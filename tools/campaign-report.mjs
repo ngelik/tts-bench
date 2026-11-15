@@ -580,7 +580,7 @@ export { writeCampaignReport, checkCampaignReport, checkAllReports };
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const args = process.argv.slice(2);
   if (args[0] === '--out') {
-    ensure(args.length >= 4, 'Usage: node tools/campaign-report.mjs --out reports/NAME results/ID/result.json [...]');
+    ensure(args.length >= 3, 'Usage: node tools/campaign-report.mjs --out reports/NAME results/ID/result.json [...]');
     const result = await writeCampaignReport(args[1], args.slice(2));
     console.log(`Campaign overview written to ${relative(ROOT, result.out).split(sep).join('/')} from ${result.resultCount} receipts across ${result.models} models`);
   } else if (args[0] === '--check') {

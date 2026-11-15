@@ -52,7 +52,8 @@ but human review is still needed. No automatic upload occurs in any benchmark ru
 
 A campaign overview combines compatible native warm, cached-resource, and CPU
 cold receipts while retaining separate metric boundaries and repetition counts.
-Generate it from already submitted result bundles:
+An overview can start with the first submitted receipt. Add each subsequent
+receipt to the same command to refresh the table and chart.
 
 ```sh
 node tools/campaign-report.mjs --out reports/CAMPAIGN results/RUN_1/result.json results/RUN_2/result.json
