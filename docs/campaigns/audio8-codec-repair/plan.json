@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+  "conditions": "Sequential headed Google Chrome 157.0.8103.40 on a MacBook Pro with Apple M1 Pro, 8 CPU cores and 16 GiB RAM, on AC power in a disposable profile. Record power and pre-run load for each cell; normal user background apps remain; thermal state is not instrumented. Keep cells in the listed order. Preserve errors and any saved failure waveforms.",
+  "cells": [
+    {
+      "model": "audio8-realistic-0.6b-int4",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "audio8-realistic-0.6b-int4",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    },
+    {
+      "model": "audio8-realistic-0.6b-int4",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "audio8-realistic-0.6b-int4",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    }
+  ]
+}
