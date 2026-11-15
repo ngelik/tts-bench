@@ -133,16 +133,39 @@ bytes / 125000; keep estimates distinct from measured throttled load time.
 
 ## Prepare and publish
 
+Work on a clean publication branch based on current upstream main. Preserve the
+scoring checkout and original receipt when publishing from a different revision.
+Set `run_id` to the value of the receipt's `id` field.
+
 ```sh
-npm run report -- runs/RUN_ID/result.json
-npm run submit -- runs/RUN_ID/result.json
+run_id=YOUR_RUN_ID
+npm run report -- "runs/$run_id/result.json"
+npm run submit -- "runs/$run_id/result.json"
+```
+
+Add authorized audio using the workflow below. Once `npm run audio -- check`
+succeeds, stage the manifest and the registered clips for this exact run.
+
+```sh
+git add -- audio/manifest.json ":(glob)audio/samples/${run_id}--*.wav"
+```
+
+Generate any requested campaign or comparison and stage its output directory.
+Then refresh the reference section and validate the complete proposed commit.
+
+```sh
+npm run reference
+git add -- "results/$run_id" README.md docs/reference-memory.svg
+git diff --cached --stat
 npm test
 npm run validate
-npm run reference
-git add results/RUN_ID README.md
-# For memory diagnostics, also stage the generated docs/reference-memory.svg.
 node tools/publication-check.mjs
 ```
+
+If the publication check reports a missing tracked file, compare the staged paths
+with the result bundle and audio manifest. Stage the reviewed file and repeat the
+check using the same native receipt and WAV. Publish independent result PRs from
+clean worktrees, or begin the next branch after the previous result merges.
 
 Every result PR must refresh the generated **README → Reference results** section
 with `npm run reference` (submission does this automatically), including failed

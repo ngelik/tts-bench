@@ -537,20 +537,41 @@ have that baseline hardware, use an [evaluation request](#request-a-model-evalua
 For a new model, first follow [model onboarding](docs/ADDING_MODELS.md) and publish
 the reviewed implementation before scoring from its clean source commit.
 
-Fork this repository on GitHub first. Replace `YOUR_USERNAME` below with your
-account; keep the original `origin` remote pointing to upstream.
+Fork `ngelik/tts-bench` on GitHub and keep `origin` pointed at upstream. Set
+`run_id` to the ID in the native receipt. Start the result branch from current
+upstream main after generation finishes.
 
 ```sh
-npm run report -- runs/<run-id>/result.json
-npm run submit -- runs/<run-id>/result.json
-npm run validate
+run_id=YOUR_RUN_ID
+git fetch origin main
+git switch -c "results/$run_id" origin/main
+npm run report -- "runs/$run_id/result.json"
+npm run submit -- "runs/$run_id/result.json"
+```
+
+If you are publishing an authorized recording, follow the [audio instructions](audio/README.md)
+now. Stage its manifest and the clips for this run after `npm run audio -- check` passes.
+
+```sh
+git add -- audio/manifest.json ":(glob)audio/samples/${run_id}--*.wav"
+```
+
+Refresh the reference table after adding audio or a comparison. Stage any generated
+campaign or comparison directory included in the PR before running the publication
+check. That check reads the Git index. You can correct a staging failure and retry
+with the same native receipt and recording.
+
+```sh
+npm run reference
+git add -- "results/$run_id" README.md docs/reference-memory.svg
+git diff --cached --stat
 npm test
-git switch -c results/my-machine
-git add results/<run-id> README.md
-# Also stage generated comparison/RAM charts and authorized audio, when included.
-git commit -m "Add M1 Pro benchmark results"
-git remote add fork https://github.com/YOUR_USERNAME/browser-tts-benchmark.git
-git push -u fork results/my-machine
+npm run validate
+node tools/publication-check.mjs
+git commit -m "Add M1 Pro benchmark $run_id"
+# Add this remote once; substitute your GitHub username.
+git remote add fork https://github.com/YOUR_USERNAME/tts-bench.git
+git push -u fork HEAD
 ```
 
 Open a pull request from your fork. The submitted bundle contains a JSON receipt,
