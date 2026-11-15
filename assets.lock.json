@@ -1475,7 +1475,7 @@
           "https://huggingface.co/Supertone/supertonic-3/tree/3cadd1ee6394adea1bd021217a0e650ede09a323/voice_styles",
           "https://huggingface.co/spaces/Supertone/supertonic-3/blob/4402acca094e2ff2b3dff446e0bf915f3fccc462/script.js"
         ],
-        "notes": "Ten supplied presets F1–F5 and M1–M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
+        "notes": "Ten supplied presets F1\u2013F5 and M1\u2013M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
       }
     },
     "kokoro-82m": {
@@ -4582,16 +4582,16 @@
           "id": "ming-audio-cpp-bench-browser-wasm",
           "target": "runtimes/audio-cpp-browser-v3/bench_browser.wasm",
           "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v3/bench_browser.wasm",
-          "bytes": 6249852,
-          "sha256": "16810776993fce4e5f43e16ccee98fbd1f3349917002ac875f1d37c80b1db0c3",
+          "bytes": 6249992,
+          "sha256": "4a6fd5bfc10e7afb4fee8e059017fcde715adba7efcd0aa2f7a851137833eee5",
           "kind": "runtime-source"
         },
         {
           "id": "ming-audio-cpp-runtime-notices",
           "target": "runtimes/audio-cpp-browser-v3/THIRD-PARTY-NOTICES.txt",
           "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v3/THIRD-PARTY-NOTICES.txt",
-          "bytes": 61321,
-          "sha256": "7bf2ddcc44469803f75bf997d6e3b6354a5ee77de6efeb14cf19edbcbc13c5b1",
+          "bytes": 64076,
+          "sha256": "1fa21b9a25b34aaa2675ca64f5c0631a7a629ddd78b561f730b1c01a110bb688",
           "kind": "license"
         }
       ],
