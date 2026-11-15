@@ -158,7 +158,7 @@ function createMemoryMetric(candidate) {
   };
 }
 
-function describeMissingScore(metric, model, backend, scenario, resource) {
+function describeMissingScore(metric, model, backend, scenario, resource, scheduled = false) {
   if (metric.resultId) return metric;
   if (!model.backends.includes(backend)) {
     const onlyBackend = model.backends.length === 1 && model.backends[0];
@@ -170,7 +170,11 @@ function describeMissingScore(metric, model, backend, scenario, resource) {
     const reason = resource.status === 'measured'
       ? 'A full-article memory run is available in the model details. The repeated warm generation score has not been published.'
       : 'No repeated warm generation score has been published for this configuration and backend.';
-    return { ...metric, displayStatus: 'No warm score', reason };
+    return {
+      ...metric,
+      displayStatus: scheduled ? 'Awaiting warm result' : 'No warm score',
+      reason: scheduled ? 'This backend is in the published warm benchmark schedule. ' + reason : reason,
+    };
   }
   return { ...metric, displayStatus: 'No memory run' };
 }
@@ -235,7 +239,9 @@ function enrichAudio(entries, resultsById, selectedWarm) {
 }
 
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
-export function assembleDashboardData({ results, models, audioEntries = [] }) {
+export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [] }) {
+  const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
+    .map(cell => `${cell.model}/${cell.backend}`));
   const warmCandidates = collectByModelBackend(results, result => result.protocol.scenario === 'warm');
   const memoryCandidates = collectByModelBackend(results, result =>
     result.origin === 'native' && result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'));
@@ -263,7 +269,8 @@ export function assembleDashboardData({ results, models, audioEntries = [] }) {
     const warm = Object.fromEntries(BACKENDS.map(backend => [backend, createWarmMetric(selectedWarm.get(`${id}/${backend}`))]));
     const memory = Object.fromEntries(BACKENDS.map(backend => [backend, createMemoryMetric(selectedMemory.get(`${id}/${backend}`))]));
     for (const backend of BACKENDS) {
-      warm[backend] = describeMissingScore(warm[backend], model, backend, 'warm', memory[backend]);
+      warm[backend] = describeMissingScore(warm[backend], model, backend, 'warm', memory[backend],
+        scheduledWarm.has(`${id}/${backend}`));
       memory[backend] = describeMissingScore(memory[backend], model, backend, 'memory');
     }
     const selectedWarmCandidates = BACKENDS.map(backend => selectedWarm.get(`${id}/${backend}`));
@@ -324,5 +331,6 @@ export async function buildDashboardData() {
   // attribution and the source receipt. Reuse it rather than duplicating those rules.
   await checkAudio();
   verifySourcesOnce(results);
-  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries });
+  const plan = JSON.parse(await readFile('docs/campaigns/nov14-english/plan.json', 'utf8'));
+  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells: plan.cells });
 }

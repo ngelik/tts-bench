@@ -92,9 +92,16 @@ test('missing warm results distinguish configured backends, CPU-only variants, a
   const diagnostic = results.find(r => r.protocol.scenario === 'cached' && r.cells.some(c =>
     c.model === cosy && c.backendRequested === 'webgpu' && c.status === 'measured'));
   assert.ok(diagnostic);
-  const subset = assembleDashboardData({ results: [diagnostic], models: { [cosy]: models[cosy], [fusor]: models[fusor] } });
+  const subset = assembleDashboardData({
+    results: [diagnostic], models: { [cosy]: models[cosy], [fusor]: models[fusor] },
+    campaignCells: [
+      { model: cosy, backend: 'webgpu', scenario: 'warm' },
+      { model: cosy, backend: 'cpu', scenario: 'cached' },
+    ],
+  });
   const [cosyRow, fusorRow] = subset.models;
-  assert.equal(cosyRow.warm.webgpu.displayStatus, 'No warm score');
+  assert.equal(cosyRow.warm.webgpu.displayStatus, 'Awaiting warm result');
+  assert.equal(cosyRow.warm.cpu.displayStatus, 'No warm score');
   assert.match(cosyRow.warm.webgpu.reason, /full-article memory run/);
   assert.equal(cosyRow.warm.webgpu.medianSeconds, null);
   assert.equal(cosyRow.memory.cpu.displayStatus, 'No memory run');
@@ -156,9 +163,11 @@ test('a later failed attempt supersedes a prior score without emitting zero metr
     results: [successful, failure.result],
     models: { paradee: getAssetLock().models.paradee },
     audioEntries: [],
+    campaignCells: [{ model: 'paradee', backend: 'cpu', scenario: 'warm' }],
   });
   const metric = assembled.models[0].warm.cpu;
   assert.equal(metric.status, 'error');
+  assert.equal(metric.displayStatus, undefined);
   assert.equal(metric.resultId, failure.result.id);
   assert.equal(metric.medianSeconds, null);
   assert.equal(metric.n, null);
