@@ -194,7 +194,8 @@ editing numbers. Use `npm run compare -- --out comparisons/NAME ...` only for
 compatible native input bundles; never combine historical CPU/GPU protocols into
 speedup ratios or pool different machines. Read all run-specific notes. For a multi-scenario campaign, generate an overview
 with `node tools/campaign-report.mjs --out reports/NAME results/RUN/result.json ...`,
-include all attempted cells, and run `node tools/campaign-report.mjs --check-all
+starting with the first submitted receipt. Include every published attempt as it
+arrives, and run `node tools/campaign-report.mjs --check-all
 reports`. See `docs/RESULTS.md` for the four report artifacts. Refresh
 `npm run reference` so the table/chart appears in the same Reference results
 section, and include it in the result PR. Keep partial campaigns visibly incomplete;
