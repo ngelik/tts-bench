@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process';
-import { mkdir, readFile, writeFile, rm } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { writeCampaignReport } from './campaign-report.mjs';
 
 const id = process.env.TINY_VOCA_ID;
 const backend = process.env.TINY_VOCA_BACKEND;
@@ -41,8 +42,8 @@ try {
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
-run(process.execPath, ['tools/campaign-report.mjs', '--out', `reports/${reportName}`,
-                       ...resultIds.map(resultId => `results/${resultId}/result.json`)]);
+await writeCampaignReport(`reports/${reportName}`,
+                          resultIds.map(resultId => `results/${resultId}/result.json`));
 
 const campaignReadme = resolve('docs/campaigns', reportName, 'README.md');
 let campaignText = await readFile(campaignReadme, 'utf8');
