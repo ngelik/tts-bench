@@ -13,7 +13,7 @@ let playRequest = 0;
 const isScheduledRetest = metric => metric?.status === 'error' && metric.registration === 'archived' && Boolean(metric.pendingCurrent);
 const statusLabel = metric => isScheduledRetest(metric) ? 'Retest scheduled' : metric?.status === 'measured' ? 'Measured' : metric?.status === 'unsupported' ? 'Unsupported' : metric?.status === 'error' ? 'Run failed' : metric?.displayStatus ?? (metric?.evidenceStatus === 'measured' ? 'Insufficient memory data' : 'Unavailable');
 const statusDetails = metric => isScheduledRetest(metric)
-  ? `Earlier run failed: ${metric.reason || 'No failure reason recorded.'}. ${metric.pendingCurrent}`
+  ? `${metric.reason ? `An earlier run failed (${metric.reason}).` : 'An earlier run failed.'} ${metric.pendingCurrent}`
   : metric?.reason || 'No published measurement for this path';
 const isMeasured = metric => metric?.status === 'measured';
 const historical = model => ['cpu', 'webgpu'].some(b => model.warm[b]?.registration === 'archived');

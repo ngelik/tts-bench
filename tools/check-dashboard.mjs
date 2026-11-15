@@ -56,7 +56,7 @@ try {
   const audio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
   const audio8Gpu = audio8?.warm.webgpu;
   if (audio8Gpu?.status === 'error' && audio8Gpu.registration === 'archived' && audio8Gpu.pendingCurrent) {
-    const explanation = `Earlier run failed: ${audio8Gpu.reason || 'No failure reason recorded.'}. ${audio8Gpu.pendingCurrent}`;
+    const explanation = `${audio8Gpu.reason ? `An earlier run failed (${audio8Gpu.reason}).` : 'An earlier run failed.'} ${audio8Gpu.pendingCurrent}`;
     const row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
     const tableStatus = row.locator('td[data-label="GPU · seconds"] .metric-unavailable');
     assert.equal(await tableStatus.innerText(), 'Retest scheduled');
