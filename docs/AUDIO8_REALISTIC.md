@@ -9,3 +9,17 @@ The browser adapter loads ONNX Runtime Web 1.31.1 with explicit CPU/WASM or WebG
 After staging assets, `node tools/check-audio8-frontend.mjs` compares all 93 canonical prompts against token IDs from Hugging Face's native tokenizer. For reproduction, `python tools/audio8-prompt-oracle.py` regenerates the text-only oracle with `tokenizers==0.22.2`.
 
 The checkpoint and ONNX export use Apache-2.0. The tokenizer runtime uses Apache-2.0 and ONNX Runtime Web uses MIT. The upstream attribution and implementation changes are retained with the adapter. [Port notices](../web/audio8/NOTICE.md)
+
+## Decoder placement and waveform verification
+
+The pinned upstream manifest specifies a CPU decoder. The original browser adapter requested WebGPU for the decoder as well as the two autoregressive graphs. In the original WebGPU cached article, 93 flat runs of at least one second account for 90.31% of the recording. Their PCM16 amplitude is −281. The matched CPU article's longest constant run is 41 ms. Both recordings remain available for inspection. [Pinned runtime manifest](https://huggingface.co/stephvax/audio8-tts-realistic-0.6b-onnx-int4/blob/04313606782af6b9a1aa93724555bc7b64ba9197/runtime_manifest.json) · [Full-recording scan](https://github.com/ngelik/tts-bench/actions/runs/43705986098/job/132787047455)
+
+The v2 routing policy runs the FP16 codec on six-thread WASM for both backends. The requested backend still controls the slow and fast autoregressive graphs. The capability probe counts autoregressive GPU dispatches separately, checks for zero GPU dispatches during the WASM decoder, and awaits PCM readback. Every generated span must contain 2,048 samples per codec frame. A wholly constant PCM16 span, or a single constant run occupying at least one second and half of a span, invalidates the article. Waveform validation runs after the generation timer and records each span’s index, sample count, longest identical PCM16 run and its amplitude under `validation.waveform` in each trial, so the saved WAV can be checked independently.
+
+Run the following from a clean checkout with the model assets staged, on a machine with hardware WebGPU and installed desktop Google Chrome:
+
+```sh
+node tools/probe-audio8-codecs.mjs
+```
+
+The diagnostic tokenizes the first 233-character canonical span and runs the GPU autoregressive graphs once. It replays the exact same codec indices through the previous mixed WebGPU decoder and the WASM decoder. It writes codebook and PCM hashes, individual dispatch counts, constant-run lengths and the corrected 44.1 kHz WAV under `runs/audio8-codec-replay-*/`. It checks that the previous fault reproduces and that the WASM decode clears the signal check. The diagnostic does not measure word accuracy or produce a full-article score.

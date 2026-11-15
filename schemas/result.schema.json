@@ -320,6 +320,56 @@
               "type": "integer",
               "minimum": 1
             },
+            "waveform": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "gate",
+                "passed",
+                "spans"
+              ],
+              "properties": {
+                "gate": {
+                  "const": "pcm16-constant-run-v1"
+                },
+                "passed": {
+                  "const": true
+                },
+                "spans": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "id",
+                      "samples",
+                      "longestConstantSamples",
+                      "constantValue"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "samples": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "longestConstantSamples": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "constantValue": {
+                        "type": "integer",
+                        "minimum": -32768,
+                        "maximum": 32767
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "nonemptyChunks": {
               "const": true
             }
