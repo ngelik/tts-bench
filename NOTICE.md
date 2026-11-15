@@ -16,3 +16,5 @@ The adapted PiVo text frontend in web/pivo/text.mjs retains Apache-2.0 terms,
 with upstream and third-party notices in web/pivo/.
 
 The Audio8 reference-free prompt and generation loop retain Edge0's Apache-2.0 notices in [web/audio8](web/audio8/NOTICE.md). The CosyVoice3 tokenizer, English frontend and generation code include Quick Inference material under PolyForm Noncommercial 1.0.0. Its license and notices are in [web/cosyvoice3](web/cosyvoice3/NOTICE.md). The English CosyVoice3 preset derives from LibriTTS-R under CC BY 4.0. See the [model license table](docs/LICENSING.md).
+
+The Ming GGUF session patch and modified audio.cpp source use Apache-2.0. The original benchmark worker and bridge use MIT. [Patch attribution and upstream license](web/audio-cpp-gguf/NOTICE.md)

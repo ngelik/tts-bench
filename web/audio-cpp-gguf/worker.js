@@ -1,8 +1,11 @@
 // Classic Emscripten worker. The same file is the pinned pthread main script.
 (function () {
   'use strict';
-  const RUNTIME_JS = '/runtimes/audio-cpp-browser-v1/bench_browser.js';
-  const RUNTIME_WASM = '/runtimes/audio-cpp-browser-v1/bench_browser.wasm';
+  const RUNTIME_RELEASE = 'audio-cpp-browser-v3';
+  const RUNTIME_ROOT = '/runtimes/' + RUNTIME_RELEASE + '/';
+  const RUNTIME_JS = RUNTIME_ROOT + 'bench_browser.js';
+  const RUNTIME_WASM = RUNTIME_ROOT + 'bench_browser.wasm';
+  // v1 identifies the weight-range format. Runtime assets use RUNTIME_RELEASE above.
   const CACHE_PREFIX = 'tts-bench-audio-cpp-gguf-v1';
   const RANGE_BYTES = 16 * 1024 * 1024;
   const THREADS = 6;
@@ -228,7 +231,7 @@
     module = await createTTS({
       locateFile(name) {
         return name.endsWith('.wasm') ? RUNTIME_WASM :
-          new URL(name, self.location.origin + '/runtimes/audio-cpp-browser-v1/').href;
+          new URL(name, self.location.origin + RUNTIME_ROOT).href;
       },
       print(message) { runtimeLog('audio.cpp', message); },
       printErr(message) { runtimeLog('audio.cpp error', message); },
@@ -247,7 +250,7 @@
       voice:info.voice || (family === 'ming3_tts' ? 'US_James built-in English voice' : 'Reference-free model synthesis'),
       precision:info.precision || 'Pinned GGUF',
       settings:Object.assign({},info.settings || {},{
-        language:'en', threads, pthreadPoolSize:PTHREAD_POOL_SIZE,
+        language:'en', threads, pthreadPoolSize:PTHREAD_POOL_SIZE, runtimeRelease:RUNTIME_RELEASE,
         modelCache:'Pinned GGUF stored in 16 MiB same-origin CacheStorage ranges keyed by full asset SHA-256, then filled into Emscripten MEMFS; incomplete ranges are rejected. Cache entries can be evicted and fetched again.',
         output:'Mono 44.1 kHz Float32 PCM; offline API returns the complete span before first-pcm is emitted.',
         executionProviders:options.backend === 'webgpu' ? ['webgpu'] : ['cpu'],
