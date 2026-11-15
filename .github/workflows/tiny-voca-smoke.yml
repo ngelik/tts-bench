@@ -1,0 +1,43 @@
+name: Tiny Voca offline Chrome smoke
+on:
+  pull_request:
+    paths:
+      - 'web/tiny-voca/**'
+      - 'web/adapters/tiny-voca.mjs'
+      - 'web/workers/tiny-voca.mjs'
+      - '.github/workflows/tiny-voca-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run assets -- fetch --model tiny-voca
+      - run: xvfb-run -a node bin/bench.mjs run --model tiny-voca --backend cpu --scenario offline --smoke
+      - name: Verify diagnostic PCM
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync, readdirSync } from 'node:fs';
+          const [folder] = readdirSync('runs');
+          const receipt = JSON.parse(readFileSync('runs/' + folder + '/result.json'));
+          assert.equal(receipt.protocol.smoke, true);
+          const [cell] = receipt.cells;
+          assert.equal(cell.status, 'measured', cell.reason);
+          assert.equal(cell.trials[0].validation.finitePcm, true);
+          assert.equal(cell.trials[0].sampleRate, 24000);
+          JS
+      - name: Show failure evidence
+        if: failure()
+        run: find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \;

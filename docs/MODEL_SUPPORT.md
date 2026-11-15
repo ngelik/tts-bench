@@ -221,3 +221,9 @@ The upstream catalog lists **117 named base voices**: 50 Chinese voices without 
 ## Ming 3.0 TTS 0.5B, Fusor mixed-quantization CPU
 
 The base cookbook lists 117 named voices. Fusor's pinned WASM runtime enumerates **seven built-in presets**. Five are English (US_James, US_Emma, US_Stella, UK_George and UK_Charlotte) and two are Chinese (灵小柔 and 灵楷). The benchmark evaluates US_James in English. Ming's base checkpoint lists Chinese, English, German, Spanish, French, Korean and Japanese. [Base voice catalog](https://github.com/inclusionAI/Ming-3.0-tts/blob/e999c39fa676722aaa9ea29b5aa19a90525b271f/cookbooks/instruction_en.md#built-in-premium-voices) · [Fusor runtime](https://huggingface.co/spaces/fusorlabs/ming-wasm/tree/bdf46b41e966340f398fdd82d3ca64f4058ad892/engine/dist/web-threaded-relaxed) · [Checkpoint card](https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B/blob/e5bd8da31ecf1b9276cdbdda821fa891068f1368/README.md)
+
+<a id="tiny-voca"></a>
+
+## Tiny Voca 4.5M
+
+The pinned checkpoint has two built-in American English voices, F2 and M2, and supports one language. The benchmark uses F2 (speaker ID 0). [Model card](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md) · [Export configuration](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json)

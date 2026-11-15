@@ -21,6 +21,7 @@ const attribution={"lfm3-audio-2b-gguf":"LFM3-Audio-2B by Liquid AI; official GG
  'fun-cosyvoice3-0.5b-2512':'Fun-CosyVoice3-0.5B-2512 by FunAudioLLM. ONNX export by Danyal Malik. The English preset derives from LibriTTS-R speaker 4446, Koizumi et al., licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Generated evaluation recording.',
  'audio8-realistic-0.6b-int4':'Audio8 TTS Realistic Air by Edge0. INT4 ONNX conversion by stephvax. Reference-free English synthesis. Apache-2.0.',
  'mach-boom':'Mach Boom by SyzygyResearch; Zoey English voice. The pinned Apache-2.0 checkpoint notice credits Gradium Phonon and Kyutai Pocket TTS/Mimi. Experimental Chrome WebAssembly port; noncommercial benchmark evaluation.',
+ 'tiny-voca':'Tiny Voca by Muhammed Nazeem (n4ze3m), Apache-2.0. Synthetic F2 voice, English.',
  'pocket-tts-100m-english-int8':'Pocket TTS by Kyutai; KevinAHM public ONNX export and browser frontend, alba English preset. CC-BY-4.0 with upstream prohibited-use conditions; noncommercial benchmark evaluation.'};
 export async function addAudio({result,wav,model,backend}){
  const d=await readResult(resolve(result),{publication:true});verifySource(d,process.cwd(),sourceCache);const c=d.cells.find(c=>c.model===model&&c.backendRequested===backend&&c.status==='measured');if(!c)throw new Error('No measured source cell');

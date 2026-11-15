@@ -4880,6 +4880,259 @@
         ],
         "notes": "Five English and two Chinese voice presets are enumerated by the pinned WASM voices() export. The base checkpoint supports seven languages. Only English is evaluated."
       }
+    },
+    "tiny-voca": {
+      "displayName": "Tiny Voca 4.5M",
+      "modelRevision": "a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.23.2",
+        "license": "MIT; bundled third-party notices apply",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.wasm.min.mjs",
+            "bytes": 49856,
+            "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs",
+            "bytes": 66261,
+            "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.mjs",
+            "bytes": 20321,
+            "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.wasm",
+            "bytes": 11905541,
+            "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 51913,
+            "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 25499390,
+            "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.23.2/LICENSE",
+            "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/v1.23.2/LICENSE",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.23.2/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/v1.23.2/ThirdPartyNotices.txt",
+            "bytes": 326866,
+            "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-onnx-model.onnx",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/onnx/model.onnx",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/onnx/model.onnx",
+          "bytes": 21386372,
+          "sha256": "fe6d918791a15b82e37465981d7f27a070e46b46635e5a3482fc8dff87a1ae46",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-config.json",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json",
+          "bytes": 2129,
+          "sha256": "27bcbf322fc428581f0e959be1c141dd7751c61f4fed5eded326e779b215f69c",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-readme.md",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md",
+          "bytes": 9122,
+          "sha256": "90482e7d58129706929b7153f6ccda8b29ff2d0dd8bcef0a4c228cebe7cc97d6",
+          "kind": "provenance"
+        },
+        {
+          "id": "tiny-voca-license",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/LICENSE",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-phonemizer-lexicon.tsv",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/lexicon.tsv",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/lexicon.tsv",
+          "bytes": 3454357,
+          "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-phonemizer-align.json",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/align.json",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/align.json",
+          "bytes": 29729,
+          "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-phonemizer-g2p.json",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/g2p.json",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/g2p.json",
+          "bytes": 834,
+          "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-phonemizer-g2p.npz",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/g2p.npz",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/g2p.npz",
+          "bytes": 1840104,
+          "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-phonemizer-homographs.json",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/homographs.json",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/homographs.json",
+          "bytes": 51956,
+          "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-phonemizer-license.cmudict",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/LICENSE.cmudict",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/LICENSE.cmudict",
+          "bytes": 1754,
+          "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-phonemizer-license.homograph-data",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/LICENSE.homograph-data",
+          "url": "https://huggingface.co/n4ze3m/tiny-voca/resolve/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/phonemizer/LICENSE.homograph-data",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-dizione",
+          "target": "models/tiny-voca/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/dizione-f8629fe989f3d0db5f440f9b3c6f0154f2e6110f.zip",
+          "url": "https://codeload.github.com/n4ze3m/dizione/zip/f8629fe989f3d0db5f440f9b3c6f0154f2e6110f",
+          "bytes": 115945,
+          "sha256": "f0d61f6a3dd00e36a30b2f3a74d4a5be27a7321d468cab5eb5453e7d49c68135",
+          "kind": "model-support"
+        },
+        {
+          "id": "tiny-voca-pyodide-pyodide.js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+          "bytes": 14761,
+          "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-pyodide-pyodide.asm.js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+          "bytes": 1229099,
+          "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-pyodide-pyodide.asm.wasm",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+          "bytes": 10088051,
+          "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-pyodide-python_stdlib.zip",
+          "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+          "bytes": 2341872,
+          "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-pyodide-pyodide-lock.json",
+          "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+          "bytes": 106335,
+          "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-pyodide-numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "target": "runtimes/pyodide/0.26.4/numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "bytes": 11959269,
+          "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-pyodide-license",
+          "target": "licenses/tiny-voca/PYODIDE-MPL-2.0.txt",
+          "url": "https://raw.githubusercontent.com/pyodide/pyodide/0.26.4/LICENSE",
+          "bytes": 16725,
+          "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-cpython-license",
+          "target": "licenses/tiny-voca/CPYTHON-LICENSE.txt",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.1/LICENSE",
+          "bytes": 13936,
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "requiresAcceptance": false,
+        "runtime": "Apache-2.0 Tiny Voca and Dizione; MIT ONNX Runtime Web; MPL-2.0 Pyodide; PSF Python, BSD NumPy and CMUdict; homograph data Apache-2.0"
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned two-voice American English checkpoint",
+        "sources": [
+          "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md",
+          "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json",
+          "https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/web/public/worker.js"
+        ],
+        "notes": "The F2 and M2 voices are embedded in one graph. Only F2 is benchmarked."
+      }
     }
   }
 }
