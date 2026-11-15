@@ -41,6 +41,21 @@ jq '
 ' assets.lock.json
 ```
 
+<!-- tiny-voca-outcomes:start -->
+## Published native outcomes
+
+This table updates as each completed full cell is independently submitted. Pending cells have not produced a public result. A no-score status is preserved as recorded and is never treated as a timing value. Cached RSS and warm timing remain separate.
+
+| Backend | Scenario | Current outcome | Evidence |
+|---|---|---|---|
+| cpu | cached | Measured | [Native receipt](../../../results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) |
+| webgpu | cached | Pending | Not submitted |
+| cpu | warm | Pending | Not submitted |
+| webgpu | warm | Pending | Not submitted |
+
+No CPU/WebGPU warm speed comparison is published until both warm cells are measured and validated.
+<!-- tiny-voca-outcomes:end -->
+
 ## Reproduce
 
 Start in a clone of this repository and use Node 22+ with a desktop session. The reference machine is an 8-core Apple M1 Pro MacBook Pro with 16 GiB RAM running headed Google Chrome 157.0.8103.40 on AC power. Set `CHROME_PATH` to the actual Chrome executable. Use your own hardware label for another machine. Keep the scoring checkout clean and run one backend at a time. Review the [license inventory](../../LICENSING.md) before running the following commands.
