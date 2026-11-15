@@ -68,7 +68,12 @@ node tools/publication-check.mjs
 Review in real Chrome at desktop and mobile widths: search, license/source filters,
 sorting, all chart metrics, model details and keyboard focus, audio playback and
 legacy `/audio/?sample=...` links. Inspect console/network errors and confirm no
-third-party requests on load. `?model=MODEL_ID` opens a model's details directly.
+third-party requests on load. `?model=MODEL_ID` opens a model's details directly. Use `?models=ID1,ID2` or
+repeat `models` (`?models=ID1&models=ID2`) to select exact configurations.
+The selected IDs compose with search, evidence and license filters. A visible
+subset note names recognized configurations, calls out unknown IDs and provides
+a clear control; an unknown ID never falls back to the full model list. Clearing
+the subset removes only `models`, preserving `q`, `view` and `model`.
 
 Publish changes through a pull request. The existing validation workflow builds
 the dashboard. After merge to `main`, `listening.yml` builds and deploys GitHub
