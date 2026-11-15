@@ -30,6 +30,21 @@ do
 done
 ```
 
+## Download size at 1 Mbps
+
+The core weights are the model files used by each configuration. The complete bundle counts every asset in its pinned receipt once, including frontend, voice, runtime and license files where present. Both CPU and WebGPU receipts for Audio8 and Fun-CosyVoice3 list the same bundle. Browser cache reuse, compression and backend-specific requests can change the actual transfer. This campaign skipped cold-load timing.
+
+| Configuration | Core weights (MB) | 1 Mbps, weights | Complete bundle (MB) | 1 Mbps, bundle | Source |
+|---|---:|---:|---:|---:|---|
+| Audio8 Realistic 0.6B INT4 | 587.71 | 1:18:22 | 644.95 | 1:26:00 | [Receipt](../../../results/2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694/result.json) |
+| Fun-CosyVoice3 0.5B Q8/Q4 | 905.67 | 2:00:45 | 961.04 | 2:08:08 | [Receipt](../../../results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/result.json) |
+| Ming 3.0 Fusor mixed quantization | 838.60 | 1:51:49 | 853.24 | 1:53:46 | [Receipt](../../../results/2026-11-14t19-30-24-576z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-cached-40143301/result.json) |
+| Ming 3.0 Q8_0 GGUF | 1,742.28 | 3:52:18 | 1,748.77 | 3:53:10 | [Receipt](../../../results/2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63/result.json) |
+
+Times are ideal estimates in hours:minutes:seconds at 1,000,000 bits/s. Divide the exact file bytes by 125,000 bytes/s and round to the nearest second. MB uses decimal units. The bundle excludes the benchmark application, npm installation and protocol overhead.
+
+To reproduce the complete byte count from any linked receipt, run `jq '[.assets[].bytes] | add' result.json`. For the weights column, sum only receipt entries whose IDs have kind `model-weights` in the [campaign asset lock](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/assets.lock.json).
+
 ## Run all 14 cells
 
 ```sh
