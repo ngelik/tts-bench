@@ -40,6 +40,7 @@ async function exercise(t, { failArticle, stage, index, warmups, trials }) {
   const cwd = await mkdtemp(join(tmpdir(), 'audio8-failed-waveform-'));
   t.after(() => rm(cwd, { recursive: true, force: true }));
   for (const dir of ['bin', 'lib', 'web', 'tools', 'fixtures']) await cp(join(root, dir), join(cwd, dir), { recursive: true });
+  await cp(join(root, 'audio/waveform-integrity.mjs'), join(cwd, 'audio/waveform-integrity.mjs'));
   await symlink(join(root, 'node_modules'), join(cwd, 'node_modules'), 'dir');
   const config = (await json(join(root, 'assets.lock.json'))).models[model];
   config.assets = config.assets.filter(a => a.id === 'audio8-realistic-provider-policy-v2');
