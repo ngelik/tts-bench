@@ -470,7 +470,9 @@ cold, offline, bandwidth-limited and model-switch scenarios. Assets are fetched/
 Use a smoke check to validate installation; use the full article and five
 repetitions for a publishable warm result. Do not run models concurrently.
 
-See the [14-cell Ming, Audio8 and CosyVoice3 campaign](docs/campaigns/nov14-english/README.md), the [Audio8 codec-routing repair retest](docs/campaigns/audio8-codec-repair/README.md), and the [four-cell Tiny Voca campaign](docs/campaigns/tiny-voca-english/README.md) for pinned schedules and reproduction commands.
+See the [14-cell Ming, Audio8 and CosyVoice3 campaign](docs/campaigns/nov14-english/README.md), the [Ming v3 runtime retest](docs/campaigns/nov14-ming-v3/README.md), the [Audio8 codec-routing repair retest](docs/campaigns/audio8-codec-repair/README.md), and the [four-cell Tiny Voca campaign](docs/campaigns/tiny-voca-english/README.md) for pinned schedules and reproduction commands.
+
+[Download the November 15 interim listening report](https://github.com/ngelik/tts-bench/releases/download/nov14-english-m1-report-2026-11-15/three-model-m1-pro.zip) for the three-model campaign. Extract the ZIP and open `listen.html` to compare the measurements and play six recorded excerpts offline.
 
 Pinned model IDs (use these with `--model`):
 
