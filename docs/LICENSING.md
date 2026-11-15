@@ -151,3 +151,7 @@ these model terms. See [configuration and reproduction](POCKET_TTS.md).
 ### Ming 3.0 TTS 0.5B, Fusor CPU
 
 The inclusionAI model and Fusor runtime carry MIT licenses. The original usage disclaimer calls for synthetic labeling and limits impersonation and deceptive uses. The lock stages the original model license, Fusor license and cards. Benchmark recordings use the built-in synthetic US_James voice. [Model and usage disclaimer](https://huggingface.co/inclusionAI/Ming-3.0-tts-0.5B/blob/e5bd8da31ecf1b9276cdbdda821fa891068f1368/README.md#usage-disclaimer) · [Fusor weight export](https://huggingface.co/fusorlabs/ming-3.0-tts-0.5b-web/blob/62588575d91dceb33822fe1e3925e748393c6b3e/README.md) · [Fusor license](https://github.com/fusor-rs/ming-wasm/blob/bcbcf268f6b32db48c075aec94f3b7ff59208085/LICENSE)
+
+### Tiny Voca 4.5M
+
+The code and model weights are Apache-2.0. The training dataset is CC BY 4.0. The benchmark uses the released F2 synthetic voice. The pinned Dizione source archive includes its Apache-2.0 license. The model assets include separate CMUdict and homograph-data notices. ONNX Runtime Web is MIT. The Pyodide distribution uses MPL-2.0, CPython uses its PSF license, and the NumPy wheel includes its BSD and bundled component notices. [Model and dataset terms](https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/README.md#license) · [Dizione license](https://github.com/n4ze3m/dizione/blob/f8629fe989f3d0db5f440f9b3c6f0154f2e6110f/LICENSE) · [Runtime configuration and source](../web/tiny-voca/NOTICE.md)
