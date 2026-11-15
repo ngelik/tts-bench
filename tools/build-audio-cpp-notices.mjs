@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cache = path.resolve(process.env.AUDIO_CPP_CACHE ?? path.join(root, '.cache/nov14'));
 const source = path.join(cache, 'audio-cpp');
 const emsdk = path.join(cache, 'emsdk');
-const outputDefault = path.join(cache, 'release/THIRD-PARTY-NOTICES.txt');
+const outputDefault = path.join(cache, 'release/audio-cpp-browser-v2/THIRD-PARTY-NOTICES.txt');
 const sourcePin = 'd38518a0d6a7aaab9d3f3dd91e9780c69857b0ac';
 const emscriptenPin = '708dcbcc9ee23bc7d2dad44fc90db377e38b771c';
 const emscriptenVersion = '6.0.13';
@@ -54,10 +54,13 @@ if (gitHead(source) !== sourcePin) throw new Error(`audio.cpp source must be ${s
 if (gitHead(emsdk) !== emscriptenPin) throw new Error(`Emscripten source must be ${emscriptenPin}`);
 const version = (await readFile(path.join(emsdk, 'upstream/emscripten/emscripten-version.txt'), 'utf8')).trim().replaceAll('"', '');
 if (version !== emscriptenVersion) throw new Error(`Expected Emscripten ${emscriptenVersion}, found ${version}`);
-const dawnVersionPath = path.join(emsdk, 'upstream/emscripten/cache/ports/emdawnwebgpu/emdawnwebgpu_pkg/VERSION.txt');
+const portPrefix = 'emsdk/upstream/emscripten/cache/ports/';
+const ports = process.env.EM_PORTS ?? path.join(cache, portPrefix);
+const dawnVersionPath = path.join(ports, 'emdawnwebgpu/emdawnwebgpu_pkg/VERSION.txt');
 const dawnVersion = await readFile(dawnVersionPath, 'utf8');
 if (!dawnVersion.includes(dawnRevision)) throw new Error(`Expected Dawn revision ${dawnRevision}`);
 
+const patchNotice = (await readFile(path.join(root, 'web/audio-cpp-gguf/ming-session-threadpool.patch.license'), 'utf8')).trimEnd();
 const parts = [
   'Browser TTS Benchmark audio.cpp WebAssembly runtime — third-party notices',
   '',
@@ -70,10 +73,14 @@ const parts = [
   `Emscripten source: emsdk ${emscriptenVersion}, commit ${emscriptenPin}`,
   `Dawn source revision: ${dawnRevision}`,
   '',
+  patchNotice,
+  '',
 ];
 
 for (const [heading, relativePath] of entries) {
-  const filename = path.join(cache, relativePath);
+  const filename = relativePath.startsWith(portPrefix)
+    ? path.join(ports, relativePath.slice(portPrefix.length))
+    : path.join(cache, relativePath);
   const bytes = await readFile(filename);
   const body = bytes.toString('utf8').replaceAll('\r\n', '\n').replace(/\n+$/u, '');
   const digest = createHash('sha256').update(bytes).digest('hex');

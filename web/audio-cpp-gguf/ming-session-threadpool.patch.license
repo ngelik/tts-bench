@@ -1,0 +1,5 @@
+SPDX-License-Identifier: Apache-2.0
+tts-bench modified audio.cpp's src/models/ming3_tts/session.cpp for audio-cpp-browser-v2.
+The patch shares one GGML CPU thread pool between the Ming generator and codec in pthread-enabled WebAssembly sessions.
+Upstream source: https://github.com/0xShug0/audio.cpp/blob/d38518a0d6a7aaab9d3f3dd91e9780c69857b0ac/src/models/ming3_tts/session.cpp
+The patch and the modified Ming session are distributed under the Apache License, Version 2.0.

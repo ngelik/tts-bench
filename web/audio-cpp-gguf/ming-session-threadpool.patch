@@ -1,0 +1,82 @@
+diff --git a/src/models/ming3_tts/session.cpp b/src/models/ming3_tts/session.cpp
+--- a/src/models/ming3_tts/session.cpp
++++ b/src/models/ming3_tts/session.cpp
+@@ -17,6 +17,11 @@
+ #include "engine/framework/sampling/torch_random.h"
+ #include "engine/framework/text/chunking.h"
+ #include "engine/framework/text/utf8.h"
++
++#if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
++#include "ggml-cpu.h"
++#include <stdexcept>
++#endif
+ 
+ #include <algorithm>
+ #include <cctype>
+@@ -63,6 +68,45 @@
+     std::vector<float> speaker;
+ };
+ 
++#if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
++class MingWasmCpuThreadPool {
++public:
++    explicit MingWasmCpuThreadPool(const core::ExecutionContext & execution)
++        : backend_(execution.backend()) {
++        if (backend_ == nullptr || !ggml_backend_is_cpu(backend_)) {
++            return;
++        }
++
++        // ExecutionContext leaves GGML's backend default in place for nonpositive counts.
++        const int requested = execution.config().threads;
++        const int threads = requested > 0 ? requested : GGML_DEFAULT_N_THREADS;
++        if (threads > GGML_MAX_N_THREADS) {
++            throw std::invalid_argument("Ming CPU thread count exceeds GGML_MAX_N_THREADS");
++        }
++        auto params = ggml_threadpool_params_default(threads);
++        pool_ = ggml_threadpool_new(&params);
++        if (pool_ == nullptr) {
++            throw std::runtime_error("Ming CPU thread pool creation failed");
++        }
++        ggml_backend_cpu_set_threadpool(backend_, pool_);
++    }
++
++    ~MingWasmCpuThreadPool() {
++        if (pool_ != nullptr) {
++            ggml_backend_cpu_set_threadpool(backend_, nullptr);
++            ggml_threadpool_free(pool_);
++        }
++    }
++
++    MingWasmCpuThreadPool(const MingWasmCpuThreadPool &) = delete;
++    MingWasmCpuThreadPool & operator=(const MingWasmCpuThreadPool &) = delete;
++
++private:
++    ggml_backend_t backend_;
++    ggml_threadpool_t pool_ = nullptr;
++};
++#endif
++
+ class MingSession final : public runtime::RuntimeSessionBase, public runtime::IOfflineVoiceTaskSession,
+     public runtime::StreamingTtsSessionBase {
+ public:
+@@ -71,6 +115,9 @@
+         : RuntimeSessionBase(options), task_(task), assets_(std::move(assets)), contract_(std::move(contract)),
+           prompts_({{}, {}, assets_->resources.require_file("tokenizer_config"),
+               assets_->resources.require_file("tokenizer_json"), tokenizers::LlamaBpePreTokenizer::Qwen2}),
++#if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
++          cpu_pool_(execution_context()),
++#endif
+           generator_(assets_->model_weights, assets_->config, execution_context()),
+           decoder_(assets_->model_weights, assets_->config.codec,
+               execution_context()) {
+@@ -343,6 +390,10 @@
+     std::shared_ptr<const MingAssets> assets_;
+     std::shared_ptr<const model_spec::ModelContract> contract_;
+     MingPromptBuilder prompts_;
++#if defined(__EMSCRIPTEN__) && defined(__EMSCRIPTEN_PTHREADS__)
++    // Host graph plans borrow this pool. Destroy all graph owners before detaching it.
++    MingWasmCpuThreadPool cpu_pool_;
++#endif
+     MingGenerator generator_;
+     modules::MingAudioDecoder decoder_;
+     runtime::StreamingAudioController<float> streaming_audio_;

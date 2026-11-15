@@ -4542,7 +4542,8 @@
       "modelRevision": "2eb8d37c7f10672e69c8aa33091baa04c461b66c",
       "runtime": {
         "license": "Apache-2.0 audio.cpp with GGML MIT and separately licensed build components",
-        "files": []
+        "files": [],
+        "version": "audio-cpp-browser-v2"
       },
       "assets": [
         {
@@ -4571,26 +4572,26 @@
         },
         {
           "id": "ming-audio-cpp-bench-browser-js",
-          "target": "runtimes/audio-cpp-browser-v1/bench_browser.js",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v1/bench_browser.js",
+          "target": "runtimes/audio-cpp-browser-v2/bench_browser.js",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v2/bench_browser.js",
           "bytes": 176974,
           "sha256": "58b3ca6a4a09f7aa4ea4d6dd055129dbddf30dc082b6d2935cb48b6fe2b66c69",
           "kind": "runtime-source"
         },
         {
           "id": "ming-audio-cpp-bench-browser-wasm",
-          "target": "runtimes/audio-cpp-browser-v1/bench_browser.wasm",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v1/bench_browser.wasm",
-          "bytes": 6250392,
-          "sha256": "fcfd9a036fc4eea8e3521e907e561d991b91eaa39bf8f2bd162ac5a467aef58c",
+          "target": "runtimes/audio-cpp-browser-v2/bench_browser.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v2/bench_browser.wasm",
+          "bytes": 6249852,
+          "sha256": "16810776993fce4e5f43e16ccee98fbd1f3349917002ac875f1d37c80b1db0c3",
           "kind": "runtime-source"
         },
         {
           "id": "ming-audio-cpp-runtime-notices",
-          "target": "runtimes/audio-cpp-browser-v1/THIRD-PARTY-NOTICES.txt",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v1/THIRD-PARTY-NOTICES.txt",
-          "bytes": 60846,
-          "sha256": "c1f6b0f354e9f2dcaeee675a45d0e0b5c2e9da192793ff49ebf1c6838216dbdc",
+          "target": "runtimes/audio-cpp-browser-v2/THIRD-PARTY-NOTICES.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v2/THIRD-PARTY-NOTICES.txt",
+          "bytes": 61321,
+          "sha256": "7bf2ddcc44469803f75bf997d6e3b6354a5ee77de6efeb14cf19edbcbc13c5b1",
           "kind": "license"
         }
       ],
