@@ -85,6 +85,14 @@ test('campaign overview omits cold metrics when no cold receipts are supplied', 
     assert.equal(pair[0].data.environment[key], pair[1].data.environment[key], `hardware field ${key}`);
   }
 
+  const first = run(['--out', reportPath, inputs[0]]);
+  assert.equal(first.status, 0, first.stderr || first.stdout);
+  const initialInputs = JSON.parse(await readFile(join(output, 'inputs.json'), 'utf8'));
+  assert.equal(initialInputs.results.length, 1);
+  assert.match(await readFile(join(output, 'overview.md'), 'utf8'), /Not submitted/);
+  const checkedFirst = run(['--check', reportPath]);
+  assert.equal(checkedFirst.status, 0, checkedFirst.stderr || checkedFirst.stdout);
+
   const generated = run(['--out', reportPath, ...inputs]);
   assert.equal(generated.status, 0, generated.stderr || generated.stdout);
   const markdown = await readFile(join(output, 'overview.md'), 'utf8');
