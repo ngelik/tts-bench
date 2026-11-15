@@ -34,7 +34,7 @@ done
 
 ## Download size at 1 Mbps
 
-The core weights are the model files used by each configuration. The complete bundle counts every asset in its pinned receipt once, including frontend, voice, runtime and license files where present. Both CPU and WebGPU receipts for Audio8 and Fun-CosyVoice3 list the same bundle. Browser cache reuse, compression and backend-specific requests can change the actual transfer. This campaign skipped cold-load timing.
+The core weights are the model files used by each configuration. The complete bundle counts every asset in its pinned receipt once, including frontend, voice, runtime and license files where present. Both CPU and WebGPU receipts for Audio8 and Fun-CosyVoice3 list the same bundle. This is the full staged inventory, not a backend-specific transfer measurement. Browser cache reuse, compression and backend-specific requests can change actual transfer; this campaign skipped cold-load timing.
 
 | Configuration | Core weights (MB) | 1 Mbps, weights | Complete bundle (MB) | 1 Mbps, bundle | Source |
 |---|---:|---:|---:|---:|---|
@@ -46,6 +46,26 @@ The core weights are the model files used by each configuration. The complete bu
 Times are ideal estimates in hours:minutes:seconds at 1,000,000 bits/s. Divide the exact file bytes by 125,000 bytes/s and round to the nearest second. MB uses decimal units. The bundle excludes the benchmark application, npm installation and protocol overhead.
 
 To reproduce the complete byte count from any linked receipt, run `jq '[.assets[].bytes] | add' result.json`. For the weights column, sum only receipt entries whose IDs have kind `model-weights` in the [campaign asset lock](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/assets.lock.json).
+
+### Backend-selected model and runtime payload
+
+These are ideal estimates from the original campaign source commit, not observed downloads or cold-load timings. “Model data” includes weights and the tokenizer, voice, config or manifest files that the selected worker loads. “Runtime” includes the locked backend-specific runtime files. Each distinct URL is counted once; divide the total file bytes by 125,000 bytes/second and round to the nearest second.
+
+| Configuration | Backend | Model data (bytes) | Selected runtime (bytes) | Total (bytes) | Ideal at 1 Mbps |
+|---|---|---:|---:|---:|---:|
+| Audio8 Realistic 0.6B INT4, archived registration | CPU | 599,932,322 | 15,776,766 | 615,709,088 | 1:22:06 |
+| Audio8 Realistic 0.6B INT4, archived registration | WebGPU | 599,932,322 | 29,721,388 | 629,653,710 | 1:23:57 |
+| Fun-CosyVoice3 0.5B Q8/Q4 | CPU | 916,881,956 | 14,927,315 | 931,809,271 | 2:04:14 |
+| Fun-CosyVoice3 0.5B Q8/Q4 | WebGPU | 916,881,956 | 28,871,937 | 945,753,893 | 2:06:06 |
+| Ming 3.0 Q8_0 GGUF | CPU | 1,742,280,896 | 6,427,366 | 1,748,708,262 | 3:53:10 |
+| Ming 3.0 Q8_0 GGUF | WebGPU | 1,742,280,896 | 6,427,366 | 1,748,708,262 | 3:53:10 |
+| Ming 3.0 Fusor mixed quantization | CPU | 850,115,730 | 3,058,023 | 853,173,753 | 1:53:45 |
+
+The selectors are the initialization paths in the pinned [Audio8 worker](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/web/workers/audio8.mjs), [CosyVoice3 worker](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/web/cosyvoice3/worker.mjs), [Ming GGUF adapter](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/web/adapters/audio-cpp-gguf.mjs) and [worker](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/web/audio-cpp-gguf/worker.js), and [Ming Fusor worker](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/web/ming/worker.mjs), using the [asset lock at the same commit](https://github.com/ngelik/tts-bench/blob/ab5aec3e510420adbcac9971f35f92152b19959c/assets.lock.json).
+
+For Audio8, the model-data selector is all `model-weights` entries plus `audio8-realistic-tokenizer-tokenizer-json`. For CosyVoice3, it is all `model-weights` entries plus `cosyvoice3-tokenizer-json`, `cosyvoice3-voice-default-json` and `cosyvoice3-flow-noise-f16-bin`. For Ming GGUF, it is `ming-gguf-weights`. For Ming Fusor, it is `ming-fusor-000-bin` through `ming-fusor-014-bin`, `ming-fusor-tokenizer-json` and `ming-fusor-manifest-json`; the worker loads every part in the [pinned model manifest](https://huggingface.co/fusorlabs/ming-3.0-tts-0.5b-web/blob/62588575d91dceb33822fe1e3925e748393c6b3e/manifest.json). Audio8 and CosyVoice3 select `ort.wasm.min.mjs` with `ort-wasm-simd-threaded.mjs` and `.wasm` on CPU, or `ort.webgpu.min.mjs` with `ort-wasm-simd-threaded.asyncify.mjs` and `.wasm` on WebGPU. Audio8 also loads `transformers.min.js`. Ming GGUF uses the same `bench_browser.js` and `bench_browser.wasm` files on either backend. Ming Fusor selects `engine/dist/host/loader.js`, `engine/dist/web-threaded-relaxed/ming_runtime.js`, `ming_runtime_bg.wasm` and its `workerHelpers.no-bundler.js` module. The exact pinned [Fusor host loader](https://huggingface.co/spaces/fusorlabs/ming-wasm/blob/bdf46b41e966340f398fdd82d3ca64f4058ad892/engine/dist/host/loader.js) imports the selected glue, which imports the thread helper. The staged Fusor `engine/worker.js` entry is not imported by this benchmark worker and is excluded.
+
+These totals exclude licenses and metadata not fetched by initialization, alternate backend runtime files, tts-bench adapter/worker modules, the benchmark page and browser shell, compression, HTTP framing and connection overhead. First-party module and shell transfer was not measured, so the figures are only the selected locked-file estimates, not customer transfer observations or cold-load results. The original Audio8 rows describe the archived source registration; the corrected Audio8 estimates are in the [codec-routing repair addendum](../audio8-codec-repair/README.md).
 
 ## Run all 14 cells
 
