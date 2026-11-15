@@ -15,6 +15,7 @@ for(let i=0;i<args.length;i++) {
 if(!options.plan||!options.machine||!options.accept) throw new Error('Plan, actual machine label and reviewed license acknowledgement are required.');
 const raw=await readFile(resolve(options.plan)), plan=JSON.parse(raw);
 if(plan.schemaVersion!==1||!Array.isArray(plan.cells)||!plan.cells.length) throw new Error('Invalid campaign plan');
+if(plan.sourceCommit!==undefined&&(typeof plan.sourceCommit!=='string'||!/^[a-f0-9]{40,64}$/.test(plan.sourceCommit))) throw new Error('Invalid campaign sourceCommit pin');
 for(const cell of plan.cells) {
   getModel(cell.model);
   if(!['cpu','webgpu'].includes(cell.backend)||!['warm','cached','cold','network','offline'].includes(cell.scenario)) throw new Error('Invalid campaign cell');
@@ -24,6 +25,7 @@ for(const cell of plan.cells) {
 }
 const git=(...args)=>execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim();
 const commit=git('rev-parse','HEAD');
+if(plan.sourceCommit!==undefined&&plan.sourceCommit!==commit) throw new Error(`Campaign plan sourceCommit ${plan.sourceCommit} does not match current HEAD ${commit}.`);
 const assertSource=()=>{if(git('status','--porcelain')||git('rev-parse','HEAD')!==commit)throw new Error('Campaign requires the same clean committed source for every cell.');};
 assertSource();
 const id=new Date().toISOString().replace(/[:.]/g,'-')+'-'+createHash('sha256').update(raw).digest('hex').slice(0,12);
