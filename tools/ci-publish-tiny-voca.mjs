@@ -10,6 +10,7 @@ const wav = process.env.TINY_VOCA_WAV;
 const scoreSource = '6ad6b9f4f062c77514e1fc8da4254327b2cf2e59';
 const reportName = 'tiny-voca-english';
 const model = 'tiny-voca';
+// Re-render after the original WAV became available as a verified release asset.
 const run = (command, args) => execFileSync(command, args, { stdio: 'inherit' });
 
 if (!/^[a-z0-9][a-z0-9._-]{0,119}$/.test(id ?? '') || !['cpu', 'webgpu'].includes(backend) || !input || !wav) {
