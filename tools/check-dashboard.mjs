@@ -5,6 +5,14 @@ import {readFile, mkdir, writeFile} from 'node:fs/promises';
 import {chromium} from 'playwright-core';
 import {findChrome} from '../lib/runner.mjs';
 const expected = JSON.parse(await readFile('.cache/listening-site/assets/data.json', 'utf8'));
+const campaignModelIds = [
+  'audio8-realistic-0.6b-int4',
+  'fun-cosyvoice3-0.5b-2512',
+  'ming-3.0-tts-0.5b-gguf',
+  'ming-3.0-tts-0.5b-fusor-mix-cpu',
+];
+const campaignModels = expected.models.filter(model => campaignModelIds.includes(model.id));
+assert.equal(campaignModels.length, campaignModelIds.length, 'Campaign subset IDs must exist in the dashboard data');
 const urlArg = process.argv.indexOf('--url');
 let base = urlArg >= 0 ? process.argv[urlArg + 1] : null;
 let server, browser;
@@ -45,6 +53,51 @@ try {
     }
   };
   await assertDefaultOrder();
+  const campaignUrl = new URL(base);
+  campaignUrl.search = '';
+  campaignUrl.searchParams.set('models', campaignModelIds.join(','));
+  campaignUrl.searchParams.set('q', 'Audio8');
+  campaignUrl.searchParams.set('view', 'charts');
+  await page.goto(campaignUrl.href);
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 of 4 selected configurations');
+  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), ['audio8-realistic-0.6b-int4']);
+  assert.equal(await page.locator('#charts-view').isVisible(), true);
+  assert.equal(await page.locator('#charts .bar-row').count(), 2);
+  const scopeNote = await page.locator('#scope-note').innerText();
+  for (const model of campaignModels) assert.ok(scopeNote.includes(model.name), `Subset banner should name ${model.id}`);
+  await page.locator('#scope-note [data-clear-model-scope]').click();
+  const clearedCampaignUrl = new URL(page.url());
+  assert.equal(clearedCampaignUrl.searchParams.has('models'), false);
+  assert.equal(clearedCampaignUrl.searchParams.get('q'), 'Audio8', 'Clearing the subset preserves search');
+  assert.equal(clearedCampaignUrl.searchParams.get('view'), 'charts', 'Clearing the subset preserves the selected view');
+  assert.equal(await page.locator('#visible-count').innerText(), `1 of ${expected.models.length} configurations`);
+  assert.equal(await page.locator('#model-rows tr').count(), 1);
+
+  const repeatedScopeUrl = new URL(base);
+  repeatedScopeUrl.search = '';
+  campaignModelIds.slice(0, 2).forEach(id => repeatedScopeUrl.searchParams.append('models', id));
+  await page.goto(repeatedScopeUrl.href);
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '2 of 2 selected configurations');
+  const repeatedModels = campaignModels.filter(model => campaignModelIds.slice(0, 2).includes(model.id));
+  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(repeatedModels, model => model.warm.cpu.medianSeconds));
+
+  const unknownScopeUrl = new URL(base);
+  unknownScopeUrl.search = '';
+  unknownScopeUrl.searchParams.set('models', `${campaignModelIds[0]},bad-model-id`);
+  await page.goto(unknownScopeUrl.href);
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 of 1 selected configurations');
+  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), [campaignModelIds[0]], 'Unknown IDs must not expose unrelated configurations');
+  assert.ok((await page.locator('#scope-note').innerText()).includes('bad-model-id'));
+
+  const onlyUnknownScopeUrl = new URL(base);
+  onlyUnknownScopeUrl.search = '';
+  onlyUnknownScopeUrl.searchParams.set('models', 'bad-model-id');
+  await page.goto(onlyUnknownScopeUrl.href);
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 of 0 selected configurations');
+  assert.equal(await page.locator('#model-rows tr').count(), 0, 'An all-unknown selection must stay empty');
+  await page.locator('#scope-note [data-clear-model-scope]').click();
+  assert.equal(await page.locator('#model-rows tr').count(), expected.models.length, 'Clear subset returns to the full configuration list');
+
   assert.equal(await page.locator('audio').count(), 1);
   assert.equal(await page.locator('audio').getAttribute('src'), null, 'Audio must not download on initial load');
   for (const model of expected.models) {

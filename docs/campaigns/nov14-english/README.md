@@ -2,6 +2,8 @@
 
 The [machine-readable plan](plan.json) reproduces the 14 full-article cells for Ming 3.0, Audio8 Realistic and Fun-CosyVoice3. It uses the 20,000-character English article in 93 spans. Seven cached cells collect generation-window Chrome process-tree RSS from one scored full article each. Seven warm cells each run one excluded full article followed by five timed articles. Each article has a 1,440-minute timeout. WebGPU runs precede CPU within each phase. The order in the plan is fixed. Ming Q8_0 GGUF and six-thread Fusor mixed-quantization CPU are distinct configurations. [Published campaign table and receipts](../../../reports/nov14-multilingual-english/overview.md)
 
+For the latest dashboard evidence, filter to these four exact configurations: [table view](https://ngelik.github.io/tts-bench/?models=audio8-realistic-0.6b-int4,fun-cosyvoice3-0.5b-2512,ming-3.0-tts-0.5b-gguf,ming-3.0-tts-0.5b-fusor-mix-cpu#results) · [chart view](https://ngelik.github.io/tts-bench/?models=audio8-realistic-0.6b-int4,fun-cosyvoice3-0.5b-2512,ming-3.0-tts-0.5b-gguf,ming-3.0-tts-0.5b-fusor-mix-cpu&view=charts#results). The dashboard shows each configuration's own latest published evidence and archived warnings. The links select configurations; they do not make the source, protocol or receipts matched across models.
+
 The reference machine is a MacBook Pro with an 8-core Apple M1 Pro, 16 GiB RAM, arm64, Darwin 25.6.0 and headed Google Chrome 157.0.8103.40. Use AC power and a hardware WebGPU adapter, with one dedicated benchmark tab and no parallel model runs. Other machines can run the plan with their actual machine label. The controller records the installed environment alongside the measurements. [Protocol](../../PROTOCOL.md)
 
 ## Stage the pinned runtime
