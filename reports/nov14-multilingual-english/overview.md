@@ -22,7 +22,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 | Model | CPU mean Chrome RSS | CPU max sampled RSS | WebGPU mean Chrome RSS | WebGPU max sampled RSS | Pinned model weights |
 |---|---:|---:|---:|---:|---:|
 | Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | 790.79 MB (n=1; 16866 samples) | 2293.40 MB (sampled max; n=1; 16866 samples) | 587.71 MB |
-| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | Not submitted | 2706.94 MB (n=1; 3159 samples) | 3328.46 MB (sampled max; n=1; 3159 samples) | 905.67 MB |
+| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | 3738.68 MB (n=1; 29467 samples) | 4206.44 MB (sampled max; n=1; 29467 samples) | 2706.94 MB (n=1; 3159 samples) | 3328.46 MB (sampled max; n=1; 3159 samples) | 905.67 MB |
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | 1882.03 MB (n=1; 1868 samples) | 1995.41 MB (sampled max; n=1; 1868 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 838.60 MB |
 | Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | 1235.53 MB (n=1; 10358 samples) | 2018.75 MB (sampled max; n=1; 10358 samples) | 1742.28 MB |
 
@@ -33,7 +33,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
 | Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
-| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#fun-cosyvoice3-0.5b-2512) | [Terms](../../docs/LICENSING.md) |
+| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | Not submitted | [Report](../../results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/summary.md) | [Report](../../results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#fun-cosyvoice3-0.5b-2512) | [Terms](../../docs/LICENSING.md) |
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | Not submitted | Unsupported (manifest) | [Report](../../results/2026-11-14t19-30-24-576z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-cached-40143301/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-fusor-mix-cpu) | [Terms](../../docs/LICENSING.md) |
 | Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-gguf) | [Terms](../../docs/LICENSING.md) |
 
