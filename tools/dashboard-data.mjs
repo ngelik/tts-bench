@@ -5,22 +5,17 @@ import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 
+import { ENVIRONMENT_COHORT_FIELDS, stable, pairedWarm, preferredAttempts } from './result-selection.mjs';
+
 const BACKENDS = ['cpu', 'webgpu'];
-const ENVIRONMENT_COHORT_FIELDS = ['machineLabel', 'os', 'arch', 'cpu', 'logicalCores', 'ramBytes', 'chromeVersion', 'headless'];
 const finite = value => typeof value === 'number' && Number.isFinite(value);
-const canonical = value => Array.isArray(value)
-  ? value.map(canonical)
-  : value && typeof value === 'object'
-    ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])]))
-    : value;
-const stable = value => JSON.stringify(canonical(value));
 const mean = values => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 const latestOrder = (a, b) => a.result.createdAt.localeCompare(b.result.createdAt) || a.result.id.localeCompare(b.result.id);
 const receiptUrl = id => `https://github.com/ngelik/tts-bench/blob/main/results/${id}/summary.md`;
 const missingMetric = (reason, fields) => ({
   status: 'unavailable', reason, resultId: null, reportUrl: null, origin: null,
   createdAt: null, protocolId: null, sourceCommit: null, sourceFingerprint: null,
-  environment: null, cohortKey: null, ...fields,
+  environment: null, cohortKey: null, registration: null, ...fields,
 });
 
 function cohortKey(result) {
@@ -35,12 +30,13 @@ function cohortKey(result) {
   }));
 }
 
-function metricBase(result, cell) {
+function metricBase({ result, cell, current }) {
   return {
     status: cell.status,
     reason: cell.reason,
     resultId: result.id,
     reportUrl: receiptUrl(result.id),
+    registration: current ? 'current' : 'archived',
     origin: result.origin,
     createdAt: result.createdAt,
     protocolId: result.protocol.id,
@@ -67,16 +63,13 @@ export function selectLatestAttempt(candidates) {
   return preferred;
 }
 
-function collectByModelBackend(results, predicate) {
+function collectByModelBackend(results, models, predicate) {
   const grouped = new Map();
-  for (const result of results) {
-    if (!predicate(result)) continue;
-    for (const cell of result.cells) {
-      const key = `${cell.model}/${cell.backendRequested}`;
-      const entries = grouped.get(key) ?? [];
-      entries.push({ result, cell });
-      grouped.set(key, entries);
-    }
+  for (const attempt of preferredAttempts(results, models, predicate)) {
+    const key = `${attempt.cell.model}/${attempt.cell.backendRequested}`;
+    const entries = grouped.get(key) ?? [];
+    entries.push(attempt);
+    grouped.set(key, entries);
   }
   return grouped;
 }
@@ -86,8 +79,8 @@ function createWarmMetric(candidate) {
     medianSeconds: null, minSeconds: null, maxSeconds: null, n: null,
     firstPcmMs: null, rtf: null, audioSeconds: null,
   });
-  const { result, cell } = candidate;
-  const base = metricBase(result, cell);
+  const { cell } = candidate;
+  const base = metricBase(candidate);
   if (cell.status !== 'measured') return {
     ...base, medianSeconds: null, minSeconds: null, maxSeconds: null, n: null,
     firstPcmMs: null, rtf: null, audioSeconds: null,
@@ -140,8 +133,8 @@ function createMemoryMetric(candidate) {
   if (!candidate) return missingMetric('No native cached resource result has been submitted.', {
     meanMB: null, peakMB: null, n: null, sampleCount: null, generationSeconds: null, audioSeconds: null,
   });
-  const { result, cell } = candidate;
-  const base = metricBase(result, cell);
+  const { cell } = candidate;
+  const base = metricBase(candidate);
   if (cell.status !== 'measured') return {
     ...base, meanMB: null, peakMB: null, n: null, sampleCount: null, generationSeconds: null, audioSeconds: null,
   };
@@ -177,33 +170,6 @@ function describeMissingScore(metric, model, backend, scenario, resource, schedu
     };
   }
   return { ...metric, displayStatus: 'No memory run' };
-}
-
-function sameSettings(a, b) {
-  const { executionProviders: ignoredA, ...settingsA } = a.settings;
-  const { executionProviders: ignoredB, ...settingsB } = b.settings;
-  return a.voice === b.voice && a.precision === b.precision && stable(settingsA) === stable(settingsB);
-}
-
-function pairedWarm(cpu, webgpu) {
-  if (!cpu || !webgpu) return false;
-  const a = cpu.result, b = webgpu.result;
-  const ac = cpu.cell, bc = webgpu.cell;
-  if (a.origin !== 'native' || b.origin !== 'native' || ac.status !== 'measured' || bc.status !== 'measured') return false;
-  if (stable(a.protocol) !== stable(b.protocol) || stable(a.fixture) !== stable(b.fixture)) return false;
-  if (a.source.manifestSha256 !== b.source.manifestSha256) return false;
-  for (const key of ['machineLabel', 'os', 'arch', 'cpu', 'logicalCores', 'ramBytes', 'chromeVersion', 'headless']) {
-    if (a.environment[key] !== b.environment[key]) return false;
-  }
-  const gpuNames = new Set([a.environment.gpu, b.environment.gpu].filter(Boolean));
-  if (gpuNames.size > 1) return false;
-  const assets = new Map();
-  for (const asset of a.assets) assets.set(asset.id, `${asset.sha256}/${asset.bytes}`);
-  for (const asset of b.assets) {
-    const previous = assets.get(asset.id);
-    if (previous && previous !== `${asset.sha256}/${asset.bytes}`) return false;
-  }
-  return sameSettings(ac, bc);
 }
 
 function verifiedModelMB(model, candidates) {
@@ -242,8 +208,8 @@ function enrichAudio(entries, resultsById, selectedWarm) {
 export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [] }) {
   const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
     .map(cell => `${cell.model}/${cell.backend}`));
-  const warmCandidates = collectByModelBackend(results, result => result.protocol.scenario === 'warm');
-  const memoryCandidates = collectByModelBackend(results, result =>
+  const warmCandidates = collectByModelBackend(results, models, result => result.protocol.scenario === 'warm');
+  const memoryCandidates = collectByModelBackend(results, models, result =>
     result.origin === 'native' && result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'));
   const selectedWarm = new Map();
   const selectedMemory = new Map();
@@ -287,7 +253,7 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
       sourceUrl: officialSourceUrl(model),
       warm,
       memory,
-      pairedWarm: pairedWarm(selectedWarm.get(`${id}/cpu`), selectedWarm.get(`${id}/webgpu`)),
+      pairedWarm: pairedWarm(selectedWarm.get(`${id}/cpu`), selectedWarm.get(`${id}/webgpu`), model),
       audio: byModelAudio.get(id) ?? [],
       preferredAudio,
     };

@@ -5,9 +5,9 @@ import { pathToFileURL } from 'node:url';
 import { resultPaths, readResult, summaries } from './results.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
+import { environmentKey as envKey, pairedWarm, preferredAttempts } from './result-selection.mjs';
 export const START='<!-- benchmark-results:start -->', END='<!-- benchmark-results:end -->';
 const md=x=>String(x).replaceAll('|','\\|').replaceAll('\n',' ');
-const envKey=d=>JSON.stringify(['machineLabel','os','arch','cpu','logicalCores','ramBytes','chromeVersion'].map(k=>d.environment[k]));
 const report=d=>`results/${d.id}/summary.md`;
 
 function outputLengthReferenceBlock(groups, models){
@@ -28,20 +28,20 @@ function outputLengthReferenceBlock(groups, models){
  return out+'\n';
 }
 
-function ramCohorts(results){
+function ramCohorts(results, models){
  const cohorts=new Map();
- for(const d of results){
-  if(d.origin!=='native'||d.protocol.smoke||!d.protocol.id.endsWith('-resources'))continue;
-  const eligible=d.cells.filter(c=>c.status!=='measured'||c.trials.length&&c.trials.every(t=>Number.isFinite(t.metrics?.generationMeanRssBytes)&&t.memory));
-  if(!eligible.length)continue;
+ const attempts=preferredAttempts(results, models, d=>d.origin==='native'&&!d.protocol.smoke&&d.protocol.id.endsWith('-resources'), { perEnvironment: true });
+ for(const {result:d, cell:c} of attempts){
+  if(c.status==='measured'&&(!c.trials.length||!c.trials.every(t=>Number.isFinite(t.metrics?.generationMeanRssBytes)&&t.memory)))continue;
   const key=envKey(d)+'/'+JSON.stringify(d.protocol)+'/'+d.source.manifestSha256;
   const group=cohorts.get(key)??{base:d,rows:new Map()};
-  for(const c of eligible){const row=group.rows.get(c.model)??{model:c.model};row[c.backendRequested]={d,c};group.rows.set(c.model,row);}cohorts.set(key,group);
+  const row=group.rows.get(c.model)??{model:c.model};
+  row[c.backendRequested]={d,c};group.rows.set(c.model,row);cohorts.set(key,group);
  }
  return [...cohorts.values()];
 }
 export function ramReferenceBlock(results,models){
- const cohorts=ramCohorts(results);
+ const cohorts=ramCohorts(results,models);
  let out='### Chrome RAM during generation\n\nDedicated full-article memory runs measure an isolated Chrome instance with one benchmark tab, including inference workers and browser baseline. These are separate resource diagnostics; their timings do not replace the warm speed measurements above. RSS may double-count shared pages and is not model-only RAM or GPU VRAM. Values are the mean of generation-window samples, averaged equally across recorded articles. [Method and reproduction](docs/MEMORY.md).\n\n';
  if(!cohorts.length)return out+'Memory results are published here after their full-article diagnostics pass validation.\n\n';
  let i=0;
@@ -57,7 +57,7 @@ export function ramReferenceBlock(results,models){
 
 const xml=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 export function ramChart(results,models){
- const cohorts=ramCohorts(results);if(!cohorts.length)return null;
+ const cohorts=ramCohorts(results,models);if(!cohorts.length)return null;
  const height=100+cohorts.reduce((n,g)=>n+120+g.rows.size*76,0);
  let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="${height}" viewBox="0 0 1080 ${height}" role="img" aria-labelledby="title desc"><title id="title">Average Chrome RAM during speech generation</title><desc id="desc">Separate full-article diagnostics. Owned Chrome process-tree RSS includes browser baseline and workers. Decimal megabytes; lower uses less memory. Unsupported backends have no bar.</desc><rect width="100%" height="100%" fill="#f7f9fc"/><g font-family="system-ui,sans-serif" fill="#192b47"><text x="32" y="42" font-size="25" font-weight="700">Chrome RAM · full article diagnostics</text><text x="32" y="68" font-size="13">One isolated Chrome instance · includes workers and browser baseline · excludes loading and audio export</text>`;
  let y=100;
@@ -83,16 +83,25 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
   const ordered=[...results].sort((a,b)=>a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id));
   const envs=new Map();for(const d of ordered)if(d.protocol.scenario==='warm'&&!envs.has(envKey(d)))envs.set(envKey(d),{id:'E'+(envs.size+1),value:d.environment});
   const groups=new Map();
-  for(const d of ordered.filter(d=>d.protocol.scenario==='warm'))for(const c of summaries(d)){
+  const warm=preferredAttempts(ordered,models,d=>d.protocol.scenario==='warm',{perEnvironment:true});
+  for(const {result:d,cell,current} of warm){
+    const c=summaries(d).find(summary=>summary.model===cell.model&&summary.backend===cell.backendRequested);
     const k=envKey(d)+'/'+c.model;const row=groups.get(k)??{model:c.model,environment:envs.get(envKey(d)).id};
-    const old=row[c.backend];if(!old||d.origin==='native'||old.d.origin!=='native')row[c.backend]={d,c};groups.set(k,row);
+    const old=row[c.backend];if(!old||d.origin==='native'||old.d.origin!=='native')row[c.backend]={d,c,cell,current};groups.set(k,row);
   }
-  let out=START+'\n\nGenerated from every submitted result. Latest warm attempt per model/backend and exact environment is shown; errors are retained. No cross-machine or cross-protocol speedup is implied.\n\n';
+  let out=START+'\n\nWarm and memory tables prefer native receipts that verify the registered model and runtime files for each backend and environment. The latest attempt within that version is shown, including errors. When it has no receipt, earlier evidence stays visible. All runs and recordings remain linked below.\n\n';
   for(const {id,value:e}of envs.values())out+=`- **${id}**: ${md(e.machineLabel)} · ${md(e.chromeVersion)} · ${md(e.os)}.\n`;
   out+='\n| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |\n|---|---|---:|---:|---:|---|\n';
   const score=v=>!v?'—':`[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'}](${report(v.d)})`;
   const modelSize=(id,pair)=>{const weights=models[id]?.assets?.filter(a=>a.kind==='model-weights')??[];const measured=pair;if(!weights.length||!measured.length||measured.some(v=>weights.some(w=>!v.d.assets.some(a=>a.sha256===w.sha256&&a.bytes===w.bytes))))return 'Unknown';return (weights.reduce((n,a)=>n+a.bytes,0)/1e6).toFixed(2);};
-  for(const row of [...groups.values()].sort((a,b)=>a.environment.localeCompare(b.environment)||a.model.localeCompare(b.model))){const pair=[row.cpu,row.webgpu].filter(Boolean);const hist=pair.some(v=>v.d.origin!=='native');const scope=hist?'Historical; distinct timing protocols':pair.length===2&&pair[0].d.source.manifestSha256===pair[1].d.source.manifestSha256?'Native; matched source':'Native; separate configuration';out+=`| ${md(models[row.model]?.displayName??row.model)} | ${row.environment} | ${modelSize(row.model,pair)} | ${score(row.cpu)} | ${score(row.webgpu)} | ${scope} |\n`;}
+  for(const row of [...groups.values()].sort((a,b)=>a.environment.localeCompare(b.environment)||a.model.localeCompare(b.model))){
+    const pair=[row.cpu,row.webgpu].filter(Boolean);
+    const candidate=v=>v&&{result:v.d,cell:v.cell};
+    const matched=pairedWarm(candidate(row.cpu),candidate(row.webgpu),models[row.model]);
+    const label=pair.every(v=>v.current)?'Native':'Archived native';
+    const scope=pair.some(v=>v.d.origin!=='native')?'Historical; distinct timing protocols':label+(matched?'; matched configuration':'; independent attempts');
+    out+=`| ${md(models[row.model]?.displayName??row.model)} | ${row.environment} | ${modelSize(row.model,pair)} | ${score(row.cpu)} | ${score(row.webgpu)} | ${scope} |\n`;
+  }
   out+='\nEach measured warm cell uses five scored full 20,000-character articles. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
   out+=outputLengthReferenceBlock(groups,models);
   out+='MB = 1,000,000 bytes. Model size counts pinned core model-weight files (including the vocoder), verified against the displayed run receipts; it excludes runtime, G2P, voice/config files and transfer overhead.\n\n';
