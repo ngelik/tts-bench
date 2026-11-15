@@ -82,9 +82,9 @@ async function sandbox(t, plan, { failModel, dirty = false } = {}) {
   return { directory, events };
 }
 
-function invoke(directory, events, failModel) {
+function invoke(directory, events, failModel, planPath = 'campaign-plan.json') {
   return spawnSync(process.execPath, [
-    'tools/run-campaign.mjs', '--plan', 'campaign-plan.json',
+    'tools/run-campaign.mjs', '--plan', planPath,
     '--machine', 'Test machine', '--accept-license',
   ], {
     cwd: directory,
@@ -96,6 +96,13 @@ function invoke(directory, events, failModel) {
       ...(failModel ? { CAMPAIGN_TEST_FAIL_MODEL: failModel } : {}),
     },
   });
+}
+
+async function writeExternalPlan(t, events, value) {
+  const path = `${events}.plan.json`;
+  await writeFile(path, JSON.stringify(value));
+  t.after(async () => rm(path, { force: true }));
+  return path;
 }
 
 async function campaignDirectory(root) {
@@ -132,6 +139,47 @@ test('campaign runner waits for each child before starting the next cell and rec
   assert.equal(attempts.length, 2);
   assert.deepEqual(attempts.map(row => row.cell.model), ['one', 'two']);
   assert.deepEqual(attempts.map(row => row.resultId), ['stub-one-cpu', 'stub-two-webgpu']);
+});
+
+test('campaign runner accepts a sourceCommit pin matching the clean checkout', async t => {
+  const { directory, events } = await sandbox(t, plan([cell('one')]));
+  const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: directory, encoding: 'utf8' }).trim();
+  const planPath = await writeExternalPlan(t, events, { ...plan([cell('one')]), sourceCommit });
+
+  const run = invoke(directory, events, undefined, planPath);
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual((await eventRows(events)).map(row => [row.event, row.model]), [
+    ['start', 'one'], ['end', 'one'],
+  ]);
+  const ledger = await campaignDirectory(directory);
+  const storedPlan = JSON.parse(await readFile(join(ledger, 'plan.json'), 'utf8'));
+  assert.equal(storedPlan.sourceCommit, sourceCommit);
+});
+
+test('campaign runner rejects a mismatched sourceCommit pin before creating output or spawning a child', async t => {
+  const { directory, events } = await sandbox(t, plan([cell('one')]));
+  const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: directory, encoding: 'utf8' }).trim();
+  const wrongCommit = sourceCommit[0] === '0' ? '1'.repeat(40) : '0'.repeat(40);
+  const planPath = await writeExternalPlan(t, events, { ...plan([cell('one')]), sourceCommit: wrongCommit });
+
+  const run = invoke(directory, events, undefined, planPath);
+  assert.notEqual(run.status, 0);
+  assert.equal(run.stdout, '');
+  assert.match(run.stderr, /sourceCommit .* does not match current HEAD/i);
+  assert.deepEqual(await eventRows(events), []);
+  await assert.rejects(readdir(join(directory, 'runs')), error => error.code === 'ENOENT');
+});
+
+test('campaign runner rejects a malformed sourceCommit pin before spawning a child', async t => {
+  const { directory, events } = await sandbox(t, plan([cell('one')]));
+  const planPath = await writeExternalPlan(t, events, { ...plan([cell('one')]), sourceCommit: 'not-a-commit' });
+
+  const run = invoke(directory, events, undefined, planPath);
+  assert.notEqual(run.status, 0);
+  assert.equal(run.stdout, '');
+  assert.match(run.stderr, /Invalid campaign sourceCommit pin/);
+  assert.deepEqual(await eventRows(events), []);
+  await assert.rejects(readdir(join(directory, 'runs')), error => error.code === 'ENOENT');
 });
 
 test('campaign runner stops after the first child failure and retains its failed attempt', async t => {
