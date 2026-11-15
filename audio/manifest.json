@@ -1459,6 +1459,35 @@
       }
     },
     {
+      "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
+      "model": "tiny-voca",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "F2 (American English)",
+      "language": "en",
+      "attribution": "Tiny Voca by Muhammed Nazeem (n4ze3m), Apache-2.0. Synthetic F2 voice, English.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md",
+        "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json",
+        "https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/web/public/worker.js"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu.wav",
+        "sha256": "38211597b006ffb9e06ce9d3549f3ff150178c9d6ed9ad807ab475894adde8fd",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu-full.wav",
+        "sha256": "64d39a965412e1da180d4cbef6c37cff8e3bf41734fddda729179e0db791f057",
+        "bytes": 55314988
+      }
+    },
+    {
       "resultId": "2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663",
       "model": "woof",
       "backend": "webgpu",
