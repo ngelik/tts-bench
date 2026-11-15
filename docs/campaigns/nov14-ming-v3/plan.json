@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "d77c64289955a57526291d39b22caceffae40413",
+  "conditions": "Ming Q8_0 GGUF, audio-cpp-browser-v3, six threads, US_James. One baseline M1 Pro on AC, pinned headed Chrome, consecutive canonical article spans. Run cells individually under the shared M1 slot. Cached runs sample generation-window memory. Warm cells use one excluded full article plus five scored articles.",
+  "cells": [
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    },
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    }
+  ]
+}
