@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec",
+  "createdAt": "2026-11-15T22:55:36.666Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "6ad6b9f4f062c77514e1fc8da4254327b2cf2e59",
+    "dirty": false,
+    "manifestSha256": "5091889c8a93f2c87d20ad2a098849fe9723875b63a1d3bec1568d318f14aeaf"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "tiny-voca-onnx-model.onnx",
+      "sha256": "fe6d918791a15b82e37465981d7f27a070e46b46635e5a3482fc8dff87a1ae46",
+      "bytes": 21386372
+    },
+    {
+      "id": "tiny-voca-config.json",
+      "sha256": "27bcbf322fc428581f0e959be1c141dd7751c61f4fed5eded326e779b215f69c",
+      "bytes": 2129
+    },
+    {
+      "id": "tiny-voca-readme.md",
+      "sha256": "90482e7d58129706929b7153f6ccda8b29ff2d0dd8bcef0a4c228cebe7cc97d6",
+      "bytes": 9122
+    },
+    {
+      "id": "tiny-voca-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-phonemizer-lexicon.tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "tiny-voca-phonemizer-align.json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "tiny-voca-phonemizer-g2p.json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "tiny-voca-phonemizer-g2p.npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "tiny-voca-phonemizer-homographs.json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "tiny-voca-phonemizer-license.cmudict",
+      "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+      "bytes": 1754
+    },
+    {
+      "id": "tiny-voca-phonemizer-license.homograph-data",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-dizione",
+      "sha256": "f0d61f6a3dd00e36a30b2f3a74d4a5be27a7321d468cab5eb5453e7d49c68135",
+      "bytes": 115945
+    },
+    {
+      "id": "tiny-voca-pyodide-pyodide.js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "tiny-voca-pyodide-pyodide.asm.js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "tiny-voca-pyodide-pyodide.asm.wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "tiny-voca-pyodide-python_stdlib.zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "tiny-voca-pyodide-pyodide-lock.json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "tiny-voca-pyodide-numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "tiny-voca-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "tiny-voca-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned two-voice American English checkpoint",
+        "sources": [
+          "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md",
+          "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json",
+          "https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/web/public/worker.js"
+        ],
+        "notes": "The F2 and M2 voices are embedded in one graph. Only F2 is benchmarked."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F2 (American English)",
+      "precision": "FP32",
+      "settings": {
+        "voiceId": 0,
+        "language": "en",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "threads": 1,
+        "frontend": "Dizione via Pyodide 0.26.4 / NumPy 1.26.4. Official sentence and phoneme-budget splitting.",
+        "noise": "ONNX graph samples internal noise without a seed input.",
+        "runtimeRelease": "onnxruntime-web@1.23.2",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "2526 compute dispatches in the untimed probe. Dizione runs locally on CPU, with WASM fallback for ONNX operators."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 21967.070000052452,
+          "samples": 27657472,
+          "sampleRate": 24000,
+          "pcmSha256": "dddd296a216311704d03da52a914cdbd2f5ef2f1f32a9703ea2dfeb2b56221ac",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 165.54500007629395,
+            "firstSourceChunkCompletedMs": 367.1200000047684,
+            "audioSeconds": 1152.3946666666666,
+            "realTimeFactor": 0.01906210661629736,
+            "minSamplesPerChunk": 233728,
+            "maxSamplesPerChunk": 382976,
+            "articleCallPeakRssBytes": 2815574016,
+            "generationMeanRssBytes": 2349252227,
+            "generationRssSampleCount": 43,
+            "loadMs": 2347.6469579999994,
+            "controllerTrialElapsedMs": 27716.256791,
+            "downloadBytes": 38404,
+            "idealDownloadSecondsAt1Mbps": 0.307232
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1794783311622.395,
+            "finalPcmAtEpochMs": 1794783333589.4648,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1794783312170,
+                1911799808
+              ],
+              [
+                1794783312665,
+                2231255040
+              ],
+              [
+                1794783313173,
+                2238382080
+              ],
+              [
+                1794783313672,
+                2227912704
+              ],
+              [
+                1794783314176,
+                2240774144
+              ],
+              [
+                1794783314676,
+                2254602240
+              ],
+              [
+                1794783315187,
+                2268168192
+              ],
+              [
+                1794783315678,
+                2283388928
+              ],
+              [
+                1794783316182,
+                2281291776
+              ],
+              [
+                1794783316687,
+                2287599616
+              ],
+              [
+                1794783317186,
+                2284584960
+              ],
+              [
+                1794783317685,
+                2279964672
+              ],
+              [
+                1794783318186,
+                2283503616
+              ],
+              [
+                1794783318687,
+                2290483200
+              ],
+              [
+                1794783319194,
+                2343092224
+              ],
+              [
+                1794783319693,
+                2347532288
+              ],
+              [
+                1794783320194,
+                2350546944
+              ],
+              [
+                1794783320695,
+                2352611328
+              ],
+              [
+                1794783321197,
+                2354790400
+              ],
+              [
+                1794783321701,
+                2357624832
+              ],
+              [
+                1794783322200,
+                2361622528
+              ],
+              [
+                1794783322702,
+                2364669952
+              ],
+              [
+                1794783323204,
+                2372927488
+              ],
+              [
+                1794783323706,
+                2380087296
+              ],
+              [
+                1794783324206,
+                2382479360
+              ],
+              [
+                1794783324711,
+                2390491136
+              ],
+              [
+                1794783325212,
+                2398388224
+              ],
+              [
+                1794783325718,
+                2409971712
+              ],
+              [
+                1794783326214,
+                2412658688
+              ],
+              [
+                1794783326715,
+                2415411200
+              ],
+              [
+                1794783327216,
+                2417754112
+              ],
+              [
+                1794783327718,
+                2422079488
+              ],
+              [
+                1794783328218,
+                2424455168
+              ],
+              [
+                1794783328721,
+                2428731392
+              ],
+              [
+                1794783329223,
+                2430844928
+              ],
+              [
+                1794783329725,
+                2434367488
+              ],
+              [
+                1794783330226,
+                2436382720
+              ],
+              [
+                1794783330726,
+                2437414912
+              ],
+              [
+                1794783331227,
+                2441789440
+              ],
+              [
+                1794783331734,
+                2441396224
+              ],
+              [
+                1794783332233,
+                2443870208
+              ],
+              [
+                1794783332735,
+                2448818176
+              ],
+              [
+                1794783333237,
+                2451324928
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "aaf15e61009a64ddd0e27654c0269b2e0d796834a053dd6877b158bb495ae7a7",
+            "bytes": 55314988
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-15T22-55-03-922Z-33e7948b593d; cell 1/1; source 6ad6b9f4f062c77514e1fc8da4254327b2cf2e59; Mains power attached; pre-run load averages 2.44, 5.10, 5.12; sequential M1 slot order; normal user background apps remain; thermal state not instrumented; cell webgpu cached; headed pinned Google Chrome 157.0.8103.40.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
