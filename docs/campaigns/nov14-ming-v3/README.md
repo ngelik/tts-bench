@@ -4,6 +4,8 @@ The [four-cell plan](plan.json) uses Ming 3.0 TTS 0.5B Q8_0 GGUF with the built-
 
 The reference machine is an 8-core Apple M1 Pro MacBook Pro with 16 GiB of memory, running arm64 Darwin 25.6.0 and headed Google Chrome 157.0.8103.40 on AC power. Run one benchmark at a time. Each backend generates one cached article with Chrome memory sampling, then one excluded warm-up and five timed articles in the warm session. The speed comparison uses those five timings. The tool checks WebGPU dispatch before accepting a GPU result. [Protocol](../../PROTOCOL.md)
 
+The original v1 WebGPU warm run had a median of 5,238.509 seconds across five scored articles after one excluded warm-up. [Original v1 five-run WebGPU receipt](https://github.com/ngelik/tts-bench/blob/246361725689177f6a29f0a8e16e901ba50ba2d2/results/2026-11-15t13-38-24-837z-ming-3.0-tts-0.5b-gguf-webgpu-warm-7e5f10e1/result.json)
+
 ## Download size at 1 Mbps
 
 Both v3 backends load the same registered GGUF weights (1,742,280,896 bytes), JavaScript (176,974 bytes) and Wasm (6,249,992 bytes). The complete registered bundle adds the model card, model license and runtime notices. The following estimates divide uncompressed asset bytes by 125,000 bytes per second and round to the nearest second. Actual transfer depends on the cache, compression and HTTP overhead. This campaign skipped cold-load timing. [Pinned v3 asset lock](https://github.com/ngelik/tts-bench/blob/d77c64289955a57526291d39b22caceffae40413/assets.lock.json)
