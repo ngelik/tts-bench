@@ -139,7 +139,12 @@ export function validateResult(d, { publication = false } = {}) {
     for(const [group, trials] of [['warmup',c.warmup],['trials',c.trials]]) for(const [i,t] of trials.entries()){
       keys(t,['index','generationMs','samples','sampleRate','pcmSha256','validation','audio','metrics','memory'],'trial');
       check(t.index===i+1 && finite(t.generationMs)&&t.generationMs>0&&int(t.samples,1)&&int(t.sampleRate,8000,192000)&&(hash(t.pcmSha256)||(d.origin==='historical-import'&&t.pcmSha256===null)),'Invalid trial/index/PCM');
-      keys(t.validation,['finitePcm','chunkCount','nonemptyChunks'],'validation');
+      keys(t.validation,['finitePcm','chunkCount','nonemptyChunks','samplesPerChunk'],'validation');
+      if (t.validation.samplesPerChunk !== undefined || (c.model === 'audio8-realistic-0.6b-int4' && c.settings.providerPolicyVersion === 2)) {
+        const counts = t.validation.samplesPerChunk;
+        check(Array.isArray(counts) && counts.length === d.fixture.chunks && counts.every(count => int(count, 1)) &&
+          counts.reduce((sum, count) => sum + count, 0) === t.samples, 'Invalid per-span PCM sample counts');
+      }
       check((t.validation.finitePcm===true||(d.origin==='historical-import'&&t.validation.finitePcm===null)) && t.validation.nonemptyChunks===true && t.validation.chunkCount===d.fixture.chunks,`${group}: invalid PCM/chunk coverage`);
       if(t.pcmSha256===null)check(t.audio&&hash(t.audio.sha256),'Historical records without float PCM hashes require WAV hashes');
       if(t.audio!==undefined){keys(t.audio,['sha256','bytes'],'audio');check(hash(t.audio.sha256)&&int(t.audio.bytes,1),'Invalid audio digest');}

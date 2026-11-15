@@ -21,3 +21,15 @@ export function checkSignal(signal, sampleRate) {
     throw new Error(`Audio8 waveform collapsed: ${flat}/${samples} samples at constant PCM16 ${signal.constantValue}`);
   }
 }
+
+export function validateAudio8Article(pcm, sampleRate, sampleCounts) {
+  let offset = 0;
+  for (const [index, count] of sampleCounts.entries()) {
+    const samples = pcm.subarray(offset, offset + count);
+    try { checkSignal(pcmSignal(samples), sampleRate); }
+    catch (error) { throw new Error(`Audio8 source span ${index + 1}: ${error.message}`); }
+    offset += count;
+  }
+  if (offset !== pcm.length) throw new Error('Audio8 source spans do not cover the recording');
+  return { samplesPerChunk: sampleCounts };
+}

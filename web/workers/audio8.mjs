@@ -110,7 +110,6 @@ self.onmessage = async ({data}) => {
       if (!chunk.text || chunk.end - chunk.start !== chunk.text.length) throw new Error('Invalid Audio8 source span');
       const codes = await generateCodes(ort, sessions, promptTokens(tokenizer, chunk.text));
       const pcm = await decodeCodes(ort, sessions.decoder, codes);
-      checkSignal(pcmSignal(pcm), 44100);
       self.postMessage({id:data.id, event:'first-pcm'});
       value = {parts:[pcm], sampleRate:44100, completedChunkId:chunk.id};
     } else if (data.action === 'dispose') {await dispose(); value = true;}
