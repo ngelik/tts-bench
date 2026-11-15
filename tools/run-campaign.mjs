@@ -4,6 +4,7 @@ import {readFile, mkdir, writeFile, appendFile} from 'node:fs/promises';
 import {resolve, dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
+import {validateCampaignCell} from '../lib/campaign-plan.mjs';
 import {getModel} from '../lib/catalog.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const args=process.argv.slice(2), options={};
@@ -18,10 +19,7 @@ if(plan.schemaVersion!==1||!Array.isArray(plan.cells)||!plan.cells.length) throw
 if(plan.sourceCommit!==undefined&&(typeof plan.sourceCommit!=='string'||!/^[a-f0-9]{40,64}$/.test(plan.sourceCommit))) throw new Error('Invalid campaign sourceCommit pin');
 for(const cell of plan.cells) {
   getModel(cell.model);
-  if(!['cpu','webgpu'].includes(cell.backend)||!['warm','cached','cold','network','offline'].includes(cell.scenario)) throw new Error('Invalid campaign cell');
-  if(!Number.isSafeInteger(cell.repetitions)||cell.repetitions<1||cell.repetitions>100||(cell.scenario==='warm'&&cell.repetitions<5)) throw new Error('Invalid campaign repetitions');
-  if(cell.timeoutMinutes!==undefined&&(!Number.isFinite(cell.timeoutMinutes)||cell.timeoutMinutes<=0||cell.timeoutMinutes>1440)) throw new Error('Invalid per-article timeout');
-  if(cell.resources!==undefined&&typeof cell.resources!=='boolean') throw new Error('Invalid resources flag');
+  validateCampaignCell(cell);
 }
 const git=(...args)=>execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim();
 const commit=git('rev-parse','HEAD');

@@ -34,6 +34,15 @@ function requiredAssets(id, model) {
   ];
 }
 
+// Campaigns name a model at a source commit. A later registration may reuse its ID.
+export function sameCampaignRegistration(id, current, planned) {
+  if (!current || !planned || current.modelRevision !== planned.modelRevision) return false;
+  const signature = model => requiredAssets(id, model)
+    .map(({ id, bytes, sha256 }) => [id, bytes, sha256])
+    .sort(([a], [b]) => a.localeCompare(b));
+  return stable(signature(current)) === stable(signature(planned));
+}
+
 const lookup = (assets, expected) => assets.get(expected.id) ?? assets.get(expected.legacyId);
 const sameBytes = (expected, actual) => actual?.sha256 === expected.sha256 && actual?.bytes === expected.bytes;
 

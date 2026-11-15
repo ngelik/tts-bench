@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { appendFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { appendFile, copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -67,6 +67,7 @@ async function sandbox(t, plan, { failModel, dirty = false } = {}) {
   await mkdir(join(directory, 'bin'), { recursive: true });
   await writeFile(join(directory, 'tools/run-campaign.mjs'), runnerSource);
   await writeFile(join(directory, 'lib/catalog.mjs'), catalogStub);
+  await copyFile(join(projectRoot, 'lib/campaign-plan.mjs'), join(directory, 'lib/campaign-plan.mjs'));
   await writeFile(join(directory, 'bin/bench.mjs'), benchStub);
   await writeFile(join(directory, '.gitignore'), 'runs/\n');
   await writeFile(join(directory, 'source.txt'), 'committed source\n');

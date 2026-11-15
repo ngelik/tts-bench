@@ -87,7 +87,7 @@ function reset() { $('#search').value = ''; $('#cohort').value = 'all'; $('#lice
 function provenance(metric) {
   if (!metric?.resultId) return '<p class="provenance">No published result for this path.</p>';
   const env = metric.environment;
-  return `<p class="provenance"><a href="${escape(metric.reportUrl)}">Open full result receipt ↗</a><br>${escape(metric.origin)} · ${metric.registration === 'current' ? 'registered files verified' : 'archived evidence'} · ${escape(metric.protocolId)}<br>${escape(env?.machineLabel ?? '')}<br>Chrome ${escape(chromeVersion(metric))} · ${escape(env?.os ?? '')}<br>${metric.sourceCommit ? `<a href="${repo}/commit/${escape(metric.sourceCommit)}">Source ${escape(metric.sourceCommit.slice(0, 8))}</a>` : 'Historical source'} · ${escape(metric.createdAt?.slice(0, 10))} UTC</p>`;
+  return `<p class="provenance"><a href="${escape(metric.reportUrl)}">Open full result receipt ↗</a><br>${escape(metric.origin)} · ${metric.registration === 'current' ? 'registered files verified' : 'archived evidence'} · ${escape(metric.protocolId)}<br>${escape(env?.machineLabel ?? '')}<br>Chrome ${escape(chromeVersion(metric))} · ${escape(env?.os ?? '')}<br>${metric.sourceCommit ? `<a href="${repo}/commit/${escape(metric.sourceCommit)}">Source ${escape(metric.sourceCommit.slice(0, 8))}</a>` : 'Historical source'} · ${escape(metric.createdAt?.slice(0, 10))} UTC${metric.pendingCurrent ? `<br>${escape(metric.pendingCurrent)}` : ''}</p>`;
 }
 function outputNoteDetails(metric) {
   const notes = metric?.outputNotes;

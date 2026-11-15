@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "6ad6b9f4f062c77514e1fc8da4254327b2cf2e59",
+  "conditions": "Sequential headed Google Chrome 157.0.8103.40 on AC power, one isolated benchmark tab. Normal background applications remain, thermal state uninstrumented. Record actual pre-run load and power before each cell.",
+  "cells": [
+    {
+      "model": "tiny-voca",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "tiny-voca",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "tiny-voca",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    },
+    {
+      "model": "tiny-voca",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    }
+  ]
+}
