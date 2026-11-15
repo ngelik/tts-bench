@@ -10,7 +10,11 @@ const state = {data: null, view: 'table', metric: 'generation', sort: 'cpu', dir
 const audio = $('#sample-audio');
 const dialog = $('#details');
 let playRequest = 0;
-const statusLabel = metric => metric?.status === 'measured' ? 'Measured' : metric?.status === 'unsupported' ? 'Unsupported' : metric?.status === 'error' ? 'Run failed' : metric?.displayStatus ?? (metric?.evidenceStatus === 'measured' ? 'Insufficient memory data' : 'Unavailable');
+const isScheduledRetest = metric => metric?.status === 'error' && metric.registration === 'archived' && Boolean(metric.pendingCurrent);
+const statusLabel = metric => isScheduledRetest(metric) ? 'Retest scheduled' : metric?.status === 'measured' ? 'Measured' : metric?.status === 'unsupported' ? 'Unsupported' : metric?.status === 'error' ? 'Run failed' : metric?.displayStatus ?? (metric?.evidenceStatus === 'measured' ? 'Insufficient memory data' : 'Unavailable');
+const statusDetails = metric => isScheduledRetest(metric)
+  ? `Earlier run failed: ${metric.reason || 'No failure reason recorded.'}. ${metric.pendingCurrent}`
+  : metric?.reason || 'No published measurement for this path';
 const isMeasured = metric => metric?.status === 'measured';
 const historical = model => ['cpu', 'webgpu'].some(b => model.warm[b]?.registration === 'archived');
 const cohortName = metric => state.cohorts.get(metric?.cohortKey)?.label ?? (metric?.origin === 'historical-import' ? 'Historical' : 'Unavailable');
@@ -68,7 +72,7 @@ function audioButtons(model) {
 }
 function metricCell(metric, key, max, backend, label, withBar = true) {
   const value = metric?.[key];
-  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(metric.reportUrl)}" title="Open ${escape(label)} receipt · ${escape(cohortName(metric))}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(metric?.reason || 'No published measurement for this path')}">${statusLabel(metric)}</span>`}</td>`;
+  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(metric.reportUrl)}" title="Open ${escape(label)} receipt · ${escape(cohortName(metric))}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(statusDetails(metric))}">${statusLabel(metric)}</span>`}</td>`;
 }
 function renderTable(models) {
   const maxTime = Math.max(1, ...models.flatMap(m => ['cpu', 'webgpu'].map(b => m.warm[b]?.medianSeconds ?? 0)));
@@ -89,7 +93,7 @@ function renderCharts(models) {
   $('#charts').innerHTML = backends.map(backend => `<section class="chart-panel ${backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><h3>${backend === 'size' ? 'Model weights' : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]} / ${backend === 'cpu' ? 'WebAssembly' : 'WebGPU'}`}</h3><p class="small">${kind === 'generation' ? 'Median full-article generation · seconds' : kind === 'memory' ? 'Average Chrome process RSS · MB' : 'Verified core model weights · MB'}</p>${[...models].sort((a, b) => compareValues(a, b, get(a, backend), get(b, backend))).map(model => {
     const value = get(model, backend), missing = !Number.isFinite(value);
     const metric = kind === 'size' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
-    return `<div class="bar-row ${missing ? 'unavailable' : ''}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="value"${missing && metric?.reason ? ` title="${escape(metric.reason)}"` : ''}>${missing ? escape(statusLabel(metric)) : `${fmt(value)} <span class="sr-only">${units}</span>`}</span></div>${missing ? '' : `<div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div>`}</div>`;
+    return `<div class="bar-row ${missing ? 'unavailable' : ''}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="value"${missing ? ` title="${escape(statusDetails(metric))}"` : ''}>${missing ? escape(statusLabel(metric)) : `${fmt(value)} <span class="sr-only">${units}</span>`}</span></div>${missing ? '' : `<div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div>`}</div>`;
   }).join('')}<p class="chart-foot">${kind === 'size' ? 'Excludes runtime and voice assets.' : 'Shared scale across CPU and GPU. Open a model for source and sample count.'}</p></section>`).join('');
 }
 function render() {
@@ -132,7 +136,7 @@ function waveformNote(metric) {
 }
 function detailMetric(metric, backend, kind) {
   const warm = kind === 'warm';
-  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${isMeasured(metric) ? `<dl>${warm ? `<dt>Median</dt><dd>${fmt(metric.medianSeconds)} s</dd><dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd><dt>Scored articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>First PCM (median)</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length (median)</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(metric?.reason ?? '')}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
+  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${isMeasured(metric) ? `<dl>${warm ? `<dt>Median</dt><dd>${fmt(metric.medianSeconds)} s</dd><dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd><dt>Scored articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>First PCM (median)</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length (median)</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
 }
 function openDetails(id) {
   const model = state.data.models.find(m => m.id === id); if (!model) return;
