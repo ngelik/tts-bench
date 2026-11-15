@@ -19,6 +19,19 @@ Before the repair source was approved, the native M1 A/B replay processed the sa
 
 The fixture is the complete 20,000-character English article in 93 source spans. Settings remain temperature 0.7, top-p 0.9, top-k 50, seed 42 and six WASM threads. The codec providers are `wasm` on both backends; autoregressive providers are `wasm` for CPU and `webgpu, wasm` for WebGPU. GPU dispatch is still required for WebGPU, and CPU/WASM fallback work is disclosed. Cached RAM results are separate diagnostics and do not replace warm timing results. RSS includes the isolated Chrome process tree, browser baseline and inference workers; it is not model-only RAM or GPU memory.
 
+## Backend-selected payload estimate
+
+The corrected source loads one shared model-data set, then selects the ONNX Runtime entry points and threaded WASM sidecars for the requested backend. These are ideal estimates from the exact corrected [source commit](https://github.com/ngelik/tts-bench/tree/9c7d880199e87a15a3959ae94b632f9d9cdd40da), [Audio8 worker](https://github.com/ngelik/tts-bench/blob/9c7d880199e87a15a3959ae94b632f9d9cdd40da/web/workers/audio8.mjs) and [asset lock](https://github.com/ngelik/tts-bench/blob/9c7d880199e87a15a3959ae94b632f9d9cdd40da/assets.lock.json). The full staged inventory for the earlier registration remains in the [November campaign table](../nov14-english/README.md#download-size-at-1-mbps). These are not observed transfers; no cold-load check was run.
+
+| Backend | Model data (bytes) | Selected runtime (bytes) | Total (bytes) | Ideal at 1 Mbps |
+|---|---:|---:|---:|---:|
+| CPU | 599,932,433 | 15,776,766 | 615,709,199 | 1:22:06 |
+| WebGPU | 599,932,433 | 29,721,388 | 629,653,821 | 1:23:57 |
+
+The model-data sum is the three ONNX graph/external-data pairs (`kind: model-weights`), `audio8-realistic-tokenizer-tokenizer-json`, and the loaded 111-byte `audio8-realistic-provider-policy-v2`. The CPU runtime selects `ort.wasm.min.mjs`, `ort-wasm-simd-threaded.mjs` and `.wasm`; WebGPU selects `ort.webgpu.min.mjs`, `ort-wasm-simd-threaded.asyncify.mjs` and `.wasm`. Both select `transformers.min.js`. Sum those entries' pinned `bytes` in the lock; divide by 125,000 bytes/second and round to the nearest second.
+
+The estimate excludes the unrequested alternate runtime files, licenses and metadata such as `runtime_manifest.json`, plus project-owned modules such as `web/adapters/audio8.mjs`, `web/workers/audio8.mjs`, `web/audio8/generation.mjs`, `web/audio8/signal.mjs` and `web/cache-model-asset.mjs`, the benchmark page and browser shell. Compression, HTTP framing, connection overhead and application-module transfers are outside this file-byte sum; it is not an observed customer download.
+
 ### Relationship to the archived results
 
 Earlier Audio8 receipts remain linked in [Reference results](../../../README.md#reference-results). They describe the prior asset registration and are not results for this schedule. In particular, the archived WebGPU cached/warm evidence retains the decoder fault and is not treated as a valid repaired speech score. The older CPU cached receipt is also archived relative to this registration; no CPU warm score is inferred from it. The dashboard should show the corrected cells as awaiting results while preserving those older receipts and their status. New receipts must cite the pinned source and match the current assets before they can satisfy this schedule.
