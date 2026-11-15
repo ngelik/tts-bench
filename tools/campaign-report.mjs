@@ -1,3 +1,4 @@
+import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
 import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, realpath, writeFile } from 'node:fs/promises';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
@@ -197,7 +198,7 @@ function outcomeNotes(byKey) {
 }
 
 function summarizeWarm(row) {
-  if (!row || row.cell.status !== 'measured') return null;
+  if (!row || row.cell.status !== 'measured' || affectedTrials(row.cell).length) return null;
   const trials = row.cell.trials;
   const generation = trials.map(trial => trial.generationMs / 1000);
   const firstPcm = trials.map(trial => trial.metrics?.firstPcmMs).filter(Number.isFinite);
@@ -237,6 +238,7 @@ function summarizeCold(row) {
 function displayCell(row, value, unit, digits = 2) {
   if (!row) return 'Not submitted';
   if (row.cell.status !== 'measured') return markdownText(statusLabel(row));
+  if (row.scenario==='warm' && affectedTrials(row.cell).length) return 'Diagnostic PCM';
   if (!Number.isFinite(value)) return 'Not recorded';
   return `${format(value, digits)} ${unit}`;
 }
@@ -262,6 +264,9 @@ function markdownReport(prepared, reportDir) {
   let md = `# Browser TTS campaign overview\n\n`;
   md += `**Cohort:** native headed-Chrome results from source commit \`${base.source.gitCommit}\` (source fingerprint \`${base.source.manifestSha256}\`), on ${markdownText(base.environment.machineLabel)} · ${markdownText(base.environment.os)} · ${markdownText(base.environment.cpu)} · ${markdownText(base.environment.chromeVersion)} · GPU ${markdownText(gpuNames.join(', ') || 'not reported')}. Fixture: \`${base.fixture.id}\`, ${base.fixture.characters.toLocaleString('en-US')} characters / ${base.fixture.chunks} chunks, SHA-256 \`${base.fixture.sha256}\`.\n\n`;
   md += `The included receipts share one source, exact environment and fixture; voice, precision and non-backend settings are checked per model. The recorded non-backend model settings match; \`executionProviders\` identifies the requested runtime providers. Scenarios remain separate and are never pooled. Model support and terms: [voice/language counts](../../docs/MODEL_SUPPORT.md) · [licensing and publication boundaries](../../docs/LICENSING.md).\n\n`;
+  if ([...byKey.values()].some(row=>affectedTrials(row.cell).length)) {
+    md+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The archived cached time and memory describe that execution. [Full waveform audit](${waveformReport}).\n\n`;
+  }
   md += `## Warm generation\n\n`;
   md += `Full warm workload: one excluded full-article warm-up and at least five scored 20,000-character / 93-chunk repetitions. Generation is the benchmark timer; values summarize scored repetitions only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`;
   md += `| Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |\n|---|---:|---:|---:|---:|---:|---:|\n`;
@@ -271,7 +276,7 @@ function markdownReport(prepared, reportDir) {
     const generation = (entry, summary) => {
       if (!entry) return 'Not submitted';
       if (entry.cell.status !== 'measured') return markdownText(statusLabel(entry));
-      if (!summary) return 'Not recorded';
+      if (!summary) return affectedTrials(entry.cell).length ? 'Diagnostic PCM' : 'Not recorded';
       return `${format(summary.generationMedianSeconds)} s (${format(summary.generationMinSeconds)}–${format(summary.generationMaxSeconds)}; n=${summary.n})`;
     };
     const firstPcm = (entry, summary) => {
