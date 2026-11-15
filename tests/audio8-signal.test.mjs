@@ -20,7 +20,9 @@ test('ignores short quiet pauses; rejects empty and nonfinite samples', () => {
 
 test('article validation records span boundaries and identifies a bad span after generation', () => {
   const pcm = Float32Array.from([0.1, -0.1, 0.2, -0.4]);
-  assert.deepEqual(validateAudio8Article(pcm, 44100, [2, 2]), { samplesPerChunk: [2, 2] });
+  const { waveform } = validateAudio8Article(pcm, 44100, [2, 2]);
+  assert.equal(waveform.passed, true);
+  assert.deepEqual(waveform.spans.map(s => [s.id, s.samples, s.longestConstantSamples]), [[0, 2, 1], [1, 2, 1]]);
   assert.throws(() => validateAudio8Article(pcm, 44100, [2]), /do not cover/);
   pcm.fill(0.02, 2);
   assert.throws(() => validateAudio8Article(pcm, 44100, [2, 2]), /source span 2:.*collapsed/);
