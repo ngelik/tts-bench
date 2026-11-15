@@ -24,7 +24,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 | Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | 790.79 MB (n=1; 16866 samples) | 2293.40 MB (sampled max; n=1; 16866 samples) | 587.71 MB |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | 3738.68 MB (n=1; 29467 samples) | 4206.44 MB (sampled max; n=1; 29467 samples) | 2706.94 MB (n=1; 3159 samples) | 3328.46 MB (sampled max; n=1; 3159 samples) | 905.67 MB |
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | 1882.03 MB (n=1; 1868 samples) | 1995.41 MB (sampled max; n=1; 1868 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 838.60 MB |
-| Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | 1235.53 MB (n=1; 10358 samples) | 2018.75 MB (sampled max; n=1; 10358 samples) | 1742.28 MB |
+| Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Error | Error | 1235.53 MB (n=1; 10358 samples) | 2018.75 MB (sampled max; n=1; 10358 samples) | 1742.28 MB |
 
 ## Submitted receipts
 
@@ -35,11 +35,15 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 | Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | Not submitted | [Report](../../results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/summary.md) | [Report](../../results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#fun-cosyvoice3-0.5b-2512) | [Terms](../../docs/LICENSING.md) |
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | Not submitted | Unsupported (manifest) | [Report](../../results/2026-11-14t19-30-24-576z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-cached-40143301/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-fusor-mix-cpu) | [Terms](../../docs/LICENSING.md) |
-| Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-gguf) | [Terms](../../docs/LICENSING.md) |
+| Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | [Report](../../results/2026-11-14t23-56-30-288z-ming-3.0-tts-0.5b-gguf-cpu-cached-a590a0df/summary.md) | [Report](../../results/2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-gguf) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
-All submitted cells are measured.
+Reasons are listed once per model, backend, status and reason; the receipt table above retains links for every submitted cell.
+
+| Model | Backend | Status | Reason | Source receipt |
+|---|---|---|---|---|
+| ming-3.0-tts-0.5b-gguf | cpu | Error | page.evaluate: Error: RuntimeError: unreachable     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[3530]:0x30e124     at abort (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:10470)     at __abort_js (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:81171)     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2637]:0x2dde42     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2114]:0x289af4     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1685]:0x18b2a3     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1687]:0x18b563     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1713]:0x1dadb6     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2244]:0x294cba     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[251]:0x16831     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[3530]:0x30e124     at abort (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:10470)     at __abort_js (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:81171)     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2637]:0x2dde42     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2114]:0x289af4     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1685]:0x18b2a3     at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wa | [Report](../../results/2026-11-14t23-56-30-288z-ming-3.0-tts-0.5b-gguf-cpu-cached-a590a0df/summary.md) |
 
 
 ![Campaign metrics chart](overview.svg)
