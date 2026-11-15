@@ -24,6 +24,8 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm test
+      - name: Test local failed-waveform evidence in Chrome
+        run: xvfb-run -a node --test tests/browser-failed-waveform.mjs
       - run: npm run validate
       - run: node tools/compare.mjs --check comparisons
       - run: node tools/campaign-report.mjs --check-all reports

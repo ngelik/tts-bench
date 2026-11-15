@@ -253,6 +253,16 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
   for (let i = 0; finitePcm && i < pcm.length; i++) finitePcm = Number.isFinite(pcm[i]);
   if (!finitePcm) throw new Error('Generated PCM is empty or contains a non-finite sample.');
   const pcmSha256 = await sha256(new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength));
+  let articleValidation;
+  try {
+    articleValidation = state.engine.validateArticle?.(pcm, sampleRate, sampleCounts);
+  } catch (error) {
+    if (error.waveform?.passed !== false) throw error;
+    state.chunks = null;
+    setStatus(error.message);
+    return { failedWaveform: { reason: error.message, waveform: error.waveform, index, samples: pcm.length,
+      sampleRate, pcmSha256, generationMs }, audioWavBase64: encodeWavBase64(pcm, sampleRate) };
+  }
   const receipt = {
     index,
     generationMs,
@@ -260,7 +270,7 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
     sampleRate,
     pcmSha256,
     validation: { finitePcm: true, chunkCount: chunks.length, nonemptyChunks: sampleCounts.every(count => count > 0),
-      ...state.engine.validateArticle?.(pcm, sampleRate, sampleCounts) },
+      ...articleValidation },
     metrics: {
       firstPcmMs,
       firstSourceChunkCompletedMs: firstChunkMs,
