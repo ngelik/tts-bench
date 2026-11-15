@@ -4,6 +4,8 @@ The [machine-readable plan](plan.json) reproduces the 14 full-article cells for 
 
 Compare the four configurations in the [table view](https://ngelik.github.io/tts-bench/?models=audio8-realistic-0.6b-int4,fun-cosyvoice3-0.5b-2512,ming-3.0-tts-0.5b-gguf,ming-3.0-tts-0.5b-fusor-mix-cpu#results) or [chart view](https://ngelik.github.io/tts-bench/?models=audio8-realistic-0.6b-int4,fun-cosyvoice3-0.5b-2512,ming-3.0-tts-0.5b-gguf,ming-3.0-tts-0.5b-fusor-mix-cpu&view=charts#results). Each value links to its own published receipt. The dashboard retains warnings on archived results and marks compatible CPU/GPU pairs. Each metric retains its own source and protocol.
 
+The [November 15 interim report](https://github.com/ngelik/tts-bench/releases/tag/nov14-english-m1-report-2026-11-15) includes the English article, a CSV, charts, and six recordings. Extract [the ZIP](https://github.com/ngelik/tts-bench/releases/download/nov14-english-m1-report-2026-11-15/three-model-m1-pro.zip) and open `listen.html` for offline playback. The snapshot includes five-run WebGPU results for Fun-CosyVoice3 and the original Ming Q8_0 runtime. Follow the [Ming v3 retest](../nov14-ming-v3/README.md) and the [Audio8 retest](../audio8-codec-repair/README.md) for their revised configurations.
+
 The reference machine is a MacBook Pro with an 8-core Apple M1 Pro, 16 GiB RAM, arm64, Darwin 25.6.0 and headed Google Chrome 157.0.8103.40. Use AC power and a hardware WebGPU adapter, with one dedicated benchmark tab and no parallel model runs. Other machines can run the plan with their actual machine label. The controller records the installed environment alongside the measurements. [Protocol](../../PROTOCOL.md)
 
 ## Stage the pinned runtime
