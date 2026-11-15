@@ -135,6 +135,7 @@ export function validateResult(d, { publication = false } = {}) {
   const assetIds=new Set();
   for(const a of d.assets){keys(a,['id','sha256','bytes'],'asset');check(text(a.id,200)&&!assetIds.has(a.id)&&hash(a.sha256)&&int(a.bytes,1),'Invalid/duplicate asset');assetIds.add(a.id);}
   check(Array.isArray(d.cells) && d.cells.length>0 && d.cells.length<=1000,'Cells required');
+  const audio8Policy = d.assets.find(asset => asset.id === 'audio8-realistic-provider-policy-v2');
   const cellIds=new Set();
   for(const c of d.cells){
     keys(c,['model','support','backendRequested','backendEffective','status','reason','voice','precision','settings','capability','warmup','trials'],'cell');
@@ -146,6 +147,15 @@ export function validateResult(d, { publication = false } = {}) {
     keys(c.capability,['gpuDispatchVerified','description'],'capability');
     check([true,false,null].includes(c.capability.gpuDispatchVerified)&&text(c.capability.description,2000),'Invalid capability');
     check(Array.isArray(c.warmup)&&Array.isArray(c.trials),'Trial arrays required');
+    const audio8V2 = d.origin === 'native' && c.model === 'audio8-realistic-0.6b-int4' &&
+      (audio8Policy !== undefined || c.settings.providerPolicyVersion === 2);
+    if (audio8V2 && (c.status === 'measured' || c.warmup.length || c.trials.length)) {
+      check(audio8Policy?.sha256 === '340c0a5e706f3029febd1600181a6b7cf88a2fd65fd181d81d7388160ba02b33' &&
+        audio8Policy.bytes === 111, 'Audio8 v2 requires its pinned routing policy');
+      const providers = c.backendRequested === 'cpu' ? ['wasm'] : ['webgpu', 'wasm'];
+      check(c.settings.providerPolicyVersion === 2 && JSON.stringify(c.settings.executionProviders) === JSON.stringify(providers) &&
+        JSON.stringify(c.settings.codecExecutionProviders) === '["wasm"]', 'Audio8 v2 requires explicit matching graph provider settings');
+    }
     if(c.status==='measured'){
       check(c.trials.length===p.repetitions && c.warmup.length===p.warmupRuns,'Measured cell repetition count mismatch');
       if(d.origin==='native')validateNativeBackend(c);
@@ -157,7 +167,7 @@ export function validateResult(d, { publication = false } = {}) {
       keys(t,['index','generationMs','samples','sampleRate','pcmSha256','validation','audio','metrics','memory'],'trial');
       check(t.index===i+1 && finite(t.generationMs)&&t.generationMs>0&&int(t.samples,1)&&int(t.sampleRate,8000,192000)&&(hash(t.pcmSha256)||(d.origin==='historical-import'&&t.pcmSha256===null)),'Invalid trial/index/PCM');
       keys(t.validation,['finitePcm','chunkCount','nonemptyChunks','waveform'],'validation');
-      if (t.validation.waveform !== undefined || (c.model === 'audio8-realistic-0.6b-int4' && c.settings.providerPolicyVersion === 2)) {
+      if (t.validation.waveform !== undefined || audio8V2) {
         validateWaveform(t, d.fixture.chunks);
       }
       check((t.validation.finitePcm===true||(d.origin==='historical-import'&&t.validation.finitePcm===null)) && t.validation.nonemptyChunks===true && t.validation.chunkCount===d.fixture.chunks,`${group}: invalid PCM/chunk coverage`);
