@@ -453,7 +453,7 @@ cold, offline, bandwidth-limited and model-switch scenarios. Assets are fetched/
 Use a smoke check to validate installation; use the full article and five
 repetitions for a publishable warm result. Do not run models concurrently.
 
-See the [14-cell Ming, Audio8 and CosyVoice3 campaign](docs/campaigns/nov14-english/README.md) and the [four-cell Tiny Voca campaign](docs/campaigns/tiny-voca-english/README.md) for pinned schedules and reproduction commands.
+See the [14-cell Ming, Audio8 and CosyVoice3 campaign](docs/campaigns/nov14-english/README.md), the [Audio8 codec-routing repair retest](docs/campaigns/audio8-codec-repair/README.md), and the [four-cell Tiny Voca campaign](docs/campaigns/tiny-voca-english/README.md) for pinned schedules and reproduction commands.
 
 Pinned model IDs (use these with `--model`):
 
