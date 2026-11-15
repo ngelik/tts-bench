@@ -1,0 +1,27 @@
+diff --git a/src/framework/audio/detail/speech_fft_internal.h b/src/framework/audio/detail/speech_fft_internal.h
+index 961267c..87633f1 100644
+--- a/src/framework/audio/detail/speech_fft_internal.h
++++ b/src/framework/audio/detail/speech_fft_internal.h
+@@ -91,0 +92,3 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++#ifdef ENGINE_SPEECHFFT_POOL_TRACE
++#  include <cstdio>
++#endif
+@@ -724,0 +728,8 @@ static const size_t max_threads = std::max(1u, std::thread::hardware_concurrency
++// Keep reserved worker capacity separate from each map's task count. Extra tasks
++// remain queued by thread_pool::submit() and are drained by this bounded pool.
++#if defined(ENGINE_SPEECHFFT_MAX_POOL_THREADS) && ENGINE_SPEECHFFT_MAX_POOL_THREADS > 0
++static const size_t pool_threads = std::min(
++  max_threads, static_cast<size_t>(ENGINE_SPEECHFFT_MAX_POOL_THREADS));
++#else
++static const size_t pool_threads = max_threads;
++#endif
+@@ -908 +919,8 @@ class thread_pool
+-    thread_pool(): thread_pool(max_threads) {}
++    thread_pool(): thread_pool(pool_threads)
++      {
++#ifdef ENGINE_SPEECHFFT_POOL_TRACE
++      std::fprintf(stderr,
++        "[speech_fft] worker_pool_capacity=%zu hardware_concurrency=%u\n",
++        pool_threads, std::thread::hardware_concurrency());
++#endif
++      }

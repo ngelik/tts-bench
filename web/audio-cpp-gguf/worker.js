@@ -1,7 +1,7 @@
 // Classic Emscripten worker. The same file is the pinned pthread main script.
 (function () {
   'use strict';
-  const RUNTIME_RELEASE = 'audio-cpp-browser-v2';
+  const RUNTIME_RELEASE = 'audio-cpp-browser-v3';
   const RUNTIME_ROOT = '/runtimes/' + RUNTIME_RELEASE + '/';
   const RUNTIME_JS = RUNTIME_ROOT + 'bench_browser.js';
   const RUNTIME_WASM = RUNTIME_ROOT + 'bench_browser.wasm';

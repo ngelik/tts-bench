@@ -17,7 +17,7 @@ fi
 # Use an independent checkout per build. A pre-existing source cache may be
 # dirty, detached or pinned to a different revision. Never switch or edit it.
 mkdir -p "$ROOT/.cache/builds"
-RUN=$(mktemp -d "$ROOT/.cache/builds/audio-cpp-browser-v2.XXXXXX")
+RUN=$(mktemp -d "$ROOT/.cache/builds/audio-cpp-browser-v3.XXXXXX")
 SOURCE="$RUN/audio-cpp"
 BUILD="$RUN/build"
 if git -C "$CACHE/audio-cpp" cat-file -e "$PINNED_COMMIT^{commit}" 2>/dev/null; then
@@ -29,12 +29,19 @@ fi
 git -C "$SOURCE" -c core.hooksPath=/dev/null checkout --quiet --detach "$PINNED_COMMIT"
 git -C "$SOURCE" apply --check "$BRIDGE/ming-session-threadpool.patch"
 git -C "$SOURCE" apply "$BRIDGE/ming-session-threadpool.patch"
-# Append the modification notice after the last token to preserve GGML line numbers.
+git -C "$SOURCE" apply --unidiff-zero --check "$BRIDGE/ming-speechfft-pool-cap.patch"
+git -C "$SOURCE" apply --unidiff-zero "$BRIDGE/ming-speechfft-pool-cap.patch"
+# Keep attribution notices out of executable code and preserve upstream line mappings.
 {
   printf '\n/*\n'
   cat "$BRIDGE/ming-session-threadpool.patch.license"
   printf '*/\n'
 } >> "$SOURCE/src/models/ming3_tts/session.cpp"
+{
+  printf '\n/*\n'
+  cat "$BRIDGE/ming-speechfft-pool-cap.patch.license"
+  printf '*/\n'
+} >> "$SOURCE/src/framework/audio/detail/speech_fft_internal.h"
 printf '\n' >> "$SOURCE/CMakeLists.txt"
 cat "$BRIDGE/bench_browser.cmake" >> "$SOURCE/CMakeLists.txt"
 cp "$BRIDGE/bench_bridge.cpp" "$SOURCE/bench_bridge.cpp"
@@ -83,7 +90,7 @@ emcmake cmake -G Ninja -S "$SOURCE" -B "$BUILD" \
   -DAUDIOCPP_BUILD_SERVER_FRONTENDS=OFF \
   -DAUDIOCPP_BUILD_C_API=OFF \
   -DENGINE_BUILD_TESTS=OFF \
-  "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread $maps" \
+  "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread -DENGINE_SPEECHFFT_MAX_POOL_THREADS=6 -DENGINE_SPEECHFFT_POOL_TRACE=1 $maps" \
   "-DCMAKE_C_FLAGS=-O3 -msimd128 -pthread $maps" \
   "-DCMAKE_EXE_LINKER_FLAGS=-pthread -sPTHREAD_POOL_SIZE=12 -sPTHREAD_POOL_SIZE_STRICT=2 $maps"
 

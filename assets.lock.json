@@ -4541,9 +4541,9 @@
       "displayName": "Ming 3.0 TTS 0.5B (Q8_0 GGUF)",
       "modelRevision": "2eb8d37c7f10672e69c8aa33091baa04c461b66c",
       "runtime": {
-        "license": "Apache-2.0 audio.cpp with GGML MIT and separately licensed build components",
+        "license": "Apache-2.0 audio.cpp, BSD-3-Clause speech FFT, GGML MIT and separately licensed build components",
         "files": [],
-        "version": "audio-cpp-browser-v2"
+        "version": "audio-cpp-browser-v3"
       },
       "assets": [
         {
@@ -4572,24 +4572,24 @@
         },
         {
           "id": "ming-audio-cpp-bench-browser-js",
-          "target": "runtimes/audio-cpp-browser-v2/bench_browser.js",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v2/bench_browser.js",
+          "target": "runtimes/audio-cpp-browser-v3/bench_browser.js",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v3/bench_browser.js",
           "bytes": 176974,
           "sha256": "58b3ca6a4a09f7aa4ea4d6dd055129dbddf30dc082b6d2935cb48b6fe2b66c69",
           "kind": "runtime-source"
         },
         {
           "id": "ming-audio-cpp-bench-browser-wasm",
-          "target": "runtimes/audio-cpp-browser-v2/bench_browser.wasm",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v2/bench_browser.wasm",
+          "target": "runtimes/audio-cpp-browser-v3/bench_browser.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v3/bench_browser.wasm",
           "bytes": 6249852,
           "sha256": "16810776993fce4e5f43e16ccee98fbd1f3349917002ac875f1d37c80b1db0c3",
           "kind": "runtime-source"
         },
         {
           "id": "ming-audio-cpp-runtime-notices",
-          "target": "runtimes/audio-cpp-browser-v2/THIRD-PARTY-NOTICES.txt",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v2/THIRD-PARTY-NOTICES.txt",
+          "target": "runtimes/audio-cpp-browser-v3/THIRD-PARTY-NOTICES.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/audio-cpp-browser-v3/THIRD-PARTY-NOTICES.txt",
           "bytes": 61321,
           "sha256": "7bf2ddcc44469803f75bf997d6e3b6354a5ee77de6efeb14cf19edbcbc13c5b1",
           "kind": "license"
@@ -4597,7 +4597,7 @@
       ],
       "license": {
         "model": "MIT",
-        "runtime": "Apache-2.0 audio.cpp, MIT GGML and component notices",
+        "runtime": "Apache-2.0 audio.cpp, BSD-3-Clause speech FFT, MIT GGML and component notices",
         "requiresAcceptance": true
       },
       "backends": [

@@ -1,0 +1,5 @@
+SPDX-License-Identifier: BSD-3-Clause
+tts-bench modifies audio.cpp's src/framework/audio/detail/speech_fft_internal.h for audio-cpp-browser-v3.
+The patch caps reserved speech_fft worker threads at six while retaining the requested task count; excess work remains queued.
+Upstream header retains its copyright and BSD-3-Clause license notice.
+The diagnostic build reports the effective pool capacity and hardware_concurrency once at pool creation.

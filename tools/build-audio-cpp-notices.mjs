@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cache = path.resolve(process.env.AUDIO_CPP_CACHE ?? path.join(root, '.cache/nov14'));
 const source = path.join(cache, 'audio-cpp');
 const emsdk = path.join(cache, 'emsdk');
-const outputDefault = path.join(cache, 'release/audio-cpp-browser-v2/THIRD-PARTY-NOTICES.txt');
+const outputDefault = path.join(cache, 'release/audio-cpp-browser-v3/THIRD-PARTY-NOTICES.txt');
 const sourcePin = 'd38518a0d6a7aaab9d3f3dd91e9780c69857b0ac';
 const emscriptenPin = '708dcbcc9ee23bc7d2dad44fc90db377e38b771c';
 const emscriptenVersion = '6.0.13';
@@ -17,6 +17,7 @@ const dawnRevision = '31e25af254ab572c77054edec4946d2244e184dd';
 
 const entries = [
   ['audio.cpp — Apache-2.0', 'audio-cpp/LICENSE'],
+  ['audio.cpp extracted speech FFT — BSD-3-Clause', 'web/audio-cpp-gguf/LICENSE-speechfft-BSD-3-Clause.txt', 'repository'],
   ['GGML — MIT', 'audio-cpp/external/ggml/LICENSE'],
   ['SentencePiece — Apache-2.0', 'audio-cpp/external/sentencepiece/LICENSE'],
   ['Protocol Buffers lite (SentencePiece bundled copy) — BSD-3-Clause and Apache-2.0', 'audio-cpp/external/sentencepiece/third_party/protobuf-lite/LICENSE'],
@@ -60,7 +61,10 @@ const dawnVersionPath = path.join(ports, 'emdawnwebgpu/emdawnwebgpu_pkg/VERSION.
 const dawnVersion = await readFile(dawnVersionPath, 'utf8');
 if (!dawnVersion.includes(dawnRevision)) throw new Error(`Expected Dawn revision ${dawnRevision}`);
 
-const patchNotice = (await readFile(path.join(root, 'web/audio-cpp-gguf/ming-session-threadpool.patch.license'), 'utf8')).trimEnd();
+const patchNotice = (await Promise.all([
+  'ming-session-threadpool.patch.license',
+  'ming-speechfft-pool-cap.patch.license',
+].map(name => readFile(path.join(root, 'web/audio-cpp-gguf', name), 'utf8')))).map(value => value.trimEnd()).join('\n\n');
 const parts = [
   'Browser TTS Benchmark audio.cpp WebAssembly runtime — third-party notices',
   '',
@@ -77,10 +81,12 @@ const parts = [
   '',
 ];
 
-for (const [heading, relativePath] of entries) {
-  const filename = relativePath.startsWith(portPrefix)
-    ? path.join(ports, relativePath.slice(portPrefix.length))
-    : path.join(cache, relativePath);
+for (const [heading, relativePath, sourceRoot = 'cache'] of entries) {
+  const filename = sourceRoot === 'repository'
+    ? path.join(root, relativePath)
+    : relativePath.startsWith(portPrefix)
+      ? path.join(ports, relativePath.slice(portPrefix.length))
+      : path.join(cache, relativePath);
   const bytes = await readFile(filename);
   const body = bytes.toString('utf8').replaceAll('\r\n', '\n').replace(/\n+$/u, '');
   const digest = createHash('sha256').update(bytes).digest('hex');
