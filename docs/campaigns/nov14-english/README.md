@@ -41,6 +41,12 @@ test "$(git rev-parse HEAD)" = "$source_commit" && \
 
 The runner saves the plan, status, attempts ledger and final status in `runs/campaign-*/`. Per-run receipts and scored WAVs are under `runs/<run-id>/`. Cached resource trials and warm timing trials have separate protocol IDs. The standard runner adds its own campaign ID and cell-index note to each receipt. Results are eligible for submission only after validation. [Publication workflow](../../../CONTRIBUTING.md)
 
+## Why the Ming Q8_0 CPU run stopped
+
+The six-thread CPU run with `audio-cpp-browser-v1` stopped during generation and produced no full-article timing or memory score. A follow-up with the same model, runtime, Chrome version and first two article spans reproduced the failure in a single CPU session. Span 1 (233 characters) produced 582,120 finite samples at 44.1 kHz. During span 2 (223 characters), Emscripten reported that its 12-worker pthread pool was exhausted. ggml then aborted while creating a thread. The original receipt points to the same assertion in the pinned Wasm binary. [Original CPU receipt](../../../results/2026-11-14t23-56-30-288z-ming-3.0-tts-0.5b-gguf-cpu-cached-a590a0df/result.json) · [Upstream thread creation and assertion](https://github.com/0xShug0/audio.cpp/blob/d38518a0d6a7aaab9d3f3dd91e9780c69857b0ac/external/ggml/src/ggml-cpu/ggml-cpu.c#L3471-L3472)
+
+Ming's separately registered Fusor CPU configuration completed the full article. Its timing, recording and memory result belong to that runtime and quantization. [Campaign results](../../../reports/nov14-multilingual-english/overview.md)
+
 ## Resume after an interruption
 
 The standard runner stops for review if a cell fails or its RAM coverage is insufficient. Inspect the failed run and its source before retrying. Preserve every attempt. To continue, pass the original plan and every `attempts.jsonl` from **this reproduction** to the helper below. The helper verifies successful receipts and their source, keeps unsupported outcomes, and writes the still-pending cells in their original order. A partially generated article has no accepted receipt and restarts at that cell. A source change starts a new comparison cohort.
