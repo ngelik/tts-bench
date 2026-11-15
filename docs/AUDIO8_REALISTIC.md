@@ -23,3 +23,7 @@ node tools/probe-audio8-codecs.mjs
 ```
 
 The diagnostic tokenizes the first 233-character canonical span and runs the GPU autoregressive graphs once. It replays the exact same codec indices through the previous mixed WebGPU decoder and the WASM decoder. It writes codebook and PCM hashes, individual dispatch counts, constant-run lengths and the corrected 44.1 kHz WAV under `runs/audio8-codec-replay-*/`. It checks that the previous fault reproduces and that the WASM decode clears the signal check. The diagnostic does not measure word accuracy or produce a full-article score.
+
+## Inspect a failed article locally
+
+If a complete article fails the constant-run check, its run directory contains `failed-warmup-N.json` or `failed-trial-N.json` and the matching full PCM16 WAV. The JSON records the native float32 PCM digest, the encoded WAV digest, the gate failure, the zero-based IDs of all rejected spans, and signal measurements for all spans. Earlier successful checkpoints remain in the directory. The normal result receipt records an error and excludes the failed article from its completed trials. Diagnostic WAVs stay under the ignored `runs/` directory.

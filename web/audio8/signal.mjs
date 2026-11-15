@@ -25,14 +25,24 @@ export function checkSignal(signal, sampleRate) {
 export function validateAudio8Article(pcm, sampleRate, sampleCounts) {
   let offset = 0;
   const spans = [];
+  const failedSpanIds = [];
+  let firstFailure;
   for (const [index, count] of sampleCounts.entries()) {
     const samples = pcm.subarray(offset, offset + count);
     const signal = pcmSignal(samples);
     try { checkSignal(signal, sampleRate); }
-    catch (error) { throw new Error(`Audio8 source span ${index + 1}: ${error.message}`); }
+    catch (error) {
+      failedSpanIds.push(index);
+      firstFailure ??= `Audio8 source span ${index + 1}: ${error.message}`;
+    }
     spans.push({ id: index, ...signal });
     offset += count;
   }
   if (offset !== pcm.length) throw new Error('Audio8 source spans do not cover the recording');
+  if (firstFailure) {
+    const error = new Error(firstFailure);
+    error.waveform = { gate: 'pcm16-constant-run-v1', passed: false, failedSpanIds, spans };
+    throw error;
+  }
   return { waveform: { gate: 'pcm16-constant-run-v1', passed: true, spans } };
 }
