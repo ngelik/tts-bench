@@ -259,7 +259,8 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
     samples: pcm.length,
     sampleRate,
     pcmSha256,
-    validation: { finitePcm: true, chunkCount: chunks.length, nonemptyChunks: sampleCounts.every(count => count > 0) },
+    validation: { finitePcm: true, chunkCount: chunks.length, nonemptyChunks: sampleCounts.every(count => count > 0),
+      ...state.engine.validateArticle?.(pcm, sampleRate, sampleCounts) },
     metrics: {
       firstPcmMs,
       firstSourceChunkCompletedMs: firstChunkMs,
