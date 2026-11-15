@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { resultPaths, readResult, summaries } from './results.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
+import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 import { environmentKey as envKey, pairedWarm, preferredAttempts } from './result-selection.mjs';
 export const START='<!-- benchmark-results:start -->', END='<!-- benchmark-results:end -->';
@@ -92,17 +93,18 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
   let out=START+'\n\nWarm and memory tables prefer native receipts that verify the registered model and runtime files for each backend and environment. The latest attempt within that version is shown, including errors. When it has no receipt, earlier evidence stays visible. All runs and recordings remain linked below.\n\n';
   for(const {id,value:e}of envs.values())out+=`- **${id}**: ${md(e.machineLabel)} · ${md(e.chromeVersion)} · ${md(e.os)}.\n`;
   out+='\n| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |\n|---|---|---:|---:|---:|---|\n';
-  const score=v=>!v?'—':`[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'}](${report(v.d)})`;
+  const score=v=>!v?'—':v.c.status==='measured'&&affectedTrials(v.cell).length?`[Diagnostic PCM](${waveformReport})`:`[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'}](${report(v.d)})`;
   const modelSize=(id,pair)=>{const weights=models[id]?.assets?.filter(a=>a.kind==='model-weights')??[];const measured=pair;if(!weights.length||!measured.length||measured.some(v=>weights.some(w=>!v.d.assets.some(a=>a.sha256===w.sha256&&a.bytes===w.bytes))))return 'Unknown';return (weights.reduce((n,a)=>n+a.bytes,0)/1e6).toFixed(2);};
   for(const row of [...groups.values()].sort((a,b)=>a.environment.localeCompare(b.environment)||a.model.localeCompare(b.model))){
     const pair=[row.cpu,row.webgpu].filter(Boolean);
     const candidate=v=>v&&{result:v.d,cell:v.cell};
-    const matched=pairedWarm(candidate(row.cpu),candidate(row.webgpu),models[row.model]);
+    const matched=!pair.some(v=>affectedTrials(v.cell).length)&&pairedWarm(candidate(row.cpu),candidate(row.webgpu),models[row.model]);
     const label=pair.every(v=>v.current)?'Native':'Archived native';
     const scope=pair.some(v=>v.d.origin!=='native')?'Historical; distinct timing protocols':label+(matched?'; matched configuration':'; independent attempts');
     out+=`| ${md(models[row.model]?.displayName??row.model)} | ${row.environment} | ${modelSize(row.model,pair)} | ${score(row.cpu)} | ${score(row.webgpu)} | ${scope} |\n`;
   }
   out+='\nEach measured warm cell uses five scored full 20,000-character articles. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
+  if(ordered.some(d=>d.cells.some(cell=>affectedTrials(cell).length)))out+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The CPU recording has no constant interval lasting 0.10 s. [Full waveform audit](${waveformReport}) and [interval data](diagnostics/audio8-waveform/evidence.json).\n\n`;
   out+=outputLengthReferenceBlock(groups,models);
   out+='MB = 1,000,000 bytes. Model size counts pinned core model-weight files (including the vocoder), verified against the displayed run receipts; it excludes runtime, G2P, voice/config files and transfer overhead.\n\n';
   out+=ramReferenceBlock(ordered,models);

@@ -60,7 +60,7 @@ def audit(path, expected_sha256):
             raise ValueError('Truncated or empty PCM')
         finish(offset)
     return {'wavSha256':digest,'bytes':path.stat().st_size,'rate':rate,'samples':frames,
-            'thresholdsSamples':totals,'longest':longest,'intervalsAtLeastOneSecond':intervals}
+            'thresholdsSamples':{str(n):v for n,v in totals.items()},'longest':longest,'intervalsAtLeastOneSecond':intervals}
 
 
 if __name__ == '__main__':

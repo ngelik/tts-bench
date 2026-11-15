@@ -1,3 +1,4 @@
+import {matchesAuditedWav,waveformFinding,waveformReport} from './waveform-integrity.mjs';
 import {recordingUrl} from './links.mjs';
 const model=document.querySelector('#model'),backend=document.querySelector('#backend'),main=document.querySelector('#samples'),status=document.querySelector('#status');
 const repo='https://github.com/ngelik/tts-bench/blob/main/';
@@ -19,6 +20,7 @@ try{
    audio.addEventListener('play',()=>main.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause();}));
    const addLink=(text,url)=>{if(links.childNodes.length)links.append(' · ');const link=document.createElement('a');link.textContent=text;link.href=url;links.append(link);};
    addLink('Full article WAV',a.full.url);addLink('Run receipt',repo+'results/'+encodeURIComponent(a.resultId)+'/summary.md');addLink('Link to this recording',recordingUrl(a,location.href));
+   if(matchesAuditedWav(a.full.sha256)){p.textContent+=' · Waveform fault. '+waveformFinding;addLink('Full waveform audit',waveformReport);}
    for(const [i,u]of a.sourceUrls.entries()){const parsed=new URL(u);if(parsed.protocol!=='https:'||parsed.username||parsed.password)throw new Error('Unexpected attribution URL');addLink('Source '+(i+1),parsed.href);}
    note.textContent=a.attribution+' Model terms: '+a.modelTerms;card.append(h,p,audio,links,note);main.append(card);
   }
