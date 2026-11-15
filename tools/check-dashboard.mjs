@@ -205,8 +205,9 @@ try {
   await page.locator('#cohort').selectOption('paired');
   assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => m.pairedWarm).length);
   await page.locator('#cohort').selectOption('historical');
-  assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].origin === 'historical-import')).length);
-  assert.equal(await page.locator('.evidence-tag.historical').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].origin === 'historical-import')).length);
+  const archivedModels = expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].registration === 'archived'));
+  assert.equal(await page.locator('#model-rows tr').count(), archivedModels.length);
+  assert.equal(await page.locator('.evidence-tag.historical').count(), archivedModels.length);
   const cohorts = await page.locator('#cohort option').evaluateAll(options => options.map(o => o.value).filter(v => !['all','paired','historical'].includes(v)));
   for (const key of cohorts) {await page.locator('#cohort').selectOption(key); assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].cohortKey === key)).length);}
   await page.locator('#reset').click();
