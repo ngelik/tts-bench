@@ -1,12 +1,14 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
 import { readResult, summaries, median } from './results.mjs';
 const esc=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const md=x=>String(x??'').replaceAll('|','\\|').replaceAll('\n',' ');
 const plain=x=>String(x??'').replaceAll('\n',' ').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replace(/[\\`*_{}\[\]()!#|]/g,c=>'\\'+c);
 export function renderReport(d){
-  const rows=summaries(d), max=Math.max(1,...rows.filter(r=>r.maxSeconds!==null).map(r=>r.maxSeconds)), min=Math.min(1,...rows.filter(r=>r.minSeconds!==null).map(r=>r.minSeconds));
+  const rows=summaries(d).map((r,i)=>d.protocol.scenario==='warm' && r.status==='measured' && affectedTrials(d.cells[i]).length
+    ? {...r,status:'Diagnostic PCM',medianSeconds:null,minSeconds:null,maxSeconds:null} : r), max=Math.max(1,...rows.filter(r=>r.maxSeconds!==null).map(r=>r.maxSeconds)), min=Math.min(1,...rows.filter(r=>r.minSeconds!==null).map(r=>r.minSeconds));
   const left=230,right=850,width=1000,height=200+rows.length*66;
   const logMax=Math.log10(max*1.8),logMin=Math.log10(min);
   const px=v=>left+(Math.log10(v)-logMin)/(logMax-logMin)*(right-left);
@@ -16,6 +18,10 @@ export function renderReport(d){
   svg+=`<text x="${left}" y="${height-22}" font-size="11">Seconds · logarithmic scale · median and observed min–max · lower is faster</text></g></svg>\n`;
   let markdown=`# ${md(d.id)}\n\n${md(d.environment.machineLabel)} · ${md(d.environment.cpu)} · ${md(d.environment.chromeVersion)}\n\nProtocol: **${md(d.protocol.id)}**, scenario **${md(d.protocol.scenario)}**. ${d.origin==='historical-import'?'Historical measurements imported from the original experiment.':'Native harness run.'}\n\n${md(d.protocol.timingBoundary)}\n\n| Model | Requested backend | Status | Median | Min–max | Runs |\n|---|---|---|---:|---:|---:|\n`;
   for(const r of rows)markdown+=`| ${md(r.model)} | ${md(r.backend)} | ${md(r.status)} | ${r.medianSeconds===null?'—':r.medianSeconds.toFixed(2)+' s'} | ${r.medianSeconds===null?'—':r.minSeconds.toFixed(2)+'–'+r.maxSeconds.toFixed(2)+' s'} | ${r.n} |\n`;
+  for(const cell of d.cells){
+    const affected=affectedTrials(cell);
+    if(affected.length)markdown+=`\n**Waveform fault in ${md(cell.model)} / ${md(cell.backendRequested)}.** ${waveformFinding} Matching timed article(s): ${affected.map(t=>(t.generationMs/1000).toFixed(3)+' s').join(', ')}. [Full waveform audit](${waveformReport}).\n`;
+  }
   if(d.origin==='native'){
     const labels={firstChunkMs:['First completed source chunk','ms'],firstSourceChunkCompletedMs:['First completed source chunk','ms'],offlineInferenceNetworkBytes:['HTTP body bytes after offline toggle','bytes'],firstPcmMs:['First PCM block','ms'],audioSeconds:['Generated audio','s'],realTimeFactor:['Generation / audio duration','ratio'],loadMs:['Model initialization','ms'],controllerTrialElapsedMs:['Complete controller trial including setup/export','ms'],switchTransitionMs:['Dispose predecessor + initialize target','ms'],downloadBytes:['Transferred HTTP body data','bytes'],idealDownloadSecondsAt1Mbps:['Ideal body transfer at 1 Mbps','s'],articleCallPeakRssBytes:['Whole-call Chrome process-tree peak RSS','bytes'],generationMeanRssBytes:['Per-trial mean generation Chrome process-tree RSS','bytes'],generationRssSampleCount:['In-window Chrome RSS observations','samples']};
     const metrics=[];

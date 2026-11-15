@@ -10,6 +10,8 @@ First source-chunk request through final CPU-readable PCM; excludes initializati
 |---|---|---|---:|---:|---:|
 | audio8-realistic-0.6b-int4 | webgpu | measured | 8460.76 s | 8460.76–8460.76 s | 1 |
 
+**Waveform fault in audio8-realistic-0.6b-int4 / webgpu.** 90.31% of this recording is constant at one PCM value. Its elapsed time describes a diagnostic execution. Matching timed article(s): 8460.758 s. [Full waveform audit](https://github.com/ngelik/tts-bench/tree/main/diagnostics/audio8-waveform).
+
 Additional metrics (median of available observations; scopes are distinct):
 
 | Model | Backend | Metric | Median | Unit | n |

@@ -1,0 +1,615 @@
+{
+  "cpu": {
+    "resultId": "2026-11-15t00-00-04-032z-audio8-realistic-0.6b-int4-cpu-cached-b259df93",
+    "pcmSha256": "a92e055ab76dddff5e6f899aa8f97e8cbf6fb42ec4de159dab4d37296ee703eb",
+    "wavSha256": "fbeabc3a632a382582d214115966cfe252bf642456f6ef10a860f4a7a8c2bd19",
+    "bytes": 126042156,
+    "rate": 44100,
+    "samples": 63021056,
+    "thresholdsSamples": {
+      "4410": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      },
+      "44100": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 14837993,
+      "endSampleExclusive": 14839808,
+      "samples": 1815,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "webgpu": {
+    "resultId": "2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694",
+    "pcmSha256": "329919ac38ad0050e0687156dcc7f58713188e0d1ad40920b31e0ae495b6e74e",
+    "wavSha256": "05664d30dbbdfe2b6731fa8e9b32db822f95b72a2e65e5c11f108bde83a1812f",
+    "bytes": 125927468,
+    "rate": 44100,
+    "samples": 62963712,
+    "thresholdsSamples": {
+      "4410": {
+        "runs": 93,
+        "samples": 56862276,
+        "zeroSamples": 0
+      },
+      "44100": {
+        "runs": 93,
+        "samples": 56862276,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 50593863,
+      "endSampleExclusive": 51410944,
+      "samples": 817081,
+      "value": -281
+    },
+    "intervalsAtLeastOneSecond": [
+      {
+        "startSample": 65607,
+        "endSampleExclusive": 733184,
+        "samples": 667577,
+        "value": -281
+      },
+      {
+        "startSample": 798791,
+        "endSampleExclusive": 1536000,
+        "samples": 737209,
+        "value": -281
+      },
+      {
+        "startSample": 1601607,
+        "endSampleExclusive": 2199552,
+        "samples": 597945,
+        "value": -281
+      },
+      {
+        "startSample": 2265159,
+        "endSampleExclusive": 2922496,
+        "samples": 657337,
+        "value": -281
+      },
+      {
+        "startSample": 2988103,
+        "endSampleExclusive": 3641344,
+        "samples": 653241,
+        "value": -281
+      },
+      {
+        "startSample": 3706951,
+        "endSampleExclusive": 4245504,
+        "samples": 538553,
+        "value": -281
+      },
+      {
+        "startSample": 4311111,
+        "endSampleExclusive": 4788224,
+        "samples": 477113,
+        "value": -281
+      },
+      {
+        "startSample": 4853831,
+        "endSampleExclusive": 5535744,
+        "samples": 681913,
+        "value": -281
+      },
+      {
+        "startSample": 5601351,
+        "endSampleExclusive": 6141952,
+        "samples": 540601,
+        "value": -281
+      },
+      {
+        "startSample": 6207559,
+        "endSampleExclusive": 6995968,
+        "samples": 788409,
+        "value": -281
+      },
+      {
+        "startSample": 7061575,
+        "endSampleExclusive": 7600128,
+        "samples": 538553,
+        "value": -281
+      },
+      {
+        "startSample": 7665735,
+        "endSampleExclusive": 8341504,
+        "samples": 675769,
+        "value": -281
+      },
+      {
+        "startSample": 8407111,
+        "endSampleExclusive": 9148416,
+        "samples": 741305,
+        "value": -281
+      },
+      {
+        "startSample": 9214023,
+        "endSampleExclusive": 9807872,
+        "samples": 593849,
+        "value": -281
+      },
+      {
+        "startSample": 9873479,
+        "endSampleExclusive": 10459136,
+        "samples": 585657,
+        "value": -281
+      },
+      {
+        "startSample": 10524743,
+        "endSampleExclusive": 11268096,
+        "samples": 743353,
+        "value": -281
+      },
+      {
+        "startSample": 11333703,
+        "endSampleExclusive": 11902976,
+        "samples": 569273,
+        "value": -281
+      },
+      {
+        "startSample": 11968583,
+        "endSampleExclusive": 12558336,
+        "samples": 589753,
+        "value": -281
+      },
+      {
+        "startSample": 12623943,
+        "endSampleExclusive": 13193216,
+        "samples": 569273,
+        "value": -281
+      },
+      {
+        "startSample": 13258823,
+        "endSampleExclusive": 13860864,
+        "samples": 602041,
+        "value": -281
+      },
+      {
+        "startSample": 13926471,
+        "endSampleExclusive": 14495744,
+        "samples": 569273,
+        "value": -281
+      },
+      {
+        "startSample": 14561348,
+        "endSampleExclusive": 15255552,
+        "samples": 694204,
+        "value": -281
+      },
+      {
+        "startSample": 15321159,
+        "endSampleExclusive": 15833088,
+        "samples": 511929,
+        "value": -281
+      },
+      {
+        "startSample": 15898695,
+        "endSampleExclusive": 16377856,
+        "samples": 479161,
+        "value": -281
+      },
+      {
+        "startSample": 16443463,
+        "endSampleExclusive": 16914432,
+        "samples": 470969,
+        "value": -281
+      },
+      {
+        "startSample": 16980039,
+        "endSampleExclusive": 17563648,
+        "samples": 583609,
+        "value": -281
+      },
+      {
+        "startSample": 17629255,
+        "endSampleExclusive": 18294784,
+        "samples": 665529,
+        "value": -281
+      },
+      {
+        "startSample": 18360391,
+        "endSampleExclusive": 18941952,
+        "samples": 581561,
+        "value": -281
+      },
+      {
+        "startSample": 19007559,
+        "endSampleExclusive": 19722240,
+        "samples": 714681,
+        "value": -281
+      },
+      {
+        "startSample": 19787847,
+        "endSampleExclusive": 20334592,
+        "samples": 546745,
+        "value": -281
+      },
+      {
+        "startSample": 20400199,
+        "endSampleExclusive": 21053440,
+        "samples": 653241,
+        "value": -281
+      },
+      {
+        "startSample": 21119047,
+        "endSampleExclusive": 21735424,
+        "samples": 616377,
+        "value": -281
+      },
+      {
+        "startSample": 21801031,
+        "endSampleExclusive": 22501376,
+        "samples": 700345,
+        "value": -281
+      },
+      {
+        "startSample": 22566983,
+        "endSampleExclusive": 23267328,
+        "samples": 700345,
+        "value": -281
+      },
+      {
+        "startSample": 23332935,
+        "endSampleExclusive": 23896064,
+        "samples": 563129,
+        "value": -281
+      },
+      {
+        "startSample": 23961671,
+        "endSampleExclusive": 24614912,
+        "samples": 653241,
+        "value": -281
+      },
+      {
+        "startSample": 24680519,
+        "endSampleExclusive": 25225216,
+        "samples": 544697,
+        "value": -281
+      },
+      {
+        "startSample": 25290823,
+        "endSampleExclusive": 25933824,
+        "samples": 643001,
+        "value": -281
+      },
+      {
+        "startSample": 25999431,
+        "endSampleExclusive": 26578944,
+        "samples": 579513,
+        "value": -281
+      },
+      {
+        "startSample": 26644551,
+        "endSampleExclusive": 27291648,
+        "samples": 647097,
+        "value": -281
+      },
+      {
+        "startSample": 27357253,
+        "endSampleExclusive": 27869184,
+        "samples": 511931,
+        "value": -281
+      },
+      {
+        "startSample": 27934791,
+        "endSampleExclusive": 28622848,
+        "samples": 688057,
+        "value": -281
+      },
+      {
+        "startSample": 28688455,
+        "endSampleExclusive": 29292544,
+        "samples": 604089,
+        "value": -281
+      },
+      {
+        "startSample": 29358151,
+        "endSampleExclusive": 29886464,
+        "samples": 528313,
+        "value": -281
+      },
+      {
+        "startSample": 29952071,
+        "endSampleExclusive": 30515200,
+        "samples": 563129,
+        "value": -281
+      },
+      {
+        "startSample": 30580804,
+        "endSampleExclusive": 31221760,
+        "samples": 640956,
+        "value": -281
+      },
+      {
+        "startSample": 31287363,
+        "endSampleExclusive": 31891456,
+        "samples": 604093,
+        "value": -281
+      },
+      {
+        "startSample": 31957063,
+        "endSampleExclusive": 32509952,
+        "samples": 552889,
+        "value": -281
+      },
+      {
+        "startSample": 32575559,
+        "endSampleExclusive": 33210368,
+        "samples": 634809,
+        "value": -281
+      },
+      {
+        "startSample": 33275975,
+        "endSampleExclusive": 34035712,
+        "samples": 759737,
+        "value": -281
+      },
+      {
+        "startSample": 34101319,
+        "endSampleExclusive": 34699264,
+        "samples": 597945,
+        "value": -281
+      },
+      {
+        "startSample": 34764871,
+        "endSampleExclusive": 35366912,
+        "samples": 602041,
+        "value": -281
+      },
+      {
+        "startSample": 35432519,
+        "endSampleExclusive": 36153344,
+        "samples": 720825,
+        "value": -281
+      },
+      {
+        "startSample": 36218951,
+        "endSampleExclusive": 36712448,
+        "samples": 493497,
+        "value": -281
+      },
+      {
+        "startSample": 36778055,
+        "endSampleExclusive": 37339136,
+        "samples": 561081,
+        "value": -281
+      },
+      {
+        "startSample": 37404743,
+        "endSampleExclusive": 38027264,
+        "samples": 622521,
+        "value": -281
+      },
+      {
+        "startSample": 38092871,
+        "endSampleExclusive": 38610944,
+        "samples": 518073,
+        "value": -281
+      },
+      {
+        "startSample": 38676551,
+        "endSampleExclusive": 39260160,
+        "samples": 583609,
+        "value": -281
+      },
+      {
+        "startSample": 39325767,
+        "endSampleExclusive": 40017920,
+        "samples": 692153,
+        "value": -281
+      },
+      {
+        "startSample": 40083527,
+        "endSampleExclusive": 40775680,
+        "samples": 692153,
+        "value": -281
+      },
+      {
+        "startSample": 40841287,
+        "endSampleExclusive": 41549824,
+        "samples": 708537,
+        "value": -281
+      },
+      {
+        "startSample": 41615431,
+        "endSampleExclusive": 42158080,
+        "samples": 542649,
+        "value": -281
+      },
+      {
+        "startSample": 42223687,
+        "endSampleExclusive": 42883072,
+        "samples": 659385,
+        "value": -281
+      },
+      {
+        "startSample": 42948679,
+        "endSampleExclusive": 43509760,
+        "samples": 561081,
+        "value": -281
+      },
+      {
+        "startSample": 43575367,
+        "endSampleExclusive": 44201984,
+        "samples": 626617,
+        "value": -281
+      },
+      {
+        "startSample": 44267591,
+        "endSampleExclusive": 44851200,
+        "samples": 583609,
+        "value": -281
+      },
+      {
+        "startSample": 44916805,
+        "endSampleExclusive": 45688832,
+        "samples": 772027,
+        "value": -281
+      },
+      {
+        "startSample": 45754439,
+        "endSampleExclusive": 46385152,
+        "samples": 630713,
+        "value": -281
+      },
+      {
+        "startSample": 46450759,
+        "endSampleExclusive": 47222784,
+        "samples": 772025,
+        "value": -281
+      },
+      {
+        "startSample": 47288391,
+        "endSampleExclusive": 47970304,
+        "samples": 681913,
+        "value": -281
+      },
+      {
+        "startSample": 48035911,
+        "endSampleExclusive": 48582656,
+        "samples": 546745,
+        "value": -281
+      },
+      {
+        "startSample": 48648263,
+        "endSampleExclusive": 49301504,
+        "samples": 653241,
+        "value": -281
+      },
+      {
+        "startSample": 49367111,
+        "endSampleExclusive": 49979392,
+        "samples": 612281,
+        "value": -281
+      },
+      {
+        "startSample": 50044999,
+        "endSampleExclusive": 50528256,
+        "samples": 483257,
+        "value": -281
+      },
+      {
+        "startSample": 50593863,
+        "endSampleExclusive": 51410944,
+        "samples": 817081,
+        "value": -281
+      },
+      {
+        "startSample": 51476551,
+        "endSampleExclusive": 52023296,
+        "samples": 546745,
+        "value": -281
+      },
+      {
+        "startSample": 52088903,
+        "endSampleExclusive": 52731904,
+        "samples": 643001,
+        "value": -281
+      },
+      {
+        "startSample": 52797511,
+        "endSampleExclusive": 53397504,
+        "samples": 599993,
+        "value": -281
+      },
+      {
+        "startSample": 53463111,
+        "endSampleExclusive": 54132736,
+        "samples": 669625,
+        "value": -281
+      },
+      {
+        "startSample": 54198343,
+        "endSampleExclusive": 54865920,
+        "samples": 667577,
+        "value": -281
+      },
+      {
+        "startSample": 54931527,
+        "endSampleExclusive": 55517184,
+        "samples": 585657,
+        "value": -281
+      },
+      {
+        "startSample": 55582791,
+        "endSampleExclusive": 56094720,
+        "samples": 511929,
+        "value": -281
+      },
+      {
+        "startSample": 56160327,
+        "endSampleExclusive": 56725504,
+        "samples": 565177,
+        "value": -281
+      },
+      {
+        "startSample": 56791111,
+        "endSampleExclusive": 57384960,
+        "samples": 593849,
+        "value": -281
+      },
+      {
+        "startSample": 57450567,
+        "endSampleExclusive": 58040320,
+        "samples": 589753,
+        "value": -281
+      },
+      {
+        "startSample": 58105927,
+        "endSampleExclusive": 58617856,
+        "samples": 511929,
+        "value": -281
+      },
+      {
+        "startSample": 58683463,
+        "endSampleExclusive": 59240448,
+        "samples": 556985,
+        "value": -281
+      },
+      {
+        "startSample": 59306055,
+        "endSampleExclusive": 59914240,
+        "samples": 608185,
+        "value": -281
+      },
+      {
+        "startSample": 59979847,
+        "endSampleExclusive": 60471296,
+        "samples": 491449,
+        "value": -281
+      },
+      {
+        "startSample": 60536903,
+        "endSampleExclusive": 61034496,
+        "samples": 497593,
+        "value": -281
+      },
+      {
+        "startSample": 61100103,
+        "endSampleExclusive": 61665280,
+        "samples": 565177,
+        "value": -281
+      },
+      {
+        "startSample": 61730887,
+        "endSampleExclusive": 62339072,
+        "samples": 608185,
+        "value": -281
+      },
+      {
+        "startSample": 62404678,
+        "endSampleExclusive": 62963712,
+        "samples": 559034,
+        "value": -281
+      }
+    ]
+  }
+}

@@ -6,6 +6,7 @@ import { getAssetLock } from '../lib/catalog.mjs';
 import { readResult, resultPaths, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
+import { affectedTrials, waveformFinding, waveformReport } from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 
 import { ENVIRONMENT_COHORT_FIELDS, stable, pairedWarm, preferredAttempts, sameCampaignRegistration } from './result-selection.mjs';
@@ -34,7 +35,10 @@ function cohortKey(result) {
 }
 
 function metricBase({ result, cell, current }) {
+  const affected = affectedTrials(cell);
   return {
+    ...(affected.length ? { waveform: { finding: waveformFinding, url: waveformReport,
+      diagnosticSeconds: affected.map(trial => trial.generationMs / 1000) } } : {}),
     status: cell.status,
     reason: cell.reason,
     resultId: result.id,
@@ -84,8 +88,8 @@ function createWarmMetric(candidate) {
   });
   const { cell } = candidate;
   const base = metricBase(candidate);
-  if (cell.status !== 'measured') return {
-    ...base, medianSeconds: null, minSeconds: null, maxSeconds: null, n: null,
+  if (cell.status !== 'measured' || base.waveform) return {
+    ...base, ...(cell.status === 'measured' ? { status: 'unavailable', evidenceStatus: 'measured', displayStatus: 'Diagnostic PCM', reason: waveformFinding } : {}), medianSeconds: null, minSeconds: null, maxSeconds: null, n: null,
     firstPcmMs: null, rtf: null, audioSeconds: null,
   };
   const trials = cell.trials;
@@ -276,7 +280,7 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
       sourceUrl: officialSourceUrl(model),
       warm,
       memory,
-      pairedWarm: pairedWarm(selectedWarm.get(`${id}/cpu`), selectedWarm.get(`${id}/webgpu`), model),
+      pairedWarm: !warm.cpu.waveform && !warm.webgpu.waveform && pairedWarm(selectedWarm.get(`${id}/cpu`), selectedWarm.get(`${id}/webgpu`), model),
       audio: byModelAudio.get(id) ?? [],
       preferredAudio,
       playbackAudio,

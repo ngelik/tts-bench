@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-15t06-00-59-478z-audio8-realistic-0.6b-int4-webgpu-warm-8a08bc92",
+  "createdAt": "2026-11-15T10:48:21.045Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "ab5aec3e510420adbcac9971f35f92152b19959c",
+    "dirty": false,
+    "manifestSha256": "241f993d2bb839cb691e5835e05ad41721522bb1ab1a3aeb03882e58e3e36036"
+  },
+  "assets": [
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:@huggingface/transformers:dist/transformers.min.js",
+      "sha256": "79fad8c1c2fd165bf1e77ace20ce023fab4dc13b6621f0e586c9b8c59c4d09d8",
+      "bytes": 849451
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:@huggingface/transformers:LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "audio8-realistic-license",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "audio8-realistic-notice",
+      "sha256": "819129644b28fb066221d782dd27a6fe1d35f33f46718d4e61570614fb38854e",
+      "bytes": 95
+    },
+    {
+      "id": "audio8-realistic-readme-md",
+      "sha256": "0d680d8d725727582351b49f933c2706ff976c008a0be5f57e00b07b341afc67",
+      "bytes": 5219
+    },
+    {
+      "id": "audio8-realistic-sha256sums",
+      "sha256": "374d5e1cc415d367229238088d6270aeaa42121be678028aed968dcb87d06eab",
+      "bytes": 1109
+    },
+    {
+      "id": "audio8-realistic-codec-decoder-fp16-onnx",
+      "sha256": "6e379be31db6c1b0c111e0e3d2aeb10717ee96b197462b926de411e75a1fd019",
+      "bytes": 594319
+    },
+    {
+      "id": "audio8-realistic-codec-decoder-fp16-onnx-data",
+      "sha256": "18838f686aa7c1528fb69ec11e1ab404fdc4dc823d13219abfd4b327988527c0",
+      "bytes": 260741440
+    },
+    {
+      "id": "audio8-realistic-fast-ar-int4-onnx",
+      "sha256": "41cfbf981e80f0f9c178f5439fd07d36090c8783280c6a82d9df868296aa09fd",
+      "bytes": 156285
+    },
+    {
+      "id": "audio8-realistic-fast-ar-int4-onnx-data",
+      "sha256": "054dc7c25d297ada0e6753f45e90fca5068f989528f33db6ec63c1085050af49",
+      "bytes": 35055104
+    },
+    {
+      "id": "audio8-realistic-provenance-json",
+      "sha256": "bfa90bffca304eebb83df74841c9e4e6d35e664a75ce94830f612555c3ab1e9f",
+      "bytes": 865
+    },
+    {
+      "id": "audio8-realistic-runtime-manifest-json",
+      "sha256": "182da307714a61f2014cf5fe42c9be005d30c5e41006daa30fed2a874b332019",
+      "bytes": 1080
+    },
+    {
+      "id": "audio8-realistic-slow-ar-int4-onnx",
+      "sha256": "eb0d4925019ce6d83e19e56a4bc73d62e64eec0c1c825a51c9b56871d5f10f70",
+      "bytes": 900212
+    },
+    {
+      "id": "audio8-realistic-slow-ar-int4-onnx-data",
+      "sha256": "27fe1e3d74e4a660f02bdf4c3a922f522a26c99ca9c1f78b268eed43f5fd6501",
+      "bytes": 290267090
+    },
+    {
+      "id": "audio8-realistic-tokenizer-tokenizer-json",
+      "sha256": "f24e08099d45a8adf3f52f5f0b03276e433bb9d689bb15fcbcc48ce58744588b",
+      "bytes": 12217872
+    }
+  ],
+  "cells": [
+    {
+      "model": "audio8-realistic-0.6b-int4",
+      "support": {
+        "voiceCount": null,
+        "bundledVoiceCount": 0,
+        "languageCount": 23,
+        "languages": [
+          "zh",
+          "en",
+          "ja",
+          "ko",
+          "de",
+          "fr",
+          "es",
+          "it",
+          "ru",
+          "ar",
+          "fi",
+          "hi",
+          "id",
+          "ms",
+          "nl",
+          "no",
+          "pl",
+          "pt",
+          "sv",
+          "th",
+          "tr",
+          "vi",
+          "yue"
+        ],
+        "scope": "Realistic 0.6B checkpoint; reference-free synthesis or open-ended zero-shot voices.",
+        "sources": [
+          "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air/blob/1e857568bfd4f02931aca3988ee773a44d2d26d3/README.md",
+          "https://huggingface.co/stephvax/audio8-tts-realistic-0.6b-onnx-int4/blob/04313606782af6b9a1aa93724555bc7b64ba9197/provenance.json"
+        ],
+        "notes": "No preset voices ship in this configuration. Reference-free English mode is tested."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "error",
+      "reason": "page.evaluate: Target page, context or browser has been closed",
+      "voice": "Reference-free English synthesis",
+      "precision": "INT4 slow/fast AR, FP16 codec",
+      "settings": {
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "language": "en",
+        "sampleRate": 44100,
+        "temperature": 0.7,
+        "topP": 0.9,
+        "topK": 50,
+        "seed": 42,
+        "wasmThreads": 6,
+        "maxFrames": 1024,
+        "voiceSelection": "Reference-free English synthesis",
+        "sampling": "Seeded JS categorical draw with upstream top-p-before-temperature and ten-frame repetition resampling.",
+        "chunking": "One complete source span per reference-free prompt, one full decoder call after EOS."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "1625590 dispatches in separate capability probe; WebGPU with WASM fallback."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 8387245.704999924,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "329919ac38ad0050e0687156dcc7f58713188e0d1ad40920b31e0ae495b6e74e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 97478.55999994278,
+            "firstSourceChunkCompletedMs": 97479.57499992847,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 5.87445567997161,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 8413724.174999952,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "329919ac38ad0050e0687156dcc7f58713188e0d1ad40920b31e0ae495b6e74e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 98200.15999996662,
+            "firstSourceChunkCompletedMs": 98200.81499993801,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 5.893001291243722,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "English 20k November campaign. Sequential headed Chrome, AC power and one isolated benchmark tab. Predeclared backend order, no cold-load check. One excluded full article followed by five scored repetitions."
+  ]
+}
