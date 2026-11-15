@@ -135,12 +135,19 @@ try {
   }
   for (const model of expected.models) {
     const row = page.locator(`tr[data-model="${model.id}"]`);
+    const waveform = ['cpu','webgpu'].some(b => model.warm[b].waveform || model.memory[b].waveform);
     const scored = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.scored);
     const warmup = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.warmup);
-    assert.equal(await row.locator('.output-warning').count(), Number(scored));
+    assert.equal(await row.locator('.output-warning').count(), Number(waveform) + Number(scored));
     assert.equal(await row.locator('.output-warmup').count(), Number(warmup));
+    if (waveform) {
+      await row.getByRole('button', {name:'Waveform fault'}).click();
+      assert.match(await page.locator('#detail-content').innerText(), /Waveform fault/);
+      await page.keyboard.press('Escape');
+    }
     if (scored || warmup) {
-      await row.locator(scored ? '.output-warning' : '.output-warmup').click();
+      const noteButton = scored ? row.getByRole('button', {name:/Check audio/}) : row.locator('.output-warmup');
+      await noteButton.click();
       for (const backend of ['cpu','webgpu']) for (const kind of ['scored','warmup']) {
         const note = model.warm[backend].outputNotes?.[kind];
         if (note) assert.ok((await page.locator('#detail-content').innerText()).includes(note.text));
