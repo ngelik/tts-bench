@@ -1,11 +1,14 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { validateCampaignCell } from '../lib/campaign-plan.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { readResult, resultPaths, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 
-import { ENVIRONMENT_COHORT_FIELDS, stable, pairedWarm, preferredAttempts } from './result-selection.mjs';
+import { ENVIRONMENT_COHORT_FIELDS, stable, pairedWarm, preferredAttempts, sameCampaignRegistration } from './result-selection.mjs';
 
 const BACKENDS = ['cpu', 'webgpu'];
 const finite = value => typeof value === 'number' && Number.isFinite(value);
@@ -152,7 +155,12 @@ function createMemoryMetric(candidate) {
 }
 
 function describeMissingScore(metric, model, backend, scenario, resource, scheduled = false) {
-  if (metric.resultId) return metric;
+  if (metric.resultId) {
+    if (scheduled && metric.registration === 'archived' && model.backends.includes(backend)) {
+      return { ...metric, pendingCurrent: `Awaiting ${scenario} result for the current registration.` };
+    }
+    return metric;
+  }
   if (!model.backends.includes(backend)) {
     const onlyBackend = model.backends.length === 1 && model.backends[0];
     const label = onlyBackend === 'cpu' ? 'CPU only' : onlyBackend === 'webgpu' ? 'WebGPU only' : 'No backend';
@@ -169,6 +177,10 @@ function describeMissingScore(metric, model, backend, scenario, resource, schedu
       reason: scheduled ? 'This backend is in the published warm benchmark schedule. ' + reason : reason,
     };
   }
+  if (scheduled) return {
+    ...metric, displayStatus: 'Awaiting memory result',
+    reason: 'A full-article cached run with Chrome memory sampling is in the published benchmark schedule.',
+  };
   return { ...metric, displayStatus: 'No memory run' };
 }
 
@@ -209,9 +221,11 @@ function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
 export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [] }) {
   const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
     .map(cell => `${cell.model}/${cell.backend}`));
-  const warmCandidates = collectByModelBackend(results, models, result => result.protocol.scenario === 'warm');
+  const scheduledMemory = new Set(campaignCells.filter(cell => cell.scenario === 'cached' && cell.resources === true)
+    .map(cell => `${cell.model}/${cell.backend}`));
+  const warmCandidates = collectByModelBackend(results, models, result => !result.protocol.smoke && result.protocol.scenario === 'warm');
   const memoryCandidates = collectByModelBackend(results, models, result =>
-    result.origin === 'native' && result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'));
+    !result.protocol.smoke && result.origin === 'native' && result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'));
   const selectedWarm = new Map();
   const selectedMemory = new Map();
   for (const [id, model] of Object.entries(models)) {
@@ -238,7 +252,8 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
     for (const backend of BACKENDS) {
       warm[backend] = describeMissingScore(warm[backend], model, backend, 'warm', memory[backend],
         scheduledWarm.has(`${id}/${backend}`));
-      memory[backend] = describeMissingScore(memory[backend], model, backend, 'memory');
+      memory[backend] = describeMissingScore(memory[backend], model, backend, 'memory', null,
+        scheduledMemory.has(`${id}/${backend}`));
     }
     const selectedWarmCandidates = BACKENDS.map(backend => selectedWarm.get(`${id}/${backend}`));
     const preferredAudio = Object.fromEntries(BACKENDS.map(backend => [
@@ -291,6 +306,38 @@ export function verifySourcesOnce(results, cwd = process.cwd(), verifier = verif
   return seen.size;
 }
 
+// Only pinned, published schedules under docs/campaigns/<name>/plan.json describe
+// dashboard work. A model ID can survive a change to its weights or runtime.
+export async function readCampaignCells(models, directory = 'docs/campaigns') {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const cells = [];
+  const catalogs = new Map();
+  for (const name of entries.filter(entry => entry.isDirectory()).map(entry => entry.name).sort()) {
+    const path = join(directory, name, 'plan.json');
+    let raw;
+    try {
+      raw = await readFile(path, 'utf8');
+    } catch (error) {
+      if (error.code === 'ENOENT') continue;
+      throw error;
+    }
+    const plan = JSON.parse(raw);
+    if (plan.schemaVersion !== 1 || !Array.isArray(plan.cells) || !plan.cells.length ||
+        !/^[a-f0-9]{40}$/.test(plan.sourceCommit ?? '')) throw new Error(`Invalid pinned dashboard campaign: ${path}`);
+    if (!catalogs.has(plan.sourceCommit)) {
+      const pinned = execFileSync('git', ['show', `${plan.sourceCommit}:assets.lock.json`], { encoding: 'utf8', maxBuffer: 8_000_000 });
+      catalogs.set(plan.sourceCommit, JSON.parse(pinned).models);
+    }
+    const pinnedModels = catalogs.get(plan.sourceCommit);
+    for (const cell of plan.cells) {
+      validateCampaignCell(cell);
+      if (!pinnedModels[cell.model]) throw new Error(`Unknown model ${cell.model} in ${path}`);
+      if (sameCampaignRegistration(cell.model, models[cell.model], pinnedModels[cell.model])) cells.push(cell);
+    }
+  }
+  return cells;
+}
+
 export async function buildDashboardData() {
   const lock = getAssetLock();
   const paths = await resultPaths('results');
@@ -306,6 +353,6 @@ export async function buildDashboardData() {
   // attribution and the source receipt. Reuse it rather than duplicating those rules.
   await checkAudio();
   verifySourcesOnce(results);
-  const plan = JSON.parse(await readFile('docs/campaigns/nov14-english/plan.json', 'utf8'));
-  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells: plan.cells });
+  const campaignCells = await readCampaignCells(lock.models);
+  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells });
 }
