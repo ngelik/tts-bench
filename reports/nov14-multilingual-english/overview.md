@@ -13,7 +13,7 @@ Full warm workload: one excluded full-article warm-up and at least five scored 2
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
 | Audio8 TTS Realistic 0.6B INT4 | Not submitted | Error | Not submitted | Error | Not submitted | Error |
-| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted |
+| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | 1600.61 s (1577.04–1607.32; n=5) | Not submitted | 18915.23 ms (n=5) | Not submitted | 1188.64 s / 1.335 |
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | Not submitted | Unsupported (not declared in manifest) | Not submitted | Unsupported (not declared in manifest) | Not submitted | Unsupported (not declared in manifest) |
 | Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted |
 
@@ -35,7 +35,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
 | Audio8 TTS Realistic 0.6B INT4 | Not submitted | [Report](../../results/2026-11-15t06-00-59-478z-audio8-realistic-0.6b-int4-webgpu-warm-8a08bc92/summary.md) | [Report](../../results/2026-11-15t00-00-04-032z-audio8-realistic-0.6b-int4-cpu-cached-b259df93/summary.md) | [Report](../../results/2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
-| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | Not submitted | [Report](../../results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/summary.md) | [Report](../../results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#fun-cosyvoice3-0.5b-2512) | [Terms](../../docs/LICENSING.md) |
+| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | Not submitted | [Report](../../results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | [Report](../../results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/summary.md) | [Report](../../results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#fun-cosyvoice3-0.5b-2512) | [Terms](../../docs/LICENSING.md) |
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | Not submitted | Unsupported (manifest) | [Report](../../results/2026-11-14t19-30-24-576z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-cached-40143301/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-fusor-mix-cpu) | [Terms](../../docs/LICENSING.md) |
 | Ming 3.0 TTS 0.5B (Q8_0 GGUF) | Not submitted | Not submitted | [Report](../../results/2026-11-14t23-56-30-288z-ming-3.0-tts-0.5b-gguf-cpu-cached-a590a0df/summary.md) | [Report](../../results/2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-gguf) | [Terms](../../docs/LICENSING.md) |
 
