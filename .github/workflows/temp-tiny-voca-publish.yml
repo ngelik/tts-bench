@@ -1,0 +1,48 @@
+name: Temporary Tiny Voca result renderer
+on:
+  push:
+    branches:
+      - codex/tmp-tiny-voca-cpu-publish
+    paths:
+      - '.github/workflows/temp-tiny-voca-publish.yml'
+      - 'tools/ci-publish-tiny-voca.mjs'
+      - 'ci-publication-inputs/tiny-voca/**'
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Download and render the verified native result
+        env:
+          TINY_VOCA_ID: 2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10
+          TINY_VOCA_BACKEND: cpu
+          TINY_VOCA_INPUT: ci-publication-inputs/tiny-voca/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10.json
+        run: |
+          set -euo pipefail
+          wav_path="$RUNNER_TEMP/tiny-voca-full.wav"
+          curl --fail --location --retry 2 --output "$wav_path" \
+            "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/${TINY_VOCA_ID}--tiny-voca--${TINY_VOCA_BACKEND}-full.wav"
+          TINY_VOCA_WAV="$wav_path" node tools/ci-publish-tiny-voca.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: tiny-voca-cpu-cached-publication
+          path: |
+            README.md
+            docs/reference-memory.svg
+            docs/campaigns/tiny-voca-english/README.md
+            reports/tiny-voca-english/**
+            audio/manifest.json
+            audio/samples/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu.wav
+            results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/**
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
