@@ -4419,6 +4419,14 @@
           "kind": "model-support"
         },
         {
+          "id": "audio8-realistic-provider-policy-v2",
+          "target": "models/audio8-realistic/provider-policy-v2.json",
+          "bytes": 111,
+          "sha256": "340c0a5e706f3029febd1600181a6b7cf88a2fd65fd181d81d7388160ba02b33",
+          "kind": "model-config",
+          "sourcePath": "web/audio8/provider-policy.json"
+        },
+        {
           "id": "audio8-realistic-codec-decoder-fp16-onnx",
           "target": "models/audio8-realistic/codec_decoder_fp16.onnx",
           "bytes": 594319,

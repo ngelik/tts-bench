@@ -82,7 +82,7 @@ async function fastStep(ort, session, hidden, token, pos, cache) {
   } finally { release(inputs); if (outputs) release(outputs); }
 }
 
-export async function synthesize(ort, sessions, tokens) {
+export async function generateCodes(ort, sessions, tokens) {
   const size = tokens.length, maxFrames = Math.min(1024, 2048 - size);
   if (maxFrames < 1) throw new Error('Audio8 prompt exceeds the context limit');
   const slowCache = caches(ort, 24, 2048), fastCache = caches(ort, 4, 10);
@@ -113,12 +113,16 @@ export async function synthesize(ort, sessions, tokens) {
   if (!frames.length) throw new Error('Audio8 produced zero codec frames');
   const codes = new BigInt64Array(10 * frames.length);
   for (let i = 0; i < frames.length; i++) for (let j = 0; j < 10; j++) codes[j * frames.length + i] = BigInt(frames[i][j]);
-  const tensor = new ort.Tensor('int64', codes, [1, 10, frames.length]);
+  return codes;
+}
+
+export async function decodeCodes(ort, decoder, codes) {
+  const tensor = new ort.Tensor('int64', codes, [1, 10, codes.length / 10]);
   let decoded;
   try {
-    decoded = await sessions.decoder.run({codes:tensor});
+    decoded = await decoder.run({codes:tensor});
     const pcm = Float32Array.from(decoded.audio.data);
-    if (!pcm.length || !pcm.every(Number.isFinite)) throw new Error('Audio8 returned empty or nonfinite PCM');
+    if (pcm.length !== codes.length / 10 * 2048) throw new Error('Audio8 decoder sample count differs from codec frame count');
     return pcm;
   } finally { tensor.dispose(); if (decoded) release(decoded); }
 }

@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "autoregressive": { "cpu": ["wasm"], "webgpu": ["webgpu", "wasm"] },
+  "codec": ["wasm"]
+}
