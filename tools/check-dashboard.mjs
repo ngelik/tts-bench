@@ -53,6 +53,35 @@ try {
     }
   };
   await assertDefaultOrder();
+  const audio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
+  const audio8Gpu = audio8?.warm.webgpu;
+  if (audio8Gpu?.status === 'error' && audio8Gpu.registration === 'archived' && audio8Gpu.pendingCurrent) {
+    const explanation = `${audio8Gpu.reason ? `An earlier run failed (${audio8Gpu.reason}).` : 'An earlier run failed.'} ${audio8Gpu.pendingCurrent}`;
+    const row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
+    const tableStatus = row.locator('td[data-label="GPU · seconds"] .metric-unavailable');
+    assert.equal(await tableStatus.innerText(), 'Retest scheduled');
+    assert.equal(await tableStatus.getAttribute('title'), explanation);
+
+    await row.locator('.model-name').click();
+    const details = page.locator('#detail-content');
+    const warmCard = details.locator('.detail-card').filter({hasText: 'GPU warm generation'});
+    assert.match(await warmCard.innerText(), /Retest scheduled/);
+    assert.ok((await warmCard.innerText()).includes(explanation), 'Details retain the earlier failure reason and current schedule');
+    assert.equal(await warmCard.locator(`a[href="${audio8Gpu.reportUrl}"]`).count(), 1, 'Details retain the earlier run receipt');
+    await page.keyboard.press('Escape');
+
+    const retestChartUrl = new URL(base);
+    retestChartUrl.search = '';
+    retestChartUrl.searchParams.set('models', audio8.id);
+    retestChartUrl.searchParams.set('view', 'charts');
+    await page.goto(retestChartUrl.href);
+    await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 of 1 selected configurations');
+    const chartStatus = page.locator('.chart-panel.gpu .bar-row').filter({has: page.locator('[data-detail="audio8-realistic-0.6b-int4"]')}).locator('.value');
+    assert.equal(await chartStatus.innerText(), 'Retest scheduled');
+    assert.equal(await chartStatus.getAttribute('title'), explanation);
+    await page.goto(base);
+    await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expected.models.length);
+  }
   const chartCampaignUrl = new URL(base);
   chartCampaignUrl.search = '';
   chartCampaignUrl.searchParams.set('models', campaignModelIds.join(','));
@@ -176,8 +205,9 @@ try {
   await page.locator('#cohort').selectOption('paired');
   assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => m.pairedWarm).length);
   await page.locator('#cohort').selectOption('historical');
-  assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].origin === 'historical-import')).length);
-  assert.equal(await page.locator('.evidence-tag.historical').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].origin === 'historical-import')).length);
+  const archivedModels = expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].registration === 'archived'));
+  assert.equal(await page.locator('#model-rows tr').count(), archivedModels.length);
+  assert.equal(await page.locator('.evidence-tag.historical').count(), archivedModels.length);
   const cohorts = await page.locator('#cohort option').evaluateAll(options => options.map(o => o.value).filter(v => !['all','paired','historical'].includes(v)));
   for (const key of cohorts) {await page.locator('#cohort').selectOption(key); assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].cohortKey === key)).length);}
   await page.locator('#reset').click();
