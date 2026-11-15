@@ -188,17 +188,18 @@ function officialSourceUrl(model) {
   return match?.[1] ?? source;
 }
 
-function enrichAudio(entries, resultsById, selectedWarm) {
+function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
   return entries.map(entry => {
     const result = resultsById.get(entry.resultId);
     if (!result) throw new Error(`Audio manifest refers to missing result ${entry.resultId}`);
-    const selected = selectedWarm.get(`${entry.model}/${entry.backend}`);
+    const key = `${entry.model}/${entry.backend}`;
     return {
       ...structuredClone(entry),
       scenario: result.protocol.scenario,
       sourceCreatedAt: result.createdAt,
       sourceOrigin: result.origin,
-      matchesSelectedWarm: selected?.result.id === entry.resultId,
+      matchesSelectedWarm: selectedWarm.get(key)?.result.id === entry.resultId,
+      matchesSelectedMemory: selectedMemory.get(key)?.result.id === entry.resultId,
       reportUrl: receiptUrl(entry.resultId),
     };
   });
@@ -221,7 +222,7 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
     }
   }
   const resultsById = new Map(results.map(result => [result.id, result]));
-  const audio = enrichAudio(audioEntries, resultsById, selectedWarm);
+  const audio = enrichAudio(audioEntries, resultsById, selectedWarm, selectedMemory);
   const byModelAudio = new Map();
   for (const entry of audio) {
     const list = byModelAudio.get(entry.model) ?? [];
@@ -244,6 +245,13 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
       backend,
       (byModelAudio.get(id) ?? []).find(entry => entry.backend === backend && entry.matchesSelectedWarm) ?? null,
     ]));
+    const playbackAudio = Object.fromEntries(BACKENDS.map(backend => {
+      const examples = (byModelAudio.get(id) ?? []).filter(entry => entry.backend === backend);
+      const currentWarm = warm[backend].registration === 'current' && preferredAudio[backend];
+      const currentMemory = memory[backend].registration === 'current' && examples.find(entry => entry.matchesSelectedMemory);
+      const selected = currentWarm || currentMemory || preferredAudio[backend] || examples[0] || null;
+      return [backend, selected];
+    }));
     return {
       id,
       name: model.displayName,
@@ -256,6 +264,7 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
       pairedWarm: pairedWarm(selectedWarm.get(`${id}/cpu`), selectedWarm.get(`${id}/webgpu`), model),
       audio: byModelAudio.get(id) ?? [],
       preferredAudio,
+      playbackAudio,
     };
   });
   const retainedDates = [];

@@ -146,3 +146,19 @@ test('legacy Paradee runtime IDs prove the same files only with matching digests
   assert.equal(output().pairedWarm,false);
   assert.equal(output().warm.cpu.registration,'archived');
 });
+
+test('playback prefers the selected current warm clip, then current cached clip, even with later archived audio', () => {
+  const warm = attempt({version:2, order:1});
+  const cached = attempt({version:2, order:2, scenario:'cached'});
+  const staleWarm = attempt({version:1, order:3});
+  const staleCached = attempt({version:1, order:4, scenario:'cached'});
+  const results = [warm,cached,staleWarm,staleCached];
+  const clips = results.map(result=>({resultId:result.id,model:id,backend:'cpu'}));
+  const row = (results,audioEntries) => assembleDashboardData({results,models,audioEntries}).models[0];
+  assert.equal(row(results,clips).playbackAudio.cpu.resultId,warm.id);
+  const withoutWarm = row(results,clips.slice(1));
+  assert.equal(withoutWarm.playbackAudio.cpu.resultId,cached.id);
+  assert.equal(withoutWarm.playbackAudio.cpu.matchesSelectedMemory,true);
+  assert.equal(withoutWarm.audio.length,3);
+  assert.equal(row(results.slice(1),clips.slice(1)).playbackAudio.cpu.resultId,cached.id);
+});
