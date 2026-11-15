@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-14t23-56-30-288z-ming-3.0-tts-0.5b-gguf-cpu-cached-a590a0df",
+  "createdAt": "2026-11-15T00:00:03.077Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "ab5aec3e510420adbcac9971f35f92152b19959c",
+    "dirty": false,
+    "manifestSha256": "241f993d2bb839cb691e5835e05ad41721522bb1ab1a3aeb03882e58e3e36036"
+  },
+  "assets": [
+    {
+      "id": "ming-gguf-weights",
+      "sha256": "fcf2aa25e8e9cf2065a936e506581735c64d6255fb7869f09fbb61a2dde09aa1",
+      "bytes": 1742280896
+    },
+    {
+      "id": "ming-gguf-license",
+      "sha256": "3a55f3df052c2a5f943704ef18aa499afe376fe92893828c5de4602e6dabb396",
+      "bytes": 1068
+    },
+    {
+      "id": "ming-gguf-card",
+      "sha256": "c74a155923f2ef72f47ff6959135444955f797f5c2a4225d221c96554aaee942",
+      "bytes": 3338
+    },
+    {
+      "id": "ming-audio-cpp-bench-browser-js",
+      "sha256": "58b3ca6a4a09f7aa4ea4d6dd055129dbddf30dc082b6d2935cb48b6fe2b66c69",
+      "bytes": 176974
+    },
+    {
+      "id": "ming-audio-cpp-bench-browser-wasm",
+      "sha256": "fcfd9a036fc4eea8e3521e907e561d991b91eaa39bf8f2bd162ac5a467aef58c",
+      "bytes": 6250392
+    },
+    {
+      "id": "ming-audio-cpp-runtime-notices",
+      "sha256": "c1f6b0f354e9f2dcaeee675a45d0e0b5c2e9da192793ff49ebf1c6838216dbdc",
+      "bytes": 60846
+    }
+  ],
+  "cells": [
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "support": {
+        "voiceCount": 117,
+        "bundledVoiceCount": 1,
+        "languageCount": 7,
+        "languages": [
+          "zh",
+          "en",
+          "ja",
+          "ko",
+          "de",
+          "fr",
+          "es"
+        ],
+        "scope": "Named base speakers in the upstream checkpoint catalog. The benchmark adapter exposes one fixed English voice.",
+        "sources": [
+          "https://github.com/inclusionAI/Ming-3.0-tts/blob/e999c39fa676722aaa9ea29b5aa19a90525b271f/cookbooks/instruction_en.md#built-in-premium-voices",
+          "https://huggingface.co/audio-cpp/Ming-3.0-TTS-0.5B-GGUF/blob/2eb8d37c7f10672e69c8aa33091baa04c461b66c/README.md",
+          "https://github.com/0xShug0/audio.cpp/blob/d38518a0d6a7aaab9d3f3dd91e9780c69857b0ac/docs/models/ming3_tts.md"
+        ],
+        "notes": "US_James is the sole benchmarked voice. The count deduplicates named base voices and excludes emotion variants, voice cloning and voice design."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu",
+      "status": "error",
+      "reason": "page.evaluate: Error: RuntimeError: unreachable\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[3530]:0x30e124\n    at abort (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:10470)\n    at __abort_js (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:81171)\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2637]:0x2dde42\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2114]:0x289af4\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1685]:0x18b2a3\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1687]:0x18b563\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1713]:0x1dadb6\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2244]:0x294cba\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[251]:0x16831\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[3530]:0x30e124\n    at abort (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:10470)\n    at __abort_js (http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.js:1:81171)\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2637]:0x2dde42\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[2114]:0x289af4\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wasm:wasm-function[1685]:0x18b2a3\n    at http://127.0.0.1:56691/runtimes/audio-cpp-browser-v1/bench_browser.wa",
+      "voice": "US_James built-in voice (English)",
+      "precision": "Q8_0 GGUF; the pinned checkpoint retains a BF16 stop head and F32 speaker encoder.",
+      "settings": {
+        "language": "en",
+        "template": "ip",
+        "voiceId": "US_James",
+        "seed": 1895,
+        "maxTokens": 1000,
+        "guidanceScale": 2,
+        "sigma": 0.25,
+        "temperature": 0,
+        "sampleRate": 44100,
+        "threads": 6,
+        "pthreadPoolSize": 12,
+        "modelCache": "Pinned GGUF stored in 16 MiB same-origin CacheStorage ranges keyed by full asset SHA-256, then filled into Emscripten MEMFS; incomplete ranges are rejected. Cache entries can be evicted and fetched again.",
+        "output": "Mono 44.1 kHz Float32 PCM; offline API returns the complete span before first-pcm is emitted.",
+        "executionProviders": [
+          "cpu"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit CPU audio.cpp backend; separate untimed synthesis probe returned finite PCM."
+      },
+      "warmup": [],
+      "trials": []
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "English 20k November campaign. Sequential headed Chrome, AC power and one isolated benchmark tab. Predeclared backend order, no cold-load check. Separate generation-window RSS diagnostic.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
