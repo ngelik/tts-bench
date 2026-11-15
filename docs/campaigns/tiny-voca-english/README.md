@@ -9,6 +9,38 @@ The [pinned plan](plan.json) runs the 20,000-character English fixture in 93 spa
 | 3 | CPU | Warm | 1 | 5 | Timing only |
 | 4 | WebGPU | Warm | 1 | 5 | Timing only |
 
+## Download size at 1 Mbps
+
+The ONNX file contains both American English voices. Chrome also needs the English phonemizer, its Python and NumPy dependencies, and the ONNX Runtime files selected for the backend. The following estimates use the pinned file sizes before HTTP compression.
+
+| Files counted | Bytes | Decimal MB | Ideal time at 1 Mbps |
+|---|---:|---:|---:|
+| ONNX weights alone | 21,386,372 | 21.39 | 2m 51s |
+| CPU inference assets, including weights | 64,596,531 | 64.60 | 8m 37s |
+| WebGPU inference assets, including weights | 78,238,377 | 78.24 | 10m 26s |
+| Complete staged bundle for both backends, including notices | 90,606,287 | 90.61 | 12m 05s |
+
+Each inference row counts 14 shared files once and three backend-specific ONNX Runtime files. WebGPU selects the larger Asyncify build. The complete bundle counts all 28 distinct pinned files once. These figures exclude the benchmark application and npm installation. Actual browser transfer depends on compression and cache reuse. Connection setup and runtime initialization add time. This campaign skips cold-load measurements. [Pinned assets](https://github.com/ngelik/tts-bench/blob/6ad6b9f4f062c77514e1fc8da4254327b2cf2e59/assets.lock.json) · [Backend file selection](https://github.com/ngelik/tts-bench/blob/6ad6b9f4f062c77514e1fc8da4254327b2cf2e59/web/workers/tiny-voca.mjs) · [Phonemizer file selection](https://github.com/ngelik/tts-bench/blob/6ad6b9f4f062c77514e1fc8da4254327b2cf2e59/web/tiny-voca/dizione.mjs)
+
+To reproduce the byte counts in the scoring checkout, run the command below. Divide each result by 125,000 for ideal seconds at 1,000,000 bits/s.
+
+```sh
+jq '
+  .models["tiny-voca"] |
+  ([.assets[] | select(.kind == "model-weights")] | map(.bytes) | add) as $weights |
+  ([.assets[] | select(.kind == "model-weights" or .kind == "model-support" or .kind == "runtime")]
+    | map(.bytes) | add) as $shared |
+  [.runtime.files[] | select(.path | startswith("dist/"))] as $ort |
+  def gpu: .path | test("webgpu|asyncify");
+  {
+    weights: $weights,
+    cpu: ($shared + ([$ort[] | select(gpu | not) | .bytes] | add)),
+    webgpu: ($shared + ([$ort[] | select(gpu) | .bytes] | add)),
+    staged: ([.assets[], .runtime.files[]] | map(.bytes) | add)
+  }
+' assets.lock.json
+```
+
 ## Reproduce
 
 Start in a clone of this repository and use Node 22+ with a desktop session. The reference machine is an 8-core Apple M1 Pro MacBook Pro with 16 GiB RAM running headed Google Chrome 157.0.8103.40 on AC power. Set `CHROME_PATH` to the actual Chrome executable. Use your own hardware label for another machine. Keep the scoring checkout clean and run one backend at a time. Review the [license inventory](../../LICENSING.md) before running the following commands.
