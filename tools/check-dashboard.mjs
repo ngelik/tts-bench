@@ -53,6 +53,16 @@ try {
     }
   };
   await assertDefaultOrder();
+  const chartCampaignUrl = new URL(base);
+  chartCampaignUrl.search = '';
+  chartCampaignUrl.searchParams.set('models', campaignModelIds.join(','));
+  chartCampaignUrl.searchParams.set('view', 'charts');
+  await page.goto(chartCampaignUrl.href);
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '4 of 4 selected configurations');
+  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(campaignModels, model => model.warm.cpu.medianSeconds));
+  assert.equal(await page.locator('#charts .bar-row').count(), 8);
+  await assertChartOrder(campaignModels, 'generation');
+
   const campaignUrl = new URL(base);
   campaignUrl.search = '';
   campaignUrl.searchParams.set('models', campaignModelIds.join(','));
@@ -95,8 +105,24 @@ try {
   await page.goto(onlyUnknownScopeUrl.href);
   await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 of 0 selected configurations');
   assert.equal(await page.locator('#model-rows tr').count(), 0, 'An all-unknown selection must stay empty');
-  await page.locator('#scope-note [data-clear-model-scope]').click();
+  assert.equal(await page.locator('#no-results h3').innerText(), 'No recognized configurations in this subset.');
+  assert.ok((await page.locator('#no-results p').innerText()).includes('bad-model-id'));
+  assert.equal(await page.locator('#clear-filters').innerText(), 'Clear subset and filters');
+  await page.locator('#clear-filters').click();
+  assert.equal(new URL(page.url()).searchParams.has('models'), false, 'The empty-state action clears an all-unknown subset');
   assert.equal(await page.locator('#model-rows tr').count(), expected.models.length, 'Clear subset returns to the full configuration list');
+
+  const emptyScopeUrl = new URL(base);
+  emptyScopeUrl.search = '';
+  emptyScopeUrl.searchParams.set('models', '');
+  await page.goto(emptyScopeUrl.href);
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 of 0 selected configurations');
+  assert.equal(await page.locator('#model-rows tr').count(), 0, 'An explicitly empty selection must stay empty');
+  assert.ok((await page.locator('#no-results p').innerText()).includes('No model IDs were selected'));
+  assert.equal(await page.locator('#clear-filters').innerText(), 'Clear subset and filters');
+  await page.locator('#clear-filters').click();
+  assert.equal(new URL(page.url()).searchParams.has('models'), false, 'The empty-state action clears an empty subset');
+  assert.equal(await page.locator('#model-rows tr').count(), expected.models.length);
 
   assert.equal(await page.locator('audio').count(), 1);
   assert.equal(await page.locator('audio').getAttribute('src'), null, 'Audio must not download on initial load');

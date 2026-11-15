@@ -47,7 +47,11 @@ function clearModelScope() {
   const url = new URL(location.href);
   url.searchParams.delete('models');
   history.replaceState(null, '', url);
-  render();
+}
+function clearNoResults() {
+  const scope = selectedModelScope();
+  if (scope !== null && scope.models.length === 0) clearModelScope();
+  reset();
 }
 function visibleModels() {
   const term = $('#search').value.trim().toLowerCase(), cohort = $('#cohort').value, license = $('#license').value;
@@ -98,6 +102,12 @@ function render() {
   $('#charts-view').hidden = state.view !== 'charts' || models.length === 0;
   $('.sort-field').hidden = state.view !== 'table';
   $('#no-results').hidden = models.length > 0;
+  const unresolvedSelection = scope !== null && scope.models.length === 0;
+  $('#no-results h3').textContent = unresolvedSelection ? 'No recognized configurations in this subset.' : 'No models match these filters.';
+  $('#no-results p').textContent = unresolvedSelection
+    ? `${scope.unknown.length ? `Unknown model IDs: ${scope.unknown.join(', ')}. ` : 'No model IDs were selected. '}Clear the subset to see all configurations.`
+    : 'Try a shorter name or a different license.';
+  $('#clear-filters').textContent = unresolvedSelection ? 'Clear subset and filters' : 'Clear filters';
   const cohort = $('#cohort').value;
   const scopeNote = cohort === 'all' || cohort === 'historical' ? 'Warm generation medians. Lower is better. Different source and Chrome cohorts are shown together; open a model for its exact test conditions.' : cohort === 'paired' ? 'CPU and GPU are compatible within each model’s native pair. Different pairs can still use different source and Chrome cohorts. RAM comes from separate diagnostics.' : 'Models with warm evidence in the selected source / environment cohort. Each backend and memory diagnostic retains its own source in model details.';
   const selection = scope === null ? '' : `<br><span class="evidence-tag">Exact subset · ${scope.models.length} selected</span> ${scope.models.map(model => escape(model.name)).join(', ') || 'No recognized configurations'}${scope.unknown.length ? ` · Unknown IDs: ${scope.unknown.map(escape).join(', ')}` : ''}. Each metric retains its own source and receipt. <button type="button" class="text-button" data-clear-model-scope>Clear subset</button>`;
@@ -161,7 +171,7 @@ $('#close-details').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
 document.addEventListener('click', event => {
   const clearModelScopeButton = event.target.closest('[data-clear-model-scope]');
-  if (clearModelScopeButton) { clearModelScope(); return; }
+  if (clearModelScopeButton) { clearModelScope(); render(); return; }
   const detail = event.target.closest('[data-detail]'); if (detail) openDetails(detail.dataset.detail);
   const playButton = event.target.closest('[data-play]'); if (playButton) play(playButton.dataset.play, playButton.dataset.backend);
   const view = event.target.closest('[data-view]'); if (view) { state.view = view.dataset.view; $$('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b === view))); render(); }
@@ -173,7 +183,7 @@ $('#cohort').addEventListener('change', render);
 $('#license').addEventListener('change', render);
 $('#sort-select').addEventListener('change', () => {state.sort = $('#sort-select').value; state.direction = 1; render();});
 $('#reset').addEventListener('click', reset);
-$('#clear-filters').addEventListener('click', reset);
+$('#clear-filters').addEventListener('click', clearNoResults);
 try {
   const response = await fetch('./assets/data.json'); if (!response.ok) throw new Error(`Data HTTP ${response.status}`);
   state.data = await response.json();
