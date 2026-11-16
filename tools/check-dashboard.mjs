@@ -117,6 +117,13 @@ try {
     await page.keyboard.press('Escape');
   }
   const audio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
+  const audio8Fault = audio8?.playbackAudio?.webgpu && matchesAuditedWav(audio8.playbackAudio.webgpu.full.sha256) ? audio8.playbackAudio.webgpu : null;
+  if (audio8Fault) {
+    const row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
+    const audioCell = row.locator('td[data-label="Listen · 30s"]');
+    assert.equal(await audioCell.locator('[data-play][data-backend="webgpu"]').count(), 0, 'Faulted GPU playback is not an ordinary homepage control');
+    assert.match(await audioCell.locator('.metric-unavailable').filter({hasText:'GPU'}).getAttribute('aria-label'), /waveform flagged/);
+  }
   if (audio8 && audio8.memory.webgpu?.waveform) {
     const row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
     const memoryCell = row.locator('td[data-label="Cached RAM · GPU · avg MB"] .metric-unavailable');
@@ -159,6 +166,11 @@ try {
     assert.match(await warmCard.innerText(), /Retest scheduled/);
     assert.ok((await warmCard.innerText()).includes(explanation), 'Details retain the earlier failure reason and current schedule');
     assert.equal(await warmCard.locator(`a[href="${audio8Gpu.reportUrl}"]`).count(), 1, 'Details retain the earlier run receipt');
+    if (audio8Fault) {
+      const diagnosticAudioLink = details.locator(`a[href="./audio/?sample=${audio8Fault.clip.path.split('/').at(-1)}"]`);
+      assert.equal(await diagnosticAudioLink.count(), 1, 'Details retain a direct route to opt-in diagnostic playback');
+      assert.equal(await details.locator(`li button[data-play][data-backend="webgpu"]`).count(), 0, 'Flagged playback stays behind the diagnostic control');
+    }
     await page.keyboard.press('Escape');
 
     const retestChartUrl = new URL(base);
@@ -264,7 +276,7 @@ try {
   }
   for (const model of expected.models) {
     const row = page.locator(`tr[data-model="${model.id}"]`);
-    const waveform = ['cpu','webgpu'].some(b => model.warm[b].waveform || model.memory[b].waveform);
+    const waveform = ['cpu','webgpu'].some(b => model.warm[b].waveform || model.memory[b].waveform) || model.audio.some(entry => matchesAuditedWav(entry.full.sha256));
     const scored = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.scored);
     const warmup = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.warmup);
     assert.equal(await row.locator('.output-warning').count(), Number(waveform) + Number(scored));
@@ -308,8 +320,14 @@ try {
   const archivedModels = expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].registration === 'archived' || m.memory[b].registration === 'archived'));
   assert.equal(await page.locator('#model-rows tr').count(), archivedModels.length);
   assert.equal(await page.locator('.evidence-tag.historical').count(), archivedModels.length);
-  const cohorts = await page.locator('#cohort option').evaluateAll(options => options.map(o => o.value).filter(v => !['all','paired','historical'].includes(v)));
-  for (const key of cohorts) {await page.locator('#cohort').selectOption(key); assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].cohortKey === key)).length);}
+  const cohortOptions = await page.locator('#cohort option').evaluateAll(options => options.map(option => ({value:option.value,label:option.textContent})).filter(option => !['all','paired','historical'].includes(option.value)));
+  const cohorts = cohortOptions.map(option => option.value);
+  assert.ok(cohortOptions.some(option => option.label.includes('cached RAM')), 'Native cached-memory source cohorts remain filterable');
+  for (const key of cohorts) {
+    await page.locator('#cohort').selectOption(key);
+    const expectedCohortModels = expected.models.filter(model => ['warm','memory'].some(kind => ['cpu','webgpu'].some(backend => model[kind][backend].cohortKey === key)));
+    assert.equal(await page.locator('#model-rows tr').count(), expectedCohortModels.length);
+  }
   await page.locator('#reset').click();
   await assertDefaultOrder();
   await page.locator('[data-sort="webgpu"]').click();
@@ -426,13 +444,13 @@ try {
   await page.goto(audioUrl.href);
   const selectedPaths = new Set(expected.models.flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio[backend]?.clip.path).filter(Boolean)));
   const selectedHealthy = [...selectedPaths].filter(path => !flaggedAudioPaths.has(path));
-  const audio8Fault = expectedAudioEntries.find(entry => entry.model === 'audio8-realistic-0.6b-int4' && entry.backend === 'webgpu' && matchesAuditedWav(entry.full.sha256));
+  const audio8DiagnosticEntry = expectedAudioEntries.find(entry => entry.model === 'audio8-realistic-0.6b-int4' && entry.backend === 'webgpu' && matchesAuditedWav(entry.full.sha256));
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, selectedHealthy.length);
   const defaultAudioPaths = await page.locator('#samples .audio-card').evaluateAll(cards => cards.map(card => `audio/samples/${card.dataset.sample}`));
   assert.deepEqual(new Set(defaultAudioPaths), new Set(selectedHealthy), 'The default listening page shows one healthy selected example per configuration/backend');
   assert.equal(await page.locator('#samples .diagnostic-note').count(), 0);
   assert.equal(await page.locator('#samples details[open]').count(), 0, 'Attribution and receipt details start collapsed');
-  if (audio8Fault) assert.equal(await page.locator(`#samples .audio-card[data-sample="${audio8Fault.clip.path.split('/').at(-1)}"]`).count(), 0, 'The faulted Audio8 GPU recording is excluded from default playback');
+  if (audio8DiagnosticEntry) assert.equal(await page.locator(`#samples .audio-card[data-sample="${audio8DiagnosticEntry.clip.path.split('/').at(-1)}"]`).count(), 0, 'The faulted Audio8 GPU recording is excluded from default playback');
   await page.screenshot({path:`${review}/audio-desktop.png`,fullPage:true});
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'The default listening page fits mobile width');
@@ -443,8 +461,8 @@ try {
   await page.locator('#include-diagnostic').check();
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, expectedAudioEntries.length);
   assert.equal(await page.locator('#samples .diagnostic-note').count(), flaggedAudioPaths.size, 'Waveform-flagged clips are explicit when diagnostic playback is enabled');
-  if (audio8Fault) {
-    const faultCard = page.locator(`#samples .audio-card[data-sample="${audio8Fault.clip.path.split('/').at(-1)}"]`);
+  if (audio8DiagnosticEntry) {
+    const faultCard = page.locator(`#samples .audio-card[data-sample="${audio8DiagnosticEntry.clip.path.split('/').at(-1)}"]`);
     assert.equal(await faultCard.count(), 1, 'Diagnostic opt-in exposes the Audio8 GPU clip');
     assert.ok((await faultCard.innerText()).includes('Diagnostic clip'));
     const evidence = faultCard.locator('details');
