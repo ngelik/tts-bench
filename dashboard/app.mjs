@@ -1,4 +1,6 @@
-import {matchesAuditedWav} from '../audio/waveform-integrity.mjs';
+import {matchesAuditedWav} from '../audio/waveform-integrity.mjs?v=__TTS_BENCH_SITE_VERSION__';
+
+const siteVersion = '__TTS_BENCH_SITE_VERSION__';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
@@ -291,7 +293,7 @@ $('#sort-select').addEventListener('change', () => {state.sort = $('#sort-select
 $('#reset').addEventListener('click', reset);
 $('#clear-filters').addEventListener('click', clearNoResults);
 try {
-  const response = await fetch('./assets/data.json'); if (!response.ok) throw new Error(`Data HTTP ${response.status}`);
+  const response = await fetch(`./assets/data.json?v=${siteVersion}`); if (!response.ok) throw new Error(`Data HTTP ${response.status}`);
   state.data = await response.json();
   if (state.data.schemaVersion !== 1 || !state.data.models.length) throw new Error('Unsupported dashboard data');
   const cohorts = [...new Map(state.data.models.flatMap(model => ['warm', 'memory'].flatMap(kind => ['cpu', 'webgpu'].map(backend => model[kind][backend]))).filter(metric => metric?.origin === 'native' && metric.cohortKey && (isEligibleWarm(metric) || isEligibleMemory(metric))).map(metric => [metric.cohortKey, metric])).entries()].sort((a, b) => a[1].createdAt.localeCompare(b[1].createdAt));

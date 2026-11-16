@@ -443,7 +443,7 @@ try {
     synthetic.audio = [];
     synthetic.playbackAudio = {cpu:null,webgpu:null};
     syntheticData.models.push(synthetic);
-    await syntheticPage.route('**/assets/data.json', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
+    await syntheticPage.route('**/assets/data.json*', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
     await syntheticPage.goto(base);
     await syntheticPage.waitForFunction(() => document.querySelectorAll('#model-rows tr').length === 24);
     assert.equal(await syntheticPage.locator('#model-count').innerText(), '24', 'A model with only error, unsupported and fault-only data is excluded from result counts');

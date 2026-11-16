@@ -1,4 +1,5 @@
-const dataUrl = './2026-11-multilingual/observations.json';
+const siteVersion = '__TTS_BENCH_SITE_VERSION__';
+const dataUrl = `./2026-11-multilingual/observations.json?v=${siteVersion}`;
 const format = new Intl.NumberFormat('en', {maximumFractionDigits: 2});
 
 function element(tag, text, className) {
@@ -77,13 +78,13 @@ function group(section, rows, models) {
       audio.setAttribute('aria-label', name + ' reading the article opening');
       audio.src = './2026-11-multilingual/audio/' + encodeURIComponent(r.recording) + '.wav';
       const link = element('a','Run receipt');
-      link.href = './2026-11-multilingual/receipts/' + encodeURIComponent(r.recording) + '.json';
+      link.href = './2026-11-multilingual/receipts/' + encodeURIComponent(r.recording) + '.json?v=' + siteVersion;
       player.append(audio,link);
       players.append(player);
     }
     article.append(players);
     const attribution = element('a','Recording sources and voice attribution','audio-attribution');
-    attribution.href = './2026-11-multilingual/audio.json';
+    attribution.href = `./2026-11-multilingual/audio.json?v=${siteVersion}`;
     article.append(attribution);
   }
   const details = element('details');
