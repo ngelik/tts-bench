@@ -69,7 +69,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | MMS English FP32 | E4 | 114.26 | [1553.40 s](results/2026-11-10t19-31-08-081z-mms-english-cpu-warm-b81daec2/summary.md) | [59.39 s](results/2026-11-10t17-46-17-830z-mms-english-webgpu-warm-3eb8b06a/summary.md) | Native; matched configuration |
 | Sano Amy 1.46M (English) | E4 | 5.82 | [737.23 s](results/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0/summary.md) | [unsupported](results/2026-11-10t16-32-02-384z-sano-amy-webgpu-warm-24afcdc7/summary.md) | Native; independent attempts |
 | Audio8 TTS Realistic 0.6B INT4 | E5 | 587.71 | — | [error](results/2026-11-15t06-00-59-478z-audio8-realistic-0.6b-int4-webgpu-warm-8a08bc92/summary.md) | Archived native; independent attempts |
-| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | — | [1600.61 s](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
+| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | [error](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) | [1600.61 s](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
 | LFM3-Audio-2B (Fusor q7 / CPU 6 threads) | E5 | 2276.67 | [526.05 s](results/2026-11-11t09-27-11-391z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-174f10d4/summary.md) | — | Native; independent attempts |
 | LFM3-Audio-2B (GGUF Q4_K_M / Q8_0) | E5 | 1403.44 | — | [377.75 s](results/2026-11-11t07-33-16-967z-lfm3-audio-2b-gguf-webgpu-warm-b42e4073/summary.md) | Native; independent attempts |
 | LFM3-Omni-2B (Fusor q7 / CPU 6 threads) | E5 | 2494.57 | [536.34 s](results/2026-11-11t11-02-51-665z-lfm3-omni-2b-fusor-q7-cpu-cpu-warm-4378e428/summary.md) | — | Native; independent attempts |
@@ -412,6 +412,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 80 · 2026-11-15 | ming-3.0-tts-0.5b-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-15t13-38-24-837z-ming-3.0-tts-0.5b-gguf-webgpu-warm-7e5f10e1/summary.md) | [SVG](results/2026-11-15t13-38-24-837z-ming-3.0-tts-0.5b-gguf-webgpu-warm-7e5f10e1/chart.svg) |
 | 81 · 2026-11-15 | tiny-voca/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) | [SVG](results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/chart.svg) |
 | 82 · 2026-11-15 | tiny-voca/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) | [SVG](results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/chart.svg) |
+| 83 · 2026-11-16 | fun-cosyvoice3-0.5b-2512/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) | [SVG](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/chart.svg) |
 
 </details>
 

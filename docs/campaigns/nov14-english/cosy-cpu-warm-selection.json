@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "kind": "operator-shortened-warm-selection",
+  "resultId": "2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e",
+  "receiptSha256": "1ef277d6bfc1aea5029d55faf51380701a941f39583f83c2fb73fab91bd04d17",
+  "modelId": "fun-cosyvoice3-0.5b-2512",
+  "backend": "cpu",
+  "scenario": "warm",
+  "sourceCommit": "ab5aec3e510420adbcac9971f35f92152b19959c",
+  "originalPlannedRepetitions": 5,
+  "warmupCompleted": true,
+  "selectedScoredTrialIndexes": [
+    1,
+    2
+  ],
+  "stopReason": "The operator stopped the run during trial 3 at the user’s request after two scored articles had completed.",
+  "warmupCheckpoint": {
+    "resultId": "2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e",
+    "trialIndex": 1
+  },
+  "pairedCachedResultId": "2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4"
+}

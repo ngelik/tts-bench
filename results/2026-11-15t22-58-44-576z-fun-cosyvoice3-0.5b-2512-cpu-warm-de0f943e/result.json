@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e",
+  "createdAt": "2026-11-16T12:55:22.932Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "ab5aec3e510420adbcac9971f35f92152b19959c",
+    "dirty": false,
+    "manifestSha256": "241f993d2bb839cb691e5835e05ad41721522bb1ab1a3aeb03882e58e3e36036"
+  },
+  "assets": [
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:fun-cosyvoice3-0.5b-2512:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "cosyvoice3-license",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "cosyvoice3-readme-md",
+      "sha256": "1e856e22633e7ea4c833f0ff666e61ef367b88b8739bc0dfe7cd6ea5ad1ea7ed",
+      "bytes": 3629
+    },
+    {
+      "id": "cosyvoice3-flow-noise-f16-bin",
+      "sha256": "7ab437a2da46f82936044a09ff25193db4044db8e028e67ad06915b887a0b869",
+      "bytes": 480000
+    },
+    {
+      "id": "cosyvoice3-onnx-embed-q4-onnx",
+      "sha256": "e723fac2773d3718023b4438b1e1c450d6a3ed6b502da112ef9e821865d98789",
+      "bytes": 88870639
+    },
+    {
+      "id": "cosyvoice3-onnx-flow-encoder-q4-onnx",
+      "sha256": "a830b1a28193cbf1cd79516cd367ddd0beaf66958a3c7ccddceb522eca6d50ec",
+      "bytes": 740028
+    },
+    {
+      "id": "cosyvoice3-onnx-flow-step-q8-onnx",
+      "sha256": "a56ab4d3654346a4da24d3b85211270a1fde5124fecd34a1d78d66cfe230058c",
+      "bytes": 373851734
+    },
+    {
+      "id": "cosyvoice3-onnx-hift-q4c8-onnx",
+      "sha256": "5b9f5bc83053523c19e446b64050582f43e729dbc182ea7b38258ca2b7c89ed3",
+      "bytes": 24004242
+    },
+    {
+      "id": "cosyvoice3-onnx-llm-q8-onnx",
+      "sha256": "6221ef67f1d8b08f2537ef6bec01bb556af1792a5eb5aea1e98e9b6a196f1ac3",
+      "bytes": 418204025
+    },
+    {
+      "id": "cosyvoice3-tokenizer-json",
+      "sha256": "caa0dadcb8c40c79a3244aaf290492e298a49c5c25e0db16cad12f2f8ff639c5",
+      "bytes": 10573953
+    },
+    {
+      "id": "cosyvoice3-voice-default-json",
+      "sha256": "43f3ef22692d6dc21a45fbfa3330cc86dc1eb4105f152b3eb734b71ebe572fa3",
+      "bytes": 157335
+    }
+  ],
+  "cells": [
+    {
+      "model": "fun-cosyvoice3-0.5b-2512",
+      "support": {
+        "voiceCount": null,
+        "bundledVoiceCount": 1,
+        "languageCount": 9,
+        "languages": [
+          "zh",
+          "en",
+          "ja",
+          "ko",
+          "de",
+          "es",
+          "fr",
+          "it",
+          "ru"
+        ],
+        "scope": "Upstream multilingual checkpoint with zero-shot voice conditioning; pinned browser export bundles one English preset.",
+        "sources": [
+          "https://huggingface.co/danyalmalik/Fun-CosyVoice3-0.5B-ONNX-WebGPU/blob/dcdb9df4bce4a47d318f5f8736de0b080efd944f/README.md",
+          "https://huggingface.co/FunAudioLLM/Fun-CosyVoice3-0.5B-2512/blob/29e01c4e8d000f4bcd70751be16fa94bf3d85a18/README.md",
+          "https://github.com/mdanyalmalik/quick-inf/blob/b50b3b8576f486d55fec5c366a0d8305a1fe8c41/src/runtime/speech/speech-engine.ts"
+        ],
+        "notes": "English measured using the supplied LibriTTS-R speaker 4446 features. Upstream also lists 18+ Chinese dialects separately from its nine languages. Total possible voices is open-ended."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "error",
+      "reason": "page.evaluate: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /private/tmp/tts-nov14-chrome-157.0.8103.40/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --no-first-run --no-default-browser-check --disable-software-rasterizer --user-data-dir=<checkout>/.cache/profiles/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e --remote-debugging-pipe about:blank\n<launched> pid=3",
+      "voice": "LibriTTS-R 4446 default",
+      "precision": "Q8 LLM and flow steps; Q4 embeddings and flow encoder; Q4/int8 HiFT",
+      "settings": {
+        "executionProviders": [
+          "wasm"
+        ],
+        "language": "en",
+        "sampleRate": 24000,
+        "wasmThreads": 4,
+        "flowSteps": 10,
+        "guidance": 0.7,
+        "sampler": "RAS top-p 0.8 / top-k 25 / repeat window 10, unseeded",
+        "frontend": "Quick Inference English normalization, Qwen2 BPE, sentence packing up to nominal 80 tokens",
+        "generation": "109 preset prompt speech tokens, cap 20 speech tokens per text token with required stop, fixed start noise and upstream HiFT uniform noise"
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Four WASM threads for the five ONNX graphs; browser-worker frontend and sampling."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 15355812.774999976,
+          "samples": 28896000,
+          "sampleRate": 24000,
+          "pcmSha256": "c100bd804ac58113ee714f4be053ba06653b14047804c32cd010c1947a9ac82d",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 180188,
+            "firstSourceChunkCompletedMs": 180188.08999991417,
+            "audioSeconds": 1204,
+            "realTimeFactor": 12.753997321428551,
+            "minSamplesPerChunk": 241920,
+            "maxSamplesPerChunk": 461760
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 15094719.794999957,
+          "samples": 28360320,
+          "sampleRate": 24000,
+          "pcmSha256": "c536adfa12308e3da2117adfa030b3de1ea0fb9f4272d6a05bbed99423945ec1",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 208385.7799999714,
+            "firstSourceChunkCompletedMs": 208385.8600000143,
+            "audioSeconds": 1181.68,
+            "realTimeFactor": 12.77394878054969,
+            "minSamplesPerChunk": 228480,
+            "maxSamplesPerChunk": 396480
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 15143551.315000057,
+          "samples": 28401600,
+          "sampleRate": 24000,
+          "pcmSha256": "04e957c72f8d1f3127308e69d6aebe6d061c6d7689456d7db1be35107b54963b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 186316.35000002384,
+            "firstSourceChunkCompletedMs": 186316.43000006676,
+            "audioSeconds": 1183.4,
+            "realTimeFactor": 12.796646370627055,
+            "minSamplesPerChunk": 231360,
+            "maxSamplesPerChunk": 422400
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "English 20k November campaign. Sequential headed Chrome, AC power and one isolated benchmark tab. Predeclared backend order, no cold-load check. One excluded full article followed by five scored repetitions."
+  ]
+}
