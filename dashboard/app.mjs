@@ -3,6 +3,7 @@ const $$ = selector => [...document.querySelectorAll(selector)];
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = (value, digits = 2) => Number.isFinite(value) ? value.toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits}) : '—';
 const repo = 'https://github.com/ngelik/tts-bench';
+const cosySelectionReportUrl = `${repo}/blob/main/reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection`;
 const labels = {cpu: 'CPU', webgpu: 'GPU'};
 const shortLicense = value => value.startsWith('Model license not separately') ? 'Unspecified · terms ↗' : value.startsWith('OpenRAIL-M') ? 'OpenRAIL-M ↗' : value.startsWith('Underdog Non-Commercial') ? 'Underdog NC 1.0 ↗' : value;
 const chromeVersion = metric => (metric?.environment?.chromeVersion ?? 'unknown').replace(/^Google Chrome\s+/, '');
@@ -80,8 +81,11 @@ function audioButtons(model) {
 }
 function metricCell(metric, key, max, backend, label, withBar = true) {
   const value = metric?.[key];
-  const evidenceDetail = metric?.selectionKind ? ` · ${statusDetails(metric)}` : '';
-  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(metric.reportUrl)}" title="Open ${escape(label)} receipt · ${escape(cohortName(metric))}${escape(evidenceDetail)}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(statusDetails(metric))}">${statusLabel(metric)}</span>`}</td>`;
+  const href = metric?.selectionKind ? cosySelectionReportUrl : metric?.reportUrl;
+  const title = metric?.selectionKind
+    ? `Open reviewed selection report · ${statusDetails(metric)}`
+    : `Open ${label} receipt · ${cohortName(metric)}`;
+  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(href)}" title="${escape(title)}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(statusDetails(metric))}">${statusLabel(metric)}</span>`}</td>`;
 }
 function renderTable(models) {
   const maxTime = Math.max(1, ...models.flatMap(m => ['cpu', 'webgpu'].map(b => m.warm[b]?.medianSeconds ?? 0)));
@@ -102,7 +106,12 @@ function renderCharts(models) {
   $('#charts').innerHTML = backends.map(backend => `<section class="chart-panel ${backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><h3>${backend === 'size' ? 'Model weights' : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]} / ${backend === 'cpu' ? 'WebAssembly' : 'WebGPU'}`}</h3><p class="small">${kind === 'generation' ? 'Median full-article generation · seconds' : kind === 'memory' ? 'Average Chrome process RSS · MB' : 'Verified core model weights · MB'}</p>${[...models].sort((a, b) => compareValues(a, b, get(a, backend), get(b, backend))).map(model => {
     const value = get(model, backend), missing = !Number.isFinite(value);
     const metric = kind === 'size' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
-    return `<div class="bar-row ${missing ? 'unavailable' : ''}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="value"${missing ? ` title="${escape(statusDetails(metric))}"` : ''}>${missing ? escape(statusLabel(metric)) : `${fmt(value)} <span class="sr-only">${units}</span>`}</span></div>${missing ? '' : `<div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div>`}</div>`;
+    const score = missing
+      ? `<span class="value" title="${escape(statusDetails(metric))}">${escape(statusLabel(metric))}</span>`
+      : metric?.selectionKind && kind === 'generation'
+        ? `<a class="value metric-link selection-report-link" href="${escape(cosySelectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
+        : `<span class="value">${fmt(value)} <span class="sr-only">${units}</span></span>`;
+    return `<div class="bar-row ${missing ? 'unavailable' : ''}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button>${score}</div>${missing ? '' : `<div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div>`}</div>`;
   }).join('')}<p class="chart-foot">${kind === 'size' ? 'Excludes runtime and voice assets.' : 'Shared scale across CPU and GPU. Open a model for source and sample count.'}</p></section>`).join('');
 }
 function render() {
