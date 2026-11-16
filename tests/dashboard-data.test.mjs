@@ -33,6 +33,14 @@ test('exports all catalog models with explicit warm, memory, license, and suppor
       assert.ok(['measured', 'unsupported', 'error', 'unavailable'].includes(model.warm[backend].status));
       assert.ok(['measured', 'unsupported', 'error', 'unavailable'].includes(model.memory[backend].status));
       assert.ok('cohortKey' in model.warm[backend] && 'cohortKey' in model.memory[backend]);
+      for (const metric of [model.warm[backend], model.memory[backend]]) {
+        if (metric.resultId) {
+          const receipt = results.find(result => result.id === metric.resultId);
+          assert.equal(metric.scenario, receipt.protocol.scenario);
+        } else {
+          assert.equal(metric.scenario, undefined);
+        }
+      }
       if (model.warm[backend].status !== 'measured') {
         assert.equal(model.warm[backend].medianSeconds, null);
         assert.equal(model.warm[backend].n, null);

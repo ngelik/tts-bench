@@ -11,7 +11,9 @@ function element(tag, text, className) {
 function timingCell(value, scale, kind) {
   const td = element('td');
   if (value === null) {
-    td.append(element('span', 'Untimed', 'muted'));
+    const missing = element('span', '—', 'muted');
+    missing.title = 'No completed timing for this measure.';
+    td.append(missing);
     return td;
   }
   td.append(element('span', format.format(value) + ' s', 'duration'));
@@ -32,8 +34,11 @@ function group(section, rows, models) {
   title.id = titleId;
   article.append(title, element('div', section.characters + ' characters · ' +
     ({matched:'Matched CPU and WebGPU runs',individual:'Individual measurement',development:'Development probes'}[cohort]), 'input-meta'));
-  article.append(element('blockquote', section.text.trim()));
-  if (rows[0].pairStatus) article.append(element('p',rows[0].pairStatus,'guide'));
+  const inputDetails = element('details', undefined, 'input-details');
+  inputDetails.append(element('summary', 'Input passage & notes'));
+  inputDetails.append(element('blockquote', section.text.trim()));
+  if (rows[0].pairStatus) inputDetails.append(element('p', rows[0].pairStatus, 'guide'));
+  article.append(inputDetails);
   const wrapper = element('div', undefined, 'diagnostic-table-wrap');
   wrapper.tabIndex = 0;
   wrapper.setAttribute('role', 'region');
@@ -113,7 +118,12 @@ async function render() {
     const development = rows.filter(row => !row.recording);
     if (paired.length) groups.append(group(section, paired, models));
     if (individual.length) groups.append(group(section, individual, models));
-    if (development.length) groups.append(group(section, development, models));
+    if (development.length) {
+      const details = element('details', undefined, 'development-details');
+      details.append(element('summary', `Earlier development probes (${development.length})`));
+      details.append(group(section, development, models));
+      groups.append(details);
+    }
   }
   document.querySelector('#load-status').hidden = true;
 }

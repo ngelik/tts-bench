@@ -46,6 +46,7 @@ function metricBase({ result, cell, current, selection }) {
     reportUrl: receiptUrl(result.id),
     registration: current ? 'current' : 'archived',
     origin: result.origin,
+    scenario: result.protocol.scenario,
     createdAt: result.createdAt,
     protocolId: result.protocol.id,
     sourceCommit: result.source.gitCommit,
