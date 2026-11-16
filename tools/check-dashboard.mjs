@@ -37,6 +37,7 @@ const expectedAudioEntries = expected.models.flatMap(model => model.audio);
 const flaggedAudioPaths = new Set(expectedAudioEntries.filter(entry => matchesAuditedWav(entry.full.sha256)).map(entry => entry.clip.path));
 const errors = [], external = [], failedResponses = [];
 const review = '.cache/dashboard-review';
+const waveformBadge = row => row.locator('button.output-warning').filter({hasText:'Waveform fault'});
 let mobileFilterWidths = null;
 async function measureResults(page) {
   return page.evaluate(() => {
@@ -131,7 +132,7 @@ try {
   assert.ok(audio8CurrentGpuRecording && (audio8CurrentGpuRecording.matchesSelectedWarm || audio8CurrentGpuRecording.matchesSelectedMemory), 'Audio8 exposes a recording selected by its current measurement');
   assert.equal(matchesAuditedWav(audio8CurrentGpuRecording.full.sha256), false, 'The current Audio8 GPU recording passed waveform review');
   const audio8Row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
-  assert.equal(await audio8Row.getByRole('button', {name:'Waveform fault'}).count(), 0, 'An archived-only Audio8 fault does not badge the current result row');
+  assert.equal(await waveformBadge(audio8Row).count(), 0, 'An archived-only Audio8 fault does not badge the current result row');
   assert.equal(await audio8Row.locator('[data-play][data-backend="webgpu"]').count(), 1, 'The healthy replacement GPU recording remains playable from the results table');
   const audio8Fault = audio8?.playbackAudio?.webgpu && matchesAuditedWav(audio8.playbackAudio.webgpu.full.sha256) ? audio8.playbackAudio.webgpu : null;
   if (audio8Fault) {
@@ -298,7 +299,7 @@ try {
     assert.equal(await row.locator('.output-warning').count(), Number(waveform) + Number(scored));
     assert.equal(await row.locator('.output-warmup').count(), Number(warmup));
     if (waveform) {
-      await row.getByRole('button', {name:'Waveform fault'}).click();
+      await waveformBadge(row).click();
       assert.match(await page.locator('#detail-content').innerText(), /Waveform fault/);
       await page.keyboard.press('Escape');
     }
@@ -481,13 +482,13 @@ try {
     assert.equal(await syntheticPage.locator('#model-count').innerText(), String(syntheticVisibleCount), 'A model with only error, unsupported and fault-only data is excluded from result counts');
     assert.equal(await syntheticPage.locator('#model-rows tr[data-model="synthetic-no-eligible-result"]').count(), 0);
     const archivedOnlyRow = syntheticPage.locator('tr[data-model="synthetic-archived-waveform-only"]');
-    assert.equal(await archivedOnlyRow.getByRole('button',{name:'Waveform fault'}).count(),0,'A historical fault is not presented as a current output warning');
+    assert.equal(await waveformBadge(archivedOnlyRow).count(),0,'A historical fault is not presented as a current output warning');
     assert.equal(await archivedOnlyRow.locator('[data-play][data-backend="webgpu"]').count(),1,'The healthy selected replacement remains playable');
     const currentMetricFaultRow = syntheticPage.locator('tr[data-model="synthetic-current-metric-waveform"]');
-    assert.equal(await currentMetricFaultRow.getByRole('button',{name:'Waveform fault'}).count(),1,'A current metric waveform finding remains visible independently of clip metadata');
+    assert.equal(await waveformBadge(currentMetricFaultRow).count(),1,'A current metric waveform finding remains visible independently of clip metadata');
     assert.equal(await currentMetricFaultRow.locator('[data-play][data-backend="webgpu"]').count(),1,'Healthy selected audio remains playable when only a metric carries the fault');
     const currentRecordingFaultRow = syntheticPage.locator('tr[data-model="synthetic-current-recording-waveform"]');
-    assert.equal(await currentRecordingFaultRow.getByRole('button',{name:'Waveform fault'}).count(),1,'A faulted recording selected by a current metric keeps its visible warning');
+    assert.equal(await waveformBadge(currentRecordingFaultRow).count(),1,'A faulted recording selected by a current metric keeps its visible warning');
     assert.equal(await currentRecordingFaultRow.locator('[data-play][data-backend="webgpu"]').count(),0,'Faulted current playback stays behind diagnostic opt-in');
     await syntheticPage.locator('[data-view="charts"]').click();
     await syntheticPage.locator('[data-metric="size"]').click();
