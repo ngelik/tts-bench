@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateCampaignCell } from '../lib/campaign-plan.mjs';
+import { effectiveCampaignCell, validateCampaignCell } from '../lib/campaign-plan.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { assembleDashboardData, readCampaignCells } from '../tools/dashboard-data.mjs';
 
@@ -81,4 +81,14 @@ test('the dashboard and campaign runner reject smoke plans and under-repeated wa
   assert.throws(() => validateCampaignCell({ ...cell, smoke: true }), /full article/);
   assert.throws(() => validateCampaignCell({ ...cell, repetitions: 1 }), /campaign repetitions/);
   assert.throws(() => validateCampaignCell({ ...cell, resources: 'true' }), /resources flag/);
+});
+
+test('CosyVoice3 warm campaign requests normalize to one while other models retain their counts', () => {
+  const cosy = { model: 'fun-cosyvoice3-0.5b-2512', backend: 'cpu', scenario: 'warm', repetitions: 5 };
+  assert.doesNotThrow(() => validateCampaignCell(cosy));
+  assert.equal(effectiveCampaignCell(cosy).repetitions, 1);
+  assert.equal(effectiveCampaignCell({ ...cosy, repetitions: 2 }).repetitions, 1);
+  const other = { ...cosy, model: 'tiny-voca' };
+  assert.equal(effectiveCampaignCell(other).repetitions, 5);
+  assert.throws(() => validateCampaignCell({ ...other, repetitions: 1 }), /campaign repetitions/);
 });

@@ -6,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { MAX_RESOURCE_RECEIPT_BYTES, validateResult, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
+import { loadCosyWarmSelection, selectedCellFor, COSY_WARM_SELECTION_RESULT_ID } from './cosy-warm-selection.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BACKENDS = ['cpu', 'webgpu'];
@@ -125,7 +126,9 @@ export function validateCampaignInputs(entries, manifest = getAssetLock().models
     else protocolByScenario.set(scenario, data.protocol);
 
     if (scenario === 'warm') {
-      ensure(data.protocol.warmupRuns === 1 && data.protocol.repetitions >= 5, 'Warm campaign results require one full warm-up and at least five scored repetitions');
+      const cosyOnly = data.cells.every(cell => cell.model === 'fun-cosyvoice3-0.5b-2512');
+      ensure(data.protocol.warmupRuns === 1 && (cosyOnly ? data.protocol.repetitions === 1 || data.protocol.repetitions >= 5 : data.protocol.repetitions >= 5),
+        'Warm campaign results require one full warm-up and at least five scored repetitions, except CosyVoice3 uses one current or at least five historical repetitions');
       ensure(!data.protocol.id.endsWith('-resources'), 'Warm score cells cannot substitute for cached resource measurements');
     } else if (scenario === 'cached') {
       ensure(data.protocol.id.endsWith('-resources'), 'Cached campaign results must use the --resources protocol');
@@ -268,7 +271,7 @@ function markdownReport(prepared, reportDir) {
     md+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The archived cached time and memory describe that execution. [Full waveform audit](${waveformReport}).\n\n`;
   }
   md += `## Warm generation\n\n`;
-  md += `Full warm workload: one excluded full-article warm-up and at least five scored 20,000-character / 93-chunk repetitions. Generation is the benchmark timer; values summarize scored repetitions only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`;
+  md += `Full warm workload: one excluded full-article warm-up. Most models use at least five scored 20,000-character / 93-chunk repetitions; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Generation is the benchmark timer; values summarize displayed scored trials only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`;
   md += `| Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |\n|---|---:|---:|---:|---:|---:|---:|\n`;
   for (const model of models) {
     const cpuEntry = cell(model.id, 'cpu', 'warm'), gpuEntry = cell(model.id, 'webgpu', 'warm');
@@ -277,7 +280,7 @@ function markdownReport(prepared, reportDir) {
       if (!entry) return 'Not submitted';
       if (entry.cell.status !== 'measured') return markdownText(statusLabel(entry));
       if (!summary) return affectedTrials(entry.cell).length ? 'Diagnostic PCM' : 'Not recorded';
-      return `${format(summary.generationMedianSeconds)} s (${format(summary.generationMinSeconds)}–${format(summary.generationMaxSeconds)}; n=${summary.n})`;
+      return `${format(summary.generationMedianSeconds)} s (${format(summary.generationMinSeconds)}–${format(summary.generationMaxSeconds)}; n=${summary.n}${entry.selection ? ` of ${entry.selection.originalPlannedRepetitions} planned` : ''})`;
     };
     const firstPcm = (entry, summary) => {
       if (!entry) return 'Not submitted';
@@ -293,6 +296,17 @@ function markdownReport(prepared, reportDir) {
     const gpuFirst = gpuEntry ? firstPcm(gpuEntry, gpu) : gpuAvailability(model) ?? 'Not submitted';
     const gpuAudio = gpuEntry ? audioRtf(gpuEntry, gpu, 'webgpu') : gpuAvailability(model) ?? 'Not submitted';
     md += `| ${markdownText(model.manifest.displayName ?? model.id)} | ${generation(cpuEntry, cpu)} | ${gpuGeneration} | ${firstPcm(cpuEntry, cpu)} | ${gpuFirst} | ${audioRtf(cpuEntry, cpu, 'cpu')} | ${gpuAudio} |\n`;
+  }
+
+  const reviewedSelections = [...byKey.values()].filter(row => row.selection);
+  if (reviewedSelections.length) {
+    md += `\n### Reviewed partial warm selection\n\n`;
+    for (const row of reviewedSelections) {
+      const selectionPath = resolve(ROOT, row.selection.selectionPath);
+      const selectionHref = relative(reportDir, selectionPath).split(sep).join('/');
+      const reasonHeadline = row.selection.rawReceiptReason.split(/\r?\n/, 1)[0];
+      md += `**${markdownText(row.cell.model)} · ${row.cell.backendRequested.toUpperCase()}:** this table and chart use ${row.selection.selectedScoredTrialIndexes.length} completed scored articles selected from ${row.selection.originalPlannedRepetitions} originally planned. The operator stopped during the next trial. The original native receipt remains ${markdownText(row.selection.rawReceiptStatus)} and records: ${markdownText(reasonHeadline)} The selection is bound to that receipt’s SHA-256 and lists the completed checkpoints in [the reviewed sidecar](${selectionHref}); the incomplete trial is not included.\n\n`;
+    }
   }
 
   const resourceHeading = hasCold ? 'Resource and cold-initialization diagnostics' : 'Resource diagnostics';
@@ -436,7 +450,7 @@ function chartReport(prepared) {
           const value = entry ? spec.value(entry, summary) : null;
           const unavailable = !entry && backend === 'webgpu' && !model.manifest.backends.includes('webgpu')
             ? 'Unsupported (manifest)' : !entry ? 'Not submitted' : entry.cell.status === 'measured' ? 'Not recorded' : entry.cell.status === 'unsupported' ? 'Unsupported' : 'Error';
-          series.push({ model, backend, value: Number.isFinite(value) ? value : null, status: unavailable });
+          series.push({ model, backend, value: Number.isFinite(value) ? value : null, status: unavailable, selection: entry?.selection });
         }
       }
     }
@@ -469,7 +483,8 @@ function chartReport(prepared) {
         outputs.push(`<text x="${x + 18}" y="${barY + 9}" font-size="9" fill="#78847f">${seriesLabel}</text>`);
         if (item.value !== null) {
           const barW = Math.max(1, position(item.value));
-          const label = spec.text && spec.single ? item.label : `${svgNumber(item.value)} ${spec.unit}`;
+          const count = item.selection ? ` · n=${item.selection.selectedScoredTrialIndexes.length} of ${item.selection.originalPlannedRepetitions} planned` : '';
+          const label = spec.text && spec.single ? item.label : `${svgNumber(item.value)} ${spec.unit}${count}`;
           outputs.push(`<rect x="${plotX}" y="${barY}" width="${barW.toFixed(2)}" height="${barH}" rx="5" fill="${color}"/><text x="${plotX + barAreaW + 8}" y="${barY + 9}" font-size="10" fill="#263d37"><title>${xml(label)}</title>${xml(label)}</text>`);
         } else {
           outputs.push(`<text x="${plotX + 3}" y="${barY + 9}" font-size="10" fill="#83908b">${xml(item.status)}</text>`);
@@ -489,17 +504,29 @@ function chartReport(prepared) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="campaign-title campaign-desc"><title id="campaign-title">Browser TTS campaign metrics</title><desc id="campaign-desc">${panelSpecs.length} separate panels show ${xml(panelNames)}. CPU and WebGPU bars appear when measured; unsupported and missing evidence are labeled. Scenarios are not pooled and this chart does not rate speech quality.${xml(coldDescription)}</desc><rect width="100%" height="100%" fill="#f4f7f4"/><g font-family="system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" fill="#183b35"><text x="34" y="48" font-size="30" font-weight="750">Browser TTS · campaign overview</text><text x="34" y="77" font-size="14" fill="#526c65">${xml(prepared.base.environment.machineLabel)} · ${xml(prepared.base.environment.chromeVersion)} · ${xml(prepared.base.fixture.characters.toLocaleString('en-US'))} characters / ${xml(prepared.base.fixture.chunks)} chunks</text><text x="34" y="99" font-size="12" fill="#62736d">CPU / WASM · WebGPU with allowed CPU fallback · not a quality ranking</text>${outputs.join('')}<text x="30" y="${height - 17}" font-size="11" fill="#64746f">${xml(footer)}</text></g></svg>\n`;
 }
 
-export function renderCampaignOverview(entries, { reportDir, manifest = getAssetLock().models, cwd = ROOT, sourceCache = new Map() } = {}) {
+export function renderCampaignOverview(entries, { reportDir, manifest = getAssetLock().models, cwd = ROOT, sourceCache = new Map(), warmSelections = [] } = {}) {
   const sortedEntries = [...entries].sort((a, b) => a.data.id.localeCompare(b.data.id));
   const prepared = validateCampaignInputs(sortedEntries, manifest, { cwd, sourceCache });
+  const selections = Array.isArray(warmSelections) ? warmSelections : [warmSelections];
+  for (const selection of selections.filter(Boolean)) {
+    const row = prepared.byKey.get(`${selection.modelId}/${selection.backend}/${selection.scenario}`);
+    if (row?.data.id !== selection.resultId) continue;
+    const selected = selectedCellFor(row, selection);
+    row.cell = selected.cell;
+    row.selection = selection;
+  }
   return {
     overviewMd: markdownReport(prepared, reportDir),
     overviewSvg: chartReport(prepared),
   };
 }
 
-function inputsManifest(entries) {
-  return { schemaVersion: 1, results: entries.map(entry => ({ id: entry.data.id, sha256: entry.digest })).sort((a, b) => a.id.localeCompare(b.id)) };
+function inputsManifest(entries, selection = null) {
+  return {
+    schemaVersion: 1,
+    results: entries.map(entry => ({ id: entry.data.id, sha256: entry.digest })).sort((a, b) => a.id.localeCompare(b.id)),
+    ...(selection ? { warmSelection: { path: selection.selectionPath, sha256: selection.selectionSha256 } } : {}),
+  };
 }
 function checksumsFor(markdown, svg, inputsBytes) {
   return { 'overview.md': sha256(Buffer.from(markdown)), 'overview.svg': sha256(Buffer.from(svg)), 'inputs.json': sha256(inputsBytes) };
@@ -520,8 +547,9 @@ async function writeCampaignReport(outValue, inputFiles) {
   for (const file of inputFiles) entries.push(await suppliedResult(file));
   const seenIds = new Set();
   for (const entry of entries) { ensure(!seenIds.has(entry.data.id), `Duplicate result input: ${entry.data.id}`); seenIds.add(entry.data.id); }
-  const rendered = renderCampaignOverview(entries, { reportDir: out });
-  const manifest = inputsManifest(entries);
+  const warmSelection = seenIds.has(COSY_WARM_SELECTION_RESULT_ID) ? await loadCosyWarmSelection(entries.map(entry => entry.data)) : null;
+  const rendered = renderCampaignOverview(entries, { reportDir: out, warmSelections: warmSelection ? [warmSelection] : [] });
+  const manifest = inputsManifest(entries, warmSelection);
   const inputsBytes = Buffer.from(JSON.stringify(manifest, null, 2) + '\n');
   const checksums = checksumsFor(rendered.overviewMd, rendered.overviewSvg, inputsBytes);
   await mkdir(out, { recursive: true });
@@ -550,7 +578,11 @@ async function checkCampaignReport(reportValue, { log = true } = {}) {
   const sourceCache = new Map();
   const entries = [];
   for (const entry of manifest.results) entries.push(await committedResult(entry.id, entry.sha256));
-  const rendered = renderCampaignOverview(entries, { reportDir: directory, sourceCache });
+  const warmSelection = entries.some(entry => entry.data.id === COSY_WARM_SELECTION_RESULT_ID)
+    ? await loadCosyWarmSelection(entries.map(entry => entry.data)) : null;
+  const expectedInputs = Buffer.from(JSON.stringify(inputsManifest(entries, warmSelection), null, 2) + '\n');
+  ensure(inputsBytes.equals(expectedInputs), 'Stale campaign inputs.json or reviewed selection digest');
+  const rendered = renderCampaignOverview(entries, { reportDir: directory, sourceCache, warmSelections: warmSelection ? [warmSelection] : [] });
   ensure(await readFile(join(directory, 'overview.md'), 'utf8') === rendered.overviewMd, 'Stale campaign overview.md');
   ensure(await readFile(join(directory, 'overview.svg'), 'utf8') === rendered.overviewSvg, 'Stale campaign overview.svg');
   const expected = checksumsFor(rendered.overviewMd, rendered.overviewSvg, inputsBytes);

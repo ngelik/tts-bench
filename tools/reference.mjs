@@ -7,6 +7,7 @@ import { getAssetLock } from '../lib/catalog.mjs';
 import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 import { environmentKey as envKey, pairedWarm, preferredAttempts } from './result-selection.mjs';
+import { loadCosyWarmSelection } from './cosy-warm-selection.mjs';
 export const START='<!-- benchmark-results:start -->', END='<!-- benchmark-results:end -->';
 const md=x=>String(x).replaceAll('|','\\|').replaceAll('\n',' ');
 const report=d=>`results/${d.id}/summary.md`;
@@ -80,20 +81,25 @@ export function ramChart(results,models){
  svg+=`<text x="32" y="${height-24}" font-size="12" fill="#6c7686">Sample means, not model-only RAM or GPU VRAM. RSS may double-count shared pages. Timing scores are reported separately.</text></g></svg>\n`;return svg;
 }
 
-export function referenceBlock(results, models, comparisons=[], audio=[], campaigns=[]){
+export function referenceBlock(results, models, comparisons=[], audio=[], campaigns=[], warmSelections=[]){
   const ordered=[...results].sort((a,b)=>a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id));
+  const selectionById=new Map((Array.isArray(warmSelections)?warmSelections:[warmSelections]).filter(Boolean).map(selection=>[selection.resultId,selection]));
   const envs=new Map();for(const d of ordered)if(d.protocol.scenario==='warm'&&!envs.has(envKey(d)))envs.set(envKey(d),{id:'E'+(envs.size+1),value:d.environment});
   const groups=new Map();
   const warm=preferredAttempts(ordered,models,d=>d.protocol.scenario==='warm',{perEnvironment:true});
   for(const {result:d,cell,current} of warm){
-    const c=summaries(d).find(summary=>summary.model===cell.model&&summary.backend===cell.backendRequested);
+    const selection=selectionById.get(d.id);
+    const useSelection=selection&&selection.modelId===cell.model&&selection.backend===cell.backendRequested&&cell.status===selection.rawReceiptStatus;
+    const displayedCell=useSelection?selection.cell:cell;
+    const displayedResult=useSelection?{...d,cells:d.cells.map(value=>value===cell?displayedCell:value)}:d;
+    const c=summaries(displayedResult).find(summary=>summary.model===cell.model&&summary.backend===cell.backendRequested);
     const k=envKey(d)+'/'+c.model;const row=groups.get(k)??{model:c.model,environment:envs.get(envKey(d)).id};
-    const old=row[c.backend];if(!old||d.origin==='native'||old.d.origin!=='native')row[c.backend]={d,c,cell,current};groups.set(k,row);
+    const old=row[c.backend];if(!old||d.origin==='native'||old.d.origin!=='native')row[c.backend]={d,c,cell:displayedCell,current,selection:useSelection?selection:null};groups.set(k,row);
   }
   let out=START+'\n\nWarm and memory tables prefer native receipts that verify the registered model and runtime files for each backend and environment. The latest attempt within that version is shown, including errors. When it has no receipt, earlier evidence stays visible. All runs and recordings remain linked below.\n\n';
   for(const {id,value:e}of envs.values())out+=`- **${id}**: ${md(e.machineLabel)} · ${md(e.chromeVersion)} · ${md(e.os)}.\n`;
   out+='\n| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |\n|---|---|---:|---:|---:|---|\n';
-  const score=v=>!v?'—':v.c.status==='measured'&&affectedTrials(v.cell).length?`[Diagnostic PCM](${waveformReport})`:`[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'}](${report(v.d)})`;
+  const score=v=>!v?'—':v.c.status==='measured'&&affectedTrials(v.cell).length?`[Diagnostic PCM](${waveformReport})`:`[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'+(v.selection?` (n=${v.selection.selectedScoredTrialIndexes.length} of ${v.selection.originalPlannedRepetitions} planned; selected)`:'')}](${report(v.d)})`;
   const modelSize=(id,pair)=>{const weights=models[id]?.assets?.filter(a=>a.kind==='model-weights')??[];const measured=pair;if(!weights.length||!measured.length||measured.some(v=>weights.some(w=>!v.d.assets.some(a=>a.sha256===w.sha256&&a.bytes===w.bytes))))return 'Unknown';return (weights.reduce((n,a)=>n+a.bytes,0)/1e6).toFixed(2);};
   for(const row of [...groups.values()].sort((a,b)=>a.environment.localeCompare(b.environment)||a.model.localeCompare(b.model))){
     const pair=[row.cpu,row.webgpu].filter(Boolean);
@@ -103,7 +109,11 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
     const scope=pair.some(v=>v.d.origin!=='native')?'Historical; distinct timing protocols':label+(matched?'; matched configuration':'; independent attempts');
     out+=`| ${md(models[row.model]?.displayName??row.model)} | ${row.environment} | ${modelSize(row.model,pair)} | ${score(row.cpu)} | ${score(row.webgpu)} | ${scope} |\n`;
   }
-  out+='\nEach measured warm cell uses five scored full 20,000-character articles. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
+  out+='\nWarm cells use one excluded warm-up. Most planned cells use five scored full 20,000-character articles; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
+  for(const row of [...groups.values()].flatMap(group=>['cpu','webgpu'].map(backend=>group[backend]).filter(value=>value?.selection))){
+    const reasonHeadline=md(row.selection.rawReceiptReason.split(/\r?\n/,1)[0]);
+    out+=`**Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (${reasonHeadline}). [Review the raw receipt](results/${row.d.id}/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.\n\n`;
+  }
   if(ordered.some(d=>d.cells.some(cell=>affectedTrials(cell).length)))out+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The CPU recording has no constant interval lasting 0.10 s. [Full waveform audit](${waveformReport}) and [interval data](diagnostics/audio8-waveform/evidence.json).\n\n`;
   out+=outputLengthReferenceBlock(groups,models);
   out+='MB = 1,000,000 bytes. Model size counts pinned core model-weight files (including the vocoder), verified against the displayed run receipts; it excludes runtime, G2P, voice/config files and transfer overhead.\n\n';
@@ -123,13 +133,14 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
 export function replaceReference(readme,block){const a=readme.indexOf(START),b=readme.indexOf(END);if(a<0||b<a||readme.indexOf(START,a+1)>=0||readme.indexOf(END,b+1)>=0)throw new Error('README requires exactly one reference-results marker pair');const heading=readme.lastIndexOf('\n## ',a);if(readme.slice(heading+1,a).split('\n')[0]!=='## Reference results')throw new Error('Generated results must be in README Reference results');return readme.slice(0,a)+block+readme.slice(b+END.length);}
 export async function updateReference({check=false}={}){
   const results=await Promise.all((await resultPaths('results')).map(p=>readResult(p,{publication:true})));
+  const warmSelection=await loadCosyWarmSelection(results);
   const comparisons=(await readdir('comparisons',{withFileTypes:true})).filter(e=>e.isDirectory()).map(e=>e.name).sort();
   let campaigns=[];try{campaigns=(await readdir('reports',{withFileTypes:true})).filter(e=>e.isDirectory()).map(e=>e.name).sort();}catch(error){if(error.code!=='ENOENT')throw error;}
   if(campaigns.some(name=>!/^[a-z0-9][a-z0-9._-]{0,119}$/.test(name)))throw new Error('Invalid campaign report directory');
   let audio=[];try{audio=JSON.parse(await readFile('audio/manifest.json','utf8')).entries;}catch(e){if(e.code!=='ENOENT')throw e;}
   const memorySvg=ramChart([...results].sort((a,b)=>a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)),getAssetLock().models);
   if(memorySvg){if(check){if(await readFile('docs/reference-memory.svg','utf8')!==memorySvg)throw new Error('Stale RAM chart; run npm run reference');}else await writeFile('docs/reference-memory.svg',memorySvg);}
-  const file='README.md',old=await readFile(file,'utf8');const next=replaceReference(old,referenceBlock(results,getAssetLock().models,comparisons,audio,campaigns));
+  const file='README.md',old=await readFile(file,'utf8');const next=replaceReference(old,referenceBlock(results,getAssetLock().models,comparisons,audio,campaigns,[warmSelection]));
   if(check&&next!==old)throw new Error('Stale/missing Reference results; run npm run reference and include README.md in the result PR');
   if(!check)await writeFile(file,next);return {results:results.length,audio:audio.length};
 }

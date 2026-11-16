@@ -25,7 +25,12 @@ configuration is distinct from its strict frontend.
    WebGPU results must demonstrate actual compute dispatch, not merely expose
    `navigator.gpu`. Record CPU preprocessing and allowed operator fallback.
 4. Load one model. Generate the **entire article once as an excluded warm-up**.
-5. Keep that engine resident. Generate the full article **five times**, sequentially.
+5. Keep that engine resident. Generate the full article sequentially. New
+   Fun-CosyVoice3 warm runs use one scored article on both backends; other models
+   use five scored articles. The older five-run CosyVoice3 receipts remain valid
+   historical evidence. A reviewed operator-shortened result may select completed
+   trials from its hash-bound native receipt, but it does not change the receipt's
+   original planned repetition count or status.
 6. Start each timer immediately before the first source-chunk request. Stop only
    after the final chunk's PCM reaches the page CPU. Await GPU outputs/readback;
    a dispatch submission time is not a completion time.
@@ -44,6 +49,10 @@ still have no usable hardware WebGPU adapter; software rendering is not a GPU sc
 ## Other scenarios
 
 Keep each scenario in a separate result/protocol group:
+
+New Fun-CosyVoice3 scored tests use one repetition for every scenario, including
+cached/resource diagnostics. Warm tests still perform the one excluded warm-up
+before that score. Other models keep their scenario-specific counts below.
 
 | Scenario | Required distinction |
 |---|---|
@@ -90,11 +99,12 @@ counterbalance order across campaigns when studying small differences.
 
 Compare only matching fixture, protocol, voice, precision, settings and hardware.
 Treat each machine as its own stratum rather than averaging laptop and desktop
-results. One machine and five repetitions do not establish universal performance.
+results. One machine and a small repetition count do not establish universal performance.
 Do not infer speech quality from speed, output duration or a nonzero waveform.
 Automated checks cannot certify that every word was pronounced correctly.
 
 Long-running cases need an explicit timeout and a persisted failure receipt.
 The historical PiVo GPU adapter took roughly 43 minutes per full generation;
-one warm-up plus five scores can take over four hours. Smoke tests are for
+one warm-up plus five scores can take over four hours. CosyVoice3 uses one score
+for new runs because a full-article render is unusually long; smoke tests are for
 installation/capability checks and are never publishable benchmark scores.

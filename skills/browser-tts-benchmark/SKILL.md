@@ -94,8 +94,10 @@ permission to redistribute weights or publish recordings.
 - A scored run requires a clean **committed** checkout. Preserve unrelated changes;
   use an isolated clone/worktree when needed. Publish the implementation commit
   before publishing results that cite it. Never edit the receipt to claim cleanliness.
-- Full warm runs use the fixed 20,000-character/93-chunk article, one excluded full
-  warm-up and at least five scored repetitions. Keep all repetitions, including
+- Full warm runs use the fixed 20,000-character/93-chunk article and one excluded
+  full warm-up. New Fun-CosyVoice3 scored tests use one article for every scenario
+  on either backend; warm tests still include the excluded warm-up.
+  other models use at least five. Keep every completed repetition, including
   errors; do not substitute projections or synthetic audio.
 - WebGPU must show actual compute dispatch and awaited CPU-readable PCM. Report
   mixed CPU/WASM work. Record unsupported GPU paths as unavailable; do not

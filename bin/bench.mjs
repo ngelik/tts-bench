@@ -16,7 +16,7 @@ Options: --model ID --backend cpu|webgpu --scenario warm|cold|cached|network|off
          --repetitions N --machine LABEL --chrome PATH --smoke --resources
          --accept-license --timeout-minutes N --predecessor ID --note TEXT
 
-Warm defaults to one excluded full article plus five full scored articles.
+Warm defaults to one excluded full article plus five full scored articles; Fun-CosyVoice3 uses one scored repetition for every new test scenario.
 Cold/cached/network default to three trials; offline/switch default to one.
 --smoke is a short nonpublishable diagnostic. Network uses a shared 1 Mbps limiter.
 Assets are staged separately. Inference cannot contact third-party services.

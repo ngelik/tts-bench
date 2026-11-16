@@ -1,5 +1,6 @@
 import { checkSignal } from '../web/audio8/signal.mjs';
 import { validateSupport } from '../lib/model-support.mjs';
+import { SINGLE_REPETITION_WARM_MODEL } from '../lib/benchmark-policy.mjs';
 import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
@@ -117,7 +118,11 @@ export function validateResult(d, { publication = false } = {}) {
   check(text(p.timingBoundary,1000) && int(p.warmupRuns,0,100) && int(p.repetitions,1,100), 'Invalid protocol counts/boundary');
   check(typeof p.smoke === 'boolean' && (p.networkMbps === null || finite(p.networkMbps) && p.networkMbps > 0), 'Invalid smoke/network setting');
   if (publication) check(!p.smoke, 'Smoke results cannot be published as benchmark scores');
-  if (d.origin==='native' && p.scenario==='warm' && !p.smoke) check(p.warmupRuns>=1 && p.repetitions>=5,'Full warm benchmark requires a full warm-up and at least five scored repetitions');
+  if (d.origin==='native' && p.scenario==='warm' && !p.smoke) {
+    const cosy = d.cells?.length > 0 && d.cells.every(cell => cell.model === SINGLE_REPETITION_WARM_MODEL);
+    check(p.warmupRuns>=1 && (cosy ? p.repetitions===1 || p.repetitions>=5 : p.repetitions>=5),
+      cosy ? 'Full CosyVoice3 warm results require a full warm-up and one current or at least five historical scored repetitions' : 'Full warm benchmark requires a full warm-up and at least five scored repetitions');
+  }
   const e=d.environment;
   keys(e,['machineLabel','os','arch','cpu','logicalCores','ramBytes','chromeVersion','gpu','headless'],'environment');
   for(const k of ['machineLabel','os','arch','cpu','chromeVersion']) check(text(e[k],200),`Invalid environment.${k}`);

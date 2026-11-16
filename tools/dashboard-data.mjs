@@ -8,6 +8,7 @@ import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
 import { affectedTrials, waveformFinding, waveformReport } from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
+import { loadCosyWarmSelection } from './cosy-warm-selection.mjs';
 
 import { ENVIRONMENT_COHORT_FIELDS, stable, pairedWarm, preferredAttempts, sameCampaignRegistration } from './result-selection.mjs';
 
@@ -34,7 +35,7 @@ function cohortKey(result) {
   }));
 }
 
-function metricBase({ result, cell, current }) {
+function metricBase({ result, cell, current, selection }) {
   const affected = affectedTrials(cell);
   return {
     ...(affected.length ? { waveform: { finding: waveformFinding, url: waveformReport,
@@ -51,6 +52,17 @@ function metricBase({ result, cell, current }) {
     sourceFingerprint: result.source.manifestSha256,
     environment: structuredClone(result.environment),
     cohortKey: cohortKey(result),
+    ...(selection ? {
+      selectionKind: 'operator-shortened-warm-selection',
+      selectionPath: selection.selectionPath,
+      selectionSha256: selection.selectionSha256,
+      selectedTrialIndexes: selection.selectedScoredTrialIndexes,
+      originalPlannedRepetitions: selection.originalPlannedRepetitions,
+      stopReason: selection.stopReason,
+      receiptStatus: selection.rawReceiptStatus,
+      receiptReason: selection.rawReceiptReason,
+      pairedCachedResultId: selection.pairedCachedResultId,
+    } : {}),
   };
 }
 
@@ -158,7 +170,7 @@ function createMemoryMetric(candidate) {
   };
 }
 
-function describeMissingScore(metric, model, backend, scenario, resource, scheduled = false) {
+function describeMissingScore(metric, model, backend, scenario, resource, scheduled = false, modelId = null) {
   if (metric.resultId) {
     if (scheduled && metric.registration === 'archived' && model.backends.includes(backend)) {
       return { ...metric, pendingCurrent: `Awaiting ${scenario} result for the current registration.` };
@@ -172,9 +184,10 @@ function describeMissingScore(metric, model, backend, scenario, resource, schedu
       model.backends.map(b => b === 'cpu' ? 'CPU' : 'WebGPU').join(' and ') + '.' };
   }
   if (scenario === 'warm') {
+    const scoreLabel = modelId === 'fun-cosyvoice3-0.5b-2512' ? 'single scored warm generation result' : 'repeated warm generation score';
     const reason = resource.status === 'measured'
-      ? 'A full-article memory run is available in the model details. The repeated warm generation score has not been published.'
-      : 'No repeated warm generation score has been published for this configuration and backend.';
+      ? `A full-article memory run is available in the model details. The ${scoreLabel} has not been published.`
+      : `No ${scoreLabel} has been published for this configuration and backend.`;
     return {
       ...metric,
       displayStatus: scheduled ? 'Awaiting warm result' : 'No warm score',
@@ -222,12 +235,23 @@ function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
 }
 
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
-export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [] }) {
+export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null }) {
   const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
     .map(cell => `${cell.model}/${cell.backend}`));
   const scheduledMemory = new Set(campaignCells.filter(cell => cell.scenario === 'cached' && cell.resources === true)
     .map(cell => `${cell.model}/${cell.backend}`));
   const warmCandidates = collectByModelBackend(results, models, result => !result.protocol.smoke && result.protocol.scenario === 'warm');
+  if (warmSelection) {
+    for (const candidates of warmCandidates.values()) for (let index = 0; index < candidates.length; index++) {
+      const candidate = candidates[index];
+      if (candidate.result.id === warmSelection.resultId) {
+        if (candidate.cell.status !== warmSelection.rawReceiptStatus || candidate.cell.reason !== warmSelection.rawReceiptReason) {
+          throw new Error('Reviewed CosyVoice selection no longer matches the displayed source receipt.');
+        }
+        candidates[index] = { ...candidate, cell: warmSelection.cell, selection: warmSelection };
+      }
+    }
+  }
   const memoryCandidates = collectByModelBackend(results, models, result =>
     !result.protocol.smoke && result.origin === 'native' && result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'));
   const selectedWarm = new Map();
@@ -255,7 +279,7 @@ export function assembleDashboardData({ results, models, audioEntries = [], camp
     const memory = Object.fromEntries(BACKENDS.map(backend => [backend, createMemoryMetric(selectedMemory.get(`${id}/${backend}`))]));
     for (const backend of BACKENDS) {
       warm[backend] = describeMissingScore(warm[backend], model, backend, 'warm', memory[backend],
-        scheduledWarm.has(`${id}/${backend}`));
+        scheduledWarm.has(`${id}/${backend}`), id);
       memory[backend] = describeMissingScore(memory[backend], model, backend, 'memory', null,
         scheduledMemory.has(`${id}/${backend}`));
     }
@@ -358,5 +382,6 @@ export async function buildDashboardData() {
   await checkAudio();
   verifySourcesOnce(results);
   const campaignCells = await readCampaignCells(lock.models);
-  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells });
+  const warmSelection = await loadCosyWarmSelection(results);
+  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells, warmSelection });
 }
