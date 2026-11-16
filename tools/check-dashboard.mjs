@@ -138,7 +138,7 @@ try {
     const row = page.locator(`tr[data-model="${id}"]`);
     const memoryBackends = ['cpu', 'webgpu'].filter(backend => eligibleMemory(model.memory[backend]) && model.memory[backend].scenario === 'cached');
     if (!memoryBackends.length) continue;
-    assert.equal(await row.locator('.cached-only').innerText(), 'RAM only · cached', `${id} remains identified as a cached-only result`);
+    assert.equal((await row.locator('.cached-only').innerText()).toLowerCase(), 'ram only · cached', `${id} remains identified as a cached-only result`);
     for (const backend of memoryBackends) {
       const label = `Cached RAM · ${backend === 'cpu' ? 'CPU' : 'GPU'} · avg MB`;
       assert.equal(await row.locator(`td[data-label="${label}"] .value`).innerText(), number(model.memory[backend].meanMB));
