@@ -22,6 +22,11 @@ const chromeVersion = metric => (metric?.environment?.chromeVersion ?? 'unknown'
 const state = {data: null, view: 'table', metric: 'generation', sort: 'cpu', direction: 1, playing: null, cohorts: new Map(), modelIds: null};
 const audio = $('#sample-audio');
 const dialog = $('#details');
+const filterDetails = $('#filter-details');
+const mobileFilterViewport = matchMedia('(max-width:700px)');
+const syncFilterDetails = () => { filterDetails.open = !mobileFilterViewport.matches; };
+syncFilterDetails();
+mobileFilterViewport.addEventListener('change', () => { syncFilterDetails(); render(); });
 let playRequest = 0;
 const isScheduledRetest = metric => (metric?.status === 'error' || metric?.receiptStatus === 'error') && metric.registration === 'archived' && Boolean(metric.pendingCurrent);
 const statusLabel = metric => isScheduledRetest(metric) ? 'Retest scheduled' : metric?.status === 'measured' ? 'Measured' : metric?.status === 'unsupported' ? 'Unsupported' : metric?.status === 'error' ? 'Run failed' : metric?.displayStatus ?? (metric?.evidenceStatus === 'measured' ? 'Insufficient memory data' : 'Unavailable');
@@ -177,7 +182,9 @@ function render() {
   const models = visibleModels();
   const scope = selectedModelScope();
   const denominator = scope === null ? state.data.models.filter(hasEligibleResult).length : scope.models.length;
-  $('#visible-count').textContent = `${models.length} of ${denominator} ${scope === null ? 'configurations' : 'selected configurations'}`;
+  const filtersApplied = Boolean($('#search').value.trim() || $('#cohort').value !== 'all' || $('#license').value !== 'all' || state.modelIds !== null);
+  $('#visible-count').hidden = !filtersApplied;
+  $('#visible-count').textContent = `${models.length} result${models.length === 1 ? '' : 's'}`;
   $('#table-view').hidden = state.view !== 'table' || models.length === 0;
   $('#charts-view').hidden = state.view !== 'charts' || models.length === 0;
   $('.sort-field').hidden = state.view !== 'table';

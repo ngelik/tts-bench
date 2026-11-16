@@ -179,7 +179,7 @@ try {
     retestChartUrl.searchParams.set('models', audio8.id);
     retestChartUrl.searchParams.set('view', 'charts');
     await page.goto(retestChartUrl.href);
-    await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 of 1 selected configurations');
+    await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 result');
     const chartStatus = page.locator('.chart-panel.gpu .bar-row').filter({has: page.locator('[data-detail="audio8-realistic-0.6b-int4"]')});
     assert.equal(await chartStatus.count(), 0, 'An archived failed timing is not plotted');
     await page.goto(base);
@@ -190,7 +190,7 @@ try {
   chartCampaignUrl.searchParams.set('models', campaignModelIds.join(','));
   chartCampaignUrl.searchParams.set('view', 'charts');
   await page.goto(chartCampaignUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '4 of 4 selected configurations');
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '4 results');
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(campaignModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
   assert.equal(await page.locator('#charts .bar-row').count(), expectedGeneration(campaignModels, 'cpu').length + expectedGeneration(campaignModels, 'webgpu').length);
   await assertChartOrder(campaignModels, 'generation');
@@ -207,7 +207,7 @@ try {
   campaignUrl.searchParams.set('q', 'Audio8');
   campaignUrl.searchParams.set('view', 'charts');
   await page.goto(campaignUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 of 4 selected configurations');
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 result');
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), ['audio8-realistic-0.6b-int4']);
   assert.equal(await page.locator('#charts-view').isVisible(), true);
   assert.equal(await page.locator('#charts .bar-row').count(), expectedGeneration([campaignModels.find(model => model.id === 'audio8-realistic-0.6b-int4')], 'cpu').length + expectedGeneration([campaignModels.find(model => model.id === 'audio8-realistic-0.6b-int4')], 'webgpu').length);
@@ -218,14 +218,14 @@ try {
   assert.equal(clearedCampaignUrl.searchParams.has('models'), false);
   assert.equal(clearedCampaignUrl.searchParams.get('q'), 'Audio8', 'Clearing the subset preserves search');
   assert.equal(clearedCampaignUrl.searchParams.get('view'), 'charts', 'Clearing the subset preserves the selected view');
-  assert.equal(await page.locator('#visible-count').innerText(), `1 of ${expected.models.length} configurations`);
+  assert.equal(await page.locator('#visible-count').innerText(), '1 result');
   assert.equal(await page.locator('#model-rows tr').count(), 1);
 
   const repeatedScopeUrl = new URL(base);
   repeatedScopeUrl.search = '';
   campaignModelIds.slice(0, 2).forEach(id => repeatedScopeUrl.searchParams.append('models', id));
   await page.goto(repeatedScopeUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '2 of 2 selected configurations');
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '2 results');
   const repeatedModels = campaignModels.filter(model => campaignModelIds.slice(0, 2).includes(model.id));
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(repeatedModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
 
@@ -233,7 +233,7 @@ try {
   unknownScopeUrl.search = '';
   unknownScopeUrl.searchParams.set('models', `${campaignModelIds[0]},bad-model-id`);
   await page.goto(unknownScopeUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 of 1 selected configurations');
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 result');
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), [campaignModelIds[0]], 'Unknown IDs must not expose unrelated configurations');
   assert.ok((await page.locator('#scope-note').innerText()).includes('bad-model-id'));
 
@@ -241,7 +241,7 @@ try {
   onlyUnknownScopeUrl.search = '';
   onlyUnknownScopeUrl.searchParams.set('models', 'bad-model-id');
   await page.goto(onlyUnknownScopeUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 of 0 selected configurations');
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
   assert.equal(await page.locator('#model-rows tr').count(), 0, 'An all-unknown selection must stay empty');
   assert.equal(await page.locator('#no-results h3').innerText(), 'No recognized configurations in this subset.');
   assert.ok((await page.locator('#no-results p').innerText()).includes('bad-model-id'));
@@ -254,7 +254,7 @@ try {
   emptyScopeUrl.search = '';
   emptyScopeUrl.searchParams.set('models', '');
   await page.goto(emptyScopeUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 of 0 selected configurations');
+  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
   assert.equal(await page.locator('#model-rows tr').count(), 0, 'An explicitly empty selection must stay empty');
   assert.ok((await page.locator('#no-results p').innerText()).includes('No model IDs were selected'));
   assert.equal(await page.locator('#clear-filters').innerText(), 'Clear subset and filters');
@@ -376,16 +376,29 @@ try {
   await page.locator('#close-player').click();
   assert.equal(await page.locator('audio').evaluate(a => a.paused), true);
   await page.setViewportSize({width:390,height:844});
+  assert.equal(await page.locator('.overview').isVisible(), false, 'Duplicate overview counters are hidden on mobile');
+  assert.equal(await page.locator('#updated').isVisible(), false, 'The latest-receipt date is hidden on mobile');
+  assert.equal(await page.locator('#visible-count').isVisible(), false, 'The unfiltered configuration count is not repeated');
+  assert.ok((await page.locator('h1').boundingBox()).height < 30, 'The mobile title fits on one line');
+  assert.ok((await page.locator('.intro-copy').boundingBox()).height < 22, 'The mobile hardware and workload baseline fits on one line');
+  const filterDetails = page.locator('#filter-details');
+  assert.equal(await filterDetails.evaluate(details => details.open), false, 'Less-used filters start collapsed on mobile');
+  await filterDetails.locator('summary').click();
+  assert.equal(await filterDetails.evaluate(details => details.open), true, 'The Filters disclosure opens accessibly');
   mobileFilterWidths = await page.evaluate(() => Object.fromEntries(['cohort','license'].map(id => {
     const control = document.querySelector('#' + id), field = control.parentElement;
     return [id,{field:Math.round(field.getBoundingClientRect().width),control:Math.round(control.getBoundingClientRect().width)}];
   })));
   assert.ok(mobileFilterWidths.cohort.control > 100, `Mobile evidence selector stays usable: ${JSON.stringify(mobileFilterWidths.cohort)}`);
   assert.ok(mobileFilterWidths.license.control > 100, `Mobile license selector stays usable: ${JSON.stringify(mobileFilterWidths.license)}`);
+  await filterDetails.locator('summary').click();
   await page.locator('#sort-select').selectOption('cpu');
   assert.equal(await page.locator('#model-rows tr').first().getAttribute('data-model'), expectedGeneration(expected.models, 'cpu').sort((a,b)=>a.warm.cpu.medianSeconds-b.warm.cpu.medianSeconds)[0].id);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.evaluate(() => {window.scrollTo(0,0);document.activeElement?.blur();});
+  const firstAudioCell = await page.locator('#model-rows tr').first().locator('td[data-label="Listen · 30s"]').boundingBox();
+  assert.ok(firstAudioCell && firstAudioCell.y + firstAudioCell.height <= 844, `The first result and its listen controls fit the initial mobile viewport: ${JSON.stringify(firstAudioCell)}`);
+  const mobileDefaultLayout = {firstAudioCellBottom:Math.round(firstAudioCell.y + firstAudioCell.height),viewportHeight:844};
   await page.screenshot({path:`${review}/mobile.png`,fullPage:true});
   await page.evaluate(() => scrollTo(0, 0));
   await page.screenshot({path:`${review}/mobile-viewport.png`});
@@ -440,7 +453,7 @@ try {
     assert.equal(await syntheticPage.locator('#charts .bar-row').count(), 24, 'A downloaded weight alone does not add a model to size ranking');
     assert.equal(await syntheticPage.locator('#charts [data-detail="synthetic-no-eligible-result"]').count(), 0);
     await syntheticPage.goto(new URL('?models=synthetic-no-eligible-result',base).href);
-    await syntheticPage.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 of 0 selected configurations');
+    await syntheticPage.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
     assert.ok((await syntheticPage.locator('#no-results p').innerText()).includes('No eligible published measurements'));
     await syntheticPage.goto(new URL('?model=synthetic-no-eligible-result',base).href);
     await syntheticPage.waitForFunction(() => document.querySelector('dialog')?.open);
@@ -475,9 +488,26 @@ try {
     const evidence = faultCard.locator('details');
     await evidence.locator('summary').click();
     assert.equal(await evidence.locator(`a[href="${'https://github.com/ngelik/tts-bench/tree/main/diagnostics/audio8-waveform'}"]`).count(), 1);
-    await faultCard.locator('audio').evaluate(async a => {a.muted=true;await a.play();});
-    await page.waitForFunction(() => {const a=document.querySelector('#samples audio');return a.currentTime > .15 && !a.paused;});
-    await faultCard.locator('audio').evaluate(a => a.pause());
+    const audioControl = faultCard.locator('audio');
+    await audioControl.evaluate(a => {
+      a.muted = true;
+      a.addEventListener('error', () => { window.__diagnosticAudioError = {code:a.error?.code ?? null,message:a.error?.message ?? null,src:a.currentSrc}; }, {once:true});
+    });
+    const diagnosticPlayer = await audioControl.evaluate(a => ({controls:a.controls,preload:a.preload,src:new URL(a.getAttribute('src'),document.baseURI).pathname}));
+    assert.equal(diagnosticPlayer.controls, true, 'The opt-in diagnostic clip retains an audio control');
+    assert.equal(diagnosticPlayer.preload, 'none');
+    assert.ok(diagnosticPlayer.src.endsWith(audio8DiagnosticEntry.clip.path), 'Diagnostic audio resolves to its published local WAV');
+    await audioControl.click({position:{x:18,y:27}});
+    await page.waitForFunction(() => {
+      const player = document.querySelector('.audio-card[data-backend="webgpu"][data-model="audio8-realistic-0.6b-int4"] audio');
+      return player.currentTime > .15 && !player.paused || player.error;
+    }, null, {timeout:10000}).catch(async () => {
+      const state = await audioControl.evaluate(a => ({currentTime:a.currentTime,paused:a.paused,readyState:a.readyState,networkState:a.networkState,error:a.error?.code ?? null,src:a.currentSrc}));
+      throw new Error(`Diagnostic clip did not start after a real audio-control click: ${JSON.stringify(state)}`);
+    });
+    const playbackState = await audioControl.evaluate(a => ({currentTime:a.currentTime,paused:a.paused,error:a.error?.code ?? null,src:a.currentSrc}));
+    assert.ok(playbackState.currentTime > .15 && !playbackState.paused, `Diagnostic clip should remain listenable on explicit click: ${JSON.stringify(playbackState)}`);
+    await audioControl.evaluate(a => a.pause());
   }
   const sample = expected.models.find(model => model.audio.length).audio[0];
   const legacy = new URL('audio/', base); legacy.searchParams.set('sample', sample.clip.path.split('/').at(-1));
@@ -498,7 +528,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Short-input diagnostics fit mobile width');
   await page.screenshot({path:`${review}/diagnostics-mobile.png`,fullPage:true});
   assert.deepEqual(errors, []); assert.deepEqual(external, []); assert.deepEqual(failedResponses, []);
-  const result = {base,chrome:browser.version(),models:expected.models.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
+  const result = {base,chrome:browser.version(),models:expected.models.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,mobileDefaultLayout,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
   await writeFile(`${review}/verification.json`, JSON.stringify(result,null,2)+'\n');
   console.log(JSON.stringify(result,null,2));
 } finally {await browser?.close(); server?.kill('SIGTERM');}
