@@ -1608,11 +1608,11 @@ dialog h3 {
   #updated {
     display:none;
   }
-  h1 {
+  #page-title {
     white-space:nowrap;
     font-size:22px;
   }
-  .intro-copy {
+  .dashboard-intro .intro-copy {
     white-space:nowrap;
     font-size:12px;
   }
