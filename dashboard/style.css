@@ -1602,6 +1602,23 @@ dialog h3 {
   }
   .filter-field {
     width: 100%;
+    height: auto;
+    min-height: 60px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px 8px;
+  }
+  .filter-field>span {
+    font-size: 9px;
+  }
+  .filter-field select {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 2px 14px 2px 0;
+    font-size: 10px;
   }
   .filters #reset {
     justify-self: end;

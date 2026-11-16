@@ -94,7 +94,7 @@ function clearNoResults() {
 }
 function visibleModels() {
   const term = $('#search').value.trim().toLowerCase(), cohort = $('#cohort').value, license = $('#license').value;
-  return state.data.models.filter(model => hasEligibleResult(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license) && (cohort === 'all' || (cohort === 'paired' && model.pairedWarm) || (cohort === 'historical' && historical(model)) || ['warm', 'memory'].some(kind => ['cpu', 'webgpu'].some(backend => model[kind][backend]?.cohortKey === cohort)))).sort(compare);
+  return state.data.models.filter(model => hasEligibleResult(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license) && (cohort === 'all' || (cohort === 'paired' && model.pairedWarm) || (cohort === 'historical' && historical(model)) || ['cpu', 'webgpu'].some(backend => (isEligibleWarm(model.warm[backend]) && model.warm[backend].cohortKey === cohort) || (isEligibleMemory(model.memory[backend]) && model.memory[backend].cohortKey === cohort)))).sort(compare);
 }
 function exampleFor(model, backend) {
   return model.playbackAudio[backend];
@@ -138,7 +138,7 @@ function renderTable(models) {
     const rowState = model.pairedWarm ? 'Matched pair' : historical(model) ? 'Historical' : '';
     const memoryOnly = !hasWarmScore(model) && hasHealthyCachedMemory(model);
     const countPair = model.id === 'fun-cosyvoice3-0.5b-2512';
-    const statusBadge = rowState ? `<span class="evidence-tag ${historical(model) ? 'historical' : ''}" title="${model.pairedWarm ? 'Native CPU/GPU pair with compatible protocol, source, assets, settings and environment' : 'At least one warm receipt is historical or uses earlier assets'}">${rowState}</span>` : '';
+    const statusBadge = rowState ? `<span class="evidence-tag ${historical(model) ? 'historical' : ''}" title="${model.pairedWarm ? 'Native CPU/GPU pair with compatible protocol, source, assets, settings and environment' : 'At least one receipt is historical or uses earlier assets'}">${rowState}</span>` : '';
     return `<tr data-model="${escape(model.id)}"><td data-label="Model"><div class="model-cell"><span class="model-monogram" aria-hidden="true">${escape(model.name.slice(0, 2).toUpperCase())}</span><div><button class="model-name" data-detail="${escape(model.id)}">${escape(model.name)}</button><div class="model-sub">${statusBadge}${memoryOnly ? '<span class="evidence-tag cached-only">RAM only · cached</span>' : ''}${outputWarningTag(model)}</div></div></div></td><td data-label="Weights · MB"><span class="value">${fmt(model.modelMB)}</span></td><td data-label="License"><button class="license-tag" data-detail="${escape(model.id)}" title="${escape(model.license.model)}" aria-label="Model license: ${escape(model.name)}. ${escape(model.license.model)}">${escape(shortLicense(model.license.model))}</button></td>${metricCell(model.warm.cpu, 'medianSeconds', maxTime, 'cpu', 'CPU · seconds', true, countPair)}${metricCell(model.warm.webgpu, 'medianSeconds', maxTime, 'webgpu', 'GPU · seconds', true, countPair)}${metricCell(model.memory.cpu, 'meanMB', 1, 'cpu', 'Cached RAM · CPU · avg MB', false)}${metricCell(model.memory.webgpu, 'meanMB', 1, 'webgpu', 'Cached RAM · GPU · avg MB', false)}<td data-label="Listen · 30s">${audioButtons(model)}</td></tr>`;
   }).join('');
   $$('th[data-column]').forEach(th => {
@@ -287,7 +287,7 @@ try {
   const response = await fetch('./assets/data.json'); if (!response.ok) throw new Error(`Data HTTP ${response.status}`);
   state.data = await response.json();
   if (state.data.schemaVersion !== 1 || !state.data.models.length) throw new Error('Unsupported dashboard data');
-  const cohorts = [...new Map(state.data.models.flatMap(model => ['warm', 'memory'].flatMap(kind => ['cpu', 'webgpu'].map(backend => model[kind][backend]))).filter(metric => metric?.origin === 'native' && metric.cohortKey).map(metric => [metric.cohortKey, metric])).entries()].sort((a, b) => a[1].createdAt.localeCompare(b[1].createdAt));
+  const cohorts = [...new Map(state.data.models.flatMap(model => ['warm', 'memory'].flatMap(kind => ['cpu', 'webgpu'].map(backend => model[kind][backend]))).filter(metric => metric?.origin === 'native' && metric.cohortKey && (isEligibleWarm(metric) || isEligibleMemory(metric))).map(metric => [metric.cohortKey, metric])).entries()].sort((a, b) => a[1].createdAt.localeCompare(b[1].createdAt));
   cohorts.forEach(([key, metric], index) => {
     const label = `C${index + 1} · ${metric.sourceCommit.slice(0, 8)} · Chrome ${chromeVersion(metric)} · ${metric.scenario === 'cached' ? 'cached RAM' : 'warm'}`;
     state.cohorts.set(key, {label, metric});

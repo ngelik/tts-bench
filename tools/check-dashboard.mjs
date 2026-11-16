@@ -30,6 +30,7 @@ const expectedAudioEntries = expected.models.flatMap(model => model.audio);
 const flaggedAudioPaths = new Set(expectedAudioEntries.filter(entry => matchesAuditedWav(entry.full.sha256)).map(entry => entry.clip.path));
 const errors = [], external = [], failedResponses = [];
 const review = '.cache/dashboard-review';
+let mobileFilterWidths = null;
 async function measureResults(page) {
   return page.evaluate(() => {
     const first = document.querySelector('#model-rows tr');
@@ -297,6 +298,7 @@ try {
     }
   }
   await mkdir(review, {recursive:true});
+  await page.evaluate(() => {window.scrollTo(0,0);document.activeElement?.blur();});
   await page.screenshot({path:`${review}/desktop.png`,fullPage:true});
   await page.locator('#search').fill('KOKORO');
   assert.equal(await page.locator('#model-rows tr').count(), 1);
@@ -325,7 +327,7 @@ try {
   assert.ok(cohortOptions.some(option => option.label.includes('cached RAM')), 'Native cached-memory source cohorts remain filterable');
   for (const key of cohorts) {
     await page.locator('#cohort').selectOption(key);
-    const expectedCohortModels = expected.models.filter(model => ['warm','memory'].some(kind => ['cpu','webgpu'].some(backend => model[kind][backend].cohortKey === key)));
+    const expectedCohortModels = expected.models.filter(model => ['cpu','webgpu'].some(backend => (eligibleWarm(model.warm[backend]) && model.warm[backend].cohortKey === key) || (eligibleMemory(model.memory[backend]) && model.memory[backend].cohortKey === key)));
     assert.equal(await page.locator('#model-rows tr').count(), expectedCohortModels.length);
   }
   await page.locator('#reset').click();
@@ -374,11 +376,16 @@ try {
   await page.locator('#close-player').click();
   assert.equal(await page.locator('audio').evaluate(a => a.paused), true);
   await page.setViewportSize({width:390,height:844});
-  assert.ok((await page.locator('#cohort').boundingBox()).width > 100, 'Mobile evidence filter stays usable');
-  assert.ok((await page.locator('#license').boundingBox()).width > 100, 'Mobile license filter stays usable');
+  mobileFilterWidths = await page.evaluate(() => Object.fromEntries(['cohort','license'].map(id => {
+    const control = document.querySelector('#' + id), field = control.parentElement;
+    return [id,{field:Math.round(field.getBoundingClientRect().width),control:Math.round(control.getBoundingClientRect().width)}];
+  })));
+  assert.ok(mobileFilterWidths.cohort.control > 100, `Mobile evidence selector stays usable: ${JSON.stringify(mobileFilterWidths.cohort)}`);
+  assert.ok(mobileFilterWidths.license.control > 100, `Mobile license selector stays usable: ${JSON.stringify(mobileFilterWidths.license)}`);
   await page.locator('#sort-select').selectOption('cpu');
   assert.equal(await page.locator('#model-rows tr').first().getAttribute('data-model'), expectedGeneration(expected.models, 'cpu').sort((a,b)=>a.warm.cpu.medianSeconds-b.warm.cpu.medianSeconds)[0].id);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.evaluate(() => {window.scrollTo(0,0);document.activeElement?.blur();});
   await page.screenshot({path:`${review}/mobile.png`,fullPage:true});
   await page.evaluate(() => scrollTo(0, 0));
   await page.screenshot({path:`${review}/mobile-viewport.png`});
@@ -491,7 +498,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Short-input diagnostics fit mobile width');
   await page.screenshot({path:`${review}/diagnostics-mobile.png`,fullPage:true});
   assert.deepEqual(errors, []); assert.deepEqual(external, []); assert.deepEqual(failedResponses, []);
-  const result = {base,chrome:browser.version(),models:expected.models.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
+  const result = {base,chrome:browser.version(),models:expected.models.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
   await writeFile(`${review}/verification.json`, JSON.stringify(result,null,2)+'\n');
   console.log(JSON.stringify(result,null,2));
 } finally {await browser?.close(); server?.kill('SIGTERM');}
