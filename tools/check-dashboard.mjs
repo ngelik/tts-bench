@@ -24,12 +24,20 @@ let server, browser;
 const number = n => n.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
 const eligibleWarm = metric => metric?.status === 'measured' && Number.isFinite(metric.medianSeconds) && !metric.waveform;
 const eligibleMemory = metric => metric?.status === 'measured' && Number.isFinite(metric.meanMB) && !metric.waveform;
+const currentWaveformFault = model => ['cpu','webgpu'].some(backend => {
+  const warm = model.warm[backend], memory = model.memory[backend];
+  if ((warm?.registration === 'current' && warm.waveform) || (memory?.registration === 'current' && memory.waveform)) return true;
+  const sample = model.playbackAudio?.[backend];
+  const selectedCurrentMetric = (warm?.registration === 'current' && sample?.matchesSelectedWarm) || (memory?.registration === 'current' && sample?.matchesSelectedMemory);
+  return Boolean(selectedCurrentMetric && sample && matchesAuditedWav(sample.full.sha256));
+});
 const expectedGeneration = (models, backend) => models.filter(model => eligibleWarm(model.warm[backend]));
 const expectedMemory = (models, backend) => models.filter(model => eligibleMemory(model.memory[backend]));
 const expectedAudioEntries = expected.models.flatMap(model => model.audio);
 const flaggedAudioPaths = new Set(expectedAudioEntries.filter(entry => matchesAuditedWav(entry.full.sha256)).map(entry => entry.clip.path));
 const errors = [], external = [], failedResponses = [];
 const review = '.cache/dashboard-review';
+const waveformBadge = row => row.locator('button.output-warning').filter({hasText:'Waveform fault'});
 let mobileFilterWidths = null;
 async function measureResults(page) {
   return page.evaluate(() => {
@@ -118,6 +126,14 @@ try {
     await page.keyboard.press('Escape');
   }
   const audio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
+  const audio8ArchivedFault = audio8?.audio.find(entry => matchesAuditedWav(entry.full.sha256));
+  const audio8CurrentGpuRecording = audio8?.playbackAudio?.webgpu;
+  assert.ok(audio8ArchivedFault, 'The Audio8 archived waveform diagnostic remains published');
+  assert.ok(audio8CurrentGpuRecording && (audio8CurrentGpuRecording.matchesSelectedWarm || audio8CurrentGpuRecording.matchesSelectedMemory), 'Audio8 exposes a recording selected by its current measurement');
+  assert.equal(matchesAuditedWav(audio8CurrentGpuRecording.full.sha256), false, 'The current Audio8 GPU recording passed waveform review');
+  const audio8Row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
+  assert.equal(await waveformBadge(audio8Row).count(), 0, 'An archived-only Audio8 fault does not badge the current result row');
+  assert.equal(await audio8Row.locator('[data-play][data-backend="webgpu"]').count(), 1, 'The healthy replacement GPU recording remains playable from the results table');
   const audio8Fault = audio8?.playbackAudio?.webgpu && matchesAuditedWav(audio8.playbackAudio.webgpu.full.sha256) ? audio8.playbackAudio.webgpu : null;
   if (audio8Fault) {
     const row = page.locator('tr[data-model="audio8-realistic-0.6b-int4"]');
@@ -146,7 +162,8 @@ try {
     const row = page.locator(`tr[data-model="${id}"]`);
     const memoryBackends = ['cpu', 'webgpu'].filter(backend => eligibleMemory(model.memory[backend]) && model.memory[backend].scenario === 'cached');
     if (!memoryBackends.length) continue;
-    assert.equal((await row.locator('.cached-only').innerText()).toLowerCase(), 'ram only · cached', `${id} remains identified as a cached-only result`);
+    const hasWarmResult = ['cpu', 'webgpu'].some(backend => eligibleWarm(model.warm[backend]));
+    assert.equal(await row.locator('.cached-only').count(), Number(!hasWarmResult), `${id} is labeled cached-only only when it has no eligible warm result`);
     for (const backend of memoryBackends) {
       const label = `Cached RAM · ${backend === 'cpu' ? 'CPU' : 'GPU'} · avg MB`;
       assert.equal(await row.locator(`td[data-label="${label}"] .value`).innerText(), number(model.memory[backend].meanMB));
@@ -277,13 +294,13 @@ try {
   }
   for (const model of expected.models) {
     const row = page.locator(`tr[data-model="${model.id}"]`);
-    const waveform = ['cpu','webgpu'].some(b => model.warm[b].waveform || model.memory[b].waveform) || model.audio.some(entry => matchesAuditedWav(entry.full.sha256));
+    const waveform = currentWaveformFault(model);
     const scored = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.scored);
     const warmup = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.warmup);
     assert.equal(await row.locator('.output-warning').count(), Number(waveform) + Number(scored));
     assert.equal(await row.locator('.output-warmup').count(), Number(warmup));
     if (waveform) {
-      await row.getByRole('button', {name:'Waveform fault'}).click();
+      await waveformBadge(row).click();
       assert.match(await page.locator('#detail-content').innerText(), /Waveform fault/);
       await page.keyboard.press('Escape');
     }
@@ -432,6 +449,22 @@ try {
   const syntheticPage = await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   try {
     const syntheticData = structuredClone(expected);
+    const sourceAudio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
+    const archivedAudio8Fault = sourceAudio8.audio.find(entry => matchesAuditedWav(entry.full.sha256));
+    const archivedOnly = structuredClone(sourceAudio8);
+    archivedOnly.id = 'synthetic-archived-waveform-only';
+    archivedOnly.name = 'Synthetic archived waveform only';
+    archivedOnly.pairedWarm = false;
+    const currentFault = structuredClone(sourceAudio8);
+    currentFault.id = 'synthetic-current-metric-waveform';
+    currentFault.name = 'Synthetic current metric waveform fault';
+    currentFault.pairedWarm = false;
+    currentFault.memory.webgpu = {...currentFault.memory.webgpu,waveform:{finding:'Synthetic current result waveform fault',url:'https://github.com/ngelik/tts-bench/tree/main/diagnostics/audio8-waveform',diagnosticSeconds:[12.5]}};
+    const currentRecordingFault = structuredClone(sourceAudio8);
+    currentRecordingFault.id = 'synthetic-current-recording-waveform';
+    currentRecordingFault.name = 'Synthetic current recording waveform fault';
+    currentRecordingFault.pairedWarm = false;
+    currentRecordingFault.playbackAudio.webgpu = {...structuredClone(archivedAudio8Fault),resultId:currentRecordingFault.memory.webgpu.resultId,matchesSelectedMemory:true};
     const synthetic = structuredClone(expected.models[0]);
     synthetic.id = 'synthetic-no-eligible-result';
     synthetic.name = 'Synthetic no-result configuration';
@@ -442,15 +475,26 @@ try {
     synthetic.memory.webgpu = {...synthetic.memory.webgpu,status:'error',meanMB:null,reason:'Synthetic pending only'};
     synthetic.audio = [];
     synthetic.playbackAudio = {cpu:null,webgpu:null};
-    syntheticData.models.push(synthetic);
+    syntheticData.models.push(archivedOnly,currentFault,currentRecordingFault,synthetic);
     await syntheticPage.route('**/assets/data.json*', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
     await syntheticPage.goto(base);
-    await syntheticPage.waitForFunction(() => document.querySelectorAll('#model-rows tr').length === 24);
-    assert.equal(await syntheticPage.locator('#model-count').innerText(), '24', 'A model with only error, unsupported and fault-only data is excluded from result counts');
+    const syntheticVisibleCount = expected.models.filter(model => ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]))).length + 3;
+    await syntheticPage.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, syntheticVisibleCount);
+    assert.equal(await syntheticPage.locator('#model-count').innerText(), String(syntheticVisibleCount), 'A model with only error, unsupported and fault-only data is excluded from result counts');
     assert.equal(await syntheticPage.locator('#model-rows tr[data-model="synthetic-no-eligible-result"]').count(), 0);
+    const archivedOnlyRow = syntheticPage.locator('tr[data-model="synthetic-archived-waveform-only"]');
+    assert.equal(await waveformBadge(archivedOnlyRow).count(),0,'A historical fault is not presented as a current output warning');
+    assert.equal(await archivedOnlyRow.locator('[data-play][data-backend="webgpu"]').count(),1,'The healthy selected replacement remains playable');
+    const currentMetricFaultRow = syntheticPage.locator('tr[data-model="synthetic-current-metric-waveform"]');
+    assert.equal(await waveformBadge(currentMetricFaultRow).count(),1,'A current metric waveform finding remains visible independently of clip metadata');
+    assert.equal(await currentMetricFaultRow.locator('[data-play][data-backend="webgpu"]').count(),1,'Healthy selected audio remains playable when only a metric carries the fault');
+    const currentRecordingFaultRow = syntheticPage.locator('tr[data-model="synthetic-current-recording-waveform"]');
+    assert.equal(await waveformBadge(currentRecordingFaultRow).count(),1,'A faulted recording selected by a current metric keeps its visible warning');
+    assert.equal(await currentRecordingFaultRow.locator('[data-play][data-backend="webgpu"]').count(),0,'Faulted current playback stays behind diagnostic opt-in');
     await syntheticPage.locator('[data-view="charts"]').click();
     await syntheticPage.locator('[data-metric="size"]').click();
-    assert.equal(await syntheticPage.locator('#charts .bar-row').count(), 24, 'A downloaded weight alone does not add a model to size ranking');
+    const syntheticSizeCount = expected.models.filter(model => Number.isFinite(model.modelMB) && ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]))).length + [archivedOnly,currentFault,currentRecordingFault].filter(model => Number.isFinite(model.modelMB)).length;
+    assert.equal(await syntheticPage.locator('#charts .bar-row').count(), syntheticSizeCount, 'A downloaded weight alone does not add a model to size ranking');
     assert.equal(await syntheticPage.locator('#charts [data-detail="synthetic-no-eligible-result"]').count(), 0);
     await syntheticPage.goto(new URL('?models=synthetic-no-eligible-result',base).href);
     await syntheticPage.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
@@ -465,6 +509,7 @@ try {
   const selectedPaths = new Set(expected.models.flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio[backend]?.clip.path).filter(Boolean)));
   const selectedHealthy = [...selectedPaths].filter(path => !flaggedAudioPaths.has(path));
   const audio8DiagnosticEntry = expectedAudioEntries.find(entry => entry.model === 'audio8-realistic-0.6b-int4' && entry.backend === 'webgpu' && matchesAuditedWav(entry.full.sha256));
+  assert.equal(audio8DiagnosticEntry?.clip.path, audio8ArchivedFault.clip.path, 'The old Audio8 fault remains available in the diagnostic recording set');
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, selectedHealthy.length);
   const defaultAudioPaths = await page.locator('#samples .audio-card').evaluateAll(cards => cards.map(card => `audio/samples/${card.dataset.sample}`));
   assert.deepEqual(new Set(defaultAudioPaths), new Set(selectedHealthy), 'The default listening page shows one healthy selected example per configuration/backend');
@@ -488,6 +533,7 @@ try {
     const evidence = faultCard.locator('details');
     await evidence.locator('summary').click();
     assert.equal(await evidence.locator(`a[href="${'https://github.com/ngelik/tts-bench/tree/main/diagnostics/audio8-waveform'}"]`).count(), 1);
+    assert.equal(await evidence.locator(`a[href="${audio8DiagnosticEntry.reportUrl}"]`).count(), 1, 'The archived clip keeps its run receipt in recording details');
     const audioControl = faultCard.locator('audio');
     await audioControl.evaluate(a => {
       a.muted = true;
@@ -497,11 +543,12 @@ try {
     assert.equal(diagnosticPlayer.controls, true, 'The opt-in diagnostic clip retains an audio control');
     assert.equal(diagnosticPlayer.preload, 'none');
     assert.ok(diagnosticPlayer.src.endsWith(audio8DiagnosticEntry.clip.path), 'Diagnostic audio resolves to its published local WAV');
+    const diagnosticSelector = `.audio-card[data-sample="${audio8DiagnosticEntry.clip.path.split('/').at(-1)}"] audio`;
     await audioControl.click({position:{x:18,y:27}});
-    await page.waitForFunction(() => {
-      const player = document.querySelector('.audio-card[data-backend="webgpu"][data-model="audio8-realistic-0.6b-int4"] audio');
-      return player.currentTime > .15 && !player.paused || player.error;
-    }, null, {timeout:10000}).catch(async () => {
+    await page.waitForFunction(selector => {
+      const player = document.querySelector(selector);
+      return player && (player.currentTime > .15 && !player.paused && player.readyState >= 2 || player.error);
+    }, diagnosticSelector, {timeout:10000}).catch(async () => {
       const state = await audioControl.evaluate(a => ({currentTime:a.currentTime,paused:a.paused,readyState:a.readyState,networkState:a.networkState,error:a.error?.code ?? null,src:a.currentSrc}));
       throw new Error(`Diagnostic clip did not start after a real audio-control click: ${JSON.stringify(state)}`);
     });
