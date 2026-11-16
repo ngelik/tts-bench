@@ -60,8 +60,17 @@ const metricValue = (model, key) => ({
 })[key];
 const hasWarmScore = model => ['cpu', 'webgpu'].some(backend => isEligibleWarm(model.warm[backend]));
 const hasHealthyCachedMemory = model => ['cpu', 'webgpu'].some(backend => isEligibleMemory(model.memory[backend]) && model.memory[backend].scenario === 'cached');
+function hasCurrentWaveformFault(model) {
+  return ['cpu', 'webgpu'].some(backend => {
+    const warm = model.warm[backend], memory = model.memory[backend];
+    if ((warm?.registration === 'current' && warm.waveform) || (memory?.registration === 'current' && memory.waveform)) return true;
+    const sample = model.playbackAudio?.[backend];
+    const selectedCurrentMetric = (warm?.registration === 'current' && sample?.matchesSelectedWarm) || (memory?.registration === 'current' && sample?.matchesSelectedMemory);
+    return Boolean(selectedCurrentMetric && sample && matchesAuditedWav(sample.full.sha256));
+  });
+}
 function outputWarningTag(model) {
-  const defect = ['cpu', 'webgpu'].some(b => model.warm[b]?.waveform || model.memory[b]?.waveform) || model.audio.some(entry => matchesAuditedWav(entry.full.sha256));
+  const defect = hasCurrentWaveformFault(model);
   const flag = defect ? `<button type="button" class="evidence-tag output-warning" data-detail="${escape(model.id)}" title="Open the affected recording and waveform audit">Waveform fault</button>` : '';
   const scored = ['cpu', 'webgpu'].flatMap(backend => model.warm[backend]?.outputNotes?.scored ? [[backend, model.warm[backend].outputNotes.scored.text]] : []);
   const warmup = ['cpu', 'webgpu'].flatMap(backend => model.warm[backend]?.outputNotes?.warmup ? [[backend, model.warm[backend].outputNotes.warmup.text]] : []);
