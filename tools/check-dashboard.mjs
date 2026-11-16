@@ -59,7 +59,7 @@ try {
     const row = page.locator('tr[data-model="fun-cosyvoice3-0.5b-2512"]');
     const score = row.locator('td[data-label="CPU · seconds"] a.metric-link');
     assert.equal(await score.getAttribute('href'), cosySelectionReportUrl, 'The selected CPU score opens its readable selection report');
-    assert.match(await score.getAttribute('title'), /n=2 completed scored articles from 5 planned/);
+    assert.match(await score.getAttribute('title'), /Reviewed selection: 2 completed scored articles from 5 planned/);
     await row.locator('.model-name').click();
     const cpuDetails = page.locator('#detail-content .detail-card').filter({hasText: 'CPU warm generation'});
     assert.equal(await cpuDetails.locator(`a[href="${cosySelection.reportUrl}"]`).count(), 1, 'Details retain the raw native receipt link');
@@ -108,7 +108,7 @@ try {
     const chartRow = page.locator('.chart-panel.cpu .bar-row').filter({has: page.locator('[data-detail="fun-cosyvoice3-0.5b-2512"]')});
     const score = chartRow.locator('a.selection-report-link');
     assert.equal(await score.getAttribute('href'), cosySelectionReportUrl, 'The chart score also opens the readable selection report');
-    assert.match(await score.getAttribute('title'), /n=2 completed scored articles from 5 planned/);
+    assert.match(await score.getAttribute('title'), /Reviewed selection: 2 completed scored articles from 5 planned/);
   }
 
   const campaignUrl = new URL(base);
