@@ -261,11 +261,12 @@ try {
     const publicPage=await publicContext.newPage();
     const publicErrors=[];
     const publicAssetResponses=[];
+    const publicAssetPaths=['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs'];
     publicPage.on('pageerror',error=>publicErrors.push(String(error)));
     publicPage.on('console',message=>{if(message.type()==='error')publicErrors.push(message.text());});
     publicPage.on('response',response=>{
       const path=new URL(response.url()).pathname;
-      if (!['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs'].includes(path)) return;
+      if (!publicAssetPaths.some(assetPath=>path.endsWith(assetPath))) return;
       publicAssetResponses.push(response.body().then(body=>({url:response.url(),status:response.status(),bytes:body.length,sha256:createHash('sha256').update(body).digest('hex')})).catch(error=>({url:response.url(),status:response.status(),error:String(error)})));
     });
     const freshUrl=new URL(publicUrl);
@@ -281,7 +282,14 @@ try {
       assert.equal(await publicPage.locator('#load-error').isVisible(),false);
       const playback=await verifyPlayback(publicPage);
       assert.deepEqual(publicErrors,[],'Fresh public visit has no browser runtime errors');
-      report.public={url:freshUrl.href,rows,modelIds:publicIds,playback,assets:await Promise.all(publicAssetResponses),errors:publicErrors};
+      const assets=await Promise.all(publicAssetResponses);
+      for (const assetPath of publicAssetPaths) {
+        const match=assets.find(asset=>new URL(asset.url).pathname.endsWith(assetPath));
+        assert.ok(match,`Fresh public visit fetched ${assetPath}`);
+        assert.equal(match.status,200,`Fresh public ${assetPath} response is successful`);
+        assert.ok(match.bytes>0&&/^[a-f0-9]{64}$/.test(match.sha256),`Fresh public ${assetPath} body was captured and hashed`);
+      }
+      report.public={url:freshUrl.href,rows,modelIds:publicIds,playback,assets,errors:publicErrors};
     } catch (error) {
       report.public={url:freshUrl.href,rows:await publicPage.locator('#model-rows tr').count().catch(()=>null),loadError:await publicPage.locator('#load-error').isVisible().catch(()=>null),assets:await Promise.all(publicAssetResponses),errors:publicErrors,error:String(error)};
       throw error;
