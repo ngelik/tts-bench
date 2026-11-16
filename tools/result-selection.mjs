@@ -79,6 +79,8 @@ export function pairedWarm(cpu, webgpu, model) {
   const a = cpu.result, b = webgpu.result;
   const ac = cpu.cell, bc = webgpu.cell;
   if (a.origin !== 'native' || b.origin !== 'native' || ac.status !== 'measured' || bc.status !== 'measured') return false;
+  if (!Array.isArray(ac.trials) || !Array.isArray(bc.trials) || ac.trials.length !== bc.trials.length ||
+      ac.trials.length !== a.protocol.repetitions || bc.trials.length !== b.protocol.repetitions) return false;
   if (stable(a.protocol) !== stable(b.protocol) || stable(a.fixture) !== stable(b.fixture)) return false;
   if (a.source.manifestSha256 !== b.source.manifestSha256) return false;
   if (environmentKey(a) !== environmentKey(b)) return false;

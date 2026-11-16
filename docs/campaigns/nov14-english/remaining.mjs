@@ -4,6 +4,7 @@ import {execFileSync} from 'node:child_process';
 import {readFile, realpath} from 'node:fs/promises';
 import {resolve, sep} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {effectiveCampaignCell} from '../../../lib/campaign-plan.mjs';
 
 const [planPath, ...ledgers] = process.argv.slice(2);
 if (!planPath || !ledgers.length) throw Error('Usage: node remaining.mjs ORIGINAL-PLAN attempts.jsonl [attempts.jsonl ...]');
@@ -19,7 +20,15 @@ for (const ledger of ledgers) {
   for (const line of (await readFile(ledger,'utf8')).split('\n').filter(Boolean)) {
     const a = JSON.parse(line);
     assert.equal(a.commit,plan.sourceCommit);
-    assert.ok(plan.cells.some(c => key(c)===key(a.cell)),'Unexpected cell in this ledger');
+    const requested = plan.cells.find(c => key(c)===key(a.requestedCell??a.cell));
+    assert.ok(requested,'Unexpected cell in this ledger');
+    assert.deepEqual(a.requestedCell??a.cell,requested,'Ledger request differs from the saved plan');
+    const effective = effectiveCampaignCell(requested);
+    // Ledgers created before model-specific normalization stored the requested
+    // cell in `cell`; current ledgers store both requestedCell and effective cell.
+    if (a.requestedCell) assert.deepEqual(a.cell,effective,'Ledger effective cell differs from current campaign policy');
+    else assert.ok(JSON.stringify(a.cell)===JSON.stringify(requested)||JSON.stringify(a.cell)===JSON.stringify(effective),
+      'Ledger cell differs from both legacy and current effective plans');
     if (a.exitCode !== 0 || a.reviewError !== null) continue;
     assert.match(a.resultId,/^[a-z0-9][a-z0-9._-]{0,119}$/);
     assert.equal(a.resultPath,'runs/'+a.resultId+'/result.json');
@@ -28,10 +37,17 @@ for (const ledger of ledgers) {
     assert.equal(r.id,a.resultId);assert.equal(r.source.gitCommit,plan.sourceCommit);
     const [cell] = r.cells;
     assert.equal(r.cells.length,1);
-    const scheduled = plan.cells.find(c=>key(c)===key({model:cell.model,backend:cell.backendRequested,scenario:r.protocol.scenario}));
-    assert.deepEqual(scheduled,a.cell);
+    const scheduled = effectiveCampaignCell(requested);
+    const recorded = a.requestedCell ? a.cell : (JSON.stringify(a.cell)===JSON.stringify(scheduled) ? a.cell : requested);
+    assert.deepEqual(recorded,a.cell);
+    assert.equal(cell.model,scheduled.model,'Receipt model does not match the scheduled campaign cell');
+    assert.equal(cell.backendRequested,scheduled.backend,'Receipt backend does not match the scheduled campaign cell');
+    assert.equal(r.protocol.scenario,scheduled.scenario,'Receipt scenario does not match the scheduled campaign cell');
+    assert.equal(r.protocol.smoke,false,'Campaign receipt cannot be a smoke diagnostic');
     assert.equal(r.protocol.id,'browser-tts-'+scheduled.scenario+'-v1'+(scheduled.resources?'-resources':''));
-    assert.equal(r.protocol.repetitions,scheduled.repetitions);
+    assert.equal(r.protocol.repetitions,recorded.repetitions);
+    assert.equal(r.protocol.warmupRuns,scheduled.scenario==='warm'?1:0);
+    assert.equal(r.protocol.networkMbps,scheduled.scenario==='network'?1:null);
     assert.ok(['measured','unsupported'].includes(cell.status));
     if (scheduled.resources && cell.status==='measured') assert.ok(cell.trials.every(t=>t.memory?.availability==='measured'));
     completed.add(key(scheduled));

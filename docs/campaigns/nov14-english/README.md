@@ -1,6 +1,6 @@
 # Reproduce the November English TTS campaign
 
-The [machine-readable plan](plan.json) reproduces the 14 full-article cells for Ming 3.0, Audio8 Realistic and Fun-CosyVoice3. It uses the 20,000-character English article in 93 spans. Seven cached cells collect generation-window Chrome process-tree RSS from one scored full article each. Seven warm cells each run one excluded full article followed by five timed articles. Each article has a 1,440-minute timeout. WebGPU runs precede CPU within each phase. The order in the plan is fixed. Ming Q8_0 GGUF and six-thread Fusor mixed-quantization CPU are distinct configurations. [Published campaign table and receipts](../../../reports/nov14-multilingual-english/overview.md)
+The frozen [machine-readable original plan](plan.json) records the 14 full-article cells for Ming 3.0, Audio8 Realistic and Fun-CosyVoice3. It uses the 20,000-character English article in 93 spans. Seven cached cells collect generation-window Chrome process-tree RSS from one scored full article each. The original seven warm cells each planned one excluded full article followed by five timed articles. Each article has a 1,440-minute timeout. WebGPU runs precede CPU within each phase. The order in the plan is fixed. Ming Q8_0 GGUF and six-thread Fusor mixed-quantization CPU are distinct configurations. A fresh replay keeps this file as provenance, but new CosyVoice3 tests use one scored article for every scenario on either backend; warm runs also keep the excluded warm-up. The current CPU evidence is an operator-reviewed selection of two completed articles from five planned; the original receipt remains error. [Selection details and checkpoints](cosy-cpu-warm-selection.md) · [Published campaign table and receipts](../../../reports/nov14-multilingual-english/overview.md)
 
 Compare the four configurations in the [table view](https://ngelik.github.io/tts-bench/?models=audio8-realistic-0.6b-int4,fun-cosyvoice3-0.5b-2512,ming-3.0-tts-0.5b-gguf,ming-3.0-tts-0.5b-fusor-mix-cpu#results) or [chart view](https://ngelik.github.io/tts-bench/?models=audio8-realistic-0.6b-int4,fun-cosyvoice3-0.5b-2512,ming-3.0-tts-0.5b-gguf,ming-3.0-tts-0.5b-fusor-mix-cpu&view=charts#results). Each value links to its own published receipt. The dashboard retains warnings on archived results and marks compatible CPU/GPU pairs. Each metric retains its own source and protocol.
 
@@ -8,7 +8,7 @@ The [November 15 interim report](https://github.com/ngelik/tts-bench/releases/ta
 
 The reference machine is a MacBook Pro with an 8-core Apple M1 Pro, 16 GiB RAM, arm64, Darwin 25.6.0 and headed Google Chrome 157.0.8103.40. Use AC power and a hardware WebGPU adapter, with one dedicated benchmark tab and no parallel model runs. Other machines can run the plan with their actual machine label. The controller records the installed environment alongside the measurements. [Protocol](../../PROTOCOL.md)
 
-## Stage the pinned runtime
+## Reproduce the original source cohort
 
 Keep the current documentation in one checkout and run the benchmark from the clean source commit used by the receipts. The plan was added after that commit.
 
@@ -71,14 +71,28 @@ These totals exclude licenses and metadata not fetched by initialization, altern
 
 ## Run all 14 cells
 
+For a new run with the current CosyVoice3 policy, use a clean checkout of the
+current committed source. The detached `ab5aec3` worktree above is only for
+reproducing the original five-repetition setup. In the current checkout, install
+dependencies and stage its currently registered assets before running the plan.
+
 ```sh
+cd "$(git -C "$campaign_docs" rev-parse --show-toplevel)"
+npm ci
+for model in fun-cosyvoice3-0.5b-2512 ming-3.0-tts-0.5b-gguf \
+             audio8-realistic-0.6b-int4 ming-3.0-tts-0.5b-fusor-mix-cpu
+do
+  npm run assets -- fetch --model "$model" --accept-license || exit 1
+  npm run assets -- verify --model "$model" --accept-license || exit 1
+done
 machine='MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64'
-test "$(git rev-parse HEAD)" = "$source_commit" && \
-  node tools/run-campaign.mjs --plan "$campaign_docs/plan.json" \
+node "$campaign_docs/replay-plan.mjs" > runs/nov14-replay-plan.json && \
+  node tools/run-campaign.mjs --plan runs/nov14-replay-plan.json --dry-run && \
+  node tools/run-campaign.mjs --plan runs/nov14-replay-plan.json \
     --machine "$machine" --accept-license
 ```
 
-The runner saves the plan, status, attempts ledger and final status in `runs/campaign-*/`. Per-run receipts and scored WAVs are under `runs/<run-id>/`. Cached resource trials and warm timing trials have separate protocol IDs. The standard runner adds its own campaign ID and cell-index note to each receipt. Results are eligible for submission only after validation. [Publication workflow](../../../CONTRIBUTING.md)
+The replay helper pins the current clean source and records the frozen plan commit and SHA-256. Its output already contains the current effective count for CosyVoice3. The dry-run prints requested and effective counts and reports whether the input source pin matches the current commit; it is informational and never starts a run. Passing a copied legacy plan directly shows its old request alongside the one-trial effective count. Other plan cells retain their requested counts. The runner saves both the literal input plan and effective plan, status, attempts ledger and final status in `runs/campaign-*/`. Per-run receipts and scored WAVs are under `runs/<run-id>/`. Cached resource trials and warm timing trials have separate protocol IDs. The standard runner adds its own campaign ID and cell-index note to each receipt. Results are eligible for submission only after validation. [Publication workflow](../../../CONTRIBUTING.md)
 
 ## Why the Ming Q8_0 CPU run stopped
 
@@ -88,12 +102,13 @@ Ming's separately registered Fusor CPU configuration completed the full article.
 
 ## Resume after an interruption
 
-The standard runner stops for review if a cell fails or its RAM coverage is insufficient. Inspect the failed run and its source before retrying. Preserve every attempt. To continue, pass the original plan and every `attempts.jsonl` from **this reproduction** to the helper below. The helper verifies successful receipts and their source, keeps unsupported outcomes, and writes the still-pending cells in their original order. A partially generated article has no accepted receipt and restarts at that cell. A source change starts a new comparison cohort.
+The standard runner stops for review if a cell fails or its RAM coverage is insufficient. Inspect the failed run and its source before retrying. Preserve every attempt. To continue, pass the saved replay plan and every `attempts.jsonl` from **this reproduction** to the helper below. The helper verifies successful receipts and their source, keeps unsupported outcomes, and writes the still-pending cells in their original order. A partially generated article has no accepted receipt and restarts at that cell. A source change starts a new comparison cohort.
 
 ```sh
 # Replace this path with the campaign directory printed by your run.
-ledger=runs/campaign-YOUR-RUN/attempts.jsonl
-node "$campaign_docs/remaining.mjs" "$campaign_docs/plan.json" "$ledger" > runs/nov14-remaining.json && \
+campaign=runs/campaign-YOUR-RUN
+ledger="$campaign/attempts.jsonl"
+node "$campaign_docs/remaining.mjs" "$campaign/plan.json" "$ledger" > runs/nov14-remaining.json && \
   if test -s runs/nov14-remaining.json; then
     node tools/run-campaign.mjs --plan runs/nov14-remaining.json \
       --machine "$machine" --accept-license

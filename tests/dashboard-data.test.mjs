@@ -85,6 +85,24 @@ test('keeps unsupported cells, historical warm provenance, and independent RAM p
   assert.equal(leokani.warm.cpu.reportUrl, `https://github.com/ngelik/tts-bench/blob/main/results/${leokani.warm.cpu.resultId}/summary.md`);
 });
 
+test('shows only the hash-bound two-trial CosyVoice3 CPU selection and preserves its error provenance', () => {
+  const cosy = dashboard.models.find(model => model.id === 'fun-cosyvoice3-0.5b-2512');
+  const receipt = results.find(result => result.id === cosy.warm.cpu.resultId);
+  const rawCell = receipt.cells[0];
+  assert.equal(cosy.warm.cpu.status, 'measured');
+  assert.equal(cosy.warm.cpu.n, 2);
+  assert.equal(cosy.warm.cpu.originalPlannedRepetitions, 5);
+  assert.equal(cosy.warm.cpu.selectionKind, 'operator-shortened-warm-selection');
+  assert.equal(cosy.warm.cpu.receiptStatus, 'error');
+  assert.equal(cosy.warm.cpu.receiptReason, rawCell.reason);
+  assert.equal(cosy.warm.cpu.selectedTrialIndexes.join(','), '1,2');
+  assert.equal(cosy.warm.cpu.pairedCachedResultId, '2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4');
+  assert.equal(cosy.pairedWarm, false, 'two selected CPU trials do not pair with five GPU trials');
+  assert.equal(cosy.warm.webgpu.n, 5);
+  const times = rawCell.trials.map(trial => trial.generationMs).sort((a, b) => a - b);
+  assert.equal(cosy.warm.cpu.medianSeconds, (times[0] + times[1]) / 2 / 1000);
+});
+
 test('missing warm results distinguish configured backends, CPU-only variants, and separate diagnostic evidence', () => {
   // Work from a fixed published diagnostic so future warm submissions can supersede it.
   const cosy = 'fun-cosyvoice3-0.5b-2512', fusor = 'ming-3.0-tts-0.5b-fusor-mix-cpu';

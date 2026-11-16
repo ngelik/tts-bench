@@ -69,7 +69,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | MMS English FP32 | E4 | 114.26 | [1553.40 s](results/2026-11-10t19-31-08-081z-mms-english-cpu-warm-b81daec2/summary.md) | [59.39 s](results/2026-11-10t17-46-17-830z-mms-english-webgpu-warm-3eb8b06a/summary.md) | Native; matched configuration |
 | Sano Amy 1.46M (English) | E4 | 5.82 | [737.23 s](results/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0/summary.md) | [unsupported](results/2026-11-10t16-32-02-384z-sano-amy-webgpu-warm-24afcdc7/summary.md) | Native; independent attempts |
 | Audio8 TTS Realistic 0.6B INT4 | E5 | 587.71 | — | [error](results/2026-11-15t06-00-59-478z-audio8-realistic-0.6b-int4-webgpu-warm-8a08bc92/summary.md) | Archived native; independent attempts |
-| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | [error](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) | [1600.61 s](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
+| Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | [15119.14 s (n=2 of 5 planned; selected)](reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection) | [1600.61 s (n=5)](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
 | LFM3-Audio-2B (Fusor q7 / CPU 6 threads) | E5 | 2276.67 | [526.05 s](results/2026-11-11t09-27-11-391z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-174f10d4/summary.md) | — | Native; independent attempts |
 | LFM3-Audio-2B (GGUF Q4_K_M / Q8_0) | E5 | 1403.44 | — | [377.75 s](results/2026-11-11t07-33-16-967z-lfm3-audio-2b-gguf-webgpu-warm-b42e4073/summary.md) | Native; independent attempts |
 | LFM3-Omni-2B (Fusor q7 / CPU 6 threads) | E5 | 2494.57 | [536.34 s](results/2026-11-11t11-02-51-665z-lfm3-omni-2b-fusor-q7-cpu-cpu-warm-4378e428/summary.md) | — | Native; independent attempts |
@@ -78,7 +78,9 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Ming 3.0 TTS 0.5B (Q8_0 GGUF) | E5 | 1742.28 | — | [5238.51 s](results/2026-11-15t13-38-24-837z-ming-3.0-tts-0.5b-gguf-webgpu-warm-7e5f10e1/summary.md) | Archived native; independent attempts |
 | Pocket TTS 100M English (INT8/FP32) | E5 | 146.16 | [854.52 s](results/2026-11-12t05-28-59-020z-pocket-tts-100m-english-int8-cpu-warm-72714412/summary.md) | [2158.19 s](results/2026-11-12t01-52-33-830z-pocket-tts-100m-english-int8-webgpu-warm-69de3d93/summary.md) | Native; matched configuration |
 
-Each measured warm cell uses five scored full 20,000-character articles. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.
+Each measured warm cell uses one excluded warm-up. Most planned cells use five scored full 20,000-character articles; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.
+
+**Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the raw receipt](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.
 
 **Original Audio8 WebGPU waveform fault.** 90.31% of this recording is constant at one PCM value. Its elapsed time describes a diagnostic execution. The CPU recording has no constant interval lasting 0.10 s. [Full waveform audit](https://github.com/ngelik/tts-bench/tree/main/diagnostics/audio8-waveform) and [interval data](diagnostics/audio8-waveform/evidence.json).
 
@@ -468,8 +470,9 @@ npm run bench -- run --model phonon --backend cpu --scenario warm
 
 See the [command reference](docs/CLI.md) for model selection, GPU runs, cached,
 cold, offline, bandwidth-limited and model-switch scenarios. Assets are fetched/imported separately and hash-verified before running.
-Use a smoke check to validate installation; use the full article and five
-repetitions for a publishable warm result. Do not run models concurrently.
+Use a smoke check to validate installation. For warm results, use one excluded
+warm-up; Fun-CosyVoice3 uses one scored article and other models use at least
+five. Do not run models concurrently.
 
 See the [14-cell Ming, Audio8 and CosyVoice3 campaign](docs/campaigns/nov14-english/README.md), the [Ming v3 runtime retest](docs/campaigns/nov14-ming-v3/README.md), the [Audio8 codec-routing repair retest](docs/campaigns/audio8-codec-repair/README.md), and the [four-cell Tiny Voca campaign](docs/campaigns/tiny-voca-english/README.md) for pinned schedules and reproduction commands.
 
@@ -493,9 +496,10 @@ record their preprocessing, voice and allowed CPU operator fallback.
 
 New native warm runs use one common CPU/GPU timing boundary: first chunk request
 through final CPU-readable PCM, excluding warm-up, validation, hashing and export.
-Model loading is excluded. One full article warm-up is followed by five scored
-articles with the model resident. The historical PiVo GPU configuration can take
-over four hours for this sequence.
+Model loading is excluded. One full article warm-up is followed by scored
+articles with the model resident: one for new Fun-CosyVoice3 runs and five for
+other models. The historical PiVo GPU configuration can take over four hours
+for its five-article sequence.
 
 ## Contribute a new model for evaluation
 

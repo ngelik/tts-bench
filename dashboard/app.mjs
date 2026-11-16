@@ -10,11 +10,19 @@ const state = {data: null, view: 'table', metric: 'generation', sort: 'cpu', dir
 const audio = $('#sample-audio');
 const dialog = $('#details');
 let playRequest = 0;
-const isScheduledRetest = metric => metric?.status === 'error' && metric.registration === 'archived' && Boolean(metric.pendingCurrent);
+const isScheduledRetest = metric => (metric?.status === 'error' || metric?.receiptStatus === 'error') && metric.registration === 'archived' && Boolean(metric.pendingCurrent);
 const statusLabel = metric => isScheduledRetest(metric) ? 'Retest scheduled' : metric?.status === 'measured' ? 'Measured' : metric?.status === 'unsupported' ? 'Unsupported' : metric?.status === 'error' ? 'Run failed' : metric?.displayStatus ?? (metric?.evidenceStatus === 'measured' ? 'Insufficient memory data' : 'Unavailable');
-const statusDetails = metric => isScheduledRetest(metric)
-  ? `${metric.reason ? `An earlier run failed (${metric.reason}).` : 'An earlier run failed.'} ${metric.pendingCurrent}`
-  : metric?.reason || 'No published measurement for this path';
+const statusDetails = metric => {
+  const reason = metric?.receiptReason ?? metric?.reason;
+  const result = isScheduledRetest(metric)
+    ? `${reason ? `An earlier run failed (${reason}).` : 'An earlier run failed.'} ${metric.pendingCurrent}`
+    : metric?.selectionKind && metric.receiptStatus === 'error'
+      ? `${reason ? `An earlier run failed (${reason}).` : 'An earlier run failed.'} ${metric.pendingCurrent ?? 'The displayed scores use only the completed trials selected from the original receipt.'}`
+      : metric?.reason || 'No published measurement for this path';
+  return metric?.selectionKind
+    ? `${result} Reviewed selection: ${metric.n} completed scored articles from ${metric.originalPlannedRepetitions} planned. ${metric.stopReason}`
+    : result;
+};
 const isMeasured = metric => metric?.status === 'measured';
 const historical = model => ['cpu', 'webgpu'].some(b => model.warm[b]?.registration === 'archived');
 const cohortName = metric => state.cohorts.get(metric?.cohortKey)?.label ?? (metric?.origin === 'historical-import' ? 'Historical' : 'Unavailable');
@@ -72,7 +80,8 @@ function audioButtons(model) {
 }
 function metricCell(metric, key, max, backend, label, withBar = true) {
   const value = metric?.[key];
-  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(metric.reportUrl)}" title="Open ${escape(label)} receipt · ${escape(cohortName(metric))}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(statusDetails(metric))}">${statusLabel(metric)}</span>`}</td>`;
+  const evidenceDetail = metric?.selectionKind ? ` · ${statusDetails(metric)}` : '';
+  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(metric.reportUrl)}" title="Open ${escape(label)} receipt · ${escape(cohortName(metric))}${escape(evidenceDetail)}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(statusDetails(metric))}">${statusLabel(metric)}</span>`}</td>`;
 }
 function renderTable(models) {
   const maxTime = Math.max(1, ...models.flatMap(m => ['cpu', 'webgpu'].map(b => m.warm[b]?.medianSeconds ?? 0)));
@@ -122,7 +131,7 @@ function reset() { $('#search').value = ''; $('#cohort').value = 'all'; $('#lice
 function provenance(metric) {
   if (!metric?.resultId) return '<p class="provenance">No published result for this path.</p>';
   const env = metric.environment;
-  return `<p class="provenance"><a href="${escape(metric.reportUrl)}">Open full result receipt ↗</a><br>${escape(metric.origin)} · ${metric.registration === 'current' ? 'registered files verified' : 'archived evidence'} · ${escape(metric.protocolId)}<br>${escape(env?.machineLabel ?? '')}<br>Chrome ${escape(chromeVersion(metric))} · ${escape(env?.os ?? '')}<br>${metric.sourceCommit ? `<a href="${repo}/commit/${escape(metric.sourceCommit)}">Source ${escape(metric.sourceCommit.slice(0, 8))}</a>` : 'Historical source'} · ${escape(metric.createdAt?.slice(0, 10))} UTC${metric.pendingCurrent ? `<br>${escape(metric.pendingCurrent)}` : ''}</p>`;
+  return `<p class="provenance"><a href="${escape(metric.reportUrl)}">Open full result receipt ↗</a>${metric.selectionPath ? `<br><a href="${repo}/blob/main/${escape(metric.selectionPath)}">Reviewed selection details ↗</a>` : ''}<br>${escape(metric.origin)} · ${metric.registration === 'current' ? 'registered files verified' : 'archived evidence'} · ${escape(metric.protocolId)}<br>${escape(env?.machineLabel ?? '')}<br>Chrome ${escape(chromeVersion(metric))} · ${escape(env?.os ?? '')}<br>${metric.sourceCommit ? `<a href="${repo}/commit/${escape(metric.sourceCommit)}">Source ${escape(metric.sourceCommit.slice(0, 8))}</a>` : 'Historical source'} · ${escape(metric.createdAt?.slice(0, 10))} UTC${metric.pendingCurrent ? `<br>${escape(metric.pendingCurrent)}` : ''}</p>`;
 }
 function outputNoteDetails(metric) {
   const notes = metric?.outputNotes;
@@ -136,7 +145,7 @@ function waveformNote(metric) {
 }
 function detailMetric(metric, backend, kind) {
   const warm = kind === 'warm';
-  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${isMeasured(metric) ? `<dl>${warm ? `<dt>Median</dt><dd>${fmt(metric.medianSeconds)} s</dd><dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd><dt>Scored articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>First PCM (median)</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length (median)</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
+  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${metric?.selectionKind || isScheduledRetest(metric) ? `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>` : ''}${isMeasured(metric) ? `<dl>${warm ? `<dt>Median</dt><dd>${fmt(metric.medianSeconds)} s</dd><dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd><dt>Scored articles</dt><dd>${fmt(metric.n, 0)}${metric.selectionKind ? ` selected / ${fmt(metric.originalPlannedRepetitions, 0)} planned` : ''}</dd><dt>First PCM (median)</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length (median)</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
 }
 function openDetails(id) {
   const model = state.data.models.find(m => m.id === id); if (!model) return;

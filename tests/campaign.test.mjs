@@ -11,7 +11,7 @@ const runnerSource = await readFile(join(projectRoot, 'tools/run-campaign.mjs'),
 
 const catalogStub = `
 export function getModel(id) {
-  if (id === 'one' || id === 'two') return { id };
+  if (id === 'one' || id === 'two' || id === 'fun-cosyvoice3-0.5b-2512') return { id };
   throw new Error('Unknown model: ' + id);
 }
 `;
@@ -26,8 +26,9 @@ const arg = flag => args[args.indexOf(flag) + 1];
 const model = arg('--model');
 const backend = arg('--backend');
 const scenario = arg('--scenario');
+const repetitions = Number(arg('--repetitions'));
 const events = process.env.CAMPAIGN_TEST_EVENTS;
-await appendFile(events, JSON.stringify({ event: 'start', model, backend, scenario }) + '\\n');
+await appendFile(events, JSON.stringify({ event: 'start', model, backend, scenario, repetitions }) + '\\n');
 await new Promise(resolve => setTimeout(resolve, 15));
 
 const failure = model === process.env.CAMPAIGN_TEST_FAIL_MODEL;
@@ -44,7 +45,7 @@ const receipt = {
   id,
   status: 'measured',
   source: { gitCommit, dirty: false },
-  protocol: { smoke: false },
+  protocol: { smoke: false, scenario, repetitions },
   fixture: { characters: 20000, chunks: 93 },
   cells: [{ status: 'measured', trials: [] }],
 };
@@ -68,6 +69,7 @@ async function sandbox(t, plan, { failModel, dirty = false } = {}) {
   await writeFile(join(directory, 'tools/run-campaign.mjs'), runnerSource);
   await writeFile(join(directory, 'lib/catalog.mjs'), catalogStub);
   await copyFile(join(projectRoot, 'lib/campaign-plan.mjs'), join(directory, 'lib/campaign-plan.mjs'));
+  await copyFile(join(projectRoot, 'lib/benchmark-policy.mjs'), join(directory, 'lib/benchmark-policy.mjs'));
   await writeFile(join(directory, 'bin/bench.mjs'), benchStub);
   await writeFile(join(directory, '.gitignore'), 'runs/\n');
   await writeFile(join(directory, 'source.txt'), 'committed source\n');
@@ -96,6 +98,15 @@ function invoke(directory, events, failModel, planPath = 'campaign-plan.json') {
       CAMPAIGN_TEST_EVENTS: events,
       ...(failModel ? { CAMPAIGN_TEST_FAIL_MODEL: failModel } : {}),
     },
+  });
+}
+
+function invokeDryRun(directory, events, planPath = 'campaign-plan.json') {
+  return spawnSync(process.execPath, ['tools/run-campaign.mjs', '--plan', planPath, '--dry-run'], {
+    cwd: directory,
+    encoding: 'utf8',
+    timeout: 10_000,
+    env: { ...process.env, CAMPAIGN_TEST_EVENTS: events },
   });
 }
 
@@ -219,6 +230,46 @@ test('campaign runner rejects warm plans with fewer than five repetitions before
   assert.notEqual(run.status, 0);
   assert.match(run.stderr, /Invalid campaign repetitions/);
   assert.deepEqual(await eventRows(events), []);
+});
+
+test('CosyVoice3 legacy warm plans dry-run with requested and effective counts', async t => {
+  const model = 'fun-cosyvoice3-0.5b-2512';
+  const legacy = { ...plan([cell(model, 'cpu', 'warm', 5)]), sourceCommit: 'a'.repeat(40) };
+  const { directory, events } = await sandbox(t, legacy);
+  const run = invokeDryRun(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  const result = JSON.parse(run.stdout);
+  assert.deepEqual(result.cells.map(row => [row.requestedRepetitions, row.effectiveRepetitions]), [[5, 1]]);
+  assert.equal(result.sourceCommitMatches, false);
+  assert.deepEqual(await eventRows(events), []);
+  await assert.rejects(readdir(join(directory, 'runs')), error => error.code === 'ENOENT');
+});
+
+test('CosyVoice3 campaign executes one scored article and records both plan counts', async t => {
+  const model = 'fun-cosyvoice3-0.5b-2512';
+  const original = plan([cell(model, 'webgpu', 'warm', 5)]);
+  const { directory, events } = await sandbox(t, original);
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual((await eventRows(events)).map(row => [row.event, row.repetitions]), [['start', 1], ['end', undefined]]);
+  const ledger = await campaignDirectory(directory);
+  assert.deepEqual(JSON.parse(await readFile(join(ledger, 'plan.json'), 'utf8')), original);
+  assert.equal(JSON.parse(await readFile(join(ledger, 'effective-plan.json'), 'utf8')).cells[0].repetitions, 1);
+  const attempt = JSON.parse((await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim());
+  assert.equal(attempt.requestedCell.repetitions, 5);
+  assert.equal(attempt.cell.repetitions, 1);
+});
+
+test('CosyVoice3 cached campaign plans also execute one scored article', async t => {
+  const model = 'fun-cosyvoice3-0.5b-2512';
+  const { directory, events } = await sandbox(t, plan([cell(model, 'cpu', 'cached', 3)]));
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual((await eventRows(events)).map(row => [row.event, row.repetitions]), [['start', 1], ['end', undefined]]);
+  const ledger = await campaignDirectory(directory);
+  const attempt = JSON.parse((await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim());
+  assert.equal(attempt.requestedCell.repetitions, 3);
+  assert.equal(attempt.cell.repetitions, 1);
 });
 
 test('campaign runner stops when a resource cell lacks measured generation-RAM evidence', async t => {

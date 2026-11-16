@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { validateResult } from '../tools/results.mjs';
 import { renderCampaignOverview, validateCampaignInputs } from '../tools/campaign-report.mjs';
+import { loadCosyWarmSelection } from '../tools/cosy-warm-selection.mjs';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const reportTool = 'tools/campaign-report.mjs';
@@ -190,4 +191,22 @@ test('campaign validator rejects model weight metadata that differs from manifes
   assert.ok(asset);
   asset.sha256 = '0'.repeat(64);
   assert.throws(() => validateCampaignInputs([{ data: tampered }]), /does not match pinned model weight/);
+});
+
+test('campaign overview charts the reviewed two-trial selection without changing the raw receipt', async () => {
+  const id = '2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e';
+  const raw = validateResult(JSON.parse(await readFile(join(root, 'results', id, 'result.json'), 'utf8')), { publication: true });
+  const cachedId = '2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4';
+  const cached = validateResult(JSON.parse(await readFile(join(root, 'results', cachedId, 'result.json'), 'utf8')), { publication: true });
+  const selection = await loadCosyWarmSelection([raw, cached]);
+  const report = renderCampaignOverview([{ data: raw, digest: selection.receiptSha256 }], {
+    reportDir: join(root, 'reports', 'cosy-selection-test'),
+    warmSelections: [selection],
+  });
+  assert.match(report.overviewMd, /n=2 of 5 planned/);
+  assert.match(report.overviewMd, /operator stopped during the next trial/i);
+  assert.match(report.overviewMd, /remains error/);
+  assert.match(report.overviewSvg, /n=2 of 5 planned/);
+  assert.equal(raw.cells[0].status, 'error');
+  assert.equal(raw.cells[0].trials.length, 2);
 });
