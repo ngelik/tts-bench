@@ -26,11 +26,13 @@ configuration is distinct from its strict frontend.
    `navigator.gpu`. Record CPU preprocessing and allowed operator fallback.
 4. Load one model. Generate the **entire article once as an excluded warm-up**.
 5. Keep that engine resident. Generate the full article sequentially. New
-   Fun-CosyVoice3 warm runs use one scored article on both backends; other models
-   use five scored articles. The older five-run CosyVoice3 receipts remain valid
-   historical evidence. A reviewed operator-shortened result may select completed
-   trials from its hash-bound native receipt, but it does not change the receipt's
-   original planned repetition count or status.
+   New Fun-CosyVoice3 tests use one scored article on both backends in every
+   scenario; other models use five scored articles by default. A valid explicit
+   CosyVoice3 repetition count is normalized to one and recorded in stderr and
+   receipt notes. Older CosyVoice3 receipts with five or more repetitions remain
+   valid historical evidence. A reviewed operator-shortened result may select
+   completed trials from its hash-bound native receipt, but it does not change the
+   receipt's original planned repetition count or status.
 6. Start each timer immediately before the first source-chunk request. Stop only
    after the final chunk's PCM reaches the page CPU. Await GPU outputs/readback;
    a dispatch submission time is not a completion time.

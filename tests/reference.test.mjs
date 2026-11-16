@@ -13,15 +13,16 @@ test('each README Listen link opens its exact hosted recording while retaining f
  assert.ok(block.includes('Open the listening room'));
 });
 
-test('reference section exposes the reviewed CosyVoice3 selection and links the raw error receipt',async()=>{
+test('reference section exposes the reviewed CosyVoice3 selection report and its raw error receipt',async()=>{
  const id='2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e';
  const result=await readResult(`results/${id}/result.json`,{publication:true});
- const cached=await readResult('results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/result.json',{publication:true});
- const selection=await loadCosyWarmSelection([result,cached]);
- const block=referenceBlock([result],getAssetLock().models,[],[],[],[selection]);
+ const gpu=await readResult('results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/result.json',{publication:true});
+ const selection=await loadCosyWarmSelection([result,gpu]);
+ const block=referenceBlock([result,gpu],getAssetLock().models,[],[],[],[selection]);
  assert.match(block,/n=2 of 5 planned; selected/);
+ assert.ok(block.includes('[15119.14 s (n=2 of 5 planned; selected)](reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection)'));
+ assert.ok(block.includes('[1600.61 s (n=5)](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md)'));
  assert.match(block,/native receipt remains error/);
  assert.ok(block.includes(`results/${id}/summary.md`));
  assert.ok(block.includes('docs/campaigns/nov14-english/cosy-cpu-warm-selection.json'));
- assert.match(block,new RegExp(`${id}.*warm.*error`));
 });

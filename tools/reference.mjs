@@ -99,7 +99,15 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
   let out=START+'\n\nWarm and memory tables prefer native receipts that verify the registered model and runtime files for each backend and environment. The latest attempt within that version is shown, including errors. When it has no receipt, earlier evidence stays visible. All runs and recordings remain linked below.\n\n';
   for(const {id,value:e}of envs.values())out+=`- **${id}**: ${md(e.machineLabel)} · ${md(e.chromeVersion)} · ${md(e.os)}.\n`;
   out+='\n| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |\n|---|---|---:|---:|---:|---|\n';
-  const score=v=>!v?'—':v.c.status==='measured'&&affectedTrials(v.cell).length?`[Diagnostic PCM](${waveformReport})`:`[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'+(v.selection?` (n=${v.selection.selectedScoredTrialIndexes.length} of ${v.selection.originalPlannedRepetitions} planned; selected)`:'')}](${report(v.d)})`;
+  const score=v=>{
+    if(!v)return '—';
+    if(v.c.status==='measured'&&affectedTrials(v.cell).length)return `[Diagnostic PCM](${waveformReport})`;
+    const count=v.c.medianSeconds===null?'':v.selection
+      ?` (n=${v.selection.selectedScoredTrialIndexes.length} of ${v.selection.originalPlannedRepetitions} planned; selected)`
+      :v.c.model==='fun-cosyvoice3-0.5b-2512'&&v.c.backend==='webgpu'?` (n=${v.c.n})`:'';
+    const href=v.selection?'reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection':report(v.d);
+    return `[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'+count}](${href})`;
+  };
   const modelSize=(id,pair)=>{const weights=models[id]?.assets?.filter(a=>a.kind==='model-weights')??[];const measured=pair;if(!weights.length||!measured.length||measured.some(v=>weights.some(w=>!v.d.assets.some(a=>a.sha256===w.sha256&&a.bytes===w.bytes))))return 'Unknown';return (weights.reduce((n,a)=>n+a.bytes,0)/1e6).toFixed(2);};
   for(const row of [...groups.values()].sort((a,b)=>a.environment.localeCompare(b.environment)||a.model.localeCompare(b.model))){
     const pair=[row.cpu,row.webgpu].filter(Boolean);
@@ -109,7 +117,7 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
     const scope=pair.some(v=>v.d.origin!=='native')?'Historical; distinct timing protocols':label+(matched?'; matched configuration':'; independent attempts');
     out+=`| ${md(models[row.model]?.displayName??row.model)} | ${row.environment} | ${modelSize(row.model,pair)} | ${score(row.cpu)} | ${score(row.webgpu)} | ${scope} |\n`;
   }
-  out+='\nWarm cells use one excluded warm-up. Most planned cells use five scored full 20,000-character articles; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
+  out+='\nEach measured warm cell uses one excluded warm-up. Most planned cells use five scored full 20,000-character articles; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
   for(const row of [...groups.values()].flatMap(group=>['cpu','webgpu'].map(backend=>group[backend]).filter(value=>value?.selection))){
     const reasonHeadline=md(row.selection.rawReceiptReason.split(/\r?\n/,1)[0]);
     out+=`**Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (${reasonHeadline}). [Review the raw receipt](results/${row.d.id}/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.\n\n`;

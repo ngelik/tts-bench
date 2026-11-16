@@ -8,7 +8,7 @@ The included receipts share one source, exact environment and fixture; voice, pr
 
 ## Warm generation
 
-Full warm workload: one excluded full-article warm-up. Most models use at least five scored 20,000-character / 93-chunk repetitions; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Generation is the benchmark timer; values summarize displayed scored trials only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.
+Each measured warm cell uses one excluded full-article warm-up. Most planned cells use at least five scored 20,000-character / 93-chunk repetitions; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Generation is the benchmark timer; values summarize displayed scored trials only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|

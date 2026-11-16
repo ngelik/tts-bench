@@ -271,7 +271,10 @@ function markdownReport(prepared, reportDir) {
     md+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The archived cached time and memory describe that execution. [Full waveform audit](${waveformReport}).\n\n`;
   }
   md += `## Warm generation\n\n`;
-  md += `Full warm workload: one excluded full-article warm-up. Most models use at least five scored 20,000-character / 93-chunk repetitions; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Generation is the benchmark timer; values summarize displayed scored trials only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`;
+  const cosyInReport = models.some(model => model.id === 'fun-cosyvoice3-0.5b-2512');
+  md += cosyInReport
+    ? `Each measured warm cell uses one excluded full-article warm-up. Most planned cells use at least five scored 20,000-character / 93-chunk repetitions; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Generation is the benchmark timer; values summarize displayed scored trials only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`
+    : `Full warm workload: one excluded full-article warm-up and at least five scored 20,000-character / 93-chunk repetitions. Generation is the benchmark timer; values summarize scored repetitions only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`;
   md += `| Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |\n|---|---:|---:|---:|---:|---:|---:|\n`;
   for (const model of models) {
     const cpuEntry = cell(model.id, 'cpu', 'warm'), gpuEntry = cell(model.id, 'webgpu', 'warm');

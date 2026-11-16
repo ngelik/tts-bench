@@ -40,8 +40,14 @@ for (const ledger of ledgers) {
     const scheduled = effectiveCampaignCell(requested);
     const recorded = a.requestedCell ? a.cell : (JSON.stringify(a.cell)===JSON.stringify(scheduled) ? a.cell : requested);
     assert.deepEqual(recorded,a.cell);
+    assert.equal(cell.model,scheduled.model,'Receipt model does not match the scheduled campaign cell');
+    assert.equal(cell.backendRequested,scheduled.backend,'Receipt backend does not match the scheduled campaign cell');
+    assert.equal(r.protocol.scenario,scheduled.scenario,'Receipt scenario does not match the scheduled campaign cell');
+    assert.equal(r.protocol.smoke,false,'Campaign receipt cannot be a smoke diagnostic');
     assert.equal(r.protocol.id,'browser-tts-'+scheduled.scenario+'-v1'+(scheduled.resources?'-resources':''));
     assert.equal(r.protocol.repetitions,recorded.repetitions);
+    assert.equal(r.protocol.warmupRuns,scheduled.scenario==='warm'?1:0);
+    assert.equal(r.protocol.networkMbps,scheduled.scenario==='network'?1:null);
     assert.ok(['measured','unsupported'].includes(cell.status));
     if (scheduled.resources && cell.status==='measured') assert.ok(cell.trials.every(t=>t.memory?.availability==='measured'));
     completed.add(key(scheduled));

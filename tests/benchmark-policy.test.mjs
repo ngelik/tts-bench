@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { effectiveRepetitions, SINGLE_REPETITION_WARM_MODEL } from '../lib/benchmark-policy.mjs';
+import { effectiveRepetitions, repetitionAdjustmentNotice, SINGLE_REPETITION_WARM_MODEL } from '../lib/benchmark-policy.mjs';
 import { effectiveCampaignCell, validateCampaignCell } from '../lib/campaign-plan.mjs';
 import { validateResult } from '../tools/results.mjs';
 
@@ -11,6 +11,9 @@ test('new CosyVoice3 tests use one scored article in every scenario without chan
   assert.equal(effectiveRepetitions(cosy, 5), 1);
   assert.equal(effectiveRepetitions(cosy, 1), 1);
   assert.equal(effectiveRepetitions(cosy, 3), 1);
+  assert.equal(repetitionAdjustmentNotice(cosy, 5, 1), 'Requested --repetitions 5; effective model policy ran 1 repetition.');
+  assert.equal(repetitionAdjustmentNotice(cosy, 1, 1), null);
+  assert.equal(repetitionAdjustmentNotice('tiny-voca', 5, 5), null);
   assert.equal(effectiveRepetitions('tiny-voca', 5), 5);
   assert.equal(effectiveCampaignCell({ model: cosy, backend: 'cpu', scenario: 'warm', repetitions: 5 }).repetitions, 1);
   assert.throws(() => validateCampaignCell({ model: 'tiny-voca', backend: 'cpu', scenario: 'warm', repetitions: 4 }), /campaign repetitions/);
