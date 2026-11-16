@@ -13,6 +13,8 @@ const campaignModelIds = [
 ];
 const campaignModels = expected.models.filter(model => campaignModelIds.includes(model.id));
 assert.equal(campaignModels.length, campaignModelIds.length, 'Campaign subset IDs must exist in the dashboard data');
+const cosySelection = expected.models.find(model => model.id === 'fun-cosyvoice3-0.5b-2512')?.warm.cpu;
+const cosySelectionReportUrl = 'https://github.com/ngelik/tts-bench/blob/main/reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection';
 const urlArg = process.argv.indexOf('--url');
 let base = urlArg >= 0 ? process.argv[urlArg + 1] : null;
 let server, browser;
@@ -53,6 +55,17 @@ try {
     }
   };
   await assertDefaultOrder();
+  if (cosySelection?.selectionKind === 'operator-shortened-warm-selection') {
+    const row = page.locator('tr[data-model="fun-cosyvoice3-0.5b-2512"]');
+    const score = row.locator('td[data-label="CPU · seconds"] a.metric-link');
+    assert.equal(await score.getAttribute('href'), cosySelectionReportUrl, 'The selected CPU score opens its readable selection report');
+    assert.match(await score.getAttribute('title'), /Reviewed selection: 2 completed scored articles from 5 planned/);
+    await row.locator('.model-name').click();
+    const cpuDetails = page.locator('#detail-content .detail-card').filter({hasText: 'CPU warm generation'});
+    assert.equal(await cpuDetails.locator(`a[href="${cosySelection.reportUrl}"]`).count(), 1, 'Details retain the raw native receipt link');
+    assert.equal(await cpuDetails.locator(`a[href="https://github.com/ngelik/tts-bench/blob/main/${cosySelection.selectionPath}"]`).count(), 1, 'Details retain the reviewed sidecar link');
+    await page.keyboard.press('Escape');
+  }
   const audio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
   const audio8Gpu = audio8?.warm.webgpu;
   if (audio8Gpu?.status === 'error' && audio8Gpu.registration === 'archived' && audio8Gpu.pendingCurrent) {
@@ -91,6 +104,12 @@ try {
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(campaignModels, model => model.warm.cpu.medianSeconds));
   assert.equal(await page.locator('#charts .bar-row').count(), 8);
   await assertChartOrder(campaignModels, 'generation');
+  if (cosySelection?.selectionKind === 'operator-shortened-warm-selection') {
+    const chartRow = page.locator('.chart-panel.cpu .bar-row').filter({has: page.locator('[data-detail="fun-cosyvoice3-0.5b-2512"]')});
+    const score = chartRow.locator('a.selection-report-link');
+    assert.equal(await score.getAttribute('href'), cosySelectionReportUrl, 'The chart score also opens the readable selection report');
+    assert.match(await score.getAttribute('title'), /Reviewed selection: 2 completed scored articles from 5 planned/);
+  }
 
   const campaignUrl = new URL(base);
   campaignUrl.search = '';
