@@ -5,7 +5,17 @@ const fmt = (value, digits = 2) => Number.isFinite(value) ? value.toLocaleString
 const repo = 'https://github.com/ngelik/tts-bench';
 const cosySelectionReportUrl = `${repo}/blob/main/reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection`;
 const labels = {cpu: 'CPU', webgpu: 'GPU'};
-const shortLicense = value => value.startsWith('Model license not separately') ? 'Unspecified · terms ↗' : value.startsWith('OpenRAIL-M') ? 'OpenRAIL-M ↗' : value.startsWith('Underdog Non-Commercial') ? 'Underdog NC 1.0 ↗' : value;
+const shortLicense = value => {
+  if (value.startsWith('Model license not separately')) return 'Unclear · CC BY-SA / BY-NC-SA';
+  if (value.startsWith('OpenRAIL-M')) return 'OpenRAIL-M';
+  if (value.startsWith('Underdog Non-Commercial')) return 'Underdog NC 1.0';
+  if (value.startsWith('LFM Open License v1.0')) return 'LFM Open v1.0';
+  if (value.startsWith('CC-BY-NC-4.0')) return 'CC BY-NC 4.0';
+  if (value.startsWith('CC-BY-4.0')) return 'CC BY 4.0 · restrictions';
+  if (value.startsWith('CC BY-NC 4.0')) return 'CC BY-NC 4.0';
+  if (value.startsWith('Apache-2.0; preset voice')) return 'Apache-2.0 · CC BY 4.0 voice';
+  return value;
+};
 const chromeVersion = metric => (metric?.environment?.chromeVersion ?? 'unknown').replace(/^Google Chrome\s+/, '');
 const state = {data: null, view: 'table', metric: 'generation', sort: 'cpu', direction: 1, playing: null, cohorts: new Map(), modelIds: null};
 const audio = $('#sample-audio');
@@ -25,9 +35,22 @@ const statusDetails = metric => {
     : result;
 };
 const isMeasured = metric => metric?.status === 'measured';
-const historical = model => ['cpu', 'webgpu'].some(b => model.warm[b]?.registration === 'archived');
+const isEligibleWarm = metric => isMeasured(metric) && Number.isFinite(metric.medianSeconds) && !metric.waveform;
+const isMeasuredMemory = metric => isMeasured(metric) && Number.isFinite(metric.meanMB);
+const isEligibleMemory = metric => isMeasuredMemory(metric) && !metric.waveform;
+const hasEligibleResult = model => ['cpu', 'webgpu'].some(backend => isEligibleWarm(model.warm[backend]) || isEligibleMemory(model.memory[backend]));
+const historical = model => ['cpu', 'webgpu'].some(b => model.warm[b]?.registration === 'archived' || model.memory[b]?.registration === 'archived');
 const cohortName = metric => state.cohorts.get(metric?.cohortKey)?.label ?? (metric?.origin === 'historical-import' ? 'Historical' : 'Unavailable');
-const metricValue = (model, key) => ({name: model.name, modelMB: model.modelMB, cpu: model.warm.cpu?.medianSeconds, webgpu: model.warm.webgpu?.medianSeconds, cpuMemory: model.memory.cpu?.meanMB, gpuMemory: model.memory.webgpu?.meanMB})[key];
+const metricValue = (model, key) => ({
+  name: model.name,
+  modelMB: model.modelMB,
+  cpu: isEligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null,
+  webgpu: isEligibleWarm(model.warm.webgpu) ? model.warm.webgpu.medianSeconds : null,
+  cpuMemory: isEligibleMemory(model.memory.cpu) ? model.memory.cpu.meanMB : null,
+  gpuMemory: isEligibleMemory(model.memory.webgpu) ? model.memory.webgpu.meanMB : null,
+})[key];
+const hasWarmScore = model => ['cpu', 'webgpu'].some(backend => isEligibleWarm(model.warm[backend]));
+const hasHealthyCachedMemory = model => ['cpu', 'webgpu'].some(backend => isEligibleMemory(model.memory[backend]) && model.memory[backend].scenario === 'cached');
 function outputWarningTag(model) {
   const defect = ['cpu', 'webgpu'].some(b => model.warm[b]?.waveform || model.memory[b]?.waveform);
   const flag = defect ? `<button type="button" class="evidence-tag output-warning" data-detail="${escape(model.id)}" title="Open the affected recording and waveform audit">Waveform fault</button>` : '';
@@ -51,7 +74,8 @@ function selectedModelScope() {
   if (state.modelIds === null) return null;
   const byId = new Map(state.data.models.map(model => [model.id, model]));
   return {
-    models: state.modelIds.map(id => byId.get(id)).filter(Boolean),
+    models: state.modelIds.map(id => byId.get(id)).filter(model => model && hasEligibleResult(model)),
+    excluded: state.modelIds.map(id => byId.get(id)).filter(model => model && !hasEligibleResult(model)),
     unknown: state.modelIds.filter(id => !byId.has(id))
   };
 }
@@ -68,7 +92,7 @@ function clearNoResults() {
 }
 function visibleModels() {
   const term = $('#search').value.trim().toLowerCase(), cohort = $('#cohort').value, license = $('#license').value;
-  return state.data.models.filter(model => (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license) && (cohort === 'all' || (cohort === 'paired' && model.pairedWarm) || (cohort === 'historical' && historical(model)) || ['cpu', 'webgpu'].some(b => model.warm[b]?.cohortKey === cohort))).sort(compare);
+  return state.data.models.filter(model => hasEligibleResult(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license) && (cohort === 'all' || (cohort === 'paired' && model.pairedWarm) || (cohort === 'historical' && historical(model)) || ['cpu', 'webgpu'].some(b => model.warm[b]?.cohortKey === cohort))).sort(compare);
 }
 function exampleFor(model, backend) {
   return model.playbackAudio[backend];
@@ -76,20 +100,42 @@ function exampleFor(model, backend) {
 function audioButtons(model) {
   return `<div class="audio-buttons">${['cpu', 'webgpu'].map(backend => {
     const sample = exampleFor(model, backend);
-    return sample ? `<button class="listen-button" data-play="${escape(model.id)}" data-backend="${backend}" aria-label="Play ${escape(model.name)} ${labels[backend]} audio example" aria-pressed="${state.playing?.clip.path === sample.clip.path && !audio.paused}"><span class="play-symbol" aria-hidden="true">▶</span> ${labels[backend]}</button>` : `<span class="metric-unavailable" title="No published ${labels[backend]} recording">${labels[backend]} —</span>`;
+    const match = sample?.matchesSelectedWarm ? 'matches the selected warm score' : sample?.matchesSelectedMemory ? 'matches the cached memory run' : 'separate recording';
+    const waveform = Boolean(model.warm[backend]?.waveform || model.memory[backend]?.waveform);
+    const description = `${labels[backend]} ${sample?.scenario ?? 'published'} audio example, ${match}${waveform ? ', waveform flagged' : ''}`;
+    return sample ? `<button class="listen-button" data-play="${escape(model.id)}" data-backend="${backend}" aria-label="Play ${escape(model.name)} ${escape(description)}" title="${escape(description)}" aria-pressed="${state.playing?.clip.path === sample.clip.path && !audio.paused}"><span class="play-symbol" aria-hidden="true">▶</span> ${labels[backend]}${waveform ? '*' : ''}</button>` : `<span class="metric-unavailable" title="No published ${labels[backend]} recording">${labels[backend]} —</span>`;
   }).join('')}</div>`;
 }
-function metricCell(metric, key, max, backend, label, withBar = true) {
+function metricCell(metric, key, max, backend, label, withBar = true, showRunCount = false) {
   const value = metric?.[key];
+  const warm = key === 'medianSeconds';
+  const eligible = warm ? isEligibleWarm(metric) : isEligibleMemory(metric);
+  if (!eligible) {
+    const diagnostic = !warm && isMeasuredMemory(metric) && Boolean(metric.waveform);
+    const detail = diagnostic
+      ? 'Waveform-flagged recording. The numeric RAM diagnostic and receipt are available in model details.'
+      : `${statusLabel(metric)}. ${statusDetails(metric)} No eligible value is shown; open model details for evidence.`;
+    const accessible = `${label}: no eligible value. ${detail}`;
+    return `<td data-label="${label}"><span class="metric-unavailable ${diagnostic ? 'diagnostic-state' : ''}" title="${escape(accessible)}" aria-label="${escape(accessible)}">—</span></td>`;
+  }
   const href = metric?.selectionKind ? cosySelectionReportUrl : metric?.reportUrl;
   const title = metric?.selectionKind
     ? `Open reviewed selection report · ${statusDetails(metric)}`
     : `Open ${label} receipt · ${cohortName(metric)}`;
-  return `<td data-label="${label}">${Number.isFinite(value) ? `<a class="value metric-link" href="${escape(href)}" title="${escape(title)}">${fmt(value)}</a>${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}` : `<span class="metric-unavailable" title="${escape(statusDetails(metric))}">${statusLabel(metric)}</span>`}</td>`;
+  const sampleCount = showRunCount && Number.isInteger(metric?.n)
+    ? `<small class="metric-count" aria-label="${metric.selectionKind ? `${metric.n} selected from ${metric.originalPlannedRepetitions} planned repetitions` : `${metric.n} scored repetitions`}">${metric.selectionKind ? `n=${metric.n}/${metric.originalPlannedRepetitions} · partial` : `n=${metric.n}`}</small>`
+    : '';
+  return `<td data-label="${label}"><a class="value metric-link" href="${escape(href)}" title="${escape(title)}">${fmt(value)}</a>${sampleCount}${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}</td>`;
 }
 function renderTable(models) {
-  const maxTime = Math.max(1, ...models.flatMap(m => ['cpu', 'webgpu'].map(b => m.warm[b]?.medianSeconds ?? 0)));
-  $('#model-rows').innerHTML = models.map(model => `<tr data-model="${escape(model.id)}"><td data-label="Model"><div class="model-cell"><span class="model-monogram" aria-hidden="true">${escape(model.name.slice(0, 2).toUpperCase())}</span><div><button class="model-name" data-detail="${escape(model.id)}">${escape(model.name)}</button><div class="model-sub"><span>${fmt(model.support.voiceCount, 0)} ${model.support.voiceCount === 1 ? 'voice' : 'voices'} · ${fmt(model.support.languageCount, 0)} ${model.support.languageCount === 1 ? 'language' : 'languages'}</span><span class="evidence-tag ${historical(model) ? 'historical' : ''}" title="${model.pairedWarm ? 'Native CPU/GPU pair with compatible protocol, source, assets, settings and environment' : historical(model) ? 'At least one warm receipt is historical or uses earlier assets' : 'See details for execution support and provenance'}">${model.pairedWarm ? 'Matched pair' : historical(model) ? 'Historical' : 'See evidence'}</span>${outputWarningTag(model)}</div></div></div></td><td data-label="Weights · MB"><span class="value">${fmt(model.modelMB)}</span></td><td data-label="Model license"><button class="license-tag" data-detail="${escape(model.id)}" title="${escape(model.license.model)}" aria-label="License details: ${escape(model.name)}">${escape(shortLicense(model.license.model))}</button></td>${metricCell(model.warm.cpu, 'medianSeconds', maxTime, 'cpu', 'CPU · seconds')}${metricCell(model.warm.webgpu, 'medianSeconds', maxTime, 'webgpu', 'GPU · seconds')}${metricCell(model.memory.cpu, 'meanMB', 1, 'cpu', 'Chrome RAM · CPU · avg MB', false)}${metricCell(model.memory.webgpu, 'meanMB', 1, 'webgpu', 'Chrome RAM · GPU · avg MB', false)}<td data-label="Listen · 30s">${audioButtons(model)}</td></tr>`).join('');
+  const maxTime = Math.max(1, ...models.flatMap(m => ['cpu', 'webgpu'].map(b => isEligibleWarm(m.warm[b]) ? m.warm[b].medianSeconds : 0)));
+  $('#model-rows').innerHTML = models.map(model => {
+    const rowState = model.pairedWarm ? 'Matched pair' : historical(model) ? 'Historical' : '';
+    const memoryOnly = !hasWarmScore(model) && hasHealthyCachedMemory(model);
+    const countPair = model.id === 'fun-cosyvoice3-0.5b-2512';
+    const statusBadge = rowState ? `<span class="evidence-tag ${historical(model) ? 'historical' : ''}" title="${model.pairedWarm ? 'Native CPU/GPU pair with compatible protocol, source, assets, settings and environment' : 'At least one warm receipt is historical or uses earlier assets'}">${rowState}</span>` : '';
+    return `<tr data-model="${escape(model.id)}"><td data-label="Model"><div class="model-cell"><span class="model-monogram" aria-hidden="true">${escape(model.name.slice(0, 2).toUpperCase())}</span><div><button class="model-name" data-detail="${escape(model.id)}">${escape(model.name)}</button><div class="model-sub">${statusBadge}${memoryOnly ? '<span class="evidence-tag cached-only">RAM only · cached</span>' : ''}${outputWarningTag(model)}</div></div></div></td><td data-label="Weights · MB"><span class="value">${fmt(model.modelMB)}</span></td><td data-label="License"><button class="license-tag" data-detail="${escape(model.id)}" title="${escape(model.license.model)}" aria-label="Model license: ${escape(model.name)}. ${escape(model.license.model)}">${escape(shortLicense(model.license.model))}</button></td>${metricCell(model.warm.cpu, 'medianSeconds', maxTime, 'cpu', 'CPU · seconds', true, countPair)}${metricCell(model.warm.webgpu, 'medianSeconds', maxTime, 'webgpu', 'GPU · seconds', true, countPair)}${metricCell(model.memory.cpu, 'meanMB', 1, 'cpu', 'Cached RAM · CPU · avg MB', false)}${metricCell(model.memory.webgpu, 'meanMB', 1, 'webgpu', 'Cached RAM · GPU · avg MB', false)}<td data-label="Listen · 30s">${audioButtons(model)}</td></tr>`;
+  }).join('');
   $$('th[data-column]').forEach(th => {
     const active = th.dataset.column === state.sort;
     if (active) th.setAttribute('aria-sort', state.direction === 1 ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort');
@@ -100,25 +146,32 @@ function renderCharts(models) {
   const kind = state.metric, key = kind === 'generation' ? 'medianSeconds' : 'meanMB';
   const backends = kind === 'size' ? ['size'] : ['cpu', 'webgpu'];
   const get = (model, backend) => backend === 'size' ? model.modelMB : model[kind === 'generation' ? 'warm' : 'memory'][backend]?.[key];
-  const max = Math.max(1, ...models.flatMap(m => backends.map(b => get(m, b) ?? 0)));
+  const eligible = (model, backend) => backend === 'size' ? Number.isFinite(model.modelMB) : kind === 'generation' ? isEligibleWarm(model.warm[backend]) : isEligibleMemory(model.memory[backend]);
+  const max = Math.max(1, ...models.flatMap(m => backends.map(b => eligible(m, b) ? get(m, b) : 0)));
   const units = kind === 'generation' ? 'seconds' : 'MB';
   $('#charts').classList.toggle('single', kind === 'size');
-  $('#charts').innerHTML = backends.map(backend => `<section class="chart-panel ${backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><h3>${backend === 'size' ? 'Model weights' : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]} / ${backend === 'cpu' ? 'WebAssembly' : 'WebGPU'}`}</h3><p class="small">${kind === 'generation' ? 'Median full-article generation · seconds' : kind === 'memory' ? 'Average Chrome process RSS · MB' : 'Verified core model weights · MB'}</p>${[...models].sort((a, b) => compareValues(a, b, get(a, backend), get(b, backend))).map(model => {
-    const value = get(model, backend), missing = !Number.isFinite(value);
+  $('#charts').innerHTML = backends.map(backend => {
+    const panelModels = models.filter(model => eligible(model, backend)).sort((a, b) => compareValues(a, b, get(a, backend), get(b, backend)));
+    const chartRows = panelModels.map(model => {
+    const value = get(model, backend);
     const metric = kind === 'size' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
-    const score = missing
-      ? `<span class="value" title="${escape(statusDetails(metric))}">${escape(statusLabel(metric))}</span>`
-      : metric?.selectionKind && kind === 'generation'
-        ? `<a class="value metric-link selection-report-link" href="${escape(cosySelectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
-        : `<span class="value">${fmt(value)} <span class="sr-only">${units}</span></span>`;
-    return `<div class="bar-row ${missing ? 'unavailable' : ''}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button>${score}</div>${missing ? '' : `<div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div>`}</div>`;
-  }).join('')}<p class="chart-foot">${kind === 'size' ? 'Excludes runtime and voice assets.' : 'Shared scale across CPU and GPU. Open a model for source and sample count.'}</p></section>`).join('');
+    const countPair = kind === 'generation' && model.id === 'fun-cosyvoice3-0.5b-2512' && Number.isInteger(metric?.n);
+    const countLabel = countPair ? `<small class="metric-count" aria-label="${metric.selectionKind ? `${metric.n} selected from ${metric.originalPlannedRepetitions} planned repetitions` : `${metric.n} scored repetitions`}">${metric.selectionKind ? `n=${metric.n}/${metric.originalPlannedRepetitions} · partial` : `n=${metric.n}`}</small>` : '';
+    const score = metric?.selectionKind && kind === 'generation'
+      ? `<a class="value metric-link selection-report-link" href="${escape(cosySelectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
+      : `<span class="value">${fmt(value)} <span class="sr-only">${units}</span></span>`;
+    const evidence = metric?.registration === 'archived' ? '<small class="chart-evidence">Historical</small>' : '';
+    return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="bar-value">${score}${countLabel}${evidence}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
+  }).join('');
+    const context = kind === 'generation' ? 'Warm full-article medians · lower is faster' : kind === 'memory' ? 'Chrome process RSS · cached runs · faulted audio excluded' : 'Verified core weights · MB';
+    return `<section class="chart-panel ${backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><h3>${backend === 'size' ? 'Model weights' : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]}`}</h3><p class="chart-context">${context}</p>${chartRows || '<p class="chart-empty">No eligible measurements.</p>'}</section>`;
+  }).join('');
 }
 function render() {
   if (!state.data) return;
   const models = visibleModels();
   const scope = selectedModelScope();
-  const denominator = scope === null ? state.data.models.length : scope.models.length;
+  const denominator = scope === null ? state.data.models.filter(hasEligibleResult).length : scope.models.length;
   $('#visible-count').textContent = `${models.length} of ${denominator} ${scope === null ? 'configurations' : 'selected configurations'}`;
   $('#table-view').hidden = state.view !== 'table' || models.length === 0;
   $('#charts-view').hidden = state.view !== 'charts' || models.length === 0;
@@ -127,12 +180,12 @@ function render() {
   const unresolvedSelection = scope !== null && scope.models.length === 0;
   $('#no-results h3').textContent = unresolvedSelection ? 'No recognized configurations in this subset.' : 'No models match these filters.';
   $('#no-results p').textContent = unresolvedSelection
-    ? `${scope.unknown.length ? `Unknown model IDs: ${scope.unknown.join(', ')}. ` : 'No model IDs were selected. '}Clear the subset to see all configurations.`
+    ? `${scope.unknown.length ? `Unknown model IDs: ${scope.unknown.join(', ')}. ` : ''}${scope.excluded.length ? `No eligible published measurements for: ${scope.excluded.map(model => model.name).join(', ')}. ` : ''}${!scope.unknown.length && !scope.excluded.length ? 'No model IDs were selected. ' : ''}Clear the subset to see all configurations.`
     : 'Try a shorter name or a different license.';
   $('#clear-filters').textContent = unresolvedSelection ? 'Clear subset and filters' : 'Clear filters';
   const cohort = $('#cohort').value;
-  const scopeNote = cohort === 'all' || cohort === 'historical' ? 'Warm generation medians. Lower is better. Different source and Chrome cohorts are shown together; open a model for its exact test conditions.' : cohort === 'paired' ? 'CPU and GPU are compatible within each model’s native pair. Different pairs can still use different source and Chrome cohorts. RAM comes from separate diagnostics.' : 'Models with warm evidence in the selected source / environment cohort. Each backend and memory diagnostic retains its own source in model details.';
-  const selection = scope === null ? '' : `<br><span class="evidence-tag">Exact subset · ${scope.models.length} selected</span> ${scope.models.map(model => escape(model.name)).join(', ') || 'No recognized configurations'}${scope.unknown.length ? ` · Unknown IDs: ${scope.unknown.map(escape).join(', ')}` : ''}. Each metric retains its own source and receipt. <button type="button" class="text-button" data-clear-model-scope>Clear subset</button>`;
+  const scopeNote = cohort === 'paired' ? 'Matched native CPU/GPU pairs.' : cohort === 'historical' ? 'Archived measurements.' : cohort === 'all' ? 'Lower is faster · RAM uses separate cached runs.' : 'Selected source and Chrome cohort.';
+  const selection = scope === null ? '' : ` <span class="evidence-tag">Subset · ${scope.models.length}</span> ${scope.models.map(model => escape(model.name)).join(', ') || 'No eligible configurations'}${scope.excluded.length ? ` · No eligible result: ${scope.excluded.map(model => escape(model.name)).join(', ')}` : ''}${scope.unknown.length ? ` · Unknown: ${scope.unknown.map(escape).join(', ')}` : ''} <button type="button" class="text-button" data-clear-model-scope>Clear subset</button>`;
   $('#scope-note').innerHTML = `${escape(scopeNote)}${selection}`;
   renderTable(models); renderCharts(models);
 }
@@ -159,7 +212,7 @@ function detailMetric(metric, backend, kind) {
 function openDetails(id) {
   const model = state.data.models.find(m => m.id === id); if (!model) return;
   const samples = ['cpu', 'webgpu'].map(b => exampleFor(model, b)).filter(Boolean);
-  $('#detail-content').innerHTML = `<h2 id="detail-title">${escape(model.name)}</h2><p class="detail-subtitle">${model.pairedWarm ? 'Matched native CPU / GPU pair' : historical(model) ? 'Archived warm evidence · see each receipt for its version and protocol' : 'Backend availability retained in the evidence'}</p><div class="detail-stats"><div class="detail-stat"><strong>${fmt(model.modelMB)}</strong><span>MB · core weights</span></div><div class="detail-stat"><strong>${fmt(model.support.voiceCount, 0)}</strong><span>supported voices</span></div><div class="detail-stat"><strong>${fmt(model.support.languageCount, 0)}</strong><span>supported languages</span></div></div><p class="detail-note">${escape(model.support.scope)}. ${escape(model.support.notes)} English and one selected voice are benchmarked.</p><h3>Warm generation · 20,000 characters</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.warm[b], b, 'warm')).join('')}</div><p class="detail-note">First PCM measures generated audio availability, not audible playback. Real-time factor = generation time / audio duration; lower is faster. Exact voice, precision, settings, warm-up and power conditions are recorded in each receipt.</p><h3>Average memory · separate resource diagnostics</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.memory[b], b, 'memory')).join('')}</div><p class="detail-note">One isolated Chrome instance with one benchmark tab, sampled during generation. Process RSS includes workers and browser baseline; shared pages may be counted more than once. Mean RAM is not a minimum hardware requirement. Sampled peaks can miss brief spikes. These diagnostics have their own source and timing.</p><h3>Licenses</h3><dl class="detail-license"><dt>Model weights</dt><dd>${escape(model.license.model)}</dd><dt>Runtime / code</dt><dd>${escape(model.license.code ?? 'Not specified in the pinned catalog')}</dd></dl><p class="detail-note">The model license does not cover every component or determine output rights. See the upstream terms and <a href="${repo}/blob/main/docs/LICENSING.md">license inventory</a>.</p><h3>Audio examples</h3><ul class="recording-list">${samples.map(a => `<li><button class="listen-button" data-play="${escape(model.id)}" data-backend="${a.backend}">▶ ${labels[a.backend]} · ${fmt(a.clip.seconds, 0)} seconds</button><p>${escape(a.voice)} · ${escape(a.language)} · ${escape(a.scenario)} recording${a.matchesSelectedWarm ? ' · matches the selected warm receipt' : a.matchesSelectedMemory ? ' · matches the selected memory receipt' : ' · example from a separate receipt'}</p><p>${escape(a.attribution ?? '')}</p><p>Model terms: ${escape(a.modelTerms ?? model.license.model)}</p><a href="${escape(a.full.url)}">Full WAV ↗</a><a href="${escape(a.reportUrl)}">Recording receipt ↗</a></li>`).join('') || '<li>No published recording.</li>'}</ul><div class="detail-bottom">${model.sourceUrl ? `<a href="${escape(model.sourceUrl)}">Model source ↗</a>` : ''}<a href="?model=${encodeURIComponent(model.id)}">Link to this model ↗</a><a href="./audio/">Browse all recordings ↗</a></div>`;
+  $('#detail-content').innerHTML = `<h2 id="detail-title">${escape(model.name)}</h2><p class="detail-subtitle">${model.pairedWarm ? 'Matched native CPU / GPU pair' : historical(model) ? 'Contains archived evidence · see each receipt for version and protocol' : 'Backend availability retained in the evidence'}</p><div class="detail-stats"><div class="detail-stat"><strong>${fmt(model.modelMB)}</strong><span>MB · core weights</span></div><div class="detail-stat"><strong>${fmt(model.support.voiceCount, 0)}</strong><span>supported voices</span></div><div class="detail-stat"><strong>${fmt(model.support.languageCount, 0)}</strong><span>supported languages</span></div></div><p class="detail-note">${escape(model.support.scope)}. ${escape(model.support.notes)} English and one selected voice are benchmarked.</p><h3>Warm generation · 20,000 characters</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.warm[b], b, 'warm')).join('')}</div><p class="detail-note">First PCM measures generated audio availability, not audible playback. Real-time factor = generation time / audio duration; lower is faster. Exact voice, precision, settings, warm-up and power conditions are recorded in each receipt.</p><h3>Average memory · separate resource diagnostics</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.memory[b], b, 'memory')).join('')}</div><p class="detail-note">One isolated Chrome instance with one benchmark tab, sampled during generation. Process RSS includes workers and browser baseline; shared pages may be counted more than once. Mean RAM is not a minimum hardware requirement. Sampled peaks can miss brief spikes. These diagnostics have their own source and timing.</p><h3>Licenses</h3><dl class="detail-license"><dt>Model weights</dt><dd>${escape(model.license.model)}</dd><dt>Runtime / code</dt><dd>${escape(model.license.code ?? 'Not specified in the pinned catalog')}</dd></dl><p class="detail-note">The model license does not cover every component or determine output rights. See the upstream terms and <a href="${repo}/blob/main/docs/LICENSING.md">license inventory</a>.</p><h3>Audio examples</h3><ul class="recording-list">${samples.map(a => `<li><button class="listen-button" data-play="${escape(model.id)}" data-backend="${a.backend}">▶ ${labels[a.backend]} · ${fmt(a.clip.seconds, 0)} seconds</button><p>${escape(a.voice)} · ${escape(a.language)} · ${escape(a.scenario)} recording${a.matchesSelectedWarm ? ' · matches the selected warm receipt' : a.matchesSelectedMemory ? ' · matches the selected memory receipt' : ' · example from a separate receipt'}</p><p>${escape(a.attribution ?? '')}</p><p>Model terms: ${escape(a.modelTerms ?? model.license.model)}</p><a href="${escape(a.full.url)}">Full WAV ↗</a><a href="${escape(a.reportUrl)}">Recording receipt ↗</a></li>`).join('') || '<li>No published recording.</li>'}</ul><div class="detail-bottom">${model.sourceUrl ? `<a href="${escape(model.sourceUrl)}">Model source ↗</a>` : ''}<a href="?model=${encodeURIComponent(model.id)}">Link to this model ↗</a><a href="./audio/">Browse all recordings ↗</a></div>`;
   if (!dialog.open) dialog.showModal();
   dialog.scrollTop = 0;
 }
@@ -217,8 +270,8 @@ try {
     const option = document.createElement('option'); option.value = key; option.textContent = label; $('#cohort').append(option);
   });
   for (const license of [...new Set(state.data.models.map(m => m.license.model))].sort()) { const option = document.createElement('option'); option.value = license; option.textContent = license; $('#license').append(option); }
-  $('#model-count').textContent = state.data.models.length;
-  $('#recording-count').textContent = state.data.models.reduce((sum, m) => sum + m.audio.length, 0);
+  $('#model-count').textContent = state.data.models.filter(hasEligibleResult).length;
+  $('#score-count').textContent = state.data.models.reduce((sum, model) => sum + ['cpu', 'webgpu'].filter(backend => isEligibleWarm(model.warm[backend])).length, 0);
   $('#updated').textContent = `Latest receipt ${state.data.updatedAt.slice(0, 10)} UTC`;
   const params = new URL(location.href).searchParams;
   state.modelIds = params.has('models')

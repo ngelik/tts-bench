@@ -127,15 +127,16 @@ button:focus-visible {
 .intro {
   display:flex;
   justify-content:space-between;
-  align-items:flex-end;
-  gap:48px;
-  padding:58px 0 40px
+  align-items:center;
+  gap:28px;
+  padding:19px 0 15px;
+  border-bottom:1px solid var(--line)
 }
 .eyebrow {
   font:10px/1.6 var(--mono);
   letter-spacing:1.2px;
   color:var(--muted);
-  margin:0 0 20px
+  margin:0 0 4px
 }
 .status-dot {
   display:inline-block;
@@ -147,25 +148,25 @@ button:focus-visible {
 }
 h1 {
   font-weight:500;
-  font-size:clamp(32px,3.4vw,51px);
-  line-height:1.18;
-  letter-spacing:-2px;
-  margin:0 0 18px
+  font-size:clamp(24px,2.4vw,32px);
+  line-height:1.16;
+  letter-spacing:-1px;
+  margin:0 0 5px
 }
 h1 span {
   color:#6b756b
 }
 .intro-copy {
-  max-width:560px;
+  max-width:700px;
   margin:0;
   color:var(--muted);
-  font-size:15px
+  font-size:13px
 }
 .overview {
   display:flex;
-  gap:36px;
+  gap:22px;
   flex-shrink:0;
-  padding-bottom:5px
+  padding:0 3px 0 0
 }
 .overview div {
   display:flex;
@@ -173,13 +174,13 @@ h1 span {
 }
 .overview strong {
   font-weight:450;
-  font-size:40px;
-  letter-spacing:-1.6px;
+  font-size:23px;
+  letter-spacing:-.7px;
   line-height:1.25;
   font-variant-numeric:tabular-nums
 }
 .overview span {
-  font:10px/2 var(--mono);
+  font:11px/1.5 var(--mono);
   color:var(--muted)
 }
 .baseline {
@@ -187,9 +188,10 @@ h1 span {
   justify-content:space-between;
   align-items:center;
   gap:16px;
-  padding:15px 0 19px;
+  padding:8px 0 10px;
   border-bottom:1px solid var(--line);
-  font-size:12px
+  font-size:12px;
+  color:var(--muted)
 }
 .baseline p {
   margin:0;
@@ -199,7 +201,8 @@ h1 span {
   flex-wrap:wrap
 }
 .baseline strong {
-  font-weight:600
+  font-weight:600;
+  color:var(--ink)
 }
 .baseline a {
   color:var(--muted);
@@ -217,7 +220,7 @@ h1 span {
   align-items:center;
   justify-content:space-between;
   gap:16px;
-  padding:28px 0 20px
+  padding:16px 0 11px
 }
 .view-toggle {
   display:flex;
@@ -250,14 +253,14 @@ h1 span {
   align-items:center;
   gap:12px;
   flex-wrap:wrap;
-  padding-bottom:18px
+  padding-bottom:10px
 }
 .search {
   display:flex;
   align-items:center;
   gap:8px;
   padding:0 12px;
-  height:42px;
+  height:38px;
   background:var(--paper);
   border:1px solid var(--line);
   border-radius:5px;
@@ -281,7 +284,7 @@ h1 span {
   gap:8px;
   border:1px solid var(--line);
   border-radius:5px;
-  height:42px;
+  height:38px;
   padding:0 10px;
   font-size:11px;
   background:var(--paper)
@@ -309,9 +312,9 @@ select {
   display:flex;
   align-items:flex-start;
   gap:8px;
-  font-size:11px;
+  font-size:12px;
   color:var(--muted);
-  margin:0 0 15px;
+  margin:0 0 9px;
   max-width:1000px
 }
 .note-dot {
@@ -335,7 +338,7 @@ table {
 th {
   text-align:left;
   color:var(--muted);
-  font:9px/1.6 var(--mono);
+  font:10px/1.5 var(--mono);
   text-transform:uppercase;
   letter-spacing:.5px;
   vertical-align:top;
@@ -359,7 +362,7 @@ th small {
   display:block;
   text-transform:none;
   letter-spacing:0;
-  font-size:9px;
+  font-size:10px;
   color:var(--muted)
 }
 th button {
@@ -443,7 +446,7 @@ td:last-child {
   color:var(--muted)
 }
 .evidence-tag {
-  font:8px/1.5 var(--mono);
+  font:9px/1.4 var(--mono);
   padding:2px 5px;
   border:1px solid #d7ddd0;
   border-radius:3px;
@@ -510,12 +513,12 @@ td:last-child {
   background:var(--gpu)
 }
 .metric-unavailable {
-  font:9px/1.4 var(--mono);
+  font:11px/1.4 var(--mono);
   color:var(--muted);
   overflow-wrap:anywhere
 }
 .license-tag {
-  font:9px/1.5 var(--mono);
+  font:10px/1.5 var(--mono);
   display:inline-block;
   border:1px solid var(--line);
   padding:3px 5px;
@@ -570,7 +573,7 @@ td:last-child {
   justify-content:space-between;
   align-items:center;
   gap:16px;
-  font-size:10px;
+  font-size:12px;
   color:var(--muted);
   padding:16px 0 0
 }
@@ -619,7 +622,7 @@ td:last-child {
 }
 .chart-panel {
   background:var(--paper);
-  padding:24px;
+  padding:19px;
   border:1px solid var(--line);
   border-radius:6px
 }
@@ -628,8 +631,10 @@ td:last-child {
   font-weight:600;
   margin:0 0 5px
 }
-.chart-panel>p {
-  margin:0 0 25px
+.chart-context {
+  margin:0 0 19px;
+  color:var(--muted);
+  font-size:12px
 }
 .chart-panel h3 .key {
   margin-right:7px
@@ -641,20 +646,42 @@ td:last-child {
   display:flex;
   align-items:baseline;
   justify-content:space-between;
-  gap:16px;
-  font-size:11px;
+  gap:10px;
+  font-size:12px;
   margin-bottom:6px
 }
 .bar-label button {
   text-align:left;
   padding:0;
-  font-size:11px
+  font-size:12px
 }
 .bar-label button:hover {
   text-decoration:underline
 }
 .bar-label .value {
-  font-size:11px
+  font-size:12px
+}
+.bar-value {
+  display:flex;
+  align-items:baseline;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:6px;
+  text-align:right
+}
+.metric-count,.chart-evidence {
+  display:block;
+  color:var(--muted);
+  font:10px/1.4 var(--mono);
+  white-space:nowrap
+}
+.chart-evidence {
+  color:#866435
+}
+.diagnostic-state small {
+  display:block;
+  font:9px/1.4 var(--mono);
+  color:#8b451d
 }
 .bar-track {
   height:7px;
@@ -674,13 +701,10 @@ td:last-child {
 .chart-panel.size .bar-fill {
   background:#74805b
 }
-.bar-row.unavailable {
-  opacity:.8
-}
-.chart-foot {
-  font-size:10px;
+.chart-empty {
+  padding:18px 0;
   color:var(--muted);
-  padding-top:4px
+  font-size:13px
 }
 .empty {
   padding:55px 20px;
@@ -697,12 +721,19 @@ td:last-child {
   color:var(--muted)
 }
 .methodology {
-  display:grid;
-  grid-template-columns:1fr 2fr;
-  gap:65px;
-  margin:65px 0 0;
-  padding:42px 0;
+  display:block;
+  margin:24px 0 0;
+  padding:16px 0;
   border-top:1px solid var(--line)
+}
+.methodology summary {
+  cursor:pointer;
+  width:fit-content;
+  font-size:14px;
+  font-weight:600
+}
+.methodology[open] summary {
+  margin-bottom:16px
 }
 h2 {
   font-size:25px;
@@ -727,7 +758,8 @@ h2 {
 .method-grid {
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:30px
+  gap:18px;
+  margin-bottom:15px
 }
 .method-number {
   font:9px var(--mono);
@@ -735,15 +767,20 @@ h2 {
   letter-spacing:.5px
 }
 .method-grid h3 {
-  font-size:14px;
+  font-size:13px;
   font-weight:600;
   margin:8px 0
 }
 .method-grid p {
-  font-size:12px;
+  font-size:13px;
   color:var(--muted);
   margin:0;
-  line-height:1.75
+  line-height:1.55
+}
+.contribute-link {
+  margin:4px 0 24px;
+  font-size:12px;
+  text-align:right
 }
 .contribute {
   display:flex;
@@ -1063,7 +1100,7 @@ dialog h3 {
     font-size:13px
   }
   td {
-    padding:22px 15px
+    padding:16px 12px
   }
   .model-name {
     font-size:14px
@@ -1087,7 +1124,7 @@ dialog h3 {
     gap:22px
   }
   .overview strong {
-    font-size:33px
+    font-size:23px
   }
   .intro {
     gap:25px
@@ -1108,23 +1145,17 @@ dialog h3 {
     font-size:12px
   }
   .model-sub {
-    font-size:9px
+    font-size:10px
   }
   .value {
-    font-size:11px
+    font-size:12px
   }
   .license-tag {
-    font-size:8px
+    font-size:10px
   }
   .listen-button {
-    font-size:8px;
+    font-size:10px;
     padding:5px
-  }
-  .filter-field>span {
-    display:none
-  }
-  .methodology {
-    gap:35px
   }
   .player-inner {
     gap:16px
@@ -1132,25 +1163,27 @@ dialog h3 {
 }
 @media(max-width:850px) {
   .intro {
-    display:block;
-    padding:38px 0 25px
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:12px;
+    padding:15px 0 12px
   }
   .overview {
-    margin-top:28px;
-    gap:35px
+    margin:0;
+    gap:13px
   }
   .overview strong {
-    font-size:29px
+    font-size:20px
   }
   .overview span {
-    font-size:9px
+    font-size:10px
   }
   h1 {
-    font-size:39px
+    font-size:27px
   }
   .baseline {
     font-size:11px;
-    align-items:flex-start
+    align-items:center
   }
   .masthead {
     min-height:82px
@@ -1220,7 +1253,7 @@ dialog h3 {
   }
   td::before {
     content:attr(data-label);
-    font:8px var(--mono);
+    font:10px var(--mono);
     text-transform:uppercase;
     letter-spacing:.4px;
     color:var(--muted)
@@ -1297,8 +1330,8 @@ dialog h3 {
   .player audio {
     order:2;
     flex:1 1 45%;
-    min-width:260px;
-    height:38px
+    min-width:0;
+    height:auto
   }
   .player #close-player {
     position:absolute;
@@ -1343,27 +1376,35 @@ dialog h3 {
     padding:0
   }
   .intro {
-    padding-top:32px
+    grid-template-columns:1fr auto;
+    padding-top:13px
   }
   h1 {
-    font-size:35px;
-    letter-spacing:-1.5px
+    font-size:24px;
+    letter-spacing:-.8px
   }
   .eyebrow {
-    font-size:8px;
+    font-size:9px;
     letter-spacing:.7px;
-    margin-bottom:17px
+    margin-bottom:3px
   }
   .intro-copy {
     font-size:13px
   }
   .overview {
     justify-content:space-between;
-    gap:18px
+    gap:10px
+  }
+  .overview strong {
+    font-size:18px
+  }
+  .overview span {
+    font-size:9px
   }
   .baseline {
-    flex-direction:column;
-    gap:6px
+    flex-direction:row;
+    align-items:flex-start;
+    gap:8px
   }
   .baseline p {
     gap:7px
@@ -1372,7 +1413,7 @@ dialog h3 {
     font-size:16px
   }
   .baseline a {
-    font-size:10px
+    font-size:11px
   }
   .results-top {
     align-items:center;
@@ -1407,8 +1448,8 @@ dialog h3 {
     margin-left:0
   }
   .comparison-note {
-    font-size:10px;
-    line-height:1.6
+    font-size:12px;
+    line-height:1.45
   }
   tbody {
     grid-template-columns:1fr
@@ -1418,7 +1459,7 @@ dialog h3 {
     height:39px
   }
   .model-name {
-    font-size:14px
+    font-size:15px
   }
   td {
     padding:12px 0
@@ -1428,10 +1469,10 @@ dialog h3 {
     max-width:100px
   }
   .model-sub {
-    font-size:10px
+    font-size:11px
   }
   .value {
-    font-size:13px
+    font-size:14px
   }
   .charts {
     grid-template-columns:1fr
@@ -1444,6 +1485,7 @@ dialog h3 {
     font-size:9px
   }
   .table-foot {
+    font-size:11px;
     flex-direction:column;
     align-items:flex-start;
     gap:9px

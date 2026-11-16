@@ -1,0 +1,70 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f5f1;
+  --paper: #fcfbf8;
+  --ink: #252f2b;
+  --muted: #657168;
+  --line: #dddfd7;
+  --cpu: #3e6956;
+  --gpu: #b6532e;
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+* { box-sizing: border-box; }
+body { max-width: 1240px; margin: 0 auto; padding: 0 32px 48px; }
+a { color: inherit; text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--gpu); }
+button, select { font: inherit; color: inherit; }
+button, select { touch-action: manipulation; }
+:focus-visible { outline: 3px solid var(--gpu); outline-offset: 3px; }
+.audio-header { border-bottom: 1px solid var(--line); }
+.audio-header nav { min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.audio-header nav a { text-decoration: none; }
+.heading-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0 18px; }
+h1 { margin: 0 0 4px; font-size: clamp(25px, 3vw, 34px); line-height: 1.2; font-weight: 550; letter-spacing: -.8px; }
+.heading-row p { margin: 0; color: var(--muted); }
+.results-link { white-space: nowrap; }
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 16px 0 11px; }
+.filters label:not(.diagnostic-toggle) { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+select, .filters button { min-height: 39px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper); padding: 7px 10px; }
+select { min-width: 180px; max-width: min(330px, 62vw); }
+.filters button { cursor: pointer; }
+.filters button[aria-pressed="true"] { background: #e6eadf; border-color: #cbd5c7; }
+.diagnostic-toggle { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); }
+.diagnostic-toggle input { width: 16px; height: 16px; accent-color: var(--cpu); }
+#status { margin: 0; padding: 4px 0 12px; color: var(--muted); font-size: 13px; }
+#samples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.audio-card { min-width: 0; padding: 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 7px; }
+.audio-card h2 { margin: 0 0 4px; font-size: 17px; line-height: 1.35; overflow-wrap: anywhere; }
+.audio-meta { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+.audio-card audio { display: block; width: 100%; height: 40px; }
+.audio-card details { margin-top: 10px; font-size: 13px; }
+.audio-card summary { cursor: pointer; width: fit-content; color: var(--muted); }
+.evidence-links { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 10px 0 2px; }
+.audio-attribution { padding-top: 7px; color: var(--muted); }
+.diagnostic-note { margin: 10px 0 0; padding: 8px 10px; border-left: 3px solid var(--gpu); background: #fff0e7; color: #70411f; font-size: 13px; }
+.empty-state { grid-column: 1 / -1; padding: 22px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
+.empty-state h2 { margin: 0 0 4px; font-size: 18px; }
+.empty-state p { margin: 0; color: var(--muted); }
+noscript { display: block; padding-top: 20px; }
+@media (max-width: 720px) {
+  body { padding: 0 18px 32px; }
+  .audio-header nav { min-height: 52px; }
+  .heading-row { align-items: flex-start; padding: 16px 0; }
+  h1 { font-size: 27px; }
+  .heading-row p { font-size: 14px; }
+  .filters { align-items: stretch; gap: 8px; }
+  .filters label:not(.diagnostic-toggle) { flex: 1 1 calc(50% - 8px); display: block; }
+  select { display: block; width: 100%; min-width: 0; max-width: none; margin-top: 4px; }
+  .filters button { flex: 1 1 auto; }
+  .diagnostic-toggle { flex: 1 1 100%; }
+  #samples { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .audio-card { padding: 14px; }
+}
+@media (max-width: 390px) {
+  body { padding-right: 14px; padding-left: 14px; }
+  .audio-header nav { font-size: 12px; }
+  .heading-row { gap: 8px; }
+  .results-link { font-size: 12px; }
+}

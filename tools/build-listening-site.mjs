@@ -6,7 +6,7 @@ const clips=new Set(data.models.flatMap(model=>model.audio.map(entry=>entry.clip
 const out=resolve('.cache/listening-site');
 // This dedicated generated directory never contains model assets or raw runs.
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
-const files=['audio/index.html','audio/player.mjs','audio/links.mjs','audio/waveform-integrity.mjs','audio/manifest.json',...clips];
+const files=['audio/index.html','audio/player.mjs','audio/player.css','audio/links.mjs','audio/waveform-integrity.mjs','audio/manifest.json',...clips];
 for(const file of files){const target=resolve(out,file);await mkdir(dirname(target),{recursive:true});await cp(file,target,{errorOnExist:true,force:false});}
 await writeFile(resolve(out,'.nojekyll'),'');
 await mkdir(resolve(out,'assets'),{recursive:true});
