@@ -52,22 +52,10 @@ for (const [page,html] of Object.entries(htmlFiles)) {
     assert.equal(new URL(url,'https://local.invalid/').searchParams.get('v'),version,`${page} asset ${url} shares the build identity`);
   }
 }
-for (const [path,checks] of [
-  ['assets/app.mjs',['waveform-integrity.mjs','assets/data.json']],
-  ['audio/player.mjs',['waveform-integrity.mjs','links.mjs','assets/data.json']],
-  ['assets/diagnostics.mjs',['observations.json']],
-]) {
+for (const path of ['assets/app.mjs','audio/player.mjs','assets/diagnostics.mjs']) {
   const source=await readFile(resolve(root,path),'utf8');
   assert.equal(source.includes(SITE_VERSION_TOKEN),false,`${path} contains no unresolved cache token`);
-  for (const name of checks) {
-    const needle=`${name}?v=${version}`;
-    assert.ok(source.includes(needle),`${path} versions ${name} with the page build identity`);
-  }
 }
-assert.ok((await readFile(resolve(root,'assets/diagnostics.mjs'),'utf8')).includes(`audio.json?v=${version}`),'Diagnostics versions its recording attribution data');
-assert.ok((await readFile(resolve(root,'assets/diagnostics.mjs'),'utf8')).includes(`.json?v=' + siteVersion`),'Diagnostics versions local receipt data');
-assert.ok((await readFile(resolve(root,'assets/app.mjs'),'utf8')).includes('new URL(sample.clip.path, document.baseURI)'),'Dashboard keeps immutable recordings on stable paths');
-assert.ok((await readFile(resolve(root,'audio/player.mjs'),'utf8')).includes('audio.src = `../${entry.clip.path}`'),'Audio page keeps immutable recordings on stable paths');
 const stampedFiles=await filesBelow(root);
 const identityEntries=[];
 for (const file of stampedFiles) {
@@ -202,12 +190,30 @@ async function verifySecondaryPages(page,label) {
   await page.goto(new URL('audio/',base).href);
   await page.waitForFunction(()=>document.querySelectorAll('#samples .audio-card').length>0,{timeout:15000});
   const audioCards=await page.locator('#samples .audio-card').count();
+  const audioUrls=await page.locator('#samples .audio-card audio').evaluateAll(nodes=>nodes.map(node=>node.src));
+  assert.ok(audioUrls.length,`${label} listening page exposes recordings`);
+  for (const url of audioUrls) {
+    assert.match(new URL(url).pathname,/\/audio\/samples\/[^/]+\.wav$/,'Listening page keeps immutable recordings at stable paths');
+    assert.equal(new URL(url).searchParams.has('v'),false,'Listening page can reuse the immutable recording cache');
+  }
   const audioResources=await assertResources(page,['/audio/player.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/data.json']);
   await page.goto(new URL('diagnostics/',base).href);
   await page.waitForFunction(()=>document.querySelectorAll('#groups .input-group').length>0,{timeout:15000});
   const diagnosticGroups=await page.locator('#groups .input-group').count();
+  const observationsUrl=await page.locator('a[href*="observations.json"]').first().getAttribute('href');
+  assert.ok(observationsUrl,'Diagnostics provides its observations JSON link');
+  assert.equal(new URL(observationsUrl,page.url()).searchParams.get('v'),version,'Diagnostics link uses the page build identity');
+  const receiptUrls=await page.locator('#groups .diagnostic-players a, #groups a.audio-attribution').evaluateAll(nodes=>nodes.map(node=>node.href));
+  assert.ok(receiptUrls.length,'Diagnostics exposes receipt or recording-attribution links');
+  for (const url of receiptUrls) assert.equal(new URL(url).searchParams.get('v'),version,'Generated diagnostics evidence links use the page build identity');
+  const diagnosticAudioUrls=await page.locator('#groups .diagnostic-players audio').evaluateAll(nodes=>nodes.map(node=>node.src));
+  assert.ok(diagnosticAudioUrls.length,'Diagnostics exposes its immutable recordings');
+  for (const url of diagnosticAudioUrls) {
+    assert.match(new URL(url).pathname,/\/diagnostics\/2026-11-multilingual\/audio\/[^/]+\.wav$/,'Diagnostics keeps immutable recordings at stable paths');
+    assert.equal(new URL(url).searchParams.has('v'),false,'Diagnostics can reuse the immutable recording cache');
+  }
   const diagnosticResources=await assertResources(page,['/assets/diagnostics.mjs','/assets/diagnostics.css','/diagnostics/2026-11-multilingual/observations.json']);
-  return {label,audioCards,audioResources,diagnosticGroups,diagnosticResources};
+  return {label,audioCards,audioResources,diagnosticGroups,diagnosticResources,receiptLinks:receiptUrls.length,diagnosticRecordings:diagnosticAudioUrls.length};
 }
 
 try {
