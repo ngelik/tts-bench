@@ -1,5 +1,7 @@
-import {matchesAuditedWav, waveformFinding, waveformReport} from './waveform-integrity.mjs';
-import {recordingUrl} from './links.mjs';
+import {matchesAuditedWav, waveformFinding, waveformReport} from './waveform-integrity.mjs?v=__TTS_BENCH_SITE_VERSION__';
+import {recordingUrl} from './links.mjs?v=__TTS_BENCH_SITE_VERSION__';
+
+const siteVersion = '__TTS_BENCH_SITE_VERSION__';
 
 const modelSelect = document.querySelector('#model');
 const backendSelect = document.querySelector('#backend');
@@ -22,7 +24,7 @@ function shortName(url) {
 }
 
 try {
-  const response = await fetch('../assets/data.json');
+  const response = await fetch(`../assets/data.json?v=${siteVersion}`);
   if (!response.ok) throw new Error('Published audio data unavailable');
   const {models} = await response.json();
   const entries = models.flatMap(model => model.audio);

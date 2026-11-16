@@ -32,4 +32,6 @@ jobs:
       - run: npm run reference -- --check
       - run: npm run audio -- check
       - run: npm run listen:build
+      - name: Verify clean and mixed-cache Pages visits in Chrome
+        run: xvfb-run -a node tools/check-site-cache.mjs
       - run: node tools/publication-check.mjs

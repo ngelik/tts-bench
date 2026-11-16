@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'">
   <meta name="description" content="Listen to published browser TTS benchmark audio examples with model, backend and receipt provenance.">
   <title>Audio examples · Browser TTS Benchmark</title>
-  <link rel="stylesheet" href="player.css">
+  <link rel="stylesheet" href="player.css?v=__TTS_BENCH_SITE_VERSION__">
 </head>
 <body>
   <header class="audio-header">
@@ -24,6 +24,6 @@
     <section id="samples" aria-label="Audio examples">Loading clips…</section>
   </main>
   <noscript>Enable JavaScript to filter and play audio, or browse the recording receipts in the <a href="https://github.com/ngelik/tts-bench/tree/main/audio">repository</a>.</noscript>
-  <script type="module" src="player.mjs"></script>
+  <script type="module" src="player.mjs?v=__TTS_BENCH_SITE_VERSION__"></script>
 </body>
 </html>
