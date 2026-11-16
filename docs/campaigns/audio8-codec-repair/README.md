@@ -32,9 +32,25 @@ The model-data sum is the three ONNX graph/external-data pairs (`kind: model-wei
 
 The estimate excludes the unrequested alternate runtime files, licenses and metadata such as `runtime_manifest.json`, plus project-owned modules such as `web/adapters/audio8.mjs`, `web/workers/audio8.mjs`, `web/audio8/generation.mjs`, `web/audio8/signal.mjs` and `web/cache-model-asset.mjs`, the benchmark page and browser shell. Compression, HTTP framing, connection overhead and application-module transfers are outside this file-byte sum; it is not an observed customer download.
 
+<!-- audio8-outcomes:start -->
+## Published native outcomes
+
+This table updates as each completed full cell is independently submitted. Pending cells have not produced a public result. A no-score status is preserved as recorded and is never treated as a timing value. Cached RSS and warm timing remain separate.
+
+| Backend | Scenario | Current outcome | Evidence |
+|---|---|---|---|
+| webgpu | cached | Measured | [Native receipt](../../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) |
+| webgpu | warm | Pending | Not submitted |
+| cpu | cached | Pending | Not submitted |
+| cpu | warm | Pending | Not submitted |
+
+No CPU/WebGPU warm speed comparison is published until both warm cells are measured and validated.
+
+<!-- audio8-outcomes:end -->
+
 ### Relationship to the archived results
 
-Earlier Audio8 receipts remain linked in [Reference results](../../../README.md#reference-results). They describe the prior asset registration and are not results for this schedule. In particular, the archived WebGPU cached/warm evidence retains the decoder fault and is not treated as a valid repaired speech score. The older CPU cached receipt is also archived relative to this registration; no CPU warm score is inferred from it. The dashboard should show the corrected cells as awaiting results while preserving those older receipts and their status. New receipts must cite the pinned source and match the current assets before they can satisfy this schedule.
+Earlier Audio8 receipts remain linked in [Reference results](../../../README.md#reference-results). They describe the prior asset registration and are not results for this schedule. In particular, the archived WebGPU cached/warm evidence retains the decoder fault and is not treated as a valid repaired speech score. The older CPU cached receipt is also archived relative to this registration; no CPU warm score is inferred from it. The dashboard preserves the older receipts and their status while showing each new cell as it is submitted. New receipts must cite the pinned source and match the current assets before they can satisfy this schedule.
 
 The cell order is fixed and sequential. An error or unsupported backend remains in the record; do not retry an unchanged cell or substitute its warm timing with cached timing. A failed acoustic gate is not a score, but its native receipt and saved failure waveform remain diagnostic evidence. A score is publishable only when all five scored warm trials and the excluded warm-up pass the gate and the final WAV matches the recorded trial.
 
