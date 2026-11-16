@@ -542,11 +542,12 @@ try {
     assert.equal(diagnosticPlayer.controls, true, 'The opt-in diagnostic clip retains an audio control');
     assert.equal(diagnosticPlayer.preload, 'none');
     assert.ok(diagnosticPlayer.src.endsWith(audio8DiagnosticEntry.clip.path), 'Diagnostic audio resolves to its published local WAV');
+    const diagnosticSelector = `.audio-card[data-sample="${audio8DiagnosticEntry.clip.path.split('/').at(-1)}"] audio`;
     await audioControl.click({position:{x:18,y:27}});
-    await page.waitForFunction(() => {
-      const player = document.querySelector('.audio-card[data-backend="webgpu"][data-model="audio8-realistic-0.6b-int4"] audio');
-      return player.currentTime > .15 && !player.paused || player.error;
-    }, null, {timeout:10000}).catch(async () => {
+    await page.waitForFunction(selector => {
+      const player = document.querySelector(selector);
+      return player && (player.currentTime > .15 && !player.paused && player.readyState >= 2 || player.error);
+    }, diagnosticSelector, {timeout:10000}).catch(async () => {
       const state = await audioControl.evaluate(a => ({currentTime:a.currentTime,paused:a.paused,readyState:a.readyState,networkState:a.networkState,error:a.error?.code ?? null,src:a.currentSrc}));
       throw new Error(`Diagnostic clip did not start after a real audio-control click: ${JSON.stringify(state)}`);
     });
