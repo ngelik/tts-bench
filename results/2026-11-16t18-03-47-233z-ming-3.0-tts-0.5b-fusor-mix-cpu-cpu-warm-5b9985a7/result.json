@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-16t18-03-47-233z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-warm-5b9985a7",
+  "createdAt": "2026-11-16T19:34:16.999Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "ab5aec3e510420adbcac9971f35f92152b19959c",
+    "dirty": false,
+    "manifestSha256": "241f993d2bb839cb691e5835e05ad41721522bb1ab1a3aeb03882e58e3e36036"
+  },
+  "assets": [
+    {
+      "id": "ming-fusor-000-bin",
+      "sha256": "018d43eaf832edfa69ba0096a60473850ac2d53019dd7e7102e10e9d69a8a58e",
+      "bytes": 153151488
+    },
+    {
+      "id": "ming-fusor-001-bin",
+      "sha256": "79e273bc0c6b078c4571a86131eb9ed382daf24a5b5f58edf0a3c90b00da5fc6",
+      "bytes": 47809536
+    },
+    {
+      "id": "ming-fusor-002-bin",
+      "sha256": "221d0161d1007ae8e8c8de3d02f5c87002a5dcedbc38fe46e392a1467c45b5c0",
+      "bytes": 49374720
+    },
+    {
+      "id": "ming-fusor-003-bin",
+      "sha256": "317cb4dc946ed5ed4fca4a059099c2ced5f19c8a30d183a6dd6df4b27cf4b281",
+      "bytes": 49374720
+    },
+    {
+      "id": "ming-fusor-004-bin",
+      "sha256": "bb3b243dc4648a01db1aaf6bd08c680a8ef49880076b51681d90339f79e2c971",
+      "bytes": 50028032
+    },
+    {
+      "id": "ming-fusor-005-bin",
+      "sha256": "138c06bfbac9059121dfbbf4f25993c0fb6c589f670bd8299e2d74033ef0c640",
+      "bytes": 49883648
+    },
+    {
+      "id": "ming-fusor-006-bin",
+      "sha256": "e460bd70b20ec14a6d603aaf075a2e275ad0aea1ee7c89d6299220fd0f6c8b33",
+      "bytes": 49374720
+    },
+    {
+      "id": "ming-fusor-007-bin",
+      "sha256": "ddf4c79abf8aa8a7df88f23820d591718aa1344cc4c0184b8f13b65fff7c4660",
+      "bytes": 50028032
+    },
+    {
+      "id": "ming-fusor-008-bin",
+      "sha256": "2ae3893f08712067981d29dfff3f754c7c0944522bd8f0cb04d251c5e592e1af",
+      "bytes": 49880064
+    },
+    {
+      "id": "ming-fusor-009-bin",
+      "sha256": "429b0551b819e339e12f7f8134e64c2cd79c137b01df9ed6bb4facffc25188ca",
+      "bytes": 49374720
+    },
+    {
+      "id": "ming-fusor-010-bin",
+      "sha256": "091292f51b1d33b2f34bfe886bae8b3076dd855ba4122604fdb04df84c49e334",
+      "bytes": 47382272
+    },
+    {
+      "id": "ming-fusor-011-bin",
+      "sha256": "543b01946f9455d87569c27bf3167c1c9271499fd2dfb732b5724a6cb15a9c90",
+      "bytes": 47366144
+    },
+    {
+      "id": "ming-fusor-012-bin",
+      "sha256": "316d6fce01f71a016a60013f335aab496e77aae13324ee32737acb7f0abf819d",
+      "bytes": 48627200
+    },
+    {
+      "id": "ming-fusor-013-bin",
+      "sha256": "3f55b8b32511799a0863ee567d033874a81ca4e627e0ef7e33dbe02cbc55722f",
+      "bytes": 47321088
+    },
+    {
+      "id": "ming-fusor-014-bin",
+      "sha256": "ee8cd2ff0385c4b99b6dfe4556be7326e53b30cf93258d52028c5af0f3550a1c",
+      "bytes": 49619520
+    },
+    {
+      "id": "ming-fusor-readme-md",
+      "sha256": "b100a453237d766f63de7c1003eccf24fe4e09e6909372760bc39a10ac483bcd",
+      "bytes": 1203
+    },
+    {
+      "id": "ming-fusor-manifest-json",
+      "sha256": "a50db3af1bfa6dfcbba12bfaca42c7d7d85fc440e76ee63b1a2a99f39cf36f05",
+      "bytes": 88437
+    },
+    {
+      "id": "ming-fusor-tokenizer-json",
+      "sha256": "87d54ca3b44ea2f822ba39a0a45cb1b61644bd6606d9d3536dea75367bffb06d",
+      "bytes": 11431389
+    },
+    {
+      "id": "ming-fusor-host-loader-js",
+      "sha256": "b2a23269d13710a974e5ce6afbeb2189813f7930b2d1befef60c9132301425bb",
+      "bytes": 8574
+    },
+    {
+      "id": "ming-fusor-web-threaded-relaxed-ming_runtime-js",
+      "sha256": "7bef84b2c6e66cbf5bbb39ac150f7b77fedb5eaeff55bdef9adb7b0c82633475",
+      "bytes": 17353
+    },
+    {
+      "id": "ming-fusor-web-threaded-relaxed-ming_runtime_bg-wasm",
+      "sha256": "20a5207f683cd5ed603a534ceaa7ef4f92ebbf677b52516e809a7bbebc13ffbf",
+      "bytes": 3030075
+    },
+    {
+      "id": "ming-fusor-src-workerhelpers-no-bundler-js",
+      "sha256": "efdf939ab7fe3c4dca2eb2f83a82a0d1057726393649fbc1721c89634f80139f",
+      "bytes": 2021
+    },
+    {
+      "id": "ming-fusor-engine-worker-js",
+      "sha256": "c1d3e268ed410a8aa66324528bea89b7eb046841cc5825e55b5032922e324a24",
+      "bytes": 3405
+    },
+    {
+      "id": "ming-fusor-base-license",
+      "sha256": "2872f1918dfc04fdeb7f5d66d8d1b773594c9375e7c8f7bda39780bb97ad4fba",
+      "bytes": 1067
+    },
+    {
+      "id": "ming-fusor-base-readme-md",
+      "sha256": "67388eca2e66e557601dccf7a76076154176f3a7dbb4a7f75f63a7543db591c0",
+      "bytes": 54491
+    },
+    {
+      "id": "ming-fusor-space-readme-md",
+      "sha256": "343efa83de0126d2afe941d7884b8b2221a08bd7d45e1141051f0adb14bf1068",
+      "bytes": 782
+    },
+    {
+      "id": "ming-fusor-license",
+      "sha256": "b34d36a9d1d848b09e80fae4c50aa6ad4ca452452ce4ba87069e21db1f919a90",
+      "bytes": 1062
+    }
+  ],
+  "cells": [
+    {
+      "model": "ming-3.0-tts-0.5b-fusor-mix-cpu",
+      "support": {
+        "voiceCount": 117,
+        "bundledVoiceCount": 7,
+        "languageCount": 7,
+        "languages": [
+          "zh",
+          "en",
+          "ja",
+          "ko",
+          "de",
+          "fr",
+          "es"
+        ],
+        "scope": "Named presets in the base Ming checkpoint cookbook. The Fusor browser runtime bundles seven and the benchmark selects US_James.",
+        "sources": [
+          "https://github.com/inclusionAI/Ming-3.0-tts/blob/e999c39fa676722aaa9ea29b5aa19a90525b271f/cookbooks/instruction_en.md#built-in-premium-voices",
+          "https://huggingface.co/fusorlabs/ming-3.0-tts-0.5b-web/blob/62588575d91dceb33822fe1e3925e748393c6b3e/README.md",
+          "https://huggingface.co/spaces/fusorlabs/ming-wasm/tree/bdf46b41e966340f398fdd82d3ca64f4058ad892/engine/dist/web-threaded-relaxed",
+          "https://github.com/fusor-rs/ming-wasm/blob/bcbcf268f6b32db48c075aec94f3b7ff59208085/README.md"
+        ],
+        "notes": "Five English and two Chinese voice presets are enumerated by the pinned WASM voices() export. The base checkpoint supports seven languages. Only English is evaluated."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "US_James (built-in US English male narrator)",
+      "precision": "Fusor mix: Q4 LLM/VAE, Q7 flow/aggregator/embeddings",
+      "settings": {
+        "voice": "US_James",
+        "preset": "quality",
+        "seed": 1895,
+        "sampleRate": 44100,
+        "threadCount": 6,
+        "maxFramesPerInternalFragment": 512,
+        "quantization": "mix: LLM and VAE decoder 4-bit; flow head, aggregator and embeddings 7-bit",
+        "baseModelRevision": "e5bd8da31ecf1b9276cdbdda821fa891068f1368",
+        "modelBundleRevision": "62588575d91dceb33822fe1e3925e748393c6b3e",
+        "runtimeSpaceRevision": "bdf46b41e966340f398fdd82d3ca64f4058ad892",
+        "loadingCache": "Revision-scoped Cache Storage supplies verified part responses to the bounded Fusor loader; the runtime checks BLAKE3 on every load.",
+        "textProcessing": "Pinned upstream Ming fragmenter; benchmark source spans are passed verbatim, and a source span may become multiple internal fragments.",
+        "runtimeBuild": "web-threaded-relaxed",
+        "effectiveThreads": 6
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Pinned Fusor web-threaded-relaxed WebAssembly runtime initialized with 6 compute threads. A separate untimed synthesis probe returned finite PCM."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 914316.3400000334,
+          "samples": 44510130,
+          "sampleRate": 44100,
+          "pcmSha256": "0b6b010f7c59614febe1e78b0d0d0111a652f3c6d54c6063bbf4ced7c38a94e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1072.280000090599,
+            "firstSourceChunkCompletedMs": 11116.875,
+            "audioSeconds": 1009.3,
+            "realTimeFactor": 0.9058915485980713,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 912279.8899999857,
+          "samples": 44510130,
+          "sampleRate": 44100,
+          "pcmSha256": "0b6b010f7c59614febe1e78b0d0d0111a652f3c6d54c6063bbf4ced7c38a94e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 818.0800000429153,
+            "firstSourceChunkCompletedMs": 10590.340000033379,
+            "audioSeconds": 1009.3,
+            "realTimeFactor": 0.903873863073403,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 892630.9549999237,
+          "samples": 44510130,
+          "sampleRate": 44100,
+          "pcmSha256": "0b6b010f7c59614febe1e78b0d0d0111a652f3c6d54c6063bbf4ced7c38a94e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 814.3650000095367,
+            "firstSourceChunkCompletedMs": 10341.980000019073,
+            "audioSeconds": 1009.3,
+            "realTimeFactor": 0.8844059793915819,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 897275.0299999714,
+          "samples": 44510130,
+          "sampleRate": 44100,
+          "pcmSha256": "0b6b010f7c59614febe1e78b0d0d0111a652f3c6d54c6063bbf4ced7c38a94e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 828.5499999523163,
+            "firstSourceChunkCompletedMs": 10332.869999885559,
+            "audioSeconds": 1009.3,
+            "realTimeFactor": 0.8890072624591018,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 894298.4549999237,
+          "samples": 44510130,
+          "sampleRate": 44100,
+          "pcmSha256": "0b6b010f7c59614febe1e78b0d0d0111a652f3c6d54c6063bbf4ced7c38a94e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 826.9950000047684,
+            "firstSourceChunkCompletedMs": 10302.069999933243,
+            "audioSeconds": 1009.3,
+            "realTimeFactor": 0.8860581145347505,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 891121.6000000238,
+          "samples": 44510130,
+          "sampleRate": 44100,
+          "pcmSha256": "0b6b010f7c59614febe1e78b0d0d0111a652f3c6d54c6063bbf4ced7c38a94e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 817.4099999666214,
+            "firstSourceChunkCompletedMs": 10434.850000023842,
+            "audioSeconds": 1009.3,
+            "realTimeFactor": 0.8829105320519408,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          },
+          "audio": {
+            "sha256": "0b74f033029e3437aeb8388f4303f3df3eee379ca20300665c41c2223aa62649",
+            "bytes": 89020304
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "English 20k November campaign. Sequential headed Chrome, AC power and one isolated benchmark tab. Predeclared backend order, no cold-load check. One excluded full article followed by five scored repetitions."
+  ]
+}
