@@ -50,7 +50,7 @@ This table updates as each completed full cell is independently submitted. Pendi
 |---|---|---|---|
 | cpu | cached | Measured | [Native receipt](../../../results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) |
 | webgpu | cached | Measured | [Native receipt](../../../results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) |
-| cpu | warm | Pending | Not submitted |
+| cpu | warm | Measured | [Native receipt](../../../results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) |
 | webgpu | warm | Pending | Not submitted |
 
 No CPU/WebGPU warm speed comparison is published until both warm cells are measured and validated.

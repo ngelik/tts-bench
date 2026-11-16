@@ -10,7 +10,7 @@ Full warm workload: one excluded full-article warm-up and at least five scored 2
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
-| Tiny Voca 4.5M | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted |
+| Tiny Voca 4.5M | 54.86 s (54.80–54.88; n=5) | Not submitted | 159.07 ms (n=5) | Not submitted | 1152.39 s / 0.048 | Not submitted |
 
 ## Resource diagnostics
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Tiny Voca 4.5M | Not submitted | Not submitted | [Report](../../results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) | [Report](../../results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#tiny-voca) | [Terms](../../docs/LICENSING.md) |
+| Tiny Voca 4.5M | [Report](../../results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | Not submitted | [Report](../../results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) | [Report](../../results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#tiny-voca) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
