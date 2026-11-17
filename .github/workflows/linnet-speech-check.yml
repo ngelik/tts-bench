@@ -1,0 +1,54 @@
+name: Check Linnet hybrid recorded speech
+on:
+  push:
+    branches: ['verification/erogol-full-article']
+    paths: ['.github/workflows/linnet-speech-check.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Install the fixed offline English recognizer
+        run: python3 -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+      - name: Read the original Chrome artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 44138358475 -R ngelik/tts-bench --name linnet-hybrid-browser-audio-1866106d8dc126273b4405d664e006a644c83516 --dir evidence
+      - name: Transcribe the CPU and hybrid recordings
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, wave
+          from pathlib import Path
+          import torch, torchaudio
+
+          torch.set_num_threads(2)
+          bundle = torchaudio.pipelines.WAV2VEC2_ASR_BASE_960H
+          recognizer = bundle.get_model().eval()
+          labels = bundle.get_labels()
+          report=json.loads(Path('evidence/report.json').read_bytes())
+          observations=[]
+          for record in report['runs']:
+              path=Path('evidence') / (record['backend']+'.wav')
+              with wave.open(str(path)) as wav:
+                  assert wav.getnchannels()==1 and wav.getsampwidth()==2
+                  audio=torch.frombuffer(bytearray(wav.readframes(wav.getnframes())),dtype=torch.int16).float()[None,:]/32768
+                  audio=torchaudio.functional.resample(audio,wav.getframerate(),bundle.sample_rate)
+              with torch.inference_mode():
+                  emissions,_=recognizer(audio)
+              tokens=emissions[0].argmax(dim=-1).unique_consecutive().tolist()
+              text=''.join(labels[token] for token in tokens if token).replace('|',' ').strip()
+              row={'backend':record['backend'],'expected':record['spokenText'],'transcript':text}
+              print(json.dumps(row))
+              assert all(word in text for word in ['LANTERN','GUIDES','HOME']),text
+              observations.append(row)
+          Path('observations.json').write_text(json.dumps(observations, indent=2) + '\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: linnet-speech-observations
+          path: observations.json
+          retention-days: 14
