@@ -9,6 +9,7 @@ export class LinnetGpuPool {
   #weightUploadCount = 0;
   #weightBytesUploaded = 0;
   #weightKeys = new Set();
+  #dynamicWeightUploads = 0;
 
   constructor({ onCrash } = {}) {
     this.#onCrash = onCrash;
@@ -86,8 +87,14 @@ export class LinnetGpuPool {
     clearTimeout(call.timer);
     if (message.ok) {
       this.#dispatchCount++;
-      if (!this.#weightKeys.has(call.request.weightKey)) {
-        this.#weightKeys.add(call.request.weightKey);
+      if (call.request.cacheableWeight === true) {
+        if (!this.#weightKeys.has(call.request.weightKey)) {
+          this.#weightKeys.add(call.request.weightKey);
+          this.#weightUploadCount++;
+          this.#weightBytesUploaded += call.request.weightBuffer?.byteLength ?? 0;
+        }
+      } else {
+        this.#dynamicWeightUploads++;
         this.#weightUploadCount++;
         this.#weightBytesUploaded += call.request.weightBuffer?.byteLength ?? 0;
       }
@@ -100,6 +107,7 @@ export class LinnetGpuPool {
     return {
       dispatchCount: this.#dispatchCount,
       uniqueWeightBuffers: this.#weightKeys.size,
+      dynamicWeightUploads: this.#dynamicWeightUploads,
       weightUploadCount: this.#weightUploadCount,
       weightBytesUploaded: this.#weightBytesUploaded,
     };

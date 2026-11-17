@@ -85,7 +85,7 @@ async function assetBytes(path) {
   return new Uint8Array(await response.arrayBuffer());
 }
 
-function linnetGpuDispatch(aPointer, bPointer, outputPointer, m, k, n, transposeB) {
+function linnetGpuDispatch(aPointer, bPointer, outputPointer, m, k, n, transposeB, cacheableRhs) {
   if (!gpuEnabled || !shouldDispatchDenseMacs(m, k, n)) return 0;
   if (!self.crossOriginIsolated || typeof SharedArrayBuffer !== 'function') {
     throw new Error('The Linnet hybrid path requires cross-origin isolation and SharedArrayBuffer.');
@@ -98,8 +98,9 @@ function linnetGpuDispatch(aPointer, bPointer, outputPointer, m, k, n, transpose
   }
   const lhs = new Float32Array(memory, aPointer, m * k);
   const rhs = new Float32Array(memory, bPointer, bCount);
+  const cacheableWeight = cacheableRhs === 1;
   const weightKey = `${bPointer}:${bCount}:${transposeB ? 't' : 'n'}`;
-  const weightBuffer = uploadedWeightKeys.has(weightKey) ? null : new SharedArrayBuffer(rhs.byteLength);
+  const weightBuffer = !cacheableWeight || !uploadedWeightKeys.has(weightKey) ? new SharedArrayBuffer(rhs.byteLength) : null;
   if (weightBuffer) new Float32Array(weightBuffer).set(rhs);
   const stateBuffer = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
   const errorBuffer = new SharedArrayBuffer(512);
@@ -107,7 +108,8 @@ function linnetGpuDispatch(aPointer, bPointer, outputPointer, m, k, n, transpose
   const outputBuffer = new SharedArrayBuffer(m * n * Float32Array.BYTES_PER_ELEMENT);
   new Float32Array(inputBuffer).set(lhs);
   self.postMessage({ type: 'linnet-gpu-request', request: {
-    m, k, n, transposeB: transposeB !== 0, weightKey, weightBuffer, stateBuffer, errorBuffer, inputBuffer, outputBuffer,
+    m, k, n, transposeB: transposeB !== 0, weightKey, cacheableWeight, weightBuffer,
+    stateBuffer, errorBuffer, inputBuffer, outputBuffer,
   } });
   const waitResult = Atomics.wait(new Int32Array(stateBuffer), 0, 0, 120000);
   const state = Atomics.load(new Int32Array(stateBuffer), 0);
@@ -117,7 +119,7 @@ function linnetGpuDispatch(aPointer, bPointer, outputPointer, m, k, n, transpose
     const reason = new TextDecoder().decode(bytes.subarray(0, end < 0 ? bytes.length : end));
     throw new Error(reason || `Linnet WebGPU dispatch failed with state ${state} (${waitResult}).`);
   }
-  uploadedWeightKeys.add(weightKey);
+  if (cacheableWeight) uploadedWeightKeys.add(weightKey);
   new Float32Array(memory, outputPointer, m * n).set(new Float32Array(outputBuffer));
   gpuDispatchCount++;
   return 1;

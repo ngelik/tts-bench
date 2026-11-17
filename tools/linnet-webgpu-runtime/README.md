@@ -6,7 +6,9 @@ by `prepare-upstream.mjs` to the upstream `matmul_mv`, `matmul_mm`, and
 `matmul_mm_transposed_b` FP32 kernels. Operations below 32,768 MACs keep the
 upstream SIMD128/CPU implementation. Larger operations synchronously hand data
 to the browser's WebGPU worker and copy the result back before the Rust runtime
-continues.
+continues. Generic operations, including changing attention K/V tensors, mark
+their RHS as dynamic and upload it for every dispatch. Only immutable `Mat::F32`
+model weights opt into the worker's pointer-and-shape cache.
 
 Upstream source is fetched at commit
 [`29dfdd503a3930e4e36c1130e4c9aab0592201ca`](https://github.com/VoxRT/LinnetTTS/tree/29dfdd503a3930e4e36c1130e4c9aab0592201ca).

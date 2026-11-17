@@ -27,7 +27,8 @@ try {
   await page.goto(server.url, { waitUntil: 'load' });
   const results = await page.evaluate(async () => {
     const { createLinnetAdapter } = await import('/web/adapters/linnet.mjs');
-    const spokenText = 'A Linnet browser runtime performs a short neural speech check.';
+    const probeText = 'First, the river turns slowly beneath the bridge.';
+    const spokenText = 'Next, a bright blue lantern guides the travelers home.';
     const runs = [];
     for (const backend of ['cpu', 'webgpu']) {
       const adapter = createLinnetAdapter();
@@ -35,7 +36,7 @@ try {
         const initialized = await adapter.initialize({
           backend,
           probe: true,
-          probeText: spokenText,
+          probeText,
           allowSoftwareGpu: true,
         });
         const response = await adapter.generateChunk({ id: 0, text: spokenText });
@@ -74,6 +75,8 @@ try {
         }
         runs.push({
           backend,
+          probeText,
+          spokenText,
           initialized,
           gpuDiagnostics: adapter.gpuDiagnostics(),
           sampleRate: response.sampleRate,
@@ -106,9 +109,12 @@ try {
     'hosted software adapter is explicitly identified as a diagnostic');
   assert.ok(webgpu.gpuDiagnostics.dispatchCount > 0, 'model-level inference dispatched WebGPU kernels');
   assert.ok(webgpu.gpuDiagnostics.uniqueWeightBuffers > 0, 'static dense weights were cached on the WebGPU worker');
-  assert.equal(webgpu.gpuDiagnostics.weightUploadCount, webgpu.gpuDiagnostics.uniqueWeightBuffers);
+  assert.ok(webgpu.gpuDiagnostics.dynamicWeightUploads > 0,
+    'dynamic KV RHS data is uploaded on every WebGPU dispatch instead of reusing pointer aliases');
+  assert.equal(webgpu.gpuDiagnostics.weightUploadCount,
+    webgpu.gpuDiagnostics.uniqueWeightBuffers + webgpu.gpuDiagnostics.dynamicWeightUploads);
   assert.ok(webgpu.gpuDiagnostics.weightUploadCount < webgpu.gpuDiagnostics.dispatchCount,
-    'repeated operations reused cached WebGPU weight buffers');
+    'immutable model weights are cached while dynamic attention values remain fresh');
   for (const run of results) {
     assert.equal(run.sampleRate, 24000);
     assert.ok(run.sampleCount > 2400, `${run.backend} emitted more than 0.1 seconds of speech`);
@@ -125,6 +131,7 @@ try {
     'Short LINNET model-level hybrid/runtime smoke output generated in headed Chrome.',
     'It is diagnostic audio, not a scored recording or a speed comparison.',
     'The synthesis uses VoxRT linnet-en-35m at its pinned revision and authorized built-in voice linnet-en-f1.',
+    `Cache regression sequence: “${results[1].probeText}” followed by “${results[1].spokenText}”.`,
     'Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0.',
     'Powered by Linnet (VoxRT).',
     'Hybrid runtime: Apache-2.0 VoxRT/LinnetTTS source v0.1.1, pinned in web/linnet/runtime-policy.mjs.',
@@ -132,6 +139,7 @@ try {
   await writeFile(resolve(artifactDir, 'report.json'), JSON.stringify({
     sourceCommit: '29dfdd503a3930e4e36c1130e4c9aab0592201ca',
     report: 'model-level short-utterance correctness diagnostic; no performance or hardware-GPU claim',
+    cacheRegression: 'two different utterances per backend; immutable weight buffers may be cached, dynamic RHS buffers are fresh per dispatch',
     runs: results,
   }, null, 2) + '\n');
   console.log(JSON.stringify({

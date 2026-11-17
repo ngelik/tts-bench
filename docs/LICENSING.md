@@ -191,7 +191,8 @@ builds a separate hybrid WASM from the pinned Apache-2.0 Rust source and stages
 it only in ignored local storage; its Rust toolchain, source commit, output size
 and SHA-256 are pinned in `web/linnet/runtime-policy.mjs`. It dispatches eligible
 dense operations to a non-fallback WebGPU adapter and keeps remaining operations
-on WASM SIMD128/CPU. The build process does not rehost model weights or the
+on WASM SIMD128/CPU. Only immutable `Mat::F32` model weights are cached; dynamic
+attention K/V tensors are uploaded afresh for each dispatch. The build process does not rehost model weights or the
 unlicensed demo binding. The benchmark adapter and safetensors memory conversion
 are original project code; no model weights or voice files are committed.
 Show both required notices with the documentation and any published sample:

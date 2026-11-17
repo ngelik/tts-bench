@@ -1,4 +1,5 @@
 import { isSoftwareWebGpuAdapter } from './runtime-policy.mjs';
+import { materializeRhsBuffer } from './gpu-rhs-buffer.mjs';
 
 let device = null;
 let pipeline = null;
@@ -74,26 +75,28 @@ function makeBuffer(size, usage) {
 
 async function dispatch(request) {
   if (!device) throw new Error('WebGPU device is not initialized.');
-  const { m, k, n, transposeB, weightKey } = request;
+  const { m, k, n, transposeB } = request;
   const lhs = Float32Array.from(new Float32Array(request.inputBuffer));
-  let rhsBuffer = weights.get(weightKey);
-  if (!rhsBuffer) {
-    if (!request.weightBuffer) throw new Error(`Weight buffer ${weightKey} was not cached and no upload was supplied.`);
-    const rhs = Float32Array.from(new Float32Array(request.weightBuffer));
-    if (rhs.byteLength > device.limits.maxStorageBufferBindingSize) {
-      throw new Error(`Weight buffer ${rhs.byteLength} exceeds maxStorageBufferBindingSize ${device.limits.maxStorageBufferBindingSize}.`);
-    }
-    rhsBuffer = makeBuffer(rhs.byteLength, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST);
-    device.queue.writeBuffer(rhsBuffer, 0, rhs);
-    weights.set(weightKey, rhsBuffer);
-  }
+  const rhsBinding = materializeRhsBuffer(request, weights,
+    size => {
+      if (size > device.limits.maxStorageBufferBindingSize) {
+        throw new Error(`Weight buffer ${size} exceeds maxStorageBufferBindingSize ${device.limits.maxStorageBufferBindingSize}.`);
+      }
+      return makeBuffer(size, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST);
+    },
+    (buffer, rhs) => device.queue.writeBuffer(buffer, 0, rhs));
+  const rhsBuffer = rhsBinding.buffer;
 
   const outBytes = m * n * Float32Array.BYTES_PER_ELEMENT;
-  const lhsBuffer = makeBuffer(lhs.byteLength, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST);
-  const outBuffer = makeBuffer(outBytes, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC);
-  const paramsBuffer = makeBuffer(16, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
-  const readback = makeBuffer(outBytes, GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ);
+  let lhsBuffer;
+  let outBuffer;
+  let paramsBuffer;
+  let readback;
   try {
+    lhsBuffer = makeBuffer(lhs.byteLength, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST);
+    outBuffer = makeBuffer(outBytes, GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC);
+    paramsBuffer = makeBuffer(16, GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST);
+    readback = makeBuffer(outBytes, GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ);
     device.queue.writeBuffer(lhsBuffer, 0, lhs);
     device.queue.writeBuffer(paramsBuffer, 0, new Uint32Array([m, k, n, transposeB ? 1 : 0]));
     const bindGroup = device.createBindGroup({
@@ -119,10 +122,11 @@ async function dispatch(request) {
     new Float32Array(request.outputBuffer).set(values);
     readback.unmap();
   } finally {
-    lhsBuffer.destroy();
-    outBuffer.destroy();
-    paramsBuffer.destroy();
-    readback.destroy();
+    lhsBuffer?.destroy();
+    outBuffer?.destroy();
+    paramsBuffer?.destroy();
+    readback?.destroy();
+    if (rhsBinding.transient) rhsBuffer.destroy();
   }
 }
 
