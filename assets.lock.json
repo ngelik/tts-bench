@@ -1475,7 +1475,7 @@
           "https://huggingface.co/Supertone/supertonic-3/tree/3cadd1ee6394adea1bd021217a0e650ede09a323/voice_styles",
           "https://huggingface.co/spaces/Supertone/supertonic-3/blob/4402acca094e2ff2b3dff446e0bf915f3fccc462/script.js"
         ],
-        "notes": "Ten supplied presets F1\u2013F5 and M1\u2013M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
+        "notes": "Ten supplied presets F1–F5 and M1–M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
       }
     },
     "kokoro-82m": {
@@ -5142,6 +5142,395 @@
         ],
         "notes": "The F2 and M2 voices are embedded in one graph. Only F2 is benchmarked."
       }
+    },
+    "sopro-v2-turbo": {
+      "displayName": "Sopro v2 Turbo",
+      "modelRevision": "9fe97bddf52ed785af3634db86a032bb7e07bf18",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "MIT ONNX Runtime Web; Apache-2.0 community frontend and Transformers.js; component notices apply",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE",
+            "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/6af1a932e2286d5c58166085d24c68783033edee/LICENSE",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/6af1a932e2286d5c58166085d24c68783033edee/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license"
+          }
+        ]
+      },
+      "license": {
+        "model": "Apache-2.0",
+        "requiresAcceptance": false,
+        "runtime": "Apache-2.0 Sopro; MIT ONNX Runtime Web (bundled notices apply)"
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": null,
+        "bundledVoiceCount": 0,
+        "languageCount": 4,
+        "languages": [
+          "en",
+          "pt",
+          "fr",
+          "de"
+        ],
+        "scope": "Open-ended voice conditioning from reference audio. No bundled speakers.",
+        "sources": [
+          "https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md",
+          "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/blob/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
+          "https://github.com/ngelik/tts-bench/blob/f456cce4422663e3217a885a4c52e8ef4735dd6d/audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav"
+        ],
+        "notes": "English, synthetic F2 reference from the benchmark’s Tiny Voca CPU warm recording."
+      },
+      "assets": [
+        {
+          "id": "sopro-common-reference.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/reference.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/reference.onnx",
+          "bytes": 318971,
+          "sha256": "fb6f3def33e918a590d0a2d66697a5c8178cb5b252eb013f122a696959a2a0b3",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-common-semantic_core.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/semantic_core.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/semantic_core.onnx",
+          "bytes": 444545,
+          "sha256": "352443a2217f730fc08bad3e29c0d6683dcedde568dfe0f8fa58a8b46ef15fd1",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-common-semantic_prefix.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/semantic_prefix.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/semantic_prefix.onnx",
+          "bytes": 30037,
+          "sha256": "2f0feabb47c3af038c1ed0127d907be674996e64c7a159265ffe181823f009dd",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-common-weights-reference.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/weights-reference.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/weights-reference.bin",
+          "bytes": 94666752,
+          "sha256": "5ae19423d496681eed622c9ae372cdf60df9a5be106964c1f483eecd6cbe3ca1",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-common-weights-semantic.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/weights-semantic.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/common/weights-semantic.bin",
+          "bytes": 96626752,
+          "sha256": "91308fb72a6cc5a452f47e6cb5f3156970e39ef8a54690bbf98e116f11c1c75d",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-manifest.json",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
+          "bytes": 16684,
+          "sha256": "7320ee142124ce34d1431b2f109a348bf8de1e5e0fc28089004c7a8f80b0e812",
+          "kind": "config"
+        },
+        {
+          "id": "sopro-tokenizer.json",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/tokenizer.json",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/tokenizer.json",
+          "bytes": 309098,
+          "sha256": "199e35f8f37235101138c5231464769ad4bf9b6dbecb9ae3b96b225f6c012394",
+          "kind": "tokenizer"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_condition.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_condition.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_condition.onnx",
+          "bytes": 22045,
+          "sha256": "51c6da2a7b3813b7d0d64aef1ef9cc28cdb41064ed5044877f54d4fcb8b6eede",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_offline_2.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_offline_2.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_offline_2.onnx",
+          "bytes": 718899,
+          "sha256": "93efe76b3ec7619071b8cee242fa77d81db91896317f2603af4cdeb0ce745764",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_stream_ode_2_0.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_ode_2_0.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_ode_2_0.onnx",
+          "bytes": 405567,
+          "sha256": "6b02355fed180c90ef4dccbcd4fcbd072015788cef532773cf32d020134b7750",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_stream_ode_2_1.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_ode_2_1.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_ode_2_1.onnx",
+          "bytes": 405567,
+          "sha256": "5a82910659a3f87502eb844383202c6cd4c020d6a7b4fc6af97dbc51edc36b0c",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_stream_prefill_2.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_prefill_2.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_prefill_2.onnx",
+          "bytes": 742984,
+          "sha256": "10afcbb60216c40fe4b53930fa9bed454be31acd41ea5783a73f696b0f3e0ae1",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_stream_prefill_ode_2_0.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_prefill_ode_2_0.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_prefill_ode_2_0.onnx",
+          "bytes": 423585,
+          "sha256": "791620c1be5bca85a044ea21f28da8959eec890ae480a8f71ab93e9fb36a00da",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_stream_prefill_ode_2_1.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_prefill_ode_2_1.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_prefill_ode_2_1.onnx",
+          "bytes": 423585,
+          "sha256": "7ad1e334f67e7886ec3cf01a0bd45a516a9bb00e70e38161991c3c48b27e7b85",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-acoustic_stream_step_2.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_step_2.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/acoustic_stream_step_2.onnx",
+          "bytes": 734062,
+          "sha256": "475ac302c05914779cced160251d3bea2748a1ba2bd068375edecc3966d9c899",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-vocoder.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/vocoder.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/vocoder.onnx",
+          "bytes": 281252,
+          "sha256": "dfa4793d1f8a00b2950df821c25813860826b1bcfb6f49fdb1b6c28c5627a1be",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-weights-acoustic.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/weights-acoustic.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/weights-acoustic.bin",
+          "bytes": 103205888,
+          "sha256": "66a12561ea7d3a451d4e70be4713cbc03787566804bb137c6f07ccb22c1aceb0",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-weights-condition.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/weights-condition.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/weights-condition.bin",
+          "bytes": 25414400,
+          "sha256": "a4fb7fdc67246d7638d84c72b5b5d4888cc4bbda43944f2405d50fe9c806c359",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-wasm-uint8-weights-vocoder.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/weights-vocoder.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/wasm-uint8/weights-vocoder.bin",
+          "bytes": 13723840,
+          "sha256": "9d8dea8079be0ef36e5a33de233a9144d060afab4a959b73fdfaee166a5fb235",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_condition.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_condition.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_condition.onnx",
+          "bytes": 13786,
+          "sha256": "bc5ee7c8b2a12ef321b855a79a41391d22649292cf480cbc2b99d660faac7fec",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_offline_2.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_offline_2.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_offline_2.onnx",
+          "bytes": 547230,
+          "sha256": "13fe8b6ec28c7e42bb5fc98d3ea004ca7fbc857bd0ba71ef82da35975508c11d",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_stream_ode_2_0.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_ode_2_0.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_ode_2_0.onnx",
+          "bytes": 286492,
+          "sha256": "8dca1aef6518f97be60553aea5c91c5360c3ca69e4b358096f4a5a1c072dc432",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_stream_ode_2_1.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_ode_2_1.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_ode_2_1.onnx",
+          "bytes": 286492,
+          "sha256": "6927034c9d5e9efb58f8e23dcf64116210ffd8985001146f82636882b8a5459f",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_stream_prefill_2.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_prefill_2.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_prefill_2.onnx",
+          "bytes": 571315,
+          "sha256": "34c40d18fe27208fd4e4dea85fb0718e71e225c28bfe39cc4ea0bfdec11525c7",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_stream_prefill_ode_2_0.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_prefill_ode_2_0.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_prefill_ode_2_0.onnx",
+          "bytes": 304140,
+          "sha256": "c145758f50886e38451dee3b170ce352e6df6c61110fec902e0962231970e213",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_stream_prefill_ode_2_1.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_prefill_ode_2_1.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_prefill_ode_2_1.onnx",
+          "bytes": 304140,
+          "sha256": "8007e6e1dadc4a46fbf54d02b332f541a392b7b396c2b3e98d7dae633f594eb7",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-acoustic_stream_step_2.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_step_2.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/acoustic_stream_step_2.onnx",
+          "bytes": 563655,
+          "sha256": "de6ee126e5dad03ed92f87ecc917a84a0bfffdbd6572c9f0b4c92b8764f5deda",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-vocoder.onnx",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/vocoder.onnx",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/vocoder.onnx",
+          "bytes": 161836,
+          "sha256": "450986058931d9f9ec5fb0a2fa267046c0a875894655bb85dea786ee917faab0",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-weights-acoustic.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/weights-acoustic.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/weights-acoustic.bin",
+          "bytes": 63275008,
+          "sha256": "a53dbabb7fc2fa1a44459255d04a059baf3d0c2d99cba436d7749ac03d29f4c0",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-weights-condition.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/weights-condition.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/weights-condition.bin",
+          "bytes": 50790400,
+          "sha256": "1446b435dcf838588eb90b3149db48e2b95a0a4e5a92bb9137634beb4fe826a2",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-webgpu-fp16-weights-vocoder.bin",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/weights-vocoder.bin",
+          "url": "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/resolve/9fe97bddf52ed785af3634db86a032bb7e07bf18/webgpu-fp16/weights-vocoder.bin",
+          "bytes": 54126656,
+          "sha256": "45d7da8d75b1da91e557f4d6b1ba44e19068dd72d38ea0eca3e51f3e5d792d5b",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sopro-cache.js",
+          "target": "runtimes/sopro/7bfcf9a0539d274f6593959a21da948f506ceee1/cache.js",
+          "url": "https://raw.githubusercontent.com/samuel-vitorino/sopro/7bfcf9a0539d274f6593959a21da948f506ceee1/web/src/cache.js",
+          "bytes": 6936,
+          "sha256": "dbbfb259fc80dbde0d78cc5c230eba7ab15a668ec1f7031f6a83b76878aed16b",
+          "kind": "runtime"
+        },
+        {
+          "id": "sopro-dsp.js",
+          "target": "runtimes/sopro/7bfcf9a0539d274f6593959a21da948f506ceee1/dsp.js",
+          "url": "https://raw.githubusercontent.com/samuel-vitorino/sopro/7bfcf9a0539d274f6593959a21da948f506ceee1/web/src/dsp.js",
+          "bytes": 20394,
+          "sha256": "037a7f073b4da637118856ba59e85ef93cb24a93d3bd99bd4d5b4793ee8ab1a8",
+          "kind": "runtime"
+        },
+        {
+          "id": "sopro-tokenizer.js",
+          "target": "runtimes/sopro/7bfcf9a0539d274f6593959a21da948f506ceee1/tokenizer.js",
+          "url": "https://raw.githubusercontent.com/samuel-vitorino/sopro/7bfcf9a0539d274f6593959a21da948f506ceee1/web/src/tokenizer.js",
+          "bytes": 4526,
+          "sha256": "2bc529b1a671f29b0928c52ce441bee364b1c36fc5916486fd2dfd6e853a9459",
+          "kind": "runtime"
+        },
+        {
+          "id": "sopro-voice-f2.wav",
+          "target": "models/sopro-v2-turbo/9fe97bddf52ed785af3634db86a032bb7e07bf18/voice-f2.wav",
+          "url": "https://github.com/ngelik/tts-bench/blob/f456cce4422663e3217a885a4c52e8ef4735dd6d/audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav",
+          "bytes": 1440044,
+          "sha256": "9a4e3fa7966b13dff25b31b02350ff70681b2e618ca5a634abe0d9a90401de0e",
+          "kind": "voice",
+          "sourcePath": "audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav"
+        }
+      ]
     }
   }
 }

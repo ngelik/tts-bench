@@ -1,3 +1,4 @@
+import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
 import { createMingAdapter } from './adapters/ming.mjs';
 import { createMingGgufAdapter } from './adapters/audio-cpp-gguf.mjs';
@@ -26,6 +27,7 @@ import { createInflectAdapter } from './adapters/inflect.mjs';
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
 const FACTORIES = {
+  'sopro-v2-turbo': createSoproAdapter,
   'tiny-voca': createTinyVocaAdapter,
   'ming-3.0-tts-0.5b-fusor-mix-cpu': createMingAdapter,
   'ming-3.0-tts-0.5b-gguf': createMingGgufAdapter,
