@@ -5,8 +5,8 @@ export const LINNET_WEBGPU_RUNTIME = Object.freeze({
   rustToolchain: '1.95.0',
   minimumMacs: 32 * 1024,
   target: 'runtimes/linnet-tts/0.1.1/linnet-tts-webgpu-hybrid.wasm',
-  sha256: 'ccc548d95dd11ab2b05798b2712f9163b3f8444ff6c5e6c9dbc448dda2cf2bcf',
-  bytes: 402265,
+  sha256: 'f4e2574f129d4e37c5c92b64a7615cfc9752eed4a05c301dd93cb97ff5ebbbd8',
+  bytes: 391476,
 });
 
 const SOFTWARE_ADAPTER = /swiftshader|llvmpipe|lavapipe|software|microsoft warp|basic render driver/i;
