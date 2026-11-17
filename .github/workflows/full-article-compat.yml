@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - model: linnet-en-35m
-            revision: 7b470f41caf0eeae1a1ad7e71d4064d5e2a715c2
+          - model: silencio-2
+            revision: 0d5dd8e407191485dcb34565e7f42baa961f5f3f
     env:
       MODEL: ${{ matrix.model }}
       REVISION: ${{ matrix.revision }}
