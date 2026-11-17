@@ -189,8 +189,10 @@ mirror or publicly rehost that binary or its demo JavaScript. Its public URL and
 SHA-256 are pinned; asset fetching fails if the bytes change. The WebGPU path
 builds a separate hybrid WASM from the pinned Apache-2.0 Rust source and stages
 it only in ignored local storage; its Rust toolchain, source commit, output size
-and SHA-256 are pinned in `web/linnet/runtime-policy.mjs`. It dispatches eligible
-dense operations to a non-fallback WebGPU adapter and keeps remaining operations
+and SHA-256 are pinned in `web/linnet/runtime-policy.mjs`. The hybrid binary is
+distributed as a digest-versioned release with its upstream Apache `LICENSE`,
+VoxRT `NOTICE`, and build-source/hash manifest. It dispatches eligible dense
+operations to a non-fallback WebGPU adapter and keeps remaining operations
 on WASM SIMD128/CPU. Only immutable `Mat::F32` model weights are cached; dynamic
 attention K/V tensors are uploaded afresh for each dispatch. The build process does not rehost model weights or the
 unlicensed demo binding. The benchmark adapter and safetensors memory conversion

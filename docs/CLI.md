@@ -18,6 +18,9 @@ npm run assets -- verify --model phonon
 `assets.lock.json` records upstream URLs, revisions, SHA-256 digests and exact byte
 counts. A changed or missing upstream file fails explicitly. Staged model/runtime
 files live in ignored `.cache/public/`; no text or audio is sent to upstream hosts.
+Linnet's source-built WebGPU WASM, Apache `LICENSE` and VoxRT `NOTICE` are fetched
+from its digest-versioned GitHub release; the pinned Rust source can be rebuilt
+with `npm run linnet:runtime:build` when the Rust 1.95.0 WebAssembly toolchain is installed.
 The install/fetch stage uses the network; synthesis is confined to the local
 static origin. Downloading assets is separate from measuring a customer's browser
 transfer. The latter is measured by the cold/network scenarios.

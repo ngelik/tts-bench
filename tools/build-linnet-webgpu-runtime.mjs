@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { access, cp, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { access, copyFile, cp, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,6 +9,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const buildRoot = resolve(root, '.cache/linnet-webgpu-build');
 const upstreamRoot = resolve(buildRoot, 'upstream');
 const wrapperRoot = resolve(buildRoot, 'runtime');
+const releaseRoot = resolve(buildRoot, 'release');
 const assetPath = resolve(root, '.cache/public', LINNET_WEBGPU_RUNTIME.target);
 const discoverDigest = process.argv.includes('--discover-digest');
 const relativeTo = (base, path) => {
@@ -74,3 +75,78 @@ const stagedPath = assetPath + '.partial';
 await rm(stagedPath, { force: true });
 await writeFile(stagedPath, wasm, { flag: 'wx' });
 await rename(stagedPath, assetPath);
+
+const upstreamLicense = await readFile(resolve(upstreamRoot, 'LICENSE'));
+const upstreamNotice = await readFile(resolve(upstreamRoot, 'NOTICE'));
+const licenseSha256 = createHash('sha256').update(upstreamLicense).digest('hex');
+const noticeSha256 = createHash('sha256').update(upstreamNotice).digest('hex');
+if (upstreamLicense.length !== 11358 || licenseSha256 !== 'cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30') {
+  throw new Error('Pinned Linnet upstream LICENSE differs from the expected Apache-2.0 text.');
+}
+if (upstreamNotice.length !== 306 || noticeSha256 !== 'db0680ca2ff8eba18131aa53b6506011c437d018016577a430896a8dec44b727') {
+  throw new Error('Pinned Linnet upstream NOTICE differs from the expected VoxRT attribution.');
+}
+
+const projectSourceFiles = [
+  'tools/build-linnet-webgpu-runtime.mjs',
+  'tools/linnet-webgpu-runtime/prepare-upstream.mjs',
+  'tools/linnet-webgpu-runtime/Cargo.toml',
+  'tools/linnet-webgpu-runtime/Cargo.lock',
+  'tools/linnet-webgpu-runtime/src/lib.rs',
+  'web/linnet/runtime-policy.mjs',
+  'web/linnet/gpu-rhs-buffer.mjs',
+  'web/linnet/model-gpu-pool.mjs',
+  'web/linnet/model-gpu-worker.mjs',
+  'web/workers/linnet.mjs',
+  'web/adapters/linnet.mjs',
+];
+const projectSource = [];
+for (const path of projectSourceFiles) {
+  const bytes = await readFile(resolve(root, path));
+  projectSource.push({ path, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') });
+}
+const projectCommit = capture('git', ['rev-parse', 'HEAD']);
+if (!/^[a-f0-9]{40}$/.test(projectCommit)) throw new Error('Could not identify the committed Linnet runtime integration source.');
+
+await rm(releaseRoot, { recursive: true, force: true });
+await mkdir(releaseRoot, { recursive: true });
+await copyFile(assetPath, resolve(releaseRoot, 'linnet-tts-webgpu-hybrid.wasm'));
+await writeFile(resolve(releaseRoot, 'LICENSE'), upstreamLicense);
+await writeFile(resolve(releaseRoot, 'NOTICE'), upstreamNotice);
+const stagedLicensePath = resolve(root, '.cache/public/licenses/linnet-tts-webgpu/LICENSE');
+const stagedNoticePath = resolve(root, '.cache/public/licenses/linnet-tts-webgpu/NOTICE');
+await mkdir(dirname(stagedLicensePath), { recursive: true });
+await writeFile(stagedLicensePath, upstreamLicense);
+await writeFile(stagedNoticePath, upstreamNotice);
+await writeFile(resolve(releaseRoot, 'BUILD-MANIFEST.json'), JSON.stringify({
+  schemaVersion: 1,
+  releaseTag: LINNET_WEBGPU_RUNTIME.releaseTag,
+  artifact: {
+    filename: 'linnet-tts-webgpu-hybrid.wasm',
+    target: LINNET_WEBGPU_RUNTIME.target,
+    bytes: wasm.length,
+    sha256,
+    license: 'Apache-2.0',
+  },
+  projectSource: {
+    repository: 'https://github.com/ngelik/tts-bench',
+    commit: projectCommit,
+    files: projectSource,
+  },
+  upstreamSource: {
+    repository: LINNET_WEBGPU_RUNTIME.sourceRepository,
+    commit: LINNET_WEBGPU_RUNTIME.sourceCommit,
+    license: 'Apache-2.0',
+    licenseFile: { filename: 'LICENSE', bytes: upstreamLicense.length, sha256: licenseSha256 },
+    noticeFile: { filename: 'NOTICE', bytes: upstreamNotice.length, sha256: noticeSha256 },
+  },
+  build: {
+    rustToolchain: installed,
+    target: 'wasm32-unknown-unknown',
+    command: 'npm run linnet:runtime:build',
+    flags: 'release profile; fat LTO; --locked; -C link-arg=--export-memory',
+  },
+  excluded: ['model weights', 'tokenizer', 'voice files', 'official browser demo WASM and JavaScript'],
+}, null, 2) + '\n');
+console.log(JSON.stringify({ releaseDirectory: releaseRoot, releaseTag: LINNET_WEBGPU_RUNTIME.releaseTag,
+  files: ['linnet-tts-webgpu-hybrid.wasm', 'LICENSE', 'NOTICE', 'BUILD-MANIFEST.json'] }));

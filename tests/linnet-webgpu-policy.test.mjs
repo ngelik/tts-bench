@@ -9,6 +9,7 @@ test('Linnet hybrid runtime is pinned to Apache source and an exact built WASM d
   assert.equal(LINNET_WEBGPU_RUNTIME.rustToolchain, '1.95.0');
   assert.equal(LINNET_WEBGPU_RUNTIME.license, 'Apache-2.0');
   assert.match(LINNET_WEBGPU_RUNTIME.sha256, /^[a-f0-9]{64}$/);
+  assert.equal(LINNET_WEBGPU_RUNTIME.releaseTag, `linnet-webgpu-0.1.1-${LINNET_WEBGPU_RUNTIME.sha256.slice(0, 12)}`);
   assert.ok(Number.isSafeInteger(LINNET_WEBGPU_RUNTIME.bytes) && LINNET_WEBGPU_RUNTIME.bytes > 0);
 });
 
@@ -88,4 +89,15 @@ test('the source patch marks generic matmuls dynamic and Mat::F32 weights cachea
   assert.match(patch, /Mat::gemv F32 weights/);
   assert.match(patch, /Mat::gemm F32 weights/);
   assert.match(patch, /Mat::gemm_rows F32 weights/);
+});
+
+test('only the verified main build uploads an allowlisted runtime release payload', async () => {
+  const workflow = await readFile(new URL('../.github/workflows/linnet-webgpu.yml', import.meta.url), 'utf8');
+  assert.match(workflow, /if: github\.event_name == 'push' && github\.ref == 'refs\/heads\/main'/);
+  assert.ok(workflow.includes('name: linnet-webgpu-runtime-${{ github.sha }}'));
+  for (const file of ['linnet-tts-webgpu-hybrid.wasm', 'LICENSE', 'NOTICE', 'BUILD-MANIFEST.json']) {
+    assert.ok(workflow.includes(`.cache/linnet-webgpu-build/release/${file}`), file);
+  }
+  assert.doesNotMatch(workflow.slice(workflow.indexOf('name: Upload the verified runtime release payload from main')),
+    /model-weights|\.safetensors|tokenizer\.model|\.npy/);
 });

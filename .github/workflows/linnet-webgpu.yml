@@ -66,3 +66,15 @@ jobs:
           path: .cache/linnet-webgpu-validation/
           if-no-files-found: error
           retention-days: 14
+      - name: Upload the verified runtime release payload from main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linnet-webgpu-runtime-${{ github.sha }}
+          path: |
+            .cache/linnet-webgpu-build/release/linnet-tts-webgpu-hybrid.wasm
+            .cache/linnet-webgpu-build/release/LICENSE
+            .cache/linnet-webgpu-build/release/NOTICE
+            .cache/linnet-webgpu-build/release/BUILD-MANIFEST.json
+          if-no-files-found: error
+          retention-days: 14

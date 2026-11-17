@@ -5,6 +5,7 @@ export const LINNET_WEBGPU_RUNTIME = Object.freeze({
   rustToolchain: '1.95.0',
   minimumMacs: 32 * 1024,
   target: 'runtimes/linnet-tts/0.1.1/linnet-tts-webgpu-hybrid.wasm',
+  releaseTag: 'linnet-webgpu-0.1.1-f4e2574f129d',
   sha256: 'f4e2574f129d4e37c5c92b64a7615cfc9752eed4a05c301dd93cb97ff5ebbbd8',
   bytes: 391476,
 });

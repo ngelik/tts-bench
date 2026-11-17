@@ -18,5 +18,9 @@ upstream text and commit checks. Build with Rust 1.95.0 and
 must match the size and SHA-256 in `web/linnet/runtime-policy.mjs`.
 
 The build consumes only the locally staged, licensed Linnet weights at runtime.
-It does not package, commit or upload model weights, the official demo WASM, or
-the official demo JavaScript. Copyright and model/voice terms remain with VoxRT.
+It does not package, commit or upload model weights, tokenizer/voice assets, the
+official demo WASM, or the official demo JavaScript. The successful main-push
+CI run archives only the hybrid WASM, the exact upstream Apache `LICENSE` and
+VoxRT `NOTICE`, and `BUILD-MANIFEST.json` with source-file hashes, source commit,
+toolchain, and output digest for a separately reviewed versioned release.
+Copyright and model/voice terms remain with VoxRT.
