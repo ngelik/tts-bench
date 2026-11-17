@@ -749,7 +749,22 @@ def main() -> None:
         expected_text = tokenizer_wrapper(example_ids)
     text_path = out / "text-conditioner.onnx"
     text_checks = verify_graph(text_path, tokenizer_wrapper, (example_ids,), ["token_ids"], ["embeddings"],
-                               {"token_ids": example_ids.numpy()}, (expected_text,), ["SentencePiece text lookup"])
+                               {"token_ids": example_ids.numpy()}, (expected_text,), ["SentencePiece text lookup"],
+                               dynamic_axes={"token_ids": {1: "token_count"},
+                                             "embeddings": {1: "token_count"}})
+    variable_ids = torch.tensor(
+        [tts.model.flow_lm.conditioner.tokenizer.encode(
+            "A second input with a deliberately different token length verifies the dynamic text axis.")],
+        dtype=torch.int64,
+    )
+    if variable_ids.shape[1] == example_ids.shape[1]:
+        raise AssertionError("Text-conditioner dynamic-axis witness unexpectedly matches the export example length")
+    with torch.no_grad():
+        expected_variable_text = tokenizer_wrapper(variable_ids).detach().cpu().numpy()
+    text_session = ort.InferenceSession(str(text_path), providers=["CPUExecutionProvider"])
+    actual_variable_text = text_session.run(["embeddings"], {"token_ids": variable_ids.numpy()})[0]
+    text_checks.append(compare("SentencePiece text lookup with a different token length",
+                               expected_variable_text, actual_variable_text))
 
     # Mimi state is parameterized by max-generation length. Cache axes are
     # dynamic; the browser allocates only the capacity needed by each text span.
@@ -766,7 +781,7 @@ def main() -> None:
         expected_mimi = mimi_wrapper(*mimi_args)
     mimi_inputs = ["latent", *[entry["input_name"] for entry in mimi_manifest]]
     mimi_outputs = ["audio", *[entry["output_name"] for entry in mimi_manifest]]
-    mimi_dynamic = {"latent": {1: "latent_length"}}
+    mimi_dynamic = {"latent": {1: "latent_length"}, "audio": {2: "audio_sample_count"}}
     for entry in mimi_manifest:
         if entry["dynamicAxis"] is not None:
             mimi_dynamic[entry["input_name"]] = {entry["dynamicAxis"]: "cache_length"}
@@ -776,6 +791,19 @@ def main() -> None:
     mimi_checks = verify_graph(mimi_path, mimi_wrapper, mimi_args, mimi_inputs, mimi_outputs, mimi_feeds,
                                expected_mimi, ["Mimi decoder audio", *[f"Mimi state {i}" for i in range(len(mimi_manifest))]],
                                dynamic_axes=mimi_dynamic)
+    variable_latent = torch.randn(1, 3, model.flow_lm.ldim)
+    variable_mimi_args = (variable_latent, *mimi_flat)
+    with torch.no_grad():
+        expected_variable_mimi = mimi_wrapper(*variable_mimi_args)
+    variable_mimi_feeds = {name: value.detach().cpu().numpy()
+                           for name, value in zip(mimi_inputs, variable_mimi_args)}
+    mimi_session = ort.InferenceSession(str(mimi_path), providers=["CPUExecutionProvider"])
+    actual_variable_mimi = mimi_session.run(mimi_outputs, variable_mimi_feeds)
+    mimi_checks.append(compare("Mimi decoder audio with a different latent length",
+                               expected_variable_mimi[0].detach().cpu().numpy(), actual_variable_mimi[0]))
+    for index in range(1, len(mimi_outputs)):
+        mimi_checks.append(compare(f"Mimi dynamic-state witness {index - 1}",
+                                   expected_variable_mimi[index].detach().cpu().numpy(), actual_variable_mimi[index]))
 
     restore_patches()
     stream_parity = verify_stream_parity(tts, model, state_voice, flow_manifest, mimi_manifest, out)
