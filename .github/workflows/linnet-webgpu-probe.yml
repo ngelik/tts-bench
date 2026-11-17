@@ -6,6 +6,11 @@ on:
       - '.github/workflows/linnet-webgpu-probe.yml'
       - 'tools/linnet-webgpu-kernel-probe.mjs'
       - 'tools/linnet-webgpu-probe/**'
+      - 'tools/linnet-webgpu-model-probe.mjs'
+      - 'tools/linnet-webgpu-runtime-probe/**'
+      - 'web/adapters/linnet.mjs'
+      - 'web/workers/linnet.mjs'
+      - 'web/linnet/**'
 permissions:
   contents: read
 jobs:
@@ -38,3 +43,38 @@ jobs:
           RUSTFLAGS='-C link-arg=--export-memory' cargo build --manifest-path tools/linnet-webgpu-probe/Cargo.toml --target wasm32-unknown-unknown --release
       - name: Compare WebGPU matmul kernels with scalar references on software adapter
         run: xvfb-run -a node tools/linnet-webgpu-kernel-probe.mjs
+
+  source-built-hybrid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: VoxRT/LinnetTTS
+          ref: 29dfdd503a3930e4e36c1130e4c9aab0592201ca
+          path: upstream-linnet
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Fetch and verify the pinned Linnet model assets
+        run: |
+          npm run assets -- fetch --model linnet-en-35m --accept-license
+          npm run assets -- verify --model linnet-en-35m --accept-license
+      - name: Patch the pinned Apache runtime only in the runner workspace
+        run: node tools/linnet-webgpu-probe/prepare-upstream.mjs upstream-linnet
+      - name: Build the source runtime wrapper for browser WASM
+        run: |
+          rustup target add wasm32-unknown-unknown
+          cp upstream-linnet/runtime/Cargo.lock tools/linnet-webgpu-runtime-probe/Cargo.lock
+          RUSTFLAGS='-C link-arg=--export-memory' cargo build --manifest-path tools/linnet-webgpu-runtime-probe/Cargo.toml --target wasm32-unknown-unknown --release
+          mkdir -p .cache/public/runtimes/linnet-tts/0.1.1
+          cp tools/linnet-webgpu-runtime-probe/target/wasm32-unknown-unknown/release/linnet_webgpu_runtime_probe.wasm .cache/public/runtimes/linnet-tts/0.1.1/linnet-tts-webgpu-probe.wasm
+      - name: Synthesize actual LINNET speech on the hybrid software WebGPU path
+        run: xvfb-run -a node tools/linnet-webgpu-model-probe.mjs

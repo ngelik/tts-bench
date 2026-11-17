@@ -1,0 +1,17 @@
+[package]
+name = "linnet-webgpu-runtime-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+linnet-tts = { path = "../../upstream-linnet/runtime/linnet-tts", features = ["webgpu-probe"] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
