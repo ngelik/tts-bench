@@ -241,3 +241,11 @@ The checkpoint supports English, European Portuguese, French and German. It cond
 Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
 
 Pinned English-only preview checkpoint with one fixed voice and no streaming API. The official checkpoint has 1,031,754 parameters. The browser build uses the official dictionary-first English G2P and NumPy OOV fallback, plus four FP32 opset-17 ONNX graphs derived from the pinned MIT weights. [Small TTS benchmark page](https://erogol.com/small_tts_bench/) · [Pinned model card](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Checkpoint configuration](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json) · [Browser ONNX release and conversion manifest](https://github.com/ngelik/tts-bench/releases/tag/supratts-onnx-v1)
+
+<a id="klein-tts-x1.5-pro"></a>
+
+## Klein-TTS X1.5 Pro FP32
+
+Supported voices: **17**. Bundled voices: **17**. Supported languages: **4** (en, es, fr, it).
+
+The pinned `model.json` lists 17 speaker embeddings with language prefixes for English, Spanish, French and Italian. The benchmark exercises Sarah (`af_heart`) in English only. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json)

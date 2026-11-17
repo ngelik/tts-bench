@@ -24,6 +24,7 @@ import { createSanoAdapter } from './adapters/sano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
 import { createInflectAdapter } from './adapters/inflect.mjs';
+import { createKleinAdapter } from './adapters/klein.mjs';
 
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
@@ -54,6 +55,7 @@ const FACTORIES = {
   'sano-amy': createSanoAdapter,
   'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
+  'klein-tts-x1.5-pro': createKleinAdapter,
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
 let canonical = null;
