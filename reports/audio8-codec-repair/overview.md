@@ -6,11 +6,11 @@ The included receipts share one source, exact environment and fixture; voice, pr
 
 ## Warm generation
 
-This report contains no scored warm generation times. The receipt table identifies the submitted scenarios and any terminal errors.
+Each warm run starts with one excluded 20,000-character article (93 chunks). Each generation time shows the observed range and the number of scored articles (n). When n=1, the median and both endpoints are the single observation. First PCM is the median time to the first audio samples. Output duration and real-time factor use the recorded sample count, sample rate and generation time.
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
-| Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted |
+| Audio8 TTS Realistic 0.6B INT4 | Not submitted | 9783.96 s (9782.39–9798.06; n=5) | Not submitted | 113932.45 ms (n=5) | Not submitted | 1427.75 s / 6.853 |
 
 ## Resource diagnostics
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
+| Audio8 TTS Realistic 0.6B INT4 | Not submitted | [Report](../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | Not submitted | [Report](../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
