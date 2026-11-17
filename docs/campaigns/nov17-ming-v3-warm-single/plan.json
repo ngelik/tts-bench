@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "3aaf2d5d54df00c1e7482e141f8e26387c6169e0",
+  "conditions": "Ming Q8_0 GGUF audio-cpp-browser-v3, six threads and US_James. Serial 20,000-character English fixture on an 8-core M1 Pro with 16 GiB RAM, AC power and pinned headed Chrome 157.0.8103.40. The full checkpoint exceeds one billion parameters. Run one excluded full warm-up followed by one timed full article per backend.",
+  "cells": [
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 1,
+      "resources": false,
+      "timeoutMinutes": 1440
+    },
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 1,
+      "resources": false,
+      "timeoutMinutes": 1440
+    }
+  ]
+}
