@@ -12,6 +12,20 @@ Pinned benchmark checkpoint. Four embedded voices: af_heart, bf_isabella, am_puc
 
 [Primary source 1](https://huggingface.co/sahilmahendrakar/Paradee-8M-v1.2/raw/ed2934d4df8a4fd891e29584c5e1104649409765/README.md), [Primary source 2](https://huggingface.co/sahilmahendrakar/Paradee-8M-v1.2/resolve/ed2934d4df8a4fd891e29584c5e1104649409765/config.json).
 
+<a id="silencio-2"></a>
+
+## Silencio-2 FP32 browser conversion
+
+Supported voices: **8**. Bundled voices: **1** (`260`). Supported languages:
+**1** (English). Only bundled synthetic voice 260 is measured; custom voice
+cloning and the other seven catalog voices are not exposed by this browser
+configuration. The benchmark ports the model's official sentence splitting
+(48-token target, 50-token generation capacity), sound/emotion tags, drifting flow and unnormalized
+24 kHz stream. It uses a disclosed seeded JavaScript normal-noise generator,
+not bitwise PyTorch RNG parity.
+
+[Pinned Silencio-2 model card](https://huggingface.co/BlueRoseLabs/Silencio-2/blob/20930f5f6a6bb564f2a8207152fd5c5d8eecff03/README.md) · [Primary benchmark source](https://erogol.com/small_tts_bench/) · [Browser conversion and license notice](../web/silencio2/NOTICE.md).
+
 <a id="phonon"></a>
 
 ## Phonon 31M q8

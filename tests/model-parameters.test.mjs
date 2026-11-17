@@ -42,6 +42,8 @@ test('Ming counts the registered synthesis path and Audio8 includes its decoder 
   assert.equal(audio8.parameterCountUpperBound, audio8.parameterCount + 130_380_129 + 1_355);
   assert.ok(audio8.parameterCountUpperBound < 1_000_000_000);
   assert.equal(getModelParameters('tiny-voca').parameterCount, 4_537_291);
+  assert.equal(getModelParameters('silencio-2').parameterCount, 27_928_626);
+  assert.equal(getModelParameters('silencio-2').countKind, 'exact');
 });
 
 test('invalid evidence cannot convert an upper bound into a demonstrated qualifying count', () => {

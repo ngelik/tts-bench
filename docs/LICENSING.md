@@ -24,6 +24,8 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Adapted official Supertonic browser helper | MIT, Supertone Inc.; retained license and exact source/change record in `web/supertonic/`. |
 | Klein-TTS X1.5 Pro | Apache-2.0 model card and weights | The browser adapter is a disclosed port of the Apache-2.0 Node package. Misaki G2P/English dictionary and `phonemizer.js` are Apache-2.0; eSpeak NG is GPL-3.0-or-later; ONNX Runtime Web is MIT with third-party notices. See [`web/klein/NOTICE.md`](../web/klein/NOTICE.md). |
 | ONNX Runtime Web | MIT, with third-party notices |
+| Silencio-2 weights, converted ONNX graphs and model-bound voice-260 state | CC-BY-4.0 at the pinned model revision; retain BlueRose Labs, Kyutai Pocket TTS and Basis Global Emotions attribution. The fixed bundled synthetic voice is not a user-supplied voice-cloning input. Follow the model card's permission, anti-impersonation and synthetic-speech disclosure guidance. |
+| Silencio-2 upstream inference source | MIT in `silencio2/core`; exporter attribution and source pins are in `tools/silencio2/NOTICE.md`. |
 
 The small Apache-2.0 frontend source files in `web/paradee/` retain separate
 license files and a source/change manifest. They are exceptions to the root MIT
@@ -69,12 +71,18 @@ Primary sources:
 | Kitten Nano 0.8 FP32 and voice archive | [Apache-2.0 model card](https://huggingface.co/KittenML/kitten-tts-nano-0.8-fp32/blob/e73cfb095bd949c786ccdcf3b8ab04eb36c47442/README.md). Weights/styles remain in ignored cache. |
 | Kitten ONNX frontend port | Apache-2.0 upstream contract/token mapping; attribution and license retained in `web/kitten/`. Browser integration is original benchmark code. |
 | MMS English | [CC BY-NC 4.0 model card](https://huggingface.co/facebook/mms-tts-eng/blob/c71de0fe7204c83f1c10820a7d696d0b450048ba/README.md). Noncommercial evaluation; Facebook/Meta MMS attribution retained. [Pinned ONNX export](https://huggingface.co/Xenova/mms-tts-eng/tree/3f8955a2adbd6487ce57420620d4916de22b9dac). |
-| Transformers.js 3.5.1 | Apache-2.0. Its embedded ONNX Runtime is pinned separately from the existing benchmark's ORT 1.23.2; exact runtime MIT license and third-party notices are staged with its assets. |
+| Transformers.js 3.5.1 | Apache-2.0. Its tokenizer-side WASM files are pinned separately from each adapter's ONNX Runtime. Silencio-2 uses ONNX Runtime Web 1.31.1 with its MIT license and third-party notices staged as runtime assets. |
 
 The new recordings are authorized benchmark outputs with model/source attribution;
 listing a model license does not claim it settles every output or voice right.
 The small Apache-2.0 adapted source files are exceptions to the repository's root
 MIT license. No model weights or bundled upstream engines are committed.
+
+The Silencio-2 conversion is published separately as a versioned GitHub Release
+because its pinned CC-BY-4.0 license permits redistribution with attribution.
+The browser source and model-bound voice-state format remain in this repository;
+the release carries the model notice, full attribution, graph provenance and
+hash manifest. See `web/silencio2/NOTICE.md` and the generated `SOURCE.json`.
 
 Sano Amy's pinned [model card](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md)
 lists GPL-3.0; the official `sanotts-web@0.3.0` browser runtime is

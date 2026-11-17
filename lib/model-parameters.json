@@ -74,5 +74,11 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json",
     "scope": "The pinned official ONNX model metadata reports params=13,122,196 for the X1.5 Pro synthesis model."
+  },
+  "silencio-2": {
+    "parameterCount": 27928626,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/ngelik/tts-bench/blob/b6a6373fee93a248257e4513bf11c01f2ea506d9/tools/silencio2/export.py",
+    "scope": "Exact sum of all parameters on the pinned BlueRoseLabs/Silencio-2 model before FP32 ONNX export; the count is computed from the loaded model, not inferred from checkpoint file size."
   }
 }

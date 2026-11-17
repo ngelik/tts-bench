@@ -1,0 +1,73 @@
+name: Silencio-2 ONNX bundle
+
+on:
+  push:
+    branches:
+      - feat/silencio-2-browser
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: tools/silencio2/export-requirements.txt
+      - name: Install CPU PyTorch
+        run: python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0
+      - name: Install pinned exporter dependencies
+        run: python -m pip install -r tools/silencio2/export-requirements.txt
+      - name: Export and verify pinned Silencio-2 bundle
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+          TOKENIZERS_PARALLELISM: 'false'
+          OMP_NUM_THREADS: '1'
+          OPENBLAS_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: >-
+          python tools/silencio2/export.py
+          --output generated/silencio2
+          --source-commit "$(git rev-parse HEAD)"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: browser-actions/setup-chrome@v1
+      - name: Install locked browser harness dependencies
+        run: npm ci
+      - name: Stage isolated bundle for local Chrome preflight
+        run: |
+          mkdir -p .cache/public/models/silencio-2-onnx-v1
+          cp generated/silencio2/* .cache/public/models/silencio-2-onnx-v1/
+          mkdir -p .cache/public/runtimes/onnxruntime-web/1.31.1 .cache/public/runtimes/transformers/3.5.1
+          ort_dist=node_modules/onnxruntime-web-pocket/dist
+          for file in \
+            ort.wasm.min.mjs \
+            ort.webgpu.min.mjs \
+            ort-wasm-simd-threaded.mjs \
+            ort-wasm-simd-threaded.wasm \
+            ort-wasm-simd-threaded.asyncify.mjs \
+            ort-wasm-simd-threaded.asyncify.wasm; do
+            cp "$ort_dist/$file" .cache/public/runtimes/onnxruntime-web/1.31.1/
+          done
+          transformers_dist=node_modules/@huggingface/transformers/dist
+          cp "$transformers_dist/transformers.min.js" .cache/public/runtimes/transformers/3.5.1/
+          cp "$transformers_dist/ort-wasm-simd-threaded.jsep.mjs" .cache/public/runtimes/transformers/3.5.1/
+          cp "$transformers_dist/ort-wasm-simd-threaded.jsep.wasm" .cache/public/runtimes/transformers/3.5.1/
+      - name: Audit all canonical frontend spans and synthesize two CPU/WASM spans
+        run: |
+          set -o pipefail
+          xvfb-run -a node tools/check-silencio2-browser.mjs | tee generated/silencio2/browser-smoke.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: silencio2-onnx-${{ github.sha }}
+          path: generated/silencio2/
+          if-no-files-found: error
+          retention-days: 14
