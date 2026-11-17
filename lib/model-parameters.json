@@ -61,5 +61,12 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md",
     "scope": "The model card reports the total trained model parameter count, including the waveform generator."
+  },
+  "sopro-v2-turbo": {
+    "parameterCount": 121574193,
+    "countKind": "lower-bound",
+    "parameterCountUpperBound": 633962260,
+    "parameterCountSource": "https://huggingface.co/api/models/samuel-vitorino/sopro-v2-turbo/revision/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312",
+    "scope": "Hugging Face counts 121,574,193 FP32 entries in the main speech network. The four released safetensors files (core, semantic encoder, speaker encoder and vocoder) total 633,962,260 bytes, a conservative upper bound counting at least one byte per stored parameter. The two ONNX runtime profiles are alternate exports of the same model."
   }
 }

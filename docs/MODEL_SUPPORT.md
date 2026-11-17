@@ -227,3 +227,9 @@ The base cookbook lists 117 named voices. Fusor's pinned WASM runtime enumerates
 ## Tiny Voca 4.5M
 
 The pinned checkpoint has two built-in American English voices, F2 and M2, and supports one language. The benchmark uses F2 (speaker ID 0). [Model card](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md) · [Export configuration](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json)
+
+<a id="sopro-v2-turbo"></a>
+
+### Sopro v2 Turbo
+
+The checkpoint supports English, European Portuguese, French and German. It conditions on an input voice, with zero preset voices and an open-ended number of possible references. This configuration uses one fixed synthetic English reference. [Model card](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Reference and runtime configuration](../web/sopro/NOTICE.md)

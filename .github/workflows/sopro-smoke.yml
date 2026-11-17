@@ -1,0 +1,65 @@
+name: Sopro offline Chrome smoke
+on:
+  pull_request:
+    paths:
+      - 'web/sopro/**'
+      - 'web/adapters/sopro.mjs'
+      - 'web/workers/sopro.mjs'
+      - '.github/workflows/sopro-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run assets -- fetch --model sopro-v2-turbo
+      - name: Check all canonical spans through the official SentencePiece tokenizer
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          import { rejectTruncation } from './web/sopro/reference.mjs';
+          const model = JSON.parse(readFileSync('assets.lock.json')).models['sopro-v2-turbo'];
+          const module = model.assets.find(asset => asset.id === 'sopro-tokenizer.js');
+          const spec = model.assets.find(asset => asset.id === 'sopro-tokenizer.json');
+          const { SentencePieceTokenizer, splitText } = await import('./.cache/public/' + module.target);
+          const tokenizer = new SentencePieceTokenizer(JSON.parse(readFileSync('.cache/public/' + spec.target)));
+          rejectTruncation(tokenizer);
+          const article = readFileSync('fixtures/en-20000.txt', 'utf8');
+          const { chunks } = JSON.parse(readFileSync('fixtures/en-20000.chunks.json'));
+          assert.equal(chunks.length, 93);
+          for (const { start, end } of chunks) {
+            const text = article.slice(start, end);
+            const pieces = splitText(text, 300);
+            assert.equal(pieces.join(' '), text.trim().replace(/\s+/g, ' '));
+            for (const piece of pieces) assert.ok(tokenizer.encode(piece, 'en').length > 2);
+          }
+          JS
+      - run: xvfb-run -a node bin/bench.mjs run --model sopro-v2-turbo --backend cpu --scenario offline --smoke
+      - name: Verify diagnostic PCM
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync, readdirSync } from 'node:fs';
+          const [folder] = readdirSync('runs');
+          const receipt = JSON.parse(readFileSync('runs/' + folder + '/result.json'));
+          assert.equal(receipt.protocol.smoke, true);
+          const [cell] = receipt.cells;
+          assert.equal(cell.status, 'measured', cell.reason);
+          assert.equal(cell.trials[0].validation.finitePcm, true);
+          assert.equal(cell.trials[0].sampleRate, 24000);
+          JS
+      - name: Show failure evidence
+        if: failure()
+        run: find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \;
