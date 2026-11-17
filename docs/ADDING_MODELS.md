@@ -11,6 +11,12 @@ policy, precision or inference algorithm is a new disclosed configuration.
    exact SHA-256/byte counts, relative staging targets, runtime package/version,
    backend declarations and terms acknowledgment requirements. Hash-pin mutable
    upstream URLs too: if their content changes, fail instead of silently updating.
+   Record evidence for the deployed parameter count in `lib/model-parameters.json`
+   when establishing the warm schedule. Cite an immutable upstream source for the
+   selected checkpoint or its logical tensor shapes. Identify which speech
+   components are included and label exact counts, bounds or published estimates
+   according to the evidence. A model name or quantized download size alone
+   does not establish that the configuration exceeds one billion parameters.
 3. Pin npm runtime dependencies in `package.json` and `package-lock.json`. Models
    are fetched explicitly; package install must not silently download weights.
 4. Implement a browser adapter and register its factory in `web/bench.mjs`.

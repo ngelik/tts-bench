@@ -121,14 +121,16 @@ export function validateCampaignInputs(entries, manifest = getAssetLock().models
 
     const scenario = data.protocol.scenario;
     ensure(SCENARIOS.includes(scenario), `Campaign overview does not combine ${scenario} results`);
+    // The receipt validator already verifies each model's scored count. Campaigns
+    // can show independent cells with different counts while keeping timing identical.
+    const { repetitions, ...warmBoundary } = data.protocol;
+    const comparableProtocol = scenario === 'warm' ? warmBoundary : data.protocol;
     const previousProtocol = protocolByScenario.get(scenario);
-    if (previousProtocol) ensure(stable(previousProtocol) === stable(data.protocol), `Protocol or timing boundaries differ within ${scenario}`);
-    else protocolByScenario.set(scenario, data.protocol);
+    if (previousProtocol) ensure(stable(previousProtocol) === stable(comparableProtocol), `Protocol or timing boundaries differ within ${scenario}`);
+    else protocolByScenario.set(scenario, comparableProtocol);
 
     if (scenario === 'warm') {
-      const cosyOnly = data.cells.every(cell => cell.model === 'fun-cosyvoice3-0.5b-2512');
-      ensure(data.protocol.warmupRuns === 1 && (cosyOnly ? data.protocol.repetitions === 1 || data.protocol.repetitions >= 5 : data.protocol.repetitions >= 5),
-        'Warm campaign results require one full warm-up and at least five scored repetitions, except CosyVoice3 uses one current or at least five historical repetitions');
+      ensure(data.protocol.warmupRuns === 1, 'Warm campaign results require one excluded full-article warm-up');
       ensure(!data.protocol.id.endsWith('-resources'), 'Warm score cells cannot substitute for cached resource measurements');
     } else if (scenario === 'cached') {
       ensure(data.protocol.id.endsWith('-resources'), 'Cached campaign results must use the --resources protocol');
@@ -271,10 +273,10 @@ function markdownReport(prepared, reportDir) {
     md+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The archived cached time and memory describe that execution. [Full waveform audit](${waveformReport}).\n\n`;
   }
   md += `## Warm generation\n\n`;
-  const cosyInReport = models.some(model => model.id === 'fun-cosyvoice3-0.5b-2512');
-  md += cosyInReport
-    ? `Each measured warm cell uses one excluded full-article warm-up. Most planned cells use at least five scored 20,000-character / 93-chunk repetitions; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Generation is the benchmark timer; values summarize displayed scored trials only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`
-    : `Full warm workload: one excluded full-article warm-up and at least five scored 20,000-character / 93-chunk repetitions. Generation is the benchmark timer; values summarize scored repetitions only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.\n\n`;
+  const measuredWarm = [...byKey.values()].some(row => row.scenario === 'warm' && summarizeWarm(row));
+  md += measuredWarm
+    ? 'Each warm run starts with one excluded 20,000-character article (93 chunks). Each generation time shows the observed range and the number of scored articles (n). When n=1, the median and both endpoints are the single observation. First PCM is the median time to the first audio samples. Output duration and real-time factor use the recorded sample count, sample rate and generation time.\n\n'
+    : 'This report contains no scored warm generation times. The receipt table identifies the submitted scenarios and any terminal errors.\n\n';
   md += `| Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |\n|---|---:|---:|---:|---:|---:|---:|\n`;
   for (const model of models) {
     const cpuEntry = cell(model.id, 'cpu', 'warm'), gpuEntry = cell(model.id, 'webgpu', 'warm');
@@ -453,7 +455,10 @@ function chartReport(prepared) {
           const value = entry ? spec.value(entry, summary) : null;
           const unavailable = !entry && backend === 'webgpu' && !model.manifest.backends.includes('webgpu')
             ? 'Unsupported (manifest)' : !entry ? 'Not submitted' : entry.cell.status === 'measured' ? 'Not recorded' : entry.cell.status === 'unsupported' ? 'Unsupported' : 'Error';
-          series.push({ model, backend, value: Number.isFinite(value) ? value : null, status: unavailable, selection: entry?.selection });
+          const trialCount = spec.scenario === 'warm'
+            ? (spec.key === 'firstPcmMedianMs' ? summary?.firstPcmN : summary?.n)
+            : null;
+          series.push({ model, backend, value: Number.isFinite(value) ? value : null, status: unavailable, trialCount, selection: entry?.selection });
         }
       }
     }
@@ -486,7 +491,9 @@ function chartReport(prepared) {
         outputs.push(`<text x="${x + 18}" y="${barY + 9}" font-size="9" fill="#78847f">${seriesLabel}</text>`);
         if (item.value !== null) {
           const barW = Math.max(1, position(item.value));
-          const count = item.selection ? ` · n=${item.selection.selectedScoredTrialIndexes.length} of ${item.selection.originalPlannedRepetitions} planned` : '';
+          const count = item.selection
+            ? ` · n=${item.trialCount} of ${item.selection.originalPlannedRepetitions} planned`
+            : item.trialCount ? ` · n=${item.trialCount}` : '';
           const label = spec.text && spec.single ? item.label : `${svgNumber(item.value)} ${spec.unit}${count}`;
           outputs.push(`<rect x="${plotX}" y="${barY}" width="${barW.toFixed(2)}" height="${barH}" rx="5" fill="${color}"/><text x="${plotX + barAreaW + 8}" y="${barY + 9}" font-size="10" fill="#263d37"><title>${xml(label)}</title>${xml(label)}</text>`);
         } else {

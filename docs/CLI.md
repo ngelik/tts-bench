@@ -46,14 +46,19 @@ A software renderer or CPU-only fallback is not a GPU result. `--smoke` uses thr
 chunks, skips the full warm-up and defaults to one scored diagnostic repetition.
 It cannot be submitted as a benchmark score.
 
-Full `warm` runs use one excluded 20,000-character warm-up. Most models default
-to five full scored repetitions; Fun-CosyVoice3 uses exactly one scored article
-for every new test scenario on CPU and WebGPU. Other models require at least
-five for full warm runs. A valid direct `--repetitions` value for CosyVoice3 is
-normalized to one and reported on stderr and in the receipt. Campaign plans with
-older CosyVoice3 counts are normalized to one, with requested and effective
-counts shown by `tools/run-campaign.mjs --dry-run`.
-The last scored output is saved as local WAV.
+Full `warm` runs start with one excluded 20,000-character article on each backend.
+The engine stays resident for the scored articles.
+
+| Registered model | Scored warm articles per backend |
+|---|---:|
+| More than 1,000,000,000 parameters | 1 |
+| Fun-CosyVoice3 | 1 in every scored scenario |
+| Other models, including exactly 1,000,000,000 parameters | 5 by default, minimum 5 |
+
+For a one-score model, a valid explicit warm count such as `--repetitions 5`
+resolves to one. Hand-authored campaign plans follow the same rule. Inspect the
+effective counts with `node tools/run-campaign.mjs --plan PLAN --dry-run`.
+The receipt records the applied count and the WAV comes from the last scored article.
 Default per-article timeout is 120 minutes; `--timeout-minutes N` accepts up to 1,440 (24 hours) for slow models. Campaign plans can set `timeoutMinutes` per cell. The timeout applies to each full article independently.
 PiVo WebGPU can take several hours for the complete warm sequence.
 

@@ -25,14 +25,16 @@ configuration is distinct from its strict frontend.
    WebGPU results must demonstrate actual compute dispatch, not merely expose
    `navigator.gpu`. Record CPU preprocessing and allowed operator fallback.
 4. Load one model. Generate the **entire article once as an excluded warm-up**.
-5. Keep that engine resident. Generate the full article sequentially. New
-   New Fun-CosyVoice3 tests use one scored article on both backends in every
-   scenario; other models use five scored articles by default. A valid explicit
-   CosyVoice3 repetition count is normalized to one and recorded in stderr and
-   receipt notes. Older CosyVoice3 receipts with five or more repetitions remain
-   valid historical evidence. A reviewed operator-shortened result may select
-   completed trials from its hash-bound native receipt, but it does not change the
-   receipt's original planned repetition count or status.
+5. Keep the engine resident. For each CPU or WebGPU warm run, score **one full
+   article** when the registered model exceeds **1,000,000,000 parameters**.
+   Use a sourced total or a lower bound that already exceeds the threshold.
+   Count the deployed speech components covered by the evidence and record their
+   scope. Exactly one billion follows the standard five-score default.
+   Fun-CosyVoice3 uses one scored article in every scenario under its existing
+   run limit. Record the effective count in the receipt. Report a single score as
+   one observation. Historical receipts retain their original counts and status.
+   A reviewed operator-shortened result identifies its selected completed trials
+   and links to the original receipt.
 6. Start each timer immediately before the first source-chunk request. Stop only
    after the final chunk's PCM reaches the page CPU. Await GPU outputs/readback;
    a dispatch submission time is not a completion time.

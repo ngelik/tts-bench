@@ -23,7 +23,7 @@ const replay = {
     sourceCommit: plan.sourceCommit,
     sha256: createHash('sha256').update(raw).digest('hex'),
   },
-  conditions: `${String(plan.conditions ?? '')} Replayed against current committed registrations, so this is a new source cohort. New CosyVoice3 scored cells use one article.`,
+  conditions: `${String(plan.conditions ?? '')} Replayed against current committed registrations, so this is a new source cohort. New CosyVoice3 tests use one scored article in every scenario; new warm tests for registrations above one billion parameters use one scored article after the excluded warm-up.`,
   cells: plan.cells.map(effectiveCampaignCell),
 };
 process.stdout.write(JSON.stringify(replay, null, 2) + '\n');

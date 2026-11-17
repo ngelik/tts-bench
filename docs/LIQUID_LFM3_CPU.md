@@ -56,6 +56,6 @@ npm run bench -- run --model lfm3-audio-2b-fusor-q7-cpu --backend cpu --scenario
 npm run bench -- run --model lfm3-audio-2b-fusor-q7-cpu --backend cpu --scenario cached --resources --repetitions 1 --accept-license --machine "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64"
 ```
 
-Substitute `lfm3-omni-2b-fusor-q7-cpu` for Omni. Commit and publish the reviewed implementation before scoring from a clean checkout. A warm score requires one excluded complete warmup and five complete 20,000-character / 93-span repetitions. Memory is a separate one-article diagnostic. Cold-load checks are excluded from this campaign.
+Substitute `lfm3-omni-2b-fusor-q7-cpu` for Omni. Commit and publish the reviewed implementation before scoring from a clean checkout. A new warm score uses one excluded full warm-up and one scored 20,000-character article covering all 93 spans. Historical five-run measurements retain their original sample counts. Memory is a separate one-article diagnostic. Cold-load checks are excluded from this campaign.
 
 A normal stop and finite PCM do not establish faithful reading. Inspect the output-length notes and receipt-bound recordings; preserve unusually short spans and all repetitions. Warmup audio is not archived, and the saved final scored repetition may differ from a trial with a short span.
