@@ -496,11 +496,8 @@ def compare(name: str, expected: np.ndarray, actual: np.ndarray, rtol: float = 4
 
 
 def verify_stream_parity(tts, model, state_voice: dict, flow_manifest: list[dict], mimi_manifest: list[dict], out: Path) -> list[dict]:
-    """Compare official streaming output with the exported graph cascade on two real spans."""
-    import copy
-
-    from silencio2.core.default_parameters import MAX_TOKEN_PER_CHUNK
-    from silencio2.core.models.text_chunking import prepare_text_prompt, split_into_best_sentences
+    """Compare native steps on captured inputs and decode their exact latents with ONNX."""
+    import torch
     from silencio2.core.modules.stateful_module import init_states
 
     fixture = Path("fixtures")
@@ -514,147 +511,223 @@ def verify_stream_parity(tts, model, state_voice: dict, flow_manifest: list[dict
     ort_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
     flow_session = ort.InferenceSession(str(out / "flow-main.onnx"), sess_options=ort_options, providers=["CPUExecutionProvider"])
     head_session = ort.InferenceSession(str(out / "flow-head.onnx"), sess_options=ort_options, providers=["CPUExecutionProvider"])
-    text_session = ort.InferenceSession(str(out / "text-conditioner.onnx"), sess_options=ort_options, providers=["CPUExecutionProvider"])
     mimi_session = ort.InferenceSession(str(out / "mimi-decoder.onnx"), sess_options=ort_options, providers=["CPUExecutionProvider"])
     flow_output_names = [value.name for value in flow_session.get_outputs()]
     head_output_name = head_session.get_outputs()[0].name
-    text_output_name = text_session.get_outputs()[0].name
     mimi_output_names = [value.name for value in mimi_session.get_outputs()]
     flow_inputs = [entry["input_name"] for entry in flow_manifest]
     mimi_inputs = [entry["input_name"] for entry in mimi_manifest]
     sample_rate = model.config.mimi.sample_rate
     fade_size = sample_rate // 200
     step_size = int(model.mimi.encoder_frame_rate / model.mimi.frame_rate)
-    receipts = []
 
-    def flow_run(sequence: np.ndarray, text_embeddings: np.ndarray, state: dict[str, np.ndarray]):
-        feed = {"sequence": sequence, "text_embeddings": text_embeddings, **state}
-        values = flow_session.run(flow_output_names, feed)
-        return values[0], bool(values[1].reshape(-1)[0]), dict(zip(flow_inputs, values[2:]))
+    def tensor_state_digest(state: dict) -> str:
+        digest = hashlib.sha256()
+        for entry in flow_manifest:
+            value = get_by_path(state, entry["path"]).detach().cpu().contiguous().numpy()
+            digest.update(entry["path"].encode("utf-8"))
+            digest.update(value.dtype.str.encode("ascii"))
+            digest.update(np.asarray(value.shape, dtype="<i8").tobytes())
+            digest.update(value.tobytes())
+        return digest.hexdigest()
 
-    def onnx_span(text: str) -> tuple[np.ndarray, list[dict]]:
-        torch.manual_seed(0)
-        span_parts = []
-        chunk_plan = []
-        for emotion, outer_chunk in tts.chunks(text):
-            model_text = f"<{emotion}> {outer_chunk}" if emotion else outer_chunk
-            model_chunks = split_into_best_sentences(
-                model.flow_lm.conditioner.tokenizer,
-                model_text,
-                MAX_TOKEN_PER_CHUNK,
-                model.pad_with_spaces_for_short_inputs,
-                remove_semicolons=model.remove_semicolons,
-                append_terminal_punctuation=model.append_terminal_punctuation,
-                capitalize_first_letter=model.capitalize_first_letter,
-                replace_characters=model.replace_characters,
+    prompt_state_sha256 = tensor_state_digest(state_voice)
+    model_device = model.flow_lm.device
+    original_step = model._run_flow_lm_and_increment_step
+    original_generate = model._generate
+
+    def run_native_trace(text: str) -> tuple[np.ndarray, dict]:
+        capture = {"chunks": []}
+        active = {"chunk": None}
+        head_inputs = []
+
+        def capture_head_inputs(module, args):
+            if len(args) != 2:
+                raise AssertionError(f"Expected drifting flow head to receive conditioning and noise, got {len(args)} inputs")
+            head_inputs.append(tuple(value.detach().cpu().numpy().copy() for value in args))
+
+        class QueueCapture:
+            def __init__(self, queue, chunk):
+                self.queue = queue
+                self.chunk = chunk
+
+            def put(self, item, *args, **kwargs):
+                if isinstance(item, torch.Tensor):
+                    self.chunk["nativeLatents"].append(item.detach().cpu().numpy().copy())
+                return self.queue.put(item, *args, **kwargs)
+
+            def __getattr__(self, name):
+                return getattr(self.queue, name)
+
+        def traced_step(model_state, text_tokens=None, backbone_input_latents=None, audio_conditioning=None):
+            sequence = backbone_input_latents
+            if sequence is None:
+                sequence = torch.empty((1, 0, model.flow_lm.ldim), dtype=model.flow_lm.dtype, device=model_device)
+            tokens = text_tokens
+            if tokens is None:
+                tokens = torch.zeros((1, 0), dtype=torch.int64, device=model_device)
+            audio = audio_conditioning
+            if audio is None:
+                audio = torch.empty((1, 0, model.flow_lm.dim), dtype=model.flow_lm.dtype, device=model_device)
+            embeddings = torch.cat([model.flow_lm.conditioner(tokens), audio], dim=1)
+            sequence_np = sequence.detach().cpu().numpy().copy()
+            embeddings_np = embeddings.detach().cpu().numpy().copy()
+            state_before = {
+                entry["input_name"]: get_by_path(model_state, entry["path"]).detach().cpu().numpy().copy()
+                for entry in flow_manifest
+            }
+            values = flow_session.run(flow_output_names, {"sequence": sequence_np, "text_embeddings": embeddings_np, **state_before})
+            head_start = len(head_inputs)
+            native_latent, native_eos = original_step(
+                model_state=model_state,
+                text_tokens=text_tokens,
+                backbone_input_latents=backbone_input_latents,
+                audio_conditioning=audio_conditioning,
             )
-            for chunk in model_chunks:
-                prepared_text, _ = prepare_text_prompt(
-                    chunk,
-                    model.pad_with_spaces_for_short_inputs,
-                    model.remove_semicolons,
-                    model.append_terminal_punctuation,
-                    model.capitalize_first_letter,
-                    model.replace_characters,
-                )
-                _, frames_after_eos_guess = prepare_text_prompt(
-                    chunk,
-                    model.pad_with_spaces_for_short_inputs,
-                    model.remove_semicolons,
-                    model.append_terminal_punctuation,
-                    model.capitalize_first_letter,
-                    model.replace_characters,
-                )
-                token_ids = model.flow_lm.conditioner.prepare(prepared_text).detach().cpu().numpy().astype(np.int64)
-                token_count = int(token_ids.shape[1])
-                max_gen_len = int(model._estimate_max_gen_len(token_count))
-                tail = model.model_recommended_frames_after_eos
-                if tail is None:
-                    tail = frames_after_eos_guess + 2
-                state = copy.deepcopy(state_voice)
-                capacity = model._flow_lm_current_end(state) + token_count + max_gen_len
-                model._expand_kv_cache(state, capacity)
-                flow_state = {
-                    entry["input_name"]: get_by_path(state, entry["path"]).detach().cpu().numpy().copy()
-                    for entry in flow_manifest
-                }
-                text_embeddings = text_session.run([text_output_name], {"token_ids": token_ids})[0]
-                empty_sequence = np.empty((1, 0, model.flow_lm.ldim), dtype=np.float32)
-                _, _, flow_state = flow_run(empty_sequence, text_embeddings, flow_state)
-                # FlowLM.forward samples one latent during prefill, then discards it.
-                torch.empty((1, model.flow_lm.ldim), dtype=torch.float32).normal_(mean=0.0, std=float(model.temp) ** 0.5)
+            native_head_calls = head_inputs[head_start:]
+            if len(native_head_calls) != 1:
+                raise AssertionError(f"Native step made {len(native_head_calls)} flow-head calls; expected one for drifting flow")
+            native_conditioning, native_noise = native_head_calls[0]
+            chunk = active["chunk"]
+            if chunk is None:
+                raise AssertionError("Native autoregressive step occurred outside a captured model chunk")
+            step_index = len(chunk["steps"])
+            prefix = f"span {chunk['sourceSpanId']} chunk {len(capture['chunks']) - 1} step {step_index}"
+            conditioning_check = compare(prefix + " conditioning", values[0], native_conditioning, rtol=2e-3, atol=2e-4)
+            native_eos_value = bool(native_eos.detach().cpu().reshape(-1)[0].item())
+            onnx_eos_value = bool(values[1].reshape(-1)[0])
+            if native_eos_value != onnx_eos_value:
+                raise AssertionError(f"{prefix} EOS mismatch: native={native_eos_value}, ONNX={onnx_eos_value}")
+            converted_latent = head_session.run(
+                [head_output_name], {"conditioning": values[0], "noise": native_noise}
+            )[0]
+            native_latent_np = native_latent.detach().cpu().numpy().reshape(converted_latent.shape)
+            latent_check = compare(prefix + " latent with captured native noise", native_latent_np, converted_latent,
+                                   rtol=2e-3, atol=2e-4)
+            state_error = 0.0
+            for index, entry in enumerate(flow_manifest):
+                native_state = get_by_path(model_state, entry["path"]).detach().cpu().numpy()
+                state_check = compare(prefix + f" state {index}", values[2 + index], native_state,
+                                      rtol=2e-3, atol=2e-4)
+                state_error = max(state_error, state_check["maxAbsError"])
+            chunk["steps"].append({
+                "sequenceSha256": hashlib.sha256(sequence_np.tobytes()).hexdigest(),
+                "textEmbeddingSha256": hashlib.sha256(embeddings_np.tobytes()).hexdigest(),
+                "noiseSha256": hashlib.sha256(native_noise.tobytes()).hexdigest(),
+                "nativeLatentSha256": hashlib.sha256(native_latent_np.tobytes()).hexdigest(),
+                "nativeEos": native_eos_value,
+                "conditioningMaxAbsError": conditioning_check["maxAbsError"],
+                "latentMaxAbsError": latent_check["maxAbsError"],
+                "stateMaxAbsError": state_error,
+            })
+            return native_latent, native_eos
 
-                generated = []
-                eos_step = None
-                backbone_input = np.full((1, 1, model.flow_lm.ldim), np.nan, dtype=np.float32)
-                for generation_step in range(max_gen_len):
-                    conditioning, is_eos, flow_state = flow_run(
-                        backbone_input,
-                        np.empty((1, 0, model.flow_lm.dim), dtype=np.float32),
-                        flow_state,
-                    )
-                    noise = torch.empty((1, model.flow_lm.ldim), dtype=torch.float32).normal_(mean=0.0, std=float(model.temp) ** 0.5).numpy()
-                    if is_eos and eos_step is None and generation_step >= model._MIN_FRAMES_BEFORE_EOS:
-                        eos_step = generation_step
-                    if eos_step is not None and generation_step >= eos_step + tail:
-                        break
-                    latent = head_session.run([head_output_name], {"conditioning": conditioning, "noise": noise})[0]
-                    generated.append(latent)
-                    backbone_input = latent.reshape(1, 1, model.flow_lm.ldim)
-                if not generated:
-                    raise AssertionError("Converted Silencio-2 stream produced no latent frames.")
-                chunk_plan.append({
-                    "modelChunkText": chunk,
-                    "preparedTextSha256": hashlib.sha256(prepared_text.encode("utf-8")).hexdigest(),
-                    "tokenCount": token_count,
-                    "tokenIdsSha256": hashlib.sha256(token_ids.tobytes()).hexdigest(),
-                    "maxGeneratedFrames": max_gen_len,
-                    "generatedFrames": len(generated),
-                })
+        def traced_generate(model_state, prepared, max_gen_len, frames_after_eos, latents_queue, result_queue,
+                            stop, latents_out=None, forced_latents=None):
+            prepared_np = prepared.detach().cpu().numpy().astype(np.int64, copy=True)
+            chunk = {
+                "sourceSpanId": current_span["id"],
+                "preparedTokenIds": prepared_np.reshape(-1).tolist(),
+                "tokenCount": int(prepared_np.shape[1]),
+                "tokenIdsSha256": hashlib.sha256(prepared_np.tobytes()).hexdigest(),
+                "maxGeneratedFrames": int(max_gen_len),
+                "framesAfterEos": int(frames_after_eos),
+                "steps": [],
+                "nativeLatents": [],
+            }
+            capture["chunks"].append(chunk)
+            active["chunk"] = chunk
+            return original_generate(
+                model_state=model_state,
+                prepared=prepared,
+                max_gen_len=max_gen_len,
+                frames_after_eos=frames_after_eos,
+                latents_queue=QueueCapture(latents_queue, chunk),
+                result_queue=result_queue,
+                stop=stop,
+                latents_out=latents_out,
+                forced_latents=forced_latents,
+            )
 
-                mimi_state = init_states(model.mimi, batch_size=1, sequence_length=max_gen_len * step_size)
-                mimi_values = {
-                    entry["input_name"]: get_by_path(mimi_state, entry["path"]).detach().cpu().numpy().copy()
-                    for entry in mimi_manifest
-                }
-                max_batch = model.max_decoder_frames_per_call
-                batches = [generated] if max_batch <= 0 else [generated[i:i + max_batch] for i in range(0, len(generated), max_batch)]
-                first_audio = True
-                for batch in batches:
-                    latents = np.concatenate(batch, axis=0)[None, :, :].astype(np.float32)
-                    feed = {"latent": latents, **mimi_values}
-                    values = mimi_session.run(mimi_output_names, feed)
-                    audio = values[0].reshape(-1).astype(np.float32, copy=True)
-                    mimi_values = dict(zip(mimi_inputs, values[1:]))
-                    if first_audio:
-                        fade_length = min(len(audio), fade_size)
-                        audio[:fade_length] *= np.linspace(0.0, 1.0, fade_length, dtype=np.float32)
-                        first_audio = False
-                    span_parts.append(audio)
-        return np.concatenate(span_parts).astype(np.float32, copy=False), chunk_plan
-
-    for span in spans:
-        text = article[span["start"]:span["end"]]
-        native_parts = [np.asarray(chunk.detach().cpu().float().numpy()).reshape(-1) for chunk in tts.stream(text, voice="260", seed=0)]
+        hook = model.flow_lm.flow_net.register_forward_pre_hook(capture_head_inputs)
+        model._run_flow_lm_and_increment_step = traced_step
+        model._generate = traced_generate
+        try:
+            native_parts = [np.asarray(chunk.detach().cpu().float().numpy()).reshape(-1)
+                            for chunk in tts.stream(text, voice="260", seed=0)]
+        finally:
+            model._run_flow_lm_and_increment_step = original_step
+            model._generate = original_generate
+            hook.remove()
+        if not native_parts:
+            raise AssertionError(f"Native Silencio-2 produced no audio for span {current_span['id']}")
         native = np.concatenate(native_parts).astype(np.float32, copy=False)
-        converted, model_chunk_plan = onnx_span(text)
-        native_chunk_samples = [int(chunk.size) for chunk in native_parts]
+        return native, {"chunks": capture["chunks"], "decoderChunkSamples": [int(part.size) for part in native_parts]}
+
+    receipts = []
+    for span_index, span in enumerate(spans):
+        current_span = span
+        text = article[span["start"]:span["end"]]
+        native, trace = run_native_trace(text)
+        repeatability = None
+        if span_index == 0:
+            second_native, second_trace = run_native_trace(text)
+            repeatability = {
+                "runs": 2,
+                "samePromptStateSha256": tensor_state_digest(state_voice) == prompt_state_sha256,
+                "firstSamples": int(native.size),
+                "secondSamples": int(second_native.size),
+                "firstPcmSha256": hashlib.sha256(native.tobytes()).hexdigest(),
+                "secondPcmSha256": hashlib.sha256(second_native.tobytes()).hexdigest(),
+                "bitwiseEqual": bool(native.shape == second_native.shape and np.array_equal(native, second_native)),
+                "secondRunModelChunkCount": len(second_trace["chunks"]),
+            }
+
+        converted_parts = []
+        model_chunk_plan = []
+        for chunk_index, chunk in enumerate(trace["chunks"]):
+            if not chunk["nativeLatents"]:
+                raise AssertionError(f"Native model chunk {chunk_index} produced no latent frames")
+            latents = np.concatenate(chunk["nativeLatents"], axis=1).astype(np.float32, copy=False)
+            mimi_state = init_states(model.mimi, batch_size=1, sequence_length=chunk["maxGeneratedFrames"] * step_size)
+            mimi_feed = {
+                entry["input_name"]: get_by_path(mimi_state, entry["path"]).detach().cpu().numpy().copy()
+                for entry in mimi_manifest
+            }
+            mimi_values = mimi_session.run(mimi_output_names, {"latent": latents, **mimi_feed})
+            audio = mimi_values[0].reshape(-1).astype(np.float32, copy=True)
+            fade_length = min(len(audio), fade_size)
+            audio[:fade_length] *= np.linspace(0.0, 1.0, fade_length, dtype=np.float32)
+            converted_parts.append(audio)
+            model_chunk_plan.append({
+                "preparedTokenIds": chunk["preparedTokenIds"],
+                "tokenCount": chunk["tokenCount"],
+                "tokenIdsSha256": chunk["tokenIdsSha256"],
+                "maxGeneratedFrames": chunk["maxGeneratedFrames"],
+                "generatedFrames": int(latents.shape[1]),
+                "stepCount": len(chunk["steps"]),
+                "stepChecks": chunk["steps"],
+            })
+        converted = np.concatenate(converted_parts).astype(np.float32, copy=False)
         if native.shape != converted.shape:
             raise AssertionError(
-                f"native-versus-ONNX span {span['id']} shape mismatch: {native.shape} != {converted.shape}; "
-                f"native decoder chunks={native_chunk_samples}, ONNX model chunks={json.dumps(model_chunk_plan, ensure_ascii=False)}"
+                f"native-versus-ONNX Mimi span {span['id']} shape mismatch: {native.shape} != {converted.shape}; "
+                f"native decoder chunks={trace['decoderChunkSamples']}, ONNX model chunks={json.dumps(model_chunk_plan, ensure_ascii=False)}"
             )
-        receipt = compare(f"native-versus-ONNX span {span['id']}", native, converted, rtol=2e-3, atol=2e-4)
+        receipt = compare(f"native-latent-versus-ONNX Mimi span {span['id']}", native, converted,
+                          rtol=2e-3, atol=2e-4)
         receipt.update({
             "sourceSpanId": span["id"],
             "sourceSpanSha256": span["sha256"],
-            "nativeDecoderChunkSamples": native_chunk_samples,
+            "nativeDecoderChunkSamples": trace["decoderChunkSamples"],
             "modelInputChunks": model_chunk_plan,
             "sampleRate": sample_rate,
             "samples": int(native.size),
             "nativePcmSha256": hashlib.sha256(native.tobytes()).hexdigest(),
             "convertedPcmSha256": hashlib.sha256(converted.tobytes()).hexdigest(),
             "bitwiseEqual": bool(np.array_equal(native, converted)),
+            "promptStateSha256": prompt_state_sha256,
+            "nativeRepeatability": repeatability,
         })
         receipts.append(receipt)
     return receipts
