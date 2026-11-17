@@ -3,7 +3,7 @@ import { SINGLE_REPETITION_WARM_MODEL, requiresSingleWarmRepetition } from '../l
 import { validateModelParameterEvidence } from '../lib/model-parameters.mjs';
 import { sha256 } from './results.mjs';
 
-export const isBenchmarkSource = file => /^(bin\/|lib\/|web\/|fixtures\/|models\/|tools\/.*\.mjs$|package(?:-lock)?\.json$|assets\.lock\.json$)/.test(file);
+export const isBenchmarkSource = file => /^(bin\/|lib\/|web\/|fixtures\/|models\/|tools\/.*\.mjs$|tools\/linnet-webgpu-runtime\/.*\.(?:rs|toml|lock)$|package(?:-lock)?\.json$|assets\.lock\.json$)/.test(file);
 export function committedManifest(commit, cwd = process.cwd()) {
   if (!/^[a-f0-9]{40,64}$/.test(commit)) throw new Error('Invalid source commit');
   const git = args => execFileSync('git', args, { cwd, stdio: ['ignore','pipe','pipe'], maxBuffer: 8000000 });

@@ -1,0 +1,80 @@
+name: Linnet hybrid WebGPU browser verification
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/linnet-webgpu.yml'
+      - 'assets.lock.json'
+      - 'tools/provenance.mjs'
+      - 'tools/build-linnet-webgpu-runtime.mjs'
+      - 'tools/linnet-webgpu-runtime/**'
+      - 'tools/linnet-webgpu-model-probe.mjs'
+      - 'web/adapters/linnet.mjs'
+      - 'web/linnet/**'
+      - 'web/workers/linnet.mjs'
+      - 'tests/linnet-webgpu-policy.test.mjs'
+      - 'tests/linnet-wasm.test.mjs'
+      - 'tests/provenance-source.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/linnet-webgpu.yml'
+      - 'assets.lock.json'
+      - 'tools/provenance.mjs'
+      - 'tools/build-linnet-webgpu-runtime.mjs'
+      - 'tools/linnet-webgpu-runtime/**'
+      - 'tools/linnet-webgpu-model-probe.mjs'
+      - 'web/adapters/linnet.mjs'
+      - 'web/linnet/**'
+      - 'web/workers/linnet.mjs'
+      - 'tests/linnet-webgpu-policy.test.mjs'
+      - 'tests/linnet-wasm.test.mjs'
+      - 'tests/provenance-source.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+permissions:
+  contents: read
+jobs:
+  hybrid-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Install pinned Rust WebAssembly toolchain
+        run: rustup toolchain install 1.95.0 --profile minimal --target wasm32-unknown-unknown
+      - run: npm test
+      - name: Build and digest-check the pinned hybrid runtime
+        run: npm run linnet:runtime:build
+      - name: Fetch and verify the accepted model assets
+        run: |
+          npm run assets -- fetch --model linnet-en-35m --accept-license
+          npm run assets -- verify --model linnet-en-35m --accept-license
+      - name: Synthesize and capture CPU and hybrid sample audio in headed Chrome
+        run: xvfb-run -a node tools/linnet-webgpu-model-probe.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linnet-hybrid-browser-audio-${{ github.sha }}
+          path: .cache/linnet-webgpu-validation/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload the verified runtime release payload from main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linnet-webgpu-runtime-${{ github.sha }}
+          path: |
+            .cache/linnet-webgpu-build/release/linnet-tts-webgpu-hybrid.wasm
+            .cache/linnet-webgpu-build/release/LICENSE
+            .cache/linnet-webgpu-build/release/NOTICE
+            .cache/linnet-webgpu-build/release/BUILD-MANIFEST.json
+          if-no-files-found: error
+          retention-days: 14

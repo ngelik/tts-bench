@@ -18,6 +18,9 @@ npm run assets -- verify --model phonon
 `assets.lock.json` records upstream URLs, revisions, SHA-256 digests and exact byte
 counts. A changed or missing upstream file fails explicitly. Staged model/runtime
 files live in ignored `.cache/public/`; no text or audio is sent to upstream hosts.
+Linnet's source-built WebGPU WASM, Apache `LICENSE` and VoxRT `NOTICE` are fetched
+from its digest-versioned GitHub release; the pinned Rust source can be rebuilt
+with `npm run linnet:runtime:build` when the Rust 1.95.0 WebAssembly toolchain is installed.
 The install/fetch stage uses the network; synthesis is confined to the local
 static origin. Downloading assets is separate from measuring a customer's browser
 transfer. The latter is measured by the cold/network scenarios.
@@ -32,6 +35,26 @@ npm run assets -- import --model phonon --source /path/to/asset-tree
 ```
 
 Never commit this cache, downloaded weights or upstream bundles. Explicitly authorized recordings use the validated [audio publication workflow](../audio/README.md).
+
+The Linnet CPU path uses VoxRT's pinned demo WASM. For Linnet WebGPU, build the
+separate Apache-2.0 hybrid runtime from its pinned VoxRT Rust source before
+running the benchmark:
+
+```sh
+rustup toolchain install 1.95.0 --profile minimal
+rustup target add --toolchain 1.95.0 wasm32-unknown-unknown
+npm run linnet:runtime:build
+npm run assets -- fetch --model linnet-en-35m --accept-license
+npm run bench -- run --model linnet-en-35m --backend webgpu --scenario warm --machine "My laptop" --accept-license
+```
+
+The builder checks the upstream source commit, Rust toolchain, output size and
+WASM SHA-256. It stages only the runtime under ignored `.cache/`; it never stages
+or uploads Linnet weights. The hybrid sends dense matrix operations at or above
+32,768 multiply-accumulates to a non-fallback WebGPU adapter and keeps the other
+operations on WASM SIMD128/CPU. Software adapters are unsupported for scored
+runs. CPU results remain on the existing official browser runtime. See the
+Linnet entry in [model support](MODEL_SUPPORT.md) and [licensing](LICENSING.md).
 
 ## Choose a backend and workload
 

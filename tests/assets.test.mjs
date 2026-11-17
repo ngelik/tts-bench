@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { listModels } from '../lib/assets.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
+import { LINNET_WEBGPU_RUNTIME } from '../web/linnet/runtime-policy.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
@@ -20,7 +21,7 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(klein.support.voiceCount, 17);
   assert.equal(klein.support.languageCount, 4);
   const linnet = getAssetLock().models['linnet-en-35m'];
-  assert.deepEqual(linnet.backends, ['cpu']);
+  assert.deepEqual(linnet.backends, ['cpu', 'webgpu']);
   assert.equal(linnet.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');
   assert.equal(linnet.license.requiresAcceptance, true);
   assert.equal(linnet.license.model, 'Linnet Weights License 1.0');
@@ -28,7 +29,22 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(linnet.support.bundledVoiceCount, 1);
   assert.equal(linnet.support.languages[0], 'en');
   assert.equal(linnet.runtime.version, '0.1.1');
-  assert.match(linnet.runtime.license, /license unspecified; no redistribution/);
+  assert.match(linnet.runtime.license, /official CPU demo WASM license unspecified and not redistributed/);
+  const hybridRuntime = linnet.assets.find(asset => asset.id === 'linnet-en-35m-webgpu-hybrid-runtime');
+  assert.equal(hybridRuntime.target, LINNET_WEBGPU_RUNTIME.target);
+  assert.equal(hybridRuntime.bytes, LINNET_WEBGPU_RUNTIME.bytes);
+  assert.equal(hybridRuntime.sha256, LINNET_WEBGPU_RUNTIME.sha256);
+  assert.equal(hybridRuntime.url,
+    `https://github.com/ngelik/tts-bench/releases/download/${LINNET_WEBGPU_RUNTIME.releaseTag}/linnet-tts-webgpu-hybrid.wasm`);
+  for (const [id, filename] of [
+    ['linnet-en-35m-webgpu-runtime-license', 'LICENSE'],
+    ['linnet-en-35m-webgpu-runtime-notice', 'NOTICE'],
+  ]) {
+    const asset = linnet.assets.find(entry => entry.id === id);
+    assert.equal(asset.kind, 'license');
+    assert.ok(asset.url.endsWith(`/${LINNET_WEBGPU_RUNTIME.releaseTag}/${filename}`));
+  }
+  assert.equal(linnet.runtime.files.length, 0, 'hybrid runtime is a release asset, not an undeclared npm file');
   const silencio = getAssetLock().models['silencio-2'];
   assert.deepEqual(silencio.backends, ['cpu', 'webgpu']);
   assert.equal(silencio.modelRevision, '20930f5f6a6bb564f2a8207152fd5c5d8eecff03');

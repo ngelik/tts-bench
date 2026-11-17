@@ -6000,7 +6000,8 @@
       "displayName": "Linnet en-35m (f1)",
       "modelRevision": "a75fdfe50bc3d3e776b9c5040f149f49a054aaf5",
       "backends": [
-        "cpu"
+        "cpu",
+        "webgpu"
       ],
       "license": {
         "model": "Linnet Weights License 1.0",
@@ -6023,12 +6024,36 @@
         "notes": "The checkpoint supports two built-in American English voices; only linnet-en-f1 is staged and benchmarked. Voice cloning is outside the included terms."
       },
       "runtime": {
-        "package": "voxrt-linnet-browser-wasm",
+        "package": "linnet-webgpu-hybrid-runtime",
         "version": "0.1.1",
-        "license": "Apache-2.0 runtime source; demo WASM license unspecified; no redistribution",
+        "license": "Apache-2.0 source-built hybrid runtime for WebGPU; official CPU demo WASM license unspecified and not redistributed",
         "files": []
       },
       "assets": [
+        {
+          "id": "linnet-en-35m-webgpu-hybrid-runtime",
+          "target": "runtimes/linnet-tts/0.1.1/linnet-tts-webgpu-hybrid.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/linnet-webgpu-0.1.1-f4e2574f129d/linnet-tts-webgpu-hybrid.wasm",
+          "bytes": 391476,
+          "sha256": "f4e2574f129d4e37c5c92b64a7615cfc9752eed4a05c301dd93cb97ff5ebbbd8",
+          "kind": "runtime"
+        },
+        {
+          "id": "linnet-en-35m-webgpu-runtime-license",
+          "target": "licenses/linnet-tts-webgpu/LICENSE",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/linnet-webgpu-0.1.1-f4e2574f129d/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "linnet-en-35m-webgpu-runtime-notice",
+          "target": "licenses/linnet-tts-webgpu/NOTICE",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/linnet-webgpu-0.1.1-f4e2574f129d/NOTICE",
+          "bytes": 306,
+          "sha256": "db0680ca2ff8eba18131aa53b6506011c437d018016577a430896a8dec44b727",
+          "kind": "license"
+        },
         {
           "id": "linnet-en-35m-browser-wasm",
           "target": "runtimes/linnet-tts/0.1.1/linnet-tts-0.1.1.wasm",

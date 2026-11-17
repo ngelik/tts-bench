@@ -186,14 +186,22 @@ inference and is fetched directly from VoxRT's public deployment into ignored
 local storage. VoxRT's Rust runtime source is Apache-2.0, but the demo-specific
 browser binding is not separately licensed in the source tree. Do not commit,
 mirror or publicly rehost that binary or its demo JavaScript. Its public URL and
-SHA-256 are pinned; asset fetching fails if the bytes change. If VoxRT removes
-the hosted file, reproduction is blocked until an authorized source-built
-browser binding becomes available. The benchmark adapter and safetensors memory
-conversion are original project code; no model weights or voice files are committed.
+SHA-256 are pinned; asset fetching fails if the bytes change. The WebGPU path
+builds a separate hybrid WASM from the pinned Apache-2.0 Rust source and stages
+it only in ignored local storage; its Rust toolchain, source commit, output size
+and SHA-256 are pinned in `web/linnet/runtime-policy.mjs`. The hybrid binary is
+distributed as a digest-versioned release with its upstream Apache `LICENSE`,
+VoxRT `NOTICE`, and build-source/hash manifest. It dispatches eligible dense
+operations to a non-fallback WebGPU adapter and keeps remaining operations
+on WASM SIMD128/CPU. Only immutable `Mat::F32` model weights are cached; dynamic
+attention K/V tensors are uploaded afresh for each dispatch. The build process does not rehost model weights or the
+unlicensed demo binding. The benchmark adapter and safetensors memory conversion
+are original project code; no model weights or voice files are committed.
 Show both required notices with the documentation and any published sample:
 **“Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0”**
 and **“Powered by Linnet (VoxRT)”**.
 
 Sources: [pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35m/tree/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5) ·
-[Apache-2.0 runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) ·
+[Apache-2.0 CPU runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) ·
+[Apache-2.0 hybrid runtime source](https://github.com/VoxRT/LinnetTTS/tree/29dfdd503a3930e4e36c1130e4c9aab0592201ca) ·
 [official browser runtime and platform notes](https://www.voxrt.com/text-to-speech).
