@@ -14,10 +14,11 @@ self.onmessage = event => {
     new Float32Array(lhsBuffer).set(lhs);
     new Float32Array(rhsBuffer).set(rhs);
 
+    self.postMessage({ phase: 'gpu-request-posted', stateBuffer, outputBuffer });
     gpuWorker.postMessage({ m, k, n, stateBuffer, errorBuffer, lhsBuffer, rhsBuffer, outputBuffer });
     const wait = Atomics.wait(new Int32Array(stateBuffer), 0, 0, 30000);
-    if (wait === 'timed-out') throw new Error('GPU worker did not finish before the synchronous bridge timeout.');
     const state = Atomics.load(new Int32Array(stateBuffer), 0);
+    if (wait === 'timed-out' && state !== 1) throw new Error(`GPU worker did not finish before the synchronous bridge timeout (state=${state}).`);
     if (state !== 1) {
       const errorBytes = new Uint8Array(errorBuffer);
       const end = errorBytes.indexOf(0);

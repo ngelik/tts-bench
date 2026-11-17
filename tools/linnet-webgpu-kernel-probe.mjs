@@ -175,6 +175,7 @@ try {
     const bridged = await new Promise((resolve, reject) => {
       const worker = new Worker('/tools/linnet-webgpu-probe/compute-worker.js');
       worker.onmessage = ({ data }) => {
+        if (data.phase) return;
         worker.terminate();
         data.ok ? resolve(data) : reject(new Error(data.error));
       };
