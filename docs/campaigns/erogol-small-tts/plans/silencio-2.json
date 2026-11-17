@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "conditions": "MacBook Pro (MacBookPro18,3, Apple M1 Pro, 8 CPU cores: 6 performance and 2 efficiency, 16 GB RAM), macOS 26.6.2 arm64, headed Google Chrome 157.0.8103.40, AC attached. One excluded full-article warm-up per warm backend; sequential CPU warm, WebGPU warm, then CPU and WebGPU cached full-article RSS diagnostics. Canonical english-20k-v1 fixture; each cell runs alone through the shared M1 publication slot. Background load and thermal/power state are recorded with the native receipts.",
+  "cells": [
+    {
+      "model": "silencio-2",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5
+    },
+    {
+      "model": "silencio-2",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5
+    },
+    {
+      "model": "silencio-2",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true
+    },
+    {
+      "model": "silencio-2",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true
+    }
+  ],
+  "sourceCommit": "0d5dd8e407191485dcb34565e7f42baa961f5f3f",
+  "replayOf": "erogol-small-tts-bench-silencio-2"
+}

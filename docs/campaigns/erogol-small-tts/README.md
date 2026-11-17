@@ -38,3 +38,19 @@ node tools/run-campaign.mjs --plan "$plan" --machine "Your actual machine, proce
 ```
 
 Warm and cached-memory receipts use different timing boundaries. Sopro’s CPU and WebGPU profiles also use different precision. The source receipt for each observation records its profile and effective backend. [How to submit results](../../../CONTRIBUTING.md)
+
+## Full-article CPU checks in hosted Chrome
+
+Each recording contains the same 20,000-character English article. The time covers one cached generation through the last audio sample. Each machine exposed four logical cores. Hardware and Chrome patch versions varied between jobs, so use the M1 Pro dashboard for like-for-like warm timings.
+
+| Model | Linux runner CPU | Chrome 157 build | Generation | Speech duration | Article check |
+| --- | --- | --- | ---: | ---: | --- |
+| SupraTTS | AMD EPYC 9V74 | 8103.50 | 0:24 | 21:24 | [93/93 spans](https://github.com/ngelik/tts-bench/actions/runs/44107462780/job/134123604018) |
+| Klein-TTS | Intel Xeon 6975P-C | 8103.78 | 3:28 | 20:59 | [93/93 spans](https://github.com/ngelik/tts-bench/actions/runs/44108678629/job/134127968330) |
+| Linnet | AMD EPYC 7763 | 8103.50 | 4:44 | 17:32 | [93/93 spans](https://github.com/ngelik/tts-bench/actions/runs/44110232347) |
+| Silencio | AMD EPYC 9V74 | 8103.50 | 16:51 | 20:05 | [93/93 spans](https://github.com/ngelik/tts-bench/actions/runs/44124788882/job/134185489479) |
+| Sopro | AMD EPYC 7763 | 8103.50 | 23:20 | 20:24 | [93/93 spans](https://github.com/ngelik/tts-bench/actions/runs/44107462780/job/134123603712) |
+
+Times are minutes:seconds. The jobs verified the full WAV against the browser receipt and cut the first 30 seconds from that recording. An offline recognizer also checked the opening and closing passages of all five articles. [Speech check](https://github.com/ngelik/tts-bench/actions/runs/44128647210)
+
+[Download the listening comparison](https://github.com/ngelik/tts-bench/releases/download/small-tts-families-chrome-cpu-2026-11-17/listen-and-compare.zip) (5.4 MB). Extract the ZIP and open `index.html` for five 30-second examples, the duration chart and links to the full articles. [Full WAVs and credits](https://github.com/ngelik/tts-bench/releases/tag/small-tts-families-chrome-cpu-2026-11-17)
