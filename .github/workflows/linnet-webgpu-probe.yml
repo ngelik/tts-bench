@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/linnet-webgpu-probe.yml'
       - 'tools/linnet-webgpu-kernel-probe.mjs'
+      - 'tools/linnet-webgpu-probe/**'
 permissions:
   contents: read
 jobs:
@@ -15,10 +16,25 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: VoxRT/LinnetTTS
+          ref: f3d3f68cbd8b7d07380d11c82bf75af06bc41281
+          path: upstream-linnet
+          persist-credentials: false
+          fetch-depth: 1
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Build pinned Linnet ops with a temporary WebGPU host import
+        run: |
+          git -C upstream-linnet apply tools/linnet-webgpu-probe/linnet-ops-webgpu-probe.patch
+          mkdir -p tools/linnet-webgpu-probe/upstream/runtime
+          cp upstream-linnet/runtime/Cargo.toml tools/linnet-webgpu-probe/upstream/runtime/Cargo.toml
+          cp -R upstream-linnet/runtime/linnet-ops tools/linnet-webgpu-probe/upstream/runtime/linnet-ops
+          rustup target add wasm32-unknown-unknown
+          RUSTFLAGS='-C link-arg=--export-memory' cargo build --manifest-path tools/linnet-webgpu-probe/Cargo.toml --target wasm32-unknown-unknown --release
       - name: Compare WebGPU matmul kernels with scalar references on software adapter
         run: xvfb-run -a node tools/linnet-webgpu-kernel-probe.mjs

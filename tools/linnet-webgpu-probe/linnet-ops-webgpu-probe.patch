@@ -1,0 +1,38 @@
+diff --git a/runtime/linnet-ops/Cargo.toml b/runtime/linnet-ops/Cargo.toml
+index 95718bc..04a3463 100644
+--- a/runtime/linnet-ops/Cargo.toml
++++ b/runtime/linnet-ops/Cargo.toml
+@@ -17,3 +17,4 @@ default = []
+ # A/B parity checks and for capturing a pre-SIMD performance baseline.
+ # Never enable for shipping builds.
+ force-scalar = []
++webgpu-probe = []
+diff --git a/runtime/linnet-ops/src/ops.rs b/runtime/linnet-ops/src/ops.rs
+index f392fc9..0ddb9ac 100644
+--- a/runtime/linnet-ops/src/ops.rs
++++ b/runtime/linnet-ops/src/ops.rs
+@@ -19,6 +19,12 @@
+ 
+ use crate::f16::f16_to_f32;
+ 
++#[cfg(all(target_arch = "wasm32", feature = "webgpu-probe"))]
++#[link(wasm_import_module = "env")]
++extern "C" {
++    fn linnet_gpu_matmul_mm(a: *const f32, b: *const f32, m: u32, k: u32, n: u32, out: *mut f32);
++}
++
+ #[cfg(all(target_arch = "x86_64", not(feature = "force-scalar")))]
+ macro_rules! avx2_fma_available {
+     () => {
+@@ -263,6 +269,11 @@ pub fn matmul_mm(a: &[f32], b: &[f32], m: usize, k: usize, n: usize, out: &mut [
+     debug_assert_eq!(a.len(), m * k);
+     debug_assert_eq!(b.len(), k * n);
+     debug_assert_eq!(out.len(), m * n);
++    #[cfg(all(target_arch = "wasm32", feature = "webgpu-probe"))]
++    unsafe {
++        linnet_gpu_matmul_mm(a.as_ptr(), b.as_ptr(), m as u32, k as u32, n as u32, out.as_mut_ptr());
++        return;
++    }
+     #[cfg(all(target_arch = "aarch64", not(feature = "force-scalar")))]
+     {
+         crate::ops_neon::matmul_mm_neon(a, b, m, k, n, out);

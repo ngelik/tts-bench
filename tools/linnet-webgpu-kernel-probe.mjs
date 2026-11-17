@@ -13,6 +13,10 @@ const assets = new Map([
     type: 'text/javascript; charset=utf-8',
     body: await readFile(new URL('./linnet-webgpu-probe/gpu-worker.js', import.meta.url), 'utf8'),
   }],
+  ['/linnet-webgpu-probe.wasm', {
+    type: 'application/wasm',
+    body: await readFile(new URL('./linnet-webgpu-probe/target/wasm32-unknown-unknown/release/linnet_webgpu_import_probe.wasm', import.meta.url)),
+  }],
 ]);
 const server = http.createServer((req, res) => {
   const asset = assets.get(new URL(req.url, 'http://localhost').pathname);
@@ -172,6 +176,7 @@ try {
       directError = Math.max(directError, Math.abs(direct.output[col] - expected));
     }
     if (directError > 0.0002) throw new Error(`Standalone WebGPU worker differs from CPU by ${directError}`);
+    const wasmBytes = await (await fetch('/linnet-webgpu-probe.wasm')).arrayBuffer();
     const bridged = await new Promise((resolve, reject) => {
       const gpuWorker = new Worker('/tools/linnet-webgpu-probe/gpu-worker.js');
       const computeWorker = new Worker('/tools/linnet-webgpu-probe/compute-worker.js');
@@ -199,14 +204,25 @@ try {
         cleanup();
         reject(new Error(event.message));
       };
-      computeWorker.postMessage({ m: 1, k: 64, n: 32, lhs, rhs });
+      computeWorker.postMessage({ wasmBytes }, [wasmBytes]);
     });
-    let bridgeError = 0;
-    for (let col = 0; col < 32; col++) {
-      let expected = 0;
-      for (let inner = 0; inner < 64; inner++) expected += lhs[inner] * rhs[inner * 32 + col];
-      bridgeError = Math.max(bridgeError, Math.abs(bridged.output[col] - expected));
+    const m = 37, k = 64, n = 128;
+    const expected = new Float32Array(m * n);
+    for (let row = 0; row < m; row++) {
+      for (let col = 0; col < n; col++) {
+        let sum = 0;
+        for (let inner = 0; inner < k; inner++) {
+          const aIndex = row * k + inner;
+          const bIndex = inner * n + col;
+          const a = ((aIndex * 17 % 23) - 11) * 0.03125;
+          const b = ((bIndex * 13 % 19) - 9) * 0.0234375;
+          sum += a * b;
+        }
+        expected[row * n + col] = sum;
+      }
     }
+    let bridgeError = 0;
+    for (let i = 0; i < expected.length; i++) bridgeError = Math.max(bridgeError, Math.abs(bridged.output[i] - expected[i]));
     if (bridgeError > 0.0002) throw new Error(`Worker/SAB bridge differs from CPU by ${bridgeError}`);
     device.destroy();
     return {
@@ -219,7 +235,9 @@ try {
       },
       synchronousWorkerBridge: {
         crossOriginIsolated,
-        waitResult: bridged.wait,
+        waitResult: bridged.bridgeWait,
+        rustOperation: 'pinned linnet_ops::matmul_mm',
+        dispatchCount: bridged.dispatchCount,
         outputValues: bridged.output.length,
         maxAbsoluteError: bridgeError,
       },
@@ -230,12 +248,11 @@ try {
   assert.ok(report.cases.every(test => test.maxAbsoluteError <= 0.0002));
   assert.equal(report.asynchronousGpuWorker.outputValues, 32);
   assert.ok(report.asynchronousGpuWorker.maxAbsoluteError <= 0.0002);
-  assert.deepEqual(report.synchronousWorkerBridge, {
-    crossOriginIsolated: true,
-    waitResult: 'ok',
-    outputValues: 32,
-    maxAbsoluteError: report.synchronousWorkerBridge.maxAbsoluteError,
-  });
+  assert.equal(report.synchronousWorkerBridge.crossOriginIsolated, true);
+  assert.equal(report.synchronousWorkerBridge.waitResult, 'ok');
+  assert.equal(report.synchronousWorkerBridge.rustOperation, 'pinned linnet_ops::matmul_mm');
+  assert.equal(report.synchronousWorkerBridge.dispatchCount, 1);
+  assert.equal(report.synchronousWorkerBridge.outputValues, 37 * 128);
   assert.ok(report.synchronousWorkerBridge.maxAbsoluteError <= 0.0002);
   console.log(JSON.stringify(report, null, 2));
 } finally {
