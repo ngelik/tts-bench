@@ -8,6 +8,7 @@ into this repository; this script packages them for a versioned GitHub Release.
 from __future__ import annotations
 
 import argparse
+import copy
 import gzip
 import hashlib
 import json
@@ -693,7 +694,6 @@ def main() -> None:
     voice_path = out / "voice-260-state.bin.gz"
     write_voice_state(voice_path, state_voice, flow_manifest)
     flow_structure = state_structure(state_voice)
-    flow_flat = tuple(flatten_state(state_voice))
     flow_names_in = [entry["input_name"] for entry in flow_manifest]
     flow_names_out = [entry["output_name"] for entry in flow_manifest]
 
@@ -703,6 +703,15 @@ def main() -> None:
     flow_main = FlowMainWrapper(model.flow_lm, flow_structure, model.eos_threshold).eval()
     dummy_sequence = torch.randn(1, 1, model.flow_lm.ldim)
     dummy_text = torch.randn(1, 1, model.flow_lm.dim)
+    # The serialized voice state intentionally keeps only the real prompt
+    # capacity. The graph example must also have room for its dummy text/audio
+    # input, or the stateful cache write targets an empty slice.
+    flow_export_state = copy.deepcopy(state_voice)
+    model._expand_kv_cache(
+        flow_export_state,
+        model._flow_lm_current_end(flow_export_state) + dummy_sequence.shape[1] + dummy_text.shape[1],
+    )
+    flow_flat = tuple(flatten_state(flow_export_state))
     flow_inputs = ["sequence", "text_embeddings", *flow_names_in]
     flow_outputs = ["conditioning", "is_eos", *flow_names_out]
     flow_dummy = (dummy_sequence, dummy_text, *flow_flat)
