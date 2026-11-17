@@ -564,7 +564,7 @@ def verify_stream_parity(tts, model, state_voice: dict, flow_manifest: list[dict
                 entry["input_name"]: get_by_path(state, entry["path"]).detach().cpu().numpy().copy()
                 for entry in flow_manifest
             }
-            text_embeddings = text_session.run(text_output_name, {"token_ids": token_ids})[0]
+            text_embeddings = text_session.run([text_output_name], {"token_ids": token_ids})[0]
             empty_sequence = np.empty((1, 0, model.flow_lm.ldim), dtype=np.float32)
             _, _, flow_state = flow_run(empty_sequence, text_embeddings, flow_state)
             # FlowLM.forward samples one latent during prefill, then discards it.
@@ -584,7 +584,7 @@ def verify_stream_parity(tts, model, state_voice: dict, flow_manifest: list[dict
                     eos_step = generation_step
                 if eos_step is not None and generation_step >= eos_step + tail:
                     break
-                latent = head_session.run(head_output_name, {"conditioning": conditioning, "noise": noise})[0]
+                latent = head_session.run([head_output_name], {"conditioning": conditioning, "noise": noise})[0]
                 generated.append(latent)
                 backbone_input = latent.reshape(1, 1, model.flow_lm.ldim)
             if not generated:
