@@ -1,10 +1,33 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 
-const server = http.createServer((_req, res) => {
-  res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
-  res.end('<!doctype html><meta charset="utf-8"><title>WGSL kernel probe</title>');
+const assets = new Map([
+  ['/', { type: 'text/html; charset=utf-8', body: '<!doctype html><meta charset="utf-8"><title>WGSL kernel probe</title>' }],
+  ['/tools/linnet-webgpu-probe/compute-worker.js', {
+    type: 'text/javascript; charset=utf-8',
+    body: await readFile(new URL('./linnet-webgpu-probe/compute-worker.js', import.meta.url), 'utf8'),
+  }],
+  ['/tools/linnet-webgpu-probe/gpu-worker.js', {
+    type: 'text/javascript; charset=utf-8',
+    body: await readFile(new URL('./linnet-webgpu-probe/gpu-worker.js', import.meta.url), 'utf8'),
+  }],
+]);
+const server = http.createServer((req, res) => {
+  const asset = assets.get(new URL(req.url, 'http://localhost').pathname);
+  if (!asset) {
+    res.writeHead(404);
+    res.end();
+    return;
+  }
+  res.writeHead(200, {
+    'content-type': asset.type,
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Embedder-Policy': 'require-corp',
+    'Cross-Origin-Resource-Policy': 'same-origin',
+  });
+  res.end(asset.body);
 });
 await new Promise((resolve, reject) => {
   server.once('error', reject);
@@ -28,6 +51,7 @@ try {
   const page = await browser.newPage();
   await page.goto(`http://127.0.0.1:${server.address().port}/`, { waitUntil: 'load' });
   const report = await page.evaluate(async () => {
+    if (!crossOriginIsolated) throw new Error('The test page is not cross-origin isolated.');
     if (!navigator.gpu) throw new Error('navigator.gpu is unavailable in this software probe');
     const adapter = await navigator.gpu.requestAdapter();
     if (!adapter) throw new Error('No WebGPU adapter is available in the software probe');
@@ -113,15 +137,49 @@ try {
     }
 
     const cases = [await checkMatmul(1, 64, 32), await checkMatmul(37, 64, 128)];
+    const lhs = Array.from({ length: 64 }, (_, i) => Math.sin(i * 0.173) * 0.75);
+    const rhs = Array.from({ length: 64 * 32 }, (_, i) => Math.cos(i * 0.119) * 0.5);
+    const bridged = await new Promise((resolve, reject) => {
+      const worker = new Worker('/tools/linnet-webgpu-probe/compute-worker.js');
+      worker.onmessage = ({ data }) => {
+        worker.terminate();
+        data.ok ? resolve(data) : reject(new Error(data.error));
+      };
+      worker.onerror = event => {
+        worker.terminate();
+        reject(new Error(event.message));
+      };
+      worker.postMessage({ m: 1, k: 64, n: 32, lhs, rhs });
+    });
+    let bridgeError = 0;
+    for (let col = 0; col < 32; col++) {
+      let expected = 0;
+      for (let inner = 0; inner < 64; inner++) expected += lhs[inner] * rhs[inner * 32 + col];
+      bridgeError = Math.max(bridgeError, Math.abs(bridged.output[col] - expected));
+    }
+    if (bridgeError > 0.0002) throw new Error(`Worker/SAB bridge differs from CPU by ${bridgeError}`);
     device.destroy();
     return {
       adapterInfo,
       cases,
+      synchronousWorkerBridge: {
+        crossOriginIsolated,
+        waitResult: bridged.wait,
+        outputValues: bridged.output.length,
+        maxAbsoluteError: bridgeError,
+      },
       note: 'Software-adapter WGSL correctness only. No hardware GPU performance, LINNET model output, or runtime integration claim.',
     };
   });
   assert.equal(report.cases.length, 2);
   assert.ok(report.cases.every(test => test.maxAbsoluteError <= 0.0002));
+  assert.deepEqual(report.synchronousWorkerBridge, {
+    crossOriginIsolated: true,
+    waitResult: 'ok',
+    outputValues: 32,
+    maxAbsoluteError: report.synchronousWorkerBridge.maxAbsoluteError,
+  });
+  assert.ok(report.synchronousWorkerBridge.maxAbsoluteError <= 0.0002);
   console.log(JSON.stringify(report, null, 2));
 } finally {
   await browser?.close();
