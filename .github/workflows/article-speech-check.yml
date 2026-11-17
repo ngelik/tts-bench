@@ -17,10 +17,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh run download 44107462780 -R ngelik/tts-bench --name hosted-article-supratts-1.0-preview --dir evidence/supratts-1.0-preview
-          gh run download 44107462780 -R ngelik/tts-bench --name hosted-article-sopro-v2-turbo --dir evidence/sopro-v2-turbo
-          gh run download 44108678629 -R ngelik/tts-bench --name hosted-article-klein-tts-x1.5-pro --dir evidence/klein-tts-x1.5-pro
-          gh run download 44110232347 -R ngelik/tts-bench --name hosted-article-linnet-en-35m --dir evidence/linnet-en-35m
+          gh run download 44124788882 -R ngelik/tts-bench --name hosted-article-silencio-2 --dir evidence/silencio-2
+          gh run download 44115003598 -R ngelik/tts-bench --name article-speech-observations --dir previous
       - name: Transcribe the first and last fifteen seconds
         run: |
           python3 - <<'PY'
@@ -32,7 +30,7 @@ jobs:
           bundle = torchaudio.pipelines.WAV2VEC2_ASR_BASE_960H
           recognizer = bundle.get_model().eval()
           labels = bundle.get_labels()
-          observations = []
+          observations = json.loads(Path("previous/observations.json").read_bytes())
           for folder in sorted(Path('evidence').iterdir()):
               path = folder / 'full.wav'
               receipt = json.loads((folder / 'result.json').read_bytes())
@@ -55,6 +53,7 @@ jobs:
                       row[name] = ''.join(labels[token] for token in tokens if token).replace('|', ' ').strip()
               print(json.dumps(row))
               observations.append(row)
+          assert len(observations) == len({r['recording'] for r in observations}) == len({r['model'] for r in observations}) == 5
           Path('observations.json').write_text(json.dumps(observations, indent=2) + '\n')
           PY
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
