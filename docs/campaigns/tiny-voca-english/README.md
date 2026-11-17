@@ -51,9 +51,9 @@ This table updates as each completed full cell is independently submitted. Pendi
 | cpu | cached | Measured | [Native receipt](../../../results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) |
 | webgpu | cached | Measured | [Native receipt](../../../results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) |
 | cpu | warm | Measured | [Native receipt](../../../results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) |
-| webgpu | warm | Pending | Not submitted |
+| webgpu | warm | Measured | [Native receipt](../../../results/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d/summary.md) |
 
-No CPU/WebGPU warm speed comparison is published until both warm cells are measured and validated.
+The [CPU/WebGPU warm comparison](../../../comparisons/tiny-voca-english/summary.md) uses the matched warm receipts; cached RAM remains a separate protocol.
 
 <!-- tiny-voca-outcomes:end -->
 
