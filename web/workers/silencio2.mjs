@@ -431,7 +431,12 @@ async function generateUtterance(text, emotion, requestId, pcmParts, spanNoise) 
       }
       const latent = await runHead(step.conditioning, noise);
       previousLatent = latent;
-      latentQueue.push(latent);
+      if (decoderFailure) throw decoderFailure;
+      try {
+        latentQueue.push(latent);
+      } catch (error) {
+        throw decoderFailure ?? error;
+      }
       if (decoderFailure) throw decoderFailure;
       noise.fill(0);
       step.conditioning.fill(0);
