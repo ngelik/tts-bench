@@ -44,9 +44,9 @@ jobs:
         run: npm ci
       - name: Stage isolated bundle for local Chrome preflight
         run: |
-          mkdir -p models/silencio-2-onnx-v1
-          cp generated/silencio2/* models/silencio-2-onnx-v1/
-          mkdir -p runtimes/onnxruntime-web/1.31.1 runtimes/transformers/3.5.1
+          mkdir -p .cache/public/models/silencio-2-onnx-v1
+          cp generated/silencio2/* .cache/public/models/silencio-2-onnx-v1/
+          mkdir -p .cache/public/runtimes/onnxruntime-web/1.31.1 .cache/public/runtimes/transformers/3.5.1
           ort_dist=node_modules/onnxruntime-web-pocket/dist
           for file in \
             ort.wasm.min.mjs \
@@ -55,12 +55,12 @@ jobs:
             ort-wasm-simd-threaded.wasm \
             ort-wasm-simd-threaded.asyncify.mjs \
             ort-wasm-simd-threaded.asyncify.wasm; do
-            cp "$ort_dist/$file" runtimes/onnxruntime-web/1.31.1/
+            cp "$ort_dist/$file" .cache/public/runtimes/onnxruntime-web/1.31.1/
           done
           transformers_dist=node_modules/@huggingface/transformers/dist
-          cp "$transformers_dist/transformers.min.js" runtimes/transformers/3.5.1/
-          cp "$transformers_dist/ort-wasm-simd-threaded.jsep.mjs" runtimes/transformers/3.5.1/
-          cp "$transformers_dist/ort-wasm-simd-threaded.jsep.wasm" runtimes/transformers/3.5.1/
+          cp "$transformers_dist/transformers.min.js" .cache/public/runtimes/transformers/3.5.1/
+          cp "$transformers_dist/ort-wasm-simd-threaded.jsep.mjs" .cache/public/runtimes/transformers/3.5.1/
+          cp "$transformers_dist/ort-wasm-simd-threaded.jsep.wasm" .cache/public/runtimes/transformers/3.5.1/
       - name: Audit all canonical frontend spans and synthesize two CPU/WASM spans
         run: |
           set -o pipefail
