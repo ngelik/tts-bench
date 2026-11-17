@@ -74,6 +74,8 @@ jobs:
           rustup target add wasm32-unknown-unknown
           cp upstream-linnet/runtime/Cargo.lock tools/linnet-webgpu-runtime-probe/Cargo.lock
           RUSTFLAGS='-C link-arg=--export-memory' cargo build --manifest-path tools/linnet-webgpu-runtime-probe/Cargo.toml --target wasm32-unknown-unknown --release
+          sha256sum tools/linnet-webgpu-runtime-probe/target/wasm32-unknown-unknown/release/linnet_webgpu_runtime_probe.wasm
+          wc -c tools/linnet-webgpu-runtime-probe/target/wasm32-unknown-unknown/release/linnet_webgpu_runtime_probe.wasm
           mkdir -p .cache/public/runtimes/linnet-tts/0.1.1
           cp tools/linnet-webgpu-runtime-probe/target/wasm32-unknown-unknown/release/linnet_webgpu_runtime_probe.wasm .cache/public/runtimes/linnet-tts/0.1.1/linnet-tts-webgpu-probe.wasm
       - name: Synthesize actual LINNET speech on the hybrid software WebGPU path
