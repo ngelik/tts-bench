@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "model": "supratts-1.0-preview",
+  "modelRevision": "80a6b0bd13c92e30e88b0c22183be9c2bdc7061c",
+  "python": "3.11",
+  "torch": "2.5.1+cpu",
+  "onnx": "1.17.0",
+  "opset": 17,
+  "sources": [
+    {
+      "id": "duration",
+      "path": "duration.pt",
+      "url": "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/resolve/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/duration.pt",
+      "bytes": 28009,
+      "sha256": "35c9e2e2ae98380adeecc72b54b1c2ebd36aa7b5a2b73ce32a730aa439d6efdb"
+    },
+    {
+      "id": "acoustic",
+      "path": "acoustic.pt",
+      "url": "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/resolve/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/acoustic.pt",
+      "bytes": 1767903,
+      "sha256": "260c57ff19c53a90f30a0ef68b82e56f64035d63683bf0950457baff010dc434"
+    },
+    {
+      "id": "decoder",
+      "path": "decoder.pt",
+      "url": "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/resolve/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/decoder.pt",
+      "bytes": 2365033,
+      "sha256": "d28fb0e9cedae77c6d9389c959efe6b7308c1bb9fb1e223dc35d0d69ba69d840"
+    },
+    {
+      "id": "config",
+      "path": "config.json",
+      "url": "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/resolve/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json",
+      "bytes": 477,
+      "sha256": "83eb7fcb39b785f55c93f75ff339c9759dca8e895b74fb81a7216a40415ebd42"
+    },
+    {
+      "id": "models-source",
+      "path": "microtts/models.py",
+      "url": "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/resolve/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/microtts/models.py",
+      "bytes": 9796,
+      "sha256": "98567ebfbd551b617ac9b89d5f992caf538ce0c53889e2f050d0f74427c5fe67"
+    },
+    {
+      "id": "synthesis-source",
+      "path": "microtts/synthesize.py",
+      "url": "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/resolve/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/microtts/synthesize.py",
+      "bytes": 8040,
+      "sha256": "19197a7e7313d4ba19df0df34fb0730f815cf482d0abb9dd03340cafa46ac582"
+    }
+  ]
+}
