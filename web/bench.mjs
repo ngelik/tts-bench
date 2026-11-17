@@ -22,6 +22,7 @@ import { createKittenAdapter } from './adapters/kitten.mjs';
 import { createSanoAdapter } from './adapters/sano.mjs';
 
 import { createInflectAdapter } from './adapters/inflect.mjs';
+import { createSilencio2Adapter } from './adapters/silencio2.mjs';
 
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
@@ -50,6 +51,7 @@ const FACTORIES = {
   'kitten-nano-0.8': createKittenAdapter,
   'sano-amy': createSanoAdapter,
   'inflect-micro-v2': createInflectAdapter,
+  'silencio-2': createSilencio2Adapter,
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
 let canonical = null;

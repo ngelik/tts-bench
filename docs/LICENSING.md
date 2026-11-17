@@ -23,6 +23,8 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Supertonic 3 model and preset voice styles | OpenRAIL-M at the pinned revision; use-based restrictions apply. The licensor claims no rights in outputs except as stated in the license, and users remain responsible for outputs and their uses. Model/voice assets remain in the ignored cache. |
 | Adapted official Supertonic browser helper | MIT, Supertone Inc.; retained license and exact source/change record in `web/supertonic/`. |
 | ONNX Runtime Web | MIT, with third-party notices |
+| Silencio-2 weights, converted ONNX graphs and model-bound voice-260 state | CC-BY-4.0 at the pinned model revision; retain BlueRose Labs, Kyutai Pocket TTS and Basis Global Emotions attribution. The fixed bundled synthetic voice is not a user-supplied voice-cloning input. Follow the model card's permission, anti-impersonation and synthetic-speech disclosure guidance. |
+| Silencio-2 upstream inference source | MIT in `silencio2/core`; exporter attribution and source pins are in `tools/silencio2/NOTICE.md`. |
 
 The small Apache-2.0 frontend source files in `web/paradee/` retain separate
 license files and a source/change manifest. They are exceptions to the root MIT
@@ -74,6 +76,12 @@ The new recordings are authorized benchmark outputs with model/source attributio
 listing a model license does not claim it settles every output or voice right.
 The small Apache-2.0 adapted source files are exceptions to the repository's root
 MIT license. No model weights or bundled upstream engines are committed.
+
+The Silencio-2 conversion is published separately as a versioned GitHub Release
+because its pinned CC-BY-4.0 license permits redistribution with attribution.
+The browser source and model-bound voice-state format remain in this repository;
+the release carries the model notice, full attribution, graph provenance and
+hash manifest. See `web/silencio2/NOTICE.md` and the generated `SOURCE.json`.
 
 Sano Amy's pinned [model card](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md)
 lists GPL-3.0; the official `sanotts-web@0.3.0` browser runtime is
