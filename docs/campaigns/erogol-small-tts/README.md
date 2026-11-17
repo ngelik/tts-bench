@@ -37,6 +37,8 @@ node tools/run-campaign.mjs --plan "$plan" --dry-run
 node tools/run-campaign.mjs --plan "$plan" --machine "Your actual machine, processor and RAM" --accept-license
 ```
 
+The Linnet plan uses the official VoxRT WASM runtime for CPU. Its WebGPU configuration runs dense matrix operations on hardware and the remaining operations in WASM. The hosted CPU recording used the earlier CPU-only registration. [Linnet GPU runtime](../../../tools/linnet-webgpu-runtime/) · [Earlier CPU-only plan](https://github.com/ngelik/tts-bench/blob/b5b2a458b350e041f34aa788ea4985082b2e3f57/docs/campaigns/erogol-small-tts/plans/linnet-en-35m.json)
+
 Warm and cached-memory receipts use different timing boundaries. Sopro’s CPU and WebGPU profiles also use different precision. The source receipt for each observation records its profile and effective backend. [How to submit results](../../../CONTRIBUTING.md)
 
 ## Full-article CPU checks in hosted Chrome
