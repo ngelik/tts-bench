@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       - name: Build pinned Linnet ops with a temporary WebGPU host import
         run: |
-          git -C upstream-linnet apply tools/linnet-webgpu-probe/linnet-ops-webgpu-probe.patch
+          git -C upstream-linnet apply ../tools/linnet-webgpu-probe/linnet-ops-webgpu-probe.patch
           mkdir -p tools/linnet-webgpu-probe/upstream/runtime
           cp upstream-linnet/runtime/Cargo.toml tools/linnet-webgpu-probe/upstream/runtime/Cargo.toml
           cp -R upstream-linnet/runtime/linnet-ops tools/linnet-webgpu-probe/upstream/runtime/linnet-ops
