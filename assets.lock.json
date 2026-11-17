@@ -6078,6 +6078,279 @@
           "kind": "license"
         }
       ]
+    },
+    "silencio-2": {
+      "displayName": "Silencio-2 28M FP32",
+      "modelRevision": "20930f5f6a6bb564f2a8207152fd5c5d8eecff03",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "MIT ONNX Runtime Web; Apache-2.0 Transformers.js; MIT Silencio-2 inference implementation.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE",
+            "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/6af1a932e2286d5c58166085d24c68783033edee/LICENSE",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/6af1a932e2286d5c58166085d24c68783033edee/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license"
+          },
+          {
+            "package": "@huggingface/transformers",
+            "version": "3.5.1",
+            "path": "dist/transformers.min.js",
+            "target": "runtimes/transformers/3.5.1/transformers.min.js",
+            "bytes": 849451,
+            "sha256": "79fad8c1c2fd165bf1e77ace20ce023fab4dc13b6621f0e586c9b8c59c4d09d8"
+          },
+          {
+            "package": "@huggingface/transformers",
+            "version": "3.5.1",
+            "path": "LICENSE",
+            "target": "licenses/transformers-3.5.1/LICENSE",
+            "bytes": 11358,
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          },
+          {
+            "package": "@huggingface/transformers",
+            "version": "3.5.1",
+            "path": "dist/ort-wasm-simd-threaded.jsep.mjs",
+            "target": "runtimes/transformers/3.5.1/ort-wasm-simd-threaded.jsep.mjs",
+            "bytes": 44484,
+            "sha256": "08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9"
+          },
+          {
+            "package": "@huggingface/transformers",
+            "version": "3.5.1",
+            "path": "dist/ort-wasm-simd-threaded.jsep.wasm",
+            "target": "runtimes/transformers/3.5.1/ort-wasm-simd-threaded.jsep.wasm",
+            "bytes": 21596019,
+            "sha256": "c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "silencio-2-release-attribution-txt",
+          "target": "models/silencio-2-onnx-v1/ATTRIBUTION.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/ATTRIBUTION.txt",
+          "bytes": 918,
+          "sha256": "1094b762a516faca0c76125e7e1207ed4ee395a2466d6de8f86ecb4951234326",
+          "kind": "license"
+        },
+        {
+          "id": "silencio-2-release-model-card-md",
+          "target": "models/silencio-2-onnx-v1/MODEL-CARD.md",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/MODEL-CARD.md",
+          "bytes": 5383,
+          "sha256": "f05e0e8f3064c4bad0770c7ba0a66d629894bc3a363c98569862c270f56c5169",
+          "kind": "model-support"
+        },
+        {
+          "id": "silencio-2-release-silencio2-mit-license-txt",
+          "target": "models/silencio-2-onnx-v1/SILENCIO2-MIT-LICENSE.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/SILENCIO2-MIT-LICENSE.txt",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+          "kind": "license"
+        },
+        {
+          "id": "silencio-2-release-source-json",
+          "target": "models/silencio-2-onnx-v1/SOURCE.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/SOURCE.json",
+          "bytes": 1011,
+          "sha256": "1ef7fb5beb938b06e8bbe23c49d01888e32e807d8114de24b2cbf2418eecea4a",
+          "kind": "model-support"
+        },
+        {
+          "id": "silencio-2-release-upstream-export-mit-license-txt",
+          "target": "models/silencio-2-onnx-v1/UPSTREAM-EXPORT-MIT-LICENSE.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/UPSTREAM-EXPORT-MIT-LICENSE.txt",
+          "bytes": 1036,
+          "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1",
+          "kind": "license"
+        },
+        {
+          "id": "silencio-2-release-upstream-notice-md",
+          "target": "models/silencio-2-onnx-v1/UPSTREAM-NOTICE.md",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/UPSTREAM-NOTICE.md",
+          "bytes": 422,
+          "sha256": "c501cbfb6d8041cd6688e0510faba4e82cd740295dad91b99ec7a36199c57eed",
+          "kind": "license"
+        },
+        {
+          "id": "silencio-2-release-browser-smoke-json",
+          "target": "models/silencio-2-onnx-v1/browser-smoke.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/browser-smoke.json",
+          "bytes": 2687,
+          "sha256": "f130b152ccb008009c5ed0a2e4d0922dec5ecfef3a185e0668542f59c5f4dd24",
+          "kind": "model-support"
+        },
+        {
+          "id": "silencio-2-release-bundle-json",
+          "target": "models/silencio-2-onnx-v1/bundle.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/bundle.json",
+          "bytes": 155549,
+          "sha256": "4a03db05f5286d9cd03a6298001852284746700460c202583343dbaad43fc445",
+          "kind": "model-config"
+        },
+        {
+          "id": "silencio-2-release-flow-head-onnx",
+          "target": "models/silencio-2-onnx-v1/flow-head.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/flow-head.onnx",
+          "bytes": 3402870,
+          "sha256": "32a371477e5bace03fb3ec7538ec6c42ebfd5ec86e33c5d2b36868753f9a738c",
+          "kind": "model-weights"
+        },
+        {
+          "id": "silencio-2-release-flow-main-onnx",
+          "target": "models/silencio-2-onnx-v1/flow-main.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/flow-main.onnx",
+          "bytes": 51195909,
+          "sha256": "42d19a94c34670264849228b8c79b4846879150be889328debf49ad9acc24ea4",
+          "kind": "model-weights"
+        },
+        {
+          "id": "silencio-2-release-mimi-decoder-onnx",
+          "target": "models/silencio-2-onnx-v1/mimi-decoder.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/mimi-decoder.onnx",
+          "bytes": 11698933,
+          "sha256": "abc9b17841b1ace31aecc1fdbcb8426a40c71fb8af5533f44a37936ef8666e33",
+          "kind": "model-weights"
+        },
+        {
+          "id": "silencio-2-release-mimi-initial-state-bin-gz",
+          "target": "models/silencio-2-onnx-v1/mimi-initial-state.bin.gz",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/mimi-initial-state.bin.gz",
+          "bytes": 3183,
+          "sha256": "657b10c2bf6a1ea0bea344bbf551fe24160cd48730bdb428bbba62800eb3988c",
+          "kind": "model-config"
+        },
+        {
+          "id": "silencio-2-release-text-conditioner-onnx",
+          "target": "models/silencio-2-onnx-v1/text-conditioner.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/text-conditioner.onnx",
+          "bytes": 8216831,
+          "sha256": "abdea0102f1921766ef462cfe551731ac052f02043a773a1496a043e296c91be",
+          "kind": "model-weights"
+        },
+        {
+          "id": "silencio-2-release-tokenizer-json",
+          "target": "models/silencio-2-onnx-v1/tokenizer.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/tokenizer.json",
+          "bytes": 245576,
+          "sha256": "19b3df07d52209244e4a61a431e94a8e076ddc6ba36bf0012653fd034d2cd80d",
+          "kind": "model-support"
+        },
+        {
+          "id": "silencio-2-release-tokenizer-config-json",
+          "target": "models/silencio-2-onnx-v1/tokenizer_config.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/tokenizer_config.json",
+          "bytes": 229,
+          "sha256": "b058edfc3f602b87d6a04ef01c2eaea111fe28ae021cb737e6aa77024f5fe167",
+          "kind": "model-support"
+        },
+        {
+          "id": "silencio-2-release-verification-json",
+          "target": "models/silencio-2-onnx-v1/verification.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/verification.json",
+          "bytes": 297269,
+          "sha256": "6ef8f85b4cea37054874b014d0e0991f6e81180b689f3ffb1300ec8ee70458d9",
+          "kind": "model-support"
+        },
+        {
+          "id": "silencio-2-release-voice-260-state-bin-gz",
+          "target": "models/silencio-2-onnx-v1/voice-260-state.bin.gz",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/silencio-2-onnx-v1/voice-260-state.bin.gz",
+          "bytes": 5596845,
+          "sha256": "fb12d81ed4b842b149f1b1ff310d582bf9efab77ea7aa1b386f49ecfe8d2e838",
+          "kind": "voice"
+        }
+      ],
+      "license": {
+        "model": "CC-BY-4.0",
+        "runtime": "MIT (ONNX Runtime Web); Apache-2.0 (Transformers.js); MIT (Silencio-2 upstream inference code).",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 8,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned BlueRoseLabs/Silencio-2 checkpoint and its eight bundled voice catalog entries; this benchmark exposes only synthetic voice 260.",
+        "sources": [
+          "https://huggingface.co/BlueRoseLabs/Silencio-2/blob/20930f5f6a6bb564f2a8207152fd5c5d8eecff03/README.md",
+          "https://huggingface.co/BlueRoseLabs/Silencio-2/tree/20930f5f6a6bb564f2a8207152fd5c5d8eecff03",
+          "https://erogol.com/small_tts_bench/"
+        ],
+        "notes": "English only. The browser configuration uses voice 260, carries its model-bound state, and does not expose custom voice cloning or the other seven catalog entries. CPU/WASM and WebGPU run FP32 ONNX graphs with one WASM thread; WebGPU allows WASM operator fallback and must prove actual GPU dispatch. Seeded browser noise is disclosed and is not bitwise PyTorch RNG parity."
+      }
     }
   }
 }
