@@ -105,10 +105,23 @@ try {
       const panel = page.getByRole('region', {name: `${backend === 'size' ? 'Model size' : backend === 'cpu' ? 'CPU' : 'GPU'} chart`, exact:true});
       const value = model => backend === 'size' ? model.modelMB : model[metric === 'generation' ? 'warm' : 'memory'][backend][metric === 'generation' ? 'medianSeconds' : 'meanMB'];
       const eligible = backend === 'size' ? models.filter(model => Number.isFinite(model.modelMB)) : metric === 'generation' ? expectedGeneration(models, backend) : expectedMemory(models, backend);
+      if (metric === 'generation') {
+        for (const model of eligible.filter(model => model.warm[backend].n === 1 && !model.warm[backend].selectionKind)) {
+          assert.equal(await panel.locator(`.bar-row[data-model="${model.id}"] .metric-count`).innerText(), 'n=1');
+        }
+      }
       assert.deepEqual(await panel.locator('.bar-row [data-detail]').evaluateAll(buttons => buttons.map(button => button.dataset.detail)), rankedIds(eligible, value));
     }
   };
   await assertDefaultOrder();
+  for (const model of expected.models) {
+    for (const [backend, label] of [['cpu', 'CPU'], ['webgpu', 'GPU']]) {
+      const metric = model.warm[backend];
+      if (!eligibleWarm(metric) || metric.n !== 1 || metric.selectionKind) continue;
+      const row = page.locator(`tr[data-model="${model.id}"]`);
+      assert.equal(await row.locator(`td[data-label="${label} · seconds"] .metric-count`).innerText(), 'n=1');
+    }
+  }
   if (cosySelection?.selectionKind === 'operator-shortened-warm-selection') {
     const row = page.locator('tr[data-model="fun-cosyvoice3-0.5b-2512"]');
     const score = row.locator('td[data-label="CPU · seconds"] a.metric-link');

@@ -54,33 +54,33 @@ Warm and memory tables prefer native receipts that verify the registered model a
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
-| Leokani 4.5M INT8 | E1 | 5.14 | [55.96 s](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [61.57 s](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
-| Leokani 7M INT8 | E1 | 7.84 | [75.19 s](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [58.11 s](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
-| Paradee 8M INT8 | E1 | 8.46 | [111.15 s](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [18.72 s](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
-| Phonon 31M q8 | E1 | 64.51 | [270.41 s](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [51.73 s](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
-| PiVo 1.4M curated (Pi voice) | E1 | 5.84 | [87.92 s](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [2562.69 s](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
-| Underdog Woof one-voice (Isla) | E1 | 31.71 | — | [181.81 s](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
-| Paradee 8M INT8 | E2 | 8.46 | [103.92 s](results/2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f/summary.md) | [18.74 s](results/2026-11-09t05-06-08-477z-paradee-webgpu-warm-c3836dc0/summary.md) | Native; matched configuration |
-| Piper en-GB Southern English Female low | E2 | 63.10 | [170.64 s](results/2026-11-09t20-33-26-966z-piper-en-gb-southern-english-female-low-cpu-warm-9a0ba981/summary.md) | [12.07 s](results/2026-11-09t20-52-18-629z-piper-en-gb-southern-english-female-low-webgpu-warm-d8fb8392/summary.md) | Native; matched configuration |
-| Supertonic 3 FP32 (M3) | E3 | 398.08 | [1332.06 s](results/2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0/summary.md) | [67.09 s](results/2026-11-10t09-58-29-882z-supertonic-3-webgpu-warm-97865808/summary.md) | Native; matched configuration |
-| Inflect Micro v2 FP32 | E4 | 37.75 | [916.34 s](results/2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6/summary.md) | [48.23 s](results/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201/summary.md) | Native; matched configuration |
-| Kitten Nano 0.8 FP32 | E4 | 56.77 | [754.08 s](results/2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636/summary.md) | [66.15 s](results/2026-11-10t19-24-19-116z-kitten-nano-0.8-webgpu-warm-cef85ae4/summary.md) | Native; matched configuration |
-| Kokoro 82M FP32 | E4 | 325.53 | [2550.00 s](results/2026-11-10t22-06-51-166z-kokoro-82m-cpu-warm-a9cc8d21/summary.md) | [272.86 s](results/2026-11-11t02-22-33-290z-kokoro-82m-webgpu-warm-58b6b9b7/summary.md) | Native; matched configuration |
-| MMS English FP32 | E4 | 114.26 | [1553.40 s](results/2026-11-10t19-31-08-081z-mms-english-cpu-warm-b81daec2/summary.md) | [59.39 s](results/2026-11-10t17-46-17-830z-mms-english-webgpu-warm-3eb8b06a/summary.md) | Native; matched configuration |
-| Sano Amy 1.46M (English) | E4 | 5.82 | [737.23 s](results/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0/summary.md) | [unsupported](results/2026-11-10t16-32-02-384z-sano-amy-webgpu-warm-24afcdc7/summary.md) | Native; independent attempts |
+| Leokani 4.5M INT8 | E1 | 5.14 | [55.96 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [61.57 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| Leokani 7M INT8 | E1 | 7.84 | [75.19 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [58.11 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| Paradee 8M INT8 | E1 | 8.46 | [111.15 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [18.72 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| Phonon 31M q8 | E1 | 64.51 | [270.41 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [51.73 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| PiVo 1.4M curated (Pi voice) | E1 | 5.84 | [87.92 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [2562.69 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| Underdog Woof one-voice (Isla) | E1 | 31.71 | — | [181.81 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| Paradee 8M INT8 | E2 | 8.46 | [103.92 s (n=5)](results/2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f/summary.md) | [18.74 s (n=5)](results/2026-11-09t05-06-08-477z-paradee-webgpu-warm-c3836dc0/summary.md) | Native; matched configuration |
+| Piper en-GB Southern English Female low | E2 | 63.10 | [170.64 s (n=5)](results/2026-11-09t20-33-26-966z-piper-en-gb-southern-english-female-low-cpu-warm-9a0ba981/summary.md) | [12.07 s (n=5)](results/2026-11-09t20-52-18-629z-piper-en-gb-southern-english-female-low-webgpu-warm-d8fb8392/summary.md) | Native; matched configuration |
+| Supertonic 3 FP32 (M3) | E3 | 398.08 | [1332.06 s (n=5)](results/2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0/summary.md) | [67.09 s (n=5)](results/2026-11-10t09-58-29-882z-supertonic-3-webgpu-warm-97865808/summary.md) | Native; matched configuration |
+| Inflect Micro v2 FP32 | E4 | 37.75 | [916.34 s (n=5)](results/2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6/summary.md) | [48.23 s (n=5)](results/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201/summary.md) | Native; matched configuration |
+| Kitten Nano 0.8 FP32 | E4 | 56.77 | [754.08 s (n=5)](results/2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636/summary.md) | [66.15 s (n=5)](results/2026-11-10t19-24-19-116z-kitten-nano-0.8-webgpu-warm-cef85ae4/summary.md) | Native; matched configuration |
+| Kokoro 82M FP32 | E4 | 325.53 | [2550.00 s (n=5)](results/2026-11-10t22-06-51-166z-kokoro-82m-cpu-warm-a9cc8d21/summary.md) | [272.86 s (n=5)](results/2026-11-11t02-22-33-290z-kokoro-82m-webgpu-warm-58b6b9b7/summary.md) | Native; matched configuration |
+| MMS English FP32 | E4 | 114.26 | [1553.40 s (n=5)](results/2026-11-10t19-31-08-081z-mms-english-cpu-warm-b81daec2/summary.md) | [59.39 s (n=5)](results/2026-11-10t17-46-17-830z-mms-english-webgpu-warm-3eb8b06a/summary.md) | Native; matched configuration |
+| Sano Amy 1.46M (English) | E4 | 5.82 | [737.23 s (n=5)](results/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0/summary.md) | [unsupported](results/2026-11-10t16-32-02-384z-sano-amy-webgpu-warm-24afcdc7/summary.md) | Native; independent attempts |
 | Audio8 TTS Realistic 0.6B INT4 | E5 | 587.71 | — | [error](results/2026-11-15t06-00-59-478z-audio8-realistic-0.6b-int4-webgpu-warm-8a08bc92/summary.md) | Archived native; independent attempts |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | [15119.14 s (n=2 of 5 planned; selected)](reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection) | [1600.61 s (n=5)](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
-| LFM3-Audio-2B (Fusor q7 / CPU 6 threads) | E5 | 2276.67 | [526.05 s](results/2026-11-11t09-27-11-391z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-174f10d4/summary.md) | — | Native; independent attempts |
-| LFM3-Audio-2B (GGUF Q4_K_M / Q8_0) | E5 | 1403.44 | — | [377.75 s](results/2026-11-11t07-33-16-967z-lfm3-audio-2b-gguf-webgpu-warm-b42e4073/summary.md) | Native; independent attempts |
-| LFM3-Omni-2B (Fusor q7 / CPU 6 threads) | E5 | 2494.57 | [536.34 s](results/2026-11-11t11-02-51-665z-lfm3-omni-2b-fusor-q7-cpu-cpu-warm-4378e428/summary.md) | — | Native; independent attempts |
-| LFM3-Omni-2B (GGUF Q4_K_M / Q8_0) | E5 | 1606.47 | — | [388.70 s](results/2026-11-11t08-11-31-864z-lfm3-omni-2b-gguf-webgpu-warm-0e07e4f7/summary.md) | Native; independent attempts |
-| Mach Boom 3.5-bit (browser WASM port) | E5 | 18.16 | [1426.15 s](results/2026-11-11t23-29-37-690z-mach-boom-cpu-warm-3e5836ed/summary.md) | [unsupported](results/2026-11-12t06-54-44-012z-mach-boom-webgpu-warm-50fcc07b/summary.md) | Native; independent attempts |
-| Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | E5 | 838.60 | [894.30 s](results/2026-11-16t18-03-47-233z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-warm-5b9985a7/summary.md) | — | Native; independent attempts |
-| Ming 3.0 TTS 0.5B (Q8_0 GGUF) | E5 | 1742.28 | — | [5238.51 s](results/2026-11-15t13-38-24-837z-ming-3.0-tts-0.5b-gguf-webgpu-warm-7e5f10e1/summary.md) | Archived native; independent attempts |
-| Pocket TTS 100M English (INT8/FP32) | E5 | 146.16 | [854.52 s](results/2026-11-12t05-28-59-020z-pocket-tts-100m-english-int8-cpu-warm-72714412/summary.md) | [2158.19 s](results/2026-11-12t01-52-33-830z-pocket-tts-100m-english-int8-webgpu-warm-69de3d93/summary.md) | Native; matched configuration |
-| Tiny Voca 4.5M | E5 | 21.39 | [54.86 s](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | — | Native; independent attempts |
+| LFM3-Audio-2B (Fusor q7 / CPU 6 threads) | E5 | 2276.67 | [526.05 s (n=5)](results/2026-11-11t09-27-11-391z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-174f10d4/summary.md) | — | Native; independent attempts |
+| LFM3-Audio-2B (GGUF Q4_K_M / Q8_0) | E5 | 1403.44 | — | [377.75 s (n=5)](results/2026-11-11t07-33-16-967z-lfm3-audio-2b-gguf-webgpu-warm-b42e4073/summary.md) | Native; independent attempts |
+| LFM3-Omni-2B (Fusor q7 / CPU 6 threads) | E5 | 2494.57 | [536.34 s (n=5)](results/2026-11-11t11-02-51-665z-lfm3-omni-2b-fusor-q7-cpu-cpu-warm-4378e428/summary.md) | — | Native; independent attempts |
+| LFM3-Omni-2B (GGUF Q4_K_M / Q8_0) | E5 | 1606.47 | — | [388.70 s (n=5)](results/2026-11-11t08-11-31-864z-lfm3-omni-2b-gguf-webgpu-warm-0e07e4f7/summary.md) | Native; independent attempts |
+| Mach Boom 3.5-bit (browser WASM port) | E5 | 18.16 | [1426.15 s (n=5)](results/2026-11-11t23-29-37-690z-mach-boom-cpu-warm-3e5836ed/summary.md) | [unsupported](results/2026-11-12t06-54-44-012z-mach-boom-webgpu-warm-50fcc07b/summary.md) | Native; independent attempts |
+| Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | E5 | 838.60 | [894.30 s (n=5)](results/2026-11-16t18-03-47-233z-ming-3.0-tts-0.5b-fusor-mix-cpu-cpu-warm-5b9985a7/summary.md) | — | Native; independent attempts |
+| Ming 3.0 TTS 0.5B (Q8_0 GGUF) | E5 | 1742.28 | — | [5238.51 s (n=5)](results/2026-11-15t13-38-24-837z-ming-3.0-tts-0.5b-gguf-webgpu-warm-7e5f10e1/summary.md) | Archived native; independent attempts |
+| Pocket TTS 100M English (INT8/FP32) | E5 | 146.16 | [854.52 s (n=5)](results/2026-11-12t05-28-59-020z-pocket-tts-100m-english-int8-cpu-warm-72714412/summary.md) | [2158.19 s (n=5)](results/2026-11-12t01-52-33-830z-pocket-tts-100m-english-int8-webgpu-warm-69de3d93/summary.md) | Native; matched configuration |
+| Tiny Voca 4.5M | E5 | 21.39 | [54.86 s (n=5)](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | — | Native; independent attempts |
 
-Each measured warm cell uses one excluded warm-up. Most planned cells use five scored full 20,000-character articles; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.
+Each native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
 **Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the raw receipt](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.
 
@@ -501,9 +501,10 @@ npm run bench -- run --model phonon --backend cpu --scenario warm
 
 See the [command reference](docs/CLI.md) for model selection, GPU runs, cached,
 cold, offline, bandwidth-limited and model-switch scenarios. Assets are fetched/imported separately and hash-verified before running.
-Use a smoke check to validate installation. For warm results, use one excluded
-warm-up; Fun-CosyVoice3 uses one scored article and other models use at least
-five. Do not run models concurrently.
+Use a smoke check to validate installation. For each CPU or WebGPU warm result,
+generate the full article once as an excluded warm-up. Then score **one article
+for models over 1 billion parameters** or for Fun-CosyVoice3. Other models
+default to five scored articles. Run each model and backend sequentially.
 
 See the [14-cell Ming, Audio8 and CosyVoice3 campaign](docs/campaigns/nov14-english/README.md), the [Ming v3 runtime retest](docs/campaigns/nov14-ming-v3/README.md), the [Audio8 codec-routing repair retest](docs/campaigns/audio8-codec-repair/README.md), and the [four-cell Tiny Voca campaign](docs/campaigns/tiny-voca-english/README.md) for pinned schedules and reproduction commands.
 
@@ -527,10 +528,9 @@ record their preprocessing, voice and allowed CPU operator fallback.
 
 New native warm runs use one common CPU/GPU timing boundary: first chunk request
 through final CPU-readable PCM, excluding warm-up, validation, hashing and export.
-Model loading is excluded. One full article warm-up is followed by scored
-articles with the model resident: one for new Fun-CosyVoice3 runs and five for
-other models. The historical PiVo GPU configuration can take over four hours
-for its five-article sequence.
+Model loading is excluded. Receipts record the number of timed articles on
+the resident engine. A one-run score is a single observation. The historical
+PiVo GPU configuration can take over four hours for its five-article sequence.
 
 ## Contribute a new model for evaluation
 

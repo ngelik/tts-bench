@@ -5,14 +5,22 @@ import { appendFile, copyFile, mkdir, mkdtemp, readFile, readdir, rm, writeFile 
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateCampaignCell } from '../lib/campaign-plan.mjs';
 
 const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const runnerSource = await readFile(join(projectRoot, 'tools/run-campaign.mjs'), 'utf8');
 
 const catalogStub = `
 export function getModel(id) {
-  if (id === 'one' || id === 'two' || id === 'fun-cosyvoice3-0.5b-2512') return { id };
+  if (['one', 'two', 'large', 'exact', 'below', 'fun-cosyvoice3-0.5b-2512'].includes(id)) return { id };
   throw new Error('Unknown model: ' + id);
+}
+`;
+
+const modelParametersStub = `
+export function getModelParameters(id) {
+  const parameterCount = { large: 1_000_000_001, exact: 1_000_000_000, below: 999_999_999 }[id];
+  return parameterCount === undefined ? null : { parameterCount };
 }
 `;
 
@@ -27,6 +35,7 @@ const model = arg('--model');
 const backend = arg('--backend');
 const scenario = arg('--scenario');
 const repetitions = Number(arg('--repetitions'));
+const note = arg('--note');
 const events = process.env.CAMPAIGN_TEST_EVENTS;
 await appendFile(events, JSON.stringify({ event: 'start', model, backend, scenario, repetitions }) + '\\n');
 await new Promise(resolve => setTimeout(resolve, 15));
@@ -48,6 +57,7 @@ const receipt = {
   protocol: { smoke: false, scenario, repetitions },
   fixture: { characters: 20000, chunks: 93 },
   cells: [{ status: 'measured', trials: [] }],
+  notes: [note],
 };
 await writeFile(result, JSON.stringify(receipt) + '\\n');
 await appendFile(events, JSON.stringify({ event: 'end', model, exitCode: 0 }) + '\\n');
@@ -68,6 +78,7 @@ async function sandbox(t, plan, { failModel, dirty = false } = {}) {
   await mkdir(join(directory, 'bin'), { recursive: true });
   await writeFile(join(directory, 'tools/run-campaign.mjs'), runnerSource);
   await writeFile(join(directory, 'lib/catalog.mjs'), catalogStub);
+  await writeFile(join(directory, 'lib/model-parameters.mjs'), modelParametersStub);
   await copyFile(join(projectRoot, 'lib/campaign-plan.mjs'), join(directory, 'lib/campaign-plan.mjs'));
   await copyFile(join(projectRoot, 'lib/benchmark-policy.mjs'), join(directory, 'lib/benchmark-policy.mjs'));
   await writeFile(join(directory, 'bin/bench.mjs'), benchStub);
@@ -243,6 +254,51 @@ test('CosyVoice3 legacy warm plans dry-run with requested and effective counts',
   assert.equal(result.sourceCommitMatches, false);
   assert.deepEqual(await eventRows(events), []);
   await assert.rejects(readdir(join(directory, 'runs')), error => error.code === 'ENOENT');
+});
+
+test('hand-authored mixed plans normalize only warm cells above one billion parameters', async t => {
+  const source = plan([
+    cell('large', 'cpu', 'warm', 5),
+    cell('exact', 'webgpu', 'warm', 5),
+    cell('below', 'cpu', 'warm', 5),
+    cell('large', 'webgpu', 'cached', 3),
+  ]);
+  const { directory, events } = await sandbox(t, source);
+  assert.doesNotThrow(() => validateCampaignCell(cell('ming-3.0-tts-0.5b-fusor-mix-cpu', 'cpu', 'warm', 1)));
+  assert.throws(() => validateCampaignCell(cell('tiny-voca', 'cpu', 'warm', 1)), /Invalid campaign repetitions/);
+
+  const run = invokeDryRun(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  const result = JSON.parse(run.stdout);
+  assert.deepEqual(result.cells.map(row => [row.requestedRepetitions, row.effectiveRepetitions]), [
+    [5, 1], [5, 5], [5, 5], [3, 3],
+  ]);
+  assert.deepEqual(await eventRows(events), []);
+  await assert.rejects(readdir(join(directory, 'runs')), error => error.code === 'ENOENT');
+});
+
+test('large-model campaign receipt preserves original requested and effective counts', async t => {
+  const source = plan([
+    cell('large', 'cpu', 'warm', 5),
+    cell('below', 'webgpu', 'warm', 5),
+    cell('large', 'webgpu', 'cached', 3),
+  ]);
+  const { directory, events } = await sandbox(t, source);
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual((await eventRows(events)).filter(row => row.event === 'start').map(row => [row.model, row.scenario, row.repetitions]), [
+    ['large', 'warm', 1], ['below', 'warm', 5], ['large', 'cached', 3],
+  ]);
+
+  const ledger = await campaignDirectory(directory);
+  assert.deepEqual(JSON.parse(await readFile(join(ledger, 'plan.json'), 'utf8')), source);
+  assert.deepEqual(JSON.parse(await readFile(join(ledger, 'effective-plan.json'), 'utf8')).cells.map(item => item.repetitions), [1, 5, 3]);
+  const attempts = (await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim().split('\n').map(line => JSON.parse(line));
+  assert.deepEqual(attempts.map(attempt => [attempt.requestedCell.repetitions, attempt.cell.repetitions]), [[5, 1], [5, 5], [3, 3]]);
+
+  const receipt = JSON.parse(await readFile(join(directory, attempts[0].resultPath), 'utf8'));
+  assert.equal(receipt.protocol.repetitions, 1, 'The receipt protocol records the actual scored repetition count');
+  assert.ok(receipt.notes.some(note => note.includes('requested n=5; effective n=1')), 'The receipt preserves both the hand-authored and effective plan counts');
 });
 
 test('CosyVoice3 campaign executes one scored article and records both plan counts', async t => {

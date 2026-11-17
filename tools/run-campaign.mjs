@@ -56,7 +56,8 @@ try {
  for(const [index,requestedCell] of plan.cells.entries()) {
   const cell=effectivePlan.cells[index];
   if(aborted)break;assertSource();
-  const note=`Campaign ${id}; cell ${index+1}/${plan.cells.length}; source ${commit}; ${plan.conditions??'Record local power and background conditions separately.'}`;
+  const repetitionNote=`requested n=${requestedCell.repetitions}; effective n=${cell.repetitions}`;
+  const note=`Campaign ${id}; cell ${index+1}/${plan.cells.length}; source ${commit}; ${repetitionNote}; ${plan.conditions??'Record local power and background conditions separately.'}`;
   const command=['bin/bench.mjs','run','--model',cell.model,'--backend',cell.backend,'--scenario',cell.scenario,'--repetitions',String(cell.repetitions),'--machine',options.machine,'--accept-license','--note',note];
   if(cell.timeoutMinutes!==undefined)command.push('--timeout-minutes',String(cell.timeoutMinutes));
   if(cell.resources)command.push('--resources');
@@ -76,6 +77,7 @@ try {
     if(typeof summary.id!=='string'||!/^[a-z0-9][a-z0-9._-]+$/.test(summary.id)||summary.result!==`runs/${summary.id}/result.json`) throw new Error('Unexpected benchmark receipt path');
     const receipt=JSON.parse(await readFile(join(root,summary.result),'utf8'));
     if(receipt.source?.dirty!==false||receipt.source?.gitCommit!==commit||receipt.protocol?.smoke!==false||receipt.protocol?.scenario!==cell.scenario||receipt.protocol?.repetitions!==cell.repetitions||receipt.fixture?.characters!==20000||receipt.fixture?.chunks!==93) throw new Error('Receipt is not a clean-source full-article result for the effective campaign cell');
+    if(!Array.isArray(receipt.notes)||!receipt.notes.some(entry=>typeof entry==='string'&&entry.includes(repetitionNote))) throw new Error('Receipt does not record requested and effective campaign repetitions');
     if(!Array.isArray(receipt.cells)||receipt.cells.length!==1||!['measured','unsupported'].includes(receipt.cells[0].status)) throw new Error('Unexpected benchmark status');
     if(cell.resources&&receipt.cells[0].status==='measured'&&(!receipt.cells[0].trials.length||receipt.cells[0].trials.some(t=>t.memory?.availability!=='measured'))) throw new Error('Generation RAM was not sufficiently sampled; inspect before continuing');
   } catch(error) { reviewError=String(error.message??error);failures++;stoppedOnFailure=true; }

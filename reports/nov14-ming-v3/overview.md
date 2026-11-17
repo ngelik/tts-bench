@@ -6,7 +6,7 @@ The included receipts share one source, exact environment and fixture; voice, pr
 
 ## Warm generation
 
-Full warm workload: one excluded full-article warm-up and at least five scored 20,000-character / 93-chunk repetitions. Generation is the benchmark timer; values summarize scored repetitions only. First PCM is median of recorded per-trial values. Audio duration and RTF are reconciled from output samples, sample rate and generation time.
+This report contains no scored warm generation times. The receipt table identifies the submitted scenarios and any terminal errors.
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|

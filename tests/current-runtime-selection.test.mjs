@@ -34,7 +34,7 @@ function attempt({version, order, scenario = 'warm', status = 'measured', backen
   return result;
 }
 const view = results => assembleDashboardData({results, models}).models[0];
-const speedTable = results => referenceBlock(results, models).split('Each measured warm cell')[0];
+const speedTable = results => referenceBlock(results, models).split('Each native warm score')[0];
 
 for (const scenario of ['warm','cached']) {
   test(`${scenario} chooses the registered runtime before recency, including errors`, () => {

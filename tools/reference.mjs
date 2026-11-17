@@ -104,7 +104,7 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
     if(v.c.status==='measured'&&affectedTrials(v.cell).length)return `[Diagnostic PCM](${waveformReport})`;
     const count=v.c.medianSeconds===null?'':v.selection
       ?` (n=${v.selection.selectedScoredTrialIndexes.length} of ${v.selection.originalPlannedRepetitions} planned; selected)`
-      :v.c.model==='fun-cosyvoice3-0.5b-2512'&&v.c.backend==='webgpu'?` (n=${v.c.n})`:'';
+      :` (n=${v.c.n})`;
     const href=v.selection?'reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection':report(v.d);
     return `[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'+count}](${href})`;
   };
@@ -117,7 +117,7 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
     const scope=pair.some(v=>v.d.origin!=='native')?'Historical; distinct timing protocols':label+(matched?'; matched configuration':'; independent attempts');
     out+=`| ${md(models[row.model]?.displayName??row.model)} | ${row.environment} | ${modelSize(row.model,pair)} | ${score(row.cpu)} | ${score(row.webgpu)} | ${scope} |\n`;
   }
-  out+='\nEach measured warm cell uses one excluded warm-up. Most planned cells use five scored full 20,000-character articles; new Fun-CosyVoice3 runs use one. Any reviewed partial selection states its original plan and selected count. Missing values are not zero. Open receipts for voice, precision, timing boundaries, power conditions and observed min–max.\n\n';
+  out+='\nEach native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.\n\n';
   for(const row of [...groups.values()].flatMap(group=>['cpu','webgpu'].map(backend=>group[backend]).filter(value=>value?.selection))){
     const reasonHeadline=md(row.selection.rawReceiptReason.split(/\r?\n/,1)[0]);
     out+=`**Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (${reasonHeadline}). [Review the raw receipt](results/${row.d.id}/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.\n\n`;

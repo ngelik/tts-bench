@@ -61,7 +61,8 @@ npm run bench -- run --model lfm3-audio-2b-gguf --backend webgpu --scenario cach
 ```
 
 Substitute `lfm3-omni-2b-gguf` for Omni. Warm scores require a clean committed
-checkout, one complete excluded warmup and five complete scored articles.
+checkout, one excluded full-article warm-up and one scored article. Historical
+five-run measurements retain their original sample counts.
 Each article is exactly 20,000 English characters / 93 canonical spans.
 Cold-load checks are excluded from this campaign. Memory is a separate sampled
 Chrome-process-tree diagnostic, including the browser baseline; it is not VRAM.

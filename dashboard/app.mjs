@@ -127,6 +127,20 @@ function audioButtons(model) {
     return sample ? `<button class="listen-button" data-play="${escape(model.id)}" data-backend="${backend}" aria-label="Play ${escape(model.name)} ${escape(description)}" title="${escape(description)}" aria-pressed="${state.playing?.clip.path === sample.clip.path && !audio.paused}"><span class="play-symbol" aria-hidden="true">▶</span> ${labels[backend]}</button>` : `<span class="metric-unavailable" title="No published ${labels[backend]} recording">${labels[backend]} —</span>`;
   }).join('')}</div>`;
 }
+function showWarmCounts(model) {
+  return ['cpu', 'webgpu'].some(backend => {
+    const score = model.warm[backend];
+    return isEligibleWarm(score) && (score.n === 1 || score.selectionKind);
+  });
+}
+function warmCountLabel(metric) {
+  if (!Number.isInteger(metric?.n)) return '';
+  const label = metric.selectionKind
+    ? `${metric.n} selected from ${metric.originalPlannedRepetitions} planned repetitions`
+    : `${metric.n} scored ${metric.n === 1 ? 'article' : 'articles'}`;
+  const count = metric.selectionKind ? `n=${metric.n}/${metric.originalPlannedRepetitions} · partial` : `n=${metric.n}`;
+  return `<small class="metric-count" aria-label="${escape(label)}">${escape(count)}</small>`;
+}
 function metricCell(metric, key, max, backend, label, withBar = true, showRunCount = false) {
   const value = metric?.[key];
   const warm = key === 'medianSeconds';
@@ -143,9 +157,7 @@ function metricCell(metric, key, max, backend, label, withBar = true, showRunCou
   const title = metric?.selectionKind
     ? `Open reviewed selection report · ${statusDetails(metric)}`
     : `Open ${label} receipt · ${cohortName(metric)}`;
-  const sampleCount = showRunCount && Number.isInteger(metric?.n)
-    ? `<small class="metric-count" aria-label="${metric.selectionKind ? `${metric.n} selected from ${metric.originalPlannedRepetitions} planned repetitions` : `${metric.n} scored repetitions`}">${metric.selectionKind ? `n=${metric.n}/${metric.originalPlannedRepetitions} · partial` : `n=${metric.n}`}</small>`
-    : '';
+  const sampleCount = showRunCount ? warmCountLabel(metric) : '';
   return `<td data-label="${label}"><a class="value metric-link" href="${escape(href)}" title="${escape(title)}">${fmt(value)}</a>${sampleCount}${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}</td>`;
 }
 function renderTable(models) {
@@ -153,7 +165,7 @@ function renderTable(models) {
   $('#model-rows').innerHTML = models.map(model => {
     const rowState = model.pairedWarm ? 'Matched pair' : historical(model) ? 'Historical' : '';
     const memoryOnly = !hasWarmScore(model) && hasHealthyCachedMemory(model);
-    const countPair = model.id === 'fun-cosyvoice3-0.5b-2512';
+    const countPair = showWarmCounts(model);
     const statusBadge = rowState ? `<span class="evidence-tag ${historical(model) ? 'historical' : ''}" title="${model.pairedWarm ? 'Native CPU/GPU pair with compatible protocol, source, assets, settings and environment' : 'At least one receipt is historical or uses earlier assets'}">${rowState}</span>` : '';
     return `<tr data-model="${escape(model.id)}"><td data-label="Model"><div class="model-cell"><span class="model-monogram" aria-hidden="true">${escape(model.name.slice(0, 2).toUpperCase())}</span><div><button class="model-name" data-detail="${escape(model.id)}">${escape(model.name)}</button><div class="model-sub">${statusBadge}${memoryOnly ? '<span class="evidence-tag cached-only">RAM only · cached</span>' : ''}${outputWarningTag(model)}</div></div></div></td><td data-label="Weights · MB"><span class="value">${fmt(model.modelMB)}</span></td><td data-label="License"><button class="license-tag" data-detail="${escape(model.id)}" title="${escape(model.license.model)}" aria-label="Model license: ${escape(model.name)}. ${escape(model.license.model)}">${escape(shortLicense(model.license.model))}</button></td>${metricCell(model.warm.cpu, 'medianSeconds', maxTime, 'cpu', 'CPU · seconds', true, countPair)}${metricCell(model.warm.webgpu, 'medianSeconds', maxTime, 'webgpu', 'GPU · seconds', true, countPair)}${metricCell(model.memory.cpu, 'meanMB', 1, 'cpu', 'Cached RAM · CPU · avg MB', false)}${metricCell(model.memory.webgpu, 'meanMB', 1, 'webgpu', 'Cached RAM · GPU · avg MB', false)}<td data-label="Listen · 30s">${audioButtons(model)}</td></tr>`;
   }).join('');
@@ -176,15 +188,14 @@ function renderCharts(models) {
     const chartRows = panelModels.map(model => {
     const value = get(model, backend);
     const metric = kind === 'size' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
-    const countPair = kind === 'generation' && model.id === 'fun-cosyvoice3-0.5b-2512' && Number.isInteger(metric?.n);
-    const countLabel = countPair ? `<small class="metric-count" aria-label="${metric.selectionKind ? `${metric.n} selected from ${metric.originalPlannedRepetitions} planned repetitions` : `${metric.n} scored repetitions`}">${metric.selectionKind ? `n=${metric.n}/${metric.originalPlannedRepetitions} · partial` : `n=${metric.n}`}</small>` : '';
+    const countLabel = kind === 'generation' && showWarmCounts(model) ? warmCountLabel(metric) : '';
     const score = metric?.selectionKind && kind === 'generation'
       ? `<a class="value metric-link selection-report-link" href="${escape(cosySelectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
       : `<span class="value">${fmt(value)} <span class="sr-only">${units}</span></span>`;
     const evidence = metric?.registration === 'archived' ? '<small class="chart-evidence">Historical</small>' : '';
     return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="bar-value">${score}${countLabel}${evidence}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
   }).join('');
-    const context = kind === 'generation' ? 'Warm full-article medians · lower is faster' : kind === 'memory' ? 'Chrome process RSS · cached runs · faulted audio excluded' : 'Verified core weights · MB';
+    const context = kind === 'generation' ? 'Warm generation · seconds · lower is faster' : kind === 'memory' ? 'Chrome process RSS · cached runs · faulted audio excluded' : 'Verified core weights · MB';
     return `<section class="chart-panel ${backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><h3>${backend === 'size' ? 'Model weights' : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]}`}</h3><p class="chart-context">${context}</p>${chartRows || '<p class="chart-empty">No eligible measurements.</p>'}</section>`;
   }).join('');
 }
@@ -230,7 +241,7 @@ function waveformNote(metric) {
 }
 function detailMetric(metric, backend, kind) {
   const warm = kind === 'warm';
-  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${metric?.selectionKind || isScheduledRetest(metric) ? `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>` : ''}${isMeasured(metric) ? `<dl>${warm ? `<dt>Median</dt><dd>${fmt(metric.medianSeconds)} s</dd><dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd><dt>Scored articles</dt><dd>${fmt(metric.n, 0)}${metric.selectionKind ? ` selected / ${fmt(metric.originalPlannedRepetitions, 0)} planned` : ''}</dd><dt>First PCM (median)</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length (median)</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
+  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${metric?.selectionKind || isScheduledRetest(metric) ? `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>` : ''}${isMeasured(metric) ? `<dl>${warm ? `<dt>${metric.n === 1 ? 'Generation time' : 'Median'}</dt><dd>${fmt(metric.medianSeconds)} s</dd>${metric.n === 1 ? '' : `<dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd>`}<dt>Scored articles</dt><dd>${fmt(metric.n, 0)}${metric.selectionKind ? ` selected / ${fmt(metric.originalPlannedRepetitions, 0)} planned` : ''}</dd><dt>First PCM${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
 }
 function openDetails(id) {
   const model = state.data.models.find(m => m.id === id); if (!model) return;

@@ -94,12 +94,17 @@ permission to redistribute weights or publish recordings.
 - A scored run requires a clean **committed** checkout. Preserve unrelated changes;
   use an isolated clone/worktree when needed. Publish the implementation commit
   before publishing results that cite it. Never edit the receipt to claim cleanliness.
-- Full warm runs use the fixed 20,000-character/93-chunk article and one excluded
-  full warm-up. New Fun-CosyVoice3 scored tests use one article for every scenario
-  on either backend; warm tests still include the excluded warm-up. Any valid
-  explicit CosyVoice3 repetition count is normalized to one and recorded on
-  stderr and in the receipt. Other models use at least five. Keep every completed
-  repetition, including errors; do not substitute projections or synthetic audio.
+- Run one full 20,000-character article as an excluded warm-up per model and backend.
+  For a registered speech model with **more than 1,000,000,000 parameters**, score
+  **one** full article on the resident engine. Fun-CosyVoice3 also uses one scored
+  article in every scenario. Other full warm runs default to five. Exactly one
+  billion takes the standard schedule. Check the registered parameter evidence
+  in `lib/model-parameters.json` when onboarding or selecting a model.
+  A backbone name or quantized file size cannot establish the full parameter count.
+- For a campaign, inspect `node tools/run-campaign.mjs --plan PLAN --dry-run`
+  before starting Chrome. Report the effective scored count for each CPU or GPU
+  cell. Describe `n=1` as one observation. Keep the original counts, recordings
+  and receipts for completed runs, including any earlier five-run results.
 - WebGPU must show actual compute dispatch and awaited CPU-readable PCM. Report
   mixed CPU/WASM work. Record unsupported GPU paths as unavailable; do not
   change backend silently. Headless or software-renderer runs are diagnostics.
