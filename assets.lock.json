@@ -6000,7 +6000,8 @@
       "displayName": "Linnet en-35m (f1)",
       "modelRevision": "a75fdfe50bc3d3e776b9c5040f149f49a054aaf5",
       "backends": [
-        "cpu"
+        "cpu",
+        "webgpu"
       ],
       "license": {
         "model": "Linnet Weights License 1.0",
@@ -6025,7 +6026,7 @@
       "runtime": {
         "package": "voxrt-linnet-browser-wasm",
         "version": "0.1.1",
-        "license": "Apache-2.0 runtime source; demo WASM license unspecified; no redistribution",
+        "license": "Apache-2.0 source-built hybrid runtime for WebGPU; official CPU demo WASM license unspecified and not redistributed",
         "files": []
       },
       "assets": [

@@ -33,6 +33,26 @@ npm run assets -- import --model phonon --source /path/to/asset-tree
 
 Never commit this cache, downloaded weights or upstream bundles. Explicitly authorized recordings use the validated [audio publication workflow](../audio/README.md).
 
+The Linnet CPU path uses VoxRT's pinned demo WASM. For Linnet WebGPU, build the
+separate Apache-2.0 hybrid runtime from its pinned VoxRT Rust source before
+running the benchmark:
+
+```sh
+rustup toolchain install 1.95.0 --profile minimal
+rustup target add --toolchain 1.95.0 wasm32-unknown-unknown
+npm run linnet:runtime:build
+npm run assets -- fetch --model linnet-en-35m --accept-license
+npm run bench -- run --model linnet-en-35m --backend webgpu --scenario warm --machine "My laptop" --accept-license
+```
+
+The builder checks the upstream source commit, Rust toolchain, output size and
+WASM SHA-256. It stages only the runtime under ignored `.cache/`; it never stages
+or uploads Linnet weights. The hybrid sends dense matrix operations at or above
+32,768 multiply-accumulates to a non-fallback WebGPU adapter and keeps the other
+operations on WASM SIMD128/CPU. Software adapters are unsupported for scored
+runs. CPU results remain on the existing official browser runtime. See the
+Linnet entry in [model support](MODEL_SUPPORT.md) and [licensing](LICENSING.md).
+
 ## Choose a backend and workload
 
 ```sh

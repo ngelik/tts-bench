@@ -52,10 +52,10 @@ test('Linnet weight parser rejects a malformed safetensors header before allocat
   assert.equal(allocations, 0);
 });
 
-test('Linnet is registered as acceptance-gated CPU-only and every downloaded file is pinned', async () => {
+test('Linnet CPU and hybrid WebGPU backends are registered and every downloaded file is pinned', async () => {
   const model = getAssetLock().models['linnet-en-35m'];
   assert.ok(model);
-  assert.deepEqual(model.backends, ['cpu']);
+  assert.deepEqual(model.backends, ['cpu', 'webgpu']);
   assert.equal(model.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');
   assert.equal(model.license.requiresAcceptance, true);
   assert.equal(model.runtime.version, '0.1.1');
@@ -73,14 +73,19 @@ test('Linnet adapter is included in the normal browser benchmark factory registr
   assert.match(bench, /'linnet-en-35m': createLinnetAdapter/);
   const worker = await readFile(new URL('../web/workers/linnet.mjs', import.meta.url), 'utf8');
   assert.match(worker, /Official VoxRT LinnetTTS browser WASM 0\.1\.1/);
-  assert.match(worker, /fetchModelAsset\(WASM_URL, REVISION\)/);
+  assert.match(worker, /const url = webgpu \? GPU_HYBRID_WASM_URL : WASM_URL/);
+  assert.match(worker, /const cacheVersion = webgpu \? LINNET_WEBGPU_RUNTIME\.sha256 : REVISION/);
+  assert.match(worker, /fetchModelAsset\(url, cacheVersion\)/);
+  assert.match(worker, /Source-built Linnet hybrid runtime does not match its pinned size and SHA-256/);
   assert.doesNotMatch(worker, /fetch\(WASM_URL/);
   assert.match(worker, /lt_start\(voiceId/);
   assert.match(worker, /assetBytes\('voices\/linnet-en-f1\.npy'\)/);
   assert.match(worker, /lt_step\(\)/);
   assert.match(worker, /await yieldToWorkerQueue\(\)/);
   assert.match(worker, /first-party browser worker keeps the widened model allocation/);
-  assert.doesNotMatch(worker, /lt_free\(expanded\.pointer/);
-  assert.match(worker, /official LinnetTTS browser runtime is CPU\/WebAssembly only/i);
+  assert.match(worker, /if \(webgpu\) wasm\.lt_free\(expanded\.pointer, expanded\.bytes\)/);
+  assert.match(worker, /official LinnetTTS browser runtime does not support the requested backend/i);
+  assert.match(worker, /backendEffective: webgpu \? 'webgpu\+wasm' : 'cpu\/wasm'/);
+  assert.match(worker, /isSoftwareWebGpuAdapter\(gpuAdapterInfo, gpuAdapterInfo\) && !allowSoftwareGpu/);
   assert.doesNotMatch(worker, /executionProviders\s*:\s*\[[^\]]*webgpu/i);
 });
