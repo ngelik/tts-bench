@@ -403,7 +403,7 @@ export class SoproTTS {
         if (index + 1 >= minSteps && token === model.semantic_vocab_size + 1) break;
         pending.push(Math.min(model.semantic_vocab_size - 1, Math.max(0, token)));
         if (pending.length >= parameters.semanticChunkTokens) yield pending.splice(0);
-        if (index + 1 >= maxSteps) break;
+        if (index + 1 >= maxSteps) throw new Error('Sopro reached the semantic duration cap before an end token');
         const r = rotary(1, headDim, position), previousK = pastK, previousV = pastV, presentLength = position + 1;
         position += 1; tokenBuffer[0] = BigInt(token);
         output = await core.run({
@@ -456,7 +456,7 @@ export class SoproTTS {
         if (index + 1 >= minSteps && token === model.semantic_vocab_size + 1) break;
         pending.push(Math.min(model.semantic_vocab_size - 1, Math.max(0, token)));
         if (pending.length >= parameters.semanticChunkTokens) yield pending.splice(0);
-        if (index + 1 >= maxSteps) break;
+        if (index + 1 >= maxSteps) throw new Error('Sopro reached the semantic duration cap before an end token');
         const r = rotary(1, headDim, position++), previousK = pastK, previousV = pastV;
         tokenBuffer[0] = BigInt(token);
         output = await stepSession.run({

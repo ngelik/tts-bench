@@ -66,7 +66,7 @@
     "parameterCount": 121574193,
     "countKind": "lower-bound",
     "parameterCountUpperBound": 633962260,
-    "parameterCountSource": "https://huggingface.co/api/models/samuel-vitorino/sopro-v2-turbo/revision/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312?blobs=true",
+    "parameterCountSource": "https://huggingface.co/api/models/samuel-vitorino/sopro-v2-turbo/revision/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312",
     "scope": "Hugging Face counts 121,574,193 FP32 entries in the main speech network. The four released safetensors files (core, semantic encoder, speaker encoder and vocoder) total 633,962,260 bytes, a conservative upper bound counting at least one byte per stored parameter. The two ONNX runtime profiles are alternate exports of the same model."
   }
 }

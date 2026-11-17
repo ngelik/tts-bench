@@ -71,7 +71,10 @@ self.onmessage = async ({ data }) => {
   try {
     let value;
     if (data.action === 'initialize') value = await initialize(data.options);
-    else if (data.action === 'generate') value = await generate(data.chunk, () => self.postMessage({ id: data.id, event: 'first-pcm' }));
+    else if (data.action === 'generate') {
+      try { value = await generate(data.chunk, () => self.postMessage({ id: data.id, event: 'first-pcm' })); }
+      catch (error) { throw new Error('Sopro source span ' + data.chunk.id + ': ' + (error?.message ?? String(error))); }
+    }
     else if (data.action === 'dispose') { await runtime?.dispose(); runtime = null; reference = null; }
     else throw new Error('Unknown Sopro worker action');
     self.postMessage({ id: data.id, value }, value?.parts?.map(part => part.buffer) ?? []);
