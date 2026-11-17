@@ -95,7 +95,7 @@ function integerDurations(logDurations) {
   const durations = new Int32Array(logDurations.length);
   let total = 0;
   for (let i = 0; i < logDurations.length; i++) {
-    const value = Math.exp(logDurations[i]);
+    const value = Math.fround(Math.exp(logDurations[i]));
     if (!Number.isFinite(value)) throw new Error('SupraTTS duration model returned a non-finite prediction.');
     // torch.round uses ties-to-even; preserve that behavior for exact halves.
     const lower = Math.floor(value);
