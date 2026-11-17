@@ -1,5 +1,6 @@
 import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
+import { createLinnetAdapter } from './adapters/linnet.mjs';
 import { createMingAdapter } from './adapters/ming.mjs';
 import { createMingGgufAdapter } from './adapters/audio-cpp-gguf.mjs';
 import { createAudio8Adapter } from './adapters/audio8.mjs';
@@ -31,6 +32,7 @@ const state = { fixture: null, chunks: null, engine: null, model: null, backend:
 const FACTORIES = {
   'sopro-v2-turbo': createSoproAdapter,
   'tiny-voca': createTinyVocaAdapter,
+  'linnet-en-35m': createLinnetAdapter,
   'ming-3.0-tts-0.5b-fusor-mix-cpu': createMingAdapter,
   'ming-3.0-tts-0.5b-gguf': createMingGgufAdapter,
   'audio8-realistic-0.6b-int4': createAudio8Adapter,

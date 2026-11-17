@@ -211,6 +211,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Sopro v2 Turbo | Unknown | 0 | 4 (en, pt, fr, de) | [Details](docs/MODEL_SUPPORT.md#sopro-v2-turbo) |
 | SupraTTS 1.0 Preview FP32 | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#supratts-1.0-preview) |
 | Klein-TTS X1.5 Pro FP32 | 17 | 17 | 4 (en, es, fr, it) | [Details](docs/MODEL_SUPPORT.md#klein-tts-x1.5-pro) |
+| Linnet en-35m (f1) | 2 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#linnet-en-35m) |
 
 ### Controlled native comparisons
 

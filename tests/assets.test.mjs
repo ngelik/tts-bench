@@ -3,12 +3,13 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { listModels } from '../lib/assets.mjs';
+import { getAssetLock } from '../lib/catalog.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro']);
+  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m']);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -18,6 +19,16 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(klein.modelRevision, '25e0e73bebba71e5985bc369628ebdcb81bf7116');
   assert.equal(klein.support.voiceCount, 17);
   assert.equal(klein.support.languageCount, 4);
+  const linnet = getAssetLock().models['linnet-en-35m'];
+  assert.deepEqual(linnet.backends, ['cpu']);
+  assert.equal(linnet.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');
+  assert.equal(linnet.license.requiresAcceptance, true);
+  assert.equal(linnet.license.model, 'Linnet Weights License 1.0');
+  assert.equal(linnet.support.voiceCount, 2);
+  assert.equal(linnet.support.bundledVoiceCount, 1);
+  assert.equal(linnet.support.languages[0], 'en');
+  assert.equal(linnet.runtime.version, '0.1.1');
+  assert.match(linnet.runtime.license, /license unspecified; no redistribution/);
   assert.deepEqual(models[0].backends, ['cpu', 'webgpu']);
   assert.equal(models[0].modelRevision, 'ed2934d4df8a4fd891e29584c5e1104649409765');
   assert.deepEqual(models[1].backends, ['cpu', 'webgpu']);

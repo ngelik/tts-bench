@@ -249,3 +249,13 @@ Pinned English-only preview checkpoint with one fixed voice and no streaming API
 Supported voices: **17**. Bundled voices: **17**. Supported languages: **4** (en, es, fr, it).
 
 The pinned `model.json` lists 17 speaker embeddings with language prefixes for English, Spanish, French and Italian. The benchmark exercises Sarah (`af_heart`) in English only. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json)
+
+<a id="linnet-en-35m"></a>
+
+## Linnet en-35m (f1)
+
+Supported voices: **2**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned English checkpoint with two built-in American English synthetic voices. Only `linnet-en-f1` is staged and benchmarked. Voice cloning is outside the included terms. The official VoxRT WASM 0.1.1 demo runtime executes on one CPU thread with SIMD128; WebGPU is not registered. The demo-specific binding is not separately licensed in source, so asset fetching uses its pinned official URL and the binary is not committed or publicly rehosted. If VoxRT removes that artifact, reproduction is blocked pending a source-built authorized browser binding.
+
+[Pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35m/tree/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5) · [Runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) · [Browser runtime details](https://www.voxrt.com/text-to-speech).

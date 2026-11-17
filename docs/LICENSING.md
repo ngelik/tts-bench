@@ -160,3 +160,32 @@ The code and model weights are Apache-2.0. The training dataset is CC BY 4.0. Th
 ## Sopro v2 Turbo
 
 Sopro's code and model weights are Apache-2.0. ONNX Runtime Web is MIT and has bundled third-party notices. The fixed reference is the benchmark’s own published Tiny Voca synthetic F2 audio, generated from the benchmark article, and credited with the output. [Model terms](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Runtime, prompt and modifications](../web/sopro/NOTICE.md)
+
+### Linnet en-35m
+
+The pinned [Linnet Weights License 1.0](https://github.com/VoxRT/LinnetTTS/releases/download/weights-v1/WEIGHTS_LICENSE.md)
+is not open-source. It allows benchmarking, testing, CI and distributing generated
+outputs, but forbids general-purpose TTS services, custom voice creation, model
+training and distributing the licensed weights outside the terms in the license.
+This registration uses fictional fixed fixture text and the built-in `f1` voice;
+it performs no cloning or training. FP16 parameters are widened to FP32 only in
+WASM memory for the SIMD128 runtime and are not persisted. The 83 MB weights,
+tokenizer and voice stay in ignored local storage and are downloaded from the
+pinned VoxRT release. Use `--accept-license` after reading the staged terms.
+
+The official VoxRT browser WASM 0.1.1 binary supplies CPU/WebAssembly SIMD128
+inference and is fetched directly from VoxRT's public deployment into ignored
+local storage. VoxRT's Rust runtime source is Apache-2.0, but the demo-specific
+browser binding is not separately licensed in the source tree. Do not commit,
+mirror or publicly rehost that binary or its demo JavaScript. Its public URL and
+SHA-256 are pinned; asset fetching fails if the bytes change. If VoxRT removes
+the hosted file, reproduction is blocked until an authorized source-built
+browser binding becomes available. The benchmark adapter and safetensors memory
+conversion are original project code; no model weights or voice files are committed.
+Show both required notices with the documentation and any published sample:
+**“Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0”**
+and **“Powered by Linnet (VoxRT)”**.
+
+Sources: [pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35m/tree/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5) ·
+[Apache-2.0 runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) ·
+[official browser runtime and platform notes](https://www.voxrt.com/text-to-speech).
