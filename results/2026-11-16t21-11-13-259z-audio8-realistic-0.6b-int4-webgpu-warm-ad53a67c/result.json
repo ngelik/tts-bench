@@ -1,0 +1,3748 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c",
+  "createdAt": "2026-11-17T13:33:14.588Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+    "dirty": false,
+    "manifestSha256": "acf5a086147296da2d526285a6c2855e5bbb75e4d2f426003ffbf53837b59185"
+  },
+  "assets": [
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:@huggingface/transformers:dist/transformers.min.js",
+      "sha256": "79fad8c1c2fd165bf1e77ace20ce023fab4dc13b6621f0e586c9b8c59c4d09d8",
+      "bytes": 849451
+    },
+    {
+      "id": "runtime:audio8-realistic-0.6b-int4:@huggingface/transformers:LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "audio8-realistic-license",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "audio8-realistic-notice",
+      "sha256": "819129644b28fb066221d782dd27a6fe1d35f33f46718d4e61570614fb38854e",
+      "bytes": 95
+    },
+    {
+      "id": "audio8-realistic-readme-md",
+      "sha256": "0d680d8d725727582351b49f933c2706ff976c008a0be5f57e00b07b341afc67",
+      "bytes": 5219
+    },
+    {
+      "id": "audio8-realistic-sha256sums",
+      "sha256": "374d5e1cc415d367229238088d6270aeaa42121be678028aed968dcb87d06eab",
+      "bytes": 1109
+    },
+    {
+      "id": "audio8-realistic-provider-policy-v2",
+      "sha256": "340c0a5e706f3029febd1600181a6b7cf88a2fd65fd181d81d7388160ba02b33",
+      "bytes": 111
+    },
+    {
+      "id": "audio8-realistic-codec-decoder-fp16-onnx",
+      "sha256": "6e379be31db6c1b0c111e0e3d2aeb10717ee96b197462b926de411e75a1fd019",
+      "bytes": 594319
+    },
+    {
+      "id": "audio8-realistic-codec-decoder-fp16-onnx-data",
+      "sha256": "18838f686aa7c1528fb69ec11e1ab404fdc4dc823d13219abfd4b327988527c0",
+      "bytes": 260741440
+    },
+    {
+      "id": "audio8-realistic-fast-ar-int4-onnx",
+      "sha256": "41cfbf981e80f0f9c178f5439fd07d36090c8783280c6a82d9df868296aa09fd",
+      "bytes": 156285
+    },
+    {
+      "id": "audio8-realistic-fast-ar-int4-onnx-data",
+      "sha256": "054dc7c25d297ada0e6753f45e90fca5068f989528f33db6ec63c1085050af49",
+      "bytes": 35055104
+    },
+    {
+      "id": "audio8-realistic-provenance-json",
+      "sha256": "bfa90bffca304eebb83df74841c9e4e6d35e664a75ce94830f612555c3ab1e9f",
+      "bytes": 865
+    },
+    {
+      "id": "audio8-realistic-runtime-manifest-json",
+      "sha256": "182da307714a61f2014cf5fe42c9be005d30c5e41006daa30fed2a874b332019",
+      "bytes": 1080
+    },
+    {
+      "id": "audio8-realistic-slow-ar-int4-onnx",
+      "sha256": "eb0d4925019ce6d83e19e56a4bc73d62e64eec0c1c825a51c9b56871d5f10f70",
+      "bytes": 900212
+    },
+    {
+      "id": "audio8-realistic-slow-ar-int4-onnx-data",
+      "sha256": "27fe1e3d74e4a660f02bdf4c3a922f522a26c99ca9c1f78b268eed43f5fd6501",
+      "bytes": 290267090
+    },
+    {
+      "id": "audio8-realistic-tokenizer-tokenizer-json",
+      "sha256": "f24e08099d45a8adf3f52f5f0b03276e433bb9d689bb15fcbcc48ce58744588b",
+      "bytes": 12217872
+    }
+  ],
+  "cells": [
+    {
+      "model": "audio8-realistic-0.6b-int4",
+      "support": {
+        "voiceCount": null,
+        "bundledVoiceCount": 0,
+        "languageCount": 23,
+        "languages": [
+          "zh",
+          "en",
+          "ja",
+          "ko",
+          "de",
+          "fr",
+          "es",
+          "it",
+          "ru",
+          "ar",
+          "fi",
+          "hi",
+          "id",
+          "ms",
+          "nl",
+          "no",
+          "pl",
+          "pt",
+          "sv",
+          "th",
+          "tr",
+          "vi",
+          "yue"
+        ],
+        "scope": "Realistic 0.6B checkpoint; reference-free synthesis or open-ended zero-shot voices.",
+        "sources": [
+          "https://huggingface.co/Edge0/Audio8-TTS-Realistic-Air/blob/1e857568bfd4f02931aca3988ee773a44d2d26d3/README.md",
+          "https://huggingface.co/stephvax/audio8-tts-realistic-0.6b-onnx-int4/blob/04313606782af6b9a1aa93724555bc7b64ba9197/provenance.json"
+        ],
+        "notes": "No preset voices ship in this configuration. Reference-free English mode is tested."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Reference-free English synthesis",
+      "precision": "INT4 slow/fast AR, FP16 codec",
+      "settings": {
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "codecExecutionProviders": [
+          "wasm"
+        ],
+        "providerPolicyVersion": 2,
+        "language": "en",
+        "sampleRate": 44100,
+        "temperature": 0.7,
+        "topP": 0.9,
+        "topK": 50,
+        "seed": 42,
+        "wasmThreads": 6,
+        "maxFrames": 1024,
+        "voiceSelection": "Reference-free English synthesis",
+        "sampling": "Seeded JS categorical draw with upstream top-p-before-temperature and ten-frame repetition resampling.",
+        "chunking": "One complete source span per reference-free prompt, one full decoder call after EOS."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "1624576 autoregressive dispatches in separate capability probe; WASM-only codec (0 dispatches)."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 9831250.899999976,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "6f8969cc0b1c9be4169a5e95d701b7b3749f82f588ca4133e9841456eb77782b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 733184,
+                  "longestConstantSamples": 433,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 802816,
+                  "longestConstantSamples": 685,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 663552,
+                  "longestConstantSamples": 8,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 722944,
+                  "longestConstantSamples": 1454,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 718848,
+                  "longestConstantSamples": 662,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 604160,
+                  "longestConstantSamples": 340,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 542720,
+                  "longestConstantSamples": 322,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 747520,
+                  "longestConstantSamples": 400,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 606208,
+                  "longestConstantSamples": 362,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 854016,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 604160,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 741376,
+                  "longestConstantSamples": 1373,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 806912,
+                  "longestConstantSamples": 390,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 659456,
+                  "longestConstantSamples": 700,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 651264,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 808960,
+                  "longestConstantSamples": 720,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 634880,
+                  "longestConstantSamples": 455,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 655360,
+                  "longestConstantSamples": 1095,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 634880,
+                  "longestConstantSamples": 371,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 667648,
+                  "longestConstantSamples": 386,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 634880,
+                  "longestConstantSamples": 703,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 759808,
+                  "longestConstantSamples": 547,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 577536,
+                  "longestConstantSamples": 710,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 544768,
+                  "longestConstantSamples": 657,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 536576,
+                  "longestConstantSamples": 545,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 649216,
+                  "longestConstantSamples": 238,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 731136,
+                  "longestConstantSamples": 663,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 647168,
+                  "longestConstantSamples": 529,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 780288,
+                  "longestConstantSamples": 496,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 612352,
+                  "longestConstantSamples": 291,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 718848,
+                  "longestConstantSamples": 701,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 681984,
+                  "longestConstantSamples": 1578,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 765952,
+                  "longestConstantSamples": 416,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 765952,
+                  "longestConstantSamples": 481,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 628736,
+                  "longestConstantSamples": 263,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 718848,
+                  "longestConstantSamples": 405,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 610304,
+                  "longestConstantSamples": 923,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 708608,
+                  "longestConstantSamples": 396,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 645120,
+                  "longestConstantSamples": 811,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 712704,
+                  "longestConstantSamples": 344,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 577536,
+                  "longestConstantSamples": 388,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 753664,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 669696,
+                  "longestConstantSamples": 355,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 593920,
+                  "longestConstantSamples": 648,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 628736,
+                  "longestConstantSamples": 165,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 706560,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 669696,
+                  "longestConstantSamples": 599,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 618496,
+                  "longestConstantSamples": 747,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 700416,
+                  "longestConstantSamples": 151,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 825344,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 663552,
+                  "longestConstantSamples": 921,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 667648,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 786432,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 559104,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 626688,
+                  "longestConstantSamples": 214,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 688128,
+                  "longestConstantSamples": 350,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 583680,
+                  "longestConstantSamples": 976,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 649216,
+                  "longestConstantSamples": 488,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 757760,
+                  "longestConstantSamples": 208,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 757760,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 774144,
+                  "longestConstantSamples": 661,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 608256,
+                  "longestConstantSamples": 235,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 724992,
+                  "longestConstantSamples": 719,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 626688,
+                  "longestConstantSamples": 1162,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 692224,
+                  "longestConstantSamples": 834,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 649216,
+                  "longestConstantSamples": 709,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 837632,
+                  "longestConstantSamples": 952,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 696320,
+                  "longestConstantSamples": 222,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 837632,
+                  "longestConstantSamples": 352,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 747520,
+                  "longestConstantSamples": 224,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 612352,
+                  "longestConstantSamples": 325,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 718848,
+                  "longestConstantSamples": 5,
+                  "constantValue": 22
+                },
+                {
+                  "id": 72,
+                  "samples": 677888,
+                  "longestConstantSamples": 422,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 548864,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 882688,
+                  "longestConstantSamples": 897,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 612352,
+                  "longestConstantSamples": 739,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 708608,
+                  "longestConstantSamples": 179,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 665600,
+                  "longestConstantSamples": 324,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 735232,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 733184,
+                  "longestConstantSamples": 614,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 651264,
+                  "longestConstantSamples": 850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 577536,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 630784,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 659456,
+                  "longestConstantSamples": 1088,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 655360,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 577536,
+                  "longestConstantSamples": 100,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 622592,
+                  "longestConstantSamples": 1383,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 673792,
+                  "longestConstantSamples": 1171,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 557056,
+                  "longestConstantSamples": 295,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 563200,
+                  "longestConstantSamples": 332,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 630784,
+                  "longestConstantSamples": 299,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 673792,
+                  "longestConstantSamples": 6,
+                  "constantValue": 33
+                },
+                {
+                  "id": 92,
+                  "samples": 624640,
+                  "longestConstantSamples": 659,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 114017.93999993801,
+            "firstSourceChunkCompletedMs": 114018.2049999237,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 6.885841874919937,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 9798059.410000086,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "6f8969cc0b1c9be4169a5e95d701b7b3749f82f588ca4133e9841456eb77782b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 733184,
+                  "longestConstantSamples": 433,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 802816,
+                  "longestConstantSamples": 685,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 663552,
+                  "longestConstantSamples": 8,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 722944,
+                  "longestConstantSamples": 1454,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 718848,
+                  "longestConstantSamples": 662,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 604160,
+                  "longestConstantSamples": 340,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 542720,
+                  "longestConstantSamples": 322,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 747520,
+                  "longestConstantSamples": 400,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 606208,
+                  "longestConstantSamples": 362,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 854016,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 604160,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 741376,
+                  "longestConstantSamples": 1373,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 806912,
+                  "longestConstantSamples": 390,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 659456,
+                  "longestConstantSamples": 700,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 651264,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 808960,
+                  "longestConstantSamples": 720,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 634880,
+                  "longestConstantSamples": 455,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 655360,
+                  "longestConstantSamples": 1095,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 634880,
+                  "longestConstantSamples": 371,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 667648,
+                  "longestConstantSamples": 386,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 634880,
+                  "longestConstantSamples": 703,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 759808,
+                  "longestConstantSamples": 547,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 577536,
+                  "longestConstantSamples": 710,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 544768,
+                  "longestConstantSamples": 657,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 536576,
+                  "longestConstantSamples": 545,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 649216,
+                  "longestConstantSamples": 238,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 731136,
+                  "longestConstantSamples": 663,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 647168,
+                  "longestConstantSamples": 529,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 780288,
+                  "longestConstantSamples": 496,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 612352,
+                  "longestConstantSamples": 291,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 718848,
+                  "longestConstantSamples": 701,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 681984,
+                  "longestConstantSamples": 1578,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 765952,
+                  "longestConstantSamples": 416,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 765952,
+                  "longestConstantSamples": 481,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 628736,
+                  "longestConstantSamples": 263,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 718848,
+                  "longestConstantSamples": 405,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 610304,
+                  "longestConstantSamples": 923,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 708608,
+                  "longestConstantSamples": 396,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 645120,
+                  "longestConstantSamples": 811,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 712704,
+                  "longestConstantSamples": 344,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 577536,
+                  "longestConstantSamples": 388,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 753664,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 669696,
+                  "longestConstantSamples": 355,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 593920,
+                  "longestConstantSamples": 648,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 628736,
+                  "longestConstantSamples": 165,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 706560,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 669696,
+                  "longestConstantSamples": 599,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 618496,
+                  "longestConstantSamples": 747,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 700416,
+                  "longestConstantSamples": 151,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 825344,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 663552,
+                  "longestConstantSamples": 921,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 667648,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 786432,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 559104,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 626688,
+                  "longestConstantSamples": 214,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 688128,
+                  "longestConstantSamples": 350,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 583680,
+                  "longestConstantSamples": 976,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 649216,
+                  "longestConstantSamples": 488,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 757760,
+                  "longestConstantSamples": 208,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 757760,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 774144,
+                  "longestConstantSamples": 661,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 608256,
+                  "longestConstantSamples": 235,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 724992,
+                  "longestConstantSamples": 719,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 626688,
+                  "longestConstantSamples": 1162,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 692224,
+                  "longestConstantSamples": 834,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 649216,
+                  "longestConstantSamples": 709,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 837632,
+                  "longestConstantSamples": 952,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 696320,
+                  "longestConstantSamples": 222,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 837632,
+                  "longestConstantSamples": 352,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 747520,
+                  "longestConstantSamples": 224,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 612352,
+                  "longestConstantSamples": 325,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 718848,
+                  "longestConstantSamples": 5,
+                  "constantValue": 22
+                },
+                {
+                  "id": 72,
+                  "samples": 677888,
+                  "longestConstantSamples": 422,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 548864,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 882688,
+                  "longestConstantSamples": 897,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 612352,
+                  "longestConstantSamples": 739,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 708608,
+                  "longestConstantSamples": 179,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 665600,
+                  "longestConstantSamples": 324,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 735232,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 733184,
+                  "longestConstantSamples": 614,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 651264,
+                  "longestConstantSamples": 850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 577536,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 630784,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 659456,
+                  "longestConstantSamples": 1088,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 655360,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 577536,
+                  "longestConstantSamples": 100,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 622592,
+                  "longestConstantSamples": 1383,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 673792,
+                  "longestConstantSamples": 1171,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 557056,
+                  "longestConstantSamples": 295,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 563200,
+                  "longestConstantSamples": 332,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 630784,
+                  "longestConstantSamples": 299,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 673792,
+                  "longestConstantSamples": 6,
+                  "constantValue": 33
+                },
+                {
+                  "id": 92,
+                  "samples": 624640,
+                  "longestConstantSamples": 659,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 114634.5450000763,
+            "firstSourceChunkCompletedMs": 114634.63499999046,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 6.862594441398305,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 9783919.694999933,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "6f8969cc0b1c9be4169a5e95d701b7b3749f82f588ca4133e9841456eb77782b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 733184,
+                  "longestConstantSamples": 433,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 802816,
+                  "longestConstantSamples": 685,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 663552,
+                  "longestConstantSamples": 8,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 722944,
+                  "longestConstantSamples": 1454,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 718848,
+                  "longestConstantSamples": 662,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 604160,
+                  "longestConstantSamples": 340,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 542720,
+                  "longestConstantSamples": 322,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 747520,
+                  "longestConstantSamples": 400,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 606208,
+                  "longestConstantSamples": 362,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 854016,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 604160,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 741376,
+                  "longestConstantSamples": 1373,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 806912,
+                  "longestConstantSamples": 390,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 659456,
+                  "longestConstantSamples": 700,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 651264,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 808960,
+                  "longestConstantSamples": 720,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 634880,
+                  "longestConstantSamples": 455,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 655360,
+                  "longestConstantSamples": 1095,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 634880,
+                  "longestConstantSamples": 371,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 667648,
+                  "longestConstantSamples": 386,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 634880,
+                  "longestConstantSamples": 703,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 759808,
+                  "longestConstantSamples": 547,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 577536,
+                  "longestConstantSamples": 710,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 544768,
+                  "longestConstantSamples": 657,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 536576,
+                  "longestConstantSamples": 545,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 649216,
+                  "longestConstantSamples": 238,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 731136,
+                  "longestConstantSamples": 663,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 647168,
+                  "longestConstantSamples": 529,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 780288,
+                  "longestConstantSamples": 496,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 612352,
+                  "longestConstantSamples": 291,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 718848,
+                  "longestConstantSamples": 701,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 681984,
+                  "longestConstantSamples": 1578,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 765952,
+                  "longestConstantSamples": 416,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 765952,
+                  "longestConstantSamples": 481,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 628736,
+                  "longestConstantSamples": 263,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 718848,
+                  "longestConstantSamples": 405,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 610304,
+                  "longestConstantSamples": 923,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 708608,
+                  "longestConstantSamples": 396,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 645120,
+                  "longestConstantSamples": 811,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 712704,
+                  "longestConstantSamples": 344,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 577536,
+                  "longestConstantSamples": 388,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 753664,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 669696,
+                  "longestConstantSamples": 355,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 593920,
+                  "longestConstantSamples": 648,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 628736,
+                  "longestConstantSamples": 165,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 706560,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 669696,
+                  "longestConstantSamples": 599,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 618496,
+                  "longestConstantSamples": 747,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 700416,
+                  "longestConstantSamples": 151,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 825344,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 663552,
+                  "longestConstantSamples": 921,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 667648,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 786432,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 559104,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 626688,
+                  "longestConstantSamples": 214,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 688128,
+                  "longestConstantSamples": 350,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 583680,
+                  "longestConstantSamples": 976,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 649216,
+                  "longestConstantSamples": 488,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 757760,
+                  "longestConstantSamples": 208,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 757760,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 774144,
+                  "longestConstantSamples": 661,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 608256,
+                  "longestConstantSamples": 235,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 724992,
+                  "longestConstantSamples": 719,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 626688,
+                  "longestConstantSamples": 1162,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 692224,
+                  "longestConstantSamples": 834,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 649216,
+                  "longestConstantSamples": 709,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 837632,
+                  "longestConstantSamples": 952,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 696320,
+                  "longestConstantSamples": 222,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 837632,
+                  "longestConstantSamples": 352,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 747520,
+                  "longestConstantSamples": 224,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 612352,
+                  "longestConstantSamples": 325,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 718848,
+                  "longestConstantSamples": 5,
+                  "constantValue": 22
+                },
+                {
+                  "id": 72,
+                  "samples": 677888,
+                  "longestConstantSamples": 422,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 548864,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 882688,
+                  "longestConstantSamples": 897,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 612352,
+                  "longestConstantSamples": 739,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 708608,
+                  "longestConstantSamples": 179,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 665600,
+                  "longestConstantSamples": 324,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 735232,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 733184,
+                  "longestConstantSamples": 614,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 651264,
+                  "longestConstantSamples": 850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 577536,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 630784,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 659456,
+                  "longestConstantSamples": 1088,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 655360,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 577536,
+                  "longestConstantSamples": 100,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 622592,
+                  "longestConstantSamples": 1383,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 673792,
+                  "longestConstantSamples": 1171,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 557056,
+                  "longestConstantSamples": 295,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 563200,
+                  "longestConstantSamples": 332,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 630784,
+                  "longestConstantSamples": 299,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 673792,
+                  "longestConstantSamples": 6,
+                  "constantValue": 33
+                },
+                {
+                  "id": 92,
+                  "samples": 624640,
+                  "longestConstantSamples": 659,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 113932.44999992847,
+            "firstSourceChunkCompletedMs": 113932.51999998093,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 6.852690936479364,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 9782394.175000072,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "6f8969cc0b1c9be4169a5e95d701b7b3749f82f588ca4133e9841456eb77782b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 733184,
+                  "longestConstantSamples": 433,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 802816,
+                  "longestConstantSamples": 685,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 663552,
+                  "longestConstantSamples": 8,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 722944,
+                  "longestConstantSamples": 1454,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 718848,
+                  "longestConstantSamples": 662,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 604160,
+                  "longestConstantSamples": 340,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 542720,
+                  "longestConstantSamples": 322,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 747520,
+                  "longestConstantSamples": 400,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 606208,
+                  "longestConstantSamples": 362,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 854016,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 604160,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 741376,
+                  "longestConstantSamples": 1373,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 806912,
+                  "longestConstantSamples": 390,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 659456,
+                  "longestConstantSamples": 700,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 651264,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 808960,
+                  "longestConstantSamples": 720,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 634880,
+                  "longestConstantSamples": 455,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 655360,
+                  "longestConstantSamples": 1095,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 634880,
+                  "longestConstantSamples": 371,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 667648,
+                  "longestConstantSamples": 386,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 634880,
+                  "longestConstantSamples": 703,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 759808,
+                  "longestConstantSamples": 547,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 577536,
+                  "longestConstantSamples": 710,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 544768,
+                  "longestConstantSamples": 657,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 536576,
+                  "longestConstantSamples": 545,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 649216,
+                  "longestConstantSamples": 238,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 731136,
+                  "longestConstantSamples": 663,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 647168,
+                  "longestConstantSamples": 529,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 780288,
+                  "longestConstantSamples": 496,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 612352,
+                  "longestConstantSamples": 291,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 718848,
+                  "longestConstantSamples": 701,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 681984,
+                  "longestConstantSamples": 1578,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 765952,
+                  "longestConstantSamples": 416,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 765952,
+                  "longestConstantSamples": 481,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 628736,
+                  "longestConstantSamples": 263,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 718848,
+                  "longestConstantSamples": 405,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 610304,
+                  "longestConstantSamples": 923,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 708608,
+                  "longestConstantSamples": 396,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 645120,
+                  "longestConstantSamples": 811,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 712704,
+                  "longestConstantSamples": 344,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 577536,
+                  "longestConstantSamples": 388,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 753664,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 669696,
+                  "longestConstantSamples": 355,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 593920,
+                  "longestConstantSamples": 648,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 628736,
+                  "longestConstantSamples": 165,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 706560,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 669696,
+                  "longestConstantSamples": 599,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 618496,
+                  "longestConstantSamples": 747,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 700416,
+                  "longestConstantSamples": 151,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 825344,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 663552,
+                  "longestConstantSamples": 921,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 667648,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 786432,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 559104,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 626688,
+                  "longestConstantSamples": 214,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 688128,
+                  "longestConstantSamples": 350,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 583680,
+                  "longestConstantSamples": 976,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 649216,
+                  "longestConstantSamples": 488,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 757760,
+                  "longestConstantSamples": 208,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 757760,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 774144,
+                  "longestConstantSamples": 661,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 608256,
+                  "longestConstantSamples": 235,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 724992,
+                  "longestConstantSamples": 719,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 626688,
+                  "longestConstantSamples": 1162,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 692224,
+                  "longestConstantSamples": 834,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 649216,
+                  "longestConstantSamples": 709,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 837632,
+                  "longestConstantSamples": 952,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 696320,
+                  "longestConstantSamples": 222,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 837632,
+                  "longestConstantSamples": 352,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 747520,
+                  "longestConstantSamples": 224,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 612352,
+                  "longestConstantSamples": 325,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 718848,
+                  "longestConstantSamples": 5,
+                  "constantValue": 22
+                },
+                {
+                  "id": 72,
+                  "samples": 677888,
+                  "longestConstantSamples": 422,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 548864,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 882688,
+                  "longestConstantSamples": 897,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 612352,
+                  "longestConstantSamples": 739,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 708608,
+                  "longestConstantSamples": 179,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 665600,
+                  "longestConstantSamples": 324,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 735232,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 733184,
+                  "longestConstantSamples": 614,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 651264,
+                  "longestConstantSamples": 850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 577536,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 630784,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 659456,
+                  "longestConstantSamples": 1088,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 655360,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 577536,
+                  "longestConstantSamples": 100,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 622592,
+                  "longestConstantSamples": 1383,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 673792,
+                  "longestConstantSamples": 1171,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 557056,
+                  "longestConstantSamples": 295,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 563200,
+                  "longestConstantSamples": 332,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 630784,
+                  "longestConstantSamples": 299,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 673792,
+                  "longestConstantSamples": 6,
+                  "constantValue": 33
+                },
+                {
+                  "id": 92,
+                  "samples": 624640,
+                  "longestConstantSamples": 659,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 113810.92500007153,
+            "firstSourceChunkCompletedMs": 113810.99000000954,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 6.851622457035302,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 9783961.10500002,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "6f8969cc0b1c9be4169a5e95d701b7b3749f82f588ca4133e9841456eb77782b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 733184,
+                  "longestConstantSamples": 433,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 802816,
+                  "longestConstantSamples": 685,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 663552,
+                  "longestConstantSamples": 8,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 722944,
+                  "longestConstantSamples": 1454,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 718848,
+                  "longestConstantSamples": 662,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 604160,
+                  "longestConstantSamples": 340,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 542720,
+                  "longestConstantSamples": 322,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 747520,
+                  "longestConstantSamples": 400,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 606208,
+                  "longestConstantSamples": 362,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 854016,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 604160,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 741376,
+                  "longestConstantSamples": 1373,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 806912,
+                  "longestConstantSamples": 390,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 659456,
+                  "longestConstantSamples": 700,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 651264,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 808960,
+                  "longestConstantSamples": 720,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 634880,
+                  "longestConstantSamples": 455,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 655360,
+                  "longestConstantSamples": 1095,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 634880,
+                  "longestConstantSamples": 371,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 667648,
+                  "longestConstantSamples": 386,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 634880,
+                  "longestConstantSamples": 703,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 759808,
+                  "longestConstantSamples": 547,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 577536,
+                  "longestConstantSamples": 710,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 544768,
+                  "longestConstantSamples": 657,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 536576,
+                  "longestConstantSamples": 545,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 649216,
+                  "longestConstantSamples": 238,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 731136,
+                  "longestConstantSamples": 663,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 647168,
+                  "longestConstantSamples": 529,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 780288,
+                  "longestConstantSamples": 496,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 612352,
+                  "longestConstantSamples": 291,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 718848,
+                  "longestConstantSamples": 701,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 681984,
+                  "longestConstantSamples": 1578,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 765952,
+                  "longestConstantSamples": 416,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 765952,
+                  "longestConstantSamples": 481,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 628736,
+                  "longestConstantSamples": 263,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 718848,
+                  "longestConstantSamples": 405,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 610304,
+                  "longestConstantSamples": 923,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 708608,
+                  "longestConstantSamples": 396,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 645120,
+                  "longestConstantSamples": 811,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 712704,
+                  "longestConstantSamples": 344,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 577536,
+                  "longestConstantSamples": 388,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 753664,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 669696,
+                  "longestConstantSamples": 355,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 593920,
+                  "longestConstantSamples": 648,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 628736,
+                  "longestConstantSamples": 165,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 706560,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 669696,
+                  "longestConstantSamples": 599,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 618496,
+                  "longestConstantSamples": 747,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 700416,
+                  "longestConstantSamples": 151,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 825344,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 663552,
+                  "longestConstantSamples": 921,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 667648,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 786432,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 559104,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 626688,
+                  "longestConstantSamples": 214,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 688128,
+                  "longestConstantSamples": 350,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 583680,
+                  "longestConstantSamples": 976,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 649216,
+                  "longestConstantSamples": 488,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 757760,
+                  "longestConstantSamples": 208,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 757760,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 774144,
+                  "longestConstantSamples": 661,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 608256,
+                  "longestConstantSamples": 235,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 724992,
+                  "longestConstantSamples": 719,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 626688,
+                  "longestConstantSamples": 1162,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 692224,
+                  "longestConstantSamples": 834,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 649216,
+                  "longestConstantSamples": 709,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 837632,
+                  "longestConstantSamples": 952,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 696320,
+                  "longestConstantSamples": 222,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 837632,
+                  "longestConstantSamples": 352,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 747520,
+                  "longestConstantSamples": 224,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 612352,
+                  "longestConstantSamples": 325,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 718848,
+                  "longestConstantSamples": 5,
+                  "constantValue": 22
+                },
+                {
+                  "id": 72,
+                  "samples": 677888,
+                  "longestConstantSamples": 422,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 548864,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 882688,
+                  "longestConstantSamples": 897,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 612352,
+                  "longestConstantSamples": 739,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 708608,
+                  "longestConstantSamples": 179,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 665600,
+                  "longestConstantSamples": 324,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 735232,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 733184,
+                  "longestConstantSamples": 614,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 651264,
+                  "longestConstantSamples": 850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 577536,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 630784,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 659456,
+                  "longestConstantSamples": 1088,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 655360,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 577536,
+                  "longestConstantSamples": 100,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 622592,
+                  "longestConstantSamples": 1383,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 673792,
+                  "longestConstantSamples": 1171,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 557056,
+                  "longestConstantSamples": 295,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 563200,
+                  "longestConstantSamples": 332,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 630784,
+                  "longestConstantSamples": 299,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 673792,
+                  "longestConstantSamples": 6,
+                  "constantValue": 33
+                },
+                {
+                  "id": 92,
+                  "samples": 624640,
+                  "longestConstantSamples": 659,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 113910.56000006199,
+            "firstSourceChunkCompletedMs": 113910.63500010967,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 6.852719940185559,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 9795887.470000029,
+          "samples": 62963712,
+          "sampleRate": 44100,
+          "pcmSha256": "6f8969cc0b1c9be4169a5e95d701b7b3749f82f588ca4133e9841456eb77782b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 733184,
+                  "longestConstantSamples": 433,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 802816,
+                  "longestConstantSamples": 685,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 663552,
+                  "longestConstantSamples": 8,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 722944,
+                  "longestConstantSamples": 1454,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 718848,
+                  "longestConstantSamples": 662,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 604160,
+                  "longestConstantSamples": 340,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 542720,
+                  "longestConstantSamples": 322,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 747520,
+                  "longestConstantSamples": 400,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 606208,
+                  "longestConstantSamples": 362,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 854016,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 604160,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 741376,
+                  "longestConstantSamples": 1373,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 806912,
+                  "longestConstantSamples": 390,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 659456,
+                  "longestConstantSamples": 700,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 651264,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 808960,
+                  "longestConstantSamples": 720,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 634880,
+                  "longestConstantSamples": 455,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 655360,
+                  "longestConstantSamples": 1095,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 634880,
+                  "longestConstantSamples": 371,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 667648,
+                  "longestConstantSamples": 386,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 634880,
+                  "longestConstantSamples": 703,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 759808,
+                  "longestConstantSamples": 547,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 577536,
+                  "longestConstantSamples": 710,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 544768,
+                  "longestConstantSamples": 657,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 536576,
+                  "longestConstantSamples": 545,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 649216,
+                  "longestConstantSamples": 238,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 731136,
+                  "longestConstantSamples": 663,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 647168,
+                  "longestConstantSamples": 529,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 780288,
+                  "longestConstantSamples": 496,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 612352,
+                  "longestConstantSamples": 291,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 718848,
+                  "longestConstantSamples": 701,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 681984,
+                  "longestConstantSamples": 1578,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 765952,
+                  "longestConstantSamples": 416,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 765952,
+                  "longestConstantSamples": 481,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 628736,
+                  "longestConstantSamples": 263,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 718848,
+                  "longestConstantSamples": 405,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 610304,
+                  "longestConstantSamples": 923,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 708608,
+                  "longestConstantSamples": 396,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 645120,
+                  "longestConstantSamples": 811,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 712704,
+                  "longestConstantSamples": 344,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 577536,
+                  "longestConstantSamples": 388,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 753664,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 669696,
+                  "longestConstantSamples": 355,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 593920,
+                  "longestConstantSamples": 648,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 628736,
+                  "longestConstantSamples": 165,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 706560,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 669696,
+                  "longestConstantSamples": 599,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 618496,
+                  "longestConstantSamples": 747,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 700416,
+                  "longestConstantSamples": 151,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 825344,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 663552,
+                  "longestConstantSamples": 921,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 667648,
+                  "longestConstantSamples": 37,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 786432,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 559104,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 626688,
+                  "longestConstantSamples": 214,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 688128,
+                  "longestConstantSamples": 350,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 583680,
+                  "longestConstantSamples": 976,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 649216,
+                  "longestConstantSamples": 488,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 757760,
+                  "longestConstantSamples": 208,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 757760,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 774144,
+                  "longestConstantSamples": 661,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 608256,
+                  "longestConstantSamples": 235,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 724992,
+                  "longestConstantSamples": 719,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 626688,
+                  "longestConstantSamples": 1162,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 692224,
+                  "longestConstantSamples": 834,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 649216,
+                  "longestConstantSamples": 709,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 837632,
+                  "longestConstantSamples": 952,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 696320,
+                  "longestConstantSamples": 222,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 837632,
+                  "longestConstantSamples": 352,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 747520,
+                  "longestConstantSamples": 224,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 612352,
+                  "longestConstantSamples": 325,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 718848,
+                  "longestConstantSamples": 5,
+                  "constantValue": 22
+                },
+                {
+                  "id": 72,
+                  "samples": 677888,
+                  "longestConstantSamples": 422,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 548864,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 882688,
+                  "longestConstantSamples": 897,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 612352,
+                  "longestConstantSamples": 739,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 708608,
+                  "longestConstantSamples": 179,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 665600,
+                  "longestConstantSamples": 324,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 735232,
+                  "longestConstantSamples": 203,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 733184,
+                  "longestConstantSamples": 614,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 651264,
+                  "longestConstantSamples": 850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 577536,
+                  "longestConstantSamples": 1070,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 630784,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 659456,
+                  "longestConstantSamples": 1088,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 655360,
+                  "longestConstantSamples": 419,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 577536,
+                  "longestConstantSamples": 100,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 622592,
+                  "longestConstantSamples": 1383,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 673792,
+                  "longestConstantSamples": 1171,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 557056,
+                  "longestConstantSamples": 295,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 563200,
+                  "longestConstantSamples": 332,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 630784,
+                  "longestConstantSamples": 299,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 673792,
+                  "longestConstantSamples": 6,
+                  "constantValue": 33
+                },
+                {
+                  "id": 92,
+                  "samples": 624640,
+                  "longestConstantSamples": 659,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 113996.60500001907,
+            "firstSourceChunkCompletedMs": 113996.6700000763,
+            "audioSeconds": 1427.7485714285715,
+            "realTimeFactor": 6.8610732071673475,
+            "minSamplesPerChunk": 536576,
+            "maxSamplesPerChunk": 882688
+          },
+          "audio": {
+            "sha256": "64202bde066b7679bf904c65bba0ec97a98b4a6cd3cdba98def7e83934459eeb",
+            "bytes": 125927468
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-16T21-11-12-341Z-f98dc9ae0215; cell 1/1; source 9c7d880199e87a15a3959ae94b632f9d9cdd40da; Mains power attached; pre-run load averages 2.32, 2.16, 1.80; serial M1 order; normal user background apps remain; thermal state not instrumented; Audio8 webgpu warm full article; serial campaign cell; headed pinned Chrome 157.0.8103.40."
+  ]
+}
