@@ -24,8 +24,10 @@ function decode(tokenizer, ids) {
 export function prepareSilencioText(input, config, useShortPadding = true) {
   let text = String(input).trim();
   if (config.replaceCharacters && Object.keys(config.replaceCharacters).length) {
-    for (const [from, to] of Object.entries(config.replaceCharacters)) text = text.split(from).join(to);
+    const replacements = config.replaceCharacters;
+    text = Array.from(text, character => Object.hasOwn(replacements, character) ? replacements[character] : character).join('');
     text = text.trim().split(WORDS).filter(Boolean).join(' ');
+    text = text.replace(/([.!?…])\s*[,;:]/gu, '$1');
   }
   if (!text) throw new Error('Silencio-2 cannot generate empty text.');
   text = text.replace(/\n/gu, ' ').replace(/\r/gu, ' ').replaceAll('  ', ' ');
