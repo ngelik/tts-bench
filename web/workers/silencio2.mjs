@@ -24,6 +24,7 @@ let providers = [];
 let gpuDescription = null;
 let restoreFetch = null;
 let initialized = false;
+let ortRunTail = Promise.resolve();
 
 const INFO = {
   voice: VOICE,
@@ -34,6 +35,7 @@ const INFO = {
     sampleRate: SAMPLE_RATE,
     wasmThreads: WASM_THREADS,
     runtime: 'ONNX Runtime Web 1.31.1; Transformers.js 3.5.1 tokenizer.',
+    executionScheduling: 'All ONNX Runtime session runs are serialized inside the worker.',
     randomSeed: 'Seed 0 per canonical source span; Mulberry32 + Box-Muller normal noise, scaled by sqrt(0.3); not bitwise PyTorch RNG parity.',
     frontend: 'Pinned Silencio-2 prompt preparation, tag validation, SentencePiece-equivalent Unigram IDs and sentence/fallback chunking; 48 IDs is the soft chunking target and the official 50-token generator capacity is enforced.',
     generation: 'Official drifting flow, EOS threshold, minimum frame and text-dependent EOS tail; raw unnormalized Float32 stream at 24 kHz.',
@@ -209,6 +211,12 @@ function disposeExcept(tensors, keep) {
   for (const tensor of tensors) if (tensor && !keepSet.has(tensor)) tensor.dispose?.();
 }
 
+function runSession(session, inputs) {
+  const operation = ortRunTail.then(() => session.run(inputs));
+  ortRunTail = operation.then(() => undefined, () => undefined);
+  return operation;
+}
+
 async function runFlow(sequence, textEmbeddings, state) {
   const entries = bundle.flowStateManifest;
   const stateInput = stateFeeds(state, entries);
@@ -220,7 +228,7 @@ async function runFlow(sequence, textEmbeddings, state) {
   const previousStateTensors = entries.map(entry => state.get(entry.input_name));
   let outputs;
   try {
-    outputs = await sessions.flowMain.run(inputs);
+    outputs = await runSession(sessions.flowMain, inputs);
     const nextState = new Map(entries.map(entry => [entry.input_name, outputs[entry.output_name]]));
     const conditioning = Float32Array.from(outputs.conditioning.data);
     const isEos = Boolean(Number(outputs.is_eos.data[0]));
@@ -245,7 +253,7 @@ async function runHead(conditioning, noise) {
   };
   let outputs;
   try {
-    outputs = await sessions.flowHead.run(feeds);
+    outputs = await runSession(sessions.flowHead, feeds);
     return Float32Array.from(outputs.latent.data);
   } finally {
     feeds.conditioning.dispose?.();
@@ -261,7 +269,7 @@ async function runText(text) {
   const input = new ort.Tensor('int64', ids, [1, ids.length]);
   let outputs;
   try {
-    outputs = await sessions.textConditioner.run({ token_ids: input });
+    outputs = await runSession(sessions.textConditioner, { token_ids: input });
     return Float32Array.from(outputs.embeddings.data);
   } finally {
     input.dispose?.();
@@ -330,7 +338,7 @@ async function runMimi(latents, state) {
   const oldState = entries.map(entry => state.get(entry.input_name));
   let outputs;
   try {
-    outputs = await sessions.mimi.run(inputs);
+    outputs = await runSession(sessions.mimi, inputs);
     const nextState = new Map(entries.map(entry => [entry.input_name, outputs[entry.output_name]]));
     const pcm = Float32Array.from(outputs.audio.data);
     disposeExcept(oldState, [...nextState.values()]);
@@ -338,7 +346,7 @@ async function runMimi(latents, state) {
     return { pcm, state: nextState };
   } catch (error) {
     if (outputs) disposeExcept(Object.values(outputs), []);
-    throw error;
+    throw new Error(`Silencio-2 Mimi ONNX failed for ${latents.length} latent frames: ${error?.stack ?? String(error)}`);
   } finally {
     inputs.latent.dispose?.();
   }
