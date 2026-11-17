@@ -139,6 +139,39 @@ try {
     const cases = [await checkMatmul(1, 64, 32), await checkMatmul(37, 64, 128)];
     const lhs = Array.from({ length: 64 }, (_, i) => Math.sin(i * 0.173) * 0.75);
     const rhs = Array.from({ length: 64 * 32 }, (_, i) => Math.cos(i * 0.119) * 0.5);
+    const directState = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
+    const directErrors = new SharedArrayBuffer(512);
+    const directLhs = new SharedArrayBuffer(lhs.length * Float32Array.BYTES_PER_ELEMENT);
+    const directRhs = new SharedArrayBuffer(rhs.length * Float32Array.BYTES_PER_ELEMENT);
+    const directOutput = new SharedArrayBuffer(32 * Float32Array.BYTES_PER_ELEMENT);
+    new Float32Array(directLhs).set(lhs);
+    new Float32Array(directRhs).set(rhs);
+    const direct = await new Promise((resolve, reject) => {
+      const worker = new Worker('/tools/linnet-webgpu-probe/gpu-worker.js');
+      const timer = setTimeout(() => {
+        worker.terminate();
+        reject(new Error('Standalone WebGPU worker timed out.'));
+      }, 12000);
+      worker.onmessage = ({ data }) => {
+        clearTimeout(timer);
+        worker.terminate();
+        data.ok ? resolve({ ...data, output: Array.from(new Float32Array(directOutput)) }) : reject(new Error(data.error));
+      };
+      worker.onerror = event => {
+        clearTimeout(timer);
+        worker.terminate();
+        reject(new Error(event.message));
+      };
+      worker.postMessage({ m: 1, k: 64, n: 32, stateBuffer: directState, errorBuffer: directErrors,
+        lhsBuffer: directLhs, rhsBuffer: directRhs, outputBuffer: directOutput });
+    });
+    let directError = 0;
+    for (let col = 0; col < 32; col++) {
+      let expected = 0;
+      for (let inner = 0; inner < 64; inner++) expected += lhs[inner] * rhs[inner * 32 + col];
+      directError = Math.max(directError, Math.abs(direct.output[col] - expected));
+    }
+    if (directError > 0.0002) throw new Error(`Standalone WebGPU worker differs from CPU by ${directError}`);
     const bridged = await new Promise((resolve, reject) => {
       const worker = new Worker('/tools/linnet-webgpu-probe/compute-worker.js');
       worker.onmessage = ({ data }) => {
@@ -162,6 +195,11 @@ try {
     return {
       adapterInfo,
       cases,
+      asynchronousGpuWorker: {
+        adapterInfo: direct.adapterInfo,
+        outputValues: direct.output.length,
+        maxAbsoluteError: directError,
+      },
       synchronousWorkerBridge: {
         crossOriginIsolated,
         waitResult: bridged.wait,
@@ -173,6 +211,8 @@ try {
   });
   assert.equal(report.cases.length, 2);
   assert.ok(report.cases.every(test => test.maxAbsoluteError <= 0.0002));
+  assert.equal(report.asynchronousGpuWorker.outputValues, 32);
+  assert.ok(report.asynchronousGpuWorker.maxAbsoluteError <= 0.0002);
   assert.deepEqual(report.synchronousWorkerBridge, {
     crossOriginIsolated: true,
     waitResult: 'ok',

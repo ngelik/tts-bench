@@ -1,4 +1,5 @@
 let devicePromise;
+let adapterInfo = null;
 
 async function getDevice() {
   if (!self.crossOriginIsolated || typeof SharedArrayBuffer !== 'function') {
@@ -7,6 +8,12 @@ async function getDevice() {
   if (!navigator.gpu) throw new Error('WebGPU is unavailable in the GPU worker.');
   const adapter = await navigator.gpu.requestAdapter();
   if (!adapter) throw new Error('GPU worker received no WebGPU adapter.');
+  try {
+    const info = adapter.info;
+    adapterInfo = info ? { vendor: info.vendor, architecture: info.architecture, device: info.device, description: info.description } : null;
+  } catch {
+    adapterInfo = null;
+  }
   return adapter.requestDevice();
 }
 
@@ -14,6 +21,7 @@ self.onmessage = async event => {
   const { m, k, n, stateBuffer, errorBuffer, lhsBuffer, rhsBuffer, outputBuffer } = event.data;
   const state = new Int32Array(stateBuffer);
   const errorBytes = new Uint8Array(errorBuffer);
+  let errorMessage = null;
   try {
     const device = await (devicePromise ??= getDevice());
     const shader = device.createShaderModule({ code: `
@@ -75,9 +83,11 @@ self.onmessage = async event => {
     for (const buffer of [aBuffer, bBuffer, outBuffer, params, readback]) buffer.destroy();
     Atomics.store(state, 0, 1);
   } catch (error) {
-    const message = new TextEncoder().encode(String(error?.message ?? error).slice(0, errorBytes.length - 1));
+    errorMessage = String(error?.message ?? error);
+    const message = new TextEncoder().encode(errorMessage.slice(0, errorBytes.length - 1));
     errorBytes.set(message);
     Atomics.store(state, 0, -1);
   }
   Atomics.notify(state, 0);
+  self.postMessage({ ok: Atomics.load(state, 0) === 1, error: errorMessage, adapterInfo });
 };
