@@ -57,9 +57,11 @@ function parseNpyFloat32(bytes, expectedLength) {
   const major = bytes[6];
   if (major !== 1 && major !== 2) throw new Error('SupraTTS tilt.npy uses an unsupported NPY version.');
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const lengthBytes = major === 1 ? 2 : 4;
+  const headerStart = 8 + lengthBytes;
   const headerBytes = major === 1 ? view.getUint16(8, true) : view.getUint32(8, true);
-  const dataOffset = 10 + (major === 1 ? 2 : 4) + headerBytes;
-  const header = new TextDecoder('ascii').decode(bytes.subarray(10 + (major === 1 ? 2 : 4), dataOffset));
+  const dataOffset = headerStart + headerBytes;
+  const header = new TextDecoder('ascii').decode(bytes.subarray(headerStart, dataOffset));
   const descr = /['\"]descr['\"]:\s*['\"]<f4['\"]/.test(header);
   const cOrder = /['\"]fortran_order['\"]:\s*False/.test(header);
   const shape = /['\"]shape['\"]:\s*\(\s*(\d+)\s*,?\s*\)/.exec(header);
