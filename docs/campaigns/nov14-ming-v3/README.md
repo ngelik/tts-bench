@@ -35,3 +35,7 @@ node tools/run-campaign.mjs --plan "$plan" --machine "$machine" --accept-license
 ```
 
 Use your actual hardware label when reproducing on another machine. The runner saves the campaign ledger under `runs/campaign-*/` and each recording and result under `runs/<run-id>/`. Submit baseline results with their recordings through the [pull request workflow](../../../CONTRIBUTING.md).
+
+## Subsequent warm protocol
+
+The CPU and WebGPU cached results from this plan remain published. Before either v3 warm cell started, the benchmark adopted one scored article after one excluded warm-up for checkpoints over one billion parameters. The newer frozen plan records the scoring revision and single-repetition protocol. [Single-repetition warm campaign](../nov17-ming-v3-warm-single/README.md) · [Verified cached results](https://github.com/ngelik/tts-bench/blob/3bbb7ee92c069f885dd035faae6326ef9c177e8b/reports/nov14-ming-v3/overview.md)
