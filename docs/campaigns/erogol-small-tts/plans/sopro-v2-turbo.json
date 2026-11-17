@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "37fa12d505a3691f783fbbe34f4628c55bde9ca1",
+  "conditions": "English 20k Sopro. Exclusive M1 Pro slot; headed pinned Google Chrome; synthetic Tiny Voca F2 reference, seed 1, four WASM threads; official wasm-uint8 and webgpu-fp16 profiles. Timed runs exclude first complete warmup; resource results are independent.",
+  "cells": [
+    {
+      "model": "sopro-v2-turbo",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "sopro-v2-turbo",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "sopro-v2-turbo",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    },
+    {
+      "model": "sopro-v2-turbo",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    }
+  ]
+}
