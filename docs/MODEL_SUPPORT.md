@@ -19,8 +19,8 @@ Pinned benchmark checkpoint. Four embedded voices: af_heart, bf_isabella, am_puc
 Supported voices: **8**. Bundled voices: **1** (`260`). Supported languages:
 **1** (English). Only bundled synthetic voice 260 is measured; custom voice
 cloning and the other seven catalog voices are not exposed by this browser
-configuration. The benchmark ports the model's official sentence splitting,
-48-token internal limit, sound/emotion tags, drifting flow and unnormalized
+configuration. The benchmark ports the model's official sentence splitting
+(48-token target, 50-token generation capacity), sound/emotion tags, drifting flow and unnormalized
 24 kHz stream. It uses a disclosed seeded JavaScript normal-noise generator,
 not bitwise PyTorch RNG parity.
 

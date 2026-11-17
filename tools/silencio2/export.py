@@ -275,8 +275,10 @@ def verify_tokenizer(model_root: Path, output_dir: Path, fixture_root: Path) -> 
     return {"cases": len(checks), "allIdsMatch": True, "allDecodesMatch": True, "checks": checks}
 
 
-def verify_frontend(tts, fixture_root: Path) -> dict:
+def verify_frontend(tts, fixture_root: Path, generator_max_tokens: int) -> dict:
     """Record the official chunk plan for every canonical source span."""
+    from silencio2.core.models.text_chunking import prepare_text_prompt, split_into_best_sentences
+
     article_path = fixture_root / "en-20000.txt"
     manifest_path = fixture_root / "en-20000.chunks.json"
     if not article_path.is_file() or not manifest_path.is_file():
@@ -293,15 +295,35 @@ def verify_frontend(tts, fixture_root: Path) -> dict:
         chunks = tts.chunks(text)
         if not chunks:
             raise AssertionError(f"Silencio-2 frontend returned no chunks for span {span['id']}")
+        source_plan = []
         plan = []
         for emotion, chunk in chunks:
             model_text = f"<{emotion}> {chunk}" if emotion else chunk
-            tokens = tts.model.flow_lm.conditioner.tokenizer.encode(model_text)
-            source_limit = 48 + (1 if emotion else 0)
-            if not tokens or len(tokens) > source_limit:
-                raise AssertionError(f"Official Silencio-2 chunk limit failed for source span {span['id']}: {len(tokens)} tokens")
-            plan.append({"text": chunk, "emotion": emotion, "tokenCount": len(tokens)})
-        spans.append({"id": span["id"], "sourceSpanSha256": span["sha256"], "utterances": plan})
+            prepared_source_text, _ = prepare_text_prompt(
+                model_text, tts.model.pad_with_spaces_for_short_inputs,
+                tts.model.remove_semicolons, tts.model.append_terminal_punctuation,
+                tts.model.capitalize_first_letter, tts.model.replace_characters,
+            )
+            source_tokens = tts.model.flow_lm.conditioner.tokenizer.encode(prepared_source_text)
+            source_plan.append({"text": chunk, "emotion": emotion, "tokenCount": len(source_tokens)})
+            model_chunks = split_into_best_sentences(
+                tts.model.flow_lm.conditioner.tokenizer, model_text, generator_max_tokens,
+                tts.model.pad_with_spaces_for_short_inputs, tts.model.remove_semicolons,
+                tts.model.append_terminal_punctuation, tts.model.capitalize_first_letter,
+                tts.model.replace_characters,
+            )
+            for model_chunk in model_chunks:
+                prepared_model_text, _ = prepare_text_prompt(
+                    model_chunk, tts.model.pad_with_spaces_for_short_inputs,
+                    tts.model.remove_semicolons, tts.model.append_terminal_punctuation,
+                    tts.model.capitalize_first_letter, tts.model.replace_characters,
+                )
+                tokens = tts.model.flow_lm.conditioner.tokenizer.encode(prepared_model_text)
+                if not tokens or len(tokens) > generator_max_tokens:
+                    raise AssertionError(f"Official Silencio-2 generator capacity failed for source span {span['id']}: {len(tokens)} tokens")
+                plan.append({"text": model_chunk, "emotion": None, "tokenCount": len(tokens)})
+        spans.append({"id": span["id"], "sourceSpanSha256": span["sha256"],
+                      "sourceUtterances": source_plan, "utterances": plan})
     return {"sourceCharacters": len(article), "sourceSpans": len(spans), "allSpansChunked": True,
             "maxTokensPerChunk": max(item["tokenCount"] for span in spans for item in span["utterances"]),
             "spans": spans}
@@ -521,7 +543,7 @@ def verify_stream_parity(tts, model, state_voice: dict, flow_manifest: list[dict
                 model.replace_characters,
             )
             _, frames_after_eos_guess = prepare_text_prompt(
-                chunk,
+                f"<{emotion}> {chunk}" if emotion else chunk,
                 model.pad_with_spaces_for_short_inputs,
                 model.remove_semicolons,
                 model.append_terminal_punctuation,
@@ -647,6 +669,7 @@ def main() -> None:
     tokenizer_parity = verify_tokenizer(model_root, out, Path("fixtures"))
     sys.path.insert(0, str(model_root))
     from silencio2 import Silencio2TTS
+    from silencio2.core.default_parameters import MAX_TOKEN_PER_CHUNK
     from silencio2.core.modules.stateful_module import init_states
 
     torch.set_num_threads(1)
@@ -662,7 +685,7 @@ def main() -> None:
     # FlowLM cache state includes the exact, model-bound prompt for voice 260.
     state_voice = model.get_state_for_audio_prompt(str(model_root / "voices/260.wav"))
     tts._voices["260"] = state_voice
-    frontend_parity = verify_frontend(tts, Path("fixtures"))
+    frontend_parity = verify_frontend(tts, Path("fixtures"), MAX_TOKEN_PER_CHUNK)
     # Keep the prompt state's real length in the downloadable asset. The
     # browser and parity runner expand it to the exact official generation
     # capacity for each text chunk.
@@ -781,6 +804,7 @@ def main() -> None:
         "flowEmbeddingStd": model.flow_lm.emb_std.detach().cpu().float().tolist(),
         "text": {
             "maxTokensPerChunk": 48,
+            "maxGeneratorTokens": MAX_TOKEN_PER_CHUNK,
             "padWithSpacesForShortInputs": bool(model.pad_with_spaces_for_short_inputs),
             "removeSemicolons": bool(model.remove_semicolons),
             "appendTerminalPunctuation": bool(model.append_terminal_punctuation),
@@ -823,7 +847,8 @@ def main() -> None:
         "allGraphOutputsMatched": True,
         "tokenizerParity": tokenizer_parity,
         "nativeVersusOnnxStreamParity": stream_parity,
-        "allNativeSpanParityPassed": len(stream_parity) == 2,
+        "nativeVersusOnnxSelectedSpanCount": len(stream_parity),
+        "nativeVersusOnnxSelectedSpansPassed": len(stream_parity) == 2,
         "frontendParity": {
             "sourceSpans": frontend_parity["sourceSpans"],
             "allSpansChunked": frontend_parity["allSpansChunked"],

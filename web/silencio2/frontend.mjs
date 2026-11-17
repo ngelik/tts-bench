@@ -87,7 +87,7 @@ function boundaryIndices(ids, boundaryTokens, tokenizer, skipDecimalPeriods = fa
   return indices;
 }
 
-export function splitSilencioSentences(tokenizer, input, config) {
+export function splitSilencioSentences(tokenizer, input, config, maxTokens = config.maxTokensPerChunk) {
   const prepared = prepareSilencioText(input, config);
   const source = prepared.text.trim();
   const ids = tokenize(tokenizer, source);
@@ -97,7 +97,7 @@ export function splitSilencioSentences(tokenizer, input, config) {
   const fallbackIds = tokenize(tokenizer, ',;:').slice(1);
   const refined = [];
   for (const segment of sentences) {
-    if (segment.count <= config.maxTokensPerChunk) refined.push(segment);
+    if (segment.count <= maxTokens) refined.push(segment);
     else {
       const subIds = tokenize(tokenizer, segment.text.trim());
       const subEnds = boundaryIndices(subIds, fallbackIds, tokenizer);
@@ -112,7 +112,7 @@ export function splitSilencioSentences(tokenizer, input, config) {
     if (!current) {
       current = segment.text;
       count = segment.count;
-    } else if (count + segment.count > config.maxTokensPerChunk) {
+    } else if (count + segment.count > maxTokens) {
       chunks.push(current.trim());
       current = segment.text;
       count = segment.count;
@@ -123,9 +123,10 @@ export function splitSilencioSentences(tokenizer, input, config) {
   }
   if (current) chunks.push(current.trim());
   if (!chunks.length) throw new Error('Silencio-2 text frontend produced no chunks.');
+  const generatorMaxTokens = config.maxGeneratorTokens ?? config.maxTokensPerChunk;
   for (const chunk of chunks) {
     const count = tokenize(tokenizer, chunk).length;
-    if (count > config.maxTokensPerChunk) throw new Error(`Silencio-2 split produced ${count} tokens; model limit is ${config.maxTokensPerChunk}.`);
+    if (count > generatorMaxTokens) throw new Error(`Silencio-2 split produced ${count} tokens; model capacity is ${generatorMaxTokens}.`);
   }
   return { chunks, sourceTokenCount: ids.length, normalizedText: source };
 }
@@ -148,6 +149,19 @@ export function splitSilencioTaggedText(tokenizer, input, config) {
     for (const text of split.chunks) result.push({ text, emotion: currentEmotion });
   }
   if (!result.length) throw new Error('Silencio-2 cannot generate from tags without text.');
+  return result;
+}
+
+// TTSModel.generate_audio_stream splits the already tagged text a second time
+// with its 50-token generation target after Silencio2TTS.chunks() uses 48.
+export function splitSilencioModelUtterances(tokenizer, input, config) {
+  const taggedChunks = splitSilencioTaggedText(tokenizer, input, config);
+  const result = [];
+  for (const { text, emotion } of taggedChunks) {
+    const modelText = emotion ? `<${emotion}> ${text}` : text;
+    const split = splitSilencioSentences(tokenizer, modelText, config, config.maxGeneratorTokens ?? 50);
+    for (const modelChunk of split.chunks) result.push({ text: modelChunk, emotion: null });
+  }
   return result;
 }
 

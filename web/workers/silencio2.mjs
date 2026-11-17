@@ -1,6 +1,6 @@
 import { requestHardwareWebGpuAdapter, observeComputeDispatches } from '../piper/webgpu.mjs';
 import { configureTransformers } from './transformers-support.mjs';
-import { createSpanNoise, prepareSilencioText, splitSilencioTaggedText } from '../silencio2/frontend.mjs';
+import { createSpanNoise, prepareSilencioText, splitSilencioModelUtterances } from '../silencio2/frontend.mjs';
 import {
   ASSET_ROOT,
   MODEL_ID,
@@ -35,7 +35,7 @@ const INFO = {
     wasmThreads: WASM_THREADS,
     runtime: 'ONNX Runtime Web 1.31.1; Transformers.js 3.5.1 tokenizer.',
     randomSeed: 'Seed 0 per canonical source span; Mulberry32 + Box-Muller normal noise, scaled by sqrt(0.3); not bitwise PyTorch RNG parity.',
-    frontend: 'Pinned Silencio-2 prompt preparation, tag validation, SentencePiece-equivalent Unigram IDs and sentence/fallback chunking; chunks above 48 IDs fail.',
+    frontend: 'Pinned Silencio-2 prompt preparation, tag validation, SentencePiece-equivalent Unigram IDs and sentence/fallback chunking; 48 IDs is the soft chunking target and the official 50-token generator capacity is enforced.',
     generation: 'Official drifting flow, EOS threshold, minimum frame and text-dependent EOS tail; raw unnormalized Float32 stream at 24 kHz.',
     voiceState: 'Precomputed state from the official bundled synthetic voice 260 WAV and pinned model checkpoint.',
     outputLocation: 'Every ONNX run is awaited; PCM is copied to worker CPU Float32Arrays before return.',
@@ -359,19 +359,16 @@ function cloneVoiceState(requiredLength) {
 let voiceState = null;
 
 async function generateUtterance(text, emotion, requestId, pcmParts, spanNoise) {
-  // The model chunks emotion-prefixed text, but its EOS-tail heuristic is
-  // computed from the plain chunk before the tag is prefixed.
-  const chunkText = prepareSilencioText(text, bundle.text);
   const prepared = prepareSilencioText(emotion ? `<${emotion}> ${text}` : text, bundle.text);
   const textTokens = tokenizer(prepared.text, { add_special_tokens: false, truncation: false, padding: false }).input_ids;
   const tokenCount = textTokens.data.length;
-  const maxPreparedTokens = bundle.text.maxTokensPerChunk + (emotion ? 1 : 0);
+  const maxPreparedTokens = bundle.text.maxGeneratorTokens;
   if (!tokenCount || tokenCount > maxPreparedTokens) {
     for (const tensor of Object.values(textTokens)) tensor.dispose?.();
     throw new Error(`Silencio-2 prepared ${tokenCount} tokens; expected 1..${maxPreparedTokens}.`);
   }
   const maxFrames = Math.ceil((tokenCount / bundle.tokensPerSecondEstimate + bundle.generationSecondsPadding) * bundle.frameRate);
-  const framesAfterEos = bundle.modelRecommendedFramesAfterEos ?? (chunkText.framesAfterEosGuess + 2);
+  const framesAfterEos = bundle.modelRecommendedFramesAfterEos ?? (prepared.framesAfterEosGuess + 2);
   const textEmbeddings = await runText(prepared.text);
   for (const tensor of Object.values(textTokens)) tensor.dispose?.();
   const voiceOffset = Number(voiceState.get(bundle.flowStateManifest.find(entry => entry.key === 'offset').input_name).data[0]);
@@ -457,7 +454,7 @@ async function synthesize(chunk, requestId) {
   if (!initialized) throw new Error('Silencio-2 is not initialized.');
   if (!chunk || !Number.isSafeInteger(chunk.id) || typeof chunk.text !== 'string' || !chunk.text.length) throw new Error('Invalid Silencio-2 source span.');
   if (chunk.sha256 && await digestHex(new TextEncoder().encode(chunk.text)) !== chunk.sha256) throw new Error(`Silencio-2 source span ${chunk.id} SHA-256 mismatch.`);
-  const parsed = splitSilencioTaggedText(tokenizer, chunk.text, bundle.text);
+  const parsed = splitSilencioModelUtterances(tokenizer, chunk.text, bundle.text);
   const noise = createSpanNoise(0, bundle.latentDim, Math.sqrt(bundle.temperature));
   const parts = [];
   for (const utterance of parsed) await generateUtterance(utterance.text, utterance.emotion, requestId, parts, noise);

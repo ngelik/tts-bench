@@ -35,7 +35,7 @@ try {
     env.localModelPath = '/models/';
     env.useBrowserCache = false;
     const tokenizer = await PreTrainedTokenizer.from_pretrained('silencio-2-onnx-v1', { local_files_only: true });
-    const { splitSilencioTaggedText, prepareSilencioText } = await import('/web/silencio2/frontend.mjs');
+    const { splitSilencioTaggedText, splitSilencioModelUtterances, prepareSilencioText } = await import('/web/silencio2/frontend.mjs');
     const [articleResponse, fixtureResponse, bundleResponse, sourceResponse] = await Promise.all([
       fetch('/fixtures/en-20000.txt', { cache: 'no-store' }),
       fetch('/fixtures/en-20000.chunks.json', { cache: 'no-store' }),
@@ -53,24 +53,33 @@ try {
     if (bundle.frontendParity?.spans?.length !== fixture.chunks.length) throw new Error('Official source frontend parity plan is incomplete.');
 
     let maxTokens = 0;
-    let utteranceCount = 0;
+    let sourceChunkCount = 0;
+    let modelUtteranceCount = 0;
     for (const span of fixture.chunks) {
       const raw = article.slice(span.start, span.end);
       if (await digest(new TextEncoder().encode(raw)) !== span.sha256) throw new Error(`Canonical source span ${span.id} hash mismatch.`);
       const expected = bundle.frontendParity.spans[span.id];
       if (expected.id !== span.id || expected.sourceSpanSha256 !== span.sha256) throw new Error(`Official frontend plan does not match canonical span ${span.id}.`);
-      const actual = splitSilencioTaggedText(tokenizer, raw, bundle.text);
-      const actualPlan = [];
-      for (const item of actual) {
+      const sourcePlan = [];
+      for (const item of splitSilencioTaggedText(tokenizer, raw, bundle.text)) {
         const prepared = prepareSilencioText(item.emotion ? `<${item.emotion}> ${item.text}` : item.text, bundle.text);
         const count = tokenizer(prepared.text, { add_special_tokens: false, truncation: false, padding: false }).input_ids.data.length;
-        const maximum = bundle.text.maxTokensPerChunk + (item.emotion ? 1 : 0);
-        if (count < 1 || count > maximum) throw new Error(`Silencio-2 span ${span.id} has a ${count}-token utterance.`);
+        if (count < 1) throw new Error(`Silencio-2 span ${span.id} has an empty source chunk.`);
         maxTokens = Math.max(maxTokens, count);
-        utteranceCount++;
-        actualPlan.push({ text: item.text, emotion: item.emotion, tokenCount: count });
+        sourceChunkCount++;
+        sourcePlan.push({ text: item.text, emotion: item.emotion, tokenCount: count });
       }
-      if (JSON.stringify(actualPlan) !== JSON.stringify(expected.utterances)) throw new Error(`Browser chunk plan differs from official PyTorch frontend at source span ${span.id}.`);
+      if (JSON.stringify(sourcePlan) !== JSON.stringify(expected.sourceUtterances)) throw new Error(`Browser 48-token chunk plan differs from official PyTorch frontend at source span ${span.id}.`);
+      const modelPlan = [];
+      for (const item of splitSilencioModelUtterances(tokenizer, raw, bundle.text)) {
+        const prepared = prepareSilencioText(item.text, bundle.text);
+        const count = tokenizer(prepared.text, { add_special_tokens: false, truncation: false, padding: false }).input_ids.data.length;
+        if (count < 1 || count > bundle.text.maxGeneratorTokens) throw new Error(`Silencio-2 model utterance ${span.id} has a ${count}-token input.`);
+        maxTokens = Math.max(maxTokens, count);
+        modelUtteranceCount++;
+        modelPlan.push({ text: item.text, emotion: item.emotion, tokenCount: count });
+      }
+      if (JSON.stringify(modelPlan) !== JSON.stringify(expected.utterances)) throw new Error(`Browser model-input plan differs from official PyTorch stream frontend at source span ${span.id}.`);
     }
 
     const { createSilencio2Adapter } = await import('/web/adapters/silencio2.mjs');
@@ -103,7 +112,7 @@ try {
     }
     return {
       fixture: { characters: article.length, spans: fixture.chunks.length, articleSha256: fixture.articleSha256 },
-      fullInputAudit: { officialPlanMatched: true, utterances: utteranceCount, maxTokens, sourceSpans: 93 },
+      fullInputAudit: { officialPlanMatched: true, sourceChunks: sourceChunkCount, modelUtterances: modelUtteranceCount, maxTokens, sourceSpans: 93 },
       initialization,
       synthesis,
       sourceCommit: source.sourceCommit,
