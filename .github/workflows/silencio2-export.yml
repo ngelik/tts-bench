@@ -1,6 +1,9 @@
 name: Silencio-2 ONNX bundle
 
 on:
+  push:
+    branches:
+      - feat/silencio-2-browser
   workflow_dispatch:
 
 permissions:
