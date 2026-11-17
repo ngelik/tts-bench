@@ -18,6 +18,8 @@ async function resumeSandbox(t) {
   await writeFile(join(root, 'docs/campaigns/nov14-english/remaining.mjs'), resumeSource);
   await writeFile(join(root, 'lib/campaign-plan.mjs'), await readFile(join(projectRoot, 'lib/campaign-plan.mjs')));
   await writeFile(join(root, 'lib/benchmark-policy.mjs'), await readFile(join(projectRoot, 'lib/benchmark-policy.mjs')));
+  await writeFile(join(root, 'lib/model-parameters.mjs'), await readFile(join(projectRoot, 'lib/model-parameters.mjs')));
+  await writeFile(join(root, 'lib/model-parameters.json'), await readFile(join(projectRoot, 'lib/model-parameters.json')));
   await writeFile(join(root, 'tools/results.mjs'), `
 import { readFile } from 'node:fs/promises';
 export async function readResult(path) { return JSON.parse(await readFile(path, 'utf8')); }
