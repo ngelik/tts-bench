@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-17t13-41-42-641z-ming-3.0-tts-0.5b-gguf-cpu-warm-7d9eb112",
+  "createdAt": "2026-11-17T18:04:17.804Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "3aaf2d5d54df00c1e7482e141f8e26387c6169e0",
+    "dirty": false,
+    "manifestSha256": "5b6bb735d5457cea99c9f584dfbb15907037c33a2985f11a3e1d8a70ebbc799c"
+  },
+  "assets": [
+    {
+      "id": "ming-gguf-weights",
+      "sha256": "fcf2aa25e8e9cf2065a936e506581735c64d6255fb7869f09fbb61a2dde09aa1",
+      "bytes": 1742280896
+    },
+    {
+      "id": "ming-gguf-license",
+      "sha256": "3a55f3df052c2a5f943704ef18aa499afe376fe92893828c5de4602e6dabb396",
+      "bytes": 1068
+    },
+    {
+      "id": "ming-gguf-card",
+      "sha256": "c74a155923f2ef72f47ff6959135444955f797f5c2a4225d221c96554aaee942",
+      "bytes": 3338
+    },
+    {
+      "id": "ming-audio-cpp-bench-browser-js",
+      "sha256": "58b3ca6a4a09f7aa4ea4d6dd055129dbddf30dc082b6d2935cb48b6fe2b66c69",
+      "bytes": 176974
+    },
+    {
+      "id": "ming-audio-cpp-bench-browser-wasm",
+      "sha256": "4a6fd5bfc10e7afb4fee8e059017fcde715adba7efcd0aa2f7a851137833eee5",
+      "bytes": 6249992
+    },
+    {
+      "id": "ming-audio-cpp-runtime-notices",
+      "sha256": "1fa21b9a25b34aaa2675ca64f5c0631a7a629ddd78b561f730b1c01a110bb688",
+      "bytes": 64076
+    }
+  ],
+  "cells": [
+    {
+      "model": "ming-3.0-tts-0.5b-gguf",
+      "support": {
+        "voiceCount": 117,
+        "bundledVoiceCount": 1,
+        "languageCount": 7,
+        "languages": [
+          "zh",
+          "en",
+          "ja",
+          "ko",
+          "de",
+          "fr",
+          "es"
+        ],
+        "scope": "Named base speakers in the upstream checkpoint catalog. The benchmark adapter exposes one fixed English voice.",
+        "sources": [
+          "https://github.com/inclusionAI/Ming-3.0-tts/blob/e999c39fa676722aaa9ea29b5aa19a90525b271f/cookbooks/instruction_en.md#built-in-premium-voices",
+          "https://huggingface.co/audio-cpp/Ming-3.0-TTS-0.5B-GGUF/blob/2eb8d37c7f10672e69c8aa33091baa04c461b66c/README.md",
+          "https://github.com/0xShug0/audio.cpp/blob/d38518a0d6a7aaab9d3f3dd91e9780c69857b0ac/docs/models/ming3_tts.md"
+        ],
+        "notes": "US_James is the sole benchmarked voice. The count deduplicates named base voices and excludes emotion variants, voice cloning and voice design."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu",
+      "status": "measured",
+      "reason": null,
+      "voice": "US_James built-in voice (English)",
+      "precision": "Q8_0 GGUF; the pinned checkpoint retains a BF16 stop head and F32 speaker encoder.",
+      "settings": {
+        "language": "en",
+        "template": "ip",
+        "voiceId": "US_James",
+        "seed": 1895,
+        "maxTokens": 1000,
+        "guidanceScale": 2,
+        "sigma": 0.25,
+        "temperature": 0,
+        "sampleRate": 44100,
+        "threads": 6,
+        "pthreadPoolSize": 12,
+        "runtimeRelease": "audio-cpp-browser-v3",
+        "modelCache": "Pinned GGUF stored in 16 MiB same-origin CacheStorage ranges keyed by full asset SHA-256, then filled into Emscripten MEMFS; incomplete ranges are rejected. Cache entries can be evicted and fetched again.",
+        "output": "Mono 44.1 kHz Float32 PCM; offline API returns the complete span before first-pcm is emitted.",
+        "executionProviders": [
+          "cpu"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit CPU audio.cpp backend; separate untimed synthesis probe returned finite PCM."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 8091809.525000095,
+          "samples": 46688670,
+          "sampleRate": 44100,
+          "pcmSha256": "25e9d2b50b7f1bcc9e5e78e634815cf5b8e2f45bb6a0c8743ddb24bf1bb752af",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 97427.30000019073,
+            "firstSourceChunkCompletedMs": 97434.74000000954,
+            "audioSeconds": 1058.7,
+            "realTimeFactor": 7.643156252951823,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 7539104.175000191,
+          "samples": 46688670,
+          "sampleRate": 44100,
+          "pcmSha256": "25e9d2b50b7f1bcc9e5e78e634815cf5b8e2f45bb6a0c8743ddb24bf1bb752af",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 91539.09000015259,
+            "firstSourceChunkCompletedMs": 91544.62000012398,
+            "audioSeconds": 1058.7,
+            "realTimeFactor": 7.121095848682526,
+            "minSamplesPerChunk": 370440,
+            "maxSamplesPerChunk": 621810
+          },
+          "audio": {
+            "sha256": "39a1cc6fc8627ba964c5a440326e38df1684aa8168463cb01b2c44951645d9ed",
+            "bytes": 93377384
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-17T13-41-41-057Z-20677a638079; cell 1/1; source 3aaf2d5d54df00c1e7482e141f8e26387c6169e0; requested n=1; effective n=1; Ming Q8_0 GGUF audio-cpp-browser-v3, six threads and US_James. Serial 20,000-character English fixture on an 8-core M1 Pro with 16 GiB RAM, AC power and pinned headed Chrome 157.0.8103.40. The full checkpoint exceeds one billion parameters. Run one excluded full warm-up followed by one timed full article per backend."
+  ]
+}
