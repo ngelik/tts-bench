@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - model: klein-tts-x1.5-pro
-            revision: ba9785f716cf24724e9a9c0a398abdb56efd5e2c
+          - model: linnet-en-35m
+            revision: 7b470f41caf0eeae1a1ad7e71d4064d5e2a715c2
     env:
       MODEL: ${{ matrix.model }}
       REVISION: ${{ matrix.revision }}
