@@ -55,6 +55,18 @@ try {
     let maxTokens = 0;
     let sourceChunkCount = 0;
     let modelUtteranceCount = 0;
+    const assertUtterancePlan = (label, actual, expected, spanId) => {
+      if (!Array.isArray(expected) || actual.length !== expected.length) {
+        throw new Error(`${label} length differs at source span ${spanId}: expected ${expected?.length}, actual ${actual.length}.`);
+      }
+      for (let index = 0; index < actual.length; index++) {
+        for (const field of ['text', 'emotion', 'tokenCount']) {
+          if (actual[index][field] !== expected[index][field]) {
+            throw new Error(`${label} differs at source span ${spanId}, utterance ${index}, field ${field}: expected ${JSON.stringify(expected[index][field])}, actual ${JSON.stringify(actual[index][field])}.`);
+          }
+        }
+      }
+    };
     for (const span of fixture.chunks) {
       const raw = article.slice(span.start, span.end);
       if (await digest(new TextEncoder().encode(raw)) !== span.sha256) throw new Error(`Canonical source span ${span.id} hash mismatch.`);
@@ -69,7 +81,7 @@ try {
         sourceChunkCount++;
         sourcePlan.push({ text: item.text, emotion: item.emotion, tokenCount: count });
       }
-      if (JSON.stringify(sourcePlan) !== JSON.stringify(expected.sourceUtterances)) throw new Error(`Browser 48-token chunk plan differs from official PyTorch frontend at source span ${span.id}.`);
+      assertUtterancePlan('Browser source chunk plan', sourcePlan, expected.sourceUtterances, span.id);
       const modelPlan = [];
       for (const item of splitSilencioModelUtterances(tokenizer, raw, bundle.text)) {
         const prepared = prepareSilencioText(item.text, bundle.text);
@@ -79,7 +91,7 @@ try {
         modelUtteranceCount++;
         modelPlan.push({ text: item.text, emotion: item.emotion, tokenCount: count });
       }
-      if (JSON.stringify(modelPlan) !== JSON.stringify(expected.utterances)) throw new Error(`Browser model-input plan differs from official PyTorch stream frontend at source span ${span.id}.`);
+      assertUtterancePlan('Browser model-input plan', modelPlan, expected.utterances, span.id);
     }
 
     const { createSilencio2Adapter } = await import('/web/adapters/silencio2.mjs');
