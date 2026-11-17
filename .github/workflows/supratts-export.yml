@@ -1,7 +1,5 @@
 name: Export SupraTTS browser graphs
 on:
-  push:
-    branches: [feat/supratts-ondevice]
   workflow_dispatch:
 permissions:
   contents: write
