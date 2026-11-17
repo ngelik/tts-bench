@@ -233,3 +233,11 @@ The pinned checkpoint has two built-in American English voices, F2 and M2, and s
 ### Sopro v2 Turbo
 
 The checkpoint supports English, European Portuguese, French and German. It conditions on an input voice, with zero preset voices and an open-ended number of possible references. This configuration uses one fixed synthetic English reference. [Model card](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Reference and runtime configuration](../web/sopro/NOTICE.md)
+
+<a id="supratts-1.0-preview"></a>
+
+## SupraTTS 1.0 Preview FP32
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned English-only preview checkpoint with one fixed voice and no streaming API. The official checkpoint has 1,031,754 parameters. The browser build uses the official dictionary-first English G2P and NumPy OOV fallback, plus four FP32 opset-17 ONNX graphs derived from the pinned MIT weights. [Small TTS benchmark page](https://erogol.com/small_tts_bench/) · [Pinned model card](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Checkpoint configuration](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json) · [Browser ONNX release and conversion manifest](https://github.com/ngelik/tts-bench/releases/tag/supratts-onnx-v1)
