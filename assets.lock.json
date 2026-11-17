@@ -5995,6 +5995,89 @@
         ],
         "notes": "17 speaker embeddings and four language prefixes in the pinned model.json. The benchmark uses Sarah (af_heart) in English; no other voice or language is exercised."
       }
+    },
+    "linnet-en-35m": {
+      "displayName": "Linnet en-35m (f1)",
+      "modelRevision": "a75fdfe50bc3d3e776b9c5040f149f49a054aaf5",
+      "backends": [
+        "cpu"
+      ],
+      "license": {
+        "model": "Linnet Weights License 1.0",
+        "runtime": "Apache-2.0",
+        "requiresAcceptance": true
+      },
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Linnet en-35m checkpoint with the built-in f1 voice staged for browser inference",
+        "sources": [
+          "https://huggingface.co/VoxRT/linnet-en-35m/blob/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/README.md",
+          "https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281",
+          "https://www.voxrt.com/text-to-speech"
+        ],
+        "notes": "The checkpoint supports two built-in American English voices; only linnet-en-f1 is staged and benchmarked. Voice cloning is outside the included terms."
+      },
+      "runtime": {
+        "package": "voxrt-linnet-browser-wasm",
+        "version": "0.1.1",
+        "license": "Apache-2.0 runtime source; demo WASM license unspecified; no redistribution",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "linnet-en-35m-browser-wasm",
+          "target": "runtimes/linnet-tts/0.1.1/linnet-tts-0.1.1.wasm",
+          "url": "https://voxrt.com/assets/linnet/linnet-tts-0.1.1.wasm",
+          "bytes": 414424,
+          "sha256": "be5fa32785b0aa978bc537ea0241b574d4b83403bb797a6b3fbfa0af3f835cc6",
+          "kind": "runtime"
+        },
+        {
+          "id": "linnet-en-35m-weights-fp16",
+          "target": "models/linnet-en-35m/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/linnet-en-35m.fp16.safetensors",
+          "url": "https://huggingface.co/VoxRT/linnet-en-35m/resolve/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/linnet-en-35m.fp16.safetensors",
+          "bytes": 83075620,
+          "sha256": "af8186a83611498ddaf162d773d1318b13a0222a49f896c1ae05da00ecbce823",
+          "kind": "model-weights"
+        },
+        {
+          "id": "linnet-en-35m-tokenizer",
+          "target": "models/linnet-en-35m/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/tokenizer.model",
+          "url": "https://huggingface.co/VoxRT/linnet-en-35m/resolve/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/tokenizer.model",
+          "bytes": 102075,
+          "sha256": "359994b0d226d0aa0b13d3a8401d6ad064ef2605b338ab7283bc64a67696850d",
+          "kind": "model-support"
+        },
+        {
+          "id": "linnet-en-35m-f1-voice",
+          "target": "models/linnet-en-35m/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/voices/linnet-en-f1.npy",
+          "url": "https://huggingface.co/VoxRT/linnet-en-35m/resolve/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/voices/linnet-en-f1.npy",
+          "bytes": 14720,
+          "sha256": "fa3496447599a5a2f8075168c9795b8b8dc3f30490a35c0b4ad79c5aaf376145",
+          "kind": "voice"
+        },
+        {
+          "id": "linnet-en-35m-weights-license",
+          "target": "licenses/linnet-en-35m/WEIGHTS_LICENSE.md",
+          "url": "https://github.com/VoxRT/LinnetTTS/releases/download/weights-v1/WEIGHTS_LICENSE.md",
+          "bytes": 20920,
+          "sha256": "4d9b7f1ac6f0dba77f783647b6da4d0ba3359fddf23bef7565f05fc5bc634795",
+          "kind": "license"
+        },
+        {
+          "id": "linnet-runtime-license",
+          "target": "licenses/linnet-tts-0.2.0/LICENSE",
+          "url": "https://raw.githubusercontent.com/VoxRT/LinnetTTS/f3d3f68cbd8b7d07380d11c82bf75af06bc41281/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        }
+      ]
     }
   }
 }
