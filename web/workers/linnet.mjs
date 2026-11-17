@@ -6,7 +6,7 @@ const REVISION = 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5';
 const MODEL_ROOT = `/models/${MODEL}/${REVISION}/`;
 const WASM_URL = '/runtimes/linnet-tts/0.1.1/linnet-tts-0.1.1.wasm';
 const GPU_PROBE_WASM_URL = '/runtimes/linnet-tts/0.1.1/linnet-tts-webgpu-probe.wasm';
-const GPU_PROBE_WASM_CACHE_VERSION = 'linnet-v0.1.1-webgpu-probe-29dfdd503a3930e4e36c1130e4c9aab0592201ca';
+const GPU_PROBE_WASM_CACHE_VERSION = '29dfdd503a3930e4e36c1130e4c9aab0592201ca';
 const WEBGPU_MIN_MACS = 32 * 1024;
 const PRESET_VOICE = 'linnet-en-f1';
 const PARAMETERS = Object.freeze({ temperature: 0.3, cfg: 2.0, seed: 0 });
@@ -130,7 +130,7 @@ async function load({ webgpu = false } = {}) {
   const url = webgpu ? GPU_PROBE_WASM_URL : WASM_URL;
   const cacheVersion = webgpu ? GPU_PROBE_WASM_CACHE_VERSION : REVISION;
   try { response = await fetchModelAsset(url, cacheVersion); }
-  catch (error) { throw new Error('Failed to fetch official Linnet WASM: ' + (error?.message ?? String(error))); }
+  catch (error) { throw new Error('Failed to fetch Linnet WASM: ' + (error?.message ?? String(error))); }
   if (!response.ok) throw new Error('Official Linnet WASM could not be loaded (HTTP ' + response.status + ')');
   const wasmBytes = await response.arrayBuffer();
   const imports = webgpu ? { env: { linnet_gpu_dispatch: linnetGpuDispatch } } : {};
