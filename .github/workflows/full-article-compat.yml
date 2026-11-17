@@ -1,0 +1,77 @@
+name: Five-family browser article verification
+on:
+  push:
+    branches: ['verification/erogol-full-article']
+    paths: ['.github/workflows/full-article-compat.yml']
+permissions:
+  contents: read
+jobs:
+  article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 140
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - model: sopro-v2-turbo
+            revision: 37fa12d505a3691f783fbbe34f4628c55bde9ca1
+          - model: supratts-1.0-preview
+            revision: 60565a58e6c3240c14a21b462c5f8fd9435ba924
+    env:
+      MODEL: ${{ matrix.model }}
+      REVISION: ${{ matrix.revision }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ matrix.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node bin/bench.mjs assets fetch --model "$MODEL" --accept-license
+      - name: Generate the complete English article inside headed Chrome
+        run: |
+          test "$(git rev-parse HEAD)" = "$REVISION"
+          xvfb-run -a node bin/bench.mjs run --model "$MODEL" --backend cpu --scenario cached --repetitions 1 --timeout-minutes 125 --accept-license --machine 'GitHub hosted Linux x64 / full-article compatibility check' --note 'Fresh complete-article output on hosted Linux. Separately queued Apple M1 Pro warm scores use the registered protocol.' | tee "$RUNNER_TEMP/test-output.txt"
+      - name: Validate receipt and actual WAV
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,math,os,shutil,wave
+          from pathlib import Path
+          path,=Path('runs').glob('*/result.json')
+          doc=json.loads(path.read_bytes())
+          cell,=doc['cells']
+          assert doc['source']['gitCommit']==os.environ['REVISION'] and not doc['source']['dirty']
+          assert doc['fixture']['sha256']=='4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b'
+          assert doc['fixture']['characters']==20000 and doc['fixture']['chunks']==93
+          assert not doc['environment']['headless'] and not doc['protocol']['smoke'] and doc['protocol']['repetitions']==1
+          assert cell['status']=='measured',cell.get('reason')
+          assert cell['model']==os.environ['MODEL'] and cell['backendEffective'] in ('cpu','cpu/wasm','wasm')
+          t,=cell['trials']
+          assert t['validation']['finitePcm'] and t['validation']['nonemptyChunks'] and t['validation']['chunkCount']==93
+          if t['validation'].get('waveform'):
+              v=t['validation']['waveform']; assert v['passed'] and len(v['spans'])==93
+          wav,=path.parent.glob('*.wav')
+          with wav.open('rb') as f: assert hashlib.file_digest(f,'sha256').hexdigest()==t['audio']['sha256']
+          out=Path(os.environ['RUNNER_TEMP'])/'verified-article';out.mkdir()
+          with wave.open(str(wav)) as w:
+              assert (w.getnframes(),w.getframerate(),w.getnchannels(),w.getsampwidth())==(t['samples'],t['sampleRate'],1,2)
+              with wave.open(str(out/'example.wav'),'wb') as clip:
+                  clip.setparams(w.getparams());clip.writeframes(w.readframes(min(w.getnframes(),30*w.getframerate())))
+          shutil.copyfile(wav,out/'full.wav');shutil.copyfile(path,out/'result.json')
+          info={'model':cell['model'],'source':doc['source']['gitCommit'],'platform':doc['environment']['machineLabel'],
+              'status':cell['status'],'protocol':doc['protocol'],'spans':t['validation']['chunkCount'],
+              'generationSeconds':t['generationMs']/1000,'audioSeconds':t['samples']/t['sampleRate'],'fullWav':t['audio']}
+          (out/'verification.json').write_text(json.dumps(info,indent=2)+'\n')
+          print(json.dumps(info))
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: hosted-article-${{ matrix.model }}
+          path: ${{ runner.temp }}/verified-article/
+          retention-days: 7
+      - name: Show terminal errors
+        if: failure()
+        run: find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \; || true
