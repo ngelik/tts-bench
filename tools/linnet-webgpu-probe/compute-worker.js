@@ -1,5 +1,3 @@
-const gpuWorker = new Worker('/tools/linnet-webgpu-probe/gpu-worker.js');
-
 self.onmessage = event => {
   const { m, k, n, lhs, rhs } = event.data;
   try {
@@ -14,8 +12,7 @@ self.onmessage = event => {
     new Float32Array(lhsBuffer).set(lhs);
     new Float32Array(rhsBuffer).set(rhs);
 
-    self.postMessage({ phase: 'gpu-request-posted', stateBuffer, outputBuffer });
-    gpuWorker.postMessage({ m, k, n, stateBuffer, errorBuffer, lhsBuffer, rhsBuffer, outputBuffer });
+    self.postMessage({ type: 'gpu-request', request: { m, k, n, stateBuffer, errorBuffer, lhsBuffer, rhsBuffer, outputBuffer } });
     const wait = Atomics.wait(new Int32Array(stateBuffer), 0, 0, 30000);
     const state = Atomics.load(new Int32Array(stateBuffer), 0);
     if (wait === 'timed-out' && state !== 1) throw new Error(`GPU worker did not finish before the synchronous bridge timeout (state=${state}).`);

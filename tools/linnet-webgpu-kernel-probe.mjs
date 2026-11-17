@@ -173,17 +173,33 @@ try {
     }
     if (directError > 0.0002) throw new Error(`Standalone WebGPU worker differs from CPU by ${directError}`);
     const bridged = await new Promise((resolve, reject) => {
-      const worker = new Worker('/tools/linnet-webgpu-probe/compute-worker.js');
-      worker.onmessage = ({ data }) => {
-        if (data.phase) return;
-        worker.terminate();
-        data.ok ? resolve(data) : reject(new Error(data.error));
-      };
-      worker.onerror = event => {
-        worker.terminate();
+      const gpuWorker = new Worker('/tools/linnet-webgpu-probe/gpu-worker.js');
+      const computeWorker = new Worker('/tools/linnet-webgpu-probe/compute-worker.js');
+      const cleanup = () => { gpuWorker.terminate(); computeWorker.terminate(); };
+      const timer = setTimeout(() => {
+        cleanup();
+        reject(new Error('Synchronous model-worker/GPU-sibling bridge timed out.'));
+      }, 12000);
+      gpuWorker.onerror = event => {
+        clearTimeout(timer);
+        cleanup();
         reject(new Error(event.message));
       };
-      worker.postMessage({ m: 1, k: 64, n: 32, lhs, rhs });
+      computeWorker.onmessage = ({ data }) => {
+        if (data.type === 'gpu-request') {
+          gpuWorker.postMessage(data.request);
+          return;
+        }
+        clearTimeout(timer);
+        cleanup();
+        data.ok ? resolve(data) : reject(new Error(data.error));
+      };
+      computeWorker.onerror = event => {
+        clearTimeout(timer);
+        cleanup();
+        reject(new Error(event.message));
+      };
+      computeWorker.postMessage({ m: 1, k: 64, n: 32, lhs, rhs });
     });
     let bridgeError = 0;
     for (let col = 0; col < 32; col++) {
