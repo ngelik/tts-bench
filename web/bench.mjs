@@ -1,4 +1,6 @@
+import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
+import { createLinnetAdapter } from './adapters/linnet.mjs';
 import { createMingAdapter } from './adapters/ming.mjs';
 import { createMingGgufAdapter } from './adapters/audio-cpp-gguf.mjs';
 import { createAudio8Adapter } from './adapters/audio8.mjs';
@@ -20,14 +22,18 @@ import { createMMSAdapter } from './adapters/mms.mjs';
 import { createKittenAdapter } from './adapters/kitten.mjs';
 
 import { createSanoAdapter } from './adapters/sano.mjs';
+import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
 import { createInflectAdapter } from './adapters/inflect.mjs';
 import { createSilencio2Adapter } from './adapters/silencio2.mjs';
+import { createKleinAdapter } from './adapters/klein.mjs';
 
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
 const FACTORIES = {
+  'sopro-v2-turbo': createSoproAdapter,
   'tiny-voca': createTinyVocaAdapter,
+  'linnet-en-35m': createLinnetAdapter,
   'ming-3.0-tts-0.5b-fusor-mix-cpu': createMingAdapter,
   'ming-3.0-tts-0.5b-gguf': createMingGgufAdapter,
   'audio8-realistic-0.6b-int4': createAudio8Adapter,
@@ -50,8 +56,10 @@ const FACTORIES = {
   'mms-english': createMMSAdapter,
   'kitten-nano-0.8': createKittenAdapter,
   'sano-amy': createSanoAdapter,
+  'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
   'silencio-2': createSilencio2Adapter,
+  'klein-tts-x1.5-pro': createKleinAdapter,
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
 let canonical = null;

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "ba9785f716cf24724e9a9c0a398abdb56efd5e2c",
+  "conditions": "Apple M1 Pro, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40, on AC power. Sequential CPU then WebGPU order; cached RSS diagnostics follow warm timings.",
+  "cells": [
+    {
+      "model": "klein-tts-x1.5-pro",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5
+    },
+    {
+      "model": "klein-tts-x1.5-pro",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5
+    },
+    {
+      "model": "klein-tts-x1.5-pro",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true
+    },
+    {
+      "model": "klein-tts-x1.5-pro",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true
+    }
+  ]
+}

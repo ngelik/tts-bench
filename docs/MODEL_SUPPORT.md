@@ -241,3 +241,35 @@ The base cookbook lists 117 named voices. Fusor's pinned WASM runtime enumerates
 ## Tiny Voca 4.5M
 
 The pinned checkpoint has two built-in American English voices, F2 and M2, and supports one language. The benchmark uses F2 (speaker ID 0). [Model card](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md) · [Export configuration](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json)
+
+<a id="sopro-v2-turbo"></a>
+
+### Sopro v2 Turbo
+
+The checkpoint supports English, European Portuguese, French and German. It conditions on an input voice, with zero preset voices and an open-ended number of possible references. This configuration uses one fixed synthetic English reference. [Model card](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Reference and runtime configuration](../web/sopro/NOTICE.md)
+
+<a id="supratts-1.0-preview"></a>
+
+## SupraTTS 1.0 Preview FP32
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned English-only preview checkpoint with one fixed voice and no streaming API. The official checkpoint has 1,031,754 parameters. The browser build uses the official dictionary-first English G2P and NumPy OOV fallback, plus four FP32 opset-17 ONNX graphs derived from the pinned MIT weights. [Small TTS benchmark page](https://erogol.com/small_tts_bench/) · [Pinned model card](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Checkpoint configuration](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json) · [Browser ONNX release and conversion manifest](https://github.com/ngelik/tts-bench/releases/tag/supratts-onnx-v1)
+
+<a id="klein-tts-x1.5-pro"></a>
+
+## Klein-TTS X1.5 Pro FP32
+
+Supported voices: **17**. Bundled voices: **17**. Supported languages: **4** (en, es, fr, it).
+
+The pinned `model.json` lists 17 speaker embeddings with language prefixes for English, Spanish, French and Italian. The benchmark exercises Sarah (`af_heart`) in English only. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json)
+
+<a id="linnet-en-35m"></a>
+
+## Linnet en-35m (f1)
+
+Supported voices: **2**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned English checkpoint with two built-in American English synthetic voices. Only `linnet-en-f1` is staged and benchmarked. Voice cloning is outside the included terms. The official VoxRT WASM 0.1.1 demo runtime executes on one CPU thread with SIMD128; WebGPU is not registered. The demo-specific binding is not separately licensed in source, so asset fetching uses its pinned official URL and the binary is not committed or publicly rehosted. If VoxRT removes that artifact, reproduction is blocked pending a source-built authorized browser binding.
+
+[Pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35m/tree/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5) · [Runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) · [Browser runtime details](https://www.voxrt.com/text-to-speech).

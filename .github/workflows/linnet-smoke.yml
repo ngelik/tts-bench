@@ -1,0 +1,58 @@
+name: Linnet CPU/WASM Chrome smoke
+on:
+  pull_request:
+    paths:
+      - 'assets.lock.json'
+      - 'web/adapters/linnet.mjs'
+      - 'web/linnet/**'
+      - 'web/workers/linnet.mjs'
+      - 'web/bench.mjs'
+      - 'docs/LICENSING.md'
+      - '.github/workflows/linnet-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Fetch the SHA-pinned official runtime and Linnet assets
+        run: npm run assets -- fetch --model linnet-en-35m --accept-license
+      - name: Verify official asset pins
+        run: npm run assets -- verify --model linnet-en-35m --accept-license
+      - name: Run a short real Chrome CPU/WASM inference diagnostic
+        run: xvfb-run -a node bin/bench.mjs run --model linnet-en-35m --backend cpu --scenario offline --smoke --accept-license --machine 'GitHub-hosted Chrome diagnostic'
+      - name: Verify nonempty PCM from the real model
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync, readdirSync } from 'node:fs';
+          const ids = readdirSync('runs').filter(id => !id.startsWith('.'));
+          assert.equal(ids.length, 1, 'Expected exactly one diagnostic run');
+          const receipt = JSON.parse(readFileSync(`runs/${ids[0]}/result.json`, 'utf8'));
+          assert.equal(receipt.protocol.smoke, true);
+          assert.equal(receipt.protocol.scenario, 'offline');
+          const [cell] = receipt.cells;
+          assert.equal(cell.model, 'linnet-en-35m');
+          assert.equal(cell.backendRequested, 'cpu');
+          assert.equal(cell.status, 'measured', cell.reason);
+          assert.equal(cell.trials.length, 1);
+          const trial = cell.trials[0];
+          assert.equal(trial.sampleRate, 24000);
+          assert.equal(trial.validation.finitePcm, true);
+          assert.ok(trial.samples > 0);
+          assert.ok(trial.metrics.firstPcmMs > 0);
+          JS
+      - name: Show failure evidence
+        if: failure()
+        run: find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \;

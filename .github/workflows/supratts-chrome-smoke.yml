@@ -1,0 +1,40 @@
+name: SupraTTS hosted Chrome CPU smoke
+on:
+  push:
+    branches: [feat/supratts-ondevice]
+    paths:
+      - '.github/workflows/supratts-chrome-smoke.yml'
+      - 'assets.lock.json'
+      - 'web/adapters/supratts.mjs'
+      - 'web/bench.mjs'
+      - 'web/supratts/fft.mjs'
+      - 'web/workers/supratts.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: supratts-hosted-chrome-cpu-smoke
+  cancel-in-progress: false
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node bin/bench.mjs assets fetch --model supratts-1.0-preview
+      - name: Run short diagnostic in headed Google Chrome
+        run: >-
+          xvfb-run -a node bin/bench.mjs run
+          --model supratts-1.0-preview
+          --backend cpu
+          --smoke
+          --machine 'GitHub hosted Ubuntu 24.04'
+          --chrome /usr/bin/google-chrome
+          --timeout-minutes 20

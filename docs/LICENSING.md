@@ -22,6 +22,7 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Piper official browser files and eSpeak data | `rhasspy/piper-samples` at `da672d1157136d07365790f51da3357a17cf9650` has no separate license file in its pinned tree. Its JavaScript, WebAssembly, and data bundle remain in the ignored local cache; do not redistribute the runtime. The eSpeak NG COPYING file is staged for reference, but it does not establish terms for the overall browser bundle. |
 | Supertonic 3 model and preset voice styles | OpenRAIL-M at the pinned revision; use-based restrictions apply. The licensor claims no rights in outputs except as stated in the license, and users remain responsible for outputs and their uses. Model/voice assets remain in the ignored cache. |
 | Adapted official Supertonic browser helper | MIT, Supertone Inc.; retained license and exact source/change record in `web/supertonic/`. |
+| Klein-TTS X1.5 Pro | Apache-2.0 model card and weights | The browser adapter is a disclosed port of the Apache-2.0 Node package. Misaki G2P/English dictionary and `phonemizer.js` are Apache-2.0; eSpeak NG is GPL-3.0-or-later; ONNX Runtime Web is MIT with third-party notices. See [`web/klein/NOTICE.md`](../web/klein/NOTICE.md). |
 | ONNX Runtime Web | MIT, with third-party notices |
 | Silencio-2 weights, converted ONNX graphs and model-bound voice-260 state | CC-BY-4.0 at the pinned model revision; retain BlueRose Labs, Kyutai Pocket TTS and Basis Global Emotions attribution. The fixed bundled synthetic voice is not a user-supplied voice-cloning input. Follow the model card's permission, anti-impersonation and synthetic-speech disclosure guidance. |
 | Silencio-2 upstream inference source | MIT in `silencio2/core`; exporter attribution and source pins are in `tools/silencio2/NOTICE.md`. |
@@ -163,3 +164,36 @@ The inclusionAI model and Fusor runtime carry MIT licenses. The original usage d
 ### Tiny Voca 4.5M
 
 The code and model weights are Apache-2.0. The training dataset is CC BY 4.0. The benchmark uses the released F2 synthetic voice. The pinned Dizione source archive includes its Apache-2.0 license. The model assets include separate CMUdict and homograph-data notices. ONNX Runtime Web is MIT. The Pyodide distribution uses MPL-2.0, CPython uses its PSF license, and the NumPy wheel includes its BSD and bundled component notices. [Model and dataset terms](https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/README.md#license) · [Dizione license](https://github.com/n4ze3m/dizione/blob/f8629fe989f3d0db5f440f9b3c6f0154f2e6110f/LICENSE) · [Runtime configuration and source](../web/tiny-voca/NOTICE.md)
+
+## Sopro v2 Turbo
+
+Sopro's code and model weights are Apache-2.0. ONNX Runtime Web is MIT and has bundled third-party notices. The fixed reference is the benchmark’s own published Tiny Voca synthetic F2 audio, generated from the benchmark article, and credited with the output. [Model terms](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Runtime, prompt and modifications](../web/sopro/NOTICE.md)
+
+### Linnet en-35m
+
+The pinned [Linnet Weights License 1.0](https://github.com/VoxRT/LinnetTTS/releases/download/weights-v1/WEIGHTS_LICENSE.md)
+is not open-source. It allows benchmarking, testing, CI and distributing generated
+outputs, but forbids general-purpose TTS services, custom voice creation, model
+training and distributing the licensed weights outside the terms in the license.
+This registration uses fictional fixed fixture text and the built-in `f1` voice;
+it performs no cloning or training. FP16 parameters are widened to FP32 only in
+WASM memory for the SIMD128 runtime and are not persisted. The 83 MB weights,
+tokenizer and voice stay in ignored local storage and are downloaded from the
+pinned VoxRT release. Use `--accept-license` after reading the staged terms.
+
+The official VoxRT browser WASM 0.1.1 binary supplies CPU/WebAssembly SIMD128
+inference and is fetched directly from VoxRT's public deployment into ignored
+local storage. VoxRT's Rust runtime source is Apache-2.0, but the demo-specific
+browser binding is not separately licensed in the source tree. Do not commit,
+mirror or publicly rehost that binary or its demo JavaScript. Its public URL and
+SHA-256 are pinned; asset fetching fails if the bytes change. If VoxRT removes
+the hosted file, reproduction is blocked until an authorized source-built
+browser binding becomes available. The benchmark adapter and safetensors memory
+conversion are original project code; no model weights or voice files are committed.
+Show both required notices with the documentation and any published sample:
+**“Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0”**
+and **“Powered by Linnet (VoxRT)”**.
+
+Sources: [pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35m/tree/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5) ·
+[Apache-2.0 runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) ·
+[official browser runtime and platform notes](https://www.voxrt.com/text-to-speech).

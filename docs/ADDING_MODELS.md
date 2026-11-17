@@ -189,3 +189,19 @@ in `7:10 each`; the upstream regex joins `seven teneach`. All 93 spans pass real
 browser phonemization without unknown symbols or truncation; maximum padded
 input is 477 tokens. Duration and decoder outputs are CPU-readable, including
 WebGPU intermediate readback. See [source/change notice](../web/inflect/NOTICE.md).
+
+## Klein-TTS X1.5 Pro
+
+No official browser runtime was verified. The adapter ports the pinned X1.5 Pro
+ONNX graph contract from `@kleinml/kleintts@0.2.0` to ONNX Runtime Web 1.23.2.
+Its English frontend adapts the package's Apache-2.0 Misaki port and pinned
+dictionary, with the repository's same-origin browser eSpeak package for unknown
+English words. Since that runtime emits no optional tie marks, explicit IPA
+normalizations map affected diphthongs and affricates into the model's alphabet.
+Unknown model symbols throw. Every phoneme sequence is validated against the
+pinned vocabulary; if it exceeds 510 tokens, source words are split and
+re-phonemized instead of silently truncating. This protects canonical text
+coverage but can differ from the Node wrapper's frontend behavior. One-thread
+WASM is used for CPU; WebGPU uses WebGPU with WASM fallback and must demonstrate
+dispatch separately. G2P and output PCM readback include CPU work. See [source
+and change notice](../web/klein/NOTICE.md).

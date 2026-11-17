@@ -1,0 +1,12 @@
+@kleinml/kleintts
+Copyright 2026 Klein ML
+
+This package includes the US English pronunciation dictionaries from misaki (https://github.com/hexgrad/misaki),
+Apache-2.0, in data/en_us_lexicon.json.gz, and a JavaScript port of parts of misaki's English lookup rules in
+src/g2p.js.
+
+Phonemes for French, Italian, Spanish and unknown English words come from eSpeak NG, used through the separate
+`espeak-ng` npm package (GPL-3.0-or-later). eSpeak NG is not included in this package; it is installed as a
+dependency under its own license.
+
+The model weights in models/ are the Klein-TTS X1.5 Flash and Flash Lite checkpoints, exported to ONNX.
