@@ -210,6 +210,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Voca 4.5M | 2 | 2 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#tiny-voca) |
 | Sopro v2 Turbo | Unknown | 0 | 4 (en, pt, fr, de) | [Details](docs/MODEL_SUPPORT.md#sopro-v2-turbo) |
 | SupraTTS 1.0 Preview FP32 | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#supratts-1.0-preview) |
+| Klein-TTS X1.5 Pro FP32 | 17 | 17 | 4 (en, es, fr, it) | [Details](docs/MODEL_SUPPORT.md#klein-tts-x1.5-pro) |
 
 ### Controlled native comparisons
 

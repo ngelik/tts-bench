@@ -22,6 +22,7 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Piper official browser files and eSpeak data | `rhasspy/piper-samples` at `da672d1157136d07365790f51da3357a17cf9650` has no separate license file in its pinned tree. Its JavaScript, WebAssembly, and data bundle remain in the ignored local cache; do not redistribute the runtime. The eSpeak NG COPYING file is staged for reference, but it does not establish terms for the overall browser bundle. |
 | Supertonic 3 model and preset voice styles | OpenRAIL-M at the pinned revision; use-based restrictions apply. The licensor claims no rights in outputs except as stated in the license, and users remain responsible for outputs and their uses. Model/voice assets remain in the ignored cache. |
 | Adapted official Supertonic browser helper | MIT, Supertone Inc.; retained license and exact source/change record in `web/supertonic/`. |
+| Klein-TTS X1.5 Pro | Apache-2.0 model card and weights | The browser adapter is a disclosed port of the Apache-2.0 Node package. Misaki G2P/English dictionary and `phonemizer.js` are Apache-2.0; eSpeak NG is GPL-3.0-or-later; ONNX Runtime Web is MIT with third-party notices. See [`web/klein/NOTICE.md`](../web/klein/NOTICE.md). |
 | ONNX Runtime Web | MIT, with third-party notices |
 
 The small Apache-2.0 frontend source files in `web/paradee/` retain separate
