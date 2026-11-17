@@ -13,10 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - model: sopro-v2-turbo
-            revision: 37fa12d505a3691f783fbbe34f4628c55bde9ca1
-          - model: supratts-1.0-preview
-            revision: 60565a58e6c3240c14a21b462c5f8fd9435ba924
+          - model: klein-tts-x1.5-pro
+            revision: ba9785f716cf24724e9a9c0a398abdb56efd5e2c
     env:
       MODEL: ${{ matrix.model }}
       REVISION: ${{ matrix.revision }}
