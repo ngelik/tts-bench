@@ -1,4 +1,4 @@
-const DEFAULT_RUNTIME_VERSION = 'audio-cpp-zonos3-cpu-wasm-v1';
+const DEFAULT_RUNTIME_VERSION = 'audio-cpp-zonos3-cpu-wasm-v2';
 const DEFAULT_THREADS = 6;
 const MAX_THREADS = 12;
 const WORKER_URL = new URL('../workers/zonos3-cpu.js', import.meta.url);

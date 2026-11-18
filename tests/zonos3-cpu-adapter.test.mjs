@@ -8,10 +8,10 @@ const model = {
   id: 'zonos3-mini',
   name: 'ZONOS3-Mini',
   family: 'zonos3',
-  cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v1',
+  cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v2',
   cpuRuntimeFiles: {
-    jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.js',
-    wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.wasm',
+    jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.js',
+    wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.wasm',
   },
   cpuAssets: {
     backbone: { modelUrl: '/models/zonos3/backbone-ptq.gguf', filename: 'backbone-ptq.gguf', bytes: 100, sha256: 'a'.repeat(64) },
@@ -104,7 +104,7 @@ test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', ()
 });
 
 test('ZONOS3 CPU worker verifies local range assets and reports the actual offline CPU backend', () => {
-  assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v1/);
+  assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v2/);
   assert.match(workerSource, /requireAsset\(assets\.backbone, 'backbone-ptq\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.decoder, 'zac-keep2\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.speakerEncoder, 'spk-encoder\.gguf'\)/);

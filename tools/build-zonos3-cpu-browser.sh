@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
-OUTPUT_ARG="${1:-$ROOT/.cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1}"
+OUTPUT_ARG="${1:-$ROOT/.cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2}"
 OUTPUT="$(mkdir -p "$(dirname "$OUTPUT_ARG")" && cd "$(dirname "$OUTPUT_ARG")" && pwd -P)/$(basename "$OUTPUT_ARG")"
 CACHE="$(cd "${ZONOS3_CPU_CACHE:-$ROOT/.cache/zonos3-cpu-build}" 2>/dev/null && pwd -P || { mkdir -p "${ZONOS3_CPU_CACHE:-$ROOT/.cache/zonos3-cpu-build}"; cd "${ZONOS3_CPU_CACHE:-$ROOT/.cache/zonos3-cpu-build}" && pwd -P; })"
 SOURCE_PIN="749fffec6ad4a763520388a4240cd24e08a0a2bf"
