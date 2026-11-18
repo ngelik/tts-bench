@@ -16,7 +16,7 @@ compiles only the `zonos3` family with CPU/WASM execution.
 Rebuild on Linux with:
 
 ```sh
-bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1
+bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2
 ```
 
 The builder checks both source revisions, emits `bench_zonos3_cpu.js`,

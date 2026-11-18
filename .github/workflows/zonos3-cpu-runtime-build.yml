@@ -27,11 +27,11 @@ jobs:
         with:
           node-version: '22'
       - name: Build pinned CPU-only Emscripten runtime
-        run: bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1
+        run: bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2
       - name: Preserve runtime artifacts and exact digests
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: zonos3-cpu-wasm-runtime
           if-no-files-found: error
           include-hidden-files: true
-          path: .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1/
+          path: .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2/
