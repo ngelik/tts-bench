@@ -127,6 +127,7 @@ test('ZONOS3 CPU worker verifies local range assets and reports the actual offli
 test('ZONOS3 CPU bridge rejects truncated or internally split generation output', async () => {
   const bridge = await readFile(new URL('../web/zonos3-cpu/bench_bridge.cpp', import.meta.url), 'utf8');
   assert.match(bridge, /audiocpp_result_custom_schema\(result, &schema, &data\)/);
+  assert.ok(bridge.indexOf('audiocpp_request_free(request);') < bridge.indexOf('audiocpp_result_custom_schema(result, &schema, &data)'), 'request is freed before metadata checks can return early');
   assert.match(bridge, /zonos3_generation_v1/);
   assert.match(bridge, /metadata\.require\("frames"\)\.as_i64\(\) <= 0/);
   assert.match(bridge, /metadata\.require\("chunks"\)\.as_i64\(\) != 1/);
