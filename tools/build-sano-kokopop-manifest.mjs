@@ -44,7 +44,15 @@ for (const filename of files) {
   const destination = filename.startsWith('LICENSE') ? resolve(projectRoot, '.cache/public', target) : resolve(stage, filename);
   await mkdir(dirname(destination), { recursive: true });
   await copyFile(path, destination);
-  if (!filename.startsWith('LICENSE')) await copyFile(path, resolve(out, filename));
+  if (filename.startsWith('LICENSE')) {
+    // Keep the license sidecars inside the same CI artifact as the generated
+    // model/runtime. Their artifact paths exactly match the locked targets.
+    const artifactPath = resolve(out, target);
+    await mkdir(dirname(artifactPath), { recursive: true });
+    await copyFile(path, artifactPath);
+  } else {
+    await copyFile(path, resolve(out, filename));
+  }
   const entry = { filename, target, bytes: bytes.length, sha256, ...(filename === 'kokopop-runtime.data' ? { license: 'GPL-3.0-or-later eSpeak NG language data' } : {}) };
   if (filename.startsWith('LICENSE')) licenseFiles.push(entry);
   else runtimeFiles.push(entry);

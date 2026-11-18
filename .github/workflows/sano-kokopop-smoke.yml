@@ -35,6 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
           fetch-depth: 0
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -97,7 +98,7 @@ jobs:
       - run: node --test tests/sano-kokopop-adapter.test.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: sano-kokopop-runtime-and-model-${{ github.sha }}
+          name: sano-kokopop-runtime-and-model-${{ github.event.pull_request.head.sha || github.sha }}
           if-no-files-found: error
           path: .cache/sano-kokopop-build/release/
           retention-days: 14
@@ -109,6 +110,7 @@ jobs:
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
           fetch-depth: 0
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -118,7 +120,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          name: sano-kokopop-runtime-and-model-${{ github.sha }}
+          name: sano-kokopop-runtime-and-model-${{ github.event.pull_request.head.sha || github.sha }}
           path: .cache/sano-kokopop-build/release
       - name: Stage only the locked runtime and model for local browser fetch
         run: |
@@ -134,7 +136,7 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: sano-kokopop-browser-smoke-${{ github.sha }}
+          name: sano-kokopop-browser-smoke-${{ github.event.pull_request.head.sha || github.sha }}
           path: .cache/sano-kokopop-browser-evidence/
           if-no-files-found: warn
           retention-days: 14
