@@ -1,12 +1,24 @@
 name: SupraTTS hosted Chrome CPU smoke
 on:
-  push:
-    branches: [feat/supratts-ondevice]
+  pull_request:
     paths:
       - '.github/workflows/supratts-chrome-smoke.yml'
       - 'assets.lock.json'
+      - 'tests/supratts-session-loader.test.mjs'
       - 'web/adapters/supratts.mjs'
       - 'web/bench.mjs'
+      - 'web/supratts/session-loader.mjs'
+      - 'web/supratts/fft.mjs'
+      - 'web/workers/supratts.mjs'
+  push:
+    branches: [main, feat/supratts-ondevice]
+    paths:
+      - '.github/workflows/supratts-chrome-smoke.yml'
+      - 'assets.lock.json'
+      - 'tests/supratts-session-loader.test.mjs'
+      - 'web/adapters/supratts.mjs'
+      - 'web/bench.mjs'
+      - 'web/supratts/session-loader.mjs'
       - 'web/supratts/fft.mjs'
       - 'web/workers/supratts.mjs'
   workflow_dispatch:
@@ -28,6 +40,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Verify ONNX graph sessions initialize sequentially
+        run: node --test tests/supratts-session-loader.test.mjs
       - run: node bin/bench.mjs assets fetch --model supratts-1.0-preview
       - name: Run short diagnostic in headed Google Chrome
         run: >-

@@ -1,6 +1,7 @@
 import { fetchModelAsset } from '../cache-model-asset.mjs';
 import { observeComputeDispatches, requestHardwareWebGpuAdapter } from '../piper/webgpu.mjs';
 import { dcBlock, inverseStft } from '../supratts/fft.mjs';
+import { createInferenceSessionsSequentially } from '../supratts/session-loader.mjs';
 
 const REVISION = '80a6b0bd13c92e30e88b0c22183be9c2bdc7061c';
 const MODEL_ROOT = '/models/supratts-1.0-preview/' + REVISION + '/';
@@ -350,11 +351,12 @@ async function loadOrt(backend, adapter) {
   if (backend === 'webgpu') ort.env.webgpu.adapter = adapter;
   activeProvider = backend === 'cpu' ? ['wasm'] : ['webgpu', 'wasm'];
   const modelFiles = await Promise.all(MODEL_FILE_NAMES.map(name => modelBytes('onnx/' + name)));
-  sessions = await Promise.all(modelFiles.map(bytes => ort.InferenceSession.create(bytes, {
+  sessions = [];
+  await createInferenceSessionsSequentially(modelFiles, bytes => ort.InferenceSession.create(bytes, {
     executionProviders: activeProvider,
     graphOptimizationLevel: 'all',
     executionMode: 'sequential',
-  })));
+  }), sessions);
 }
 
 async function initialize({ backend, probe, probeText }) {
