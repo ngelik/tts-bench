@@ -43,7 +43,7 @@ const expectedGeneration = (models, backend) => models.filter(model => eligibleW
 const expectedMemory = (models, backend) => models.filter(model => eligibleMemory(model.memory[backend]));
 const expectedAudioEntries = expected.models.flatMap(model => model.audio);
 const flaggedAudioPaths = new Set(expectedAudioEntries.filter(entry => matchesAuditedWav(entry.full.sha256)).map(entry => entry.clip.path));
-const errors = [], external = [], failedResponses = [];
+const errors = [], external = [], failedResponses = [], mediaResponses = [];
 const review = '.cache/dashboard-review';
 const waveformBadge = row => row.locator('button.output-warning').filter({hasText:'Waveform fault'});
 let mobileFilterWidths = null;
@@ -79,8 +79,15 @@ try {
   browser = await chromium.launch({executablePath:await findChrome(), headless:false});
   const page = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
   page.on('pageerror', e => errors.push(String(e)));
+  page.on('console', message => {if (message.type() === 'error') errors.push(`console: ${message.text()} ${JSON.stringify(message.location())}`);});
   page.on('request', r => {if (new URL(r.url()).origin !== new URL(base).origin) external.push(r.url());});
-  page.on('response', r => {if (r.status() >= 400) failedResponses.push(r.status()+' '+r.url());});
+  page.on('response', async r => {
+    if (r.status() >= 400) failedResponses.push(r.status()+' '+r.url());
+    if (new URL(r.url()).pathname.includes('/audio/')) {
+      const headers = await r.allHeaders();
+      mediaResponses.push({url:r.url(),status:r.status(),contentLength:headers['content-length']??null,contentRange:headers['content-range']??null,contentType:headers['content-type']??null});
+    }
+  });
   await page.goto(base);
   await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
   const candidateLayout = await measureResults(page);
@@ -414,8 +421,15 @@ try {
   for (const model of expected.models) for (const backend of ['cpu','webgpu']) {
     const button = page.locator(`tr[data-model="${model.id}"] [data-play][data-backend="${backend}"]`);
     if (await button.count() === 0) continue;
+    console.log(`PLAYBACK_CHECK ${model.id} ${backend}`);
     await button.click();
-    await page.waitForFunction(() => {const a=document.querySelector('audio');return a.currentTime > .15 && !a.paused && a.readyState >= 2;});
+    try {
+      await page.waitForFunction(() => {const a=document.querySelector('audio');return a.currentTime > .15 && !a.paused && a.readyState >= 2;});
+    } catch (error) {
+      const audioState = await page.locator('audio').evaluate(a => ({src:a.getAttribute('src'),currentSrc:a.currentSrc,currentTime:a.currentTime,paused:a.paused,readyState:a.readyState,networkState:a.networkState,error:a.error?{code:a.error.code,message:a.error.message}:null,duration:a.duration,buffered:Array.from({length:a.buffered.length},(_,i)=>[a.buffered.start(i),a.buffered.end(i)])}));
+      const playerError = await page.locator('#player-error').innerText().catch(() => 'unavailable');
+      throw new Error(`Playback failed for ${model.id}/${backend}; audio=${JSON.stringify(audioState)}; playerError=${playerError}; failedResponses=${JSON.stringify(failedResponses.slice(-8))}; mediaResponses=${JSON.stringify(mediaResponses.slice(-8))}; browserErrors=${JSON.stringify(errors.slice(-8))}`,{cause:error});
+    }
     assert.equal(await page.locator('audio').evaluate(a => a.duration), 30);
     assert.equal(await page.locator('#player-error').isVisible(), false);
     clips++;
@@ -607,6 +621,7 @@ try {
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Short-input diagnostics fit mobile width');
   await page.screenshot({path:`${review}/diagnostics-mobile.png`,fullPage:true});
+  console.log(`DEBUG_PUBLIC_EVENTS ${JSON.stringify({errors,external,failedResponses,mediaFailures:mediaResponses.filter(response => response.status >= 400)})}`);
   assert.deepEqual(errors, []); assert.deepEqual(external, []); assert.deepEqual(failedResponses, []);
   const result = {base,chrome:browser.version(),models:expectedResultModels.length,registeredModels:expected.models.length,eligibleResultModels:expectedResultModels.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,mobileDefaultLayout,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
   await writeFile(`${review}/verification.json`, JSON.stringify(result,null,2)+'\n');
