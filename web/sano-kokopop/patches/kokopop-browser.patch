@@ -1,0 +1,398 @@
+diff --git a/include/kokopop.h b/include/kokopop.h
+index 11b8b20..5d79ea9 100644
+--- a/include/kokopop.h
++++ b/include/kokopop.h
+@@ -239,6 +239,11 @@ KOKOPOP_API const char * kokopop_model_voice_default_style(const kokopop_model *
+ /// Returns one of KOKOPOP_BACKEND_*, or KOKOPOP_BACKEND_CPU for a null model.
+ KOKOPOP_API int32_t kokopop_model_backend(const kokopop_model * model);
+
++/// Benchmark telemetry: reset and read the ggml graph nodes scheduled onto
++/// the WebGPU backend since the previous reset. CPU assignments are omitted.
++KOKOPOP_API void kokopop_model_reset_webgpu_op_assignments(kokopop_model * model);
++KOKOPOP_API const char * kokopop_model_webgpu_op_assignments_json(const kokopop_model * model);
++
+ #ifdef __cplusplus
+
+ /// Get the internal C++ Model pointer from a kokopop_model handle
+diff --git a/src/backend/backend.h b/src/backend/backend.h
+index 3401b4b..f49a0f5 100644
+--- a/src/backend/backend.h
++++ b/src/backend/backend.h
+@@ -112,6 +112,12 @@ struct Backend {
+     // Backend enum value stored on Model after AUTO has been resolved.
+     virtual int32_t type() const { return KOKOPOP_BACKEND_CPU; }
+
++    // Benchmark-only introspection hooks. Backends may expose the operation
++    // types the scheduler actually assigned to their device for recent graph
++    // executions. The default CPU implementation has no device assignments.
++    virtual void reset_webgpu_op_assignments() {}
++    virtual std::string webgpu_op_assignments_json() const { return "{}"; }
++
+     // Optional: tag the next compute call with a label (e.g. "frontend",
+     // "generation", "generator"). Backends may use it for diagnostics or
+     // selective compute (KOKOPOP_METAL_RUN_ONLY). Default: no-op.
+diff --git a/src/backend/webgpu.cpp b/src/backend/webgpu.cpp
+index c8f6351..58f9a4f 100644
+--- a/src/backend/webgpu.cpp
++++ b/src/backend/webgpu.cpp
+@@ -12,6 +12,8 @@
+ #include <algorithm>
+ #include <cstdint>
+ #include <cstdlib>
++#include <map>
++#include <string>
+
+ #include <ggml.h>
+ #include <ggml-backend.h>
+@@ -25,6 +27,7 @@ class WebGPUBackend final : public SchedBackendBase {
+     ggml_backend_t backend_ = nullptr;
+     ggml_backend_t cpu_backend_ = nullptr;
+     ggml_backend_t backends_[2] = {nullptr, nullptr};
++    std::map<std::string, uint64_t> gpu_op_assignments_;
+
+ public:
+     explicit WebGPUBackend(int32_t n_threads) {
+@@ -86,6 +89,40 @@ public:
+         return "WebGPU (GPU)";
+     }
+
++    void reset_webgpu_op_assignments() override {
++        gpu_op_assignments_.clear();
++    }
++
++    std::string webgpu_op_assignments_json() const override {
++        std::string json = "{";
++        bool first = true;
++        for (const auto & [name, count] : gpu_op_assignments_) {
++            if (!first) json += ",";
++            first = false;
++            json += "\"" + name + "\":" + std::to_string(count);
++        }
++        json += "}";
++        return json;
++    }
++
++    ggml_status compute(ggml_context * ctx, ggml_cgraph * graph) override {
++        GGML_ASSERT(sched_ != nullptr && "compute called before sched_alloc_graph");
++        GGML_ASSERT(graph != nullptr);
++        for (int i = 0; i < graph->n_nodes; ++i) {
++            ggml_tensor * node = graph->nodes[i];
++            if (ggml_backend_sched_get_tensor_backend(sched_, node) != backend_) {
++                continue;
++            }
++            const char * op_name = node->op == GGML_OP_UNARY
++                ? ggml_unary_op_name(ggml_get_unary_op(node))
++                : ggml_op_name(node->op);
++            if (op_name != nullptr) {
++                ++gpu_op_assignments_[op_name];
++            }
++        }
++        return SchedBackendBase::compute(ctx, graph);
++    }
++
+     int32_t type() const override {
+         return KOKOPOP_BACKEND_WEBGPU;
+     }
+diff --git a/src/kokopop.cpp b/src/kokopop.cpp
+index 443bc7e..a17cdc6 100644
+--- a/src/kokopop.cpp
++++ b/src/kokopop.cpp
+@@ -613,6 +613,20 @@ int32_t kokopop_model_backend(const kokopop_model * model) {
+     return model->impl->backend_type;
+ }
+
++void kokopop_model_reset_webgpu_op_assignments(kokopop_model * model) {
++    if (model && model->impl && model->impl->backend) {
++        model->impl->backend->reset_webgpu_op_assignments();
++    }
++}
++
++const char * kokopop_model_webgpu_op_assignments_json(const kokopop_model * model) {
++    static thread_local std::string json;
++    json = model && model->impl && model->impl->backend
++        ? model->impl->backend->webgpu_op_assignments_json()
++        : "{}";
++    return json.c_str();
++}
++
+ kokopop::Model * kokopop_model_get_impl(kokopop_model * model) {
+     if (!model || !model->impl) return nullptr;
+     return model->impl.get();
+diff --git a/web/CMakeLists.txt b/web/CMakeLists.txt
+index c758cc2..7a1917c 100644
+--- a/web/CMakeLists.txt
++++ b/web/CMakeLists.txt
+@@ -31,7 +31,7 @@ target_link_options(kokopop_web PRIVATE
+
+ if(KOKOPOP_ENABLE_WEBGPU)
+   target_link_options(kokopop_web PRIVATE
+-    "-sJSPI_EXPORTS=['kp_load','kp_synthesize','kp_free']")
++  "-sJSPI_EXPORTS=['kp_load','kp_synthesize','kp_synthesize_seeded','kp_free']")
+ endif()
+
+ foreach(file index.js index.d.ts worker.js runtime.js package.json README.md)
+diff --git a/web/bindings.cpp b/web/bindings.cpp
+index 551df23..c225e8a 100644
+--- a/web/bindings.cpp
++++ b/web/bindings.cpp
+@@ -1,6 +1,9 @@
+ #include "kokopop.h"
+
+ #include <cstdlib>
++#include <cstring>
++#include <memory>
++#include <vector>
+
+ #include <emscripten/emscripten.h>
+
+@@ -31,6 +34,71 @@ EMSCRIPTEN_KEEPALIVE kokopop_audio * kp_synthesize(
+     return audio;
+ }
+
++EMSCRIPTEN_KEEPALIVE kokopop_audio * kp_synthesize_seeded(
++    kokopop_model * model, const char * text, const char * voice, float speed, uint32_t seed) {
++    try {
++        kokopop_synthesis_options options{};
++        options.voice = voice;
++        options.speed = speed;
++        options.mode = KOKOPOP_SYNTH_LONG_FORM;
++        options.has_sano_noise_seed = 1;
++        options.sano_noise_seed = seed;
++
++        kokopop_synthesis * raw_synthesis = nullptr;
++        if (kokopop_synthesis_create(model, &options, &raw_synthesis) != KOKOPOP_OK) {
++            return nullptr;
++        }
++        const auto free_synthesis = [](kokopop_synthesis * value) { kokopop_synthesis_free(value); };
++        std::unique_ptr<kokopop_synthesis, decltype(free_synthesis)> synthesis(raw_synthesis, free_synthesis);
++        auto audio = std::make_unique<kokopop_audio>();
++        std::vector<float> samples;
++        int sample_rate = 0;
++        bool final_chunk = false;
++        if (kokopop_synthesis_push_text(synthesis.get(), text) != KOKOPOP_OK ||
++            kokopop_synthesis_finish_input(synthesis.get()) != KOKOPOP_OK) {
++            return nullptr;
++        }
++
++        struct AudioChunksDeleter {
++            size_t count;
++            void operator()(kokopop_audio_chunk * value) const {
++                kokopop_audio_chunks_free(value, count);
++            }
++        };
++        while (!final_chunk) {
++            kokopop_audio_chunk * chunks = nullptr;
++            size_t n_chunks = 0;
++            const int result = kokopop_synthesis_next(synthesis.get(), 1, &chunks, &n_chunks);
++            std::unique_ptr<kokopop_audio_chunk, AudioChunksDeleter> owned_chunks(
++                chunks, AudioChunksDeleter{n_chunks});
++            if (result != KOKOPOP_OK || n_chunks == 0) return nullptr;
++            for (size_t i = 0; i < n_chunks; ++i) {
++                if (chunks[i].sample_rate <= 0 ||
++                    (sample_rate != 0 && chunks[i].sample_rate != sample_rate) ||
++                    (chunks[i].n_samples != 0 && chunks[i].samples == nullptr)) {
++                    return nullptr;
++                }
++                sample_rate = chunks[i].sample_rate;
++                if (chunks[i].n_samples != 0) {
++                    samples.insert(samples.end(), chunks[i].samples,
++                                   chunks[i].samples + chunks[i].n_samples);
++                }
++                final_chunk = chunks[i].is_final != 0;
++            }
++        }
++        if (samples.empty() || sample_rate <= 0) return nullptr;
++
++        audio->samples = static_cast<float *>(std::malloc(samples.size() * sizeof(float)));
++        if (audio->samples == nullptr) return nullptr;
++        std::memcpy(audio->samples, samples.data(), samples.size() * sizeof(float));
++        audio->n_samples = samples.size();
++        audio->sample_rate = sample_rate;
++        return audio.release();
++    } catch (...) {
++        return nullptr;
++    }
++}
++
+ EMSCRIPTEN_KEEPALIVE const float * kp_samples(kokopop_audio * audio) { return audio->samples; }
+ EMSCRIPTEN_KEEPALIVE size_t kp_length(kokopop_audio * audio) { return audio->n_samples; }
+ EMSCRIPTEN_KEEPALIVE int kp_rate(kokopop_audio * audio) { return audio->sample_rate; }
+@@ -48,6 +116,12 @@ EMSCRIPTEN_KEEPALIVE const char * kp_voice_name(kokopop_model * model, size_t i)
+ EMSCRIPTEN_KEEPALIVE int kp_voice_rate(kokopop_model * model, const char * voice) { return kokopop_model_voice_sample_rate(model, voice); }
+
+ EMSCRIPTEN_KEEPALIVE int kp_backend(kokopop_model * model) { return kokopop_model_backend(model); }
++EMSCRIPTEN_KEEPALIVE void kp_reset_webgpu_op_assignments(kokopop_model * model) {
++    kokopop_model_reset_webgpu_op_assignments(model);
++}
++EMSCRIPTEN_KEEPALIVE const char * kp_webgpu_op_assignments_json(kokopop_model * model) {
++    return kokopop_model_webgpu_op_assignments_json(model);
++}
+ EMSCRIPTEN_KEEPALIVE const char * kp_arch(kokopop_model * model) { return kokopop_model_arch_name(model); }
+
+ } // extern "C"
+diff --git a/web/index.d.ts b/web/index.d.ts
+index 8cbf493..7d42605 100644
+--- a/web/index.d.ts
++++ b/web/index.d.ts
+@@ -24,6 +24,10 @@ export interface CreateOptions {
+ export interface SynthesisOptions {
+   voice?: string;
+   speed?: number;
++  /** Explicit sanoTTS noise seed; ignored for Kokoro. */
++  seed?: number;
++  /** Collect per-call WebGPU scheduler and dispatch evidence for diagnostics. */
++  trace?: boolean;
+   /** Input is already phonemized, using the selected model's phoneme convention. */
+   phonemes?: boolean;
+ }
+diff --git a/web/runtime.js b/web/runtime.js
+index f53f6ae..57e73c6 100644
+--- a/web/runtime.js
++++ b/web/runtime.js
+@@ -3,6 +3,7 @@ export class Runtime {
+   constructor(module) {
+     this.module = module;
+     this.model = 0;
++    this.backend = 'cpu';
+   }
+
+   call(name, type, types = [], args = [], async = false) {
+@@ -23,6 +24,8 @@ export class Runtime {
+       this.model = await this.call('load', 'number', ['string', 'number'], [path, backend], true);
+       if (!this.model) throw this.error();
+
++      const backendName = this.call('backend', 'number', ['number'], [this.model]) === 6 ? 'webgpu' : 'cpu';
++      this.backend = backendName;
+       const voices = [];
+       const count = this.call('voice_count', 'number', ['number'], [this.model]);
+       for (let i = 0; i < count; i++) {
+@@ -33,7 +36,7 @@ export class Runtime {
+
+       return {
+         voices,
+-        backend: this.call('backend', 'number', ['number'], [this.model]) === 6 ? 'webgpu' : 'cpu',
++        backend: backendName,
+         architecture: this.call('arch', 'string', ['number'], [this.model]),
+       };
+     } finally {
+@@ -41,7 +44,7 @@ export class Runtime {
+     }
+   }
+
+-  async synthesize(text, { voice = '', speed = 1, phonemes = false } = {}) {
++  async synthesize(text, { voice = '', speed = 1, phonemes = false, seed, trace = false } = {}) {
+     if (!this.model) throw new Error('No model loaded');
+     if (typeof text !== 'string' || !text.trim() || text.includes('\0')) {
+       throw new TypeError('text must be a nonempty string without NUL');
+@@ -52,12 +55,22 @@ export class Runtime {
+     if (!Number.isFinite(speed) || speed <= 0) {
+       throw new RangeError('speed must be positive and finite');
+     }
++    if (seed !== undefined && (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff)) {
++      throw new RangeError('seed must be an unsigned 32-bit integer');
++    }
++
++    if (trace && !phonemes) {
++      this.call('reset_webgpu_op_assignments', null, ['number'], [this.model]);
++    }
+
++    const useSeededText = !phonemes && seed !== undefined;
+     const audio = await this.call(
+-      'synthesize',
++      useSeededText ? 'synthesize_seeded' : 'synthesize',
+       'number',
+       ['number', 'string', 'string', 'number', 'number'],
+-      [this.model, text, voice, speed, Number(phonemes)],
++      useSeededText
++        ? [this.model, text, voice, speed, seed]
++        : [this.model, text, voice, speed, Number(phonemes)],
+       true,
+     );
+     if (!audio) throw this.error();
+@@ -67,7 +80,12 @@ export class Runtime {
+       const length = this.call('length', 'number', ['number'], [audio]);
+       const sampleRate = this.call('rate', 'number', ['number'], [audio]);
+       // Copy before freeing native audio; never expose a view into growing WASM memory.
+-      return { samples: this.module.HEAPF32.slice(start, start + length), sampleRate };
++      const result = { samples: this.module.HEAPF32.slice(start, start + length), sampleRate };
++      if (trace && !phonemes) {
++        const json = this.call('webgpu_op_assignments_json', 'string', ['number'], [this.model]);
++        result.webgpuOpAssignments = JSON.parse(json || '{}');
++      }
++      return result;
+     } finally {
+       this.call('audio_free', null, ['number'], [audio]);
+     }
+diff --git a/web/worker.js b/web/worker.js
+index 2a33c4e..f03d99f 100644
+--- a/web/worker.js
++++ b/web/worker.js
+@@ -5,6 +5,31 @@ import { Runtime } from './runtime.js';
+ let runtime;
+ let queue = Promise.resolve();
+
++function observeComputeDispatches() {
++  let count = 0;
++  let stopped = false;
++  const original = [];
++  const prototype = globalThis.GPUComputePassEncoder?.prototype;
++  for (const name of ['dispatchWorkgroups', 'dispatchWorkgroupsIndirect']) {
++    if (typeof prototype?.[name] !== 'function') continue;
++    const method = prototype[name];
++    original.push([prototype, name, method]);
++    prototype[name] = function (...args) {
++      count++;
++      return method.apply(this, args);
++    };
++  }
++  return {
++    stop() {
++      if (!stopped) {
++        for (const [proto, name, method] of original) proto[name] = method;
++        stopped = true;
++      }
++      return count;
++    },
++  };
++}
++
+ const BACKEND_VALUES = { auto: 0, cpu: 1, webgpu: 6 };
+
+ async function resolveBackend(requested) {
+@@ -20,9 +45,14 @@ async function resolveBackend(requested) {
+   if (backend !== 'cpu') {
+     const adapter = navigator.gpu ? await navigator.gpu.requestAdapter().catch(() => null) : null;
+     // GGML requires shader-f16 and asserts on adapter/device creation failure.
+-    const available = adapter?.features.has('shader-f16');
++    const info = adapter?.info;
++    const identity = [info?.vendor, info?.architecture, info?.device, info?.description]
++      .filter(Boolean).join(' ');
++    const software = adapter?.isFallbackAdapter === true || info?.isFallbackAdapter === true ||
++      /swiftshader|llvmpipe|software raster/i.test(identity);
++    const available = Boolean(adapter && !software && adapter.features.has('shader-f16'));
+     if (!available && backend === 'webgpu') {
+-      throw new Error('No WebGPU adapter with shader-f16 support is available');
++      throw new Error('No hardware WebGPU adapter with shader-f16 support is available');
+     }
+     if (!available) backend = 'cpu';
+   }
+@@ -42,8 +72,17 @@ async function handle(method, args) {
+   switch (method) {
+     case 'load':
+       return load(...args);
+-    case 'synthesize':
+-      return runtime.synthesize(...args);
++    case 'synthesize': {
++      const trace = args?.[1]?.trace === true;
++      const observer = trace && runtime.backend === 'webgpu' ? observeComputeDispatches() : null;
++      try {
++        const result = await runtime.synthesize(...args);
++        if (trace) result.gpuDispatches = observer?.stop() ?? null;
++        return result;
++      } finally {
++        observer?.stop();
++      }
++    }
+     case 'dispose':
+       await runtime?.dispose();
+       return undefined;

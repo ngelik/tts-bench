@@ -1,0 +1,127 @@
+name: Sano heart-nano Kokopop WebGPU verification
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/sano-kokopop-smoke.yml'
+      - 'tools/build-sano-kokopop-webgpu.sh'
+      - 'tools/build-sano-kokopop-manifest.mjs'
+      - 'tools/sano-kokopop-browser-smoke.mjs'
+      - 'web/adapters/sano-kokopop.mjs'
+      - 'web/sano-kokopop/**'
+      - 'web/workers/sano-kokopop.mjs'
+      - 'tests/sano-kokopop-adapter.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sano-kokopop-smoke.yml'
+      - 'tools/build-sano-kokopop-webgpu.sh'
+      - 'tools/build-sano-kokopop-manifest.mjs'
+      - 'tools/sano-kokopop-browser-smoke.mjs'
+      - 'web/adapters/sano-kokopop.mjs'
+      - 'web/sano-kokopop/**'
+      - 'web/workers/sano-kokopop.mjs'
+      - 'tests/sano-kokopop-adapter.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-and-golden:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: tterrasson/kokopop
+          ref: 73ed5710cb37ca0384bc4bfdd7138d13605c9a88
+          path: .cache/sano-kokopop-build/upstream
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Ampixa/sanoTTS
+          ref: 939d982b9faa54cbcf5d24cc878f5cd514b2646e
+          path: .cache/ampixa-sanoTTS
+          sparse-checkout: mcu/test/fixtures/en_us_e13b
+          sparse-checkout-cone-mode: true
+          persist-credentials: false
+          fetch-depth: 1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.13'
+      - name: Install pinned build prerequisites
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: Build Kokopop WebGPU runtime and convert exact heartnano Q8 sources
+        env:
+          KOKOPOP_SOURCE: ${{ github.workspace }}/.cache/sano-kokopop-build/upstream
+          BUILD_JOBS: '4'
+        run: bash tools/build-sano-kokopop-webgpu.sh
+      - name: Check converted F32 GGUF against the official heartnano golden fixture
+        env:
+          KOKOPOP_SOURCE: ${{ github.workspace }}/.cache/sano-kokopop-build/upstream
+          KOKOPOP_SANOTTS_FIXTURES: ${{ github.workspace }}/.cache/ampixa-sanoTTS/mcu/test/fixtures
+        run: |
+          source_dir="$KOKOPOP_SOURCE"
+          mkdir -p "$source_dir/models"
+          cp .cache/sano-kokopop-build/release/heartnano-f32.gguf "$source_dir/models/sanotts-heartnano.gguf"
+          cmake -G Ninja -S "$source_dir" -B .cache/sano-kokopop-build/native-test \
+            -DCMAKE_BUILD_TYPE=Release -DKOKOPOP_BUILD_TESTS=ON \
+            -DKOKOPOP_BUILD_TOOLS=OFF -DKOKOPOP_BUILD_WEB=OFF \
+            -DKOKOPOP_ENABLE_WEBGPU=OFF -DKOKOPOP_ENABLE_OPUS=OFF
+          cmake --build .cache/sano-kokopop-build/native-test --target kokopop_tests --parallel 4
+          (cd "$source_dir" && "$GITHUB_WORKSPACE/.cache/sano-kokopop-build/native-test/kokopop_tests" \
+            --test-case=sanotts_vocos_decoder_matches_the_heartnano_golden_fixture)
+      - run: node --test tests/sano-kokopop-adapter.test.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sano-kokopop-runtime-and-model-${{ github.sha }}
+          if-no-files-found: error
+          path: .cache/sano-kokopop-build/release/
+          retention-days: 14
+
+  browser-smoke:
+    needs: build-and-golden
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: sano-kokopop-runtime-and-model-${{ github.sha }}
+          path: .cache/sano-kokopop-build/release
+      - name: Stage only the locked runtime and model for local browser fetch
+        run: |
+          mkdir -p .cache/public/models .cache/public/runtimes/kokopop-sano-heartnano-v1
+          cp .cache/sano-kokopop-build/release/heartnano-f32.gguf .cache/public/models/heartnano-f32.gguf
+          cp .cache/sano-kokopop-build/release/kokopop-runtime.js .cache/public/runtimes/kokopop-sano-heartnano-v1/
+          cp .cache/sano-kokopop-build/release/kokopop-runtime.wasm .cache/public/runtimes/kokopop-sano-heartnano-v1/
+          cp .cache/sano-kokopop-build/release/kokopop-runtime.data .cache/public/runtimes/kokopop-sano-heartnano-v1/
+      - name: Run headed Chrome CPU and hardware WebGPU parity smoke
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: node tools/sano-kokopop-browser-smoke.mjs
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: sano-kokopop-browser-smoke-${{ github.sha }}
+          path: .cache/sano-kokopop-browser-evidence/
+          if-no-files-found: warn
+          retention-days: 14
