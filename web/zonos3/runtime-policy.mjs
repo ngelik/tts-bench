@@ -21,6 +21,7 @@ export const ZONOS3_MODEL_CONFIG = Object.freeze({
   info: Object.freeze({
     voice: ZONOS3_VOICE_LABEL,
     voiceId: ZONOS3_VOICE_ID,
+    voicePreviewAudio: 'Disabled for the benchmark; TTS uses the pinned Imogen codes and embedding, not the preview clip.',
     language: 'en_us',
     sampleRate: 44100,
     seed: '42 + canonical chunk id',

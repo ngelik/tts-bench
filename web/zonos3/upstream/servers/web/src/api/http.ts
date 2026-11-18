@@ -13,11 +13,12 @@ export interface EngineRequest {
   pcmSeconds?: number;
 }
 
-/** Response channel: start() once with status and headers, then chunk() any number of times, then end(). */
+/** Response channel: start() once with status and headers, then chunk() any number of times, then end(error?) with a
+ *  terminal error when a response that has already started could not be completed. */
 export interface Sink {
   start(status: number, headers: Record<string, string>): void;
   chunk(data: Uint8Array): void;
-  end(): void;
+  end(error?: string): void;
 }
 
 /** HTTPException(status_code, detail) or a full error body (422 ValidationError). */

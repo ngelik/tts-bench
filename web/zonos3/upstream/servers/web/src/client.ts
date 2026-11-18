@@ -1,9 +1,10 @@
 // Main-thread facade of the in-browser server: spawns the engine worker (and the codec worker holding the host half
 // of the codec, connected to the engine worker over a MessageChannel) and exposes a fetch-compatible localFetch()
-// that serves the v2 API in-process. Audio the worker cannot decode (it has no AudioContext) is decoded here: default
-// voices at init, speaker_audio_base64 (and the edit routes' audio_base64) per request, sent next to the JSON as
-// 44.1 kHz mono PCM with the upload's whole length.
+// that serves the v2 API in-process. Audio the worker cannot decode (it has no AudioContext) is decoded here: optional
+// default-voice previews at init, speaker_audio_base64 (and the edit routes' audio_base64) per request, sent next to the
+// JSON as 44.1 kHz mono PCM with the upload's whole length.
 import { b64DecodeStrict } from './b64';
+import { failEngineResponses, finishEngineResponse } from '../../../../finish-engine-response.mjs';
 import { EDIT_MAX_SECONDS, REFERENCE_AUDIO_MAX_SECONDS, SAMPLE_RATE } from './generation';
 import { fetchJson, modelsBaseUrl, type LoadProgress } from './gpu/weights';
 import type { InMsg, OutMsg } from './worker';
@@ -61,7 +62,10 @@ worker.onmessage = (ev: MessageEvent<OutMsg>) => {
       break;
     case 'fatal':
       if (!ready) initReject?.(new Error(m.message));
-      else for (const cb of fatalCbs) cb(m.message);
+      else {
+        failEngineResponses(pending, m.message);
+        for (const cb of fatalCbs) cb(m.message);
+      }
       break;
     case 'res': {
       const p = pending.get(m.id);
@@ -73,22 +77,29 @@ worker.onmessage = (ev: MessageEvent<OutMsg>) => {
     case 'chunk':
       pending.get(m.id)?.controller?.enqueue(new Uint8Array(m.data));
       break;
-    case 'end':
+    case 'end': {
       lastDispatchProbe = m.probe ?? null;
-      pending.get(m.id)?.controller?.close();
+      finishEngineResponse(pending.get(m.id), m.error);
       pending.delete(m.id);
       break;
+    }
   }
 };
 worker.onerror = ev => {
   const msg = ev.message || 'engine worker failed to start';
   if (!ready) initReject?.(new Error(msg));
-  else for (const cb of fatalCbs) cb(msg);
+  else {
+    failEngineResponses(pending, msg);
+    for (const cb of fatalCbs) cb(msg);
+  }
 };
 codecWorker.onerror = ev => {
   const msg = 'codec worker failed: ' + (ev.message || 'did not start');
   if (!ready) initReject?.(new Error(msg));
-  else for (const cb of fatalCbs) cb(msg);
+  else {
+    failEngineResponses(pending, msg);
+    for (const cb of fatalCbs) cb(msg);
+  }
 };
 
 export interface InitOptions {
@@ -98,6 +109,8 @@ export interface InitOptions {
   cache?: boolean;
   /** Optional subset of the pinned default voices to load; omitted means every published preset. */
   voiceIds?: string[];
+  /** Skip decoding preview clips when the caller only needs preset conditioning assets. */
+  loadVoicePreviews?: boolean;
 }
 
 /** Decode any browser-supported audio file to API-rate mono (downmix + resample), cropped to `maxSeconds`
@@ -154,7 +167,7 @@ export const engine = {
         throw new Error('ZONOS3_UNSUPPORTED_WEBGPU: the client worker has no navigator.gpu.');
       }
       const base = opts.base ?? modelsBaseUrl();
-      const voicesPcm = await defaultVoicesPcm(base, opts.voiceIds);
+      const voicesPcm = opts.loadVoicePreviews === false ? {} : await defaultVoicesPcm(base, opts.voiceIds);
       const started = Promise.withResolvers<void>();
       initResolve = started.resolve;
       initReject = started.reject;

@@ -29,7 +29,7 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(zonos.support.voiceCount, 27);
   assert.equal(zonos.support.bundledVoiceCount, 1);
   assert.equal(zonos.support.languageCount, 43);
-  assert.equal(zonos.assets.length, 76);
+  assert.equal(zonos.assets.length, 75);
   assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-web-voices-English-Imogen_en-British_F_1-embedding-npy').sha256,
     '683424b91faeade48c8a92e05e1c3679366abbba443ef62eccba8dc40de48e9e');
   assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-cpu-backbone-q4q8').bytes, 663150624);

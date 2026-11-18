@@ -164,7 +164,7 @@
       requireAsset(assets.speakerEmbedding, 'Imogen_en-British_F_1.embedding.npy'),
     ];
     const threads = options.threads || config.cpuThreads || config.info?.settings?.threads || THREADS;
-    if (!Number.isSafeInteger(threads) || threads < 1 || threads > 16) throw new Error('ZONOS3 CPU thread count must be from 1 to 16.');
+    if (!Number.isSafeInteger(threads) || threads < 1 || threads > PTHREAD_POOL_SIZE) throw new Error('ZONOS3 CPU thread count must be from 1 to 12.');
 
     log('runtime-load', 'Loading the pinned community audio.cpp ZONOS3 CPU WebAssembly runtime.');
     module = await createZonos3Cpu({

@@ -8,9 +8,16 @@ import { createHash } from 'node:crypto';
 const root=resolve(import.meta.dirname,'..');
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 
-test('installed runtime packages and bytes match every model pin without downloading weights',async()=>{
+test('installed packages and repository-built runtime bytes match every pin without downloading weights',async()=>{
  const lock=JSON.parse(await readFile(join(root,'assets.lock.json'))), checked=new Set();
  for(const model of Object.values(lock.models))for(const file of model.runtime.files){
+  if(file.sourcePath){
+   const source=resolve(root,file.sourcePath),bytes=await readFile(source);
+   assert.equal(bytes.length,file.bytes,`${file.sourcePath} byte length`);
+   assert.equal(sha(bytes),file.sha256,`${file.sourcePath} content hash`);
+   checked.add('source/'+file.sourcePath+'/'+file.sha256);
+   continue;
+  }
   const pkg=file.package??model.runtime.package, version=file.version??model.runtime.version;
   const meta=JSON.parse(await readFile(join(root,'node_modules',pkg,'package.json')));
   assert.equal(meta.version,version,`${pkg} changed; update and validate model/runtime pins explicitly`);

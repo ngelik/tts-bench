@@ -97,8 +97,14 @@ test('ZONOS3 CPU adapter rejects WebGPU instead of silently falling back', async
   }
 });
 
+test('ZONOS3 CPU adapter rejects thread counts beyond the pinned Emscripten pool', () => {
+  assert.throws(() => createZonos3CpuAdapter(model, { threads: 13 }), /integer from 1 to 12/);
+});
+
 test('ZONOS3 CPU worker verifies local range assets and reports the actual offline CPU backend', () => {
   assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v1/);
+  assert.match(workerSource, /threads > PTHREAD_POOL_SIZE/);
+  assert.match(workerSource, /thread count must be from 1 to 12/);
   assert.match(workerSource, /requireAsset\(assets\.backbone, 'backbone-ptq\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.decoder, 'zac-keep2\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.speakerEncoder, 'spk-encoder\.gguf'\)/);

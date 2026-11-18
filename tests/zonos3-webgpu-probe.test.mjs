@@ -18,14 +18,16 @@ test('ZONOS3 WebGPU evidence comes from the actual inference worker', async () =
   assert.match(inferenceWorker, /GPUComputePassEncoder\?\.prototype/);
   assert.match(inferenceWorker, /'dispatchWorkgroupsIndirect'/);
   assert.match(inferenceWorker, /m\.headers\['x-benchmark-dispatch-probe'\] === '1' \? dispatchProbe\(\)/);
-  assert.match(inferenceWorker, /probe: \{ dispatches: probeHook\.stop\(\) \}/);
+  assert.match(inferenceWorker, /probe: probeHook\.stop\(\)/);
+  assert.doesNotMatch(inferenceWorker, /probe: \{ dispatches: probeHook\.stop\(\) \}/);
   assert.match(client, /lastDispatchProbe = m\.probe \?\? null/);
   assert.match(client, /getLastDispatchProbe\(\)[\s\S]*lastDispatchProbe = null/);
   assert.match(gpuDevice, /requestAdapter\(\{ powerPreference: 'high-performance' \}\)/);
   assert.match(gpuDevice, /isFallbackAdapter/);
   assert.match(gpuDevice, /onAdapter\?\.\(summary\)/);
+  assert.match(gpuDevice, /onLost\?\.\('WebGPU uncaptured error: '/);
   assert.match(adapterWorker, /x-benchmark-dispatch-probe/);
-  assert.match(adapterWorker, /if \(!dispatches\) throw new Error/);
+  assert.match(adapterWorker, /const count = evidence\.dispatches;[\s\S]*if \(!count\) throw new Error/);
   assert.doesNotMatch(adapterWorker, /requestAdapter|GPUComputePassEncoder/);
   assert.match(adapter, /createRpcAdapter\(new URL\('\.\.\/workers\/zonos3\.mjs'/);
 });

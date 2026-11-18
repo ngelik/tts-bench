@@ -416,7 +416,8 @@ function decodeRows(codes: number[], H: number, ctx: Int32Array | null, K: numbe
 
 /** Runs one planned request to completion; PCM goes to `emit` (prefill/context dropped, then the output stage: gain and
  *  soft limiter). */
-export async function runJob(e: Engine, p: Plan, emit: (pcm: Float32Array) => void, aborted: () => boolean): Promise<void> {
+export async function runJob(e: Engine, p: Plan, emit: (pcm: Float32Array) => void, aborted: () => boolean,
+                             requireEos = false): Promise<void> {
   const { probe, follower, laci } = attachProbe(e, p);
   const bb = e.backbone, codec = await p.decoder.codec();
   const ncb = NCB, W = ncb + 1;
@@ -530,7 +531,12 @@ export async function runJob(e: Engine, p: Plan, emit: (pcm: Float32Array) => vo
   bb.startSampling({ sp: p.sp, minFrames: 0, cfgScale });
 
   for (;;) {
-    if (aborted()) { await discard(); await pcmChain; return; }
+    if (aborted()) {
+      await discard();
+      await pcmChain;
+      if (requireEos) throw new Error('generation was aborted before EOS.');
+      return;
+    }
     if (codecErr) { await discard(); throw codecErr; }
     // 3. the next frame (submitted now, or a step ago), then the step after it when running ahead
     if (!inflight.length) submit();
@@ -601,6 +607,7 @@ export async function runJob(e: Engine, p: Plan, emit: (pcm: Float32Array) => vo
         for (let i = r.begin; i < r.end; i++) for (let k = 0; k < ncb; k++) codes.push(laci.stream[i][k]);
         eosFrame = laci.end && laci.end[1] !== null ? laci.end[1] : -1;
       }
+      if (requireEos && eosFrame < 0) throw new Error(`generation reached the ${attemptMax}-frame limit before EOS.`);
       // submit_finalize: EOS inside the silence prefill leaves no audio
       if (eosFrame >= 0 && eosFrame <= p.prompt.prefillFrames) throw new Error('generation failed');
       await pcmChain;
@@ -636,6 +643,7 @@ export async function runJob(e: Engine, p: Plan, emit: (pcm: Float32Array) => vo
 async function generate(e: Engine, spk: Speakers, body: Body, req: EngineRequest, sink: Sink, aborted: () => boolean): Promise<void> {
   const wav = str(body, 'format') === 'wav';
   const stream = bool(body, 'stream') ?? true;
+  const requireEos = req.headers['x-benchmark-require-eos'] === '1';
   if (stream && wav) fail(400, 'format=wav needs stream=false');
   const p = await planGenerate(e, spk, body, sessionId(req), req.pcm);
   p.wav = wav;
@@ -650,12 +658,14 @@ async function generate(e: Engine, spk: Speakers, body: Body, req: EngineRequest
   if (p.stream) {
     let started = false;
     const start = () => { if (!started) { started = true; sink.start(200, { ...headers, 'content-type': 'audio/pcm' }); } };
-    // an error before the first byte answers as JSON; afterwards the stream ends (the client sees a short body)
+    // An error before the first byte answers as JSON; after streaming starts, carry the failure in the terminal event.
     try {
-      await runJob(e, p, pcm => { start(); sink.chunk(new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength)); }, aborted);
+      await runJob(e, p, pcm => { start(); sink.chunk(new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength)); }, aborted, requireEos);
     } catch (err) {
       if (!started) throw err;
       console.error('generate:', err);
+      sink.end(err instanceof Error ? err.message : String(err));
+      return;
     }
     start();
     sink.end();
@@ -663,7 +673,7 @@ async function generate(e: Engine, spk: Speakers, body: Body, req: EngineRequest
   }
   const parts: Float32Array[] = [];
   try {
-    await runJob(e, p, pcm => parts.push(pcm.slice()), aborted);
+    await runJob(e, p, pcm => parts.push(pcm.slice()), aborted, requireEos);
   } catch (err) {
     if (err instanceof HttpError) throw err;
     console.error('generate:', err);

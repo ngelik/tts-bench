@@ -6390,8 +6390,8 @@
             "path": "engine.js",
             "sourcePath": "web/zonos3/runtime/engine.js",
             "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/engine.js",
-            "bytes": 13706,
-            "sha256": "69bffbf12cfe41df5a934b267ead522607d3d8574f9bb7a27c0acaee91f439b9",
+            "bytes": 14701,
+            "sha256": "46e59a34905f26b18d5e8449a828ce98355db7676b1c34ed77389e160892b6b3",
             "kind": "runtime"
           },
           {
@@ -6399,8 +6399,8 @@
             "path": "worker.js",
             "sourcePath": "web/zonos3/runtime/worker.js",
             "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/worker.js",
-            "bytes": 1298031,
-            "sha256": "58ee8730d39fc9137be87e535bb48856962ca45e5bd62876658a714d739126f9",
+            "bytes": 1298592,
+            "sha256": "d4792e98ea1105e3515d96fee8b7dcab2ab5775ec1832c62f207a4fc748ba978",
             "kind": "runtime"
           },
           {
@@ -6418,7 +6418,7 @@
             "sourcePath": "web/zonos3/runtime/BUILD-MANIFEST.json",
             "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/BUILD-MANIFEST.json",
             "bytes": 776,
-            "sha256": "439f43348fd6e696a959b3567f891229254ab9c4ffe4f47ad179b02e2bb1bc65",
+            "sha256": "230baefb0544c577ebe02be872fc249c5df47aac19b49aa842bbc885256cc1bf",
             "kind": "runtime"
           }
         ]
@@ -6607,14 +6607,6 @@
           "bytes": 5760,
           "sha256": "03d584a4faa2ac71a9c278c12a61d9099dd98e8ae3e2cb225640ad01af0a41bb",
           "kind": "model-support"
-        },
-        {
-          "id": "zonos3-web-voices-English-Imogen_en-British_F_1-wav",
-          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/English/Imogen_en-British_F_1.wav",
-          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/English/Imogen_en-British_F_1.wav",
-          "bytes": 1117244,
-          "sha256": "dde4691a6ccd95f4928fbbc4e2d49089824b264575bc0bf0ac4986dd2f8082c5",
-          "kind": "voice"
         },
         {
           "id": "zonos3-web-voices-English-Imogen_en-British_F_1-codes-npy",
@@ -7098,7 +7090,7 @@
           "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
           "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
         ],
-        "notes": "The checkpoint advertises 43 server language codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. The WebGPU runtime loads its preview audio, codes and embedding; the CPU/WASM TTS path uses the same embedding only. No other preset or language is exercised."
+        "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. Both inference profiles load its reference codes and embedding; the browser benchmark skips unused preview audio. The CPU/WASM TTS path uses the same embedding only. No other preset or language is exercised."
       }
     }
   }

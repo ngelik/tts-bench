@@ -37,7 +37,7 @@ export type OutMsg =
   | { type: 'fatal'; message: string }
   | { type: 'res'; id: number; status: number; headers: Record<string, string> }
   | { type: 'chunk'; id: number; data: ArrayBuffer }
-  | { type: 'end'; id: number; probe?: { dispatches: number; restored: boolean } };
+  | { type: 'end'; id: number; error?: string; probe?: { dispatches: number; restored: boolean } };
 
 const post = (m: OutMsg, transfer: Transferable[] = []) => self.postMessage(m, transfer);
 
@@ -268,10 +268,10 @@ async function serve(m: Extract<InMsg, { type: 'req' }>): Promise<void> {
   const id = m.id;
   const probeHook = m.headers['x-benchmark-dispatch-probe'] === '1' ? dispatchProbe() : null;
   let ended = false;
-  const end = () => {
+  const end = (error?: string) => {
     if (ended) return;
     ended = true;
-    post({ type: 'end', id, ...(probeHook ? { probe: { dispatches: probeHook.stop() } } : {}) });
+    post({ type: 'end', id, ...(error ? { error } : {}), ...(probeHook ? { probe: probeHook.stop() } : {}) });
   };
   const sink = {
     start: (status: number, headers: Record<string, string>) => post({ type: 'res', id, status, headers }),

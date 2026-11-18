@@ -28,6 +28,27 @@ function b64DecodeStrict(raw) {
 	}
 	return out.subarray(0, n);
 }
+// web/zonos3/finish-engine-response.mjs
+/** Close a successful engine response or expose a post-start inference failure to its stream reader. */
+function finishEngineResponse(pending, error) {
+	if (!pending) return;
+	if (error !== void 0 && error !== null) {
+		const failure = error instanceof Error ? error : new Error(String(error));
+		if (pending.controller) try {
+			pending.controller.error(failure);
+		} catch {}
+		else pending.reject(failure);
+	} else if (pending.controller) try {
+		pending.controller.close();
+	} catch {}
+}
+function failEngineResponses(pendingResponses, error) {
+	const failure = error instanceof Error ? error : new Error(String(error));
+	for (const [id, pending] of pendingResponses) {
+		finishEngineResponse(pending, failure.message);
+		pendingResponses.delete(id);
+	}
+}
 var generation_default = {
 	description: "Request defaults and limits of every server and the studio (zonos3.generation). sample_rate: the API's audio rate (Hz). sampling: the v2 sampling defaults (servers/api/openapi.yaml repeats them; model/tests/test_generation.py keeps the two equal). silence_prefill_frames: the server default length (ZONOS3_SILENCE_PREFILL_FRAMES overrides it) and the longest a request may ask for. decode_context_frames: the reference tail decoded ahead of the stream when a request leaves decode_context_frames unset or 0. reference_max_frames: the reference prefix of the GGUF servers (60 s at the dual codec's 2940-sample hop; longer reference codes keep their first frames). max_frames: the GGUF servers' default frame budget (--max). audio_max_seconds: the longest reference clip, upload and speech-edit clip. stream_codebooks: the prefix stream's early partial-frame decode defaults (request fields stream_codebooks / stream_codebooks_scope): a frame is decoded once its first `default` codebooks arrived, for the `scope` chunks (first: the first chunk only; all: every chunk); default = n_codebooks decodes complete frames only. output_limit_dbfs: the knee k of the soft limiter every server applies after the decoder's output gain: samples at or below it pass unchanged, louder ones bend smoothly into full scale, sign(x) (k + (1 - k) tanh((|x| - k) / (1 - k))).",
 	sample_rate: 44100,
@@ -153,7 +174,10 @@ worker.onmessage = (ev) => {
 			break;
 		case "fatal":
 			if (!ready) initReject?.(new Error(m.message));
-			else for (const cb of fatalCbs) cb(m.message);
+			else {
+				failEngineResponses(pending, m.message);
+				for (const cb of fatalCbs) cb(m.message);
+			}
 			break;
 		case "res": {
 			const p = pending.get(m.id);
@@ -172,19 +196,25 @@ worker.onmessage = (ev) => {
 			break;
 		case "end":
 			lastDispatchProbe = m.probe ?? null;
-			pending.get(m.id)?.controller?.close();
+			finishEngineResponse(pending.get(m.id), m.error);
 			pending.delete(m.id);
 	}
 };
 worker.onerror = (ev) => {
 	const msg = ev.message || "engine worker failed to start";
 	if (!ready) initReject?.(new Error(msg));
-	else for (const cb of fatalCbs) cb(msg);
+	else {
+		failEngineResponses(pending, msg);
+		for (const cb of fatalCbs) cb(msg);
+	}
 };
 codecWorker.onerror = (ev) => {
 	const msg = "codec worker failed: " + (ev.message || "did not start");
 	if (!ready) initReject?.(new Error(msg));
-	else for (const cb of fatalCbs) cb(msg);
+	else {
+		failEngineResponses(pending, msg);
+		for (const cb of fatalCbs) cb(msg);
+	}
 };
 /** Decode any browser-supported audio file to API-rate mono (downmix + resample), cropped to `maxSeconds`
 *  (REFERENCE_AUDIO_MAX_SECONDS by default); `seconds` is the whole file's length. */
@@ -235,7 +265,7 @@ var engine = {
 		initPromise ??= (async () => {
 			if (!("gpu" in navigator) || !navigator.gpu) throw new Error("ZONOS3_UNSUPPORTED_WEBGPU: the client worker has no navigator.gpu.");
 			const base = opts.base ?? modelsBaseUrl();
-			const voicesPcm = await defaultVoicesPcm(base, opts.voiceIds);
+			const voicesPcm = opts.loadVoicePreviews === false ? {} : await defaultVoicesPcm(base, opts.voiceIds);
 			const started = Promise.withResolvers();
 			initResolve = started.resolve;
 			initReject = started.reject;

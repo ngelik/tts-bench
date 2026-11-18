@@ -60,14 +60,14 @@ export class Api {
     const guarded: Sink = {
       start: (status, headers) => { started = true; sink.start(status, headers); },
       chunk: d => sink.chunk(d),
-      end: () => sink.end(),
+      end: error => sink.end(error),
     };
     try {
       await this.route(req, guarded, aborted);
     } catch (err) {
       if (started) {
         console.error('engine api:', err);
-        sink.end();
+        sink.end(err instanceof Error ? err.message : String(err));
         return;
       }
       if (err instanceof HttpError) sendJson(sink, err.body, err.status);

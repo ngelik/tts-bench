@@ -6727,7 +6727,7 @@ function decodeRows(codes, H, ctx, K) {
 }
 /** Runs one planned request to completion; PCM goes to `emit` (prefill/context dropped, then the output stage: gain and
 *  soft limiter). */
-async function runJob(e, p, emit, aborted) {
+async function runJob(e, p, emit, aborted, requireEos = false) {
 	const { probe, follower, laci } = attachProbe(e, p);
 	const bb = e.backbone, codec = await p.decoder.codec();
 	const ncb = 10, W = 11;
@@ -6839,6 +6839,7 @@ async function runJob(e, p, emit, aborted) {
 		if (aborted()) {
 			await discard();
 			await pcmChain;
+			if (requireEos) throw new Error("generation was aborted before EOS.");
 			return;
 		}
 		if (codecErr) {
@@ -6912,6 +6913,7 @@ async function runJob(e, p, emit, aborted) {
 				for (let i = r.begin; i < r.end; i++) for (let k = 0; k < ncb; k++) codes.push(laci.stream[i][k]);
 				eosFrame = laci.end && laci.end[1] !== null ? laci.end[1] : -1;
 			}
+			if (requireEos && eosFrame < 0) throw new Error(`generation reached the ${attemptMax}-frame limit before EOS.`);
 			if (eosFrame >= 0 && eosFrame <= p.prompt.prefillFrames) throw new Error("generation failed");
 			await pcmChain;
 			if (codecErr) throw codecErr;
@@ -6946,7 +6948,9 @@ async function runJob(e, p, emit, aborted) {
 }
 async function generate(e, spk, body, req, sink, aborted) {
 	const wav = str(body, "format") === "wav";
-	if ((bool(body, "stream") ?? true) && wav) fail(400, "format=wav needs stream=false");
+	const stream = bool(body, "stream") ?? true;
+	const requireEos = req.headers["x-benchmark-require-eos"] === "1";
+	if (stream && wav) fail(400, "format=wav needs stream=false");
 	const p = await planGenerate(e, spk, body, sessionId(req), req.pcm);
 	p.wav = wav;
 	const headers = {
@@ -6972,10 +6976,12 @@ async function generate(e, spk, body, req, sink, aborted) {
 			await runJob(e, p, (pcm) => {
 				start();
 				sink.chunk(new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength));
-			}, aborted);
+			}, aborted, requireEos);
 		} catch (err) {
 			if (!started) throw err;
 			console.error("generate:", err);
+			sink.end(err instanceof Error ? err.message : String(err));
+			return;
 		}
 		start();
 		sink.end();
@@ -6983,7 +6989,7 @@ async function generate(e, spk, body, req, sink, aborted) {
 	}
 	const parts = [];
 	try {
-		await runJob(e, p, (pcm) => parts.push(pcm.slice()), aborted);
+		await runJob(e, p, (pcm) => parts.push(pcm.slice()), aborted, requireEos);
 	} catch (err) {
 		if (err instanceof HttpError) throw err;
 		console.error("generate:", err);
@@ -7392,14 +7398,14 @@ var Api = class {
 				sink.start(status, headers);
 			},
 			chunk: (d) => sink.chunk(d),
-			end: () => sink.end()
+			end: (error) => sink.end(error)
 		};
 		try {
 			await this.route(req, guarded, aborted);
 		} catch (err) {
 			if (started) {
 				console.error("engine api:", err);
-				sink.end();
+				sink.end(err instanceof Error ? err.message : String(err));
 				return;
 			}
 			if (err instanceof HttpError) sendJson(sink, err.body, err.status);
@@ -7559,7 +7565,11 @@ async function initGpu(onLost, onAdapter) {
 	device.lost.then((info) => {
 		if (info.reason !== "destroyed") onLost?.("GPU device lost: " + info.message + "; reload the page");
 	});
-	device.addEventListener("uncapturederror", (e) => console.error("WebGPU error:", e.error.message));
+	device.addEventListener("uncapturederror", (e) => {
+		const message = e.error.message;
+		console.error("WebGPU error:", message);
+		onLost?.("WebGPU uncaptured error: " + message);
+	});
 	return device;
 }
 const H8_ROWS = /^gemm_h8_r(\d+)_(\d+)x(\d+)$/;
@@ -12992,13 +13002,14 @@ async function serve(m) {
 	const id = m.id;
 	const probeHook = m.headers["x-benchmark-dispatch-probe"] === "1" ? dispatchProbe() : null;
 	let ended = false;
-	const end = () => {
+	const end = (error) => {
 		if (ended) return;
 		ended = true;
 		post({
 			type: "end",
 			id,
-			...probeHook ? { probe: { dispatches: probeHook.stop() } } : {}
+			...error ? { error } : {},
+			...probeHook ? { probe: probeHook.stop() } : {}
 		});
 	};
 	const sink = {

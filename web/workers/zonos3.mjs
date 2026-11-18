@@ -6,6 +6,7 @@ import {
 
 const SAMPLE_RATE = 44100;
 let initialized = false;
+let engineFatal = null;
 
 function unsupported(reason) {
   return {
@@ -29,12 +30,14 @@ function makeRequest(chunk) {
 }
 
 async function generate(chunk, onFirstPcm, { probeDispatch = false } = {}) {
+  if (engineFatal) throw engineFatal;
   if (!initialized) throw new Error('ZONOS3-Mini WebGPU runtime is not initialized.');
   if (!Number.isSafeInteger(Number(chunk.id)) || Number(chunk.id) < 0) throw new Error('ZONOS3 requires a nonnegative canonical chunk id.');
   const response = await localFetch('/v2/generate', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
+      'x-benchmark-require-eos': '1',
       ...(probeDispatch ? { 'x-benchmark-dispatch-probe': '1' } : {}),
     },
     body: JSON.stringify(makeRequest(chunk)),
@@ -81,7 +84,13 @@ async function initialize({ backend, probe = false, probeText = 'A short local s
   initialized = false;
   if (backend !== 'webgpu') return unsupported('The official ZONOS3 browser runtime requires a WebGPU backend.');
   try {
-    await engine.init(() => {}, { base: ZONOS3_WEB_BASE, cache: true, voiceIds: [ZONOS3_VOICE_ID] });
+    engineFatal = null;
+    engine.onFatal(message => {
+      engineFatal = new Error(`ZONOS3 WebGPU engine failed: ${message}`);
+      initialized = false;
+    });
+    await engine.init(() => {}, { base: ZONOS3_WEB_BASE, cache: true, voiceIds: [ZONOS3_VOICE_ID], loadVoicePreviews: false });
+    if (engineFatal) throw engineFatal;
     initialized = true;
     const dispatches = probe ? await (async () => {
       const out = await generate({ id: 0, text: probeText }, null, { probeDispatch: true });
@@ -111,7 +120,7 @@ async function initialize({ backend, probe = false, probeText = 'A short local s
         selectedAdapter,
         gpuExecution: 'Official ZONOS3 backbone and keep2_plain decoder WebGPU kernels.',
         cpuExecution: 'Host iSTFT, FIR mixing, resampling, benchmark text pass-through, streamed float32 readback.',
-        loadedVoiceAssets: 'The official client loads Imogen preview audio; the worker loads its reference codes and embedding. CPU/WASM uses only the same embedding sidecar.',
+        loadedVoiceAssets: 'The benchmark skips unused Imogen preview audio; the worker loads its reference codes and embedding. CPU/WASM uses only the same embedding sidecar.',
         dispatchProbe: 'Separate untimed generation; hooks are removed before scored generation.',
       },
       capability: {
@@ -124,6 +133,7 @@ async function initialize({ backend, probe = false, probeText = 'A short local s
   } catch (error) {
     initialized = false;
     disposeEngine();
+    engineFatal = null;
     const message = String(error?.message ?? error);
     if (message.includes('ZONOS3_UNSUPPORTED_WEBGPU:')) {
       return unsupported(message.replace(/^.*?ZONOS3_UNSUPPORTED_WEBGPU:\s*/s, ''));
@@ -135,6 +145,7 @@ async function initialize({ backend, probe = false, probeText = 'A short local s
 async function dispose() {
   initialized = false;
   disposeEngine();
+  engineFatal = null;
 }
 
 self.onmessage = async ({ data }) => {

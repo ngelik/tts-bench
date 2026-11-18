@@ -39,7 +39,11 @@ export async function initGpu(onLost?: (message: string) => void,
   device.lost.then(info => {
     if (info.reason !== 'destroyed') onLost?.('GPU device lost: ' + info.message + '; reload the page');
   });
-  device.addEventListener('uncapturederror', e => console.error('WebGPU error:', (e as GPUUncapturedErrorEvent).error.message));
+  device.addEventListener('uncapturederror', e => {
+    const message = (e as GPUUncapturedErrorEvent).error.message;
+    console.error('WebGPU error:', message);
+    onLost?.('WebGPU uncaptured error: ' + message);
+  });
   return device;
 }
 

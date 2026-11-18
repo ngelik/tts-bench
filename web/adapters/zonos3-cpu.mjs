@@ -16,8 +16,8 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
   if (!model || model.family !== 'zonos3' || !model.cpuAssets || !model.info) {
     throw new Error('ZONOS3 CPU adapter requires the registered ZONOS3 model config and its pinned GGUF assets.');
   }
-  if (!Number.isSafeInteger(threads) || threads < 1 || threads > 16) {
-    throw new Error('ZONOS3 CPU thread count must be an integer from 1 to 16.');
+  if (!Number.isSafeInteger(threads) || threads < 1 || threads > 12) {
+    throw new Error('ZONOS3 CPU thread count must be an integer from 1 to 12.');
   }
 
   let worker = null;

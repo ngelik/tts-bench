@@ -24,7 +24,8 @@ committed outputs.
 The local integration changes are limited to:
 
 - Filtering the preset voice catalog to the explicitly configured Imogen ID
-  before fetching preview audio, reference codes and embedding data.
+  before fetching reference codes and embedding data; the benchmark disables
+  unused preview-audio fetch/decode.
 - Exporting a disposal method that terminates both upstream browser workers
   and resets their initialization state for the benchmark lifecycle.
 - Reporting the adapter chosen by the actual inference worker, rejecting
@@ -34,6 +35,11 @@ The local integration changes are limited to:
   inference worker only for a separate request carrying
   `x-benchmark-dispatch-probe: 1`; restoring its original methods when that
   request ends and returning the count through the worker protocol.
+- Requiring EOS for benchmark generation and carrying failures after response
+  streaming begins through the worker terminal message and readable-stream
+  error, so partial output is not accepted as a completed utterance.
+- Forwarding fatal inference-worker, codec-worker and WebGPU device errors to
+  active request streams.
 
 No model inference kernels, tokenizer, text processing, or codec arithmetic are
 changed by this integration. The benchmark sends canonical text spans without
