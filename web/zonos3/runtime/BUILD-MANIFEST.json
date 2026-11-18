@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/Zyphra/ZONOS3-Mini",
+    "revision": "a50e14117d99181ba7f28047b451ba03ba1a09a9",
+    "license": "MIT",
+    "entry": "servers/web/src/client.ts"
+  },
+  "builder": {
+    "package": "vite",
+    "version": "8.3.5",
+    "target": "es2022"
+  },
+  "files": [
+    {
+      "path": "codec-worker.js",
+      "bytes": 16058,
+      "sha256": "2aab09284739314e3270894b051f49d03327ff82f2a0b13d7b693cbf4e574f5e"
+    },
+    {
+      "path": "engine.js",
+      "bytes": 14701,
+      "sha256": "46e59a34905f26b18d5e8449a828ce98355db7676b1c34ed77389e160892b6b3"
+    },
+    {
+      "path": "worker.js",
+      "bytes": 1298592,
+      "sha256": "d4792e98ea1105e3515d96fee8b7dcab2ab5775ec1832c62f207a4fc748ba978"
+    }
+  ]
+}

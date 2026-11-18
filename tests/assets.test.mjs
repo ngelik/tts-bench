@@ -10,7 +10,7 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2']);
+  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini']);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -20,6 +20,26 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(klein.modelRevision, '25e0e73bebba71e5985bc369628ebdcb81bf7116');
   assert.equal(klein.support.voiceCount, 17);
   assert.equal(klein.support.languageCount, 4);
+  const zonos = getAssetLock().models['zonos3-mini'];
+  assert.deepEqual(zonos.backends, ['cpu', 'webgpu']);
+  assert.equal(zonos.modelRevision, '2921b8821772b0bd10a04456863d21abf9d2f283');
+  assert.equal(zonos.runtime.version, 'a50e14117d99181ba7f28047b451ba03ba1a09a9');
+  assert.deepEqual(zonos.runtime.files.map(file => file.path).sort(), ['BUILD-MANIFEST.json', 'codec-worker.js', 'engine.js', 'worker.js']);
+  assert.ok(zonos.runtime.files.every(file => file.sourcePath.startsWith('web/zonos3/runtime/') && file.kind === 'runtime'));
+  assert.equal(zonos.support.voiceCount, 27);
+  assert.equal(zonos.support.bundledVoiceCount, 1);
+  assert.equal(zonos.support.languageCount, 43);
+  assert.equal(zonos.assets.length, 75);
+  assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-web-voices-English-Imogen_en-British_F_1-embedding-npy').sha256,
+    '683424b91faeade48c8a92e05e1c3679366abbba443ef62eccba8dc40de48e9e');
+  assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-cpu-backbone-q4q8').bytes, 663150624);
+  assert.equal(zonos.assets.filter(asset => asset.id.startsWith('zonos3-web-backbone-shard-') || asset.id.startsWith('zonos3-web-zac-shard-') || asset.id === 'zonos3-web-companions-steer-gguf').reduce((sum, asset) => sum + asset.bytes, 0), 920731032);
+  assert.equal(zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-') && asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 1160861792);
+  const cpuRuntime = zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-runtime-'));
+  assert.equal(cpuRuntime.reduce((sum, asset) => sum + asset.bytes, 0), 4410876);
+  assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v2-690469b7955a/')));
+  assert.equal(cpuRuntime.find(asset => asset.id === 'zonos3-cpu-runtime-wasm').sha256,
+    '690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17');
   const linnet = getAssetLock().models['linnet-en-35m'];
   assert.deepEqual(linnet.backends, ['cpu', 'webgpu']);
   assert.equal(linnet.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');

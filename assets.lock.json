@@ -6376,6 +6376,722 @@
         ],
         "notes": "English only. The browser configuration uses voice 260, carries its model-bound state, and does not expose custom voice cloning or the other seven catalog entries. CPU/WASM and WebGPU run FP32 ONNX graphs with one WASM thread; WebGPU allows WASM operator fallback and must prove actual GPU dispatch. Seeded browser noise is disclosed and is not bitwise PyTorch RNG parity."
       }
+    },
+    "zonos3-mini": {
+      "displayName": "ZONOS3-Mini (Imogen)",
+      "modelRevision": "2921b8821772b0bd10a04456863d21abf9d2f283",
+      "runtime": {
+        "package": "Zyphra/ZONOS3-Mini servers/web",
+        "version": "a50e14117d99181ba7f28047b451ba03ba1a09a9",
+        "license": "MIT; source bundled under web/zonos3/upstream; CPU/WASM runtime is pinned separately in its asset manifest",
+        "files": [
+          {
+            "id": "zonos3-web-runtime-engine-js",
+            "path": "engine.js",
+            "sourcePath": "web/zonos3/runtime/engine.js",
+            "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/engine.js",
+            "bytes": 14701,
+            "sha256": "46e59a34905f26b18d5e8449a828ce98355db7676b1c34ed77389e160892b6b3",
+            "kind": "runtime"
+          },
+          {
+            "id": "zonos3-web-runtime-worker-js",
+            "path": "worker.js",
+            "sourcePath": "web/zonos3/runtime/worker.js",
+            "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/worker.js",
+            "bytes": 1298592,
+            "sha256": "d4792e98ea1105e3515d96fee8b7dcab2ab5775ec1832c62f207a4fc748ba978",
+            "kind": "runtime"
+          },
+          {
+            "id": "zonos3-web-runtime-codec-worker-js",
+            "path": "codec-worker.js",
+            "sourcePath": "web/zonos3/runtime/codec-worker.js",
+            "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/codec-worker.js",
+            "bytes": 16058,
+            "sha256": "2aab09284739314e3270894b051f49d03327ff82f2a0b13d7b693cbf4e574f5e",
+            "kind": "runtime"
+          },
+          {
+            "id": "zonos3-web-runtime-build-manifest-json",
+            "path": "BUILD-MANIFEST.json",
+            "sourcePath": "web/zonos3/runtime/BUILD-MANIFEST.json",
+            "target": "runtimes/zonos3-mini-web/a50e14117d99181ba7f28047b451ba03ba1a09a9/BUILD-MANIFEST.json",
+            "bytes": 776,
+            "sha256": "230baefb0544c577ebe02be872fc249c5df47aac19b49aa842bbc885256cc1bf",
+            "kind": "runtime"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "zonos3-web-backbone-manifest-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/manifest.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/manifest.json",
+          "bytes": 33646,
+          "sha256": "f814bd3f85cf039b99492f1fce92580adee9b879649bb18ee6d9c52411cd6362",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-000-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-000.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-000.bin",
+          "bytes": 101007360,
+          "sha256": "90a46772c8b081ad5df4ce63a48d2ef16630fab8e96f547093603bc860b1dc30",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-001-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-001.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-001.bin",
+          "bytes": 65155584,
+          "sha256": "c0516d4e20f421ee92b4ec87449f48d89ad266f39408e36ba1aca572e64a8c69",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-002-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-002.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-002.bin",
+          "bytes": 54345984,
+          "sha256": "9eed55b5cf23af6b88c73cd485b6bbf1fdffbbb51212511149717a858bfd35cc",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-003-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-003.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-003.bin",
+          "bytes": 64696832,
+          "sha256": "36847259c95af1398459616cb27ce51978e1e9993eccb675d253d91124fb98ee",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-004-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-004.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-004.bin",
+          "bytes": 67090688,
+          "sha256": "cd3c788c83f4c07e38c6df3958ac743c3be6a38dea50e5109446385fcfe692ff",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-005-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-005.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-005.bin",
+          "bytes": 67090688,
+          "sha256": "29390aeb6bc52ea192b7d259115922cfe7599d4ca6632f8fcf29e36f6c6adfae",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-006-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-006.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-006.bin",
+          "bytes": 53144320,
+          "sha256": "49518efa5d4e382b9da5e4c2537589288acff9e191cbf2deabecc31694523423",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-007-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-007.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-007.bin",
+          "bytes": 67090688,
+          "sha256": "e26b316ddcdde1a200529502c60359a0016888df91b7a84b5d633b354c263a68",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-008-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-008.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-008.bin",
+          "bytes": 67090688,
+          "sha256": "193fa3416c553b939282c30bfb0468a882a3b3f20c1177baed6155b3545a7b1a",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-009-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-009.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-009.bin",
+          "bytes": 67090688,
+          "sha256": "f98db299230cebb19c3022e13c00565d1f598db00774893b1a6f2674c8b045c7",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-backbone-shard-010-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-010.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/shard-010.bin",
+          "bytes": 1184000,
+          "sha256": "75b3d78bb498e829e4a79255cf21fdf6ec59c1159869557dd887b484d13ba4e0",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-zac-manifest-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/manifest.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/manifest.json",
+          "bytes": 36774,
+          "sha256": "67e7fcb7a89a216f1866cc96c5a308ef474fc6168862ca856ef51ea59fcab0ff",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-zac-shard-000-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-000.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-000.bin",
+          "bytes": 6291456,
+          "sha256": "10bd894273348c1591287cf452d247d1378a41dade7d343b3daa760d9ed20aae",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-zac-shard-001-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-001.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-001.bin",
+          "bytes": 75497472,
+          "sha256": "0fc3557b110124dc8d9f71900b85c39e758a000b6405134b33a7cc17ac8a03fc",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-zac-shard-002-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-002.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-002.bin",
+          "bytes": 66758656,
+          "sha256": "5c54ccdde348b10fcf36029d55d54d021344b81abbcfcdc5197cba19f97013e4",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-zac-shard-003-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-003.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-003.bin",
+          "bytes": 67106816,
+          "sha256": "234f64c8b089ff2b69a7fb4f2a0b3bc6167b657ea9b54298513c5fb5666c45cf",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-zac-shard-004-bin",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-004.bin",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/shard-004.bin",
+          "bytes": 29884152,
+          "sha256": "c15a760b8a8164e9922fb59fd798c4295e2a31d308e3853db3d3b63ac6f1fe2e",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-zac-full_mr-manifest-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac-full_mr/manifest.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac-full_mr/manifest.json",
+          "bytes": 153716,
+          "sha256": "ca892cb90cc3c7592796333cfb2376b6feaa1f0eb21343d88ab383961f54a5d6",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-edit-manifest-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/edit/manifest.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/edit/manifest.json",
+          "bytes": 30451,
+          "sha256": "8aec095abf2b8db4bd5ddb34605f908f33941951c92734b392074f40f1425912",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-aligner-manifest-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/aligner/manifest.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/aligner/manifest.json",
+          "bytes": 33075,
+          "sha256": "fe68218a5a785cd64a08d0a1fa367685f6749a6e71fe3cf9a1dd7f39303ea2b7",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-companions-steer-gguf",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/companions/steer.gguf",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/companions/steer.gguf",
+          "bytes": 204960,
+          "sha256": "6e8e3f86e89a09801ce083b9286f43263ec696acfaff72e25aca537aa9efa90c",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-web-voices-voices-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+          "bytes": 5760,
+          "sha256": "03d584a4faa2ac71a9c278c12a61d9099dd98e8ae3e2cb225640ad01af0a41bb",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-voices-English-Imogen_en-British_F_1-codes-npy",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/English/Imogen_en-British_F_1.codes.npy",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/English/Imogen_en-British_F_1.codes.npy",
+          "bytes": 7728,
+          "sha256": "c906f6c405c9078607fe9c54cf1b71ef0e112839490499e34bf8791ed1ad7e86",
+          "kind": "voice"
+        },
+        {
+          "id": "zonos3-web-voices-English-Imogen_en-British_F_1-embedding-npy",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/English/Imogen_en-British_F_1.embedding.npy",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/English/Imogen_en-British_F_1.embedding.npy",
+          "bytes": 896,
+          "sha256": "683424b91faeade48c8a92e05e1c3679366abbba443ef62eccba8dc40de48e9e",
+          "kind": "voice"
+        },
+        {
+          "id": "zonos3-web-laci-index-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/index.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/index.json",
+          "bytes": 1593,
+          "sha256": "d3a2268d523e6fcf1bfc334a6c42f36eeafe66faf46e8f866c9650e0b508b2b2",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads.json",
+          "bytes": 7495,
+          "sha256": "407e47472224c603b9c3a969e7175f35b637e0c1995eb606d5128ec1b2e88528",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ar-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ar.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ar.json",
+          "bytes": 7661,
+          "sha256": "e8d283a8eb0647015e26e2c6d49d2ec6fa2bd9941e5390e7b30396ca5e035ed6",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_bg-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_bg.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_bg.json",
+          "bytes": 7608,
+          "sha256": "1c4820a421ab318cd62ecc49e52ea4ec9aff520fe510ab54e31a654e394f6828",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_bn-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_bn.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_bn.json",
+          "bytes": 7654,
+          "sha256": "9b49a48f9b7bfaf8857ee759736b786f3940c1890c394a4cdbe679e1f522e45e",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_cs-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_cs.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_cs.json",
+          "bytes": 7571,
+          "sha256": "97ce6b22613053a17463deccbcd4943c1450c4f73210b09e93eec7679683eff1",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_da-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_da.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_da.json",
+          "bytes": 7616,
+          "sha256": "bc1971f6054b465b939141bb06d0d07682501e74652fa0023d3f0a2db0c70146",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_de-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_de.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_de.json",
+          "bytes": 7539,
+          "sha256": "5029f11f7a75c02f68229f87f774e0440dc7bc98c091e8086828a1645d200645",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_el-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_el.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_el.json",
+          "bytes": 7603,
+          "sha256": "511ccc46c94476a01a0fe3fd96ee2b7e8926b1e5852772000faa9df54e92cee7",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_es-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_es.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_es.json",
+          "bytes": 7571,
+          "sha256": "20f0e8fae411ca651ddf6ae7fcab63e6b2d94340aa5497ca541b349feeb2d754",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_fi-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_fi.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_fi.json",
+          "bytes": 7580,
+          "sha256": "7b7ece889fef904c39ca569d882746d61b105c37a348838041a72aa2164c43ef",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_fr-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_fr.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_fr.json",
+          "bytes": 7571,
+          "sha256": "6ceacd45c4618504350532eb5c2628aec69ac8f18911256fa4378653216733d3",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_gu-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_gu.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_gu.json",
+          "bytes": 7362,
+          "sha256": "2282bc9873b50cd86e0fe84e0d4478df0558cbfbea9f5e0683f80de6fbe1383f",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_he-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_he.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_he.json",
+          "bytes": 7639,
+          "sha256": "4cb8baae3d74b3099a68c07e9c69dc388b5c05755ee3544bd2da0860e1ba3956",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_hi-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_hi.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_hi.json",
+          "bytes": 7579,
+          "sha256": "0ef8179db4db8e29014faaebdbab9494d33a2974cf21405a884d6269eca1630a",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_hu-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_hu.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_hu.json",
+          "bytes": 7614,
+          "sha256": "8d42f5c087bb205a2e67509324ce999c5cdb56b26fd29685664bc8fe10dce143",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_id-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_id.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_id.json",
+          "bytes": 7597,
+          "sha256": "0b2fe2fbc497b4f821d83488061ca32e6283ce2080975d4986e7c209a619dbad",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_it-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_it.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_it.json",
+          "bytes": 7557,
+          "sha256": "bd1ab97819057fd0b7c1cb6577a646118b42e1ba7568dff4ee379e925a74e2e7",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ja-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ja.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ja.json",
+          "bytes": 7584,
+          "sha256": "1da810b373a7ddc591ffc654de363d8024821a407665083748c3eef5bf3e233a",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ka-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ka.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ka.json",
+          "bytes": 7568,
+          "sha256": "854646c45094c81f5ff1cd7719a6eba1e13d45ed05676b3b4d2fe68ce14649cf",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_kn-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_kn.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_kn.json",
+          "bytes": 7698,
+          "sha256": "0a0cf44eab3ebd28266e91750b32383d1e0ac5aa7a87a1e3d812145530b74307",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ko-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ko.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ko.json",
+          "bytes": 7566,
+          "sha256": "b5ef1551a418333ddc37a74078a825da718ac6434400a46efa98f5e5472c9fb9",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ml-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ml.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ml.json",
+          "bytes": 7639,
+          "sha256": "99d02ad7afeebe8f08b51ad2b6cde84c2a689c49c5644aab1693ff4937a1b66f",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_mr-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_mr.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_mr.json",
+          "bytes": 7591,
+          "sha256": "94d5414ef4c5a76a37b9bce02045e08b5f9a75bffca8379e9411301fcece8a27",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ms-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ms.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ms.json",
+          "bytes": 7564,
+          "sha256": "723dd6e8c6a63f7eb157c12e9676d7b8ee44de2253a32887bb64483df874a70e",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_nl-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_nl.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_nl.json",
+          "bytes": 7626,
+          "sha256": "5a28c72337284768512d274052e76e06a2b804447fcb0b7840740bbf77b631fe",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_no-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_no.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_no.json",
+          "bytes": 7566,
+          "sha256": "2ce69edde434697ce97e10e4b7c65fbc90bd1d075533dbd1abd27e99d1774a6f",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_or-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_or.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_or.json",
+          "bytes": 7434,
+          "sha256": "ce438e2cdcfa6e21ee9cddddeb03ea3fae519e8c81ed5a6b485ac03c356490b5",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_pa-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_pa.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_pa.json",
+          "bytes": 7582,
+          "sha256": "06ab88201f37b55b5f8ec87fcf9f28e002fc2ca3d983e5257bc2359d3aba531a",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_pl-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_pl.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_pl.json",
+          "bytes": 7569,
+          "sha256": "627b2d45c108d7be9afe0d603c24bdff69504145b750b1e3ef06065bad940e45",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_pt-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_pt.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_pt.json",
+          "bytes": 7557,
+          "sha256": "cd675f1943ef3b06ee4d33a9c8fc55c0b3d0b41aedcf538889c89965b75036fb",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ro-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ro.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ro.json",
+          "bytes": 7574,
+          "sha256": "f42815de5929d821cbba40497e97d9cae284791b0651445d825f67e15f1205c9",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ru-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ru.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ru.json",
+          "bytes": 7573,
+          "sha256": "63be82dca8a36445affdfd6483f31b5f4d3c0770a37b98cb791857a91d7fea3c",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_sk-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_sk.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_sk.json",
+          "bytes": 7578,
+          "sha256": "a9323f447a98d91af68d1f5d69f703f833f14f23467ddfe122ff052761127422",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_sv-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_sv.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_sv.json",
+          "bytes": 7584,
+          "sha256": "b710183a79178c6aa2ebe2699ec5947f6e1308d21107c166caf161f98c59af3b",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ta-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ta.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ta.json",
+          "bytes": 7452,
+          "sha256": "4b441fdbfa47587b560c1e3cef388aa0842191fc15c651b81cd65e3c88a6b8e0",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_te-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_te.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_te.json",
+          "bytes": 7459,
+          "sha256": "c93da663899e460d08de7b158f765e963e231137369c2f7458240aaf3b4a2acf",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_th-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_th.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_th.json",
+          "bytes": 7630,
+          "sha256": "b882630f4dfd28a1f610b99a9cdc3f8b22ce3abaa1b6b84d273149e32bbc0c92",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_tl-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_tl.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_tl.json",
+          "bytes": 7602,
+          "sha256": "6e76d81cff51edff3acf96b3bc52891e7c9aa02b1b217d5c8561287bafffb381",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_tr-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_tr.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_tr.json",
+          "bytes": 7679,
+          "sha256": "f48baeea20cdb4bb84b84175a00a8a2307fcb4c5e0978bbb77aa7c856ed7a22e",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_uk-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_uk.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_uk.json",
+          "bytes": 7631,
+          "sha256": "f5f6c66f31281e287b21b45cf6b4ab722349e8299c48ed1c0396135edb44c6cc",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_ur-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ur.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_ur.json",
+          "bytes": 7628,
+          "sha256": "bc2c557897ceafcfa8494f8321fa87c22b4b1ce5ae14b2407a91d843a3ffae32",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_vi-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_vi.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_vi.json",
+          "bytes": 7644,
+          "sha256": "0ed6768e0fa3aa1a5c444319dbbe813137d0a4083bc0c1dc53bedb06b9635030",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-web-laci-zonos3_mini_heads_zh-json",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_zh.json",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/web/laci/zonos3_mini_heads_zh.json",
+          "bytes": 7558,
+          "sha256": "e8ef4f98d7738ca3a5768a125cad4a7362297580f9fcc46581c3eb025fd9273f",
+          "kind": "model-support"
+        },
+        {
+          "id": "zonos3-cpu-backbone-q4q8",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/gguf/backbone-ptq.gguf",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/gguf/backbone-ptq.gguf",
+          "bytes": 663150624,
+          "sha256": "66fceb6d73a8c30bde80249e4112bb308380ab7f3384fa11c8e4048115e4ceec",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-cpu-zac-keep2",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/gguf/zac-keep2.gguf",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/gguf/zac-keep2.gguf",
+          "bytes": 452325440,
+          "sha256": "834e5b70b88294afc3c702a478487e0664dcc6b574c16fc6167d72444aabeafd",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-cpu-speaker-encoder",
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/gguf/spk-encoder.gguf",
+          "url": "https://huggingface.co/Zyphra/ZONOS3-Mini/resolve/2921b8821772b0bd10a04456863d21abf9d2f283/gguf/spk-encoder.gguf",
+          "bytes": 45385728,
+          "sha256": "9539f340b70be246005403b9c254732e180e85e0b3c57fb1973f0d6bc6c59bdc",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zonos3-cpu-runtime-js",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.js",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/bench_zonos3_cpu.js",
+          "bytes": 121508,
+          "sha256": "5081914362c042de1e353f9cea93cbe884d9bc5081002cf587f5798122feec7a",
+          "kind": "runtime"
+        },
+        {
+          "id": "zonos3-cpu-runtime-wasm",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/bench_zonos3_cpu.wasm",
+          "bytes": 4231507,
+          "sha256": "690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17",
+          "kind": "runtime"
+        },
+        {
+          "id": "zonos3-cpu-runtime-third-party-notices",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/THIRD-PARTY-NOTICES.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/THIRD-PARTY-NOTICES.txt",
+          "bytes": 57861,
+          "sha256": "a47966056c2230037d837c507d812040bd7eaae74cb933a33031af35f0a1064a",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "runtime": "MIT (official Zyphra browser runtime); audio.cpp CPU/WASM route with separately pinned notices",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 27,
+        "bundledVoiceCount": 1,
+        "languageCount": 43,
+        "languages": [
+          "en",
+          "fr",
+          "es",
+          "de",
+          "it",
+          "pt",
+          "nl",
+          "pl",
+          "ru",
+          "sv",
+          "tr",
+          "uk",
+          "cs",
+          "da",
+          "fi",
+          "el",
+          "hu",
+          "no",
+          "ro",
+          "sk",
+          "bg",
+          "zh",
+          "ja",
+          "ko",
+          "ar",
+          "he",
+          "vi",
+          "id",
+          "th",
+          "tl",
+          "ms",
+          "ka",
+          "hi",
+          "bn",
+          "ta",
+          "te",
+          "mr",
+          "gu",
+          "kn",
+          "ml",
+          "pa",
+          "or",
+          "ur"
+        ],
+        "scope": "Pinned ZONOS3-Mini checkpoint and official 27-preset voice catalog; one English preset is staged and benchmarked.",
+        "sources": [
+          "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+          "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+          "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+          "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+        ],
+        "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. The WebGPU profile loads its reference codes and speaker embedding; the CPU/WASM profile loads the speaker embedding only. The benchmark skips unused preview audio. No other preset or language is exercised."
+      }
     }
   }
 }
