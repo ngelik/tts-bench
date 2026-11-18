@@ -7,8 +7,16 @@ on:
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/sano-kokopop-browser-smoke.mjs'
       - 'web/adapters/sano-kokopop.mjs'
+      - 'web/adapters/sano-kokopop-config.mjs'
       - 'web/sano-kokopop/**'
       - 'web/workers/sano-kokopop.mjs'
+      - 'assets.lock.json'
+      - 'lib/assets.mjs'
+      - 'lib/model-parameters.json'
+      - 'web/bench.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'tests/runtime-installation.test.mjs'
       - 'tests/sano-kokopop-adapter.test.mjs'
       - 'package.json'
       - 'package-lock.json'
@@ -20,8 +28,16 @@ on:
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/sano-kokopop-browser-smoke.mjs'
       - 'web/adapters/sano-kokopop.mjs'
+      - 'web/adapters/sano-kokopop-config.mjs'
       - 'web/sano-kokopop/**'
       - 'web/workers/sano-kokopop.mjs'
+      - 'assets.lock.json'
+      - 'lib/assets.mjs'
+      - 'lib/model-parameters.json'
+      - 'web/bench.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'tests/runtime-installation.test.mjs'
       - 'tests/sano-kokopop-adapter.test.mjs'
       - 'package.json'
       - 'package-lock.json'
@@ -117,18 +133,15 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - run: npm ci --ignore-scripts
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: sano-kokopop-runtime-and-model-${{ github.event.pull_request.head.sha || github.sha }}
           path: .cache/sano-kokopop-build/release
-      - name: Stage only the locked runtime and model for local browser fetch
+      - run: npm ci --ignore-scripts
+      - name: Import and verify the locked generated asset closure
         run: |
-          mkdir -p .cache/public/models .cache/public/runtimes/kokopop-sano-heartnano-v1
-          cp .cache/sano-kokopop-build/release/heartnano-f32.gguf .cache/public/models/heartnano-f32.gguf
-          cp .cache/sano-kokopop-build/release/kokopop-runtime.js .cache/public/runtimes/kokopop-sano-heartnano-v1/
-          cp .cache/sano-kokopop-build/release/kokopop-runtime.wasm .cache/public/runtimes/kokopop-sano-heartnano-v1/
-          cp .cache/sano-kokopop-build/release/kokopop-runtime.data .cache/public/runtimes/kokopop-sano-heartnano-v1/
+          node bin/bench.mjs assets import --model sano-heart-nano-gguf-f32 --source .cache/sano-kokopop-build/release --accept-license
+          node bin/bench.mjs assets verify --model sano-heart-nano-gguf-f32 --accept-license
       - name: Run headed Chrome CPU and hardware WebGPU parity smoke
         env:
           CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
