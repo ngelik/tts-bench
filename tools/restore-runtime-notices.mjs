@@ -30,6 +30,16 @@ export async function restoreRuntimeNotices(checkout, modelId) {
     const bytes = known.get(asset.sha256);
     if (!bytes || bytes.length !== asset.bytes) throw new Error('No byte-identical mirror for ' + asset.target);
     const path = resolve(root, '.cache/public', asset.target);
+    let ancestor = dirname(path);
+    for (;;) {
+      try {
+        if (!inside(root, await realpath(ancestor))) throw new Error('Historical cache resolves outside its checkout');
+        break;
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+        ancestor = dirname(ancestor);
+      }
+    }
     await mkdir(dirname(path), { recursive: true });
     if (!inside(root, await realpath(dirname(path)))) throw new Error('Historical cache resolves outside its checkout');
     let existing;

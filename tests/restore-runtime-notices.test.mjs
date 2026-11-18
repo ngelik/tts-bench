@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { mkdtemp, readFile, writeFile, rm, mkdir, symlink } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, rm, mkdir, symlink, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -36,6 +36,7 @@ test('historical notice restoration refuses cache paths escaping through symlink
     await mkdir(join(root, '.cache'));
     await symlink(outside, join(root, '.cache/public'), 'dir');
     await assert.rejects(restoreRuntimeNotices(root, 'tiny'), /outside/);
+    assert.deepEqual(await readdir(outside), []);
   } finally {
     await rm(root, { recursive: true, force: true });
     await rm(outside, { recursive: true, force: true });
