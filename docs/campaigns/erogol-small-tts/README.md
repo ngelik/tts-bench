@@ -16,6 +16,17 @@ Eight entries have existing family coverage: Phonon, Tiny Voca, Mach Boom, Parad
 
 Each supported backend runs the fixed 20,000-character English article in headed Google Chrome on the eight-core, 16 GiB Apple M1 Pro. One full warm-up precedes five timed articles. A separate cached article provides average Chrome process-tree memory during generation. The warm timing includes model output through the final CPU-readable audio samples. The configuration records the selected voice and precision, including any backend-specific differences. [Benchmark protocol](../../PROTOCOL.md) · [Memory measurement](../../MEMORY.md)
 
+### SupraTTS M1 Pro results
+
+The pinned preview checkpoint has **1,031,754 parameters** and one fixed English voice. All four receipts below use the clean merged source `ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1`, Chrome 157.0.8103.40, and all 93 spans of the 20,000-character fixture. Warm cells include one excluded full-article warm-up and five scored runs. The WebGPU capability probe observed 681 compute dispatches in a separate untimed synthesis. [Parameter and checkpoint evidence](../../MODEL_SUPPORT.md#supratts-1.0-preview) · [Runtime and output licensing](../../LICENSING.md#supratts-10-preview-browser-onnx)
+
+| Backend and receipts | Warm median (n=5) | Warm range | Cached render (n=1) | Mean generation-window RSS | Generation-window peak RSS | Whole-call peak RSS |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CPU/WASM ([warm](../../../results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md), [cached](../../../results/2026-11-18t08-16-35-187z-supratts-1.0-preview-cpu-cached-43089de0/summary.md)) | 21.876 s | 21.807–21.917 s | 22.580 s | 1,212.813 MB (44 samples) | 1,292.812 MB | 1,668.891 MB |
+| WebGPU + WASM ([warm](../../../results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md), [cached](../../../results/2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47/summary.md)) | 16.469 s | 16.355–16.521 s | 17.362 s | 2,024.568 MB (34 samples) | 2,136.637 MB | 2,552.709 MB |
+
+RSS is the owned Chrome process-tree total, including browser baseline; MB are decimal. The generation-window peak is the maximum of samples taken every 500 ms between the first request and final PCM. The whole-call peak spans setup and post-timer validation/export. These peak scopes are distinct. The recordings and 30-second listening clips are attributed in [`audio/manifest.json`](../../../audio/manifest.json) and are available on the [SupraTTS dashboard](https://ngelik.github.io/tts-bench/?models=supratts-1.0-preview).
+
 The source comparison used five shorter texts and a Linux AMD EPYC CPU. Its audio and timings belong to that experiment. For these browser runs, the reference table links each submitted receipt, and the dashboard displays its associated audio when available. [Browser comparison and recordings](https://ngelik.github.io/tts-bench/?models=linnet-en-35m,supratts-1.0-preview,silencio-2,klein-tts-x1.5-pro,sopro-v2-turbo)
 
 ## Replay a browser measurement

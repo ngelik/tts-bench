@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "60565a58e6c3240c14a21b462c5f8fd9435ba924",
+  "sourceCommit": "ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1",
   "replayOf": "erogol-small-tts-bench-supratts-1.0-preview",
   "conditions": "Clean merged source; full english-20k-v1 fixture; one excluded warm-up plus five scored trials for warm cells; one cached full-article generation with 500 ms Chrome process-tree RSS sampling for resource cells; CPU uses one-thread WASM; WebGPU requires hardware adapter and observed dispatch; no cold runs.",
   "cells": [
