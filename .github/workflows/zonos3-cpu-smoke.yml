@@ -11,6 +11,7 @@ on:
       - 'tools/build-zonos3-cpu-browser.sh'
       - 'tools/build-zonos3-cpu-notices.mjs'
       - 'tools/check-zonos3-cpu-build.mjs'
+      - 'tools/check-zonos3-cpu-lock.mjs'
       - '.github/workflows/zonos3-cpu-smoke.yml'
       - '.github/workflows/zonos3-cpu-runtime-build.yml'
   workflow_dispatch:
@@ -36,7 +37,9 @@ jobs:
       - name: Verify committed WebGPU runtime bundles are current
         run: git diff --exit-code -- web/zonos3/runtime
       - name: Build the pinned CPU-only Emscripten runtime
-        run: bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1
+        run: bash tools/build-zonos3-cpu-browser.sh .cache/zonos3-cpu-runtime-build
+      - name: Compare the reproducible CPU build with immutable release lock
+        run: node tools/check-zonos3-cpu-lock.mjs .cache/zonos3-cpu-runtime-build
       - name: Verify adapter and worker contract
         run: node --test tests/zonos3-cpu-adapter.test.mjs
       - name: Fetch pinned model, voice and runtime assets
@@ -93,9 +96,9 @@ jobs:
           name: zonos3-cpu-wasm-chrome-smoke
           if-no-files-found: ignore
           path: |
-            .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.js
-            .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.wasm
-            .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1/THIRD-PARTY-NOTICES.txt
+            .cache/zonos3-cpu-runtime-build/bench_zonos3_cpu.js
+            .cache/zonos3-cpu-runtime-build/bench_zonos3_cpu.wasm
+            .cache/zonos3-cpu-runtime-build/THIRD-PARTY-NOTICES.txt
             runs/**/result.json
             runs/**/status.json
             runs/**/error.json
