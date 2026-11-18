@@ -48,6 +48,10 @@ No CPU/WebGPU warm speed comparison is published until both warm cells are measu
 
 <!-- audio8-outcomes:end -->
 
+### Operational note for the CPU cached measurement
+
+During the generation window for the [CPU cached receipt](../../../results/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a/summary.md), verified-unused completed Ming dependency/build caches were deleted at about 02:16 UTC on 2026-11-18. The deletion command took about 2.03 seconds. The available evidence does not establish whether this affected generation time or RSS, so no impact is estimated or subtracted from the recorded result. No synthesis or test workload was started as part of the cleanup.
+
 ### Relationship to the archived results
 
 Earlier Audio8 receipts remain linked in [Reference results](../../../README.md#reference-results). They describe the prior asset registration and are not results for this schedule. In particular, the archived WebGPU cached/warm evidence retains the decoder fault and is not treated as a valid repaired speech score. The older CPU cached receipt is also archived relative to this registration; no CPU warm score is inferred from it. The dashboard preserves the older receipts and their status while showing each new cell as it is submitted. New receipts must cite the pinned source and match the current assets before they can satisfy this schedule.
