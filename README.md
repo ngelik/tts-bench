@@ -254,6 +254,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Klein-TTS X1.5 Pro FP32 | 17 | 17 | 4 (en, es, fr, it) | [Details](docs/MODEL_SUPPORT.md#klein-tts-x1.5-pro) |
 | Linnet en-35m (f1) | 2 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#linnet-en-35m) |
 | Silencio-2 28M FP32 | 8 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#silencio-2) |
+| ZONOS3-Mini (Imogen) | 27 | 1 | 43 | [Details](docs/MODEL_SUPPORT.md#zonos3-mini) |
 
 ### Controlled native comparisons
 
