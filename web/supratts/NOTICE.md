@@ -28,6 +28,8 @@ Runtime components and their separately staged notices:
 - CPython 3.13.2: Python Software Foundation license.
 - NumPy 2.2.5: BSD-3-Clause and bundled component notices.
 
-No runtime weights, model assets, Python runtime files or audio are committed
-here. They are fetched from immutable, digest-verified sources listed in
-[`assets.lock.json`](../../assets.lock.json).
+No runtime weights, model assets or Python runtime files are committed here.
+Inference assets are fetched from immutable, digest-verified sources listed in
+[`assets.lock.json`](../../assets.lock.json). The two approved benchmark excerpts
+are committed under `audio/samples/` and linked to their scored warm trial receipts
+in [`audio/manifest.json`](../../audio/manifest.json).
