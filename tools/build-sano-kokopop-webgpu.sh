@@ -18,8 +18,11 @@ actual_source="$(git -C "$SOURCE" rev-parse HEAD)"
 [[ "$actual_source" == "$SOURCE_PIN" ]] || { echo "Expected Kokopop $SOURCE_PIN, found $actual_source" >&2; exit 1; }
 
 PATCH="$ROOT/web/sano-kokopop/patches/kokopop-browser.patch"
-git -C "$SOURCE" apply --check "$PATCH"
-git -C "$SOURCE" apply "$PATCH"
+# This generated patch uses zero-context hunks so the patch file itself stays
+# free of whitespace-only context records. The exact upstream commit is pinned
+# above before applying it.
+git -C "$SOURCE" apply --unidiff-zero --check "$PATCH"
+git -C "$SOURCE" apply --unidiff-zero "$PATCH"
 
 MODEL="$ASSET_ROOT/models/heartnano-f32.gguf"
 RUNTIME_STAGE="$ASSET_ROOT/runtimes/kokopop-sano-heartnano-v1"
