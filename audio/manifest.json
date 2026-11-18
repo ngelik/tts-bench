@@ -1631,6 +1631,35 @@
       }
     },
     {
+      "resultId": "2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c",
+      "model": "sopro-v2-turbo",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Tiny Voca F2 synthetic English reference",
+      "language": "en",
+      "attribution": "Sopro v2 Turbo by Samuel Vitorino, Apache-2.0. English reference from the published Tiny Voca synthetic F2 recording by this benchmark.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md",
+        "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/blob/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
+        "https://github.com/ngelik/tts-bench/blob/f456cce4422663e3217a885a4c52e8ef4735dd6d/audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c--sopro-v2-turbo--cpu.wav",
+        "sha256": "1ef39fd972217ccaa134d17b0be8cf8ccea588eae9a916c33c67bfb5e0474337",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c--sopro-v2-turbo--cpu-full.wav",
+        "sha256": "c4cf4658ae01fc379b8eddc4d5cde49e0db37dea83cb851fbb1a022fbdd0dd9f",
+        "bytes": 58734636
+      }
+    },
+    {
       "resultId": "2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0",
       "model": "supertonic-3",
       "backend": "cpu",
