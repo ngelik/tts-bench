@@ -1,0 +1,5890 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-18t08-17-08-445z-sopro-v2-turbo-cpu-cached-519c04ea",
+  "createdAt": "2026-11-18T08:27:57.728Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "37fa12d505a3691f783fbbe34f4628c55bde9ca1",
+    "dirty": false,
+    "manifestSha256": "8129435fe3243e59bc1fffbaf900eccfc1da8ef614615e8d56ae5e6735c9e6ab"
+  },
+  "assets": [
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:sopro-v2-turbo:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "sopro-common-reference.onnx",
+      "sha256": "fb6f3def33e918a590d0a2d66697a5c8178cb5b252eb013f122a696959a2a0b3",
+      "bytes": 318971
+    },
+    {
+      "id": "sopro-common-semantic_core.onnx",
+      "sha256": "352443a2217f730fc08bad3e29c0d6683dcedde568dfe0f8fa58a8b46ef15fd1",
+      "bytes": 444545
+    },
+    {
+      "id": "sopro-common-semantic_prefix.onnx",
+      "sha256": "2f0feabb47c3af038c1ed0127d907be674996e64c7a159265ffe181823f009dd",
+      "bytes": 30037
+    },
+    {
+      "id": "sopro-common-weights-reference.bin",
+      "sha256": "5ae19423d496681eed622c9ae372cdf60df9a5be106964c1f483eecd6cbe3ca1",
+      "bytes": 94666752
+    },
+    {
+      "id": "sopro-common-weights-semantic.bin",
+      "sha256": "91308fb72a6cc5a452f47e6cb5f3156970e39ef8a54690bbf98e116f11c1c75d",
+      "bytes": 96626752
+    },
+    {
+      "id": "sopro-manifest.json",
+      "sha256": "7320ee142124ce34d1431b2f109a348bf8de1e5e0fc28089004c7a8f80b0e812",
+      "bytes": 16684
+    },
+    {
+      "id": "sopro-tokenizer.json",
+      "sha256": "199e35f8f37235101138c5231464769ad4bf9b6dbecb9ae3b96b225f6c012394",
+      "bytes": 309098
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_condition.onnx",
+      "sha256": "51c6da2a7b3813b7d0d64aef1ef9cc28cdb41064ed5044877f54d4fcb8b6eede",
+      "bytes": 22045
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_offline_2.onnx",
+      "sha256": "93efe76b3ec7619071b8cee242fa77d81db91896317f2603af4cdeb0ce745764",
+      "bytes": 718899
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_stream_ode_2_0.onnx",
+      "sha256": "6b02355fed180c90ef4dccbcd4fcbd072015788cef532773cf32d020134b7750",
+      "bytes": 405567
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_stream_ode_2_1.onnx",
+      "sha256": "5a82910659a3f87502eb844383202c6cd4c020d6a7b4fc6af97dbc51edc36b0c",
+      "bytes": 405567
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_stream_prefill_2.onnx",
+      "sha256": "10afcbb60216c40fe4b53930fa9bed454be31acd41ea5783a73f696b0f3e0ae1",
+      "bytes": 742984
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_stream_prefill_ode_2_0.onnx",
+      "sha256": "791620c1be5bca85a044ea21f28da8959eec890ae480a8f71ab93e9fb36a00da",
+      "bytes": 423585
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_stream_prefill_ode_2_1.onnx",
+      "sha256": "7ad1e334f67e7886ec3cf01a0bd45a516a9bb00e70e38161991c3c48b27e7b85",
+      "bytes": 423585
+    },
+    {
+      "id": "sopro-wasm-uint8-acoustic_stream_step_2.onnx",
+      "sha256": "475ac302c05914779cced160251d3bea2748a1ba2bd068375edecc3966d9c899",
+      "bytes": 734062
+    },
+    {
+      "id": "sopro-wasm-uint8-vocoder.onnx",
+      "sha256": "dfa4793d1f8a00b2950df821c25813860826b1bcfb6f49fdb1b6c28c5627a1be",
+      "bytes": 281252
+    },
+    {
+      "id": "sopro-wasm-uint8-weights-acoustic.bin",
+      "sha256": "66a12561ea7d3a451d4e70be4713cbc03787566804bb137c6f07ccb22c1aceb0",
+      "bytes": 103205888
+    },
+    {
+      "id": "sopro-wasm-uint8-weights-condition.bin",
+      "sha256": "a4fb7fdc67246d7638d84c72b5b5d4888cc4bbda43944f2405d50fe9c806c359",
+      "bytes": 25414400
+    },
+    {
+      "id": "sopro-wasm-uint8-weights-vocoder.bin",
+      "sha256": "9d8dea8079be0ef36e5a33de233a9144d060afab4a959b73fdfaee166a5fb235",
+      "bytes": 13723840
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_condition.onnx",
+      "sha256": "bc5ee7c8b2a12ef321b855a79a41391d22649292cf480cbc2b99d660faac7fec",
+      "bytes": 13786
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_offline_2.onnx",
+      "sha256": "13fe8b6ec28c7e42bb5fc98d3ea004ca7fbc857bd0ba71ef82da35975508c11d",
+      "bytes": 547230
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_stream_ode_2_0.onnx",
+      "sha256": "8dca1aef6518f97be60553aea5c91c5360c3ca69e4b358096f4a5a1c072dc432",
+      "bytes": 286492
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_stream_ode_2_1.onnx",
+      "sha256": "6927034c9d5e9efb58f8e23dcf64116210ffd8985001146f82636882b8a5459f",
+      "bytes": 286492
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_stream_prefill_2.onnx",
+      "sha256": "34c40d18fe27208fd4e4dea85fb0718e71e225c28bfe39cc4ea0bfdec11525c7",
+      "bytes": 571315
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_stream_prefill_ode_2_0.onnx",
+      "sha256": "c145758f50886e38451dee3b170ce352e6df6c61110fec902e0962231970e213",
+      "bytes": 304140
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_stream_prefill_ode_2_1.onnx",
+      "sha256": "8007e6e1dadc4a46fbf54d02b332f541a392b7b396c2b3e98d7dae633f594eb7",
+      "bytes": 304140
+    },
+    {
+      "id": "sopro-webgpu-fp16-acoustic_stream_step_2.onnx",
+      "sha256": "de6ee126e5dad03ed92f87ecc917a84a0bfffdbd6572c9f0b4c92b8764f5deda",
+      "bytes": 563655
+    },
+    {
+      "id": "sopro-webgpu-fp16-vocoder.onnx",
+      "sha256": "450986058931d9f9ec5fb0a2fa267046c0a875894655bb85dea786ee917faab0",
+      "bytes": 161836
+    },
+    {
+      "id": "sopro-webgpu-fp16-weights-acoustic.bin",
+      "sha256": "a53dbabb7fc2fa1a44459255d04a059baf3d0c2d99cba436d7749ac03d29f4c0",
+      "bytes": 63275008
+    },
+    {
+      "id": "sopro-webgpu-fp16-weights-condition.bin",
+      "sha256": "1446b435dcf838588eb90b3149db48e2b95a0a4e5a92bb9137634beb4fe826a2",
+      "bytes": 50790400
+    },
+    {
+      "id": "sopro-webgpu-fp16-weights-vocoder.bin",
+      "sha256": "45d7da8d75b1da91e557f4d6b1ba44e19068dd72d38ea0eca3e51f3e5d792d5b",
+      "bytes": 54126656
+    },
+    {
+      "id": "sopro-cache.js",
+      "sha256": "dbbfb259fc80dbde0d78cc5c230eba7ab15a668ec1f7031f6a83b76878aed16b",
+      "bytes": 6936
+    },
+    {
+      "id": "sopro-dsp.js",
+      "sha256": "037a7f073b4da637118856ba59e85ef93cb24a93d3bd99bd4d5b4793ee8ab1a8",
+      "bytes": 20394
+    },
+    {
+      "id": "sopro-tokenizer.js",
+      "sha256": "2bc529b1a671f29b0928c52ce441bee364b1c36fc5916486fd2dfd6e853a9459",
+      "bytes": 4526
+    },
+    {
+      "id": "sopro-voice-f2.wav",
+      "sha256": "9a4e3fa7966b13dff25b31b02350ff70681b2e618ca5a634abe0d9a90401de0e",
+      "bytes": 1440044
+    }
+  ],
+  "cells": [
+    {
+      "model": "sopro-v2-turbo",
+      "support": {
+        "voiceCount": null,
+        "bundledVoiceCount": 0,
+        "languageCount": 4,
+        "languages": [
+          "en",
+          "pt",
+          "fr",
+          "de"
+        ],
+        "scope": "Open-ended voice conditioning from reference audio. No bundled speakers.",
+        "sources": [
+          "https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md",
+          "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/blob/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
+          "https://github.com/ngelik/tts-bench/blob/f456cce4422663e3217a885a4c52e8ef4735dd6d/audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav"
+        ],
+        "notes": "English, synthetic F2 reference from the benchmark’s Tiny Voca CPU warm recording."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Tiny Voca F2 synthetic English reference",
+      "precision": "Official wasm-uint8 mixed precision",
+      "settings": {
+        "language": "en",
+        "seed": 1,
+        "temperature": 0.8,
+        "topP": 0.9,
+        "topK": 25,
+        "steps": 2,
+        "maxSeconds": 30,
+        "minSeconds": 0.4,
+        "maxSegmentChars": 300,
+        "threads": 4,
+        "referenceSeconds": 10,
+        "memory": "fast",
+        "sampleRate": 24000,
+        "referenceSha256": "9a4e3fa7966b13dff25b31b02350ff70681b2e618ca5a634abe0d9a90401de0e",
+        "runtime": "Sopro 0.3.0 / ONNX Runtime Web 1.31.1",
+        "profile": "wasm-uint8"
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "All inference stages explicitly use the official CPU WASM profile with four threads."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 624411.4599997997,
+          "samples": 29367296,
+          "sampleRate": 24000,
+          "pcmSha256": "ef6e4d5a75600f644b3259c7472436645310b4be40ddd8f5a311dc8fa64211f0",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 345856,
+                  "longestConstantSamples": 68,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 318208,
+                  "longestConstantSamples": 733,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 311040,
+                  "longestConstantSamples": 17,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 370192,
+                  "longestConstantSamples": 46,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 359168,
+                  "longestConstantSamples": 473,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 289536,
+                  "longestConstantSamples": 184,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 279296,
+                  "longestConstantSamples": 107,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 371456,
+                  "longestConstantSamples": 14,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 270080,
+                  "longestConstantSamples": 45,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 311104,
+                  "longestConstantSamples": 192,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 346400,
+                  "longestConstantSamples": 44,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 322304,
+                  "longestConstantSamples": 12696,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 356096,
+                  "longestConstantSamples": 105,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 314960,
+                  "longestConstantSamples": 23,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 366336,
+                  "longestConstantSamples": 196,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 387840,
+                  "longestConstantSamples": 24,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 346880,
+                  "longestConstantSamples": 119,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 315136,
+                  "longestConstantSamples": 19,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 269056,
+                  "longestConstantSamples": 148,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 310016,
+                  "longestConstantSamples": 44,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 273152,
+                  "longestConstantSamples": 1187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 314112,
+                  "longestConstantSamples": 103,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 247552,
+                  "longestConstantSamples": 3579,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 286464,
+                  "longestConstantSamples": 2967,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 276224,
+                  "longestConstantSamples": 13864,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 312064,
+                  "longestConstantSamples": 239,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 320016,
+                  "longestConstantSamples": 256,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 285440,
+                  "longestConstantSamples": 77,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 365808,
+                  "longestConstantSamples": 1372,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 272128,
+                  "longestConstantSamples": 102,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 356096,
+                  "longestConstantSamples": 152,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 337664,
+                  "longestConstantSamples": 223,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 357120,
+                  "longestConstantSamples": 139,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 337664,
+                  "longestConstantSamples": 458,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 285440,
+                  "longestConstantSamples": 7398,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 316288,
+                  "longestConstantSamples": 5186,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 299536,
+                  "longestConstantSamples": 4277,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 322304,
+                  "longestConstantSamples": 76,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 301824,
+                  "longestConstantSamples": 3721,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 364288,
+                  "longestConstantSamples": 142,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 279296,
+                  "longestConstantSamples": 92,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 325376,
+                  "longestConstantSamples": 2876,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 314112,
+                  "longestConstantSamples": 7229,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 305920,
+                  "longestConstantSamples": 44,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 321104,
+                  "longestConstantSamples": 2187,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 358144,
+                  "longestConstantSamples": 2033,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 339232,
+                  "longestConstantSamples": 61,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 298752,
+                  "longestConstantSamples": 148,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 339712,
+                  "longestConstantSamples": 21,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 398080,
+                  "longestConstantSamples": 11943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 318208,
+                  "longestConstantSamples": 215,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 290560,
+                  "longestConstantSamples": 341,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 364288,
+                  "longestConstantSamples": 1247,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 288512,
+                  "longestConstantSamples": 4223,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 301584,
+                  "longestConstantSamples": 1883,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 345856,
+                  "longestConstantSamples": 308,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 285200,
+                  "longestConstantSamples": 56,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 315136,
+                  "longestConstantSamples": 5652,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 355072,
+                  "longestConstantSamples": 114,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 348208,
+                  "longestConstantSamples": 16,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 338688,
+                  "longestConstantSamples": 67,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 253216,
+                  "longestConstantSamples": 218,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 365312,
+                  "longestConstantSamples": 6724,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 290320,
+                  "longestConstantSamples": 670,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 319232,
+                  "longestConstantSamples": 43,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 313088,
+                  "longestConstantSamples": 6594,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 340736,
+                  "longestConstantSamples": 39,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 299776,
+                  "longestConstantSamples": 57,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 342784,
+                  "longestConstantSamples": 35,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 340448,
+                  "longestConstantSamples": 282,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 303872,
+                  "longestConstantSamples": 35,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 310016,
+                  "longestConstantSamples": 1081,
+                  "constantValue": 0
+                },
+                {
+                  "id": 72,
+                  "samples": 312064,
+                  "longestConstantSamples": 22,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 249600,
+                  "longestConstantSamples": 109,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 411392,
+                  "longestConstantSamples": 32,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 251648,
+                  "longestConstantSamples": 104,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 266768,
+                  "longestConstantSamples": 62,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 351888,
+                  "longestConstantSamples": 5381,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 326400,
+                  "longestConstantSamples": 70,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 331520,
+                  "longestConstantSamples": 41,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 315136,
+                  "longestConstantSamples": 62,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 262912,
+                  "longestConstantSamples": 302,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 299776,
+                  "longestConstantSamples": 3559,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 314112,
+                  "longestConstantSamples": 74,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 299776,
+                  "longestConstantSamples": 25,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 284416,
+                  "longestConstantSamples": 33,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 271104,
+                  "longestConstantSamples": 298,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 330016,
+                  "longestConstantSamples": 1945,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 276768,
+                  "longestConstantSamples": 4132,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 241408,
+                  "longestConstantSamples": 183,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 287488,
+                  "longestConstantSamples": 7394,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 291584,
+                  "longestConstantSamples": 787,
+                  "constantValue": 0
+                },
+                {
+                  "id": 92,
+                  "samples": 289536,
+                  "longestConstantSamples": 41,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 772.3499999046326,
+            "firstSourceChunkCompletedMs": 7374.2300000190735,
+            "audioSeconds": 1223.6373333333333,
+            "realTimeFactor": 0.510291279115217,
+            "minSamplesPerChunk": 241408,
+            "maxSamplesPerChunk": 411392,
+            "articleCallPeakRssBytes": 2166784000,
+            "generationMeanRssBytes": 1676840476,
+            "generationRssSampleCount": 1243,
+            "loadMs": 5440.537250000001,
+            "controllerTrialElapsedMs": 634063.367542,
+            "downloadBytes": 294537796,
+            "idealDownloadSecondsAt1Mbps": 2356.302368
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1794989848716.5999,
+            "finalPcmAtEpochMs": 1794990473128.06,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1794989849267,
+                1516912640
+              ],
+              [
+                1794989849761,
+                1530871808
+              ],
+              [
+                1794989850263,
+                1540079616
+              ],
+              [
+                1794989850767,
+                1549205504
+              ],
+              [
+                1794989851265,
+                1558364160
+              ],
+              [
+                1794989851772,
+                1572585472
+              ],
+              [
+                1794989852275,
+                1583726592
+              ],
+              [
+                1794989852793,
+                1595850752
+              ],
+              [
+                1794989853271,
+                1608155136
+              ],
+              [
+                1794989853785,
+                1617362944
+              ],
+              [
+                1794989854277,
+                1637122048
+              ],
+              [
+                1794989854778,
+                1641971712
+              ],
+              [
+                1794989855284,
+                1675624448
+              ],
+              [
+                1794989855780,
+                1659600896
+              ],
+              [
+                1794989856284,
+                1550123008
+              ],
+              [
+                1794989856787,
+                1604222976
+              ],
+              [
+                1794989857285,
+                1610678272
+              ],
+              [
+                1794989857792,
+                1614954496
+              ],
+              [
+                1794989858316,
+                1620590592
+              ],
+              [
+                1794989858790,
+                1624309760
+              ],
+              [
+                1794989859301,
+                1630142464
+              ],
+              [
+                1794989859797,
+                1633763328
+              ],
+              [
+                1794989860306,
+                1639120896
+              ],
+              [
+                1794989860803,
+                1642774528
+              ],
+              [
+                1794989861309,
+                1647837184
+              ],
+              [
+                1794989861813,
+                1651326976
+              ],
+              [
+                1794989862308,
+                1654571008
+              ],
+              [
+                1794989862808,
+                1552957440
+              ],
+              [
+                1794989863313,
+                1607974912
+              ],
+              [
+                1794989863813,
+                1615364096
+              ],
+              [
+                1794989864320,
+                1619132416
+              ],
+              [
+                1794989864817,
+                1623670784
+              ],
+              [
+                1794989865318,
+                1627734016
+              ],
+              [
+                1794989865822,
+                1633730560
+              ],
+              [
+                1794989866322,
+                1653850112
+              ],
+              [
+                1794989866835,
+                1651523584
+              ],
+              [
+                1794989867326,
+                1649016832
+              ],
+              [
+                1794989867834,
+                1673592832
+              ],
+              [
+                1794989868331,
+                1655537664
+              ],
+              [
+                1794989868835,
+                1635581952
+              ],
+              [
+                1794989869341,
+                1586987008
+              ],
+              [
+                1794989869835,
+                1611776000
+              ],
+              [
+                1794989870341,
+                1617510400
+              ],
+              [
+                1794989870842,
+                1622900736
+              ],
+              [
+                1794989871343,
+                1650442240
+              ],
+              [
+                1794989871845,
+                1633026048
+              ],
+              [
+                1794989872353,
+                1638252544
+              ],
+              [
+                1794989872859,
+                1642299392
+              ],
+              [
+                1794989873352,
+                1652604928
+              ],
+              [
+                1794989873856,
+                1656127488
+              ],
+              [
+                1794989874353,
+                1660289024
+              ],
+              [
+                1794989874857,
+                1663860736
+              ],
+              [
+                1794989875356,
+                1668890624
+              ],
+              [
+                1794989875860,
+                1672527872
+              ],
+              [
+                1794989876362,
+                1663385600
+              ],
+              [
+                1794989876864,
+                1607417856
+              ],
+              [
+                1794989877363,
+                1632305152
+              ],
+              [
+                1794989877868,
+                1638023168
+              ],
+              [
+                1794989878369,
+                1646034944
+              ],
+              [
+                1794989878876,
+                1646723072
+              ],
+              [
+                1794989879375,
+                1652097024
+              ],
+              [
+                1794989879880,
+                1655275520
+              ],
+              [
+                1794989880380,
+                1659043840
+              ],
+              [
+                1794989880886,
+                1664385024
+              ],
+              [
+                1794989881382,
+                1667842048
+              ],
+              [
+                1794989881888,
+                1673134080
+              ],
+              [
+                1794989882386,
+                1676640256
+              ],
+              [
+                1794989882891,
+                1681686528
+              ],
+              [
+                1794989883396,
+                1685209088
+              ],
+              [
+                1794989883893,
+                1574354944
+              ],
+              [
+                1794989884401,
+                1631813632
+              ],
+              [
+                1794989884897,
+                1635418112
+              ],
+              [
+                1794989885397,
+                1653817344
+              ],
+              [
+                1794989885901,
+                1646395392
+              ],
+              [
+                1794989886402,
+                1651703808
+              ],
+              [
+                1794989886960,
+                1656455168
+              ],
+              [
+                1794989887404,
+                1659420672
+              ],
+              [
+                1794989887913,
+                1666105344
+              ],
+              [
+                1794989888412,
+                1669545984
+              ],
+              [
+                1794989888919,
+                1674887168
+              ],
+              [
+                1794989889410,
+                1656045568
+              ],
+              [
+                1794989889912,
+                1589870592
+              ],
+              [
+                1794989890420,
+                1635729408
+              ],
+              [
+                1794989890922,
+                1641398272
+              ],
+              [
+                1794989891420,
+                1646804992
+              ],
+              [
+                1794989891921,
+                1664942080
+              ],
+              [
+                1794989892426,
+                1649721344
+              ],
+              [
+                1794989892930,
+                1654996992
+              ],
+              [
+                1794989893427,
+                1660125184
+              ],
+              [
+                1794989893932,
+                1676410880
+              ],
+              [
+                1794989894430,
+                1669939200
+              ],
+              [
+                1794989894944,
+                1651572736
+              ],
+              [
+                1794989895435,
+                1628798976
+              ],
+              [
+                1794989895949,
+                1635188736
+              ],
+              [
+                1794989896459,
+                1639923712
+              ],
+              [
+                1794989896953,
+                1657225216
+              ],
+              [
+                1794989897446,
+                1653047296
+              ],
+              [
+                1794989897952,
+                1661353984
+              ],
+              [
+                1794989898457,
+                1657323520
+              ],
+              [
+                1794989898953,
+                1662631936
+              ],
+              [
+                1794989899452,
+                1666220032
+              ],
+              [
+                1794989899955,
+                1670332416
+              ],
+              [
+                1794989900466,
+                1674674176
+              ],
+              [
+                1794989900962,
+                1678000128
+              ],
+              [
+                1794989901458,
+                1720926208
+              ],
+              [
+                1794989901962,
+                1686355968
+              ],
+              [
+                1794989902460,
+                1689665536
+              ],
+              [
+                1794989902967,
+                1666514944
+              ],
+              [
+                1794989903471,
+                1631223808
+              ],
+              [
+                1794989903970,
+                1642659840
+              ],
+              [
+                1794989904481,
+                1639923712
+              ],
+              [
+                1794989904977,
+                1645182976
+              ],
+              [
+                1794989905471,
+                1648590848
+              ],
+              [
+                1794989905978,
+                1654472704
+              ],
+              [
+                1794989906476,
+                1659748352
+              ],
+              [
+                1794989906981,
+                1662976000
+              ],
+              [
+                1794989907482,
+                1667055616
+              ],
+              [
+                1794989907986,
+                1671446528
+              ],
+              [
+                1794989908486,
+                1654128640
+              ],
+              [
+                1794989908994,
+                1631404032
+              ],
+              [
+                1794989909489,
+                1637072896
+              ],
+              [
+                1794989909995,
+                1642086400
+              ],
+              [
+                1794989910498,
+                1647558656
+              ],
+              [
+                1794989910997,
+                1678835712
+              ],
+              [
+                1794989911497,
+                1669054464
+              ],
+              [
+                1794989912002,
+                1666088960
+              ],
+              [
+                1794989912504,
+                1676296192
+              ],
+              [
+                1794989913024,
+                1670135808
+              ],
+              [
+                1794989913503,
+                1673674752
+              ],
+              [
+                1794989914003,
+                1677852672
+              ],
+              [
+                1794989914513,
+                1702281216
+              ],
+              [
+                1794989915006,
+                1580613632
+              ],
+              [
+                1794989915510,
+                1634271232
+              ],
+              [
+                1794989916012,
+                1644724224
+              ],
+              [
+                1794989916521,
+                1644544000
+              ],
+              [
+                1794989917020,
+                1649115136
+              ],
+              [
+                1794989917517,
+                1660125184
+              ],
+              [
+                1794989918021,
+                1659666432
+              ],
+              [
+                1794989918527,
+                1663320064
+              ],
+              [
+                1794989919029,
+                1669857280
+              ],
+              [
+                1794989919524,
+                1673396224
+              ],
+              [
+                1794989920030,
+                1678557184
+              ],
+              [
+                1794989920534,
+                1682079744
+              ],
+              [
+                1794989921037,
+                1686061056
+              ],
+              [
+                1794989921533,
+                1699332096
+              ],
+              [
+                1794989922031,
+                1583169536
+              ],
+              [
+                1794989922536,
+                1644396544
+              ],
+              [
+                1794989923050,
+                1646886912
+              ],
+              [
+                1794989923540,
+                1647738880
+              ],
+              [
+                1794989924040,
+                1656537088
+              ],
+              [
+                1794989924548,
+                1656913920
+              ],
+              [
+                1794989925046,
+                1662926848
+              ],
+              [
+                1794989925545,
+                1666613248
+              ],
+              [
+                1794989926051,
+                1670610944
+              ],
+              [
+                1794989926550,
+                1674248192
+              ],
+              [
+                1794989927056,
+                1679343616
+              ],
+              [
+                1794989927559,
+                1682882560
+              ],
+              [
+                1794989928060,
+                1689878528
+              ],
+              [
+                1794989928562,
+                1580056576
+              ],
+              [
+                1794989929066,
+                1633370112
+              ],
+              [
+                1794989929564,
+                1638940672
+              ],
+              [
+                1794989930067,
+                1644347392
+              ],
+              [
+                1794989930569,
+                1649065984
+              ],
+              [
+                1794989931077,
+                1652654080
+              ],
+              [
+                1794989931582,
+                1658617856
+              ],
+              [
+                1794989932074,
+                1662238720
+              ],
+              [
+                1794989932590,
+                1667432448
+              ],
+              [
+                1794989933079,
+                1671036928
+              ],
+              [
+                1794989933590,
+                1676132352
+              ],
+              [
+                1794989934080,
+                1692008448
+              ],
+              [
+                1794989934588,
+                1684766720
+              ],
+              [
+                1794989935091,
+                1688158208
+              ],
+              [
+                1794989935586,
+                1665286144
+              ],
+              [
+                1794989936089,
+                1590771712
+              ],
+              [
+                1794989936594,
+                1637302272
+              ],
+              [
+                1794989937094,
+                1642676224
+              ],
+              [
+                1794989937598,
+                1648181248
+              ],
+              [
+                1794989938096,
+                1650769920
+              ],
+              [
+                1794989938600,
+                1656946688
+              ],
+              [
+                1794989939105,
+                1692745728
+              ],
+              [
+                1794989939599,
+                1666105344
+              ],
+              [
+                1794989940105,
+                1671299072
+              ],
+              [
+                1794989940606,
+                1674592256
+              ],
+              [
+                1794989941110,
+                1679671296
+              ],
+              [
+                1794989941610,
+                1683193856
+              ],
+              [
+                1794989942111,
+                1581416448
+              ],
+              [
+                1794989942611,
+                1634795520
+              ],
+              [
+                1794989943115,
+                1641218048
+              ],
+              [
+                1794989943629,
+                1646657536
+              ],
+              [
+                1794989944117,
+                1651113984
+              ],
+              [
+                1794989944625,
+                1655865344
+              ],
+              [
+                1794989945125,
+                1661779968
+              ],
+              [
+                1794989945624,
+                1665351680
+              ],
+              [
+                1794989946128,
+                1672069120
+              ],
+              [
+                1794989946633,
+                1675444224
+              ],
+              [
+                1794989947132,
+                1680719872
+              ],
+              [
+                1794989947632,
+                1684176896
+              ],
+              [
+                1794989948142,
+                1689288704
+              ],
+              [
+                1794989948640,
+                1692745728
+              ],
+              [
+                1794989949145,
+                1696874496
+              ],
+              [
+                1794989949637,
+                1584840704
+              ],
+              [
+                1794989950147,
+                1640005632
+              ],
+              [
+                1794989950643,
+                1644806144
+              ],
+              [
+                1794989951146,
+                1650393088
+              ],
+              [
+                1794989951647,
+                1655078912
+              ],
+              [
+                1794989952264,
+                1659944960
+              ],
+              [
+                1794989952672,
+                1661812736
+              ],
+              [
+                1794989953169,
+                1662550016
+              ],
+              [
+                1794989953662,
+                1666859008
+              ],
+              [
+                1794989954169,
+                1672069120
+              ],
+              [
+                1794989954664,
+                1675608064
+              ],
+              [
+                1794989955170,
+                1680670720
+              ],
+              [
+                1794989955672,
+                1704001536
+              ],
+              [
+                1794989956178,
+                1687306240
+              ],
+              [
+                1794989956680,
+                1692352512
+              ],
+              [
+                1794989957177,
+                1695580160
+              ],
+              [
+                1794989957674,
+                1669677056
+              ],
+              [
+                1794989958184,
+                1596653568
+              ],
+              [
+                1794989958684,
+                1643397120
+              ],
+              [
+                1794989959184,
+                1648869376
+              ],
+              [
+                1794989959679,
+                1652572160
+              ],
+              [
+                1794989960195,
+                1656717312
+              ],
+              [
+                1794989960685,
+                1660862464
+              ],
+              [
+                1794989961201,
+                1670643712
+              ],
+              [
+                1794989961688,
+                1670676480
+              ],
+              [
+                1794989962204,
+                1675116544
+              ],
+              [
+                1794989962695,
+                1678491648
+              ],
+              [
+                1794989963208,
+                1685569536
+              ],
+              [
+                1794989963715,
+                1688993792
+              ],
+              [
+                1794989964214,
+                1692090368
+              ],
+              [
+                1794989964710,
+                1695055872
+              ],
+              [
+                1794989965202,
+                1698267136
+              ],
+              [
+                1794989965716,
+                1598816256
+              ],
+              [
+                1794989966206,
+                1644576768
+              ],
+              [
+                1794989966706,
+                1648443392
+              ],
+              [
+                1794989967209,
+                1660583936
+              ],
+              [
+                1794989967707,
+                1659224064
+              ],
+              [
+                1794989968218,
+                1664925696
+              ],
+              [
+                1794989968724,
+                1667530752
+              ],
+              [
+                1794989969218,
+                1670955008
+              ],
+              [
+                1794989969714,
+                1675214848
+              ],
+              [
+                1794989970225,
+                1679572992
+              ],
+              [
+                1794989970714,
+                1682898944
+              ],
+              [
+                1794989971224,
+                1687928832
+              ],
+              [
+                1794989971733,
+                1691222016
+              ],
+              [
+                1794989972225,
+                1670414336
+              ],
+              [
+                1794989972742,
+                1641431040
+              ],
+              [
+                1794989973401,
+                1646166016
+              ],
+              [
+                1794989973730,
+                1650098176
+              ],
+              [
+                1794989974232,
+                1653784576
+              ],
+              [
+                1794989974740,
+                1659158528
+              ],
+              [
+                1794989975235,
+                1664237568
+              ],
+              [
+                1794989975737,
+                1668759552
+              ],
+              [
+                1794989976239,
+                1671954432
+              ],
+              [
+                1794989976755,
+                1676083200
+              ],
+              [
+                1794989977244,
+                1679523840
+              ],
+              [
+                1794989977743,
+                1683603456
+              ],
+              [
+                1794989978246,
+                1589280768
+              ],
+              [
+                1794989978748,
+                1643741184
+              ],
+              [
+                1794989979247,
+                1649049600
+              ],
+              [
+                1794989979755,
+                1654259712
+              ],
+              [
+                1794989980257,
+                1657700352
+              ],
+              [
+                1794989980765,
+                1662926848
+              ],
+              [
+                1794989981254,
+                1667137536
+              ],
+              [
+                1794989981755,
+                1677475840
+              ],
+              [
+                1794989982256,
+                1674936320
+              ],
+              [
+                1794989982761,
+                1679949824
+              ],
+              [
+                1794989983266,
+                1683406848
+              ],
+              [
+                1794989983759,
+                1686601728
+              ],
+              [
+                1794989984269,
+                1691598848
+              ],
+              [
+                1794989984765,
+                1670725632
+              ],
+              [
+                1794989985274,
+                1643216896
+              ],
+              [
+                1794989985775,
+                1647935488
+              ],
+              [
+                1794989986270,
+                1652604928
+              ],
+              [
+                1794989986776,
+                1665286144
+              ],
+              [
+                1794989987269,
+                1661321216
+              ],
+              [
+                1794989987782,
+                1667268608
+              ],
+              [
+                1794989988277,
+                1669758976
+              ],
+              [
+                1794989988783,
+                1674772480
+              ],
+              [
+                1794989989281,
+                1677410304
+              ],
+              [
+                1794989989776,
+                1681670144
+              ],
+              [
+                1794989990282,
+                1689452544
+              ],
+              [
+                1794989990783,
+                1589477376
+              ],
+              [
+                1794989991278,
+                1643872256
+              ],
+              [
+                1794989991778,
+                1648885760
+              ],
+              [
+                1794989992290,
+                1654128640
+              ],
+              [
+                1794989992793,
+                1657536512
+              ],
+              [
+                1794989993290,
+                1662976000
+              ],
+              [
+                1794989993791,
+                1668005888
+              ],
+              [
+                1794989994302,
+                1671561216
+              ],
+              [
+                1794989994797,
+                1675821056
+              ],
+              [
+                1794989995300,
+                1694121984
+              ],
+              [
+                1794989995790,
+                1683505152
+              ],
+              [
+                1794989996298,
+                1687486464
+              ],
+              [
+                1794989996806,
+                1691746304
+              ],
+              [
+                1794989997295,
+                1589903360
+              ],
+              [
+                1794989997803,
+                1646313472
+              ],
+              [
+                1794989998304,
+                1648148480
+              ],
+              [
+                1794989998804,
+                1653719040
+              ],
+              [
+                1794989999304,
+                1657389056
+              ],
+              [
+                1794989999812,
+                1662631936
+              ],
+              [
+                1794990000313,
+                1689796608
+              ],
+              [
+                1794990000814,
+                1671905280
+              ],
+              [
+                1794990001312,
+                1675624448
+              ],
+              [
+                1794990001817,
+                1679818752
+              ],
+              [
+                1794990002314,
+                1590001664
+              ],
+              [
+                1794990002820,
+                1642659840
+              ],
+              [
+                1794990003331,
+                1648607232
+              ],
+              [
+                1794990003831,
+                1653981184
+              ],
+              [
+                1794990004330,
+                1658404864
+              ],
+              [
+                1794990004829,
+                1666891776
+              ],
+              [
+                1794990005330,
+                1673740288
+              ],
+              [
+                1794990005833,
+                1670938624
+              ],
+              [
+                1794990006338,
+                1676328960
+              ],
+              [
+                1794990006837,
+                1679769600
+              ],
+              [
+                1794990007349,
+                1692385280
+              ],
+              [
+                1794990007842,
+                1665253376
+              ],
+              [
+                1794990008342,
+                1599815680
+              ],
+              [
+                1794990008849,
+                1646362624
+              ],
+              [
+                1794990009346,
+                1651736576
+              ],
+              [
+                1794990009857,
+                1657176064
+              ],
+              [
+                1794990010349,
+                1660780544
+              ],
+              [
+                1794990010870,
+                1666990080
+              ],
+              [
+                1794990011356,
+                1671266304
+              ],
+              [
+                1794990011857,
+                1675018240
+              ],
+              [
+                1794990012360,
+                1680146432
+              ],
+              [
+                1794990012866,
+                1683652608
+              ],
+              [
+                1794990013363,
+                1665187840
+              ],
+              [
+                1794990013862,
+                1601257472
+              ],
+              [
+                1794990014362,
+                1647575040
+              ],
+              [
+                1794990014869,
+                1653112832
+              ],
+              [
+                1794990015372,
+                1658421248
+              ],
+              [
+                1794990015874,
+                1663041536
+              ],
+              [
+                1794990016383,
+                1668202496
+              ],
+              [
+                1794990016880,
+                1671528448
+              ],
+              [
+                1794990017378,
+                1676132352
+              ],
+              [
+                1794990017880,
+                1681358848
+              ],
+              [
+                1794990018389,
+                1684930560
+              ],
+              [
+                1794990018883,
+                1689042944
+              ],
+              [
+                1794990019400,
+                1693351936
+              ],
+              [
+                1794990019885,
+                1591459840
+              ],
+              [
+                1794990020394,
+                1644822528
+              ],
+              [
+                1794990020895,
+                1650294784
+              ],
+              [
+                1794990021402,
+                1672888320
+              ],
+              [
+                1794990021893,
+                1659437056
+              ],
+              [
+                1794990022403,
+                1664860160
+              ],
+              [
+                1794990022909,
+                1700839424
+              ],
+              [
+                1794990023402,
+                1768636416
+              ],
+              [
+                1794990023901,
+                1780482048
+              ],
+              [
+                1794990024413,
+                1781481472
+              ],
+              [
+                1794990024915,
+                1786085376
+              ],
+              [
+                1794990025410,
+                1790312448
+              ],
+              [
+                1794990025914,
+                1693040640
+              ],
+              [
+                1794990026417,
+                1671856128
+              ],
+              [
+                1794990026913,
+                1601388544
+              ],
+              [
+                1794990027413,
+                1647902720
+              ],
+              [
+                1794990027923,
+                1653407744
+              ],
+              [
+                1794990028442,
+                1658650624
+              ],
+              [
+                1794990028926,
+                1662320640
+              ],
+              [
+                1794990029428,
+                1668366336
+              ],
+              [
+                1794990029927,
+                1671806976
+              ],
+              [
+                1794990030439,
+                1676230656
+              ],
+              [
+                1794990030932,
+                1679523840
+              ],
+              [
+                1794990031439,
+                1684668416
+              ],
+              [
+                1794990031937,
+                1706459136
+              ],
+              [
+                1794990032439,
+                1591951360
+              ],
+              [
+                1794990032945,
+                1645625344
+              ],
+              [
+                1794990033448,
+                1651294208
+              ],
+              [
+                1794990033943,
+                1663647744
+              ],
+              [
+                1794990034447,
+                1660616704
+              ],
+              [
+                1794990034951,
+                1676541952
+              ],
+              [
+                1794990035449,
+                1670168576
+              ],
+              [
+                1794990035956,
+                1690157056
+              ],
+              [
+                1794990036460,
+                1677950976
+              ],
+              [
+                1794990036958,
+                1683030016
+              ],
+              [
+                1794990037462,
+                1701101568
+              ],
+              [
+                1794990037962,
+                1688879104
+              ],
+              [
+                1794990038469,
+                1693138944
+              ],
+              [
+                1794990038966,
+                1696514048
+              ],
+              [
+                1794990039466,
+                1700544512
+              ],
+              [
+                1794990039976,
+                1704525824
+              ],
+              [
+                1794990040474,
+                1590640640
+              ],
+              [
+                1794990040984,
+                1643577344
+              ],
+              [
+                1794990041478,
+                1649229824
+              ],
+              [
+                1794990041980,
+                1654636544
+              ],
+              [
+                1794990042483,
+                1659174912
+              ],
+              [
+                1794990042984,
+                1663778816
+              ],
+              [
+                1794990043491,
+                1669660672
+              ],
+              [
+                1794990043992,
+                1689665536
+              ],
+              [
+                1794990044496,
+                1677295616
+              ],
+              [
+                1794990044996,
+                1699528704
+              ],
+              [
+                1794990045498,
+                1699102720
+              ],
+              [
+                1794990045993,
+                1590804480
+              ],
+              [
+                1794990046497,
+                1643905024
+              ],
+              [
+                1794990047000,
+                1649557504
+              ],
+              [
+                1794990047502,
+                1655013376
+              ],
+              [
+                1794990048005,
+                1659469824
+              ],
+              [
+                1794990048507,
+                1664204800
+              ],
+              [
+                1794990049012,
+                1669234688
+              ],
+              [
+                1794990049507,
+                1672757248
+              ],
+              [
+                1794990050014,
+                1677426688
+              ],
+              [
+                1794990050520,
+                1681752064
+              ],
+              [
+                1794990051018,
+                1690894336
+              ],
+              [
+                1794990051515,
+                1714225152
+              ],
+              [
+                1794990052022,
+                1694744576
+              ],
+              [
+                1794990052523,
+                1698185216
+              ],
+              [
+                1794990053024,
+                1676427264
+              ],
+              [
+                1794990053528,
+                1622179840
+              ],
+              [
+                1794990054028,
+                1648230400
+              ],
+              [
+                1794990054529,
+                1652948992
+              ],
+              [
+                1794990055036,
+                1669382144
+              ],
+              [
+                1794990055536,
+                1663746048
+              ],
+              [
+                1794990056035,
+                1668153344
+              ],
+              [
+                1794990056542,
+                1673592832
+              ],
+              [
+                1794990057045,
+                1680277504
+              ],
+              [
+                1794990057550,
+                1683701760
+              ],
+              [
+                1794990058050,
+                1687977984
+              ],
+              [
+                1794990058547,
+                1692368896
+              ],
+              [
+                1794990059053,
+                1730428928
+              ],
+              [
+                1794990059552,
+                1700872192
+              ],
+              [
+                1794990060053,
+                1593098240
+              ],
+              [
+                1794990060556,
+                1647378432
+              ],
+              [
+                1794990061065,
+                1652211712
+              ],
+              [
+                1794990061565,
+                1657192448
+              ],
+              [
+                1794990062059,
+                1674559488
+              ],
+              [
+                1794990062564,
+                1665646592
+              ],
+              [
+                1794990063069,
+                1671692288
+              ],
+              [
+                1794990063569,
+                1675313152
+              ],
+              [
+                1794990064070,
+                1679622144
+              ],
+              [
+                1794990064573,
+                1701396480
+              ],
+              [
+                1794990065079,
+                1688338432
+              ],
+              [
+                1794990065573,
+                1691779072
+              ],
+              [
+                1794990066077,
+                1709359104
+              ],
+              [
+                1794990066577,
+                1700511744
+              ],
+              [
+                1794990067084,
+                1678639104
+              ],
+              [
+                1794990067583,
+                1624440832
+              ],
+              [
+                1794990068086,
+                1650311168
+              ],
+              [
+                1794990068588,
+                1655046144
+              ],
+              [
+                1794990069091,
+                1660420096
+              ],
+              [
+                1794990069591,
+                1665826816
+              ],
+              [
+                1794990070104,
+                1670283264
+              ],
+              [
+                1794990070596,
+                1675640832
+              ],
+              [
+                1794990071098,
+                1680064512
+              ],
+              [
+                1794990071600,
+                1683505152
+              ],
+              [
+                1794990072101,
+                1687715840
+              ],
+              [
+                1794990072606,
+                1706196992
+              ],
+              [
+                1794990073105,
+                1695432704
+              ],
+              [
+                1794990073607,
+                1700626432
+              ],
+              [
+                1794990074108,
+                1592868864
+              ],
+              [
+                1794990074607,
+                1644822528
+              ],
+              [
+                1794990075110,
+                1649655808
+              ],
+              [
+                1794990075632,
+                1654390784
+              ],
+              [
+                1794990076142,
+                1668251648
+              ],
+              [
+                1794990076626,
+                1663795200
+              ],
+              [
+                1794990077129,
+                1668939776
+              ],
+              [
+                1794990077627,
+                1672560640
+              ],
+              [
+                1794990078142,
+                1676673024
+              ],
+              [
+                1794990078627,
+                1680179200
+              ],
+              [
+                1794990079137,
+                1684242432
+              ],
+              [
+                1794990079633,
+                1688535040
+              ],
+              [
+                1794990080133,
+                1604730880
+              ],
+              [
+                1794990080643,
+                1645772800
+              ],
+              [
+                1794990081143,
+                1651163136
+              ],
+              [
+                1794990081638,
+                1654849536
+              ],
+              [
+                1794990082146,
+                1660223488
+              ],
+              [
+                1794990082644,
+                1665302528
+              ],
+              [
+                1794990083148,
+                1670021120
+              ],
+              [
+                1794990083644,
+                1674231808
+              ],
+              [
+                1794990084156,
+                1677967360
+              ],
+              [
+                1794990084652,
+                1682259968
+              ],
+              [
+                1794990085157,
+                1686519808
+              ],
+              [
+                1794990085651,
+                1689944064
+              ],
+              [
+                1794990086158,
+                1713831936
+              ],
+              [
+                1794990086659,
+                1597849600
+              ],
+              [
+                1794990087162,
+                1644134400
+              ],
+              [
+                1794990087670,
+                1648852992
+              ],
+              [
+                1794990088165,
+                1653604352
+              ],
+              [
+                1794990088671,
+                1658732544
+              ],
+              [
+                1794990089169,
+                1662959616
+              ],
+              [
+                1794990089678,
+                1668481024
+              ],
+              [
+                1794990090173,
+                1672790016
+              ],
+              [
+                1794990090677,
+                1676312576
+              ],
+              [
+                1794990091176,
+                1680556032
+              ],
+              [
+                1794990091685,
+                1684799488
+              ],
+              [
+                1794990092184,
+                1688207360
+              ],
+              [
+                1794990092682,
+                1589411840
+              ],
+              [
+                1794990093183,
+                1642889216
+              ],
+              [
+                1794990093697,
+                1648443392
+              ],
+              [
+                1794990094190,
+                1665630208
+              ],
+              [
+                1794990094687,
+                1657634816
+              ],
+              [
+                1794990095200,
+                1663123456
+              ],
+              [
+                1794990095693,
+                1686192128
+              ],
+              [
+                1794990096196,
+                1672757248
+              ],
+              [
+                1794990096698,
+                1676902400
+              ],
+              [
+                1794990097204,
+                1680474112
+              ],
+              [
+                1794990097700,
+                1684602880
+              ],
+              [
+                1794990098208,
+                1701527552
+              ],
+              [
+                1794990098705,
+                1686503424
+              ],
+              [
+                1794990099206,
+                1585577984
+              ],
+              [
+                1794990099711,
+                1641054208
+              ],
+              [
+                1794990100213,
+                1646608384
+              ],
+              [
+                1794990100713,
+                1659158528
+              ],
+              [
+                1794990101215,
+                1655668736
+              ],
+              [
+                1794990101718,
+                1660960768
+              ],
+              [
+                1794990102218,
+                1666252800
+              ],
+              [
+                1794990102725,
+                1670627328
+              ],
+              [
+                1794990103221,
+                1673969664
+              ],
+              [
+                1794990103730,
+                1678262272
+              ],
+              [
+                1794990104229,
+                1681178624
+              ],
+              [
+                1794990104730,
+                1684586496
+              ],
+              [
+                1794990105234,
+                1701707776
+              ],
+              [
+                1794990105731,
+                1598701568
+              ],
+              [
+                1794990106239,
+                1644396544
+              ],
+              [
+                1794990106739,
+                1649934336
+              ],
+              [
+                1794990107245,
+                1653620736
+              ],
+              [
+                1794990107743,
+                1672003584
+              ],
+              [
+                1794990108243,
+                1665105920
+              ],
+              [
+                1794990108743,
+                1668825088
+              ],
+              [
+                1794990109250,
+                1675280384
+              ],
+              [
+                1794990109746,
+                1677869056
+              ],
+              [
+                1794990110251,
+                1682915328
+              ],
+              [
+                1794990110758,
+                1684045824
+              ],
+              [
+                1794990111255,
+                1687175168
+              ],
+              [
+                1794990111762,
+                1692221440
+              ],
+              [
+                1794990112274,
+                1695580160
+              ],
+              [
+                1794990112761,
+                1698824192
+              ],
+              [
+                1794990113261,
+                1587822592
+              ],
+              [
+                1794990113763,
+                1641922560
+              ],
+              [
+                1794990114267,
+                1647673344
+              ],
+              [
+                1794990114774,
+                1656012800
+              ],
+              [
+                1794990115270,
+                1657470976
+              ],
+              [
+                1794990115773,
+                1662091264
+              ],
+              [
+                1794990116282,
+                1667940352
+              ],
+              [
+                1794990116778,
+                1671626752
+              ],
+              [
+                1794990117289,
+                1675673600
+              ],
+              [
+                1794990117781,
+                1679278080
+              ],
+              [
+                1794990118288,
+                1701756928
+              ],
+              [
+                1794990118785,
+                1589215232
+              ],
+              [
+                1794990119293,
+                1642299392
+              ],
+              [
+                1794990119793,
+                1647788032
+              ],
+              [
+                1794990120297,
+                1651458048
+              ],
+              [
+                1794990120800,
+                1656995840
+              ],
+              [
+                1794990121300,
+                1662205952
+              ],
+              [
+                1794990121798,
+                1666613248
+              ],
+              [
+                1794990122303,
+                1671839744
+              ],
+              [
+                1794990122802,
+                1673068544
+              ],
+              [
+                1794990123310,
+                1678147584
+              ],
+              [
+                1794990123811,
+                1681686528
+              ],
+              [
+                1794990124311,
+                1685766144
+              ],
+              [
+                1794990124819,
+                1690173440
+              ],
+              [
+                1794990125322,
+                1667842048
+              ],
+              [
+                1794990125825,
+                1598439424
+              ],
+              [
+                1794990126325,
+                1644691456
+              ],
+              [
+                1794990126847,
+                1648164864
+              ],
+              [
+                1794990127336,
+                1653637120
+              ],
+              [
+                1794990127875,
+                1656815616
+              ],
+              [
+                1794990128355,
+                1661861888
+              ],
+              [
+                1794990128839,
+                1666203648
+              ],
+              [
+                1794990129342,
+                1671397376
+              ],
+              [
+                1794990129843,
+                1673936896
+              ],
+              [
+                1794990130355,
+                1679130624
+              ],
+              [
+                1794990130850,
+                1693171712
+              ],
+              [
+                1794990131349,
+                1686650880
+              ],
+              [
+                1794990131858,
+                1690861568
+              ],
+              [
+                1794990132353,
+                1670463488
+              ],
+              [
+                1794990132860,
+                1643741184
+              ],
+              [
+                1794990133367,
+                1649295360
+              ],
+              [
+                1794990133860,
+                1652998144
+              ],
+              [
+                1794990134364,
+                1658634240
+              ],
+              [
+                1794990134867,
+                1663860736
+              ],
+              [
+                1794990135365,
+                1668202496
+              ],
+              [
+                1794990135873,
+                1673494528
+              ],
+              [
+                1794990136370,
+                1675902976
+              ],
+              [
+                1794990136876,
+                1681211392
+              ],
+              [
+                1794990137372,
+                1684652032
+              ],
+              [
+                1794990137882,
+                1689731072
+              ],
+              [
+                1794990138381,
+                1711996928
+              ],
+              [
+                1794990138879,
+                1605992448
+              ],
+              [
+                1794990139386,
+                1646739456
+              ],
+              [
+                1794990139883,
+                1651310592
+              ],
+              [
+                1794990140382,
+                1656029184
+              ],
+              [
+                1794990140890,
+                1661370368
+              ],
+              [
+                1794990141386,
+                1666482176
+              ],
+              [
+                1794990141893,
+                1671135232
+              ],
+              [
+                1794990142400,
+                1675313152
+              ],
+              [
+                1794990142895,
+                1684586496
+              ],
+              [
+                1794990143398,
+                1683488768
+              ],
+              [
+                1794990143900,
+                1687945216
+              ],
+              [
+                1794990144397,
+                1695318016
+              ],
+              [
+                1794990144907,
+                1712537600
+              ],
+              [
+                1794990145399,
+                1592197120
+              ],
+              [
+                1794990145903,
+                1645920256
+              ],
+              [
+                1794990146410,
+                1651736576
+              ],
+              [
+                1794990146915,
+                1654767616
+              ],
+              [
+                1794990147415,
+                1659125760
+              ],
+              [
+                1794990147913,
+                1663827968
+              ],
+              [
+                1794990148421,
+                1669709824
+              ],
+              [
+                1794990148917,
+                1672331264
+              ],
+              [
+                1794990149421,
+                1677508608
+              ],
+              [
+                1794990149921,
+                1681031168
+              ],
+              [
+                1794990150423,
+                1685045248
+              ],
+              [
+                1794990150928,
+                1687814144
+              ],
+              [
+                1794990151428,
+                1691172864
+              ],
+              [
+                1794990151936,
+                1696186368
+              ],
+              [
+                1794990152436,
+                1707589632
+              ],
+              [
+                1794990152930,
+                1588887552
+              ],
+              [
+                1794990153434,
+                1643102208
+              ],
+              [
+                1794990153935,
+                1649278976
+              ],
+              [
+                1794990154443,
+                1654636544
+              ],
+              [
+                1794990154949,
+                1658994688
+              ],
+              [
+                1794990155446,
+                1662533632
+              ],
+              [
+                1794990155950,
+                1668415488
+              ],
+              [
+                1794990156447,
+                1679589376
+              ],
+              [
+                1794990156954,
+                1677475840
+              ],
+              [
+                1794990157450,
+                1681047552
+              ],
+              [
+                1794990157955,
+                1685159936
+              ],
+              [
+                1794990158463,
+                1689403392
+              ],
+              [
+                1794990158959,
+                1692794880
+              ],
+              [
+                1794990159467,
+                1696825344
+              ],
+              [
+                1794990159965,
+                1675231232
+              ],
+              [
+                1794990160465,
+                1643692032
+              ],
+              [
+                1794990160967,
+                1649459200
+              ],
+              [
+                1794990161465,
+                1653129216
+              ],
+              [
+                1794990161972,
+                1658617856
+              ],
+              [
+                1794990162474,
+                1663893504
+              ],
+              [
+                1794990162974,
+                1681686528
+              ],
+              [
+                1794990163479,
+                1680834560
+              ],
+              [
+                1794990163974,
+                1676001280
+              ],
+              [
+                1794990164479,
+                1681063936
+              ],
+              [
+                1794990164984,
+                1684635648
+              ],
+              [
+                1794990165478,
+                1688748032
+              ],
+              [
+                1794990165983,
+                1696333824
+              ],
+              [
+                1794990166487,
+                1601290240
+              ],
+              [
+                1794990166988,
+                1647312896
+              ],
+              [
+                1794990167493,
+                1652719616
+              ],
+              [
+                1794990167992,
+                1656389632
+              ],
+              [
+                1794990168494,
+                1660698624
+              ],
+              [
+                1794990168991,
+                1665859584
+              ],
+              [
+                1794990169495,
+                1670217728
+              ],
+              [
+                1794990169992,
+                1674592256
+              ],
+              [
+                1794990170502,
+                1678983168
+              ],
+              [
+                1794990170996,
+                1682423808
+              ],
+              [
+                1794990171503,
+                1687420928
+              ],
+              [
+                1794990172018,
+                1690828800
+              ],
+              [
+                1794990172505,
+                1694056448
+              ],
+              [
+                1794990173010,
+                1699069952
+              ],
+              [
+                1794990173505,
+                1592049664
+              ],
+              [
+                1794990174012,
+                1645985792
+              ],
+              [
+                1794990174514,
+                1652473856
+              ],
+              [
+                1794990175017,
+                1657061376
+              ],
+              [
+                1794990175521,
+                1661517824
+              ],
+              [
+                1794990176021,
+                1665712128
+              ],
+              [
+                1794990176521,
+                1669971968
+              ],
+              [
+                1794990177022,
+                1689141248
+              ],
+              [
+                1794990177525,
+                1678802944
+              ],
+              [
+                1794990178023,
+                1683046400
+              ],
+              [
+                1794990178537,
+                1687207936
+              ],
+              [
+                1794990179027,
+                1690599424
+              ],
+              [
+                1794990179530,
+                1694646272
+              ],
+              [
+                1794990180036,
+                1721106432
+              ],
+              [
+                1794990180536,
+                1701937152
+              ],
+              [
+                1794990181031,
+                1705213952
+              ],
+              [
+                1794990181534,
+                1709195264
+              ],
+              [
+                1794990182044,
+                1713192960
+              ],
+              [
+                1794990182549,
+                1604009984
+              ],
+              [
+                1794990183053,
+                1649852416
+              ],
+              [
+                1794990183545,
+                1654341632
+              ],
+              [
+                1794990184050,
+                1658961920
+              ],
+              [
+                1794990184549,
+                1664139264
+              ],
+              [
+                1794990185051,
+                1668448256
+              ],
+              [
+                1794990185558,
+                1673756672
+              ],
+              [
+                1794990186053,
+                1677443072
+              ],
+              [
+                1794990186557,
+                1683456000
+              ],
+              [
+                1794990187056,
+                1686994944
+              ],
+              [
+                1794990187562,
+                1688682496
+              ],
+              [
+                1794990188067,
+                1692876800
+              ],
+              [
+                1794990188564,
+                1696235520
+              ],
+              [
+                1794990189062,
+                1594114048
+              ],
+              [
+                1794990189571,
+                1646673920
+              ],
+              [
+                1794990190073,
+                1652310016
+              ],
+              [
+                1794990190577,
+                1656848384
+              ],
+              [
+                1794990191072,
+                1661566976
+              ],
+              [
+                1794990191582,
+                1667547136
+              ],
+              [
+                1794990192084,
+                1669988352
+              ],
+              [
+                1794990192582,
+                1675182080
+              ],
+              [
+                1794990193080,
+                1678770176
+              ],
+              [
+                1794990193591,
+                1683881984
+              ],
+              [
+                1794990194084,
+                1687388160
+              ],
+              [
+                1794990194588,
+                1691467776
+              ],
+              [
+                1794990195088,
+                1594408960
+              ],
+              [
+                1794990195595,
+                1647788032
+              ],
+              [
+                1794990196092,
+                1652572160
+              ],
+              [
+                1794990196591,
+                1657487360
+              ],
+              [
+                1794990197098,
+                1663172608
+              ],
+              [
+                1794990197591,
+                1666367488
+              ],
+              [
+                1794990198095,
+                1669988352
+              ],
+              [
+                1794990198605,
+                1674510336
+              ],
+              [
+                1794990199101,
+                1678721024
+              ],
+              [
+                1794990199607,
+                1684275200
+              ],
+              [
+                1794990200104,
+                1684832256
+              ],
+              [
+                1794990200610,
+                1689993216
+              ],
+              [
+                1794990201117,
+                1693401088
+              ],
+              [
+                1794990201609,
+                1696727040
+              ],
+              [
+                1794990202113,
+                1701920768
+              ],
+              [
+                1794990202618,
+                1725300736
+              ],
+              [
+                1794990203117,
+                1681489920
+              ],
+              [
+                1794990203623,
+                1647296512
+              ],
+              [
+                1794990204119,
+                1652948992
+              ],
+              [
+                1794990204618,
+                1658060800
+              ],
+              [
+                1794990205129,
+                1663746048
+              ],
+              [
+                1794990205624,
+                1668382720
+              ],
+              [
+                1794990206133,
+                1674035200
+              ],
+              [
+                1794990206631,
+                1679458304
+              ],
+              [
+                1794990207138,
+                1682194432
+              ],
+              [
+                1794990207634,
+                1686405120
+              ],
+              [
+                1794990208142,
+                1690566656
+              ],
+              [
+                1794990208636,
+                1694023680
+              ],
+              [
+                1794990209143,
+                1675362304
+              ],
+              [
+                1794990209644,
+                1650180096
+              ],
+              [
+                1794990210143,
+                1654915072
+              ],
+              [
+                1794990210643,
+                1659633664
+              ],
+              [
+                1794990211155,
+                1664974848
+              ],
+              [
+                1794990211652,
+                1669332992
+              ],
+              [
+                1794990212156,
+                1673543680
+              ],
+              [
+                1794990212656,
+                1677819904
+              ],
+              [
+                1794990213158,
+                1681391616
+              ],
+              [
+                1794990213658,
+                1713225728
+              ],
+              [
+                1794990214161,
+                1700233216
+              ],
+              [
+                1794990214658,
+                1694236672
+              ],
+              [
+                1794990215174,
+                1698447360
+              ],
+              [
+                1794990215669,
+                1607385088
+              ],
+              [
+                1794990216175,
+                1653129216
+              ],
+              [
+                1794990216673,
+                1664663552
+              ],
+              [
+                1794990217173,
+                1662599168
+              ],
+              [
+                1794990217677,
+                1668562944
+              ],
+              [
+                1794990218176,
+                1672249344
+              ],
+              [
+                1794990218690,
+                1685078016
+              ],
+              [
+                1794990219181,
+                1680982016
+              ],
+              [
+                1794990219689,
+                1685798912
+              ],
+              [
+                1794990220187,
+                1689141248
+              ],
+              [
+                1794990220692,
+                1694531584
+              ],
+              [
+                1794990221188,
+                1698250752
+              ],
+              [
+                1794990221690,
+                1702428672
+              ],
+              [
+                1794990222194,
+                1707098112
+              ],
+              [
+                1794990222690,
+                1599488000
+              ],
+              [
+                1794990223199,
+                1652277248
+              ],
+              [
+                1794990223701,
+                1656619008
+              ],
+              [
+                1794990224200,
+                1661419520
+              ],
+              [
+                1794990224700,
+                1668562944
+              ],
+              [
+                1794990225206,
+                1672134656
+              ],
+              [
+                1794990225703,
+                1676591104
+              ],
+              [
+                1794990226211,
+                1681063936
+              ],
+              [
+                1794990226709,
+                1684471808
+              ],
+              [
+                1794990227214,
+                1689780224
+              ],
+              [
+                1794990227718,
+                1693220864
+              ],
+              [
+                1794990228220,
+                1698267136
+              ],
+              [
+                1794990228717,
+                1609564160
+              ],
+              [
+                1794990229222,
+                1655291904
+              ],
+              [
+                1794990229722,
+                1661124608
+              ],
+              [
+                1794990230222,
+                1664811008
+              ],
+              [
+                1794990230728,
+                1670283264
+              ],
+              [
+                1794990231231,
+                1675264000
+              ],
+              [
+                1794990231731,
+                1680031744
+              ],
+              [
+                1794990232230,
+                1684242432
+              ],
+              [
+                1794990232733,
+                1687846912
+              ],
+              [
+                1794990233243,
+                1691942912
+              ],
+              [
+                1794990233748,
+                1696301056
+              ],
+              [
+                1794990234237,
+                1699627008
+              ],
+              [
+                1794990234764,
+                1704640512
+              ],
+              [
+                1794990235247,
+                1611595776
+              ],
+              [
+                1794990235749,
+                1657012224
+              ],
+              [
+                1794990236245,
+                1661632512
+              ],
+              [
+                1794990236752,
+                1666236416
+              ],
+              [
+                1794990237255,
+                1671757824
+              ],
+              [
+                1794990237750,
+                1676361728
+              ],
+              [
+                1794990238259,
+                1681965056
+              ],
+              [
+                1794990238756,
+                1685733376
+              ],
+              [
+                1794990239263,
+                1692368896
+              ],
+              [
+                1794990239765,
+                1695875072
+              ],
+              [
+                1794990240264,
+                1700020224
+              ],
+              [
+                1794990240766,
+                1704280064
+              ],
+              [
+                1794990241265,
+                1707704320
+              ],
+              [
+                1794990241769,
+                1711685632
+              ],
+              [
+                1794990242278,
+                1715929088
+              ],
+              [
+                1794990242771,
+                1604911104
+              ],
+              [
+                1794990243277,
+                1658552320
+              ],
+              [
+                1794990243781,
+                1671823360
+              ],
+              [
+                1794990244286,
+                1669791744
+              ],
+              [
+                1794990244783,
+                1677557760
+              ],
+              [
+                1794990245289,
+                1677950976
+              ],
+              [
+                1794990245786,
+                1682964480
+              ],
+              [
+                1794990246293,
+                1687519232
+              ],
+              [
+                1794990246825,
+                1691713536
+              ],
+              [
+                1794990247297,
+                1698447360
+              ],
+              [
+                1794990247795,
+                1699414016
+              ],
+              [
+                1794990248297,
+                1710997504
+              ],
+              [
+                1794990248805,
+                1704624128
+              ],
+              [
+                1794990249299,
+                1721040896
+              ],
+              [
+                1794990249801,
+                1712390144
+              ],
+              [
+                1794990250309,
+                1603305472
+              ],
+              [
+                1794990250809,
+                1657831424
+              ],
+              [
+                1794990251314,
+                1664221184
+              ],
+              [
+                1794990251815,
+                1670053888
+              ],
+              [
+                1794990252311,
+                1675608064
+              ],
+              [
+                1794990252810,
+                1679687680
+              ],
+              [
+                1794990253321,
+                1686011904
+              ],
+              [
+                1794990253815,
+                1689796608
+              ],
+              [
+                1794990254322,
+                1700888576
+              ],
+              [
+                1794990254822,
+                1709326336
+              ],
+              [
+                1794990255322,
+                1704083456
+              ],
+              [
+                1794990255847,
+                1708261376
+              ],
+              [
+                1794990256347,
+                1713553408
+              ],
+              [
+                1794990256847,
+                1715748864
+              ],
+              [
+                1794990257329,
+                1693581312
+              ],
+              [
+                1794990257837,
+                1661616128
+              ],
+              [
+                1794990258345,
+                1667252224
+              ],
+              [
+                1794990258836,
+                1688436736
+              ],
+              [
+                1794990259340,
+                1676705792
+              ],
+              [
+                1794990259846,
+                1680867328
+              ],
+              [
+                1794990260341,
+                1680424960
+              ],
+              [
+                1794990260852,
+                1684865024
+              ],
+              [
+                1794990261346,
+                1690746880
+              ],
+              [
+                1794990261854,
+                1695186944
+              ],
+              [
+                1794990262355,
+                1678983168
+              ],
+              [
+                1794990262862,
+                1658617856
+              ],
+              [
+                1794990263358,
+                1664942080
+              ],
+              [
+                1794990263862,
+                1669709824
+              ],
+              [
+                1794990264360,
+                1675313152
+              ],
+              [
+                1794990264863,
+                1680998400
+              ],
+              [
+                1794990265363,
+                1685635072
+              ],
+              [
+                1794990265869,
+                1691287552
+              ],
+              [
+                1794990266368,
+                1696481280
+              ],
+              [
+                1794990266962,
+                1701740544
+              ],
+              [
+                1794990267417,
+                1709506560
+              ],
+              [
+                1794990267988,
+                1729708032
+              ],
+              [
+                1794990268467,
+                1710358528
+              ],
+              [
+                1794990268975,
+                1713274880
+              ],
+              [
+                1794990269446,
+                1716142080
+              ],
+              [
+                1794990270000,
+                1719042048
+              ],
+              [
+                1794990270462,
+                1721942016
+              ],
+              [
+                1794990270978,
+                1724858368
+              ],
+              [
+                1794990271492,
+                1611612160
+              ],
+              [
+                1794990272006,
+                1663762432
+              ],
+              [
+                1794990272488,
+                1663778816
+              ],
+              [
+                1794990272994,
+                1667039232
+              ],
+              [
+                1794990273480,
+                1672364032
+              ],
+              [
+                1794990273987,
+                1676034048
+              ],
+              [
+                1794990274473,
+                1680179200
+              ],
+              [
+                1794990274981,
+                1688797184
+              ],
+              [
+                1794990275556,
+                1688862720
+              ],
+              [
+                1794990276030,
+                1705246720
+              ],
+              [
+                1794990276492,
+                1713127424
+              ],
+              [
+                1794990277029,
+                1698906112
+              ],
+              [
+                1794990277532,
+                1701838848
+              ],
+              [
+                1794990277996,
+                1705787392
+              ],
+              [
+                1794990278511,
+                1710702592
+              ],
+              [
+                1794990278988,
+                1610481664
+              ],
+              [
+                1794990279503,
+                1641955328
+              ],
+              [
+                1794990280013,
+                1665990656
+              ],
+              [
+                1794990280513,
+                1669480448
+              ],
+              [
+                1794990281038,
+                1673560064
+              ],
+              [
+                1794990281519,
+                1676705792
+              ],
+              [
+                1794990282002,
+                1679982592
+              ],
+              [
+                1794990282498,
+                1712259072
+              ],
+              [
+                1794990282997,
+                1688928256
+              ],
+              [
+                1794990283500,
+                1692188672
+              ],
+              [
+                1794990284010,
+                1695318016
+              ],
+              [
+                1794990284499,
+                1698381824
+              ],
+              [
+                1794990285008,
+                1712603136
+              ],
+              [
+                1794990285498,
+                1704624128
+              ],
+              [
+                1794990286013,
+                1708130304
+              ],
+              [
+                1794990286504,
+                1711390720
+              ],
+              [
+                1794990287002,
+                1609678848
+              ],
+              [
+                1794990287517,
+                1661517824
+              ],
+              [
+                1794990288028,
+                1665073152
+              ],
+              [
+                1794990288518,
+                1670512640
+              ],
+              [
+                1794990289034,
+                1675493376
+              ],
+              [
+                1794990289519,
+                1678557184
+              ],
+              [
+                1794990290032,
+                1682997248
+              ],
+              [
+                1794990290515,
+                1687994368
+              ],
+              [
+                1794990291031,
+                1692254208
+              ],
+              [
+                1794990291544,
+                1701330944
+              ],
+              [
+                1794990292042,
+                1698889728
+              ],
+              [
+                1794990292527,
+                1702854656
+              ],
+              [
+                1794990293047,
+                1707065344
+              ],
+              [
+                1794990293548,
+                1712947200
+              ],
+              [
+                1794990294030,
+                1713586176
+              ],
+              [
+                1794990294538,
+                1612300288
+              ],
+              [
+                1794990295038,
+                1665368064
+              ],
+              [
+                1794990295558,
+                1678737408
+              ],
+              [
+                1794990296057,
+                1674477568
+              ],
+              [
+                1794990296550,
+                1679753216
+              ],
+              [
+                1794990297057,
+                1683537920
+              ],
+              [
+                1794990297565,
+                1688535040
+              ],
+              [
+                1794990298066,
+                1693368320
+              ],
+              [
+                1794990298559,
+                1696858112
+              ],
+              [
+                1794990299064,
+                1703329792
+              ],
+              [
+                1794990299566,
+                1706442752
+              ],
+              [
+                1794990300065,
+                1709670400
+              ],
+              [
+                1794990300564,
+                1712898048
+              ],
+              [
+                1794990301061,
+                1715879936
+              ],
+              [
+                1794990301570,
+                1720909824
+              ],
+              [
+                1794990302075,
+                1724153856
+              ],
+              [
+                1794990302561,
+                1616642048
+              ],
+              [
+                1794990303075,
+                1669136384
+              ],
+              [
+                1794990303579,
+                1673412608
+              ],
+              [
+                1794990304093,
+                1677656064
+              ],
+              [
+                1794990304570,
+                1706278912
+              ],
+              [
+                1794990305085,
+                1685405696
+              ],
+              [
+                1794990305572,
+                1689452544
+              ],
+              [
+                1794990306081,
+                1694695424
+              ],
+              [
+                1794990306575,
+                1698136064
+              ],
+              [
+                1794990307091,
+                1702281216
+              ],
+              [
+                1794990307603,
+                1706393600
+              ],
+              [
+                1794990308105,
+                1709637632
+              ],
+              [
+                1794990308583,
+                1712898048
+              ],
+              [
+                1794990309095,
+                1713324032
+              ],
+              [
+                1794990309585,
+                1613889536
+              ],
+              [
+                1794990310088,
+                1667661824
+              ],
+              [
+                1794990310609,
+                1674575872
+              ],
+              [
+                1794990311099,
+                1678163968
+              ],
+              [
+                1794990311617,
+                1683685376
+              ],
+              [
+                1794990312109,
+                1686028288
+              ],
+              [
+                1794990312602,
+                1690894336
+              ],
+              [
+                1794990313107,
+                1695055872
+              ],
+              [
+                1794990313607,
+                1698447360
+              ],
+              [
+                1794990314125,
+                1702723584
+              ],
+              [
+                1794990314617,
+                1706737664
+              ],
+              [
+                1794990315115,
+                1710047232
+              ],
+              [
+                1794990315642,
+                1713012736
+              ],
+              [
+                1794990316124,
+                1716043776
+              ],
+              [
+                1794990316621,
+                1719402496
+              ],
+              [
+                1794990317120,
+                1722318848
+              ],
+              [
+                1794990317609,
+                1699004416
+              ],
+              [
+                1794990318153,
+                1628094464
+              ],
+              [
+                1794990318636,
+                1671790592
+              ],
+              [
+                1794990319150,
+                1677246464
+              ],
+              [
+                1794990319644,
+                1680654336
+              ],
+              [
+                1794990320140,
+                1684783104
+              ],
+              [
+                1794990320649,
+                1688289280
+              ],
+              [
+                1794990321139,
+                1692270592
+              ],
+              [
+                1794990321645,
+                1694498816
+              ],
+              [
+                1794990322156,
+                1697906688
+              ],
+              [
+                1794990322649,
+                1702854656
+              ],
+              [
+                1794990323163,
+                1707835392
+              ],
+              [
+                1794990323657,
+                1731870720
+              ],
+              [
+                1794990324167,
+                1713045504
+              ],
+              [
+                1794990324645,
+                1736753152
+              ],
+              [
+                1794990325145,
+                1719304192
+              ],
+              [
+                1794990325640,
+                1723318272
+              ],
+              [
+                1794990326143,
+                1700741120
+              ],
+              [
+                1794990326644,
+                1626980352
+              ],
+              [
+                1794990327162,
+                1678409728
+              ],
+              [
+                1794990327660,
+                1676443648
+              ],
+              [
+                1794990328172,
+                1681784832
+              ],
+              [
+                1794990328657,
+                1685487616
+              ],
+              [
+                1794990329172,
+                1690959872
+              ],
+              [
+                1794990329663,
+                1695498240
+              ],
+              [
+                1794990330167,
+                1700757504
+              ],
+              [
+                1794990330669,
+                1703362560
+              ],
+              [
+                1794990331180,
+                1706606592
+              ],
+              [
+                1794990331689,
+                1710587904
+              ],
+              [
+                1794990332187,
+                1713504256
+              ],
+              [
+                1794990332676,
+                1717665792
+              ],
+              [
+                1794990333180,
+                1696956416
+              ],
+              [
+                1794990333686,
+                1628274688
+              ],
+              [
+                1794990334191,
+                1673592832
+              ],
+              [
+                1794990334681,
+                1678426112
+              ],
+              [
+                1794990335212,
+                1683783680
+              ],
+              [
+                1794990335692,
+                1687093248
+              ],
+              [
+                1794990336302,
+                1691041792
+              ],
+              [
+                1794990336688,
+                1709228032
+              ],
+              [
+                1794990337189,
+                1699807232
+              ],
+              [
+                1794990337693,
+                1704247296
+              ],
+              [
+                1794990338198,
+                1707622400
+              ],
+              [
+                1794990338722,
+                1710915584
+              ],
+              [
+                1794990339206,
+                1715912704
+              ],
+              [
+                1794990339710,
+                1719042048
+              ],
+              [
+                1794990340212,
+                1722302464
+              ],
+              [
+                1794990340702,
+                1620705280
+              ],
+              [
+                1794990341206,
+                1673723904
+              ],
+              [
+                1794990341699,
+                1679376384
+              ],
+              [
+                1794990342213,
+                1688977408
+              ],
+              [
+                1794990342696,
+                1688682496
+              ],
+              [
+                1794990343207,
+                1694121984
+              ],
+              [
+                1794990343707,
+                1698562048
+              ],
+              [
+                1794990344202,
+                1702854656
+              ],
+              [
+                1794990344705,
+                1706278912
+              ],
+              [
+                1794990345207,
+                1709539328
+              ],
+              [
+                1794990345716,
+                1713700864
+              ],
+              [
+                1794990346211,
+                1717092352
+              ],
+              [
+                1794990346709,
+                1721171968
+              ],
+              [
+                1794990347216,
+                1700839424
+              ],
+              [
+                1794990347714,
+                1651818496
+              ],
+              [
+                1794990348215,
+                1677590528
+              ],
+              [
+                1794990348720,
+                1689878528
+              ],
+              [
+                1794990349227,
+                1691680768
+              ],
+              [
+                1794990349720,
+                1692565504
+              ],
+              [
+                1794990350225,
+                1699102720
+              ],
+              [
+                1794990350728,
+                1703657472
+              ],
+              [
+                1794990351233,
+                1707261952
+              ],
+              [
+                1794990351730,
+                1711505408
+              ],
+              [
+                1794990352232,
+                1694744576
+              ],
+              [
+                1794990352732,
+                1655341056
+              ],
+              [
+                1794990353233,
+                1680343040
+              ],
+              [
+                1794990353739,
+                1685782528
+              ],
+              [
+                1794990354249,
+                1691090944
+              ],
+              [
+                1794990354739,
+                1694760960
+              ],
+              [
+                1794990355247,
+                1718157312
+              ],
+              [
+                1794990355746,
+                1704263680
+              ],
+              [
+                1794990356250,
+                1711685632
+              ],
+              [
+                1794990356748,
+                1714241536
+              ],
+              [
+                1794990357255,
+                1719353344
+              ],
+              [
+                1794990357757,
+                1720451072
+              ],
+              [
+                1794990358256,
+                1724563456
+              ],
+              [
+                1794990358761,
+                1728692224
+              ],
+              [
+                1794990359264,
+                1732018176
+              ],
+              [
+                1794990359763,
+                1735163904
+              ],
+              [
+                1794990360267,
+                1740292096
+              ],
+              [
+                1794990360771,
+                1743978496
+              ],
+              [
+                1794990361264,
+                1624801280
+              ],
+              [
+                1794990361770,
+                1677164544
+              ],
+              [
+                1794990362273,
+                1682849792
+              ],
+              [
+                1794990362776,
+                1687633920
+              ],
+              [
+                1794990363274,
+                1692745728
+              ],
+              [
+                1794990363785,
+                1713553408
+              ],
+              [
+                1794990364281,
+                1720434688
+              ],
+              [
+                1794990364788,
+                1710440448
+              ],
+              [
+                1794990365283,
+                1711800320
+              ],
+              [
+                1794990365788,
+                1716158464
+              ],
+              [
+                1794990366284,
+                1699692544
+              ],
+              [
+                1794990366790,
+                1679163392
+              ],
+              [
+                1794990367298,
+                1684684800
+              ],
+              [
+                1794990367790,
+                1689305088
+              ],
+              [
+                1794990368297,
+                1693925376
+              ],
+              [
+                1794990368800,
+                1699102720
+              ],
+              [
+                1794990369301,
+                1703444480
+              ],
+              [
+                1794990369804,
+                1708736512
+              ],
+              [
+                1794990370303,
+                1711013888
+              ],
+              [
+                1794990370811,
+                1716224000
+              ],
+              [
+                1794990371304,
+                1719730176
+              ],
+              [
+                1794990371807,
+                1626669056
+              ],
+              [
+                1794990372309,
+                1680113664
+              ],
+              [
+                1794990372814,
+                1685684224
+              ],
+              [
+                1794990373318,
+                1696907264
+              ],
+              [
+                1794990373814,
+                1695580160
+              ],
+              [
+                1794990374321,
+                1700429824
+              ],
+              [
+                1794990374828,
+                1706573824
+              ],
+              [
+                1794990375321,
+                1710653440
+              ],
+              [
+                1794990375840,
+                1734770688
+              ],
+              [
+                1794990376349,
+                1718222848
+              ],
+              [
+                1794990376843,
+                1722433536
+              ],
+              [
+                1794990377334,
+                1726562304
+              ],
+              [
+                1794990377834,
+                1751121920
+              ],
+              [
+                1794990378355,
+                1730117632
+              ],
+              [
+                1794990378846,
+                1735655424
+              ],
+              [
+                1794990379337,
+                1625210880
+              ],
+              [
+                1794990379843,
+                1678557184
+              ],
+              [
+                1794990380346,
+                1685192704
+              ],
+              [
+                1794990380854,
+                1690206208
+              ],
+              [
+                1794990381349,
+                1694941184
+              ],
+              [
+                1794990381853,
+                1699790848
+              ],
+              [
+                1794990382351,
+                1732722688
+              ],
+              [
+                1794990382858,
+                1709932544
+              ],
+              [
+                1794990383378,
+                1713012736
+              ],
+              [
+                1794990383863,
+                1717370880
+              ],
+              [
+                1794990384363,
+                1720696832
+              ],
+              [
+                1794990384869,
+                1725906944
+              ],
+              [
+                1794990385363,
+                1729396736
+              ],
+              [
+                1794990385867,
+                1708015616
+              ],
+              [
+                1794990386367,
+                1638760448
+              ],
+              [
+                1794990386871,
+                1685389312
+              ],
+              [
+                1794990387377,
+                1690763264
+              ],
+              [
+                1794990387877,
+                1695186944
+              ],
+              [
+                1794990388376,
+                1706033152
+              ],
+              [
+                1794990388883,
+                1706459136
+              ],
+              [
+                1794990389387,
+                1710276608
+              ],
+              [
+                1794990389887,
+                1714601984
+              ],
+              [
+                1794990390387,
+                1714257920
+              ],
+              [
+                1794990390892,
+                1719402496
+              ],
+              [
+                1794990391389,
+                1722892288
+              ],
+              [
+                1794990391895,
+                1726939136
+              ],
+              [
+                1794990392395,
+                1731215360
+              ],
+              [
+                1794990392895,
+                1709965312
+              ],
+              [
+                1794990393399,
+                1681637376
+              ],
+              [
+                1794990393900,
+                1687306240
+              ],
+              [
+                1794990394399,
+                1690976256
+              ],
+              [
+                1794990394905,
+                1696661504
+              ],
+              [
+                1794990395406,
+                1702133760
+              ],
+              [
+                1794990395906,
+                1706950656
+              ],
+              [
+                1794990396411,
+                1712472064
+              ],
+              [
+                1794990396909,
+                1715060736
+              ],
+              [
+                1794990397413,
+                1720090624
+              ],
+              [
+                1794990397921,
+                1723400192
+              ],
+              [
+                1794990398418,
+                1726726144
+              ],
+              [
+                1794990398923,
+                1731739648
+              ],
+              [
+                1794990399424,
+                1709768704
+              ],
+              [
+                1794990399924,
+                1640251392
+              ],
+              [
+                1794990400423,
+                1686552576
+              ],
+              [
+                1794990400932,
+                1691959296
+              ],
+              [
+                1794990401434,
+                1697316864
+              ],
+              [
+                1794990401963,
+                1701249024
+              ],
+              [
+                1794990402441,
+                1707163648
+              ],
+              [
+                1794990402938,
+                1717829632
+              ],
+              [
+                1794990403446,
+                1715552256
+              ],
+              [
+                1794990403943,
+                1719173120
+              ],
+              [
+                1794990404441,
+                1723269120
+              ],
+              [
+                1794990404947,
+                1705918464
+              ],
+              [
+                1794990405447,
+                1684029440
+              ],
+              [
+                1794990405947,
+                1688649728
+              ],
+              [
+                1794990406447,
+                1693384704
+              ],
+              [
+                1794990406954,
+                1698709504
+              ],
+              [
+                1794990407457,
+                1703100416
+              ],
+              [
+                1794990407962,
+                1722433536
+              ],
+              [
+                1794990408460,
+                1713684480
+              ],
+              [
+                1794990408960,
+                1716518912
+              ],
+              [
+                1794990409462,
+                1720664064
+              ],
+              [
+                1794990409981,
+                1725054976
+              ],
+              [
+                1794990410464,
+                1728380928
+              ],
+              [
+                1794990410976,
+                1733378048
+              ],
+              [
+                1794990411488,
+                1632518144
+              ],
+              [
+                1794990411985,
+                1685864448
+              ],
+              [
+                1794990412496,
+                1691254784
+              ],
+              [
+                1794990412984,
+                1695809536
+              ],
+              [
+                1794990413493,
+                1699905536
+              ],
+              [
+                1794990413985,
+                1704345600
+              ],
+              [
+                1794990414494,
+                1709801472
+              ],
+              [
+                1794990414986,
+                1712013312
+              ],
+              [
+                1794990415509,
+                1715355648
+              ],
+              [
+                1794990416015,
+                1718714368
+              ],
+              [
+                1794990416500,
+                1721860096
+              ],
+              [
+                1794990417019,
+                1725825024
+              ],
+              [
+                1794990417511,
+                1747992576
+              ],
+              [
+                1794990418041,
+                1733279744
+              ],
+              [
+                1794990418506,
+                1632780288
+              ],
+              [
+                1794990419041,
+                1686601728
+              ],
+              [
+                1794990419514,
+                1691041792
+              ],
+              [
+                1794990420018,
+                1692876800
+              ],
+              [
+                1794990420530,
+                1698398208
+              ],
+              [
+                1794990421017,
+                1702920192
+              ],
+              [
+                1794990421527,
+                1707868160
+              ],
+              [
+                1794990422021,
+                1731117056
+              ],
+              [
+                1794990422524,
+                1717796864
+              ],
+              [
+                1794990423023,
+                1720041472
+              ],
+              [
+                1794990423545,
+                1725153280
+              ],
+              [
+                1794990424034,
+                1728528384
+              ],
+              [
+                1794990424533,
+                1731706880
+              ],
+              [
+                1794990425050,
+                1736704000
+              ],
+              [
+                1794990425535,
+                1645117440
+              ],
+              [
+                1794990426045,
+                1690779648
+              ],
+              [
+                1794990426536,
+                1695334400
+              ],
+              [
+                1794990427038,
+                1698693120
+              ],
+              [
+                1794990427556,
+                1703723008
+              ],
+              [
+                1794990428048,
+                1707589632
+              ],
+              [
+                1794990428556,
+                1713668096
+              ],
+              [
+                1794990429053,
+                1717649408
+              ],
+              [
+                1794990429548,
+                1720778752
+              ],
+              [
+                1794990430056,
+                1725104128
+              ],
+              [
+                1794990430546,
+                1728479232
+              ],
+              [
+                1794990431053,
+                1732444160
+              ],
+              [
+                1794990431558,
+                1645133824
+              ],
+              [
+                1794990432054,
+                1689714688
+              ],
+              [
+                1794990432550,
+                1694760960
+              ],
+              [
+                1794990433074,
+                1700052992
+              ],
+              [
+                1794990433559,
+                1704476672
+              ],
+              [
+                1794990434066,
+                1708900352
+              ],
+              [
+                1794990434567,
+                1714110464
+              ],
+              [
+                1794990435065,
+                1718878208
+              ],
+              [
+                1794990435570,
+                1721204736
+              ],
+              [
+                1794990436070,
+                1726234624
+              ],
+              [
+                1794990436569,
+                1729740800
+              ],
+              [
+                1794990437080,
+                1712062464
+              ],
+              [
+                1794990437571,
+                1668071424
+              ],
+              [
+                1794990438070,
+                1693106176
+              ],
+              [
+                1794990438577,
+                1699938304
+              ],
+              [
+                1794990439088,
+                1705721856
+              ],
+              [
+                1794990439576,
+                1704787968
+              ],
+              [
+                1794990440091,
+                1711112192
+              ],
+              [
+                1794990440581,
+                1714831360
+              ],
+              [
+                1794990441098,
+                1719304192
+              ],
+              [
+                1794990441584,
+                1722793984
+              ],
+              [
+                1794990442090,
+                1744633856
+              ],
+              [
+                1794990442592,
+                1753382912
+              ],
+              [
+                1794990443091,
+                1734475776
+              ],
+              [
+                1794990443599,
+                1738440704
+              ],
+              [
+                1794990444100,
+                1742454784
+              ],
+              [
+                1794990444595,
+                1645035520
+              ],
+              [
+                1794990445102,
+                1690632192
+              ],
+              [
+                1794990445606,
+                1696268288
+              ],
+              [
+                1794990446104,
+                1701019648
+              ],
+              [
+                1794990446609,
+                1706000384
+              ],
+              [
+                1794990447112,
+                1712128000
+              ],
+              [
+                1794990447611,
+                1716142080
+              ],
+              [
+                1794990448120,
+                1721368576
+              ],
+              [
+                1794990448617,
+                1723924480
+              ],
+              [
+                1794990449119,
+                1728053248
+              ],
+              [
+                1794990449620,
+                1732362240
+              ],
+              [
+                1794990450118,
+                1636810752
+              ],
+              [
+                1794990450620,
+                1689747456
+              ],
+              [
+                1794990451129,
+                1695383552
+              ],
+              [
+                1794990451634,
+                1700626432
+              ],
+              [
+                1794990452131,
+                1704296448
+              ],
+              [
+                1794990452639,
+                1717682176
+              ],
+              [
+                1794990453133,
+                1714962432
+              ],
+              [
+                1794990453640,
+                1719697408
+              ],
+              [
+                1794990454137,
+                1722302464
+              ],
+              [
+                1794990454657,
+                1732984832
+              ],
+              [
+                1794990455146,
+                1638400000
+              ],
+              [
+                1794990455645,
+                1692483584
+              ],
+              [
+                1794990456167,
+                1698234368
+              ],
+              [
+                1794990456650,
+                1703477248
+              ],
+              [
+                1794990457145,
+                1707147264
+              ],
+              [
+                1794990457649,
+                1712521216
+              ],
+              [
+                1794990458149,
+                1717616640
+              ],
+              [
+                1794990458654,
+                1722384384
+              ],
+              [
+                1794990459155,
+                1725775872
+              ],
+              [
+                1794990459661,
+                1743421440
+              ],
+              [
+                1794990460158,
+                1733443584
+              ],
+              [
+                1794990460670,
+                1737424896
+              ],
+              [
+                1794990461159,
+                1640513536
+              ],
+              [
+                1794990461660,
+                1694253056
+              ],
+              [
+                1794990462168,
+                1699872768
+              ],
+              [
+                1794990462676,
+                1705476096
+              ],
+              [
+                1794990463176,
+                1709359104
+              ],
+              [
+                1794990463690,
+                1718452224
+              ],
+              [
+                1794990464173,
+                1717796864
+              ],
+              [
+                1794990464698,
+                1722269696
+              ],
+              [
+                1794990465176,
+                1725759488
+              ],
+              [
+                1794990465689,
+                1730805760
+              ],
+              [
+                1794990466190,
+                1734279168
+              ],
+              [
+                1794990466682,
+                1738457088
+              ],
+              [
+                1794990467189,
+                1718796288
+              ],
+              [
+                1794990467693,
+                1693614080
+              ],
+              [
+                1794990468192,
+                1700839424
+              ],
+              [
+                1794990468700,
+                1704640512
+              ],
+              [
+                1794990469197,
+                1710555136
+              ],
+              [
+                1794990469702,
+                1714847744
+              ],
+              [
+                1794990470202,
+                1719255040
+              ],
+              [
+                1794990470704,
+                1724383232
+              ],
+              [
+                1794990471205,
+                1728266240
+              ],
+              [
+                1794990471708,
+                1733312512
+              ],
+              [
+                1794990472213,
+                1755037696
+              ],
+              [
+                1794990472707,
+                1741324288
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "c4cf4658ae01fc379b8eddc4d5cde49e0db37dea83cb851fbb1a022fbdd0dd9f",
+            "bytes": 58734636
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Sopro English, four WASM threads, fixed synthetic F2 prompt and seed 1. Exclusive M1 benchmark lock; Now drawing from 'AC Power'. Run order: CPU and WebGPU smoke, CPU and WebGPU cached, CPU and WebGPU warm.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
