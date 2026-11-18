@@ -6,6 +6,26 @@ import { renderReport } from './report.mjs';
 const historical=JSON.parse(await readFile(new URL('../results/historical-2026-11-08-m1pro-gpu-warm/result.json',import.meta.url)));
 const nativeReceipt=JSON.parse(await readFile(new URL('../results/2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f/result.json',import.meta.url)));
 const native=()=>structuredClone(nativeReceipt);
+test('accepts the 101-character Linnet precision description and keeps the 150-character bound', () => {
+  const receipt = native();
+  const cell = receipt.cells[0];
+  const linnetPrecision = 'FP16 weights widened to FP32; dense kernels run as FP32 WebGPU and remaining kernels use WASM SIMD128';
+  assert.equal(linnetPrecision.length, 101);
+
+  // The synthetic fixture is marked as a measured GPU cell so the full native
+  // publication checks run with this backend-specific precision description.
+  cell.backendRequested = 'webgpu';
+  cell.backendEffective = 'webgpu+wasm';
+  cell.capability.gpuDispatchVerified = true;
+  cell.precision = linnetPrecision;
+  assert.equal(validateResult(receipt, { publication: true }), receipt);
+
+  cell.precision = 'x'.repeat(150);
+  assert.doesNotThrow(() => validateResult(receipt, { publication: true }));
+
+  cell.precision = 'x'.repeat(151);
+  assert.throws(() => validateResult(receipt, { publication: true }), /Voice, precision and settings are required/);
+});
 test('historical provenance preserves all six measured GPU cells',()=>{assert.equal(validateResult(historical,{publication:true}).cells.length,6);});
 test('smoke and dirty-source measurements cannot be published',()=>{for(const modify of[d=>d.protocol.smoke=true,d=>d.source.dirty=true]){const d=native();modify(d);assert.throws(()=>validateResult(d,{publication:true}));}});
 test('native publication cannot change fixture ID, hash, length or chunk count to bypass the canonical check',()=>{const d=native();d.fixture={id:'alternate-article-v1',sha256:'b'.repeat(64),characters:19999,chunks:92};assert.throws(()=>validateResult(d,{publication:true}),/canonical fixture/);});
