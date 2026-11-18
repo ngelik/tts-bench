@@ -83,8 +83,8 @@ jobs:
           import pathlib, sys
           path = pathlib.Path(sys.argv[1])
           source = path.read_text()
-          if source.count('std::sinf(') != 2:
-              raise SystemExit('Expected exactly two upstream std::sinf calls in the pinned host-test source')
+          if source.count('std::sinf(') != 7:
+              raise SystemExit('Expected exactly seven upstream std::sinf calls in the pinned host-test source')
           path.write_text(source.replace('std::sinf(', 'std::sin('))
           PY
           cmake -G Ninja -S "$source_dir" -B .cache/sano-kokopop-build/native-test \
