@@ -1,9 +1,11 @@
 import { chromium } from 'playwright-core';
 import { findChrome } from '../lib/runner.mjs';
+import { readFile } from 'node:fs/promises';
 
 const url = 'https://ngelik.github.io/tts-bench/';
 const browser = await chromium.launch({ executablePath: await findChrome(), headless: false });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+const expected = JSON.parse(await readFile('.cache/listening-site/assets/data.json', 'utf8'));
 const pageErrors = [], consoleErrors = [], failedRequests = [], badResponses = [];
 page.on('pageerror', error => pageErrors.push(String(error)));
 page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
@@ -23,5 +25,5 @@ const report = await page.evaluate(() => ({
   scripts: [...document.scripts].map(script => script.src).filter(Boolean),
   pagePath: [...document.querySelectorAll('script')].map(script => script.textContent.slice(0, 100)).filter(Boolean),
 }));
-console.log(JSON.stringify({ report, pageErrors, consoleErrors, failedRequests, badResponses }, null, 2));
+console.log(JSON.stringify({ expectedModelCount: expected.models.length, expectedModelIds: expected.models.map(model => model.id), report, pageErrors, consoleErrors, failedRequests, badResponses }, null, 2));
 await browser.close();
