@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "kind": "audio8-cpu-warm-cache-setup-recovery",
+  "sourceCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+  "chromeVersion": "157.0.8103.40",
+  "architecture": "arm64",
+  "nativeSetupError": {
+    "resultId": "2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18",
+    "resultPath": "results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/result.json",
+    "resultSha256": "4143b316bdbf2537fe44bbb93d4fa6aebfc21c5279304866bae2e3afc6dddd25",
+    "status": "error",
+    "phase": "browser setup before synthesis",
+    "reason": "Cache.put() encountered a network error",
+    "warmupTrials": 0,
+    "scoredTrials": 0,
+    "interpretation": "Preserved setup failure; not an unsupported backend and not a speed score."
+  },
+  "diagnosticAttempts": [
+    {
+      "id": "initial-probe-harness-error",
+      "startedAt": "2026-11-18T14:31:35.820Z",
+      "finishedAt": "2026-11-18T14:31:36.720Z",
+      "rawArtifactSha256": "cdf50259e32667d6169adf9c623f0c5574f70b9ca45facf1292465d5aedf6495",
+      "outcome": "Harness ReferenceError: bounded is not defined while attempting the first small provider-policy asset. No model asset was cached and no ONNX session or synthesis was run; this is not model evidence."
+    },
+    {
+      "id": "cache-probe-before-compiler-cache-cleanup",
+      "startedAt": "2026-11-18T14:32:33.505Z",
+      "finishedAt": "2026-11-18T14:32:37.581Z",
+      "rawArtifactSha256": "af096d5bc7f5811ee19398ddd43659d7476c898b31c64f760c67e84ee3bb7660",
+      "freeDiskBeforeBytes": 4976295936,
+      "freeDiskAfterBytes": 4549615616,
+      "cacheWriteFailure": {
+        "assetPath": "models/audio8-realistic/codec_decoder_fp16.onnx.data",
+        "bytes": 260741440,
+        "sha256": "18838f686aa7c1528fb69ec11e1ab404fdc4dc823d13219abfd4b327988527c0",
+        "httpStatus": 200,
+        "httpBytesMatchedLockedSizeAndHash": true,
+        "cachePutOutcome": "failed: net::ERR_FAILED"
+      },
+      "outcome": "The no-inference browser CacheStorage probe reproduced the setup failure while storing the codec decoder external-data response."
+    },
+    {
+      "id": "cache-probe-after-compiler-cache-cleanup",
+      "startedAt": "2026-11-18T14:48:10.570Z",
+      "finishedAt": "2026-11-18T14:48:13.875Z",
+      "rawArtifactSha256": "8e52baf523156f065e6183dc524458a7f01c30fb83ffb0dbd945256d74743320",
+      "freeDiskBeforeBytes": 6167298048,
+      "freeDiskMinimumDuringProbeBytes": 5224431616,
+      "freeDiskAfterProbeBytes": 5479751680,
+      "freeDiskAfterDisposableProfileCleanupBytes": 6166835200,
+      "cachedAssetCount": 9,
+      "cachedAssetBytes": 614792704,
+      "failedRequests": 0,
+      "outcome": "The same-source, same-Chrome, no-inference CacheStorage load completed all nine model/runtime asset writes and readbacks."
+    }
+  ],
+  "compilerCacheCleanup": {
+    "startedAt": "2026-11-18T14:46:58.865733Z",
+    "finishedAt": "2026-11-18T14:46:59.032573Z",
+    "receiptLocation": "Private coordinator evidence artifact; not a file in this repository.",
+    "rawReceiptSha256": "c5fa76b6c78f0c85ec32ba0e0ce713e4cdeda9bff9a025370f2edab15a4be04a",
+    "removedScope": "Two verified unused SDK compiler-cache trees and their generated activation markers; no benchmark model assets, source, receipts, or recordings.",
+    "freeDiskBeforeBytes": 4944617472,
+    "freeDiskAfterBytes": 6169743360,
+    "freeDiskIncreaseBytes": 1225125888,
+    "sdkVersion": "6.0.13",
+    "restoreCommands": [
+      "cd .cache/nov14/emsdk",
+      "./emsdk install 6.0.13",
+      "./emsdk activate 6.0.13"
+    ]
+  },
+  "recoveryRunAtCapture": {
+    "resultId": "2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb",
+    "status": "warmup-1",
+    "statusUpdatedAt": "2026-11-18T14:56:48.672Z",
+    "note": "This is a separate recovery attempt. Its later outcome is not asserted by this snapshot."
+  },
+  "causeAssessment": "The failure reproduced before cleanup and the complete cache write/readback passed after free disk increased. This correlation supports a storage-headroom hypothesis but does not prove Chrome BlobStorage or any other specific subsystem caused the original Cache.put failure."
+}
