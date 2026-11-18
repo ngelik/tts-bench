@@ -4,6 +4,7 @@ import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { relative, resolve, sep } from 'node:path';
 import { chromium } from 'playwright-core';
+import { SANO_HEART_NANO_F32 } from '../web/adapters/sano-kokopop-config.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const release = resolve(root, '.cache/sano-kokopop-build/release');
@@ -12,17 +13,17 @@ const manifest = JSON.parse(await readFile(resolve(release, 'BUILD-MANIFEST.json
 const modelBytes = await readFile(resolve(release, 'heartnano-f32.gguf'));
 const modelSha256 = createHash('sha256').update(modelBytes).digest('hex');
 assert.equal(modelSha256, manifest.model.sha256);
+assert.equal(SANO_HEART_NANO_F32.model.bytes, modelBytes.length);
+assert.equal(SANO_HEART_NANO_F32.model.sha256, modelSha256);
+for (const file of manifest.runtimeFiles) {
+  const locked = SANO_HEART_NANO_F32.runtime.files.find(candidate => candidate.path === file.filename);
+  assert.ok(locked, 'Runtime asset is present in the shared profile config: ' + file.filename);
+  assert.equal(locked.bytes, file.bytes, 'Runtime asset byte count matches the shared profile config: ' + file.filename);
+  assert.equal(locked.sha256, file.sha256, 'Runtime asset digest matches the shared profile config: ' + file.filename);
+  assert.equal(locked.target, file.target, 'Runtime asset target matches the shared profile config: ' + file.filename);
+}
 const smokeText = 'The quick brown fox jumps over the lazy dog.';
-const runtime = manifest.runtimeFiles.map(file => ({ ...file, url: '/' + file.target }));
-const modelConfig = {
-  id: 'sano-heart-nano-gguf-f32',
-  model: { url: '/models/heartnano-f32.gguf', bytes: modelBytes.length, sha256: modelSha256 },
-  runtime: { version: 'kokopop-sano-heartnano-v1', files: runtime },
-  info: {
-    voice: 'heartnano (US English)',
-    settings: { sampleRate: 24000, speed: 1, seed: '42 + chunk.id', precision: 'F32 expanded from official Q8 weights' },
-  },
-};
+const modelConfig = SANO_HEART_NANO_F32;
 
 function contentType(path) {
   if (path.endsWith('.mjs') || path.endsWith('.js')) return 'text/javascript; charset=utf-8';
