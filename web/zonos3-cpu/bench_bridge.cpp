@@ -128,6 +128,7 @@ EMSCRIPTEN_KEEPALIVE int bench_generate(const char * text, uint32_t seed, int ch
     if (status == AUDIOCPP_OK) status = audiocpp_request_set_option(request, "text_chunk_size", "20000");
 
     if (status == AUDIOCPP_OK) status = audiocpp_session_run(session, request, &result);
+    audiocpp_request_free(request);
     if (status == AUDIOCPP_OK) {
         const char * schema = nullptr;
         const char * data = nullptr;
@@ -161,7 +162,6 @@ EMSCRIPTEN_KEEPALIVE int bench_generate(const char * text, uint32_t seed, int ch
         }
     }
     if (status == AUDIOCPP_OK) status = audiocpp_result_audio(result, &pcm, &frames, &rate, &channels);
-    audiocpp_request_free(request);
     if (status != AUDIOCPP_OK) {
         const int code = fail(status);
         clear_result();
