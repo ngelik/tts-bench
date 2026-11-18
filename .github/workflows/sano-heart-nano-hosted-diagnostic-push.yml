@@ -1,0 +1,98 @@
+name: SanoTTS heart-nano exact-source hosted diagnostic
+on:
+  push:
+    branches:
+      - diagnostic/sano-heart-nano-hosted
+permissions:
+  contents: read
+concurrency:
+  group: sano-heart-nano-full-hosted-diagnostic
+  cancel-in-progress: false
+jobs:
+  full-hosted-cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: b0f8c8887e9dfab5cef7b8fac9a15af865d722ef
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --ignore-scripts
+      - name: Require the exact clean reviewed source commit
+        run: |
+          expected='b0f8c8887e9dfab5cef7b8fac9a15af865d722ef'
+          actual="$(git rev-parse HEAD)"
+          if [[ "$actual" != "$expected" ]]; then
+            echo "Checked out $actual, expected $expected."
+            exit 1
+          fi
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          if [[ -n "$status" ]]; then
+            printf 'Dirty source paths before assets or inference:\n%s\n' "$status"
+            exit 1
+          fi
+      - name: Fetch and verify immutable model and runtime assets
+        run: |
+          npm run assets -- fetch --model sano-heart-nano --accept-license
+          npm run assets -- verify --model sano-heart-nano --accept-license
+      - name: Recheck source before generation
+        run: |
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          if [[ -n "$status" ]]; then
+            printf 'Dirty source paths before generation:\n%s\n' "$status"
+            exit 1
+          fi
+      - name: Run full 20k warm schedule (one excluded warm-up plus five scored)
+        run: >-
+          xvfb-run -a npm run bench -- run
+          --model sano-heart-nano
+          --backend cpu
+          --scenario warm
+          --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM diagnostic'
+          --note 'Hosted full-article diagnostic only; not an M1 baseline score.'
+          --chrome /usr/bin/google-chrome
+          --accept-license
+          --timeout-minutes 330
+      - name: Run separate cached 20k RSS observation (n=1)
+        run: >-
+          xvfb-run -a npm run bench -- run
+          --model sano-heart-nano
+          --backend cpu
+          --scenario cached
+          --resources
+          --repetitions 1
+          --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM diagnostic'
+          --note 'Separate hosted cached resource diagnostic only; one observation, not an M1 baseline score.'
+          --chrome /usr/bin/google-chrome
+          --accept-license
+          --timeout-minutes 330
+      - name: Verify full receipts, WAVs and exact first-30-second PCM prefixes
+        run: node tools/package-sano-hosted-diagnostic.mjs b0f8c8887e9dfab5cef7b8fac9a15af865d722ef
+      - name: Preserve compact receipts and exact 30-second audio prefixes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sano-heart-nano-hosted-diagnostic-compact
+          if-no-files-found: ignore
+          path: |
+            runs/diagnostics/sano-heart-nano-hosted/**
+            runs/**/result.json
+            runs/**/summary.md
+            runs/**/status.json
+            runs/**/error.json
+            runs/**/invalid-result.json
+            runs/**/warmup-*.json
+            runs/**/trial-*.json
+      - name: Preserve exact full scored WAV files separately
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sano-heart-nano-hosted-diagnostic-full-wavs
+          if-no-files-found: ignore
+          path: runs/**/sano-heart-nano-cpu.wav
