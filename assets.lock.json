@@ -7090,7 +7090,7 @@
           "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
           "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
         ],
-        "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. Both inference profiles load its reference codes and embedding; the browser benchmark skips unused preview audio. The CPU/WASM TTS path uses the same embedding only. No other preset or language is exercised."
+        "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. The WebGPU profile loads its reference codes and speaker embedding; the CPU/WASM profile loads the speaker embedding only. The benchmark skips unused preview audio. No other preset or language is exercised."
       }
     }
   }

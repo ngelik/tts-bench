@@ -14,6 +14,8 @@
   const THREADS = 6;
   const PTHREAD_POOL_SIZE = 12;
   const MAX_THREADS = PTHREAD_POOL_SIZE;
+  const CPU_VOICE_DESCRIPTION = 'CPU TTS uses only the pinned Imogen speaker embedding; reference codes and preview audio are not loaded.';
+  const CPU_STREAM_DESCRIPTION = 'Offline audio.cpp generation; the complete canonical span is returned before first PCM.';
   const isPthread = String(self.name || '').startsWith('em-pthread');
 
   importScripts(RUNTIME_JS);
@@ -209,6 +211,8 @@
     const info = config.info || {};
     const value = {
       ...info,
+      voicePreviewAudio: CPU_VOICE_DESCRIPTION,
+      streamDecode: CPU_STREAM_DESCRIPTION,
       status: 'measured',
       backendEffective: 'cpu/wasm',
       voice: info.voice || 'Imogen (English, British female)',
@@ -216,6 +220,8 @@
       settings: {
         ...info,
         ...(info.settings || {}),
+        voicePreviewAudio: CPU_VOICE_DESCRIPTION,
+        streamDecode: CPU_STREAM_DESCRIPTION,
         language: 'en_us',
         textFrontend: 'audio.cpp community ZONOS3 tokenizer; canonical text spans are passed unchanged with normalization disabled.',
         selectedVoiceIds: [info.voiceId || 'default_b78b28baf5c31a1d'],
@@ -238,7 +244,6 @@
         softLimit: true,
         textNormalization: false,
         shortText: 'Not implemented by this community CPU port; canonical spans are passed unchanged.',
-        streamDecode: 'Offline audio.cpp generation; complete canonical span returned before its first-PCM event.',
         textChunkSize: 20000,
         runtimeRelease: RUNTIME_RELEASE,
         threads,

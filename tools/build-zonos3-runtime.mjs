@@ -8,7 +8,11 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRoot = resolve(root, 'web/zonos3/upstream');
 const webRoot = resolve(sourceRoot, 'servers/web');
 const entry = resolve(webRoot, 'src/client.ts');
-const outDir = resolve(root, 'web/zonos3/runtime');
+const args = process.argv.slice(2);
+if (args.length > 1 || (args.length === 1 && args[0] !== '--verify-build')) {
+  throw new Error('Usage: node tools/build-zonos3-runtime.mjs [--verify-build]');
+}
+const outDir = resolve(root, args.length ? '.cache/zonos3-web-runtime-build' : 'web/zonos3/runtime');
 const sourceRevision = 'a50e14117d99181ba7f28047b451ba03ba1a09a9';
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 

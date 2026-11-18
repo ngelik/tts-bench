@@ -34,9 +34,9 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: npm ci --ignore-scripts
       - name: Rebuild the pinned official WebGPU runtime bundles
-        run: npm run zonos3:runtime:build
+        run: npm run zonos3:runtime:build -- --verify-build
       - name: Verify committed WebGPU runtime bundles are current
-        run: git diff --exit-code -- web/zonos3/runtime
+        run: node tools/check-zonos3-runtime-build.mjs .cache/zonos3-web-runtime-build
       - name: Build the pinned CPU-only Emscripten runtime
         run: bash tools/build-zonos3-cpu-browser.sh .cache/zonos3-cpu-runtime-build
       - name: Compare the reproducible CPU build with immutable release lock
@@ -47,6 +47,15 @@ jobs:
         run: npm run assets -- fetch --model zonos3-mini
       - name: Verify every pinned ZONOS3 asset
         run: npm run assets -- verify --model zonos3-mini
+      - name: Verify clean source before Chrome generation
+        run: |
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          if [[ -n "$status" ]]; then
+            printf 'Dirty source paths before generation:\n%s\n' "$status"
+            echo "::error::Refusing to begin CPU smoke with a dirty source checkout."
+            exit 1
+          fi
+          echo "Source checkout is clean before Chrome generation."
       - name: Run headed Chrome CPU smoke under Xvfb
         run: >-
           xvfb-run -a node bin/bench.mjs run
@@ -57,6 +66,15 @@ jobs:
           --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM diagnostic'
           --chrome /usr/bin/google-chrome
           --timeout-minutes 45
+      - name: Capture source paths after Chrome generation
+        if: always()
+        run: |
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          if [[ -n "$status" ]]; then
+            printf 'Source paths after Chrome generation:\n%s\n' "$status"
+          else
+            echo "Source checkout is clean after Chrome generation."
+          fi
       - name: Verify native receipt and generated PCM WAV
         run: |
           node --input-type=module - <<'JS'
@@ -100,6 +118,7 @@ jobs:
             .cache/zonos3-cpu-runtime-build/bench_zonos3_cpu.js
             .cache/zonos3-cpu-runtime-build/bench_zonos3_cpu.wasm
             .cache/zonos3-cpu-runtime-build/THIRD-PARTY-NOTICES.txt
+            .cache/zonos3-web-runtime-build/**
             runs/**/result.json
             runs/**/status.json
             runs/**/error.json

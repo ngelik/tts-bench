@@ -4,6 +4,8 @@ import { readFile } from 'node:fs/promises';
 import { createZonos3CpuAdapter } from '../web/adapters/zonos3-cpu.mjs';
 
 const workerSource = await readFile(new URL('../web/workers/zonos3-cpu.js', import.meta.url), 'utf8');
+const assetLock = JSON.parse(await readFile(new URL('../assets.lock.json', import.meta.url), 'utf8'));
+const supportNotes = assetLock.models['zonos3-mini'].support.notes;
 const model = {
   id: 'zonos3-mini',
   name: 'ZONOS3-Mini',
@@ -104,6 +106,7 @@ test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', ()
 });
 
 test('ZONOS3 CPU worker verifies local range assets and reports the actual offline CPU backend', () => {
+  assert.match(supportNotes, /WebGPU profile loads its reference codes and speaker embedding; the CPU\/WASM profile loads the speaker embedding only/);
   assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v2/);
   assert.match(workerSource, /requireAsset\(assets\.backbone, 'backbone-ptq\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.decoder, 'zac-keep2\.gguf'\)/);
@@ -112,6 +115,10 @@ test('ZONOS3 CPU worker verifies local range assets and reports the actual offli
   assert.match(workerSource, /backendEffective: 'cpu\/wasm'/);
   assert.match(workerSource, /seedPerChunk: '42 \+ canonical chunk id/);
   assert.match(workerSource, /selectedVoiceIds: \[info\.voiceId/);
+  assert.match(workerSource, /const CPU_VOICE_DESCRIPTION = 'CPU TTS uses only the pinned Imogen speaker embedding; reference codes and preview audio are not loaded\.'/);
+  assert.match(workerSource, /const CPU_STREAM_DESCRIPTION = 'Offline audio\.cpp generation; the complete canonical span is returned before first PCM\.'/);
+  assert.equal((workerSource.match(/voicePreviewAudio: CPU_VOICE_DESCRIPTION/g) || []).length, 2);
+  assert.equal((workerSource.match(/streamDecode: CPU_STREAM_DESCRIPTION/g) || []).length, 2);
   assert.match(workerSource, /Not implemented by this community CPU port/);
   assert.match(workerSource, /Offline audio\.cpp generation/);
   assert.match(workerSource, /range\+|headers: \{ Range:/);
