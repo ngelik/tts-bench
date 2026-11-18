@@ -18,7 +18,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 
 | Model | CPU mean Chrome RSS | CPU max sampled RSS | WebGPU mean Chrome RSS | WebGPU max sampled RSS | Pinned model weights |
 |---|---:|---:|---:|---:|---:|
-| Audio8 TTS Realistic 0.6B INT4 | Not submitted | Not submitted | 2912.53 MB (n=1; 19401 samples) | 4169.92 MB (sampled max; n=1; 19401 samples) | 587.71 MB |
+| Audio8 TTS Realistic 0.6B INT4 | 3062.81 MB (n=1; 42113 samples) | 4335.21 MB (sampled max; n=1; 42113 samples) | 2912.53 MB (n=1; 19401 samples) | 4169.92 MB (sampled max; n=1; 19401 samples) | 587.71 MB |
 
 ## Submitted receipts
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Audio8 TTS Realistic 0.6B INT4 | Not submitted | [Report](../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | Not submitted | [Report](../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
+| Audio8 TTS Realistic 0.6B INT4 | Not submitted | [Report](../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | [Report](../../results/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a/summary.md) | [Report](../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 

@@ -41,7 +41,7 @@ This table updates as each completed full cell is independently submitted. Pendi
 |---|---|---|---|
 | webgpu | cached | Measured | [Native receipt](../../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) |
 | webgpu | warm | Measured | [Native receipt](../../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) |
-| cpu | cached | Pending | Not submitted |
+| cpu | cached | Measured | [Native receipt](../../../results/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a/summary.md) |
 | cpu | warm | Pending | Not submitted |
 
 No CPU/WebGPU warm speed comparison is published until both warm cells are measured and validated.
