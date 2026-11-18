@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-18t12-26-55-316z-klein-tts-x1.5-pro-webgpu-cached-d9dafc80",
+  "createdAt": "2026-11-18T12:27:25.598Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "1bf5187012bad86ab324679b05dfc0a712896f80",
+    "dirty": false,
+    "manifestSha256": "ed3a99a86bfc6c8473d0205e9abf551b22138a81a245bf7a41c47f81fe444b95"
+  },
+  "assets": [
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:phonemizer:dist/phonemizer.js",
+      "sha256": "193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec",
+      "bytes": 1322380
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:phonemizer:LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "klein-pro-metadata",
+      "sha256": "e549b783b7650781c418f2f3c73a68e45181cea9513d1c72bd5b05b0c383a354",
+      "bytes": 92161
+    },
+    {
+      "id": "klein-pro-encoder",
+      "sha256": "0abf547af7f8663c12134900a845087f0d220d70b4744b3a383c7a909fc4c4a6",
+      "bytes": 29050275
+    },
+    {
+      "id": "klein-pro-decoder",
+      "sha256": "8bcaace5e03ed273b987e5e319014fcffb08597f229e0eb11487bd24ed593918",
+      "bytes": 23832110
+    },
+    {
+      "id": "klein-en-us-lexicon",
+      "sha256": "f88c07d53f0bc97adecc70c755416dd1103f61c47f76937339f73a7f32bf5f85",
+      "bytes": 1394577
+    },
+    {
+      "id": "klein-model-license",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "bytes": 10280
+    },
+    {
+      "id": "klein-espeak-ng-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "klein-tts-x1.5-pro",
+      "support": {
+        "voiceCount": 17,
+        "bundledVoiceCount": 17,
+        "languageCount": 4,
+        "languages": [
+          "en",
+          "es",
+          "fr",
+          "it"
+        ],
+        "scope": "Pinned Klein-TTS X1.5 Pro ONNX checkpoint",
+        "sources": [
+          "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+          "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+        ],
+        "notes": "17 speaker embeddings and four language prefixes in the pinned model.json. The benchmark uses Sarah (af_heart) in English; no other voice or language is exercised."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Sarah (af_heart)",
+      "precision": "FP32",
+      "settings": {
+        "threads": 1,
+        "speed": 1,
+        "sampleRate": 24000,
+        "voiceId": "af_heart",
+        "frontend": "Klein-TTS upstream 0.2.0 Misaki G2P and pinned browser eSpeak 1.2.1 fallback; no-tie IPA mapping",
+        "sentenceChunks": "Upstream 250-character sentence grouping; strict vocabulary validation; recursively split at source word boundaries instead of upstream silent 510-token truncation",
+        "noise": "Upstream mulberry32 + Box-Muller; seed = canonical chunk id × 1024 + internal subchunk index",
+        "interChunkPauseSeconds": 0.12
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Non-fallback hardware adapter apple; observed 1343 compute dispatches in a separate untimed probe. WebGPU with possible WASM operator fallback; eSpeak preprocessing and CPU-readable PCM readback are CPU work."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 22580.110000133514,
+          "samples": 30206400,
+          "sampleRate": 24000,
+          "pcmSha256": "b28daedec5e3a34734992a80db6b5ef8cba6e90b26506cb7aef820a549ed26db",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 450.74500012397766,
+            "firstSourceChunkCompletedMs": 450.75999999046326,
+            "audioSeconds": 1258.6,
+            "realTimeFactor": 0.017940656284866928,
+            "minSamplesPerChunk": 256200,
+            "maxSamplesPerChunk": 387600,
+            "articleCallPeakRssBytes": 2081849344,
+            "generationMeanRssBytes": 1903427584,
+            "generationRssSampleCount": 44,
+            "loadMs": 816.1893750000004,
+            "controllerTrialElapsedMs": 27295.712833,
+            "downloadBytes": 38404,
+            "idealDownloadSecondsAt1Mbps": 0.307232
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795004819444.4,
+            "finalPcmAtEpochMs": 1795004842024.5098,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795004820027,
+                1931018240
+              ],
+              [
+                1795004820536,
+                2081849344
+              ],
+              [
+                1795004820998,
+                1979318272
+              ],
+              [
+                1795004821490,
+                1913896960
+              ],
+              [
+                1795004821994,
+                1847607296
+              ],
+              [
+                1795004822494,
+                1885503488
+              ],
+              [
+                1795004822995,
+                1879998464
+              ],
+              [
+                1795004823499,
+                1854799872
+              ],
+              [
+                1795004824003,
+                1897136128
+              ],
+              [
+                1795004824501,
+                1842872320
+              ],
+              [
+                1795004825007,
+                1880293376
+              ],
+              [
+                1795004825502,
+                1861042176
+              ],
+              [
+                1795004826005,
+                1874870272
+              ],
+              [
+                1795004826508,
+                1856208896
+              ],
+              [
+                1795004827019,
+                1881620480
+              ],
+              [
+                1795004827510,
+                1894514688
+              ],
+              [
+                1795004828012,
+                1873854464
+              ],
+              [
+                1795004828513,
+                1886715904
+              ],
+              [
+                1795004829012,
+                1876672512
+              ],
+              [
+                1795004829516,
+                1881636864
+              ],
+              [
+                1795004830017,
+                1886289920
+              ],
+              [
+                1795004830519,
+                1901740032
+              ],
+              [
+                1795004831023,
+                1907736576
+              ],
+              [
+                1795004831523,
+                1915797504
+              ],
+              [
+                1795004832027,
+                1900920832
+              ],
+              [
+                1795004832524,
+                1905393664
+              ],
+              [
+                1795004833028,
+                1905197056
+              ],
+              [
+                1795004833528,
+                1915355136
+              ],
+              [
+                1795004834031,
+                1940422656
+              ],
+              [
+                1795004834527,
+                1944109056
+              ],
+              [
+                1795004835033,
+                1932754944
+              ],
+              [
+                1795004835538,
+                1934409728
+              ],
+              [
+                1795004836044,
+                1940602880
+              ],
+              [
+                1795004836540,
+                1945485312
+              ],
+              [
+                1795004837050,
+                1947025408
+              ],
+              [
+                1795004837544,
+                1947648000
+              ],
+              [
+                1795004838059,
+                1930199040
+              ],
+              [
+                1795004838542,
+                1868316672
+              ],
+              [
+                1795004839057,
+                1890254848
+              ],
+              [
+                1795004839561,
+                1893892096
+              ],
+              [
+                1795004840054,
+                1867366400
+              ],
+              [
+                1795004840553,
+                1884209152
+              ],
+              [
+                1795004841054,
+                1875968000
+              ],
+              [
+                1795004841555,
+                1888288768
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "65e4e26420c90fe0e897f15cf57498ca3085612b46f791d64354dad066ac65ff",
+            "bytes": 60412844
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-18T12-26-54-731Z-c97e6d45165e; cell 1/1; source 1bf5187012bad86ab324679b05dfc0a712896f80; requested n=1; effective n=1; Apple M1 Pro, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40, on AC power. One-cell WebGPU cached resource diagnostic on the merged Klein sequential session-init source, after the matched CPU and WebGPU warm cells. Earlier CPU warm result on source ba9785f overlapped brief unrelated disk-cache maintenance at about 07:40 UTC and an exact-duplicate historical GGUF removal at approximately 07:42 UTC near its trial-1/trial-2 boundary; impact on those earlier measurements was not measured and no estimate is made. No cleanup overlaps this cell.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
