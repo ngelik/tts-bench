@@ -9,6 +9,7 @@ on:
       - 'lib/model-parameters.json'
       - 'tests/assets.test.mjs'
       - 'tests/klein-model.test.mjs'
+      - 'tests/klein-session-loader.test.mjs'
       - 'web/adapters/klein.mjs'
       - 'web/bench.mjs'
       - 'web/klein/**'
@@ -34,6 +35,8 @@ jobs:
       - run: npm run assets -- fetch --model klein-tts-x1.5-pro
       - name: Check Klein frontend and strict token policy
         run: node --test tests/klein-model.test.mjs
+      - name: Check sequential ONNX session setup and partial cleanup
+        run: node --test tests/klein-session-loader.test.mjs
       - name: Run headed Chrome CPU smoke under Xvfb
         run: xvfb-run -a node bin/bench.mjs run --model klein-tts-x1.5-pro --backend cpu --scenario offline --smoke
       - name: Verify native receipt and genuine PCM WAV
@@ -68,6 +71,45 @@ jobs:
           assert.equal(wav.length, 44 + trial.samples * 2);
           assert.equal(createHash('sha256').update(wav).digest('hex'), trial.audio.sha256);
           console.log(JSON.stringify({ runId: result.id, sourceCommit: result.source.gitCommit, wav: wavPath, wavSha256: trial.audio.sha256, samples: trial.samples }, null, 2));
+          JS
+      - name: Run headed Chrome WebGPU setup smoke when hardware is available
+        run: >-
+          xvfb-run -a node bin/bench.mjs run
+          --model klein-tts-x1.5-pro
+          --backend webgpu
+          --scenario offline
+          --smoke
+          --machine 'GitHub hosted Ubuntu 24.04'
+          --chrome /usr/bin/google-chrome
+          --timeout-minutes 20
+      - name: Verify WebGPU smoke is measured or explicitly unavailable
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync, readdirSync, statSync } from 'node:fs';
+          const run = readdirSync('runs').map(name => ({ name, mtime: statSync(`runs/${name}`).mtimeMs })).sort((a, b) => b.mtime - a.mtime)[0];
+          assert.ok(run, 'WebGPU smoke run directory exists');
+          const result = JSON.parse(readFileSync(`runs/${run.name}/result.json`, 'utf8'));
+          assert.equal(result.protocol.smoke, true);
+          assert.equal(result.protocol.scenario, 'offline');
+          assert.equal(result.source.dirty, false);
+          assert.equal(result.cells.length, 1);
+          const [cell] = result.cells;
+          assert.equal(cell.model, 'klein-tts-x1.5-pro');
+          assert.equal(cell.backendRequested, 'webgpu');
+          if (cell.status === 'unsupported') {
+            assert.match(cell.reason, /No non-fallback hardware WebGPU adapter|software WebGPU adapter|No WebGPU compute dispatch/i);
+            console.log(JSON.stringify({ runId: result.id, status: cell.status, reason: cell.reason }, null, 2));
+          } else {
+            assert.equal(cell.status, 'measured', cell.reason);
+            assert.equal(cell.backendEffective, 'webgpu+wasm');
+            assert.equal(cell.capability.gpuDispatchVerified, true);
+            const [trial] = cell.trials;
+            assert.equal(trial.validation.finitePcm, true);
+            assert.equal(trial.validation.chunkCount, 3);
+            assert.equal(trial.sampleRate, 24000);
+            console.log(JSON.stringify({ runId: result.id, status: cell.status, backend: cell.backendEffective, gpuDispatchVerified: cell.capability.gpuDispatchVerified }, null, 2));
+          }
           JS
       - name: Show failure evidence
         if: failure()
