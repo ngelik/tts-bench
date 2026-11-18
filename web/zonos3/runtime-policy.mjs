@@ -31,10 +31,10 @@ export const ZONOS3_MODEL_CONFIG = Object.freeze({
     silencePrefillFrames: 3,
     streamDecode: 'prefix; decode after one codebook for the first prefix only',
   }),
-  cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v1',
+  cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v2',
   cpuRuntimeFiles: Object.freeze({
-    jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.js',
-    wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.wasm',
+    jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.js',
+    wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.wasm',
   }),
   cpuAssets: Object.freeze({
     backbone: Object.freeze({

@@ -28,7 +28,7 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Silencio-2 upstream inference source | MIT in `silencio2/core`; exporter attribution and source pins are in `tools/silencio2/NOTICE.md`. |
 | ZONOS3-Mini model weights and the pinned Imogen default-voice files | Apache-2.0 as declared by the pinned Hugging Face model card; the benchmark stages Imogen reference codes and embedding for WebGPU, while CPU/WASM TTS uses only the same embedding. Unused preview audio is not staged. |
 | ZONOS3-Mini official browser runtime | MIT at the pinned Zyphra source revision; source, unmodified upstream LICENSE/NOTICE and the documented voice-filter, disposal, dispatch-probe, EOS and streamed-error changes are retained in `web/zonos3/`. |
-| ZONOS3-Mini CPU/WASM runtime | The audio.cpp browser build is separately versioned and its exact release notices are staged with the locked runtime files; it does not inherit the model's Apache license. See [configuration and reproduction](ZONOS3_MINI.md). |
+| ZONOS3-Mini CPU/WASM runtime | The audio.cpp browser build is separately versioned under Apache-2.0 with retained Zyphra/GGML MIT and other third-party notices staged with the locked runtime files; it does not inherit the model's Apache license. See [configuration and reproduction](ZONOS3_MINI.md). |
 
 The small Apache-2.0 frontend source files in `web/paradee/` retain separate
 license files and a source/change manifest. They are exceptions to the root MIT

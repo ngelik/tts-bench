@@ -36,10 +36,10 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(zonos.assets.filter(asset => asset.id.startsWith('zonos3-web-backbone-shard-') || asset.id.startsWith('zonos3-web-zac-shard-') || asset.id === 'zonos3-web-companions-steer-gguf').reduce((sum, asset) => sum + asset.bytes, 0), 920731032);
   assert.equal(zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-') && asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 1160861792);
   const cpuRuntime = zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-runtime-'));
-  assert.equal(cpuRuntime.reduce((sum, asset) => sum + asset.bytes, 0), 4409261);
-  assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v1-a11ec3f37db3/')));
+  assert.equal(cpuRuntime.reduce((sum, asset) => sum + asset.bytes, 0), 4410876);
+  assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v2-690469b7955a/')));
   assert.equal(cpuRuntime.find(asset => asset.id === 'zonos3-cpu-runtime-wasm').sha256,
-    'a11ec3f37db35b3da6d0c9d82fd9673c7f7b9eb74c7a6169958cbdb5704fd4a3');
+    '690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17');
   const linnet = getAssetLock().models['linnet-en-35m'];
   assert.deepEqual(linnet.backends, ['cpu', 'webgpu']);
   assert.equal(linnet.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');

@@ -7002,24 +7002,24 @@
         },
         {
           "id": "zonos3-cpu-runtime-js",
-          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.js",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v1-a11ec3f37db3/bench_zonos3_cpu.js",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.js",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/bench_zonos3_cpu.js",
           "bytes": 121508,
-          "sha256": "f18a62eb8a87f97dafe1f9a4fc774571939a58d776e2533a2d9d88349812cf53",
+          "sha256": "5081914362c042de1e353f9cea93cbe884d9bc5081002cf587f5798122feec7a",
           "kind": "runtime"
         },
         {
           "id": "zonos3-cpu-runtime-wasm",
-          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v1/bench_zonos3_cpu.wasm",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v1-a11ec3f37db3/bench_zonos3_cpu.wasm",
-          "bytes": 4229892,
-          "sha256": "a11ec3f37db35b3da6d0c9d82fd9673c7f7b9eb74c7a6169958cbdb5704fd4a3",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/bench_zonos3_cpu.wasm",
+          "bytes": 4231507,
+          "sha256": "690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17",
           "kind": "runtime"
         },
         {
           "id": "zonos3-cpu-runtime-third-party-notices",
-          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v1/THIRD-PARTY-NOTICES.txt",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v1-a11ec3f37db3/THIRD-PARTY-NOTICES.txt",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/THIRD-PARTY-NOTICES.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/THIRD-PARTY-NOTICES.txt",
           "bytes": 57861,
           "sha256": "a47966056c2230037d837c507d812040bd7eaae74cb933a33031af35f0a1064a",
           "kind": "license"

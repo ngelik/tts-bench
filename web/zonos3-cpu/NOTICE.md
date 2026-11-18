@@ -9,8 +9,9 @@ in `assets.lock.json` and `docs/LICENSING.md`.
 The browser runtime is compiled from audio.cpp commit
 `749fffec6ad4a763520388a4240cd24e08a0a2bf` and Emscripten 6.0.13 at commit
 `708dcbcc9ee23bc7d2dad44fc90db377e38b771c`. The ZONOS3 model code in audio.cpp
-is derived from Zyphra's MIT-licensed implementation at source commit
-`a50e14117d99181ba7f28047b451ba03ba1a09a9`. The build excludes WebGPU and
+is derived from the MIT-licensed browser implementation in
+[Zyphra/ZONOS3-Mini](https://github.com/Zyphra/ZONOS3-Mini/tree/a50e14117d99181ba7f28047b451ba03ba1a09a9)
+at source commit `a50e14117d99181ba7f28047b451ba03ba1a09a9`. The build excludes WebGPU and
 compiles only the `zonos3` family with CPU/WASM execution.
 
 Rebuild on Linux with:
