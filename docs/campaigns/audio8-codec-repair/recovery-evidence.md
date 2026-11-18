@@ -22,6 +22,6 @@ The before/after correlation supports a storage-headroom hypothesis, but does no
 
 ## Recovery attempt
 
-A separate retry on the unchanged source and configuration began as `2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb`. At the capture time (`2026-11-18T14:56:48.672Z`) it had entered the excluded `warmup-1` stage. This note records only that checkpoint; it makes no claim about the later retry outcome. The retry has its own native receipt and does not modify the preserved setup-error receipt.
+A separate retry on the unchanged source and configuration began as `2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb`. At the capture time (`2026-11-18T14:56:48.672Z`) it had entered the excluded `warmup-1` stage. This note records only that checkpoint; it makes no claim about the later retry outcome. The retry has a separate run ID; its completed receipt will be published after validation, without modifying the preserved setup-error receipt.
 
 The accompanying [machine-readable evidence](recovery-evidence.json) records the artifact hashes, byte counts, timestamps and interpretation boundaries.
