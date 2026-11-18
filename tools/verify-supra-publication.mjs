@@ -132,7 +132,50 @@ for (const backend of ['cpu', 'webgpu']) {
 
 const pageErrors = [];
 const browser = await chromium.launch({ executablePath: await findChrome(), headless: false });
+const eligibleMetric = metric => metric?.status === 'measured' && !metric.waveform &&
+  (Number.isFinite(metric.medianSeconds) || Number.isFinite(metric.meanMB));
+const expectedDashboardModels = data.models.filter(item => ['cpu','webgpu'].some(backend =>
+  eligibleMetric(item.warm[backend]) || eligibleMetric(item.memory[backend])));
+const formatted = value => Number(value).toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
+const dashboardPageErrors = [];
+let dashboardRowReadback;
 try {
+  const dashboard = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  dashboard.on('pageerror', error => dashboardPageErrors.push(String(error)));
+  await dashboard.goto(base, { waitUntil: 'networkidle' });
+  await dashboard.waitForFunction(count => Number(document.querySelector('#model-count')?.textContent) === count, expectedDashboardModels.length);
+  const rowIds = await dashboard.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model));
+  assert.deepEqual([...rowIds].sort(), expectedDashboardModels.map(item => item.id).sort(), 'live dashboard rows match models with eligible measurements');
+  const row = dashboard.locator(`tr[data-model="${modelId}"]`);
+  assert.equal(await row.count(), 1, 'Supra is visible in the published dashboard');
+  for (const backend of ['cpu', 'webgpu']) {
+    const warm = expected[backend === 'cpu' ? 'cpu/warm' : 'webgpu/warm'];
+    const cached = expected[backend === 'cpu' ? 'cpu/cached' : 'webgpu/cached'];
+    const warmLabel = backend === 'cpu' ? 'CPU · seconds' : 'GPU · seconds';
+    const memoryLabel = backend === 'cpu' ? 'Cached RAM · CPU · avg MB' : 'Cached RAM · GPU · avg MB';
+    const warmMetric = model.warm[backend], memoryMetric = model.memory[backend];
+    assert.equal(await row.locator(`td[data-label="${warmLabel}"] .metric-link`).innerText(), formatted(warm.medianSeconds));
+    assert.equal(await row.locator(`td[data-label="${memoryLabel}"] .value`).innerText(), formatted(cached.meanMB));
+    assert.equal(warmMetric.resultId, warm.id);
+    assert.equal(memoryMetric.resultId, cached.id);
+  }
+  await row.locator('.model-name').click();
+  const cards = dashboard.locator('#detail-content .detail-card');
+  for (const [backend, metric, kind] of [
+    ['cpu', model.warm.cpu, 'CPU warm generation'],
+    ['webgpu', model.warm.webgpu, 'GPU warm generation'],
+    ['cpu', model.memory.cpu, 'CPU memory diagnostic'],
+    ['webgpu', model.memory.webgpu, 'GPU memory diagnostic'],
+  ]) {
+    const card = cards.filter({ hasText: kind });
+    assert.equal(await card.count(), 1, `Supra dashboard details include ${kind}`);
+    const cardText = await card.innerText();
+    assert.equal(await card.locator('a').evaluateAll((links, href) => links.some(link => link.href === href), metric.reportUrl), true, `${kind} links to its selected receipt`);
+    assert.ok(cardText.includes(formatted(kind.includes('warm') ? metric.medianSeconds : metric.meanMB)), `${kind} displays the selected metric`);
+    if (kind.includes('warm')) assert.ok(cardText.includes(String(metric.n)), `${kind} shows the selected scored article count`);
+  }
+  dashboardRowReadback = { visibleModels: rowIds.length, modelId, selectedResultIds: Object.fromEntries(['cpu','webgpu'].flatMap(backend => [[`${backend}/warm`,model.warm[backend].resultId],[`${backend}/cached`,model.memory[backend].resultId]])) };
+  await dashboard.close();
   for (const backend of ['cpu', 'webgpu']) {
     const entry = audioEntries.find(item => item.backend === backend);
     const filename = entry.clip.path.split('/').at(-1);
@@ -160,6 +203,7 @@ try {
 } finally {
   await browser.close();
 }
+assert.deepEqual(dashboardPageErrors, [], 'public dashboard raised browser errors');
 assert.deepEqual(pageErrors, [], 'public listening page raised browser errors');
 console.log(JSON.stringify({
   status: 'PASS',
@@ -169,6 +213,7 @@ console.log(JSON.stringify({
   selections: Object.fromEntries(Object.entries(expected).map(([key, value]) => [key, { resultId: value.id, sourceCommit: source }])),
   publishedClips,
   publicWavs,
+  dashboardRowReadback,
   playerDeepLinksAndPlayback: ['cpu warm trial 5', 'webgpu warm trial 5'],
   pageErrors,
 }, null, 2));
