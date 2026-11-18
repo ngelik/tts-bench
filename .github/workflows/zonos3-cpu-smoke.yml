@@ -11,8 +11,10 @@ on:
       - 'web/workers/zonos3.mjs'
       - 'tools/build-zonos3-cpu-browser.sh'
       - 'tools/build-zonos3-cpu-notices.mjs'
+      - 'tools/build-zonos3-runtime.mjs'
       - 'tools/check-zonos3-cpu-build.mjs'
       - 'tools/check-zonos3-cpu-lock.mjs'
+      - 'tools/check-zonos3-runtime-build.mjs'
       - '.github/workflows/zonos3-cpu-smoke.yml'
       - '.github/workflows/zonos3-cpu-runtime-build.yml'
   workflow_dispatch:
