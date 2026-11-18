@@ -58,6 +58,7 @@ In a fresh worktree, fetch assets there or copy the verified `.cache/public`
 directory into that checkout. Do not symlink its public cache outside the checkout:
 the static server intentionally rejects files whose real paths escape its root.
 A cache-path failure is setup evidence, not model/backend incompatibility.
+For a historical ONNX Runtime notice HTTP 404, use the current checkout’s `tools/restore-runtime-notices.mjs --checkout HISTORICAL_CHECKOUT --model MODEL`, then verify all assets there, following `docs/REPLAY_ASSETS.md`. Preserve the scored source and asset manifest.
 
 Read `docs/CLI.md`, `docs/PROTOCOL.md` and the selected model's `docs/LICENSING.md`
 entry **in that checkout**. Installed copies of this skill may be outside the
