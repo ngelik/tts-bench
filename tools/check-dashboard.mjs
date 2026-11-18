@@ -96,13 +96,15 @@ try {
   if (baselineUrl) {
     const baseline = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
     try {
-      await baseline.goto(baselineUrl);
-      const baselineResultCount = await baseline.evaluate(async () => {
-        const data = await (await fetch('./assets/data.json')).json();
-        const eligibleWarm = metric => metric?.status === 'measured' && Number.isFinite(metric.medianSeconds) && !metric.waveform;
-        const eligibleMemory = metric => metric?.status === 'measured' && Number.isFinite(metric.meanMB) && !metric.waveform;
-        return data.models.filter(model => ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]))).length;
+      const baselineDataResponsePromise = baseline.waitForResponse(response => {
+        const url = new URL(response.url());
+        return url.origin === new URL(baselineUrl).origin && url.pathname.endsWith('/assets/data.json');
       });
+      await baseline.goto(baselineUrl);
+      const baselineDataResponse = await baselineDataResponsePromise;
+      assert.equal(baselineDataResponse.status(), 200, 'Baseline dashboard data request succeeds');
+      const baselineData = await baselineDataResponse.json();
+      const baselineResultCount = resultModels(baselineData.models).length;
       await baseline.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, baselineResultCount);
       baselineLayout = {url:baselineUrl,...await measureResults(baseline)};
       await mkdir(review, {recursive:true});
@@ -606,7 +608,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Short-input diagnostics fit mobile width');
   await page.screenshot({path:`${review}/diagnostics-mobile.png`,fullPage:true});
   assert.deepEqual(errors, []); assert.deepEqual(external, []); assert.deepEqual(failedResponses, []);
-  const result = {base,chrome:browser.version(),registeredModels:expected.models.length,eligibleResultModels:expectedResultModels.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,mobileDefaultLayout,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
+  const result = {base,chrome:browser.version(),models:expectedResultModels.length,registeredModels:expected.models.length,eligibleResultModels:expectedResultModels.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,mobileDefaultLayout,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
   await writeFile(`${review}/verification.json`, JSON.stringify(result,null,2)+'\n');
   console.log(JSON.stringify(result,null,2));
 } finally {await browser?.close(); server?.kill('SIGTERM');}
