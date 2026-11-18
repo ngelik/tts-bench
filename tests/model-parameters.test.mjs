@@ -45,6 +45,9 @@ test('Ming counts the registered synthesis path and Audio8 includes its decoder 
   assert.equal(getModelParameters('tiny-voca').parameterCount, 4_537_291);
   assert.equal(getModelParameters('silencio-2').parameterCount, 27_928_626);
   assert.equal(getModelParameters('silencio-2').countKind, 'exact');
+  const heartNano = getModelParameters('sano-heart-nano');
+  assert.equal(heartNano.parameterCount, 294_279);
+  assert.equal(heartNano.countKind, 'exact');
   const zonos = getModelParameters('zonos3-mini');
   assert.equal(zonos.parameterCount, 1_029_247_872);
   assert.equal(zonos.parameterCountUpperBound, 1_070_816_040);
