@@ -12,6 +12,7 @@ const manifest = JSON.parse(await readFile(resolve(release, 'BUILD-MANIFEST.json
 const modelBytes = await readFile(resolve(release, 'heartnano-f32.gguf'));
 const modelSha256 = createHash('sha256').update(modelBytes).digest('hex');
 assert.equal(modelSha256, manifest.model.sha256);
+const smokeText = 'The quick brown fox jumps over the lazy dog.';
 const runtime = manifest.runtimeFiles.map(file => ({ ...file, url: '/' + file.target }));
 const modelConfig = {
   id: 'sano-heart-nano-gguf-f32',
@@ -67,9 +68,8 @@ try {
   page.on('console', message => console.log('[browser]', message.text()));
   page.on('pageerror', error => console.error('[browser-error]', error.stack || error.message));
   await page.goto('http://127.0.0.1:' + port + '/');
-  const result = await page.evaluate(async config => {
+  const result = await page.evaluate(async ({ config, text }) => {
     const { createSanoKokopopAdapter } = await import('/web/adapters/sano-kokopop.mjs');
-    const text = 'The quick brown fox jumps over the lazy dog.';
     const chunk = { id: 3, start: 0, end: text.length, text };
     const cpu = createSanoKokopopAdapter(config);
     const cpuInfo = await cpu.initialize({ backend: 'cpu' });
@@ -97,7 +97,7 @@ try {
       cpu: { sampleRate: cpuOutput.sampleRate, samples: Array.from(cpuOutput.parts[0]) },
       gpu: { sampleRate: gpuOutput.sampleRate, samples: Array.from(gpuOutput.parts[0]) },
     };
-  }, modelConfig);
+  }, { config: modelConfig, text: smokeText });
 
   const { writeFile: write } = await import('node:fs/promises');
   function wav(samples, sampleRate) {
@@ -167,7 +167,7 @@ try {
       wavSha256: createHash('sha256').update(gpuWav).digest('hex'),
       capability: result.gpuInfo.capability,
     };
-    report.parity = { frames: cpu.length, correlation, rmsError, seed: 45, text };
+    report.parity = { frames: cpu.length, correlation, rmsError, seed: 45, text: smokeText };
   } else {
     report.gpu = { status: result.status, reason: result.reason };
     // Preserve an explicit unavailable receipt on runners that do not expose
