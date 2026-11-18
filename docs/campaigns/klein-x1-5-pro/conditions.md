@@ -10,4 +10,4 @@ The earlier WebGPU attempt from the same source is retained separately as an ini
 
 ## Post-score file operations
 
-After Klein timing finished, two local full-WAV read/hash/clip operations took about 5.2 seconds each while another model's Linnet WebGPU warm campaign held the machine resource slot between 12:28:43 and 12:43:17 UTC. The exact phase within that window is unknown. These were post-score file operations outside Klein's timed calls; their impact was not estimated and no Klein timing adjustment was made.
+After Klein timing finished, two local full-WAV read/hash/clip operations took about 5.2 seconds each during the period after 12:28:43 UTC and before the approximately 12:47 UTC coordinator update about Linnet WebGPU warm work. Their exact timestamps and whether they overlapped warm-up or a scored trial are uncertain. These were post-score file operations outside Klein's timed calls. Their effect on Klein or Linnet timing and resource measurements was not estimated; no adjustment was made to either campaign.
