@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47",
+  "createdAt": "2026-11-18T08:39:20.023Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1",
+    "dirty": false,
+    "manifestSha256": "aa6b49118546eed8c96a5c6ba4d7a9a2d4efad21e174e0189eed6bdecfc4736a"
+  },
+  "assets": [
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:supratts-1.0-preview:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "supratts-onnx-duration",
+      "sha256": "049b7664d69bd295dee782fcdc292cdaef522bd928c4e6b3a123abb3ac89648b",
+      "bytes": 25452
+    },
+    {
+      "id": "supratts-onnx-acoustic-token",
+      "sha256": "c0ed53a1a39ab8d2f09666a6dbbde465891daee8384102c5fe6959d1c9e8d7d8",
+      "bytes": 667298
+    },
+    {
+      "id": "supratts-onnx-acoustic-frame",
+      "sha256": "9776335dc5d58ac000c32bbd8dc741bd9009ad71c939c10b31857283b8f533cd",
+      "bytes": 1096613
+    },
+    {
+      "id": "supratts-onnx-decoder",
+      "sha256": "1ec3431615870d96d90fa4ca85d703a0afef7509aa8e085b9f1ea8c2e71ec58e",
+      "bytes": 2366477
+    },
+    {
+      "id": "supratts-onnx-conversion-manifest",
+      "sha256": "09a39c5084711f6afca372b063ad2ab1be36995b1ccec96cbe54a9198507887c",
+      "bytes": 1794
+    },
+    {
+      "id": "supratts-config",
+      "sha256": "83eb7fcb39b785f55c93f75ff339c9759dca8e895b74fb81a7216a40415ebd42",
+      "bytes": 477
+    },
+    {
+      "id": "supratts-tilt",
+      "sha256": "4e6e224a262c9b6cf055a59b8f994b1c02654003d0b5025843538efe6e2c5275",
+      "bytes": 528
+    },
+    {
+      "id": "supratts-pyodide-pyodide-mjs",
+      "sha256": "23213d27e9dacbda6f25f955fb38dabfc40ada082c04ee253047ea5dddcaa3b5",
+      "bytes": 17616
+    },
+    {
+      "id": "supratts-pyodide-pyodide-asm-js",
+      "sha256": "1263f02b5b26099b96112378156f242dd98b39a8201ba7765e5fe3d455c5ce91",
+      "bytes": 1074322
+    },
+    {
+      "id": "supratts-pyodide-pyodide-asm-wasm",
+      "sha256": "e2f4ee75b325e35eb31bfb8c613d4dd5098f5502c156a97847686875b5025480",
+      "bytes": 8647684
+    },
+    {
+      "id": "supratts-pyodide-python_stdlib-zip",
+      "sha256": "4298b6ee445cb724c3973437da47789752b9e6ff4e26619026b283ec801fc46b",
+      "bytes": 2423989
+    },
+    {
+      "id": "supratts-pyodide-pyodide-lock-json",
+      "sha256": "3256ffc76388de0e37f4b34d42ab484268d1afc675179ff97b2a5bb14f84ccac",
+      "bytes": 120010
+    },
+    {
+      "id": "supratts-pyodide-numpy-2-2-5-cp313-cp313-pyodide_2025_0_wasm32-whl",
+      "sha256": "6eaab6a7bb658d71ebe702911a3deab715323642462eb41b65565ca6a7cc23f1",
+      "bytes": 3103966
+    },
+    {
+      "id": "supratts-frontend-py",
+      "sha256": "5cc1b4f853b7aeee865b5e3d38e002001d470852616641030cf2c39884155d2b",
+      "bytes": 2918
+    },
+    {
+      "id": "supratts-g2p-__init__-py",
+      "sha256": "5e82108c2bf1fab401b286e9260dd155d7035988d4dc5804e8ee7b07a11523a2",
+      "bytes": 341
+    },
+    {
+      "id": "supratts-g2p-english-py",
+      "sha256": "b47cb70f0a891ce5b0a31a25dd978247ba5c65a0f1d754ae739a64dbacf50824",
+      "bytes": 60878
+    },
+    {
+      "id": "supratts-g2p-oov-py",
+      "sha256": "bf91c1282aa91d7996a412499854b0f9d9c91cfec5a0b6e71417c5262e7d9dc2",
+      "bytes": 11238
+    },
+    {
+      "id": "supratts-g2p-g2p_data-us_gold-json",
+      "sha256": "a13911134e702c8fd1d79ea47cdc64f146aec1deabf4638a9a8cdd71da5b87a3",
+      "bytes": 3093057
+    },
+    {
+      "id": "supratts-g2p-g2p_data-us_silver-json",
+      "sha256": "a7d8629ff02614cd37837f44c41f0085f55bed4f0eb2c169964f0077bb102d6b",
+      "bytes": 3192879
+    },
+    {
+      "id": "supratts-g2p-g2p_data-oov_bart_en_us-npz",
+      "sha256": "f14370fca67996500724d2ecfb73c5ef170ff3bbc5814d613943f75730270ff2",
+      "bytes": 2806853
+    },
+    {
+      "id": "supratts-model-license",
+      "sha256": "49fcf840337ea69fbe6cda104915a7382e5a1bce86bfdd8462a911befeff95b9",
+      "bytes": 1416
+    },
+    {
+      "id": "supratts-g2p-apache-license",
+      "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6",
+      "bytes": 11558
+    },
+    {
+      "id": "supratts-g2p-notice",
+      "sha256": "6022ddd7d51464ef19e5212da205161e4a80dfb9fd93ed45fdd11b63ae1d30d6",
+      "bytes": 659
+    },
+    {
+      "id": "supratts-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "supratts-cpython-license",
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "bytes": 13809
+    },
+    {
+      "id": "supratts-numpy-license",
+      "sha256": "01fb016849aa427edb1bbbbd55f91c26ca6cadb32a5b20e7f000655dd05b0760",
+      "bytes": 1543
+    }
+  ],
+  "cells": [
+    {
+      "model": "supratts-1.0-preview",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned English preview checkpoint; one fixed voice",
+        "sources": [
+          "https://erogol.com/small_tts_bench/",
+          "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md",
+          "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json",
+          "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/microtts/synthesize.py",
+          "https://github.com/ngelik/tts-bench/tree/829ebd388cdc976afd43bec7cff6b9b38f5fc9f6/tools/export-supratts-onnx.py",
+          "https://github.com/ngelik/tts-bench/releases/tag/supratts-onnx-v1"
+        ],
+        "notes": "English-only, fixed single voice; upstream ships no streaming API. The browser port runs the pinned official dictionary-first G2P and NumPy OOV fallback in Pyodide, plus four FP32 ONNX graphs exported from the official MIT checkpoint. Zero noise, 24 kHz mono, shipped 100-band mel tilt and centered Hann iSTFT/DC filter match the official synthesis path. CPU uses one-thread ONNX Runtime Web WASM. WebGPU runs neural operators on an explicitly requested hardware adapter with WASM fallback; frontend and waveform reconstruction remain on CPU. The separate GPU capability probe requires observed compute dispatches before the backend is measured."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "fixed single voice",
+      "precision": "FP32 ONNX; FP32 CPU/GPU operator execution",
+      "settings": {
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "sampleRate": 24000,
+        "noiseScale": 0,
+        "sentenceGapSeconds": 0.1,
+        "maxTokens": 207,
+        "maxFramesPerPiece": 2400,
+        "softFrameBudget": 2000,
+        "frontend": "Pinned official SupraTTS English dictionary-first frontend and NumPy OOV model in Pyodide 0.29.3 / NumPy 2.2.5; no espeak or network; unsupported phones fail rather than being dropped silently.",
+        "model": "SupraTTS-1.0-Preview; four FP32 ONNX graphs exported at opset 17 from the pinned MIT checkpoint.",
+        "synthesis": "Official zero-noise, 24 kHz mono path; 100-band mel tilt, centered Hann iSTFT and FFT DC-blocking filter; one 0.10 s gap between internal sentence pieces.",
+        "cpuWork": "English G2P, frame expansion, iSTFT overlap-add and waveform DC blocking run in the Chrome worker; neural operators use the explicitly requested ONNX provider with possible WASM fallback."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 681 WebGPU compute dispatches during a separate untimed synthesis. Neural operators use WebGPU with possible WASM fallback; G2P, frame expansion and waveform reconstruction use CPU. Dispatch hooks were removed before measured generation."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 17361.69000005722,
+          "samples": 30819552,
+          "sampleRate": 24000,
+          "pcmSha256": "056429c5498e29cb2f89420236735e7ac515cd7e434eeeab4aa1962be0271b62",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 586.585000038147,
+            "firstSourceChunkCompletedMs": 726.835000038147,
+            "audioSeconds": 1284.148,
+            "realTimeFactor": 0.013520007039731573,
+            "minSamplesPerChunk": 264032,
+            "maxSamplesPerChunk": 420384,
+            "articleCallPeakRssBytes": 2552709120,
+            "generationMeanRssBytes": 2024567989,
+            "generationRssSampleCount": 34,
+            "loadMs": 1776.8097500000003,
+            "controllerTrialElapsedMs": 23053.358874999998,
+            "downloadBytes": 38404,
+            "idealDownloadSecondsAt1Mbps": 0.307232
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1794991139084.065,
+            "finalPcmAtEpochMs": 1794991156445.7551,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1794991139656,
+                1542750208
+              ],
+              [
+                1794991140129,
+                1730936832
+              ],
+              [
+                1794991140629,
+                1806123008
+              ],
+              [
+                1794991141132,
+                1896022016
+              ],
+              [
+                1794991141633,
+                1920958464
+              ],
+              [
+                1794991142134,
+                1961525248
+              ],
+              [
+                1794991142637,
+                1973714944
+              ],
+              [
+                1794991143138,
+                2007908352
+              ],
+              [
+                1794991143639,
+                2033352704
+              ],
+              [
+                1794991144143,
+                2025635840
+              ],
+              [
+                1794991144642,
+                2038497280
+              ],
+              [
+                1794991145146,
+                2032713728
+              ],
+              [
+                1794991145648,
+                2032549888
+              ],
+              [
+                1794991146151,
+                2032402432
+              ],
+              [
+                1794991146652,
+                2045050880
+              ],
+              [
+                1794991147154,
+                2040872960
+              ],
+              [
+                1794991147659,
+                2065350656
+              ],
+              [
+                1794991148156,
+                2046853120
+              ],
+              [
+                1794991148659,
+                2073378816
+              ],
+              [
+                1794991149163,
+                2069102592
+              ],
+              [
+                1794991149666,
+                2075656192
+              ],
+              [
+                1794991150166,
+                2058797056
+              ],
+              [
+                1794991150669,
+                2079457280
+              ],
+              [
+                1794991151170,
+                2090663936
+              ],
+              [
+                1794991151674,
+                2098757632
+              ],
+              [
+                1794991152174,
+                2102755328
+              ],
+              [
+                1794991152680,
+                2109865984
+              ],
+              [
+                1794991153177,
+                2098790400
+              ],
+              [
+                1794991153676,
+                2113437696
+              ],
+              [
+                1794991154177,
+                2118680576
+              ],
+              [
+                1794991154680,
+                2108211200
+              ],
+              [
+                1794991155188,
+                2136621056
+              ],
+              [
+                1794991155683,
+                2131279872
+              ],
+              [
+                1794991156188,
+                2136637440
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "5c1503c288c0307ebf3b28ef3bc35ccffdf2842cf5e9a2db9573993b7b0bc4f4",
+            "bytes": 61639148
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-18T08-38-51-885Z-f03922f3bc07; cell 1/1; source ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1; requested n=1; effective n=1; Retest after serialized ONNX Runtime session creation; clean public source; full english-20k-v1 fixture; warm cells use one excluded full-article warm-up plus five scored trials; cached resource cells use one full-article generation with 500 ms Chrome process-tree RSS sampling; CPU is one-thread WASM; WebGPU requires hardware adapter and observed dispatch; no cold runs; each cell acquires and releases the shared M1 slot independently.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

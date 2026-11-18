@@ -2033,6 +2033,70 @@
         "sha256": "9c48cc897a5337d6f855104c7d90ab8d0a81ee330c5afbe0339e9d670b4e7d4a",
         "bytes": 38065004
       }
+    },
+    {
+      "resultId": "2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76",
+      "model": "supratts-1.0-preview",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "fixed single voice",
+      "language": "en",
+      "attribution": "SupraTTS 1.0 Preview by SupraLabs; fixed single English voice. MIT checkpoint/runtime and browser ONNX conversion; bundled G2P dictionary and OOV fallback are Apache-2.0. The voice performer is not separately named in the pinned card.",
+      "modelTerms": "MIT; bundled English G2P dictionaries and OOV fallback data are Apache-2.0",
+      "sourceUrls": [
+        "https://erogol.com/small_tts_bench/",
+        "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md",
+        "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json",
+        "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/microtts/synthesize.py",
+        "https://github.com/ngelik/tts-bench/tree/829ebd388cdc976afd43bec7cff6b9b38f5fc9f6/tools/export-supratts-onnx.py",
+        "https://github.com/ngelik/tts-bench/releases/tag/supratts-onnx-v1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76--supratts-1.0-preview--cpu.wav",
+        "sha256": "82c4027d2fa70d27206723ffe02da2a69f8ca964c6a238d92c2c0f1d4a1dbdd5",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76--supratts-1.0-preview--cpu-full.wav",
+        "sha256": "89f0a0099081407778e7e4ec4200fcd9de3f9171bb24693313d8877f3966cc1e",
+        "bytes": 61639148
+      }
+    },
+    {
+      "resultId": "2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6",
+      "model": "supratts-1.0-preview",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "fixed single voice",
+      "language": "en",
+      "attribution": "SupraTTS 1.0 Preview by SupraLabs; fixed single English voice. MIT checkpoint/runtime and browser ONNX conversion; bundled G2P dictionary and OOV fallback are Apache-2.0. The voice performer is not separately named in the pinned card.",
+      "modelTerms": "MIT; bundled English G2P dictionaries and OOV fallback data are Apache-2.0",
+      "sourceUrls": [
+        "https://erogol.com/small_tts_bench/",
+        "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md",
+        "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/config.json",
+        "https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/microtts/synthesize.py",
+        "https://github.com/ngelik/tts-bench/tree/829ebd388cdc976afd43bec7cff6b9b38f5fc9f6/tools/export-supratts-onnx.py",
+        "https://github.com/ngelik/tts-bench/releases/tag/supratts-onnx-v1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6--supratts-1.0-preview--webgpu.wav",
+        "sha256": "c3c48b18a9c8ff032138a8308fdf482f6de9bec09442566c95c2d911f46bda2c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6--supratts-1.0-preview--webgpu-full.wav",
+        "sha256": "5c1503c288c0307ebf3b28ef3bc35ccffdf2842cf5e9a2db9573993b7b0bc4f4",
+        "bytes": 61639148
+      }
     }
   ]
 }

@@ -205,3 +205,17 @@ Sources: [pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35
 [Apache-2.0 CPU runtime source](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) ·
 [Apache-2.0 hybrid runtime source](https://github.com/VoxRT/LinnetTTS/tree/29dfdd503a3930e4e36c1130e4c9aab0592201ca) ·
 [official browser runtime and platform notes](https://www.voxrt.com/text-to-speech).
+
+## SupraTTS 1.0 Preview browser ONNX
+
+The pinned SupraTTS checkpoint and official MicroTTS runtime are MIT. The
+benchmark's four FP32 ONNX graphs are a conversion of that checkpoint, with
+conversion code and provenance recorded in the pinned release manifest. The
+English G2P dictionary and OOV fallback assets are Apache-2.0 and retain their
+upstream license and notice. The browser configuration uses ONNX Runtime Web
+1.23.2 (MIT), Pyodide 0.29.3 (MPL-2.0), CPython 3.13.2 (PSF terms) and NumPy
+2.2.5 (BSD-3-Clause and bundled notices); their pinned license files are staged
+with the local assets. The benchmark uses the checkpoint's one fixed English
+voice. The pinned card does not name a voice performer or grant separate output
+rights. Keep model/runtime licenses separate from any rights in the voice or
+recordings. [Pinned model card and license](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Browser runtime and conversion notice](../web/supratts/NOTICE.md)
