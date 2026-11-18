@@ -18,7 +18,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 
 | Model | CPU mean Chrome RSS | CPU max sampled RSS | WebGPU mean Chrome RSS | WebGPU max sampled RSS | Pinned model weights |
 |---|---:|---:|---:|---:|---:|
-| Sopro v2 Turbo | Not submitted | Not submitted | Not submitted | Not submitted | 509.82 MB |
+| Sopro v2 Turbo | 1680.16 MB (n=1; 1203 samples) | 1771.96 MB (sampled max; n=1; 1203 samples) | Not submitted | Not submitted | 509.82 MB |
 
 ## Submitted receipts
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Sopro v2 Turbo | [Report](../../results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | Not submitted | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sopro-v2-turbo) | [Terms](../../docs/LICENSING.md) |
+| Sopro v2 Turbo | [Report](../../results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | Not submitted | [Report](../../results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/summary.md) | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sopro-v2-turbo) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
