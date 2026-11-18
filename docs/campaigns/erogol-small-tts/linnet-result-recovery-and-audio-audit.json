@@ -46,7 +46,24 @@
           "sha256": "e0d4ea4b7fbf75d5c3808dde608421cce092c2a0bb2ea2396d20a09a322683fc",
           "bytes": 48710444
         },
-        "label": "WebGPU warm measured; original validator error"
+        "label": "WebGPU warm measured; original validator error",
+        "preservedNativeArtifacts": [
+          {
+            "file": "invalid-result.json",
+            "bytes": 10568,
+            "sha256": "33a2ecbf38fd5b0876e46d55a9defd459332125780da47a820da61f5d8cf6e09"
+          },
+          {
+            "file": "error.json",
+            "bytes": 289,
+            "sha256": "7b179353b333ec31872049feccf1b5f7302951416b9fcee719ca3bc98bfb33b7"
+          },
+          {
+            "file": "status.json",
+            "bytes": 137,
+            "sha256": "18b29ec6887247081ccdb50c3141291eea80c8ea745a35bccba1ca6d109fc51d"
+          }
+        ]
       },
       {
         "resultId": "2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2",
@@ -68,7 +85,24 @@
           "sha256": "e0d4ea4b7fbf75d5c3808dde608421cce092c2a0bb2ea2396d20a09a322683fc",
           "bytes": 48710444
         },
-        "label": "WebGPU cached measured; original validator error"
+        "label": "WebGPU cached measured; original validator error",
+        "preservedNativeArtifacts": [
+          {
+            "file": "invalid-result.json",
+            "bytes": 164870,
+            "sha256": "97f1158b557849557230682ab2d96f6921ab740ebe07d635d90bc5e1109592d6"
+          },
+          {
+            "file": "error.json",
+            "bytes": 293,
+            "sha256": "fd4da6a76055f459876a16de39cfdc356c764d4b571934e76fcd9736baf296ef"
+          },
+          {
+            "file": "status.json",
+            "bytes": 139,
+            "sha256": "d31f43ad080a2ba9c53cef8f041d510886aea1b87f5d94139e9053bd21c86a1f"
+          }
+        ]
       }
     ]
   },
@@ -79,14 +113,28 @@
         "publicResult": "results/2026-11-18t07-33-48-667z-linnet-en-35m-cpu-warm-1fa1636c/result.json",
         "sha256": "0585eee861feccc37fcd74ccd7c672cd32c5e6a762e7e1edef24326d6f3dc55f",
         "scoreCount": 0,
-        "reason": "Failed to cache linnet-en-35m.fp16.safetensors: Cache.put() encountered a network error before synthesis. This is an asset-loading failure, not an unsupported CPU backend."
+        "reason": "Failed to cache linnet-en-35m.fp16.safetensors: Cache.put() encountered a network error before synthesis. This is an asset-loading failure, not an unsupported CPU backend.",
+        "preservedNativeArtifacts": [
+          {
+            "file": "status.json",
+            "bytes": 134,
+            "sha256": "f28d6b768d630dc423e0a496014ba12a6c762a002cddc6f5f4fbaf582dad0255"
+          }
+        ]
       },
       {
         "resultId": "2026-11-18t08-13-25-604z-linnet-en-35m-cpu-warm-3b452224",
         "publicResult": "results/2026-11-18t08-13-25-604z-linnet-en-35m-cpu-warm-3b452224/result.json",
         "sha256": "439ffb89dcc154d5a7e3badeba8dad121f7c967997de4a7e5895e7e202fc6763",
         "scoreCount": 0,
-        "reason": "Failed to cache linnet-en-35m.fp16.safetensors: Cache.put() encountered a network error before synthesis. This is an asset-loading failure, not an unsupported CPU backend."
+        "reason": "Failed to cache linnet-en-35m.fp16.safetensors: Cache.put() encountered a network error before synthesis. This is an asset-loading failure, not an unsupported CPU backend.",
+        "preservedNativeArtifacts": [
+          {
+            "file": "status.json",
+            "bytes": 134,
+            "sha256": "34cd7813e99e5c06a407dafd6f3a921f3582230ffd3967fb089249864a9ea4a2"
+          }
+        ]
       }
     ],
     "cpuCachedPreflight": {
@@ -99,7 +147,7 @@
     }
   },
   "webgpuWarmCondition": {
-    "note": "The serial lock was held by the Linnet WebGPU warm run beginning 2026-11-18T12:28:43Z. A separate publisher reports two local audio file/hash/30-second clip operations, each about 5.2 seconds, at unknown times after 12:27Z and before approximately 12:47Z. Their overlap with warm-up or the first scored trial is uncertain. No inference, test or resource sampling ran during those operations. No timing adjustment or impact estimate is applied."
+    "note": "The serial lock was held by the Linnet WebGPU warm run beginning 2026-11-18T12:28:43Z. A separate publisher reports two local audio file/hash/30-second clip operations, each about 5.2 seconds, at unknown times after 12:27Z and before approximately 12:47Z. The operations themselves did not initiate another benchmark inference, test or resource-sampling run. Whether they overlapped warm-up or a scored trial is unknown. Timing values are retained without adjustment or an impact estimate."
   },
   "chunkValidation": {
     "warmReceipts": "Both warm native receipts record 93 chunks, finite PCM and nonempty chunks for warm-up plus all five scored trials.",
