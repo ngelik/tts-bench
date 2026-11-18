@@ -1,5 +1,6 @@
 import { phonemize } from '../klein/g2p.mjs';
 import { fitPhoneChunks, gaussian, PAUSE_SECONDS, splitText, VOICE_NAMES } from '../klein/model.mjs';
+import { createKleinSessionsSequentially } from '../klein/session-loader.mjs';
 import { dispatchProbe, hardwareGpu } from './gpu-probe.mjs';
 
 const BASE = '/models/klein-tts-x1.5-pro/25e0e73bebba71e5985bc369628ebdcb81bf7116/';
@@ -122,10 +123,7 @@ async function loadJsonAndGraphs(backend) {
   if (style.length !== info.styles[0].length) throw new Error('Klein voice style width is inconsistent.');
   const options = { executionProviders: ['wasm'], graphOptimizationLevel: 'all' };
   if (backend === 'webgpu') options.executionProviders = ['webgpu', 'wasm'];
-  [encoder, decoder] = await Promise.all([
-    ort.InferenceSession.create(encoderBytes, options),
-    ort.InferenceSession.create(decoderBytes, options),
-  ]);
+  ({ encoder, decoder } = await createKleinSessionsSequentially(ort, encoderBytes, decoderBytes, options));
 }
 
 async function initialize({ backend, probe = false, probeText = 'A short local speech check.' }) {
