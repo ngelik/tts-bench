@@ -1,0 +1,44 @@
+name: Publish supplemental Sano heart-nano hosted evidence
+on:
+  push:
+    branches: [supplemental/sano-heart-nano-hosted-release-44413947798]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: sano-heart-nano-hosted-release-44413947798
+  cancel-in-progress: false
+jobs:
+  publish-verified-hosted-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Verify successful source artifacts and publish supplemental nonlatest release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          python3 tools/publish-sano-hosted.py
+          --run-id 44413947798
+          --source b0f8c8887e9dfab5cef7b8fac9a15af865d722ef
+          --workflow-head a37f30501ab8b4baf6a772af778d48b69b051387
+          --workflow-branch diagnostic/sano-heart-nano-hosted
+          --workflow-path .github/workflows/sano-heart-nano-hosted-diagnostic-push.yml
+          --warm-receipt-sha 61f1e370a607e297324f99b156664bf0ccdb3f8a1934c565631fec2cb6578d11
+          --cached-receipt-sha 037e6c7ead8aa66ca875abb06ee444f773c4358c75ee1337367122ae9a610b93
+          --exporter tools/export-sano-hosted.py
+          --work "${RUNNER_TEMP}/heartnano-release"
+      - name: Preserve publication readback evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sano-heart-nano-hosted-publication-proof
+          if-no-files-found: ignore
+          path: |
+            ${{ runner.temp }}/heartnano-release/release/public-verification.json
+            ${{ runner.temp }}/heartnano-release/release/checksums.json
+            ${{ runner.temp }}/heartnano-release/release/recordings.json
+            ${{ runner.temp }}/heartnano-release/release/report.md
