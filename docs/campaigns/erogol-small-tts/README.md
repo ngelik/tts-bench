@@ -56,3 +56,5 @@ Each recording contains the same 20,000-character English article. The time cove
 Times are minutes:seconds. The jobs verified the full WAV against the browser receipt and cut the first 30 seconds from that recording. An offline recognizer also checked the opening and closing passages of all five articles. [Speech check](https://github.com/ngelik/tts-bench/actions/runs/44128647210)
 
 [Listen to the five recordings in your browser](https://ngelik.github.io/tts-bench/diagnostics/erogol-small-tts/) or [download the listening comparison](https://github.com/ngelik/tts-bench/releases/download/small-tts-families-chrome-cpu-2026-11-17/listen-and-compare.zip) (5.4 MB). Extract the ZIP and open `index.html` for five 30-second examples, the duration chart and links to the full articles. [Full WAVs and credits](https://github.com/ngelik/tts-bench/releases/tag/small-tts-families-chrome-cpu-2026-11-17)
+
+For source-pinned replay plans whose upstream ONNX Runtime notice URLs return HTTP 404, use the [historical asset recovery instructions](../../REPLAY_ASSETS.md) before model fetch and verification. The restored notice bytes retain the original asset digests.
