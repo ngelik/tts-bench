@@ -397,12 +397,7 @@ try {
     assert.equal(await page.locator('.bar-row').count(), chartCount);
     assert.equal(await page.locator('#charts').evaluate(e => e.innerHTML.includes('NaN')), false);
     await assertChartOrder(expected.models, metric);
-    if (metric === 'generation') {
-      for (const backend of ['cpu', 'webgpu']) {
-        const historicalCount = expectedGeneration(expected.models, backend).filter(model => model.warm[backend].registration === 'archived').length;
-        assert.equal(await page.locator(`.chart-panel.${backend === 'cpu' ? 'cpu' : 'gpu'} .chart-evidence`).count(), historicalCount, `${backend} historical bars retain their label`);
-      }
-    }
+    assert.doesNotMatch(await page.locator('#charts .bar-value').allInnerTexts().then(values => values.join(' ')), /\bHistorical\b/i);
   }
   await page.locator('[data-metric="generation"]').click();
   await page.locator('#cohort').selectOption(cohorts.at(-1));

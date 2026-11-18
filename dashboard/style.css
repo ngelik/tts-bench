@@ -678,14 +678,11 @@ td:last-child {
   gap:6px;
   text-align:right
 }
-.metric-count,.chart-evidence {
+.metric-count {
   display:block;
   color:var(--muted);
   font:10px/1.4 var(--mono);
   white-space:nowrap
-}
-.chart-evidence {
-  color:#866435
 }
 .diagnostic-state small {
   display:block;
