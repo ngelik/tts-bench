@@ -150,7 +150,7 @@ export function validateResult(d, { publication = false } = {}) {
     if(c.support!==undefined)validateSupport(c.support);
     const id=c.model+'/'+c.backendRequested;check(!cellIds.has(id),'Duplicate cell');cellIds.add(id);
     check(['measured','unsupported','error'].includes(c.status) && (c.reason===null || text(c.reason,2000)),'Invalid status/reason');
-    check(text(c.voice,150)&&text(c.precision,100)&&object(c.settings),'Voice, precision and settings are required');
+    check(text(c.voice,150)&&text(c.precision,150)&&object(c.settings),'Voice, precision and settings are required');
     keys(c.capability,['gpuDispatchVerified','description'],'capability');
     check([true,false,null].includes(c.capability.gpuDispatchVerified)&&text(c.capability.description,2000),'Invalid capability');
     check(Array.isArray(c.warmup)&&Array.isArray(c.trials),'Trial arrays required');
