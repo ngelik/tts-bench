@@ -1,0 +1,37 @@
+name: Build pinned ZONOS3 CPU/WASM runtime
+on:
+  # Bootstrap the locked runtime artifact hashes from the onboarding branch
+  # before the shared model manifest can fetch or verify them.
+  push:
+    branches:
+      - zonos3-cpu-wasm
+    paths:
+      - 'web/zonos3-cpu/**'
+      - 'tools/build-zonos3-cpu-browser.sh'
+      - 'tools/build-zonos3-cpu-notices.mjs'
+      - 'tools/check-zonos3-cpu-build.mjs'
+      - '.github/workflows/zonos3-cpu-runtime-build.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Build pinned CPU-only Emscripten runtime
+        run: bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1
+      - name: Preserve runtime artifacts and exact digests
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: zonos3-cpu-wasm-runtime
+          if-no-files-found: error
+          include-hidden-files: true
+          path: .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v1/

@@ -80,5 +80,13 @@
     "countKind": "exact",
     "parameterCountSource": "https://github.com/ngelik/tts-bench/blob/b6a6373fee93a248257e4513bf11c01f2ea506d9/tools/silencio2/export.py",
     "scope": "Exact sum of all parameters on the pinned BlueRoseLabs/Silencio-2 model before FP32 ONNX export; the count is computed from the loaded model, not inferred from checkpoint file size."
+  },
+  "zonos3-mini": {
+    "parameterCount": 1029247872,
+    "countKind": "lower-bound",
+    "parameterCountUpperBound": 1070816040,
+    "parameterCountSource": "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/backbone/manifest.json",
+    "decoderSource": "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/manifest.json",
+    "scope": "Conservative lower bound sums all backbone .weight tensor shapes plus embd_all and codec .weight tensor shapes, excluding the 254-element head.mixer.weight and all codebook tables, biases, fixed windows and resampler. The 1,070,816,040 logical-element upper bound includes the manifest tensors, including known nonlearned window and resampler buffers. The optional speaker encoder is excluded from both counts."
   }
 }

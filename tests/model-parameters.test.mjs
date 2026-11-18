@@ -26,6 +26,7 @@ test('parameter evidence has integer counts and an immutable source independent 
     'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-audio-2b-gguf',
     'lfm3-omni-2b-fusor-q7-cpu', 'lfm3-omni-2b-gguf',
     'ming-3.0-tts-0.5b-fusor-mix-cpu', 'ming-3.0-tts-0.5b-gguf',
+    'zonos3-mini',
   ]) assert.ok(qualifying.includes(id), id);
   assert.equal(getModelParameters('unknown-99b'), null);
   assert.equal(getModelParameters('constructor'), null);
@@ -44,6 +45,10 @@ test('Ming counts the registered synthesis path and Audio8 includes its decoder 
   assert.equal(getModelParameters('tiny-voca').parameterCount, 4_537_291);
   assert.equal(getModelParameters('silencio-2').parameterCount, 27_928_626);
   assert.equal(getModelParameters('silencio-2').countKind, 'exact');
+  const zonos = getModelParameters('zonos3-mini');
+  assert.equal(zonos.parameterCount, 1_029_247_872);
+  assert.equal(zonos.parameterCountUpperBound, 1_070_816_040);
+  assert.equal(zonos.countKind, 'lower-bound');
 });
 
 test('invalid evidence cannot convert an upper bound into a demonstrated qualifying count', () => {

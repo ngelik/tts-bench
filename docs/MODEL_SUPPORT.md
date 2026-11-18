@@ -275,3 +275,11 @@ Pinned English checkpoint with two built-in American English synthetic voices. O
 [Pinned model card and files](https://huggingface.co/VoxRT/linnet-en-35m/tree/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5) · [Apache-2.0 Rust runtime at the CPU source pin](https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281) · [Apache-2.0 Rust runtime at the hybrid source pin](https://github.com/VoxRT/LinnetTTS/tree/29dfdd503a3930e4e36c1130e4c9aab0592201ca) · [Browser runtime details](https://www.voxrt.com/text-to-speech).
 
 Current M1 Pro measurements, per-backend reports and the validation-only WebGPU receipt recovery with hosted audio audit are documented in the [five-family results](campaigns/erogol-small-tts/README.md#five-family-m1-pro-results) and [Linnet recovery/audit record](campaigns/erogol-small-tts/linnet-result-recovery-and-audio-audit.json).
+
+<a id="zonos3-mini"></a>
+
+## ZONOS3-Mini (Imogen)
+
+Supported voices: **27**. Bundled voices: **1**. Supported languages: **43**.
+
+The pinned model publishes 27 preset voices and 43 server language codes. This configuration stages and benchmarks Imogen (English, British female) only. CPU/WASM and WebGPU use the same pinned speaker embedding; the official WebGPU client also loads Imogen's preview audio and reference codes. See [configuration and asset closure](ZONOS3_MINI.md), the [pinned model card](https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md), and the [pinned upstream browser runtime](https://github.com/Zyphra/ZONOS3-Mini/tree/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web).

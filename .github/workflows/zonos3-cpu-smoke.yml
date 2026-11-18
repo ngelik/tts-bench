@@ -1,0 +1,109 @@
+name: ZONOS3 CPU/WASM headed Chrome smoke
+on:
+  pull_request:
+    paths:
+      - 'tests/zonos3-cpu-adapter.test.mjs'
+      - 'web/adapters/zonos3-cpu.mjs'
+      - 'web/adapters/zonos3.mjs'
+      - 'web/zonos3/**'
+      - 'web/zonos3-cpu/**'
+      - 'web/workers/zonos3-cpu.js'
+      - 'web/workers/zonos3.mjs'
+      - 'tools/build-zonos3-cpu-browser.sh'
+      - 'tools/build-zonos3-cpu-notices.mjs'
+      - 'tools/check-zonos3-cpu-build.mjs'
+      - 'tools/check-zonos3-cpu-lock.mjs'
+      - '.github/workflows/zonos3-cpu-smoke.yml'
+      - '.github/workflows/zonos3-cpu-runtime-build.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --ignore-scripts
+      - name: Rebuild the pinned official WebGPU runtime bundles
+        run: npm run zonos3:runtime:build
+      - name: Verify committed WebGPU runtime bundles are current
+        run: git diff --exit-code -- web/zonos3/runtime
+      - name: Build the pinned CPU-only Emscripten runtime
+        run: bash tools/build-zonos3-cpu-browser.sh .cache/zonos3-cpu-runtime-build
+      - name: Compare the reproducible CPU build with immutable release lock
+        run: node tools/check-zonos3-cpu-lock.mjs .cache/zonos3-cpu-runtime-build
+      - name: Verify adapter and worker contract
+        run: node --test tests/zonos3-cpu-adapter.test.mjs
+      - name: Fetch pinned model, voice and runtime assets
+        run: npm run assets -- fetch --model zonos3-mini
+      - name: Verify every pinned ZONOS3 asset
+        run: npm run assets -- verify --model zonos3-mini
+      - name: Run headed Chrome CPU smoke under Xvfb
+        run: >-
+          xvfb-run -a node bin/bench.mjs run
+          --model zonos3-mini
+          --backend cpu
+          --scenario offline
+          --smoke
+          --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM diagnostic'
+          --chrome /usr/bin/google-chrome
+          --timeout-minutes 45
+      - name: Verify native receipt and generated PCM WAV
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { createHash } from 'node:crypto';
+          import { readFileSync, readdirSync, statSync } from 'node:fs';
+          const run = readdirSync('runs').map(name => ({ name, mtime: statSync(`runs/${name}`).mtimeMs })).sort((a, b) => b.mtime - a.mtime)[0];
+          assert.ok(run, 'CPU smoke run directory exists');
+          const root = `runs/${run.name}`;
+          const result = JSON.parse(readFileSync(`${root}/result.json`, 'utf8'));
+          assert.equal(result.protocol.smoke, true);
+          assert.equal(result.protocol.scenario, 'offline');
+          assert.equal(result.source.dirty, false);
+          assert.equal(result.cells.length, 1);
+          const [cell] = result.cells;
+          assert.equal(cell.model, 'zonos3-mini');
+          assert.equal(cell.backendRequested, 'cpu');
+          assert.equal(cell.backendEffective, 'cpu/wasm');
+          assert.equal(cell.status, 'measured', cell.reason);
+          const [trial] = cell.trials;
+          assert.equal(trial.validation.finitePcm, true);
+          assert.equal(trial.validation.chunkCount, 3);
+          assert.equal(trial.sampleRate, 44100);
+          const wavPath = `${root}/zonos3-mini-cpu.wav`;
+          const wav = readFileSync(wavPath);
+          assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+          assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+          assert.equal(wav.readUInt32LE(24), 44100);
+          assert.equal(wav.readUInt32LE(40), trial.samples * 2);
+          assert.equal(wav.length, 44 + trial.samples * 2);
+          assert.equal(createHash('sha256').update(wav).digest('hex'), trial.audio.sha256);
+          console.log(JSON.stringify({ runId: result.id, sourceCommit: result.source.gitCommit, backend: cell.backendEffective, wav: wavPath, wavSha256: trial.audio.sha256, samples: trial.samples }, null, 2));
+          JS
+      - name: Preserve runtime and smoke evidence for review
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: zonos3-cpu-wasm-chrome-smoke
+          if-no-files-found: ignore
+          path: |
+            .cache/zonos3-cpu-runtime-build/bench_zonos3_cpu.js
+            .cache/zonos3-cpu-runtime-build/bench_zonos3_cpu.wasm
+            .cache/zonos3-cpu-runtime-build/THIRD-PARTY-NOTICES.txt
+            runs/**/result.json
+            runs/**/status.json
+            runs/**/error.json
+            runs/**/*.wav
+      - name: Show failure evidence
+        if: failure()
+        run: find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \;
