@@ -18,7 +18,7 @@ Each supported backend runs the fixed 20,000-character English article in headed
 
 ### SupraTTS M1 Pro results
 
-The pinned preview checkpoint has **1,031,754 parameters** and one fixed English voice. All four receipts below use the clean merged source `ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1`, Chrome 157.0.8103.40, and all 93 spans of the 20,000-character fixture. Warm cells include one excluded full-article warm-up and five scored runs. The WebGPU capability probe observed 681 compute dispatches in a separate untimed synthesis. [Parameter and checkpoint evidence](../../MODEL_SUPPORT.md#supratts-1.0-preview) · [Runtime and output licensing](../../LICENSING.md#supratts-10-preview-browser-onnx)
+The pinned preview checkpoint has **1,031,754 parameters**; its four FP32 ONNX graphs total **4,155,840 bytes (4.16 MB)**, excluding runtime and frontend assets. It has one fixed English voice. All four receipts below use the clean merged source `ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1`, Chrome 157.0.8103.40, and all 93 spans of the 20,000-character fixture. Warm cells include one excluded full-article warm-up and five scored runs. The WebGPU capability probe observed 681 compute dispatches in a separate untimed synthesis. [Parameter and checkpoint evidence](../../MODEL_SUPPORT.md#supratts-1.0-preview) · [Runtime and output licensing](../../LICENSING.md#supratts-10-preview-browser-onnx)
 
 | Backend and receipts | Warm median (n=5) | Warm range | Cached render (n=1) | Mean generation-window RSS | Generation-window peak RSS | Whole-call peak RSS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
