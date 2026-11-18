@@ -20,6 +20,6 @@ jobs:
       - name: Build local expected dashboard data without inference
         run: npm run listen:build
       - name: Read back public Supra selections, clips and full WAV assets
-        run: node tools/verify-supra-publication.mjs
+        run: xvfb-run -a node tools/verify-supra-publication.mjs
       - name: Verify all live dashboard views and selected recordings in hosted Chrome
         run: xvfb-run -a node tools/check-dashboard.mjs --url https://ngelik.github.io/tts-bench/
