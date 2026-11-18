@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "kind": "linnet-native-result-recovery-and-audio-audit",
+  "model": "linnet-en-35m",
+  "hardware": {
+    "machine": "Apple M1 Pro",
+    "cpuCores": 8,
+    "memoryGiB": 16,
+    "chrome": "157.0.8103.40"
+  },
+  "provenance": {
+    "producerSourceCommit": "1866106d8dc126273b4405d664e006a644c83516",
+    "modelRevision": "a75fdfe50bc3d3e776b9c5040f149f49a054aaf5",
+    "validatorFixCommit": "66d9e8f541f8d4a21e1dc2837b3cae42bba1d79d",
+    "producerSourceUnchanged": true,
+    "inferenceRerunForRecovery": false
+  },
+  "validationRecovery": {
+    "issue": "The original result validator rejected a valid precision description longer than its 100-character limit.",
+    "originalMaximumCharacters": 100,
+    "correctedMaximumCharacters": 150,
+    "descriptionCharacters": 101,
+    "exactDescription": "FP16 weights widened to FP32; dense kernels run as FP32 WebGPU and remaining kernels use WASM SIMD128",
+    "originalTerminalStatus": "error",
+    "originalErrorPhase": "result-validation",
+    "originalErrorReason": "Voice, precision and settings are required",
+    "note": "Only validator acceptance changed. The exact original native WebGPU result inputs were submitted unchanged; their public result.json files are byte-identical to those inputs. Original invalid-result.json, error.json and status.json remain unchanged in the native run store.",
+    "results": [
+      {
+        "resultId": "2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30",
+        "publicResult": "results/2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30/result.json",
+        "nativeInputFile": "invalid-result.json",
+        "nativeInputSha256": "33a2ecbf38fd5b0876e46d55a9defd459332125780da47a820da61f5d8cf6e09",
+        "publishedResultSha256": "33a2ecbf38fd5b0876e46d55a9defd459332125780da47a820da61f5d8cf6e09",
+        "bytes": 10568,
+        "byteIdenticalToNativeInput": true,
+        "sourceCommit": "1866106d8dc126273b4405d664e006a644c83516",
+        "sourceManifestSha256": "e2c2b3c05a36edafbd233104bd65b1dfaf5a065808beec1526e4fb44138ce4b4",
+        "backend": "webgpu",
+        "scenario": "warm",
+        "status": "measured",
+        "scoreCount": 5,
+        "excludedWarmups": 1,
+        "error": null,
+        "finalAudio": {
+          "sha256": "e0d4ea4b7fbf75d5c3808dde608421cce092c2a0bb2ea2396d20a09a322683fc",
+          "bytes": 48710444
+        },
+        "label": "WebGPU warm measured; original validator error"
+      },
+      {
+        "resultId": "2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2",
+        "publicResult": "results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/result.json",
+        "nativeInputFile": "invalid-result.json",
+        "nativeInputSha256": "97f1158b557849557230682ab2d96f6921ab740ebe07d635d90bc5e1109592d6",
+        "publishedResultSha256": "97f1158b557849557230682ab2d96f6921ab740ebe07d635d90bc5e1109592d6",
+        "bytes": 164870,
+        "byteIdenticalToNativeInput": true,
+        "sourceCommit": "1866106d8dc126273b4405d664e006a644c83516",
+        "sourceManifestSha256": "e2c2b3c05a36edafbd233104bd65b1dfaf5a065808beec1526e4fb44138ce4b4",
+        "backend": "webgpu",
+        "scenario": "cached",
+        "status": "measured",
+        "scoreCount": 1,
+        "excludedWarmups": 0,
+        "error": null,
+        "finalAudio": {
+          "sha256": "e0d4ea4b7fbf75d5c3808dde608421cce092c2a0bb2ea2396d20a09a322683fc",
+          "bytes": 48710444
+        },
+        "label": "WebGPU cached measured; original validator error"
+      }
+    ]
+  },
+  "earlyFailures": {
+    "cpuWarmAssetCacheFailures": [
+      {
+        "resultId": "2026-11-18t07-33-48-667z-linnet-en-35m-cpu-warm-1fa1636c",
+        "publicResult": "results/2026-11-18t07-33-48-667z-linnet-en-35m-cpu-warm-1fa1636c/result.json",
+        "sha256": "0585eee861feccc37fcd74ccd7c672cd32c5e6a762e7e1edef24326d6f3dc55f",
+        "scoreCount": 0,
+        "reason": "Failed to cache linnet-en-35m.fp16.safetensors: Cache.put() encountered a network error before synthesis. This is an asset-loading failure, not an unsupported CPU backend."
+      },
+      {
+        "resultId": "2026-11-18t08-13-25-604z-linnet-en-35m-cpu-warm-3b452224",
+        "publicResult": "results/2026-11-18t08-13-25-604z-linnet-en-35m-cpu-warm-3b452224/result.json",
+        "sha256": "439ffb89dcc154d5a7e3badeba8dad121f7c967997de4a7e5895e7e202fc6763",
+        "scoreCount": 0,
+        "reason": "Failed to cache linnet-en-35m.fp16.safetensors: Cache.put() encountered a network error before synthesis. This is an asset-loading failure, not an unsupported CPU backend."
+      }
+    ],
+    "cpuCachedPreflight": {
+      "startedAt": "2026-11-18T13:56:21Z",
+      "finishedAt": "2026-11-18T13:56:22.835289Z",
+      "status": "failed-before-inference",
+      "reason": "listen EPERM: operation not permitted 127.0.0.1",
+      "nativeReceiptProduced": false,
+      "interpretation": "Runner loopback setup failure. No result was fabricated; the subsequent CPU cached run is the measured resource receipt."
+    }
+  },
+  "webgpuWarmCondition": {
+    "note": "The serial lock was held by the Linnet WebGPU warm run beginning 2026-11-18T12:28:43Z. A separate publisher reports two local audio file/hash/30-second clip operations, each about 5.2 seconds, at unknown times after 12:27Z and before approximately 12:47Z. Their overlap with warm-up or the first scored trial is uncertain. No inference, test or resource sampling ran during those operations. No timing adjustment or impact estimate is applied."
+  },
+  "chunkValidation": {
+    "warmReceipts": "Both warm native receipts record 93 chunks, finite PCM and nonempty chunks for warm-up plus all five scored trials.",
+    "limitation": "Native receipts contain chunk-count and min/max sample summaries but not per-span PCM arrays. The hosted full-WAV audit validates the complete final scored recording; it does not independently inspect each chunk boundary."
+  },
+  "audioPublication": {
+    "license": "The Linnet Weights License 1.0 permits distributing generated outputs. Required notices are included in the audio manifest attribution and listening documentation.",
+    "releaseTag": "benchmark-audio-v1",
+    "auditRun": "https://github.com/ngelik/tts-bench/actions/runs/44330351794",
+    "auditHead": "c744d1dc47e546cd1aedfe44f62954e4a7bc2abc",
+    "auditMethod": "Hosted Python scan of both complete PCM16 WAV files: receipt SHA-256 and byte count, mono PCM16 RIFF structure, sample rate, sample count and full PCM16 data digest; streamed exact-constant runs tracked across read-block boundaries; Wav2Vec2/torchaudio 2.6.0 transcribed first and last 15 seconds.",
+    "pcmHashNote": "The result receipt pcmSha256 hashes the browser Float32 PCM. wavPcm16DataSha256 hashes the lossy PCM16 WAV payload; these are different encodings and are intentionally recorded separately.",
+    "transcriptLimit": "Edge transcripts are a limited intelligibility check, not full-article word-accuracy proof or a subjective listening review.",
+    "observations": [
+      {
+        "model": "linnet-en-35m",
+        "backend": "cpu",
+        "resultId": "2026-11-18t12-05-28-956z-linnet-en-35m-cpu-warm-f59450f4",
+        "wavSha256": "d6ec9ee8ddff36c73cefbbc1140b1a56d07cc1b05fdd593d19d6144ebeea74b5",
+        "wavBytes": 50484524,
+        "sampleRate": 24000,
+        "samples": 25242240,
+        "durationSeconds": 1051.76,
+        "floatPcmSha256": "7e2cce3ae5bdfe5a6d280bae1378ed90e9a4601002c5996c16dbd632e11b18cd",
+        "wavPcm16DataSha256": "f5645c04049b402c6592c35671bd8484929050d3662be86f428769d56aae42fe",
+        "peakAbsPcm16": 26217,
+        "clippedSamples": 0,
+        "nonzeroSamples": 23494661,
+        "longestConstantRun": {
+          "valuePcm16": 0,
+          "startSample": 12773438,
+          "startSeconds": 532.2265833333333,
+          "samples": 26879,
+          "seconds": 1.1199583333333334
+        },
+        "constantRunsAtLeast100ms": {
+          "count": 8,
+          "samples": 84259,
+          "totalSeconds": 3.5107916666666665
+        },
+        "constantRunsAtLeast1s": {
+          "count": 1,
+          "samples": 26879,
+          "totalSeconds": 1.1199583333333334
+        },
+        "recognizer": "wav2vec2-asr-base-960h (torchaudio 2.6.0)",
+        "first15s": "THE FIRST SOUND MARAVEN HEARD ON GULL POINT WAS NOT THE SEA IT WAS THE OLD HARBOR BELL A BRONZE NOTE THAT CAME ONCE FROM SOMEWHERE BEYOND THE FOG PAUSED THEN CAME AGAIN SHE CAME TO SORT TOWN RECORDS BEFORE THAT TERMINAL SALE AND SHE HAD EXPECTED DAMP PAPER",
+        "last15s": "THE PHOTOGRAPH IN A SLEEVE MARKED NORTHLANDING IN NINETEEN NINETY FOUR THE FAIRIE STILL CROSSED AT SEVEN TEN WEATHER ALLOWING AND WHEN THE BELL SOUNDED TWICE PEOPLE LOOKED TOWARD THE HIGH GROUND THEN TOWARD ONE ANOTHER TO SEE WHO HAD HEARD IT TOO"
+      },
+      {
+        "model": "linnet-en-35m",
+        "backend": "webgpu",
+        "resultId": "2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30",
+        "wavSha256": "e0d4ea4b7fbf75d5c3808dde608421cce092c2a0bb2ea2396d20a09a322683fc",
+        "wavBytes": 48710444,
+        "sampleRate": 24000,
+        "samples": 24355200,
+        "durationSeconds": 1014.8,
+        "floatPcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+        "wavPcm16DataSha256": "3475f57066a18ebba1a5a6afad1591001c85d69cee21059949dc8274e0e3bc39",
+        "peakAbsPcm16": 25107,
+        "clippedSamples": 0,
+        "nonzeroSamples": 23544105,
+        "longestConstantRun": {
+          "valuePcm16": 0,
+          "startSample": 1683119,
+          "startSeconds": 70.12995833333333,
+          "samples": 732,
+          "seconds": 0.0305
+        },
+        "constantRunsAtLeast100ms": {
+          "count": 0,
+          "samples": 0,
+          "totalSeconds": 0
+        },
+        "constantRunsAtLeast1s": {
+          "count": 0,
+          "samples": 0,
+          "totalSeconds": 0
+        },
+        "recognizer": "wav2vec2-asr-base-960h (torchaudio 2.6.0)",
+        "first15s": "THE FIRST SOUND MARA VAN HEARD ON GULL POINT WAS NOT THE SEA IT WAS THE OLD HARBOR BELL A BRONZE NOTE THAT CAME ONCE FROM SOMEWHERE BEYOND THE FOG PAUSED THEN CAME AGAIN SHE CAME TO SORT TOWN RECORDS BEFORE THAT TERMINAL SALE AND SHE HAD EXPECTED DAMP PAPER",
+        "last15s": "A SLEEVE MARKED NORTHLANDING BEFORE NINETEEN NINETY FOUR THE FAIRIES STILL CROSSED AT SEVEN TEN WEATHER ALLOWING AND WHEN THE BELL SOUNDED TWICE PEOPLE LOOKED TOWARD THE HIGH GROUND THEN TOWARD ONE ANOTHER TO SEE WHO HAD HEARD IT TOO"
+      }
+    ]
+  },
+  "relatedReports": [
+    "reports/linnet-en-35m-cpu-m1pro/overview.md",
+    "reports/linnet-en-35m-webgpu-m1pro/overview.md"
+  ]
+}

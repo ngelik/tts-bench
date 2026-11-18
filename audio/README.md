@@ -82,3 +82,4 @@ See [component licensing](../docs/LICENSING.md) and the linked primary sources.
 No listening quality score is inferred from speed, waveform hashes or file size.
 
 - LFM3 Audio and Omni: Liquid AI; American English female prompted style. Official GGUF WebGPU and Fusor q7 CPU configurations are distinguished in every recording. LFM Open License v1.0 applies; runtime licenses do not relicense weights or recordings. Very short output spans, where observed, are disclosed with the results; audio validity does not verify complete reading.
+- Linnet en-35m: include the required notices “Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0” and “Powered by Linnet (VoxRT).” The fixed f1 voice is synthetic; the benchmark license permits distributing generated outputs. Model weights and tokenizer are not included.

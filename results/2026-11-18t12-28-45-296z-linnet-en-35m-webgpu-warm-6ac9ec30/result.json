@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30",
+  "createdAt": "2026-11-18T13:52:54.409Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro · Apple M1 Pro · 8-core CPU · 16 GiB RAM · Chrome 157.0.8103.40",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "1866106d8dc126273b4405d664e006a644c83516",
+    "dirty": false,
+    "manifestSha256": "e2c2b3c05a36edafbd233104bd65b1dfaf5a065808beec1526e4fb44138ce4b4"
+  },
+  "assets": [
+    {
+      "id": "linnet-en-35m-webgpu-hybrid-runtime",
+      "sha256": "f4e2574f129d4e37c5c92b64a7615cfc9752eed4a05c301dd93cb97ff5ebbbd8",
+      "bytes": 391476
+    },
+    {
+      "id": "linnet-en-35m-webgpu-runtime-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "linnet-en-35m-webgpu-runtime-notice",
+      "sha256": "db0680ca2ff8eba18131aa53b6506011c437d018016577a430896a8dec44b727",
+      "bytes": 306
+    },
+    {
+      "id": "linnet-en-35m-browser-wasm",
+      "sha256": "be5fa32785b0aa978bc537ea0241b574d4b83403bb797a6b3fbfa0af3f835cc6",
+      "bytes": 414424
+    },
+    {
+      "id": "linnet-en-35m-weights-fp16",
+      "sha256": "af8186a83611498ddaf162d773d1318b13a0222a49f896c1ae05da00ecbce823",
+      "bytes": 83075620
+    },
+    {
+      "id": "linnet-en-35m-tokenizer",
+      "sha256": "359994b0d226d0aa0b13d3a8401d6ad064ef2605b338ab7283bc64a67696850d",
+      "bytes": 102075
+    },
+    {
+      "id": "linnet-en-35m-f1-voice",
+      "sha256": "fa3496447599a5a2f8075168c9795b8b8dc3f30490a35c0b4ad79c5aaf376145",
+      "bytes": 14720
+    },
+    {
+      "id": "linnet-en-35m-weights-license",
+      "sha256": "4d9b7f1ac6f0dba77f783647b6da4d0ba3359fddf23bef7565f05fc5bc634795",
+      "bytes": 20920
+    },
+    {
+      "id": "linnet-runtime-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    }
+  ],
+  "cells": [
+    {
+      "model": "linnet-en-35m",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Linnet en-35m checkpoint with the built-in f1 voice staged for browser inference",
+        "sources": [
+          "https://huggingface.co/VoxRT/linnet-en-35m/blob/a75fdfe50bc3d3e776b9c5040f149f49a054aaf5/README.md",
+          "https://github.com/VoxRT/LinnetTTS/tree/f3d3f68cbd8b7d07380d11c82bf75af06bc41281",
+          "https://www.voxrt.com/text-to-speech"
+        ],
+        "notes": "The checkpoint supports two built-in American English voices; only linnet-en-f1 is staged and benchmarked. Voice cloning is outside the included terms."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "linnet-en-f1",
+      "precision": "FP16 weights widened to FP32; dense kernels run as FP32 WebGPU and remaining kernels use WASM SIMD128",
+      "settings": {
+        "sampleRate": 24000,
+        "threads": 1,
+        "seed": 0,
+        "temperature": 0.3,
+        "classifierFreeGuidance": 2,
+        "stop": "Official LinnetTTS browser session defaults; one step emits up to 80 ms",
+        "runtimeRelease": "Source-built VoxRT LinnetTTS v0.1.1 Apache-2.0 runtime (1.95.0)",
+        "modelRevision": "a75fdfe50bc3d3e776b9c5040f149f49a054aaf5",
+        "runtimeSourceCommit": "29dfdd503a3930e4e36c1130e4c9aab0592201ca",
+        "runtimeSha256": "f4e2574f129d4e37c5c92b64a7615cfc9752eed4a05c301dd93cb97ff5ebbbd8",
+        "executionProvider": "WebGPU dense matrix operations >=32768 MACs plus source-built Linnet WASM SIMD128/CPU kernels for remaining operations",
+        "webgpuMinMacs": 32768,
+        "webgpuAdapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false,
+          "available": true
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "WebGPU dense matrix operations >=32768 MACs plus source-built Linnet WASM SIMD128/CPU kernels for remaining operations; one CPU WASM worker synchronously hands dense operations to a sibling WebGPU worker and reads results back."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 858536.2149999142,
+          "samples": 24355200,
+          "sampleRate": 24000,
+          "pcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 711.6050000190735,
+            "firstSourceChunkCompletedMs": 11023.295000076294,
+            "audioSeconds": 1014.8,
+            "realTimeFactor": 0.8460151901851736,
+            "minSamplesPerChunk": 32640,
+            "maxSamplesPerChunk": 374400
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 849733.3850002289,
+          "samples": 24355200,
+          "sampleRate": 24000,
+          "pcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 566.5650000572205,
+            "firstSourceChunkCompletedMs": 10649.310000181198,
+            "audioSeconds": 1014.8,
+            "realTimeFactor": 0.8373407420183572,
+            "minSamplesPerChunk": 32640,
+            "maxSamplesPerChunk": 374400
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 846691.2750000954,
+          "samples": 24355200,
+          "sampleRate": 24000,
+          "pcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 550.6650002002716,
+            "firstSourceChunkCompletedMs": 10810.405000209808,
+            "audioSeconds": 1014.8,
+            "realTimeFactor": 0.8343429986205118,
+            "minSamplesPerChunk": 32640,
+            "maxSamplesPerChunk": 374400
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 831041.7050001621,
+          "samples": 24355200,
+          "sampleRate": 24000,
+          "pcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 530.0900001525879,
+            "firstSourceChunkCompletedMs": 10419.585000038147,
+            "audioSeconds": 1014.8,
+            "realTimeFactor": 0.8189216643675228,
+            "minSamplesPerChunk": 32640,
+            "maxSamplesPerChunk": 374400
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 831844.4849998951,
+          "samples": 24355200,
+          "sampleRate": 24000,
+          "pcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 555.0699999332428,
+            "firstSourceChunkCompletedMs": 10498.730000019073,
+            "audioSeconds": 1014.8,
+            "realTimeFactor": 0.8197127364996996,
+            "minSamplesPerChunk": 32640,
+            "maxSamplesPerChunk": 374400
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 813831.5800001621,
+          "samples": 24355200,
+          "sampleRate": 24000,
+          "pcmSha256": "8a8d3db97bbc6d954d62244ebcbf7f64428bca550d47fcf3cc75faaabb4a8a5c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 574.4700000286102,
+            "firstSourceChunkCompletedMs": 10572.105000019073,
+            "audioSeconds": 1014.8,
+            "realTimeFactor": 0.8019625344897143,
+            "minSamplesPerChunk": 32640,
+            "maxSamplesPerChunk": 374400
+          },
+          "audio": {
+            "sha256": "e0d4ea4b7fbf75d5c3808dde608421cce092c2a0bb2ea2396d20a09a322683fc",
+            "bytes": 48710444
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-18T12-28-44-766Z-5bace061fdb4; cell 1/1; source 1866106d8dc126273b4405d664e006a644c83516; requested n=5; effective n=5; LINNET en-35m on the baseline MacBook Pro with Apple M1 Pro, 8 CPU cores and 16 GiB RAM, using headed Google Chrome 157.0.8103.40 in disposable profiles. CPU uses the official CPU/WASM path; WebGPU uses the reviewed hybrid runtime and must prove actual GPU dispatch. Acquire and release the shared M1 slot separately for each complete cell, in order: CPU warm, WebGPU warm, CPU cached, WebGPU cached; preserve unsupported status if actual WebGPU dispatch is unavailable and do not substitute CPU. Warm timing uses one excluded full-article warm-up and five scored full articles. Cached RSS is a separate one-article process-tree diagnostic. Record actual pre-run power/load; thermals are uninstrumented."
+  ]
+}
