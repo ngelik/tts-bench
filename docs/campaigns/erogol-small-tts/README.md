@@ -16,6 +16,20 @@ Eight entries have existing family coverage: Phonon, Tiny Voca, Mach Boom, Parad
 
 Each supported backend runs the fixed 20,000-character English article in headed Google Chrome on the eight-core, 16 GiB Apple M1 Pro. One full warm-up precedes five timed articles. A separate cached article provides average Chrome process-tree memory during generation. The warm timing includes model output through the final CPU-readable audio samples. The configuration records the selected voice and precision, including any backend-specific differences. [Benchmark protocol](../../PROTOCOL.md) · [Memory measurement](../../MEMORY.md)
 
+### Five-family M1 Pro results
+
+Warm columns show the median of five scored articles after one excluded warm-up. Cached memory is the mean Chrome process-tree RSS from a separate one-article run (n=1); it includes browser baseline and workers and is not model-only RAM or VRAM. These are per-model runtime cohorts; cross-backend values are not a hardware-only comparison.
+
+| Family | CPU warm median | CPU cached mean RSS | WebGPU warm median | WebGPU cached mean RSS | Focused chart | Reports |
+| --- | ---: | ---: | ---: | ---: | --- | --- |
+| Linnet en-35m | 212.580 s | 1,284.581 MB | 831.844 s | 2,778.327 MB | [Chart](https://ngelik.github.io/tts-bench/?models=linnet-en-35m) | [CPU](../../../reports/linnet-en-35m-cpu-m1pro/overview.md) · [WebGPU](../../../reports/linnet-en-35m-webgpu-m1pro/overview.md) |
+| SupraTTS 1.0 Preview | 21.876 s | 1,212.813 MB | 16.469 s | 2,024.568 MB | [Chart](https://ngelik.github.io/tts-bench/?models=supratts-1.0-preview) | [Report](../../../reports/supratts-1.0-preview-m1pro/overview.md) |
+| Silencio-2 | 607.96 s | 1,601.69 MB | 1,962.27 s | 1,664.92 MB | [Chart](https://ngelik.github.io/tts-bench/?models=silencio-2) | [Report](../../../reports/silencio2-m1-2026-11-18/overview.md) |
+| Klein-TTS X1.5 Pro | 251.73 s | 1,331.76 MB | 22.00 s | 1,903.43 MB | [Chart](https://ngelik.github.io/tts-bench/?models=klein-tts-x1.5-pro) | [Report](../../../reports/klein-x1-5-pro/overview.md) |
+| Sopro v2 Turbo | 616.59 s | 1,680.16 MB | 507.48 s | 1,792.63 MB | [Chart](https://ngelik.github.io/tts-bench/?models=sopro-v2-turbo) | [CPU](../../../reports/erogol-sopro-cpu/overview.md) · [WebGPU](../../../reports/erogol-sopro/overview.md) |
+
+Sopro’s CPU and WebGPU profiles use different precisions. Linnet CPU runs the official VoxRT WASM runtime; WebGPU dispatches qualifying dense operations to the GPU and keeps the remaining work on WASM/CPU. Linnet’s scored outputs differ in duration (1,051.76 s CPU and 1,014.8 s WebGPU), so this table does not state a direct speedup. Its WebGPU warm timing also retains a bounded, uncertain publication-I/O overlap note and a validation-only receipt recovery; details are linked from the [Linnet runtime and licensing notes](../../MODEL_SUPPORT.md#linnet-en-35m) and [recovery/audit record](linnet-result-recovery-and-audio-audit.json). Two earlier CPU warm attempts are preserved as Cache.put asset-loading errors. The CPU cached preflight separately stopped before inference with `listen EPERM: operation not permitted 127.0.0.1` and produced no native receipt; the later completed CPU cached run is the measured resource result. These are setup/loading failures, not unsupported-backend findings.
+
 ### SupraTTS M1 Pro results
 
 The pinned preview checkpoint has **1,031,754 parameters**. Its four FP32 TTS ONNX graphs total **4,155,840 bytes (4.16 MB)**; adding the **2,806,853-byte** OOV G2P classifier gives **6,962,693 bytes (6.96 MB)** of registered model weights. Runtime, language dictionaries and other frontend assets are excluded. The model has one fixed English voice. All four receipts below use the clean merged source `ef1163d7a243fe0d82b4c0ecccb5de113d58a9a1`, Chrome 157.0.8103.40, and all 93 spans of the 20,000-character fixture. Warm cells include one excluded full-article warm-up and five scored runs. The WebGPU capability probe observed 681 compute dispatches in a separate untimed synthesis. [Parameter and checkpoint evidence](../../MODEL_SUPPORT.md#supratts-1.0-preview) · [Runtime and output licensing](../../LICENSING.md#supratts-10-preview-browser-onnx)
@@ -25,13 +39,13 @@ The pinned preview checkpoint has **1,031,754 parameters**. Its four FP32 TTS ON
 | CPU/WASM ([warm](../../../results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md), [cached](../../../results/2026-11-18t08-16-35-187z-supratts-1.0-preview-cpu-cached-43089de0/summary.md)) | 21.876 s | 21.807–21.917 s | 22.580 s | 1,212.813 MB (44 samples) | 1,292.812 MB | 1,668.891 MB |
 | WebGPU + WASM ([warm](../../../results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md), [cached](../../../results/2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47/summary.md)) | 16.469 s | 16.355–16.521 s | 17.362 s | 2,024.568 MB (34 samples) | 2,136.637 MB | 2,552.709 MB |
 
-RSS is the owned Chrome process-tree total, including browser baseline; MB are decimal. The generation-window peak is the maximum of samples taken every 500 ms between the first request and final PCM. The whole-call peak spans setup and post-timer validation/export. These peak scopes are distinct. The published listening examples use the final scored warm trial for each backend; full WAVs and 30-second clips are attributed in [`audio/manifest.json`](../../../audio/manifest.json) and will appear on the [SupraTTS dashboard](https://ngelik.github.io/tts-bench/?models=supratts-1.0-preview) after merge.
+RSS is the owned Chrome process-tree total, including browser baseline; MB are decimal. The generation-window peak is the maximum of samples taken every 500 ms between the first request and final PCM. The whole-call peak spans setup and post-timer validation/export. These peak scopes are distinct. Listening examples use each backend’s final scored warm trial. Full WAVs and 30-second clips are receipt-bound in [`audio/manifest.json`](../../../audio/manifest.json); use the focused chart links above to reach each model’s published results and audio.
 
 No listening review was performed; the timing, waveform integrity and hashes do not establish pronunciation or speech quality.
 
 The generated [four-cell campaign overview](../../../reports/supratts-1.0-preview-m1pro/overview.md) keeps warm timing and cached-resource observations together while preserving their separate measurement scopes.
 
-The source comparison used five shorter texts and a Linux AMD EPYC CPU. Its audio and timings belong to that experiment. For these browser runs, the reference table links each submitted receipt, and the dashboard displays its associated audio when available. [Browser comparison and recordings](https://ngelik.github.io/tts-bench/?models=linnet-en-35m,supratts-1.0-preview,silencio-2,klein-tts-x1.5-pro,sopro-v2-turbo)
+The source comparison used five shorter texts and a Linux AMD EPYC CPU. Its audio and timings belong to that experiment. For these browser runs, the reference table links each submitted receipt, and the dashboard displays its associated audio when available. [All five browser results](https://ngelik.github.io/tts-bench/?models=linnet-en-35m,supratts-1.0-preview,silencio-2,klein-tts-x1.5-pro,sopro-v2-turbo)
 
 ## Replay a browser measurement
 
@@ -52,7 +66,7 @@ node tools/run-campaign.mjs --plan "$plan" --dry-run
 node tools/run-campaign.mjs --plan "$plan" --machine "Your actual machine, processor and RAM" --accept-license
 ```
 
-The Linnet plan uses the official VoxRT WASM runtime for CPU. Its WebGPU configuration runs dense matrix operations on hardware and the remaining operations in WASM. The hosted CPU recording used the earlier CPU-only registration. [Linnet GPU runtime](../../../tools/linnet-webgpu-runtime/) · [Earlier CPU-only plan](https://github.com/ngelik/tts-bench/blob/b5b2a458b350e041f34aa788ea4985082b2e3f57/docs/campaigns/erogol-small-tts/plans/linnet-en-35m.json)
+The Linnet plan uses the official VoxRT WASM runtime for CPU. Its WebGPU configuration runs dense matrix operations on hardware and the remaining operations in WASM. [Linnet GPU runtime](../../../tools/linnet-webgpu-runtime/) · [Source-pinned plan](plans/linnet-en-35m.json)
 
 Warm and cached-memory receipts use different timing boundaries. Sopro’s CPU and WebGPU profiles also use different precision. The source receipt for each observation records its profile and effective backend. [How to submit results](../../../CONTRIBUTING.md)
 
