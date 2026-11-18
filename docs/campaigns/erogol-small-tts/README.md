@@ -27,6 +27,8 @@ The pinned preview checkpoint has **1,031,754 parameters** and one fixed English
 
 RSS is the owned Chrome process-tree total, including browser baseline; MB are decimal. The generation-window peak is the maximum of samples taken every 500 ms between the first request and final PCM. The whole-call peak spans setup and post-timer validation/export. These peak scopes are distinct. The recordings and 30-second listening clips are attributed in [`audio/manifest.json`](../../../audio/manifest.json) and are available on the [SupraTTS dashboard](https://ngelik.github.io/tts-bench/?models=supratts-1.0-preview).
 
+The generated [four-cell campaign overview](../../../reports/supratts-1.0-preview-m1pro/overview.md) keeps warm timing and cached-resource observations together while preserving their separate measurement scopes.
+
 The source comparison used five shorter texts and a Linux AMD EPYC CPU. Its audio and timings belong to that experiment. For these browser runs, the reference table links each submitted receipt, and the dashboard displays its associated audio when available. [Browser comparison and recordings](https://ngelik.github.io/tts-bench/?models=linnet-en-35m,supratts-1.0-preview,silencio-2,klein-tts-x1.5-pro,sopro-v2-turbo)
 
 ## Replay a browser measurement
