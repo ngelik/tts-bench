@@ -24,6 +24,14 @@ let server, browser;
 const number = n => n.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
 const eligibleWarm = metric => metric?.status === 'measured' && Number.isFinite(metric.medianSeconds) && !metric.waveform;
 const eligibleMemory = metric => metric?.status === 'measured' && Number.isFinite(metric.meanMB) && !metric.waveform;
+// Mirror dashboard/app.mjs: registered configurations without any eligible warm
+// or memory result remain in source metadata but do not produce a result row.
+const hasEligibleResult = model => ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]));
+const resultModels = models => models.filter(hasEligibleResult);
+const expectedResultModels = resultModels(expected.models);
+const campaignResultModels = resultModels(campaignModels);
+const resultCountLabel = count => `${count} result${count === 1 ? '' : 's'}`;
+assert.ok(campaignResultModels.length > 0, 'The dashboard campaign subset includes eligible results');
 const currentWaveformFault = model => ['cpu','webgpu'].some(backend => {
   const warm = model.warm[backend], memory = model.memory[backend];
   if ((warm?.registration === 'current' && warm.waveform) || (memory?.registration === 'current' && memory.waveform)) return true;
@@ -74,10 +82,14 @@ try {
   page.on('request', r => {if (new URL(r.url()).origin !== new URL(base).origin) external.push(r.url());});
   page.on('response', r => {if (r.status() >= 400) failedResponses.push(r.status()+' '+r.url());});
   await page.goto(base);
-  await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expected.models.length);
+  await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
   const candidateLayout = await measureResults(page);
   assert.ok(candidateLayout.firstResultRowTop < 650, `First result row should remain near the top; observed y=${candidateLayout.firstResultRowTop}`);
-  assert.equal(await page.locator('#model-count').innerText(), String(expected.models.length));
+  assert.equal(await page.locator('#model-count').innerText(), String(expectedResultModels.length));
+  assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length));
+  for (const model of expected.models.filter(model => !hasEligibleResult(model))) {
+    assert.equal(await page.locator(`tr[data-model="${model.id}"]`).count(), 0, `${model.id} remains registered without an eligible result row`);
+  }
   const visibleAbove = await page.locator('body').innerText();
   assert.doesNotMatch(visibleAbove, /PUBLISHED MEASUREMENTS|Open evidence\. Local inference\./);
   let baselineLayout = null;
@@ -85,7 +97,13 @@ try {
     const baseline = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
     try {
       await baseline.goto(baselineUrl);
-      await baseline.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expected.models.length);
+      const baselineResultCount = await baseline.evaluate(async () => {
+        const data = await (await fetch('./assets/data.json')).json();
+        const eligibleWarm = metric => metric?.status === 'measured' && Number.isFinite(metric.medianSeconds) && !metric.waveform;
+        const eligibleMemory = metric => metric?.status === 'measured' && Number.isFinite(metric.meanMB) && !metric.waveform;
+        return data.models.filter(model => ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]))).length;
+      });
+      await baseline.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, baselineResultCount);
       baselineLayout = {url:baselineUrl,...await measureResults(baseline)};
       await mkdir(review, {recursive:true});
       await baseline.screenshot({path:`${review}/baseline-desktop.png`,fullPage:true});
@@ -96,7 +114,7 @@ try {
     return av == null && bv == null ? a.name.localeCompare(b.name) : av == null ? 1 : bv == null ? -1 : av - bv || a.name.localeCompare(b.name);
   }).map(model => model.id);
   const assertDefaultOrder = async () => {
-    assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(expected.models, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
+    assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(expectedResultModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
     assert.equal(await page.locator('th[data-column="cpu"]').getAttribute('aria-sort'), 'ascending');
     assert.equal(await page.locator('#sort-select').inputValue(), 'cpu');
   };
@@ -104,7 +122,7 @@ try {
     for (const backend of metric === 'size' ? ['size'] : ['cpu', 'webgpu']) {
       const panel = page.getByRole('region', {name: `${backend === 'size' ? 'Model size' : backend === 'cpu' ? 'CPU' : 'GPU'} chart`, exact:true});
       const value = model => backend === 'size' ? model.modelMB : model[metric === 'generation' ? 'warm' : 'memory'][backend][metric === 'generation' ? 'medianSeconds' : 'meanMB'];
-      const eligible = backend === 'size' ? models.filter(model => Number.isFinite(model.modelMB)) : metric === 'generation' ? expectedGeneration(models, backend) : expectedMemory(models, backend);
+      const eligible = backend === 'size' ? models.filter(model => hasEligibleResult(model) && Number.isFinite(model.modelMB)) : metric === 'generation' ? expectedGeneration(models, backend) : expectedMemory(models, backend);
       if (metric === 'generation') {
         for (const model of eligible.filter(model => model.warm[backend].n === 1 && !model.warm[backend].selectionKind)) {
           assert.equal(await panel.locator(`.bar-row[data-model="${model.id}"] .metric-count`).innerText(), 'n=1');
@@ -114,7 +132,7 @@ try {
     }
   };
   await assertDefaultOrder();
-  for (const model of expected.models) {
+  for (const model of expectedResultModels) {
     for (const [backend, label] of [['cpu', 'CPU'], ['webgpu', 'GPU']]) {
       const metric = model.warm[backend];
       if (!eligibleWarm(metric) || metric.n !== 1 || metric.selectionKind) continue;
@@ -213,15 +231,15 @@ try {
     const chartStatus = page.locator('.chart-panel.gpu .bar-row').filter({has: page.locator('[data-detail="audio8-realistic-0.6b-int4"]')});
     assert.equal(await chartStatus.count(), 0, 'An archived failed timing is not plotted');
     await page.goto(base);
-    await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expected.models.length);
+    await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
   }
   const chartCampaignUrl = new URL(base);
   chartCampaignUrl.search = '';
   chartCampaignUrl.searchParams.set('models', campaignModelIds.join(','));
   chartCampaignUrl.searchParams.set('view', 'charts');
   await page.goto(chartCampaignUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '4 results');
-  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(campaignModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
+  await page.waitForFunction(label => document.querySelector('#visible-count')?.textContent === label, resultCountLabel(campaignResultModels.length));
+  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(campaignResultModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
   assert.equal(await page.locator('#charts .bar-row').count(), expectedGeneration(campaignModels, 'cpu').length + expectedGeneration(campaignModels, 'webgpu').length);
   await assertChartOrder(campaignModels, 'generation');
   if (cosySelection?.selectionKind === 'operator-shortened-warm-selection') {
@@ -255,16 +273,16 @@ try {
   repeatedScopeUrl.search = '';
   campaignModelIds.slice(0, 2).forEach(id => repeatedScopeUrl.searchParams.append('models', id));
   await page.goto(repeatedScopeUrl.href);
-  await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '2 results');
-  const repeatedModels = campaignModels.filter(model => campaignModelIds.slice(0, 2).includes(model.id));
+  const repeatedModels = resultModels(campaignModels.filter(model => campaignModelIds.slice(0, 2).includes(model.id)));
+  await page.waitForFunction(label => document.querySelector('#visible-count')?.textContent === label, resultCountLabel(repeatedModels.length));
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(repeatedModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
 
   const unknownScopeUrl = new URL(base);
   unknownScopeUrl.search = '';
-  unknownScopeUrl.searchParams.set('models', `${campaignModelIds[0]},bad-model-id`);
+  unknownScopeUrl.searchParams.set('models', `${campaignResultModels[0].id},bad-model-id`);
   await page.goto(unknownScopeUrl.href);
   await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 result');
-  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), [campaignModelIds[0]], 'Unknown IDs must not expose unrelated configurations');
+  assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), [campaignResultModels[0].id], 'Unknown IDs must not expose unrelated configurations');
   assert.ok((await page.locator('#scope-note').innerText()).includes('bad-model-id'));
 
   const onlyUnknownScopeUrl = new URL(base);
@@ -278,7 +296,7 @@ try {
   assert.equal(await page.locator('#clear-filters').innerText(), 'Clear subset and filters');
   await page.locator('#clear-filters').click();
   assert.equal(new URL(page.url()).searchParams.has('models'), false, 'The empty-state action clears an all-unknown subset');
-  assert.equal(await page.locator('#model-rows tr').count(), expected.models.length, 'Clear subset returns to the full configuration list');
+  assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.length, 'Clear subset returns to the full eligible result list');
 
   const emptyScopeUrl = new URL(base);
   emptyScopeUrl.search = '';
@@ -290,11 +308,11 @@ try {
   assert.equal(await page.locator('#clear-filters').innerText(), 'Clear subset and filters');
   await page.locator('#clear-filters').click();
   assert.equal(new URL(page.url()).searchParams.has('models'), false, 'The empty-state action clears an empty subset');
-  assert.equal(await page.locator('#model-rows tr').count(), expected.models.length);
+  assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.length);
 
   assert.equal(await page.locator('audio').count(), 1);
   assert.equal(await page.locator('audio').getAttribute('src'), null, 'Audio must not download on initial load');
-  for (const model of expected.models) {
+  for (const model of expectedResultModels) {
     const row = page.locator(`tr[data-model="${model.id}"]`);
     assert.equal(await row.locator('.license-tag').getAttribute('title'), model.license.model);
     assert.ok((await row.locator('.license-tag').innerText()).trim().length > 0, 'The model license stays visible in the table');
@@ -305,7 +323,7 @@ try {
       else if (column >= 3) assert.equal(await cell.locator('.metric-unavailable').innerText(), '—');
     }
   }
-  for (const model of expected.models) {
+  for (const model of expectedResultModels) {
     const row = page.locator(`tr[data-model="${model.id}"]`);
     const waveform = currentWaveformFault(model);
     const scored = ['cpu','webgpu'].some(b => model.warm[b].outputNotes?.scored);
@@ -344,12 +362,12 @@ try {
   assert.equal(await page.locator('#no-results').isVisible(), true);
   await page.locator('#clear-filters').click();
   await page.locator('#license').selectOption('Apache-2.0');
-  assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => m.license.model === 'Apache-2.0').length);
+  assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.filter(m => m.license.model === 'Apache-2.0').length);
   await page.locator('#reset').click();
   await page.locator('#cohort').selectOption('paired');
-  assert.equal(await page.locator('#model-rows tr').count(), expected.models.filter(m => m.pairedWarm).length);
+  assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.filter(m => m.pairedWarm).length);
   await page.locator('#cohort').selectOption('historical');
-  const archivedModels = expected.models.filter(m => ['cpu','webgpu'].some(b => m.warm[b].registration === 'archived' || m.memory[b].registration === 'archived'));
+  const archivedModels = expectedResultModels.filter(m => ['cpu','webgpu'].some(b => m.warm[b].registration === 'archived' || m.memory[b].registration === 'archived'));
   assert.equal(await page.locator('#model-rows tr').count(), archivedModels.length);
   assert.equal(await page.locator('.evidence-tag.historical').count(), archivedModels.length);
   const cohortOptions = await page.locator('#cohort option').evaluateAll(options => options.map(option => ({value:option.value,label:option.textContent})).filter(option => !['all','paired','historical'].includes(option.value)));
@@ -363,9 +381,9 @@ try {
   await page.locator('#reset').click();
   await assertDefaultOrder();
   await page.locator('[data-sort="webgpu"]').click();
-  const measuredGpu = expectedGeneration(expected.models, 'webgpu').sort((a,b) => a.warm.webgpu.medianSeconds-b.warm.webgpu.medianSeconds);
+  const measuredGpu = expectedGeneration(expectedResultModels, 'webgpu').sort((a,b) => a.warm.webgpu.medianSeconds-b.warm.webgpu.medianSeconds);
   assert.equal(await page.locator('#model-rows tr').first().getAttribute('data-model'), measuredGpu[0].id);
-  const unavailableGpu = expected.models.filter(m => !eligibleWarm(m.warm.webgpu)).sort((a,b)=>a.name.localeCompare(b.name));
+  const unavailableGpu = expectedResultModels.filter(m => !eligibleWarm(m.warm.webgpu)).sort((a,b)=>a.name.localeCompare(b.name));
   if (unavailableGpu.length) assert.equal(await page.locator('#model-rows tr').last().getAttribute('data-model'), unavailableGpu.at(-1).id);
   await page.locator('[data-sort="webgpu"]').click();
   if (unavailableGpu.length) assert.equal(await page.locator('#model-rows tr').last().getAttribute('data-model'), unavailableGpu.at(-1).id, 'Missing scores remain last even descending');
@@ -373,7 +391,7 @@ try {
   for (const metric of ['generation','memory','size']) {
     await page.locator(`[data-metric="${metric}"]`).click();
     assert.equal(await page.locator('.chart-panel').count(), metric === 'size' ? 1 : 2);
-    const chartCount = metric === 'size' ? expected.models.filter(model => Number.isFinite(model.modelMB)).length : metric === 'generation' ? expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length : expectedMemory(expected.models, 'cpu').length + expectedMemory(expected.models, 'webgpu').length;
+    const chartCount = metric === 'size' ? expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length : metric === 'generation' ? expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length : expectedMemory(expected.models, 'cpu').length + expectedMemory(expected.models, 'webgpu').length;
     assert.equal(await page.locator('.bar-row').count(), chartCount);
     assert.equal(await page.locator('#charts').evaluate(e => e.innerHTML.includes('NaN')), false);
     await assertChartOrder(expected.models, metric);
@@ -423,7 +441,7 @@ try {
   assert.ok(mobileFilterWidths.license.control > 100, `Mobile license selector stays usable: ${JSON.stringify(mobileFilterWidths.license)}`);
   await filterDetails.locator('summary').click();
   await page.locator('#sort-select').selectOption('cpu');
-  assert.equal(await page.locator('#model-rows tr').first().getAttribute('data-model'), expectedGeneration(expected.models, 'cpu').sort((a,b)=>a.warm.cpu.medianSeconds-b.warm.cpu.medianSeconds)[0].id);
+  assert.equal(await page.locator('#model-rows tr').first().getAttribute('data-model'), expectedGeneration(expectedResultModels, 'cpu').sort((a,b)=>a.warm.cpu.medianSeconds-b.warm.cpu.medianSeconds)[0].id);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.evaluate(() => {window.scrollTo(0,0);document.activeElement?.blur();});
   const firstAudioCell = await page.locator('#model-rows tr').first().locator('td[data-label="Listen · 30s"]').boundingBox();
@@ -441,7 +459,7 @@ try {
   await page.locator('#close-details').click();
   // Shareable family views must preserve the requested filter, chart and units.
   await page.setViewportSize({width:1440,height:1000});
-  const family = expected.models.filter(model => model.name.toLowerCase().includes('lfm3'));
+  const family = resultModels(expected.models.filter(model => model.name.toLowerCase().includes('lfm3')));
   assert.ok(family.length >= 4, 'The published LFM3 configurations must remain discoverable');
   await page.goto(new URL('?q=LFM3', base).href);
   await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, family.length);
@@ -491,7 +509,7 @@ try {
     syntheticData.models.push(archivedOnly,currentFault,currentRecordingFault,synthetic);
     await syntheticPage.route('**/assets/data.json*', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
     await syntheticPage.goto(base);
-    const syntheticVisibleCount = expected.models.filter(model => ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]))).length + 3;
+    const syntheticVisibleCount = expectedResultModels.length + 3;
     await syntheticPage.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, syntheticVisibleCount);
     assert.equal(await syntheticPage.locator('#model-count').innerText(), String(syntheticVisibleCount), 'A model with only error, unsupported and fault-only data is excluded from result counts');
     assert.equal(await syntheticPage.locator('#model-rows tr[data-model="synthetic-no-eligible-result"]').count(), 0);
@@ -506,7 +524,7 @@ try {
     assert.equal(await currentRecordingFaultRow.locator('[data-play][data-backend="webgpu"]').count(),0,'Faulted current playback stays behind diagnostic opt-in');
     await syntheticPage.locator('[data-view="charts"]').click();
     await syntheticPage.locator('[data-metric="size"]').click();
-    const syntheticSizeCount = expected.models.filter(model => Number.isFinite(model.modelMB) && ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]))).length + [archivedOnly,currentFault,currentRecordingFault].filter(model => Number.isFinite(model.modelMB)).length;
+    const syntheticSizeCount = expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length + [archivedOnly,currentFault,currentRecordingFault].filter(model => Number.isFinite(model.modelMB)).length;
     assert.equal(await syntheticPage.locator('#charts .bar-row').count(), syntheticSizeCount, 'A downloaded weight alone does not add a model to size ranking');
     assert.equal(await syntheticPage.locator('#charts [data-detail="synthetic-no-eligible-result"]').count(), 0);
     await syntheticPage.goto(new URL('?models=synthetic-no-eligible-result',base).href);
@@ -588,7 +606,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Short-input diagnostics fit mobile width');
   await page.screenshot({path:`${review}/diagnostics-mobile.png`,fullPage:true});
   assert.deepEqual(errors, []); assert.deepEqual(external, []); assert.deepEqual(failedResponses, []);
-  const result = {base,chrome:browser.version(),models:expected.models.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,mobileDefaultLayout,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
+  const result = {base,chrome:browser.version(),registeredModels:expected.models.length,eligibleResultModels:expectedResultModels.length,playedClips:clips,filters:true,sorting:true,charts:true,details:true,keyboard:true,mobile:true,mobileFilterWidths,mobileDefaultLayout,legacyDeepLink:true,familyDeepLinks:true,audioSelection:true,audioDiagnostics:true,diagnosticsPage:true,layout:{baseline:baselineLayout,cleaned:{url:base,...candidateLayout},...(baselineLayout ? {firstRowMovedUpBy:baselineLayout.firstResultRowTop-candidateLayout.firstResultRowTop,visibleWordsReducedBy:baselineLayout.visibleWordsBeforeFirstRow-candidateLayout.visibleWordsBeforeFirstRow} : {})},externalRequests:external.length,errors};
   await writeFile(`${review}/verification.json`, JSON.stringify(result,null,2)+'\n');
   console.log(JSON.stringify(result,null,2));
 } finally {await browser?.close(); server?.kill('SIGTERM');}
