@@ -262,7 +262,7 @@ Pinned English-only preview checkpoint with one fixed voice and no streaming API
 
 Supported voices: **17**. Bundled voices: **17**. Supported languages: **4** (en, es, fr, it).
 
-The pinned `model.json` lists 17 speaker embeddings with language prefixes for English, Spanish, French and Italian. The benchmark exercises Sarah (`af_heart`) in English only. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json)
+The pinned `model.json` lists 17 speaker embeddings with language prefixes for English, Spanish, French and Italian. The benchmark exercises Sarah (`af_heart`) in English only. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json) · [Benchmark cohort and background-condition notes](campaigns/klein-x1-5-pro/conditions.md)
 
 <a id="linnet-en-35m"></a>
 
