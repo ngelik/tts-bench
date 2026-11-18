@@ -125,4 +125,9 @@ jobs:
             runs/**/*.wav
       - name: Show failure evidence
         if: failure()
-        run: find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \;
+        run: |
+          if [[ -d runs ]]; then
+            find runs -type f \( -name 'error.json' -o -name 'summary.md' \) -exec cat {} \;
+          else
+            echo "No benchmark run directory exists; a setup preflight stopped before Chrome generation."
+          fi

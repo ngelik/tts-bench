@@ -16,6 +16,7 @@ JOBS="${BUILD_JOBS:-4}"
 
 mkdir -p "$CACHE/sources" "$ROOT/.cache/builds"
 RUN="$(mktemp -d "$ROOT/.cache/builds/zonos3-cpu-wasm.XXXXXX")"
+cd "$RUN"
 SOURCE="$RUN/audio-cpp"
 BUILD="$RUN/build"
 SDK="$CACHE/emsdk"
