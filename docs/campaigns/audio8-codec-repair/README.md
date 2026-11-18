@@ -80,3 +80,5 @@ The smoke checks are installation/capability diagnostics, not scores. The full p
 ## Remaining CPU warm measurement
 
 The CPU warm cell in this corrected schedule supplies the remaining Audio8 comparison, with one excluded article and five scored repetitions on this exact source. The original-source CPU warm cell was superseded before synthesis began. Existing historical recordings and receipts remain available. [Disposition and matching CPU cached evidence](../nov14-english/audio8-cpu-warm-supersession.json)
+
+The first corrected-source CPU warm attempt stopped before synthesis because the browser could not write one model asset to CacheStorage. It remains a native setup-error receipt, not an unsupported result or score. The separate disk/cache investigation, exact probe artifact hashes, measured headroom, cleanup scope, and SDK restore commands are recorded in [CPU warm setup recovery evidence](recovery-evidence.md) and its [machine-readable summary](recovery-evidence.json). The replacement run is a separate native attempt; neither the error receipt nor its timings are altered.
