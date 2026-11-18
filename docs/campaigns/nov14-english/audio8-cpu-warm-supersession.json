@@ -1,0 +1,28 @@
+{
+  "status": "superseded-before-start",
+  "at": "2026-11-18T11:29:36.874973+00:00",
+  "sourceCommit": "ab5aec3e510420adbcac9971f35f92152b19959c",
+  "model": "audio8-realistic-0.6b-int4",
+  "backend": "cpu",
+  "scenario": "warm",
+  "repetitions": 5,
+  "startedNative": false,
+  "nativeResultId": null,
+  "scoreCreated": false,
+  "replacementSourceCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+  "reason": "The corrected routing-policy campaign provides the current matched CPU/WebGPU comparison. Both verified CPU cached outputs have identical PCM. An additional original-source warm run would only add an obsolete cohort and is superseded before starting.",
+  "cpuCachedEvidence": {
+    "original": "2026-11-15t00-00-04-032z-audio8-realistic-0.6b-int4-cpu-cached-b259df93",
+    "corrected": "2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a",
+    "pcmSha256": "a92e055ab76dddff5e6f899aa8f97e8cbf6fb42ec4de159dab4d37296ee703eb"
+  },
+  "originalPlan": "plan.json",
+  "replacementPlan": "../audio8-codec-repair/plan.json",
+  "replacementCell": {
+    "model": "audio8-realistic-0.6b-int4",
+    "backend": "cpu",
+    "scenario": "warm",
+    "repetitions": 5,
+    "warmupRuns": 1
+  }
+}

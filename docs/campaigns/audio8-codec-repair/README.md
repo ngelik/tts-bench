@@ -76,3 +76,7 @@ node tools/run-campaign.mjs --plan "$PWD/docs/campaigns/audio8-codec-repair/plan
 ```
 
 The smoke checks are installation/capability diagnostics, not scores. The full plan runs one untimed capability synthesis before each measured cell. If native campaign orchestration stops on an error for review, preserve that attempt and resume only the remaining eligible cells with the same source pin; never edit a receipt. Validate every result and waveform with the repository's native publication checks before submitting it.
+
+## Remaining CPU warm measurement
+
+The CPU warm cell in this corrected schedule supplies the remaining Audio8 comparison, with one excluded article and five scored repetitions on this exact source. The original-source CPU warm cell was superseded before synthesis began. Existing historical recordings and receipts remain available. [Disposition and matching CPU cached evidence](../nov14-english/audio8-cpu-warm-supersession.json)
