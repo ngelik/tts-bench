@@ -1573,6 +1573,64 @@
       }
     },
     {
+      "resultId": "2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf",
+      "model": "silencio-2",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "260",
+      "language": "en",
+      "attribution": "Silencio-2 by BlueRose Labs; model and converted graphs CC-BY-4.0. Fine-tuned from Kyutai Pocket TTS with Basis Global Emotions data; bundled synthetic voice 260. Noncommercial benchmark evaluation.",
+      "modelTerms": "CC-BY-4.0",
+      "sourceUrls": [
+        "https://huggingface.co/BlueRoseLabs/Silencio-2/blob/20930f5f6a6bb564f2a8207152fd5c5d8eecff03/README.md",
+        "https://huggingface.co/BlueRoseLabs/Silencio-2/tree/20930f5f6a6bb564f2a8207152fd5c5d8eecff03",
+        "https://erogol.com/small_tts_bench/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf--silencio-2--cpu.wav",
+        "sha256": "a2e46978370569e0e1853a25cbba2ad02ddadfdcff4f4edc1fba19f1fb5082dc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf--silencio-2--cpu-full.wav",
+        "sha256": "fe559be758192e9e281c7a8428db53c64e02634fc9d88bc5b3d8b22a6a606608",
+        "bytes": 57838124
+      }
+    },
+    {
+      "resultId": "2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55",
+      "model": "silencio-2",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "260",
+      "language": "en",
+      "attribution": "Silencio-2 by BlueRose Labs; model and converted graphs CC-BY-4.0. Fine-tuned from Kyutai Pocket TTS with Basis Global Emotions data; bundled synthetic voice 260. Noncommercial benchmark evaluation.",
+      "modelTerms": "CC-BY-4.0",
+      "sourceUrls": [
+        "https://huggingface.co/BlueRoseLabs/Silencio-2/blob/20930f5f6a6bb564f2a8207152fd5c5d8eecff03/README.md",
+        "https://huggingface.co/BlueRoseLabs/Silencio-2/tree/20930f5f6a6bb564f2a8207152fd5c5d8eecff03",
+        "https://erogol.com/small_tts_bench/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55--silencio-2--webgpu.wav",
+        "sha256": "cf5f75426ac350bf83087576fdd77c4caffd58469cd0f7016f5fe953ab613e64",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55--silencio-2--webgpu-full.wav",
+        "sha256": "3fa8933d804d1d3d8fdb7e63e8a2a975d5848f4f4598a4cad8bf08281cbd4be4",
+        "bytes": 57968684
+      }
+    },
+    {
       "resultId": "2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0",
       "model": "supertonic-3",
       "backend": "cpu",
