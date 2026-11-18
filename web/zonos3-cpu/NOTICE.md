@@ -27,3 +27,8 @@ The browser adapter uses the pinned Q4_0-expert/Q8_0-projection GGUF backbone,
 KEEP-2 decoder and speaker encoder. It supplies the separately pinned Imogen
 speaker embedding, passes the canonical input text unchanged, and reports the
 quantized runtime and CPU/WASM backend in its measurement metadata.
+
+This community CPU path does not implement Zyphra's LACI short-text filler and
+cut behavior. The fixed benchmark spans are sent unchanged. audio.cpp's offline
+C API returns the complete span before the adapter emits its first-PCM event;
+the metadata records that boundary instead of treating it as streaming output.

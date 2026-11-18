@@ -11,6 +11,12 @@ for (const name of expected) {
   if (name.endsWith('.wasm') && (bytes.length < 8 || bytes[0] !== 0 || bytes[1] !== 0x61 || bytes[2] !== 0x73 || bytes[3] !== 0x6d)) {
     throw new Error(name + ' is not a WebAssembly module.');
   }
+  if (name === 'THIRD-PARTY-NOTICES.txt') {
+    const content = bytes.toString('utf8');
+    if (content.includes('.cache/builds/zonos3-cpu-wasm.') || /\/home\/runner\/|\/private\/tmp\//u.test(content)) {
+      throw new Error(name + ' embeds a per-build or private path.');
+    }
+  }
   if (name !== 'THIRD-PARTY-NOTICES.txt') {
     const content = bytes.toString('latin1');
     const forbidden = ['/Users/', '/private/tmp/', '/private/var/folders/', ...privatePaths.map(path => resolve(path))];

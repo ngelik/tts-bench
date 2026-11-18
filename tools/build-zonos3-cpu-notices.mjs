@@ -28,19 +28,19 @@ const version = (await readFile(path.join(emsdk, 'upstream/emscripten/emscripten
 if (version !== emscriptenVersion) throw new Error('Expected Emscripten ' + emscriptenVersion + ', found ' + version);
 
 const entries = [
-  ['audio.cpp — Apache-2.0', path.join(source, 'LICENSE')],
-  ['Zyphra ZONOS3 runtime source — MIT', path.join(root, 'web/zonos3-cpu/LICENSE-Zyphra-ZONOS3-MIT.txt')],
-  ['GGML — MIT', path.join(source, 'external/ggml/LICENSE')],
-  ['SentencePiece — Apache-2.0', path.join(source, 'external/sentencepiece/LICENSE')],
-  ['Protocol Buffers lite — BSD-3-Clause and Apache-2.0', path.join(source, 'external/sentencepiece/third_party/protobuf-lite/LICENSE')],
-  ['Abseil — Apache-2.0', path.join(source, 'external/sentencepiece/third_party/absl/LICENSE')],
-  ['Darts Clone — BSD-3-Clause', path.join(source, 'external/sentencepiece/third_party/darts_clone/LICENSE')],
-  ['esaxx — license included with SentencePiece', path.join(source, 'external/sentencepiece/third_party/esaxx/LICENSE')],
-  ['Emscripten — MIT and University of Illinois/NCSA', path.join(emsdk, 'upstream/emscripten/LICENSE')],
-  ['cJSON — MIT', path.join(source, 'external/cJSON/LICENSE')],
-  ['LibYAML — MIT', path.join(source, 'external/libyaml/License')],
-  ['LZ4 — BSD-2-Clause', path.join(source, 'external/lz4/LICENSE')],
-  ['utf8proc — MIT', path.join(source, 'external/utf8proc/LICENSE.md')],
+  ['audio.cpp — Apache-2.0', path.join(source, 'LICENSE'), 'audio.cpp/LICENSE'],
+  ['Zyphra ZONOS3 runtime source — MIT', path.join(root, 'web/zonos3-cpu/LICENSE-Zyphra-ZONOS3-MIT.txt'), 'web/zonos3-cpu/LICENSE-Zyphra-ZONOS3-MIT.txt'],
+  ['GGML — MIT', path.join(source, 'external/ggml/LICENSE'), 'audio.cpp/external/ggml/LICENSE'],
+  ['SentencePiece — Apache-2.0', path.join(source, 'external/sentencepiece/LICENSE'), 'audio.cpp/external/sentencepiece/LICENSE'],
+  ['Protocol Buffers lite — BSD-3-Clause and Apache-2.0', path.join(source, 'external/sentencepiece/third_party/protobuf-lite/LICENSE'), 'audio.cpp/external/sentencepiece/third_party/protobuf-lite/LICENSE'],
+  ['Abseil — Apache-2.0', path.join(source, 'external/sentencepiece/third_party/absl/LICENSE'), 'audio.cpp/external/sentencepiece/third_party/absl/LICENSE'],
+  ['Darts Clone — BSD-3-Clause', path.join(source, 'external/sentencepiece/third_party/darts_clone/LICENSE'), 'audio.cpp/external/sentencepiece/third_party/darts_clone/LICENSE'],
+  ['esaxx — license included with SentencePiece', path.join(source, 'external/sentencepiece/third_party/esaxx/LICENSE'), 'audio.cpp/external/sentencepiece/third_party/esaxx/LICENSE'],
+  ['Emscripten — MIT and University of Illinois/NCSA', path.join(emsdk, 'upstream/emscripten/LICENSE'), 'emsdk/upstream/emscripten/LICENSE'],
+  ['cJSON — MIT', path.join(source, 'external/cJSON/LICENSE'), 'audio.cpp/external/cJSON/LICENSE'],
+  ['LibYAML — MIT', path.join(source, 'external/libyaml/License'), 'audio.cpp/external/libyaml/License'],
+  ['LZ4 — BSD-2-Clause', path.join(source, 'external/lz4/LICENSE'), 'audio.cpp/external/lz4/LICENSE'],
+  ['utf8proc — MIT', path.join(source, 'external/utf8proc/LICENSE.md'), 'audio.cpp/external/utf8proc/LICENSE.md'],
 ];
 
 let outputArg = null;
@@ -60,11 +60,11 @@ const parts = [
   'Zyphra ZONOS3 runtime source: Zyphra/ZONOS3 ' + upstreamZyphraPin,
   'Emscripten: ' + emscriptenVersion + ', emsdk commit ' + emsdkPin,
 ];
-for (const [heading, file] of entries) {
+for (const [heading, file, sourceLabel] of entries) {
   const bytes = await readFile(file);
   const body = bytes.toString('utf8').replaceAll('\r\n', '\n').replace(/\n+$/u, '');
   const digest = createHash('sha256').update(bytes).digest('hex');
-  parts.push('\n' + '='.repeat(78) + '\n' + heading + '\nSource: ' + path.relative(root, file) +
+  parts.push('\n' + '='.repeat(78) + '\n' + heading + '\nSource: ' + sourceLabel +
     '\nSHA-256: ' + digest + '\n' + '='.repeat(78) + '\n\n' + body + '\n');
 }
 const result = parts.join('\n').replace(/\n+$/u, '') + '\n';
