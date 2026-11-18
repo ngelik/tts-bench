@@ -1,0 +1,71 @@
+name: Reconcile reviewed Supra result publication
+on:
+  push:
+    branches: [verification/supra-reconcile-7cbd87c]
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: supra-result-attribution
+          path: target
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Verify source lineage and reconcile only Supra audio rows
+        working-directory: target
+        env:
+          EXPECTED_SOURCE: 62346509d66344b0d95bca4cb1a21587fe5ff5d8
+          EXPECTED_MAIN: e97b22f1c9314bbdedae55cd770089e94a88258c
+        run: |
+          git fetch origin main
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
+          test "$(git merge-base HEAD origin/main)" = "$EXPECTED_MAIN"
+          node ../reconcile-supra-publication.mjs
+      - name: Install pinned dependencies
+        working-directory: target
+        run: npm ci --ignore-scripts
+      - name: Run repository test suite
+        working-directory: target
+        run: npm test
+      - name: Validate results and compatible comparisons
+        working-directory: target
+        run: |
+          npm run validate
+          node tools/compare.mjs --check comparisons
+          node tools/campaign-report.mjs --check-all reports
+      - name: Regenerate Reference and verify all result IDs
+        working-directory: target
+        run: |
+          npm run reference
+          npm run reference -- --check
+          node ../reconcile-supra-publication.mjs --reference
+      - name: Validate audio, listening build and publication bundle
+        working-directory: target
+        run: |
+          npm run audio -- check
+          npm run listen:build
+          git add README.md docs/reference-memory.svg audio/manifest.json
+          git diff --cached --check
+          node tools/publication-check.mjs
+      - name: Commit generated files to the reviewed result branch
+        working-directory: target
+        run: |
+          unexpected="$(git status --porcelain | awk '{print substr($0,4)}' | grep -Ev '^(README.md|docs/reference-memory.svg|audio/manifest.json)$' || true)"
+          test -z "$unexpected" || { printf 'Unexpected worktree changes:\n%s\n' "$unexpected"; exit 1; }
+          if ! git diff --cached --quiet; then
+            git config user.name 'tts-bench result publisher'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Regenerate Supra reference publication from current main'
+            git push origin HEAD:supra-result-attribution
+          else
+            echo 'Generated files already match the reviewed publication.'
+          fi
