@@ -72,8 +72,21 @@ jobs:
           KOKOPOP_SANOTTS_FIXTURES: ${{ github.workspace }}/.cache/ampixa-sanoTTS/mcu/test/fixtures
         run: |
           source_dir="$KOKOPOP_SOURCE"
+          test "$(git -C "$source_dir" rev-parse HEAD)" = 73ed5710cb37ca0384bc4bfdd7138d13605c9a88
           mkdir -p "$source_dir/models"
           cp .cache/sano-kokopop-build/release/heartnano-f32.gguf "$source_dir/models/sanotts-heartnano.gguf"
+          # Kokopop's unrelated Kokoro helper uses std::sinf, which GCC 13
+          # rejects in strict C++17 mode. The browser artifact was built above
+          # from the unchanged pinned source; adapt only this host-only golden
+          # test build, and require the exact expected occurrence count.
+          python3 - "$source_dir/src/arch/kokoro/graph_ops.cpp" <<'PY'
+          import pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          source = path.read_text()
+          if source.count('std::sinf(') != 2:
+              raise SystemExit('Expected exactly two upstream std::sinf calls in the pinned host-test source')
+          path.write_text(source.replace('std::sinf(', 'std::sin('))
+          PY
           cmake -G Ninja -S "$source_dir" -B .cache/sano-kokopop-build/native-test \
             -DCMAKE_BUILD_TYPE=Release -DKOKOPOP_BUILD_TESTS=ON \
             -DKOKOPOP_BUILD_TOOLS=OFF -DKOKOPOP_BUILD_WEB=OFF \
