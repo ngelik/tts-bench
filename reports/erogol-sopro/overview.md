@@ -6,11 +6,11 @@ The included receipts share one source, exact environment and fixture; voice, pr
 
 ## Warm generation
 
-This report contains no scored warm generation times. The receipt table identifies the submitted scenarios and any terminal errors.
+Each warm run starts with one excluded 20,000-character article (93 chunks). Each generation time shows the observed range and the number of scored articles (n). When n=1, the median and both endpoints are the single observation. First PCM is the median time to the first audio samples. Output duration and real-time factor use the recorded sample count, sample rate and generation time.
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
-| Sopro v2 Turbo | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted |
+| Sopro v2 Turbo | Not submitted | 507.48 s (500.10–507.60; n=5) | Not submitted | 629.56 ms (n=5) | Not submitted | 1223.59 s / 0.415 |
 
 ## Resource diagnostics
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Sopro v2 Turbo | Not submitted | Not submitted | Not submitted | [Report](../../results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#sopro-v2-turbo) | [Terms](../../docs/LICENSING.md) |
+| Sopro v2 Turbo | Not submitted | [Report](../../results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/summary.md) | Not submitted | [Report](../../results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#sopro-v2-turbo) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
