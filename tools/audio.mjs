@@ -22,6 +22,7 @@ const attribution={"lfm3-audio-2b-gguf":"LFM3-Audio-2B by Liquid AI; official GG
  'audio8-realistic-0.6b-int4':'Audio8 TTS Realistic Air by Edge0. INT4 ONNX conversion by stephvax. Reference-free English synthesis. Apache-2.0.',
  'mach-boom':'Mach Boom by SyzygyResearch; Zoey English voice. The pinned Apache-2.0 checkpoint notice credits Gradium Phonon and Kyutai Pocket TTS/Mimi. Experimental Chrome WebAssembly port; noncommercial benchmark evaluation.',
  'sopro-v2-turbo':'Sopro v2 Turbo by Samuel Vitorino, Apache-2.0. English reference from the published Tiny Voca synthetic F2 recording by this benchmark.',
+ 'supratts-1.0-preview':'SupraTTS 1.0 Preview by SupraLabs; fixed single English voice. MIT checkpoint/runtime and browser ONNX conversion; bundled G2P dictionary and OOV fallback are Apache-2.0. The voice performer is not separately named in the pinned card.',
  'tiny-voca':'Tiny Voca by Muhammed Nazeem (n4ze3m), Apache-2.0. Synthetic F2 voice, English.',
  'pocket-tts-100m-english-int8':'Pocket TTS by Kyutai; KevinAHM public ONNX export and browser frontend, alba English preset. CC-BY-4.0 with upstream prohibited-use conditions; noncommercial benchmark evaluation.'};
 attribution['silencio-2']='Silencio-2 by BlueRose Labs; model and converted graphs CC-BY-4.0. Fine-tuned from Kyutai Pocket TTS with Basis Global Emotions data; bundled synthetic voice 260. Noncommercial benchmark evaluation.';
