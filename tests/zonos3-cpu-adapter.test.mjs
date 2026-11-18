@@ -105,6 +105,9 @@ test('ZONOS3 CPU worker verifies local range assets and reports the actual offli
   assert.match(workerSource, /Imogen_en-British_F_1\.embedding\.npy/);
   assert.match(workerSource, /backendEffective: 'cpu\/wasm'/);
   assert.match(workerSource, /seedPerChunk: '42 \+ canonical chunk id/);
+  assert.match(workerSource, /selectedVoiceIds: \[info\.voiceId/);
+  assert.match(workerSource, /Not implemented by this community CPU port/);
+  assert.match(workerSource, /Offline audio\.cpp generation/);
   assert.match(workerSource, /range\+|headers: \{ Range:/);
   assert.match(workerSource, /network\.status !== 206/);
   assert.match(workerSource, /network\.headers\.get\('Content-Range'\)/);
