@@ -13,6 +13,7 @@
   const RANGE_BYTES = 16 * 1024 * 1024;
   const THREADS = 6;
   const PTHREAD_POOL_SIZE = 12;
+  const MAX_THREADS = PTHREAD_POOL_SIZE;
   const isPthread = String(self.name || '').startsWith('em-pthread');
 
   importScripts(RUNTIME_JS);
@@ -58,26 +59,45 @@
         cache: 'no-store',
         credentials: 'same-origin',
       });
-      if (network.status !== 206) {
+      if (network.status === 200 && start === 0 && end === asset.bytes - 1) {
+        const declaredLength = Number(network.headers.get('Content-Length'));
+        if (declaredLength !== asset.bytes) {
+          throw new Error('Unexpected full-file length for ' + asset.filename + ': ' + declaredLength);
+        }
+        const body = await network.arrayBuffer();
+        if (body.byteLength !== asset.bytes) throw new Error('Unexpected full-file body length for ' + asset.filename + ': ' + body.byteLength);
+        const digest = await crypto.subtle.digest('SHA-256', body);
+        const actualSha256 = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+        if (actualSha256 !== asset.sha256) throw new Error('Full-file SHA-256 mismatch for ' + asset.filename + '.');
+        response = new Response(body, { status: 200, headers: {
+          'Content-Type': 'application/octet-stream',
+          'Content-Length': String(asset.bytes),
+          'X-GGUF-SHA256': asset.sha256,
+          'X-GGUF-START': '0',
+          'X-GGUF-END': String(asset.bytes - 1),
+        } });
+        await cache.put(key, response.clone());
+      } else if (network.status !== 206) {
         throw new Error('ZONOS3 CPU asset ' + asset.filename + ' range ' + start + '-' + end +
           ' returned HTTP ' + network.status + ', expected 206.');
+      } else {
+        const contentRange = network.headers.get('Content-Range') || '';
+        if (contentRange !== 'bytes ' + start + '-' + end + '/' + asset.bytes) {
+          throw new Error('ZONOS3 CPU asset ' + asset.filename + ' has unexpected Content-Range: ' + (contentRange || '(missing)'));
+        }
+        const declaredLength = Number(network.headers.get('Content-Length'));
+        if (declaredLength !== expected) throw new Error('Unexpected range length for ' + asset.filename + ': ' + declaredLength);
+        const body = await network.arrayBuffer();
+        if (body.byteLength !== expected) throw new Error('Unexpected range body length for ' + asset.filename + ': ' + body.byteLength);
+        response = new Response(body, { status: 200, headers: {
+          'Content-Type': 'application/octet-stream',
+          'Content-Length': String(expected),
+          'X-GGUF-SHA256': asset.sha256,
+          'X-GGUF-START': String(start),
+          'X-GGUF-END': String(end),
+        } });
+        await cache.put(key, response.clone());
       }
-      const contentRange = network.headers.get('Content-Range') || '';
-      if (contentRange !== 'bytes ' + start + '-' + end + '/' + asset.bytes) {
-        throw new Error('ZONOS3 CPU asset ' + asset.filename + ' has unexpected Content-Range: ' + (contentRange || '(missing)'));
-      }
-      const declaredLength = Number(network.headers.get('Content-Length'));
-      if (declaredLength !== expected) throw new Error('Unexpected range length for ' + asset.filename + ': ' + declaredLength);
-      const body = await network.arrayBuffer();
-      if (body.byteLength !== expected) throw new Error('Unexpected range body length for ' + asset.filename + ': ' + body.byteLength);
-      response = new Response(body, { status: 200, headers: {
-        'Content-Type': 'application/octet-stream',
-        'Content-Length': String(expected),
-        'X-GGUF-SHA256': asset.sha256,
-        'X-GGUF-START': String(start),
-        'X-GGUF-END': String(end),
-      } });
-      await cache.put(key, response.clone());
     }
     const bytes = new Uint8Array(await response.arrayBuffer());
     if (bytes.byteLength !== end - start + 1) throw new Error('Corrupt cached range for ' + asset.filename + '.');
@@ -164,7 +184,7 @@
       requireAsset(assets.speakerEmbedding, 'Imogen_en-British_F_1.embedding.npy'),
     ];
     const threads = options.threads || config.cpuThreads || config.info?.settings?.threads || THREADS;
-    if (!Number.isSafeInteger(threads) || threads < 1 || threads > 16) throw new Error('ZONOS3 CPU thread count must be from 1 to 16.');
+    if (!Number.isSafeInteger(threads) || threads < 1 || threads > MAX_THREADS) throw new Error('ZONOS3 CPU thread count must be from 1 to 12.');
 
     log('runtime-load', 'Loading the pinned community audio.cpp ZONOS3 CPU WebAssembly runtime.');
     module = await createZonos3Cpu({

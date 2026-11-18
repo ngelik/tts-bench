@@ -97,6 +97,12 @@ test('ZONOS3 CPU adapter rejects WebGPU instead of silently falling back', async
   }
 });
 
+test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', () => {
+  assert.throws(() => createZonos3CpuAdapter(model, { threads: 13 }), /thread count must be an integer from 1 to 12/);
+  assert.match(workerSource, /const PTHREAD_POOL_SIZE = 12/);
+  assert.match(workerSource, /threads > MAX_THREADS/);
+});
+
 test('ZONOS3 CPU worker verifies local range assets and reports the actual offline CPU backend', () => {
   assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v1/);
   assert.match(workerSource, /requireAsset\(assets\.backbone, 'backbone-ptq\.gguf'\)/);
@@ -110,8 +116,20 @@ test('ZONOS3 CPU worker verifies local range assets and reports the actual offli
   assert.match(workerSource, /Offline audio\.cpp generation/);
   assert.match(workerSource, /range\+|headers: \{ Range:/);
   assert.match(workerSource, /network\.status !== 206/);
+  assert.match(workerSource, /network\.status === 200 && start === 0 && end === asset\.bytes - 1/);
+  assert.match(workerSource, /crypto\.subtle\.digest\('SHA-256', body\)/);
   assert.match(workerSource, /network\.headers\.get\('Content-Range'\)/);
   assert.match(workerSource, /rate !== 44100/);
   assert.match(workerSource, /\.every\(Number\.isFinite\)/);
   assert.doesNotMatch(workerSource, /navigator\.gpu/);
+});
+
+test('ZONOS3 CPU bridge rejects truncated or internally split generation output', async () => {
+  const bridge = await readFile(new URL('../web/zonos3-cpu/bench_bridge.cpp', import.meta.url), 'utf8');
+  assert.match(bridge, /audiocpp_result_custom_schema\(result, &schema, &data\)/);
+  assert.match(bridge, /zonos3_generation_v1/);
+  assert.match(bridge, /metadata\.require\("frames"\)\.as_i64\(\) <= 0/);
+  assert.match(bridge, /metadata\.require\("chunks"\)\.as_i64\(\) != 1/);
+  assert.match(bridge, /metadata\.require\("reached_limit"\)\.as_bool\(\)/);
+  assert.match(bridge, /before terminal EOS/);
 });
