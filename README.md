@@ -180,7 +180,7 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
-| Silencio-2 28M FP32 | 74.51 | [1601.69](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | — |
+| Silencio-2 28M FP32 | 74.51 | [1601.69](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | [1664.92](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/summary.md) |
 
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
@@ -488,6 +488,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 94 · 2026-11-18 | silencio-2/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf/summary.md) | [SVG](results/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf/chart.svg) |
 | 95 · 2026-11-18 | silencio-2/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55/summary.md) | [SVG](results/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55/chart.svg) |
 | 96 · 2026-11-18 | silencio-2/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | [SVG](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/chart.svg) |
+| 97 · 2026-11-18 | silencio-2/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/summary.md) | [SVG](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/chart.svg) |
 
 </details>
 

@@ -18,7 +18,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 
 | Model | CPU mean Chrome RSS | CPU max sampled RSS | WebGPU mean Chrome RSS | WebGPU max sampled RSS | Pinned model weights |
 |---|---:|---:|---:|---:|---:|
-| Silencio-2 28M FP32 | 1601.69 MB (n=1; 1219 samples) | 1818.18 MB (sampled max; n=1; 1219 samples) | Not submitted | Not submitted | 74.51 MB |
+| Silencio-2 28M FP32 | 1601.69 MB (n=1; 1219 samples) | 1818.18 MB (sampled max; n=1; 1219 samples) | 1664.92 MB (n=1; 3928 samples) | 2629.24 MB (sampled max; n=1; 3928 samples) | 74.51 MB |
 
 ## Submitted receipts
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Silencio-2 28M FP32 | [Report](../../results/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf/summary.md) | [Report](../../results/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55/summary.md) | [Report](../../results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#silencio-2) | [Terms](../../docs/LICENSING.md) |
+| Silencio-2 28M FP32 | [Report](../../results/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf/summary.md) | [Report](../../results/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55/summary.md) | [Report](../../results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | [Report](../../results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#silencio-2) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
