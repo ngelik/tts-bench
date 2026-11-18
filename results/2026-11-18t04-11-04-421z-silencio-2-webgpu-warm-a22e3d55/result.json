@@ -1,0 +1,366 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55",
+  "createdAt": "2026-11-18T07:27:36.061Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "0d5dd8e407191485dcb34565e7f42baa961f5f3f",
+    "dirty": false,
+    "manifestSha256": "b33eb4131048fb51f79222f60e7fc67d78bde3178c2325f795bbf667e8c6bd8e"
+  },
+  "assets": [
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:silencio-2:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "runtime:silencio-2:@huggingface/transformers:dist/transformers.min.js",
+      "sha256": "79fad8c1c2fd165bf1e77ace20ce023fab4dc13b6621f0e586c9b8c59c4d09d8",
+      "bytes": 849451
+    },
+    {
+      "id": "runtime:silencio-2:@huggingface/transformers:LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "runtime:silencio-2:@huggingface/transformers:dist/ort-wasm-simd-threaded.jsep.mjs",
+      "sha256": "08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9",
+      "bytes": 44484
+    },
+    {
+      "id": "runtime:silencio-2:@huggingface/transformers:dist/ort-wasm-simd-threaded.jsep.wasm",
+      "sha256": "c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39",
+      "bytes": 21596019
+    },
+    {
+      "id": "silencio-2-release-attribution-txt",
+      "sha256": "1094b762a516faca0c76125e7e1207ed4ee395a2466d6de8f86ecb4951234326",
+      "bytes": 918
+    },
+    {
+      "id": "silencio-2-release-model-card-md",
+      "sha256": "f05e0e8f3064c4bad0770c7ba0a66d629894bc3a363c98569862c270f56c5169",
+      "bytes": 5383
+    },
+    {
+      "id": "silencio-2-release-silencio2-mit-license-txt",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "id": "silencio-2-release-source-json",
+      "sha256": "1ef7fb5beb938b06e8bbe23c49d01888e32e807d8114de24b2cbf2418eecea4a",
+      "bytes": 1011
+    },
+    {
+      "id": "silencio-2-release-upstream-export-mit-license-txt",
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1",
+      "bytes": 1036
+    },
+    {
+      "id": "silencio-2-release-upstream-notice-md",
+      "sha256": "c501cbfb6d8041cd6688e0510faba4e82cd740295dad91b99ec7a36199c57eed",
+      "bytes": 422
+    },
+    {
+      "id": "silencio-2-release-browser-smoke-json",
+      "sha256": "f130b152ccb008009c5ed0a2e4d0922dec5ecfef3a185e0668542f59c5f4dd24",
+      "bytes": 2687
+    },
+    {
+      "id": "silencio-2-release-bundle-json",
+      "sha256": "4a03db05f5286d9cd03a6298001852284746700460c202583343dbaad43fc445",
+      "bytes": 155549
+    },
+    {
+      "id": "silencio-2-release-flow-head-onnx",
+      "sha256": "32a371477e5bace03fb3ec7538ec6c42ebfd5ec86e33c5d2b36868753f9a738c",
+      "bytes": 3402870
+    },
+    {
+      "id": "silencio-2-release-flow-main-onnx",
+      "sha256": "42d19a94c34670264849228b8c79b4846879150be889328debf49ad9acc24ea4",
+      "bytes": 51195909
+    },
+    {
+      "id": "silencio-2-release-mimi-decoder-onnx",
+      "sha256": "abc9b17841b1ace31aecc1fdbcb8426a40c71fb8af5533f44a37936ef8666e33",
+      "bytes": 11698933
+    },
+    {
+      "id": "silencio-2-release-mimi-initial-state-bin-gz",
+      "sha256": "657b10c2bf6a1ea0bea344bbf551fe24160cd48730bdb428bbba62800eb3988c",
+      "bytes": 3183
+    },
+    {
+      "id": "silencio-2-release-text-conditioner-onnx",
+      "sha256": "abdea0102f1921766ef462cfe551731ac052f02043a773a1496a043e296c91be",
+      "bytes": 8216831
+    },
+    {
+      "id": "silencio-2-release-tokenizer-json",
+      "sha256": "19b3df07d52209244e4a61a431e94a8e076ddc6ba36bf0012653fd034d2cd80d",
+      "bytes": 245576
+    },
+    {
+      "id": "silencio-2-release-tokenizer-config-json",
+      "sha256": "b058edfc3f602b87d6a04ef01c2eaea111fe28ae021cb737e6aa77024f5fe167",
+      "bytes": 229
+    },
+    {
+      "id": "silencio-2-release-verification-json",
+      "sha256": "6ef8f85b4cea37054874b014d0e0991f6e81180b689f3ffb1300ec8ee70458d9",
+      "bytes": 297269
+    },
+    {
+      "id": "silencio-2-release-voice-260-state-bin-gz",
+      "sha256": "fb12d81ed4b842b149f1b1ff310d582bf9efab77ea7aa1b386f49ecfe8d2e838",
+      "bytes": 5596845
+    }
+  ],
+  "cells": [
+    {
+      "model": "silencio-2",
+      "support": {
+        "voiceCount": 8,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned BlueRoseLabs/Silencio-2 checkpoint and its eight bundled voice catalog entries; this benchmark exposes only synthetic voice 260.",
+        "sources": [
+          "https://huggingface.co/BlueRoseLabs/Silencio-2/blob/20930f5f6a6bb564f2a8207152fd5c5d8eecff03/README.md",
+          "https://huggingface.co/BlueRoseLabs/Silencio-2/tree/20930f5f6a6bb564f2a8207152fd5c5d8eecff03",
+          "https://erogol.com/small_tts_bench/"
+        ],
+        "notes": "English only. The browser configuration uses voice 260, carries its model-bound state, and does not expose custom voice cloning or the other seven catalog entries. CPU/WASM and WebGPU run FP32 ONNX graphs with one WASM thread; WebGPU allows WASM operator fallback and must prove actual GPU dispatch. Seeded browser noise is disclosed and is not bitwise PyTorch RNG parity."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "260",
+      "precision": "FP32 ONNX graphs; one-thread CPU/WASM or WebGPU with WASM operator fallback.",
+      "settings": {
+        "model": "BlueRoseLabs/Silencio-2@20930f5f6a6bb564f2a8207152fd5c5d8eecff03",
+        "voice": "260",
+        "sampleRate": 24000,
+        "wasmThreads": 1,
+        "runtime": "ONNX Runtime Web 1.31.1; Transformers.js 3.5.1 tokenizer.",
+        "executionScheduling": "All ONNX Runtime session runs are serialized inside the worker.",
+        "randomSeed": "Seed 0 per canonical source span; Mulberry32 + Box-Muller normal noise, scaled by sqrt(0.3); not bitwise PyTorch RNG parity.",
+        "frontend": "Pinned Silencio-2 prompt preparation, tag validation, SentencePiece-equivalent Unigram IDs and sentence/fallback chunking; 48 IDs is the soft chunking target and the official 50-token generator capacity is enforced.",
+        "generation": "Official drifting flow, EOS threshold, minimum frame and text-dependent EOS tail; raw unnormalized Float32 stream at 24 kHz.",
+        "voiceState": "Precomputed state from the official bundled synthetic voice 260 WAV and pinned model checkpoint.",
+        "outputLocation": "Every ONNX run is awaited; PCM is copied to worker CPU Float32Arrays before return.",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "browserNoise": "Mulberry32 + Box-Muller, seed 0 per source span",
+        "tokenizerFrontend": "Pinned local SentencePiece Unigram conversion"
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 306177 actual WebGPU compute dispatches during separate untimed synthesis. WebGPU with WASM operator fallback; CPU-readable PCM. Hooks removed before scored generation."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 1949888.2999999523,
+          "samples": 28984320,
+          "sampleRate": 24000,
+          "pcmSha256": "b2958881c8cb7a8d87dba4996f8b6da043fa3f44bac90639613f8ba13ed2f3e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 283.11500000953674,
+            "firstSourceChunkCompletedMs": 20803.69000005722,
+            "audioSeconds": 1207.68,
+            "realTimeFactor": 1.6145736453364734,
+            "minSamplesPerChunk": 186240,
+            "maxSamplesPerChunk": 474240
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 1962191.504999876,
+          "samples": 28984320,
+          "sampleRate": 24000,
+          "pcmSha256": "b2958881c8cb7a8d87dba4996f8b6da043fa3f44bac90639613f8ba13ed2f3e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 200.88499999046326,
+            "firstSourceChunkCompletedMs": 20654.700000047684,
+            "audioSeconds": 1207.68,
+            "realTimeFactor": 1.6247611163552234,
+            "minSamplesPerChunk": 186240,
+            "maxSamplesPerChunk": 474240
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 1962367.9550001621,
+          "samples": 28984320,
+          "sampleRate": 24000,
+          "pcmSha256": "b2958881c8cb7a8d87dba4996f8b6da043fa3f44bac90639613f8ba13ed2f3e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 202.61500000953674,
+            "firstSourceChunkCompletedMs": 20581.615000009537,
+            "audioSeconds": 1207.68,
+            "realTimeFactor": 1.624907222939986,
+            "minSamplesPerChunk": 186240,
+            "maxSamplesPerChunk": 474240
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 1962852.2999999523,
+          "samples": 28984320,
+          "sampleRate": 24000,
+          "pcmSha256": "b2958881c8cb7a8d87dba4996f8b6da043fa3f44bac90639613f8ba13ed2f3e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 203.59500002861023,
+            "firstSourceChunkCompletedMs": 20763.06500005722,
+            "audioSeconds": 1207.68,
+            "realTimeFactor": 1.6253082770269875,
+            "minSamplesPerChunk": 186240,
+            "maxSamplesPerChunk": 474240
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 1957790.730000019,
+          "samples": 28984320,
+          "sampleRate": 24000,
+          "pcmSha256": "b2958881c8cb7a8d87dba4996f8b6da043fa3f44bac90639613f8ba13ed2f3e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 194.34999990463257,
+            "firstSourceChunkCompletedMs": 20634.484999895096,
+            "audioSeconds": 1207.68,
+            "realTimeFactor": 1.621117125397472,
+            "minSamplesPerChunk": 186240,
+            "maxSamplesPerChunk": 474240
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 1962266.355000019,
+          "samples": 28984320,
+          "sampleRate": 24000,
+          "pcmSha256": "b2958881c8cb7a8d87dba4996f8b6da043fa3f44bac90639613f8ba13ed2f3e4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 201.1949999332428,
+            "firstSourceChunkCompletedMs": 20638.210000038147,
+            "audioSeconds": 1207.68,
+            "realTimeFactor": 1.6248230946939746,
+            "minSamplesPerChunk": 186240,
+            "maxSamplesPerChunk": 474240
+          },
+          "audio": {
+            "sha256": "3fa8933d804d1d3d8fdb7e63e8a2a975d5848f4f4598a4cad8bf08281cbd4be4",
+            "bytes": 57968684
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-18T03-09-54-940Z-24399c495e1e; cell 2/4; source 0d5dd8e407191485dcb34565e7f42baa961f5f3f; requested n=5; effective n=5; MacBook Pro (MacBookPro18,3, Apple M1 Pro, 8 CPU cores: 6 performance and 2 efficiency, 16 GB RAM), macOS 26.6.2 arm64, headed Google Chrome 157.0.8103.40, AC attached. One excluded full-article warm-up per warm backend; sequential CPU warm, WebGPU warm, then CPU and WebGPU cached full-article RSS diagnostics. Canonical english-20k-v1 fixture; each cell runs alone through the shared M1 publication slot. Background load and thermal/power state are recorded with the native receipts."
+  ]
+}
