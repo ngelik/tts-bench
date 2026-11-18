@@ -21,5 +21,7 @@ jobs:
         run: npm run listen:build
       - name: Read back public Supra selections, clips and full WAV assets
         run: xvfb-run -a node tools/verify-supra-publication.mjs
+      - name: Diagnose live dashboard DOM in hosted Chrome
+        run: xvfb-run -a node tools/diagnose-live-dashboard.mjs
       - name: Verify all live dashboard views and selected recordings in hosted Chrome
         run: xvfb-run -a node tools/check-dashboard.mjs --url https://ngelik.github.io/tts-bench/
