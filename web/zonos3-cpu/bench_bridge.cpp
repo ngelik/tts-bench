@@ -2,12 +2,14 @@
 // Copyright (c) 2026 tts-bench contributors.
 // audio.cpp and Zyphra-derived code retain their own licenses; see NOTICE.md.
 #include "audiocpp.h"
+#include "engine/framework/io/json.h"
 
 #include <emscripten/emscripten.h>
 
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#include <exception>
 #include <limits>
 #include <string>
 
@@ -57,9 +59,9 @@ extern "C" {
 EMSCRIPTEN_KEEPALIVE int bench_open(const char * model_path, const char * backend, int threads) {
     close_all();
     bridge_error[0] = '\0';
-    if (model_path == nullptr || backend == nullptr || threads < 1 || threads > 16 ||
+    if (model_path == nullptr || backend == nullptr || threads < 1 || threads > 12 ||
         std::strcmp(backend, "cpu") != 0) {
-        std::snprintf(bridge_error, sizeof(bridge_error), "ZONOS3 CPU bridge requires a model path, CPU backend and 1-16 threads.");
+        std::snprintf(bridge_error, sizeof(bridge_error), "ZONOS3 CPU bridge requires a model path, CPU backend and 1-12 threads.");
         return static_cast<int>(AUDIOCPP_ERR_INVALID_ARGUMENT);
     }
 
@@ -126,6 +128,38 @@ EMSCRIPTEN_KEEPALIVE int bench_generate(const char * text, uint32_t seed, int ch
     if (status == AUDIOCPP_OK) status = audiocpp_request_set_option(request, "text_chunk_size", "20000");
 
     if (status == AUDIOCPP_OK) status = audiocpp_session_run(session, request, &result);
+    if (status == AUDIOCPP_OK) {
+        const char * schema = nullptr;
+        const char * data = nullptr;
+        status = audiocpp_result_custom_schema(result, &schema, &data);
+        if (status != AUDIOCPP_OK || schema == nullptr || std::strcmp(schema, "zonos3_generation_v1") != 0 || data == nullptr) {
+            std::snprintf(bridge_error, sizeof(bridge_error), "audio.cpp did not return zonos3_generation_v1 completion metadata.");
+            clear_result();
+            return static_cast<int>(AUDIOCPP_ERR_RUNTIME);
+        }
+        try {
+            const auto metadata = engine::io::json::parse(data);
+            if (!metadata.is_object() || metadata.require("frames").as_i64() <= 0) {
+                std::snprintf(bridge_error, sizeof(bridge_error), "ZONOS3 generation returned no complete audio frames.");
+                clear_result();
+                return static_cast<int>(AUDIOCPP_ERR_RUNTIME);
+            }
+            if (metadata.require("chunks").as_i64() != 1) {
+                std::snprintf(bridge_error, sizeof(bridge_error), "ZONOS3 generation split a canonical span into multiple internal chunks.");
+                clear_result();
+                return static_cast<int>(AUDIOCPP_ERR_RUNTIME);
+            }
+            if (metadata.require("reached_limit").as_bool()) {
+                std::snprintf(bridge_error, sizeof(bridge_error), "ZONOS3 generation reached its token limit before terminal EOS; partial audio is rejected.");
+                clear_result();
+                return static_cast<int>(AUDIOCPP_ERR_RUNTIME);
+            }
+        } catch (const std::exception & error) {
+            std::snprintf(bridge_error, sizeof(bridge_error), "Could not validate ZONOS3 generation metadata: %s", error.what());
+            clear_result();
+            return static_cast<int>(AUDIOCPP_ERR_RUNTIME);
+        }
+    }
     if (status == AUDIOCPP_OK) status = audiocpp_result_audio(result, &pcm, &frames, &rate, &channels);
     audiocpp_request_free(request);
     if (status != AUDIOCPP_OK) {

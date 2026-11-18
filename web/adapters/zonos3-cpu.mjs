@@ -1,5 +1,6 @@
 const DEFAULT_RUNTIME_VERSION = 'audio-cpp-zonos3-cpu-wasm-v1';
 const DEFAULT_THREADS = 6;
+const MAX_THREADS = 12;
 const WORKER_URL = new URL('../workers/zonos3-cpu.js', import.meta.url);
 
 function unsupported(model, reason) {
@@ -16,7 +17,7 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
   if (!model || model.family !== 'zonos3' || !model.cpuAssets || !model.info) {
     throw new Error('ZONOS3 CPU adapter requires the registered ZONOS3 model config and its pinned GGUF assets.');
   }
-  if (!Number.isSafeInteger(threads) || threads < 1 || threads > 12) {
+  if (!Number.isSafeInteger(threads) || threads < 1 || threads > MAX_THREADS) {
     throw new Error('ZONOS3 CPU thread count must be an integer from 1 to 12.');
   }
 
