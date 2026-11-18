@@ -26,6 +26,7 @@ const attribution={"lfm3-audio-2b-gguf":"LFM3-Audio-2B by Liquid AI; official GG
  'tiny-voca':'Tiny Voca by Muhammed Nazeem (n4ze3m), Apache-2.0. Synthetic F2 voice, English.',
  'pocket-tts-100m-english-int8':'Pocket TTS by Kyutai; KevinAHM public ONNX export and browser frontend, alba English preset. CC-BY-4.0 with upstream prohibited-use conditions; noncommercial benchmark evaluation.'};
 attribution['silencio-2']='Silencio-2 by BlueRose Labs; model and converted graphs CC-BY-4.0. Fine-tuned from Kyutai Pocket TTS with Basis Global Emotions data; bundled synthetic voice 260. Noncommercial benchmark evaluation.';
+attribution['klein-tts-x1.5-pro']='Klein-TTS X1.5 Pro by Klein ML; Sarah (af_heart) English voice. Pinned model is Apache-2.0. Browser implementation is a disclosed port of @kleinml/kleintts 0.2.0.';
 export async function addAudio({result,wav,model,backend}){
  const d=await readResult(resolve(result),{publication:true});verifySource(d,process.cwd(),sourceCache);const c=d.cells.find(c=>c.model===model&&c.backendRequested===backend&&c.status==='measured');if(!c)throw new Error('No measured source cell');
  const b=await readFile(wav),digest=sha256(b),w=wavInfo(b);const t=c.trials.find(t=>t.audio?.sha256===digest&&t.audio.bytes===b.length);if(!t||t.samples!==w.samples||t.sampleRate!==w.sampleRate)throw new Error('Full audio does not match a scored receipt');

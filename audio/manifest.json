@@ -2097,6 +2097,62 @@
         "sha256": "5c1503c288c0307ebf3b28ef3bc35ccffdf2842cf5e9a2db9573993b7b0bc4f4",
         "bytes": 61639148
       }
+    },
+    {
+      "resultId": "2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Sarah (af_heart)",
+      "language": "en",
+      "attribution": "Klein-TTS X1.5 Pro by Klein ML; Sarah (af_heart) English voice. Pinned model is Apache-2.0. Browser implementation is a disclosed port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee--klein-tts-x1.5-pro--cpu.wav",
+        "sha256": "561d94b2bf50c0fcf28a498e00b19c58ff79ec120cb96177185f65298dcce297",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee--klein-tts-x1.5-pro--cpu-full.wav",
+        "sha256": "b89e7eece63e6bb93f24dd328f7883ae0eae43b531bcd6d72007e818bccfcb10",
+        "bytes": 60412844
+      }
+    },
+    {
+      "resultId": "2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Sarah (af_heart)",
+      "language": "en",
+      "attribution": "Klein-TTS X1.5 Pro by Klein ML; Sarah (af_heart) English voice. Pinned model is Apache-2.0. Browser implementation is a disclosed port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb--klein-tts-x1.5-pro--webgpu.wav",
+        "sha256": "749b5fd8dad3f7c97aa023659d87f936efe1b522427588163878127c754c3d10",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb--klein-tts-x1.5-pro--webgpu-full.wav",
+        "sha256": "65e4e26420c90fe0e897f15cf57498ca3085612b46f791d64354dad066ac65ff",
+        "bytes": 60412844
+      }
     }
   ]
 }

@@ -72,6 +72,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | SupraTTS 1.0 Preview FP32 | E4 | 6.96 | [21.88 s (n=5)](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md) | [16.47 s (n=5)](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md) | Native; matched configuration |
 | Audio8 TTS Realistic 0.6B INT4 | E5 | 587.71 | — | [9783.96 s (n=5)](results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | Native; independent attempts |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | [15119.14 s (n=2 of 5 planned; selected)](reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection) | [1600.61 s (n=5)](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
+| Klein-TTS X1.5 Pro FP32 | E5 | 52.88 | [251.73 s (n=5)](results/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee/summary.md) | [22.00 s (n=5)](results/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb/summary.md) | Native; matched configuration |
 | LFM3-Audio-2B (Fusor q7 / CPU 6 threads) | E5 | 2276.67 | [526.05 s (n=5)](results/2026-11-11t09-27-11-391z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-174f10d4/summary.md) | — | Native; independent attempts |
 | LFM3-Audio-2B (GGUF Q4_K_M / Q8_0) | E5 | 1403.44 | — | [377.75 s (n=5)](results/2026-11-11t07-33-16-967z-lfm3-audio-2b-gguf-webgpu-warm-b42e4073/summary.md) | Native; independent attempts |
 | LFM3-Omni-2B (Fusor q7 / CPU 6 threads) | E5 | 2494.57 | [536.34 s (n=5)](results/2026-11-11t11-02-51-665z-lfm3-omni-2b-fusor-q7-cpu-cpu-warm-4378e428/summary.md) | — | Native; independent attempts |
@@ -202,6 +203,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Sopro v2 Turbo | 509.82 | [1680.16](results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/summary.md) | [1792.63](results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/summary.md) |
 
+**RAM 15** · MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`1bf51870`](https://github.com/ngelik/tts-bench/commit/1bf5187012bad86ab324679b05dfc0a712896f80).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Klein-TTS X1.5 Pro FP32 | 52.88 | [1331.76](results/2026-11-18t11-54-42-795z-klein-tts-x1.5-pro-cpu-cached-289eb3eb/summary.md) | [1903.43](results/2026-11-18t12-26-55-316z-klein-tts-x1.5-pro-webgpu-cached-d9dafc80/summary.md) |
+
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
 ### Voice and language support
@@ -295,6 +302,10 @@ Each report states its selected scenarios and keeps their measurement boundaries
 [five-tiny-models — all-metrics table and source receipts](reports/five-tiny-models/overview.md)
 
 ![five-tiny-models — campaign metrics](reports/five-tiny-models/overview.svg)
+
+[klein-x1-5-pro — all-metrics table and source receipts](reports/klein-x1-5-pro/overview.md)
+
+![klein-x1-5-pro — campaign metrics](reports/klein-x1-5-pro/overview.svg)
 
 [lfm3-audio-cpu — all-metrics table and source receipts](reports/lfm3-audio-cpu/overview.md)
 
@@ -424,6 +435,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | PiVo 1.4M curated (Pi voice) | cpu | [Receipt](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=historical-2026-11-08-m1pro-primary-warm--pivo-curated--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/historical-2026-11-08-m1pro-primary-warm--pivo-curated--cpu-full.wav) |
 | SupraTTS 1.0 Preview FP32 | cpu | [Receipt](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76--supratts-1.0-preview--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76--supratts-1.0-preview--cpu-full.wav) |
 | SupraTTS 1.0 Preview FP32 | webgpu | [Receipt](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6--supratts-1.0-preview--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6--supratts-1.0-preview--webgpu-full.wav) |
+| Klein-TTS X1.5 Pro FP32 | cpu | [Receipt](results/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee--klein-tts-x1.5-pro--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee--klein-tts-x1.5-pro--cpu-full.wav) |
+| Klein-TTS X1.5 Pro FP32 | webgpu | [Receipt](results/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb--klein-tts-x1.5-pro--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb--klein-tts-x1.5-pro--webgpu-full.wav) |
 
 <details>
 <summary>All submitted results — every scenario and earlier run</summary>
@@ -528,17 +541,23 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 96 · 2026-11-18 | supratts-1.0-preview/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t07-30-36-660z-supratts-1.0-preview-cpu-warm-3c3a78a9/summary.md) | [SVG](results/2026-11-18t07-30-36-660z-supratts-1.0-preview-cpu-warm-3c3a78a9/chart.svg) |
 | 97 · 2026-11-18 | supratts-1.0-preview/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t07-32-59-909z-supratts-1.0-preview-cpu-cached-976d892f/summary.md) | [SVG](results/2026-11-18t07-32-59-909z-supratts-1.0-preview-cpu-cached-976d892f/chart.svg) |
 | 98 · 2026-11-18 | supratts-1.0-preview/webgpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t07-33-33-066z-supratts-1.0-preview-webgpu-warm-dbe1775e/summary.md) | [SVG](results/2026-11-18t07-33-33-066z-supratts-1.0-preview-webgpu-warm-dbe1775e/chart.svg) |
-| 99 · 2026-11-18 | silencio-2/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | [SVG](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/chart.svg) |
-| 100 · 2026-11-18 | supratts-1.0-preview/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md) | [SVG](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/chart.svg) |
-| 101 · 2026-11-18 | supratts-1.0-preview/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-16-35-187z-supratts-1.0-preview-cpu-cached-43089de0/summary.md) | [SVG](results/2026-11-18t08-16-35-187z-supratts-1.0-preview-cpu-cached-43089de0/chart.svg) |
-| 102 · 2026-11-18 | sopro-v2-turbo/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-17-08-445z-sopro-v2-turbo-cpu-cached-519c04ea/summary.md) | [SVG](results/2026-11-18t08-17-08-445z-sopro-v2-turbo-cpu-cached-519c04ea/chart.svg) |
-| 103 · 2026-11-18 | supratts-1.0-preview/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md) | [SVG](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/chart.svg) |
-| 104 · 2026-11-18 | sopro-v2-turbo/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/summary.md) | [SVG](results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/chart.svg) |
-| 105 · 2026-11-18 | supratts-1.0-preview/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47/summary.md) | [SVG](results/2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47/chart.svg) |
-| 106 · 2026-11-18 | sopro-v2-turbo/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/summary.md) | [SVG](results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/chart.svg) |
-| 107 · 2026-11-18 | silencio-2/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/summary.md) | [SVG](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/chart.svg) |
-| 108 · 2026-11-18 | sopro-v2-turbo/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | [SVG](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/chart.svg) |
-| 109 · 2026-11-18 | sopro-v2-turbo/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/summary.md) | [SVG](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/chart.svg) |
+| 99 · 2026-11-18 | klein-tts-x1.5-pro/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t07-33-51-166z-klein-tts-x1.5-pro-cpu-warm-95c8a5c3/summary.md) | [SVG](results/2026-11-18t07-33-51-166z-klein-tts-x1.5-pro-cpu-warm-95c8a5c3/chart.svg) |
+| 100 · 2026-11-18 | silencio-2/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/summary.md) | [SVG](results/2026-11-18t08-02-54-453z-silencio-2-cpu-cached-ef3f099f/chart.svg) |
+| 101 · 2026-11-18 | supratts-1.0-preview/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md) | [SVG](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/chart.svg) |
+| 102 · 2026-11-18 | klein-tts-x1.5-pro/webgpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t08-16-32-717z-klein-tts-x1.5-pro-webgpu-warm-94682c35/summary.md) | [SVG](results/2026-11-18t08-16-32-717z-klein-tts-x1.5-pro-webgpu-warm-94682c35/chart.svg) |
+| 103 · 2026-11-18 | supratts-1.0-preview/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-16-35-187z-supratts-1.0-preview-cpu-cached-43089de0/summary.md) | [SVG](results/2026-11-18t08-16-35-187z-supratts-1.0-preview-cpu-cached-43089de0/chart.svg) |
+| 104 · 2026-11-18 | sopro-v2-turbo/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-17-08-445z-sopro-v2-turbo-cpu-cached-519c04ea/summary.md) | [SVG](results/2026-11-18t08-17-08-445z-sopro-v2-turbo-cpu-cached-519c04ea/chart.svg) |
+| 105 · 2026-11-18 | supratts-1.0-preview/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md) | [SVG](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/chart.svg) |
+| 106 · 2026-11-18 | sopro-v2-turbo/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/summary.md) | [SVG](results/2026-11-18t08-29-56-036z-sopro-v2-turbo-webgpu-cached-548c984a/chart.svg) |
+| 107 · 2026-11-18 | supratts-1.0-preview/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47/summary.md) | [SVG](results/2026-11-18t08-38-52-443z-supratts-1.0-preview-webgpu-cached-58e39c47/chart.svg) |
+| 108 · 2026-11-18 | sopro-v2-turbo/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/summary.md) | [SVG](results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/chart.svg) |
+| 109 · 2026-11-18 | silencio-2/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/summary.md) | [SVG](results/2026-11-18t08-49-53-356z-silencio-2-webgpu-cached-d95444ac/chart.svg) |
+| 110 · 2026-11-18 | sopro-v2-turbo/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | [SVG](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/chart.svg) |
+| 111 · 2026-11-18 | klein-tts-x1.5-pro/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb/summary.md) | [SVG](results/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb/chart.svg) |
+| 112 · 2026-11-18 | sopro-v2-turbo/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/summary.md) | [SVG](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/chart.svg) |
+| 113 · 2026-11-18 | klein-tts-x1.5-pro/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee/summary.md) | [SVG](results/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee/chart.svg) |
+| 114 · 2026-11-18 | klein-tts-x1.5-pro/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t11-54-42-795z-klein-tts-x1.5-pro-cpu-cached-289eb3eb/summary.md) | [SVG](results/2026-11-18t11-54-42-795z-klein-tts-x1.5-pro-cpu-cached-289eb3eb/chart.svg) |
+| 115 · 2026-11-18 | klein-tts-x1.5-pro/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t12-26-55-316z-klein-tts-x1.5-pro-webgpu-cached-d9dafc80/summary.md) | [SVG](results/2026-11-18t12-26-55-316z-klein-tts-x1.5-pro-webgpu-cached-d9dafc80/chart.svg) |
 
 </details>
 
