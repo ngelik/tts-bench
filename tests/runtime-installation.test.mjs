@@ -66,7 +66,7 @@ test('generated assets import from pinned build artifact paths and verify withou
   const runtimeBytes=Buffer.from('generated wasm fixture');
   const modelBytes=Buffer.from('generated model fixture');
   const build='Pinned build: tools/build fixture at exact source revision.';
-  const generated=(artifactPath,bytes)=>({artifactPath,build,bytes:bytes.length,sha256:sha(bytes)});
+  const generated=(artifactPath,bytes)=>({bytes:bytes.length,sha256:sha(bytes),generated:{artifactPath,build}});
   const runtimeFile={path:'runtime.wasm',target:'runtimes/generated-v1/runtime.wasm',kind:'runtime',...generated('runtime.wasm',runtimeBytes)};
   const modelAsset={id:'generated-weight',target:'models/generated/model.bin',kind:'model-weights',...generated('model.bin',modelBytes)};
   const model={displayName:'Generated import test',modelRevision:'a'.repeat(40),backends:['cpu'],support:{voiceCount:null,bundledVoiceCount:null,languageCount:null,languages:null,scope:'Test fixture',sources:['https://example.invalid/model'],notes:'Unknown test support'},license:{requiresAcceptance:false},runtime:{package:'generated-runtime',version:'v1',files:[runtimeFile]},assets:[modelAsset]};
