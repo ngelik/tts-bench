@@ -269,6 +269,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | sanoTTS Amy 1.83M (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy-1p8m-gguf) |
 | sanoTTS HFC (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-hfc-gguf) |
 | sanoTTS Kristin (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-kristin-gguf) |
+| Inflect Micro v3 FP32 | 6 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#inflect-micro-v3) |
 
 ### Controlled native comparisons
 
