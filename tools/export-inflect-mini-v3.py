@@ -260,29 +260,33 @@ class WaveformGraph(nn.Module):
 class ExportInstanceNorm1d(nn.Module):
     """InstanceNorm1d expressed with reductions for dynamic-channel ONNX export.
 
-    The pinned generator uses affine InstanceNorm1d with input statistics
-    (track_running_stats=False). The legacy TorchScript ONNX symbolic rejects
-    its dynamic channel dimension even though the layer's affine tensors bind
-    that dimension. This explicit population-variance form preserves the
-    inference equation and lets ONNX keep both channels and frame count dynamic.
-    The complete waveform parity check below compares it against the untouched
-    upstream native generator.
+    The pinned generator uses input-statistics InstanceNorm1d
+    (track_running_stats=False); the checkpoint retains affine parameters only
+    for some layers and omits identity affine pairs from the rest. The legacy
+    TorchScript ONNX symbolic rejects its dynamic channel dimension even when
+    affine tensors bind that dimension. This explicit population-variance form
+    preserves both affine and nonaffine inference equations and lets ONNX keep
+    channels and frame count dynamic. Complete waveform parity below compares
+    it against the untouched upstream native generator.
     """
 
     def __init__(self, source: nn.InstanceNorm1d):
         super().__init__()
-        require(source.affine and not source.track_running_stats,
-                "Only pinned affine/input-statistics InstanceNorm is export-qualified")
+        require(not source.track_running_stats,
+                "Only pinned input-statistics InstanceNorm is export-qualified")
         self.eps = float(source.eps)
-        self.weight = source.weight
-        self.bias = source.bias
+        self.affine = bool(source.affine)
+        self.weight = source.weight if self.affine else None
+        self.bias = source.bias if self.affine else None
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         mean = x.mean(dim=-1, keepdim=True)
         centered = x - mean
         variance = centered.square().mean(dim=-1, keepdim=True)
         normalized = centered * torch.rsqrt(variance + self.eps)
-        return normalized * self.weight.reshape(1, -1, 1) + self.bias.reshape(1, -1, 1)
+        if self.affine:
+            normalized = normalized * self.weight.reshape(1, -1, 1) + self.bias.reshape(1, -1, 1)
+        return normalized
 
 
 def onnx_export_generator(generator: nn.Module) -> nn.Module:
