@@ -61,7 +61,11 @@ export function splitMicroText(text, limit = INTERNAL_TEXT_LIMIT) {
     let last = -1;
     for (const match of text.slice(start, end).matchAll(boundary)) {
       const candidate = start + match.index + match[0].length;
-      if (text.slice(start, candidate).trim()) last = candidate;
+      // A boundary can consume the final nonspace character in the current
+      // window and leave only trailing whitespace. That whitespace cannot be
+      // phonemized as a separate utterance or reattached when it would exceed
+      // the limit, so choose the previous safe word boundary instead.
+      if (text.slice(start, candidate).trim() && text.slice(candidate).trim()) last = candidate;
     }
     if (last < 0) throw new Error('Micro found no safe split point within the 220-character limit.');
     chunks.push(text.slice(start, last));
