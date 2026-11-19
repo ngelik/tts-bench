@@ -7002,24 +7002,24 @@
         },
         {
           "id": "zonos3-cpu-runtime-js",
-          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.js",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/bench_zonos3_cpu.js",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.js",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/bench_zonos3_cpu.js",
           "bytes": 121508,
           "sha256": "5081914362c042de1e353f9cea93cbe884d9bc5081002cf587f5798122feec7a",
           "kind": "runtime"
         },
         {
           "id": "zonos3-cpu-runtime-wasm",
-          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.wasm",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/bench_zonos3_cpu.wasm",
-          "bytes": 4231507,
-          "sha256": "690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/bench_zonos3_cpu.wasm",
+          "bytes": 4223098,
+          "sha256": "59ca2ce1c12bffd27fa13beb00e2d90d919f00bcc083c963ce29878de3502bf8",
           "kind": "runtime"
         },
         {
           "id": "zonos3-cpu-runtime-third-party-notices",
-          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v2/THIRD-PARTY-NOTICES.txt",
-          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v2-690469b7955a/THIRD-PARTY-NOTICES.txt",
+          "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v3/THIRD-PARTY-NOTICES.txt",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/THIRD-PARTY-NOTICES.txt",
           "bytes": 57861,
           "sha256": "a47966056c2230037d837c507d812040bd7eaae74cb933a33031af35f0a1064a",
           "kind": "license"
