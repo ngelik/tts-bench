@@ -11,7 +11,7 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee", "phonon", "leokani-7m", "leokani-4.5m", "pivo-curated", "woof", "piper-en-gb-southern-english-female-low", "supertonic-3", "kokoro-82m", "mms-english", "kitten-nano-0.8", "sano-amy", "inflect-micro-v2", "lfm3-audio-2b-gguf", "lfm3-omni-2b-gguf", "lfm3-audio-2b-fusor-q7-cpu", "lfm3-omni-2b-fusor-q7-cpu", "mach-boom", "pocket-tts-100m-english-int8", "fun-cosyvoice3-0.5b-2512", "audio8-realistic-0.6b-int4", "ming-3.0-tts-0.5b-gguf", "ming-3.0-tts-0.5b-fusor-mix-cpu", "tiny-voca", "sopro-v2-turbo", "supratts-1.0-preview", "klein-tts-x1.5-pro", "linnet-en-35m", "silencio-2", "zonos3-mini", "sano-heart-nano-gguf-f32", "sano-robot-mcu", "sano-trellis", "inflect-atom-v3", "sano-heart-gguf", "sano-amy-gguf", "sano-amy-small-gguf", "sano-amy-1p8m-gguf", "sano-hfc-gguf", "sano-kristin-gguf"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee", "phonon", "leokani-7m", "leokani-4.5m", "pivo-curated", "woof", "piper-en-gb-southern-english-female-low", "supertonic-3", "kokoro-82m", "mms-english", "kitten-nano-0.8", "sano-amy", "inflect-micro-v2", "lfm3-audio-2b-gguf", "lfm3-omni-2b-gguf", "lfm3-audio-2b-fusor-q7-cpu", "lfm3-omni-2b-fusor-q7-cpu", "mach-boom", "pocket-tts-100m-english-int8", "fun-cosyvoice3-0.5b-2512", "audio8-realistic-0.6b-int4", "ming-3.0-tts-0.5b-gguf", "ming-3.0-tts-0.5b-fusor-mix-cpu", "tiny-voca", "sopro-v2-turbo", "supratts-1.0-preview", "klein-tts-x1.5-pro", "linnet-en-35m", "silencio-2", "zonos3-mini", "sano-heart-nano-gguf-f32", "sano-robot-mcu", "sano-trellis", "inflect-atom-v3", "sano-heart-gguf", "sano-amy-gguf", "sano-amy-small-gguf", "sano-amy-1p8m-gguf", "sano-hfc-gguf", "sano-kristin-gguf", "inflect-micro-v3"]);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -105,6 +105,11 @@ test('catalog entries match the pinned browser backends', () => {
   for (const id of ['lfm3-audio-2b-gguf','lfm3-omni-2b-gguf']) {
     const m=models.find(model=>model.id===id);assert.deepEqual(m.backends,['webgpu']);assert.equal(m.support.languageCount,18);assert.equal(m.support.voiceCount,null);
   }
+  const microV3 = models.find(model => model.id === 'inflect-micro-v3');
+  assert.deepEqual(microV3.backends, ['cpu', 'webgpu']);
+  assert.equal(microV3.modelRevision, 'c1a7db6ef44c931623fc2028cb0409659b83156c');
+  assert.deepEqual([microV3.support.voiceCount, microV3.support.bundledVoiceCount, microV3.support.languageCount], [6, 1, 1]);
+  assert.equal(microV3.license.requiresAcceptance, false);
 });
 
 test('Piper has voice and lineage cards plus immutable cache-only runtime pins', async () => {
