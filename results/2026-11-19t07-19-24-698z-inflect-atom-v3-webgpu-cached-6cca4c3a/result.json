@@ -1,0 +1,1563 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a",
+  "createdAt": "2026-11-19T07:21:02.547Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "913fb381bba216d744b3168705029d0da3ab9a5c",
+    "dirty": false,
+    "manifestSha256": "4526c64c6f4eebbba1a522a9416c3a071a5802521e3e3947f18d4279cbaec0ea"
+  },
+  "assets": [
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:inflect-atom-v3:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "inflect-atom-v3-encoder.onnx",
+      "sha256": "7f01cf98b3fb0063ae29de9b4a1f9b083353dac1a75e2007ccead439983fe4b4",
+      "bytes": 419098
+    },
+    {
+      "id": "inflect-atom-v3-decoder.onnx",
+      "sha256": "d8e2c11e1cf80382771ad901b79a7e95f4bc8bfa272df1cd34c74891cbc4a8b2",
+      "bytes": 284762
+    },
+    {
+      "id": "inflect-atom-v3-dsp.json",
+      "sha256": "d4e96cee04b1f7c88ecf6c63f772abd2f067c84d8424ffdc324d287468a07c96",
+      "bytes": 4178
+    },
+    {
+      "id": "inflect-atom-v3-vocab.json",
+      "sha256": "8d65b0188b77eafc60751dac42bbac7ab5f5685074af44db91d1877b42dc1d7c",
+      "bytes": 1416
+    },
+    {
+      "id": "inflect-atom-v3-dsp.mjs",
+      "sha256": "a552489e9e4dda60b1428185ba1d731b42957af4d4b1d2d2bea5627ac71653f5",
+      "bytes": 10455
+    },
+    {
+      "id": "inflect-atom-v3-dsp.wasm",
+      "sha256": "0775e74e4e440a2f71e9c7167387d377ec60ddccdb230fe76a6b9e039e7c29ad",
+      "bytes": 29177
+    },
+    {
+      "id": "inflect-atom-v3-espeak.mjs",
+      "sha256": "71f9dddd13d9753bd8f747c146dfa8a4dabf2707bd567126f006351d6750cc59",
+      "bytes": 73422
+    },
+    {
+      "id": "inflect-atom-v3-espeak.wasm",
+      "sha256": "becd0761e0f38c3ffd8d26a273323e69fbb37e3b1ec6465e8a5024e283713b37",
+      "bytes": 305272
+    },
+    {
+      "id": "inflect-atom-v3-espeak.data",
+      "sha256": "66c36c462cf1693ab179baaea74a2d4330cbc8dd72eed20696b12e734fa702dd",
+      "bytes": 827621
+    },
+    {
+      "id": "inflect-atom-v3-provenance.json",
+      "sha256": "cdce3a263ff97a537e30a63b98e1ac1d5deb643e9a9849a792933047468089c0",
+      "bytes": 1686
+    },
+    {
+      "id": "inflect-atom-v3-export-evidence.json",
+      "sha256": "d93ac8ec797a90f83fb8e458712fbf64cae79704fd7ce2270fac6f85c3f255d6",
+      "bytes": 34599
+    },
+    {
+      "id": "inflect-atom-v3-dsp-native-parity.json",
+      "sha256": "f9c8fe5d72cbe4fbb2dcb682b6acc2f322e42993e9b71480533e7f412a20cffa",
+      "bytes": 208
+    },
+    {
+      "id": "inflect-atom-v3-dsp-wasm-parity.json",
+      "sha256": "645f659d7747024d4b643047acae58e4c50ebff8aecf99e15d6294eeb1c12b39",
+      "bytes": 173
+    },
+    {
+      "id": "inflect-atom-v3-chrome-cpu-compatibility.json",
+      "sha256": "8e5fe50324366d1223954690d32ce7da9fd789cf5a3c17f5a544b76604b75289",
+      "bytes": 28521
+    },
+    {
+      "id": "inflect-atom-v3-espeak-COPYING",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "inflect-atom-v3-emscripten-LICENSE",
+      "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+      "bytes": 5093
+    },
+    {
+      "id": "inflect-atom-v3-misaki-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "inflect-atom-v3-phonemizer-fork-LICENSE",
+      "sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94",
+      "bytes": 35142
+    },
+    {
+      "id": "inflect-atom-v3-LICENSE.md",
+      "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+      "bytes": 10455
+    },
+    {
+      "id": "inflect-atom-v3-LICENSE_SCOPE.json",
+      "sha256": "3d5def598a9fcc36b5e7eec17caeff40a1c3369ef868fadfdd387172ce6c5879",
+      "bytes": 719
+    },
+    {
+      "id": "inflect-atom-v3-LICENSING.md",
+      "sha256": "b3845f9871aff6faefe97373982f201250d179b42bd81a1453e9731adfbe9cfd",
+      "bytes": 1489
+    },
+    {
+      "id": "inflect-atom-v3-THIRD_PARTY_NOTICES.md",
+      "sha256": "8c939b9eb4538c7fb0dcfc72916f75d56e025ba4c75fe3f838a5f1efa472080e",
+      "bytes": 1262
+    }
+  ],
+  "cells": [
+    {
+      "model": "inflect-atom-v3",
+      "support": {
+        "voiceCount": 6,
+        "bundledVoiceCount": 6,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Exact 157,190-parameter Atom v3 core and six fixed voice embeddings; rule-based English frontend with no neural POS model",
+        "notes": "Hope, Sophia, Cassidy, James, Jasper and Mark; benchmark selects Cassidy. Local FP32 ONNX + WASM DSP browser port, with explicitly normalized line whitespace and a specified seeded noise stream. WebGPU accelerates the convolutional decoder; GRU encoder/frontend/DSP remain WASM.",
+        "sources": [
+          "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+          "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+          "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+        ]
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "precision": "FP32 ONNX acoustic core; FP32 DSP with FP64 long-utterance phase accumulation",
+      "settings": {
+        "sampleRate": 24000,
+        "speakerId": 2,
+        "seed": 7717,
+        "speed": 1,
+        "maxFrames": 4096,
+        "frontend": "eSpeak NG 1.52.0 + Misaki 0.9.4 espeak-light mapping; CR/LF/TAB converted to spaces before G2P; unknown phones fail",
+        "chunking": "Canonical spans; upstream 510-phone limit and greedy 200-phone internal splitting when needed, 80 ms internal pauses",
+        "noiseGenerator": "Pinned C++ MT19937 + polar Box-Muller standard-normal noise; same browser stream on both providers, not PyTorch bitwise RNG parity",
+        "runtime": "ONNX Runtime Web 1.23.2; Emscripten 3.1.74 DSP and eSpeak; encoder always WASM",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "encoderExecutionProviders": [
+          "wasm"
+        ],
+        "executionProviderScope": "executionProviders selects the convolution decoder; encoder, frontend and DSP always use WASM"
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Convolution decoder uses WebGPU with WASM fallback; GRU encoder and DSP remain WASM. Untimed dispatches: 218."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 89442.94499993324,
+          "samples": 30159300,
+          "sampleRate": 24000,
+          "pcmSha256": "8c30ec7d26bd4f81f2c64cfbfd8d4688ff197d0046c9796cf252e0701bb43bde",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true,
+            "waveform": {
+              "gate": "pcm16-constant-run-v1",
+              "passed": true,
+              "spans": [
+                {
+                  "id": 0,
+                  "samples": 339000,
+                  "longestConstantSamples": 5047,
+                  "constantValue": 0
+                },
+                {
+                  "id": 1,
+                  "samples": 343200,
+                  "longestConstantSamples": 5303,
+                  "constantValue": 0
+                },
+                {
+                  "id": 2,
+                  "samples": 303300,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 3,
+                  "samples": 357900,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 4,
+                  "samples": 369000,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 5,
+                  "samples": 278400,
+                  "longestConstantSamples": 4967,
+                  "constantValue": 0
+                },
+                {
+                  "id": 6,
+                  "samples": 294900,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 7,
+                  "samples": 360600,
+                  "longestConstantSamples": 4674,
+                  "constantValue": 0
+                },
+                {
+                  "id": 8,
+                  "samples": 272700,
+                  "longestConstantSamples": 6810,
+                  "constantValue": 0
+                },
+                {
+                  "id": 9,
+                  "samples": 327600,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 10,
+                  "samples": 362400,
+                  "longestConstantSamples": 5047,
+                  "constantValue": 0
+                },
+                {
+                  "id": 11,
+                  "samples": 355800,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 12,
+                  "samples": 400200,
+                  "longestConstantSamples": 5264,
+                  "constantValue": 0
+                },
+                {
+                  "id": 13,
+                  "samples": 317700,
+                  "longestConstantSamples": 5077,
+                  "constantValue": 0
+                },
+                {
+                  "id": 14,
+                  "samples": 362100,
+                  "longestConstantSamples": 4828,
+                  "constantValue": 0
+                },
+                {
+                  "id": 15,
+                  "samples": 387600,
+                  "longestConstantSamples": 5077,
+                  "constantValue": 0
+                },
+                {
+                  "id": 16,
+                  "samples": 362100,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 17,
+                  "samples": 307800,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 18,
+                  "samples": 289200,
+                  "longestConstantSamples": 5082,
+                  "constantValue": 0
+                },
+                {
+                  "id": 19,
+                  "samples": 325200,
+                  "longestConstantSamples": 4951,
+                  "constantValue": 0
+                },
+                {
+                  "id": 20,
+                  "samples": 324300,
+                  "longestConstantSamples": 5358,
+                  "constantValue": 0
+                },
+                {
+                  "id": 21,
+                  "samples": 307800,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 22,
+                  "samples": 258000,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 23,
+                  "samples": 295200,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 24,
+                  "samples": 283800,
+                  "longestConstantSamples": 5303,
+                  "constantValue": 0
+                },
+                {
+                  "id": 25,
+                  "samples": 304500,
+                  "longestConstantSamples": 4803,
+                  "constantValue": 0
+                },
+                {
+                  "id": 26,
+                  "samples": 327600,
+                  "longestConstantSamples": 5850,
+                  "constantValue": 0
+                },
+                {
+                  "id": 27,
+                  "samples": 302400,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 28,
+                  "samples": 362700,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 29,
+                  "samples": 281400,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 30,
+                  "samples": 344100,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 31,
+                  "samples": 337800,
+                  "longestConstantSamples": 5247,
+                  "constantValue": 0
+                },
+                {
+                  "id": 32,
+                  "samples": 339900,
+                  "longestConstantSamples": 5082,
+                  "constantValue": 0
+                },
+                {
+                  "id": 33,
+                  "samples": 370800,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 34,
+                  "samples": 285600,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 35,
+                  "samples": 313500,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 36,
+                  "samples": 289500,
+                  "longestConstantSamples": 5543,
+                  "constantValue": 0
+                },
+                {
+                  "id": 37,
+                  "samples": 338400,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 38,
+                  "samples": 297000,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 39,
+                  "samples": 337200,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 40,
+                  "samples": 310200,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 41,
+                  "samples": 360000,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 42,
+                  "samples": 340800,
+                  "longestConstantSamples": 4967,
+                  "constantValue": 0
+                },
+                {
+                  "id": 43,
+                  "samples": 308700,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 44,
+                  "samples": 339600,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 45,
+                  "samples": 332700,
+                  "longestConstantSamples": 7463,
+                  "constantValue": 0
+                },
+                {
+                  "id": 46,
+                  "samples": 345600,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 47,
+                  "samples": 293700,
+                  "longestConstantSamples": 8105,
+                  "constantValue": 0
+                },
+                {
+                  "id": 48,
+                  "samples": 333900,
+                  "longestConstantSamples": 5543,
+                  "constantValue": 0
+                },
+                {
+                  "id": 49,
+                  "samples": 406200,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 50,
+                  "samples": 344100,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 51,
+                  "samples": 304800,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 52,
+                  "samples": 360000,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 53,
+                  "samples": 306300,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 54,
+                  "samples": 288300,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 55,
+                  "samples": 367800,
+                  "longestConstantSamples": 5077,
+                  "constantValue": 0
+                },
+                {
+                  "id": 56,
+                  "samples": 284100,
+                  "longestConstantSamples": 7216,
+                  "constantValue": 0
+                },
+                {
+                  "id": 57,
+                  "samples": 297300,
+                  "longestConstantSamples": 4967,
+                  "constantValue": 0
+                },
+                {
+                  "id": 58,
+                  "samples": 382500,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 59,
+                  "samples": 381000,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 60,
+                  "samples": 366000,
+                  "longestConstantSamples": 5082,
+                  "constantValue": 0
+                },
+                {
+                  "id": 61,
+                  "samples": 262200,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 62,
+                  "samples": 380400,
+                  "longestConstantSamples": 5358,
+                  "constantValue": 0
+                },
+                {
+                  "id": 63,
+                  "samples": 322200,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 64,
+                  "samples": 315600,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 65,
+                  "samples": 328500,
+                  "longestConstantSamples": 4674,
+                  "constantValue": 0
+                },
+                {
+                  "id": 66,
+                  "samples": 355500,
+                  "longestConstantSamples": 5047,
+                  "constantValue": 0
+                },
+                {
+                  "id": 67,
+                  "samples": 318900,
+                  "longestConstantSamples": 4615,
+                  "constantValue": 0
+                },
+                {
+                  "id": 68,
+                  "samples": 360600,
+                  "longestConstantSamples": 8432,
+                  "constantValue": 0
+                },
+                {
+                  "id": 69,
+                  "samples": 370800,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 70,
+                  "samples": 300900,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 71,
+                  "samples": 299700,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 72,
+                  "samples": 310200,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 73,
+                  "samples": 263400,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 74,
+                  "samples": 393900,
+                  "longestConstantSamples": 5050,
+                  "constantValue": 0
+                },
+                {
+                  "id": 75,
+                  "samples": 266100,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 76,
+                  "samples": 291300,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 77,
+                  "samples": 380100,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 78,
+                  "samples": 302700,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 79,
+                  "samples": 350400,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 80,
+                  "samples": 330600,
+                  "longestConstantSamples": 4943,
+                  "constantValue": 0
+                },
+                {
+                  "id": 81,
+                  "samples": 284700,
+                  "longestConstantSamples": 5303,
+                  "constantValue": 0
+                },
+                {
+                  "id": 82,
+                  "samples": 325800,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 83,
+                  "samples": 329700,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 84,
+                  "samples": 318900,
+                  "longestConstantSamples": 5077,
+                  "constantValue": 0
+                },
+                {
+                  "id": 85,
+                  "samples": 287400,
+                  "longestConstantSamples": 5243,
+                  "constantValue": 0
+                },
+                {
+                  "id": 86,
+                  "samples": 284400,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                },
+                {
+                  "id": 87,
+                  "samples": 312600,
+                  "longestConstantSamples": 4674,
+                  "constantValue": 0
+                },
+                {
+                  "id": 88,
+                  "samples": 281700,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 89,
+                  "samples": 252300,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 90,
+                  "samples": 273300,
+                  "longestConstantSamples": 4971,
+                  "constantValue": 0
+                },
+                {
+                  "id": 91,
+                  "samples": 308100,
+                  "longestConstantSamples": 5126,
+                  "constantValue": 0
+                },
+                {
+                  "id": 92,
+                  "samples": 324600,
+                  "longestConstantSamples": 4965,
+                  "constantValue": 0
+                }
+              ]
+            }
+          },
+          "metrics": {
+            "firstPcmMs": 1435.4850001335144,
+            "firstSourceChunkCompletedMs": 1435.4950001239777,
+            "audioSeconds": 1256.6375,
+            "realTimeFactor": 0.07117640926674021,
+            "minSamplesPerChunk": 252300,
+            "maxSamplesPerChunk": 406200,
+            "articleCallPeakRssBytes": 2482847744,
+            "generationMeanRssBytes": 1788983871,
+            "generationRssSampleCount": 178,
+            "loadMs": 336.5385830000005,
+            "controllerTrialElapsedMs": 94335.65049999999,
+            "downloadBytes": 38404,
+            "idealDownloadSecondsAt1Mbps": 0.307232
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795072768923.825,
+            "finalPcmAtEpochMs": 1795072858366.77,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795072769468,
+                1359921152
+              ],
+              [
+                1795072769963,
+                1560592384
+              ],
+              [
+                1795072770464,
+                1586397184
+              ],
+              [
+                1795072770966,
+                1614921728
+              ],
+              [
+                1795072771467,
+                1643855872
+              ],
+              [
+                1795072771970,
+                1661059072
+              ],
+              [
+                1795072772473,
+                1688043520
+              ],
+              [
+                1795072772973,
+                1695301632
+              ],
+              [
+                1795072773474,
+                1715781632
+              ],
+              [
+                1795072773978,
+                1724596224
+              ],
+              [
+                1795072774477,
+                1734426624
+              ],
+              [
+                1795072774978,
+                1731051520
+              ],
+              [
+                1795072775484,
+                1726251008
+              ],
+              [
+                1795072775984,
+                1726283776
+              ],
+              [
+                1795072776485,
+                1737031680
+              ],
+              [
+                1795072776988,
+                1737048064
+              ],
+              [
+                1795072777492,
+                1745485824
+              ],
+              [
+                1795072777993,
+                1745485824
+              ],
+              [
+                1795072778502,
+                1734574080
+              ],
+              [
+                1795072778999,
+                1734606848
+              ],
+              [
+                1795072779511,
+                1739063296
+              ],
+              [
+                1795072780001,
+                1739063296
+              ],
+              [
+                1795072780504,
+                1738244096
+              ],
+              [
+                1795072781006,
+                1738244096
+              ],
+              [
+                1795072781505,
+                1738637312
+              ],
+              [
+                1795072782007,
+                1738571776
+              ],
+              [
+                1795072782511,
+                1740275712
+              ],
+              [
+                1795072783014,
+                1740275712
+              ],
+              [
+                1795072783516,
+                1742733312
+              ],
+              [
+                1795072784015,
+                1742733312
+              ],
+              [
+                1795072784519,
+                1746894848
+              ],
+              [
+                1795072785023,
+                1746862080
+              ],
+              [
+                1795072785525,
+                1748615168
+              ],
+              [
+                1795072786028,
+                1748484096
+              ],
+              [
+                1795072786529,
+                1747206144
+              ],
+              [
+                1795072787030,
+                1750253568
+              ],
+              [
+                1795072787529,
+                1751678976
+              ],
+              [
+                1795072788032,
+                1751678976
+              ],
+              [
+                1795072788537,
+                1753464832
+              ],
+              [
+                1795072789035,
+                1753481216
+              ],
+              [
+                1795072789537,
+                1755217920
+              ],
+              [
+                1795072790039,
+                1755217920
+              ],
+              [
+                1795072790542,
+                1759854592
+              ],
+              [
+                1795072791043,
+                1759854592
+              ],
+              [
+                1795072791545,
+                1758216192
+              ],
+              [
+                1795072792049,
+                1762476032
+              ],
+              [
+                1795072792548,
+                1762476032
+              ],
+              [
+                1795072793052,
+                1762115584
+              ],
+              [
+                1795072793552,
+                1762131968
+              ],
+              [
+                1795072794052,
+                1764261888
+              ],
+              [
+                1795072794556,
+                1768292352
+              ],
+              [
+                1795072795058,
+                1768292352
+              ],
+              [
+                1795072795559,
+                1767260160
+              ],
+              [
+                1795072796058,
+                1767260160
+              ],
+              [
+                1795072796560,
+                1771470848
+              ],
+              [
+                1795072797060,
+                1771470848
+              ],
+              [
+                1795072797562,
+                1770045440
+              ],
+              [
+                1795072798065,
+                1770045440
+              ],
+              [
+                1795072798570,
+                1775599616
+              ],
+              [
+                1795072799067,
+                1778008064
+              ],
+              [
+                1795072799568,
+                1776140288
+              ],
+              [
+                1795072800069,
+                1776140288
+              ],
+              [
+                1795072800572,
+                1777549312
+              ],
+              [
+                1795072801075,
+                1777549312
+              ],
+              [
+                1795072801576,
+                1781956608
+              ],
+              [
+                1795072802080,
+                1781956608
+              ],
+              [
+                1795072802582,
+                1780236288
+              ],
+              [
+                1795072803084,
+                1780236288
+              ],
+              [
+                1795072803584,
+                1784135680
+              ],
+              [
+                1795072804087,
+                1784102912
+              ],
+              [
+                1795072804586,
+                1782972416
+              ],
+              [
+                1795072805089,
+                1784676352
+              ],
+              [
+                1795072805591,
+                1784561664
+              ],
+              [
+                1795072806094,
+                1788477440
+              ],
+              [
+                1795072806594,
+                1788379136
+              ],
+              [
+                1795072807096,
+                1787199488
+              ],
+              [
+                1795072807599,
+                1787199488
+              ],
+              [
+                1795072808100,
+                1791098880
+              ],
+              [
+                1795072808602,
+                1791098880
+              ],
+              [
+                1795072809109,
+                1790033920
+              ],
+              [
+                1795072809607,
+                1790050304
+              ],
+              [
+                1795072810109,
+                1791459328
+              ],
+              [
+                1795072810610,
+                1791459328
+              ],
+              [
+                1795072811111,
+                1787166720
+              ],
+              [
+                1795072811614,
+                1787166720
+              ],
+              [
+                1795072812116,
+                1789657088
+              ],
+              [
+                1795072812618,
+                1789657088
+              ],
+              [
+                1795072813119,
+                1791082496
+              ],
+              [
+                1795072813622,
+                1791082496
+              ],
+              [
+                1795072814122,
+                1792966656
+              ],
+              [
+                1795072814625,
+                1792966656
+              ],
+              [
+                1795072815127,
+                1794064384
+              ],
+              [
+                1795072815628,
+                1798766592
+              ],
+              [
+                1795072816130,
+                1798651904
+              ],
+              [
+                1795072816634,
+                1798897664
+              ],
+              [
+                1795072817136,
+                1798766592
+              ],
+              [
+                1795072817638,
+                1798766592
+              ],
+              [
+                1795072818140,
+                1800519680
+              ],
+              [
+                1795072818640,
+                1800519680
+              ],
+              [
+                1795072819139,
+                1804746752
+              ],
+              [
+                1795072819646,
+                1804746752
+              ],
+              [
+                1795072820144,
+                1804451840
+              ],
+              [
+                1795072820646,
+                1804451840
+              ],
+              [
+                1795072821150,
+                1808400384
+              ],
+              [
+                1795072821653,
+                1809645568
+              ],
+              [
+                1795072822154,
+                1806598144
+              ],
+              [
+                1795072822656,
+                1808695296
+              ],
+              [
+                1795072823160,
+                1808547840
+              ],
+              [
+                1795072823661,
+                1812545536
+              ],
+              [
+                1795072824162,
+                1812447232
+              ],
+              [
+                1795072824664,
+                1810808832
+              ],
+              [
+                1795072825167,
+                1810808832
+              ],
+              [
+                1795072825668,
+                1809498112
+              ],
+              [
+                1795072826168,
+                1809498112
+              ],
+              [
+                1795072826670,
+                1811906560
+              ],
+              [
+                1795072827176,
+                1811906560
+              ],
+              [
+                1795072827678,
+                1813512192
+              ],
+              [
+                1795072828178,
+                1813626880
+              ],
+              [
+                1795072828679,
+                1815412736
+              ],
+              [
+                1795072829181,
+                1815314432
+              ],
+              [
+                1795072829684,
+                1817755648
+              ],
+              [
+                1795072830185,
+                1817755648
+              ],
+              [
+                1795072830687,
+                1819410432
+              ],
+              [
+                1795072831189,
+                1819295744
+              ],
+              [
+                1795072831690,
+                1821933568
+              ],
+              [
+                1795072832192,
+                1821933568
+              ],
+              [
+                1795072832695,
+                1823473664
+              ],
+              [
+                1795072833199,
+                1823473664
+              ],
+              [
+                1795072833701,
+                1825161216
+              ],
+              [
+                1795072834199,
+                1825161216
+              ],
+              [
+                1795072834705,
+                1826455552
+              ],
+              [
+                1795072835207,
+                1826455552
+              ],
+              [
+                1795072835709,
+                1828388864
+              ],
+              [
+                1795072836211,
+                1828388864
+              ],
+              [
+                1795072836714,
+                1830305792
+              ],
+              [
+                1795072837215,
+                1830305792
+              ],
+              [
+                1795072837716,
+                1831485440
+              ],
+              [
+                1795072838218,
+                1831485440
+              ],
+              [
+                1795072838719,
+                1844101120
+              ],
+              [
+                1795072839220,
+                1844101120
+              ],
+              [
+                1795072839722,
+                1834369024
+              ],
+              [
+                1795072840222,
+                1835532288
+              ],
+              [
+                1795072840725,
+                1835433984
+              ],
+              [
+                1795072841225,
+                1837711360
+              ],
+              [
+                1795072841728,
+                1837711360
+              ],
+              [
+                1795072842230,
+                1838563328
+              ],
+              [
+                1795072842732,
+                1838465024
+              ],
+              [
+                1795072843234,
+                1840381952
+              ],
+              [
+                1795072843737,
+                1840381952
+              ],
+              [
+                1795072844235,
+                1842675712
+              ],
+              [
+                1795072844737,
+                1842675712
+              ],
+              [
+                1795072845245,
+                1847672832
+              ],
+              [
+                1795072845743,
+                1847672832
+              ],
+              [
+                1795072846243,
+                1846444032
+              ],
+              [
+                1795072846743,
+                1846444032
+              ],
+              [
+                1795072847249,
+                1848573952
+              ],
+              [
+                1795072847757,
+                1848573952
+              ],
+              [
+                1795072848251,
+                1852260352
+              ],
+              [
+                1795072848751,
+                1851211776
+              ],
+              [
+                1795072849254,
+                1851097088
+              ],
+              [
+                1795072849755,
+                1855225856
+              ],
+              [
+                1795072850259,
+                1855111168
+              ],
+              [
+                1795072850761,
+                1853800448
+              ],
+              [
+                1795072851261,
+                1853800448
+              ],
+              [
+                1795072851762,
+                1857503232
+              ],
+              [
+                1795072852264,
+                1857503232
+              ],
+              [
+                1795072852766,
+                1856143360
+              ],
+              [
+                1795072853273,
+                1857454080
+              ],
+              [
+                1795072853773,
+                1857339392
+              ],
+              [
+                1795072854274,
+                1861009408
+              ],
+              [
+                1795072854772,
+                1860911104
+              ],
+              [
+                1795072855279,
+                1859158016
+              ],
+              [
+                1795072855786,
+                1860190208
+              ],
+              [
+                1795072856280,
+                1862418432
+              ],
+              [
+                1795072856781,
+                1861812224
+              ],
+              [
+                1795072857286,
+                1861812224
+              ],
+              [
+                1795072857786,
+                1865744384
+              ],
+              [
+                1795072858289,
+                1865826304
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "2f43df7394183d579f4313db4740139332485191d73f2db877605a1fe50a7aa2",
+            "bytes": 60318644
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Atom v3 English Cassidy, FP32 acoustic encoder/decoder, one WASM thread, exact local espeak-light frontend, seeded MT19937/polar noise7717. WebGPU decoder with WASM encoder/DSP; same settings on CPU. Exclusive M1 benchmark lock; Now drawing from 'AC Power'. Run order: CPU and WebGPU smoke, CPU and WebGPU cached, CPU and WebGPU warm.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
