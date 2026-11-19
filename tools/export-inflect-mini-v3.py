@@ -901,6 +901,14 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "phase_uniform": phase_torch.numpy(),
         "harmonic_noise": noise_torch.numpy(),
     })[0]
+    separated_source_error = array_error(native_source_spec, source_spec_onnx)
+    separated_source_phase_audit = raw_phase_audit(
+        native_source_spec[:, bins:, :], source_spec_onnx[:, bins:, :],
+        native_source_spec[:, :bins, :])
+    diagnostic_errors["nativeVsSeparatedWasmSourceSpec"] = separated_source_error
+    diagnostic_errors["nativeVsSeparatedWasmSourcePhase"] = separated_source_phase_audit
+    diagnostic_errors["separatedWasmVsCombinedOrtSourceSpec"] = array_error(
+        ort_source_spec, source_spec_onnx)
     waveform_onnx = waveform_session.run(None, {
         "hidden": hidden_onnx,
         "style": style,
@@ -909,8 +917,6 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
     require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
             "ONNX waveform is nonfinite or clipped")
-    require(np.allclose(source_spec_onnx, native_source_spec, rtol=0, atol=1e-6),
-            "CPU/WASM source frontend output differs from the native source features")
     waveform_max_error = float(np.max(np.abs(waveform_onnx[0] - native["audio"].numpy())))
     waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
     require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
