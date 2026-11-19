@@ -1,0 +1,52 @@
+name: Publish supplemental Sano converted F32 pair
+on:
+  push:
+    branches: [supplemental/sano-heart-nano-f32-release-44431517354]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: sano-heart-nano-f32-release-44431517354
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Validate and publish only the original accepted recordings
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          python3 tools/publish-f32-hosted.py
+          --source ca54c5ca1954406a72f4f0d705c6a37852ee7761
+          --fingerprint e0861e6953fba9e6c1702db4ed3ff48d9cfe6175afe566a558dcec31214aebe6
+          --workflow-head 184277b3557702029472bf6ec5422a68e9959853
+          --workflow-branch codex/verify-kokopop-fullpair-20261119
+          --workflow-path .github/workflows/temporary-kokopop-full-pair.yml
+          --compact-artifact sano-kokopop-full-warm-pair-44431517354
+          --full-artifact sano-kokopop-full-warm-pair-44431517354
+          --cpu-id 2026-11-19t00-45-33-954z-sano-heart-nano-gguf-f32-cpu-warm-82eff4ee
+          --gpu-id 2026-11-19t00-47-06-080z-sano-heart-nano-gguf-f32-webgpu-warm-94daff2e
+          --cpu-receipt-sha d70f6747455e5fde0965fab5170734b632ca78c5c4af0ba2364d789c7d6fe584
+          --gpu-receipt-sha 20ec469b57460dd38f32190f1d6bb041f0f8c601a898d3b5c6ef08b5ecb3d193
+          --run-id 44431517354
+          --recovery tools/f32-recovery.json
+          --work "${RUNNER_TEMP}/heartnano-f32-release"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: sano-heart-nano-f32-public-verification
+          if-no-files-found: ignore
+          path: |
+            ${{ runner.temp }}/heartnano-f32-release/release/public-verification.json
+            ${{ runner.temp }}/heartnano-f32-release/release/checksums.json
+            ${{ runner.temp }}/heartnano-f32-release/release/recordings.json
+            ${{ runner.temp }}/heartnano-f32-release/release/report.md
+            ${{ runner.temp }}/heartnano-f32-release/release/bundle/*native-result.json
+            ${{ runner.temp }}/heartnano-f32-release/release/bundle/*trial-*.json
+            ${{ runner.temp }}/heartnano-f32-release/release/bundle/*warmup-*.json
+            ${{ runner.temp }}/heartnano-f32-release/original-artifact/evidence/**

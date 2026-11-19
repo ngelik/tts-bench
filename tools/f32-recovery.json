@@ -1,0 +1,18 @@
+{
+  "scoringJobId": 135249778510,
+  "artifact": {
+    "id": 14486683305,
+    "name": "sano-kokopop-full-warm-pair-44431517354",
+    "bytes": 91348942,
+    "sha256": "dc6bfe8851295bbe0add88d924bb1b2ad0d01a46a6d6eedad1f796d5bc6b1cab"
+  },
+  "verifier": {
+    "runId": 44432799981,
+    "headSha": "3552f62ed1e434bddcc428459997a57a0bc9cff8",
+    "branch": "codex/verify-kokopop-pair-artifact-20261119",
+    "path": ".github/workflows/temporary-kokopop-pair-artifact-verify.yml",
+    "artifactName": "sano-kokopop-pair-verification-44432799981",
+    "proofPath": "verification.json",
+    "proofSha256": "977e1ace4bf49a651a91b828cf114c38d97295ecbe50d2aee04e77fb9e3efbea"
+  }
+}
