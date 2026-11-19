@@ -102,7 +102,7 @@ function validateGenerationMemory(t,generationMs) {
 export function nativeEffectiveBackendAllowed(model, requested, effective) {
   const labels={
     cpu:/^(?:cpu|cpu\/wasm|wasm)$/i,
-    webgpu:/^(?:webgpu|webgpu\+wasm)$/i,
+    webgpu:/^(?:webgpu|webgpu\+wasm|hybrid-webgpu-wasm-duration\+wasm-bridge\+wasm-waveform)$/i,
   };
   if (requested === 'webgpu' && model === 'zonos3-mini' && effective === 'webgpu+cpu-codec-host') return true;
   return Boolean(labels[requested]?.test(effective));

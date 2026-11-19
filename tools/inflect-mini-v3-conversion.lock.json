@@ -1,0 +1,65 @@
+{
+  "schema": "inflect-mini-v3-browser-conversion-lock-v1",
+  "model": "owensong/Inflect-Mini-v3",
+  "modelRevision": "fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6",
+  "upstreamReleaseManifest": {
+    "path": "core/baseline/release-manifest.json",
+    "bytes": 3320,
+    "sha256": "bca890f13715494dad5a6f9351cc0bb69a5f1943f54e653688e693c4c388d670"
+  },
+  "miniManifest": {
+    "path": "core/baseline/models/mini/manifest.json",
+    "bytes": 3570,
+    "sha256": "b44dcf7b75baa4e6fb717389d1d98743f6c8732f587f67ec84ba3b3c9a30f0c3"
+  },
+  "checkpoint": {
+    "path": "core/baseline/models/mini/weights.pt",
+    "bytes": 138388547,
+    "sha256": "8460e7d54a2fbf7fb54b3c7be7569c493c852de9a2aa1a0fd9fd9a099de581ed"
+  },
+  "sourceFiles": {
+    "core/baseline/models/mini/code/native_mini_inference.py": "9fd534ad540e14be73fb70009b81ab6ab3c42a98f5204b9b58896c3e093d36d1",
+    "core/baseline/models/mini/code/native26_text_model.py": "90f37ead1e5ae32fb1b4a3d48ed5761f7ed4c0565b134e9ce69befa9d9bc407d",
+    "core/baseline/models/mini/code/native27_nativegen_bridge.py": "18de598ee83f1fd505c422d4c6870a7d61a05db01920308bab9b78de43ed75d8",
+    "core/baseline/models/mini/code/native33_text_fast.py": "8a4b4230e71bfa276bb902cbd5f4f71edfa2572eb8223b1bc3ee138921ceb953",
+    "core/baseline/models/mini/code/native33_text_model.py": "58ce0f8c43a9b1e3cb8c5a882f81d5c0393826c337a81965b684d2d674b3d543",
+    "core/baseline/models/mini/code/inflect_kokoro_student27.py": "0c8bda4244f8e3cfca4a27412534a790cc1d4b9941d76e4477715aa606c339c3",
+    "core/baseline/models/mini/code/qualify_native27_native_generator_budget.py": "d1e3c725bc0be08075ba38cb16ee8efd232bcef3eee1974786e17fcc0ca02743",
+    "core/baseline/models/mini/code/student.py": "92bac7593a2d95c427650e659536379a73a1f38775b8b155c56f1395d9e6c54b",
+    "core/baseline/models/mini/code/student_decoder.py": "825acd09513ef6f1be3d59cc64863a64d96f5be4b670596e24488336c7f4f324",
+    "core/baseline/models/mini/code/kokoro/__init__.py": "fdad68804b9aaf6d1752d730cacf8a810a1f7169eb7acdea88eb6e23d0f9af4b",
+    "core/baseline/models/mini/code/kokoro/custom_stft.py": "a55ecb8d02f455b08ad94f3c21b0505df9d5c954e6fcd7ba5c142627adf58747",
+    "core/baseline/models/mini/code/kokoro/istftnet.py": "340ec572aeb911b7fe6cb8b987a4eacf6cf36d44922b13ddd9d2eb60b1de0098",
+    "core/baseline/models/mini/code/kokoro/model.py": "ab52d0734655d35385b8f2ff24d63b89821848a8fc2a05078f683daa5626808b",
+    "core/baseline/models/mini/code/kokoro/modules.py": "59df05405c199d4f2bacdde250a26b1b7f694e34a9b2aa282e600ceaa6d65e61",
+    "core/baseline/frontend/native_mini_text.py": "9a53cbd83cd88238387ddafb4ce22f69ed667ef55c8b49874bdc324ec2652c84",
+    "core/baseline/frontend/native_mini_text_espeak.py": "c73d27e89f94a2824fad6d777c0f270d4004795ba5fcee9ccac68d22538756d9",
+    "core/baseline/frontend/native_english_frontend_repair_r003_20261029.py": "d2e6f49b3144881c130b5aee975884e479edf153675e3faf072ce464cf0c4f46",
+    "core/baseline/frontend/native_english_numeric_frontend_20261031.py": "136cbd1ccfca4f1be5ebaae81abcb7ffb60ea7a49559876d9aa0e71324973b62",
+    "core/baseline/synthesize.py": "a15639644090ca1a5d80bb6300ae66617af6091f3d5a1cb76e214cb527c6fde9",
+    "core/baseline/requirements.txt": "2801c40449e6616c355d4b6b2ea1895f67270fc4ae083598160cdf5d3d51d6db",
+    "core/baseline/requirements-cpu.txt": "cb9bdd9f4dc2e816b1fffdd42604045bd57a2380668f5088d639ee2839e9b8d0"
+  },
+  "provenanceFiles": {
+    "LICENSE.md": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+    "LICENSING.md": "09f0b40a96cb8c6e533d3bc813127a637114ebaf61037ca821a7d1212f1463b7",
+    "THIRD_PARTY_NOTICES.md": "e57d036bd8a6ea496ee83c4ac1bbce04a5daa50217519b2e9d6458d4af5fd5c1",
+    "core/THIRD_PARTY_NOTICES.md": "f1a065879f20c8b99e30b04e4745d55f0f6122f59140043a7b42dd815824f813",
+    "core/LICENSE_SCOPE.json": "96ca809e96352efd2ddd191b455b3db60cf9031ea682e762807e9a768e4df391",
+    "core/LICENSES/Apache-2.0.txt": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+    "core/LICENSES/StyleTTS2-MIT.txt": "7f023c12a1d6b25583506f6fc77f5287c7c71b65c0f886922f14153bcc07dfa9"
+  },
+  "export": {
+    "format": "onnx",
+    "opset": 17,
+    "torch": "2.11.0+cpu",
+    "onnx": "1.17.0",
+    "onnxruntime": "1.23.2",
+    "voice": "cassidy",
+    "speakerId": 2,
+    "sampleRate": 24000,
+    "maxPhonemes": 510,
+    "maxFrames": 1200,
+    "seed": 42
+  }
+}

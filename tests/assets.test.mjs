@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { listModels } from '../lib/assets.mjs';
@@ -11,11 +12,30 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee", "phonon", "leokani-7m", "leokani-4.5m", "pivo-curated", "woof", "piper-en-gb-southern-english-female-low", "supertonic-3", "kokoro-82m", "mms-english", "kitten-nano-0.8", "sano-amy", "inflect-micro-v2", "lfm3-audio-2b-gguf", "lfm3-omni-2b-gguf", "lfm3-audio-2b-fusor-q7-cpu", "lfm3-omni-2b-fusor-q7-cpu", "mach-boom", "pocket-tts-100m-english-int8", "fun-cosyvoice3-0.5b-2512", "audio8-realistic-0.6b-int4", "ming-3.0-tts-0.5b-gguf", "ming-3.0-tts-0.5b-fusor-mix-cpu", "tiny-voca", "sopro-v2-turbo", "supratts-1.0-preview", "klein-tts-x1.5-pro", "linnet-en-35m", "silencio-2", "zonos3-mini", "sano-heart-nano-gguf-f32", "sano-robot-mcu", "sano-trellis", "inflect-atom-v3", "sano-heart-gguf", "sano-amy-gguf", "sano-amy-small-gguf", "sano-amy-1p8m-gguf", "sano-hfc-gguf", "sano-kristin-gguf", "inflect-micro-v3"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port"]);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
   assert.equal(supra.modelRevision, '80a6b0bd13c92e30e88b0c22183be9c2bdc7061c');
+  const mini = models.find(model => model.id === 'inflect-mini-v3-browser-port');
+  assert.deepEqual(mini.backends, ['cpu', 'webgpu']);
+  assert.equal(mini.modelRevision, 'fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6');
+  assert.equal(mini.support.voiceCount, 6);
+  assert.equal(mini.support.bundledVoiceCount, 1);
+  assert.equal(mini.support.languageCount, 1);
+  const miniLock = getAssetLock().models['inflect-mini-v3-browser-port'];
+  assert.deepEqual(miniLock.runtime.files.filter(file => file.path.includes('webgpu') || file.path.includes('asyncify'))
+    .map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })).sort((a, b) => a.path.localeCompare(b.path)), [
+      { path: 'dist/ort-wasm-simd-threaded.asyncify.mjs', bytes: 51913,
+        sha256: '249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff' },
+      { path: 'dist/ort-wasm-simd-threaded.asyncify.wasm', bytes: 25499390,
+        sha256: 'babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada' },
+      { path: 'dist/ort.webgpu.min.mjs', bytes: 66261,
+        sha256: '8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864' },
+    ]);
+  assert.equal(miniLock.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 137110819);
+  assert.equal(miniLock.assets.filter(asset => asset.generated).length, 6);
+  assert.ok(miniLock.assets.some(asset => asset.id === 'inflect-mini-v3-browser-klein-en-us-lexicon'));
   const klein = models.find(model => model.id === 'klein-tts-x1.5-pro');
   assert.deepEqual(klein.backends, ['cpu', 'webgpu']);
   assert.equal(klein.modelRevision, '25e0e73bebba71e5985bc369628ebdcb81bf7116');
@@ -160,7 +180,7 @@ test('asset lock pins content and permits only identical shared runtime targets'
         'asset needs a pinned URL, checked-in source, or package-pinned runtime path: ' + asset.target);
       if (asset.generated) {
         assert.ok(asset.generated.artifactPath);
-        assert.match(asset.generated.build, /tools\/build-sano-kokopop-webgpu\.sh/);
+        assert.match(asset.generated.build, /tools\/[A-Za-z0-9_./-]+\.(?:sh|py|mjs)/);
       }
       const existing = targets.get(asset.target);
       if (existing) {
@@ -208,4 +228,18 @@ test('each Kokopop voice has one individually pinned GGUF and the shared verifie
     assert.equal(lock.support.voiceCount, 1);
     assert.equal(lock.support.bundledVoiceCount, 1);
   }
+});
+
+test('Inflect Mini browser-port registration binds its exact upstream license and strict parity scope', async () => {
+  const model = getAssetLock().models['inflect-mini-v3-browser-port'];
+  const license = model.assets.find(asset => asset.id === 'inflect-mini-v3-browser-license');
+  const bytes = await readFile(resolve(root, license.sourcePath));
+  assert.equal(bytes.length, license.bytes);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), license.sha256);
+  assert.deepEqual(model.backends, ['cpu', 'webgpu']);
+  assert.equal(model.assets.filter(asset => asset.generated).length, 6);
+  assert.match(model.support.notes, /distinct frontend\/source-DSP port/);
+  assert.match(model.support.notes, /failed the recorded strict native waveform gate/);
+  assert.match(model.support.notes, /only the duration graph uses WebGPU with WASM fallback/);
+  assert.match(model.support.notes, /all-graph WebGPU control clipped output/);
 });

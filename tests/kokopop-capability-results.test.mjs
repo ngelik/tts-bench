@@ -87,6 +87,18 @@ test('legacy capability shape remains valid for other GPU models', () => {
   assert.deepEqual(validated.cells[0].capability, proof);
 });
 
+test('Inflect Mini scoped duration-only WebGPU effective backend is valid with dispatch proof', () => {
+  const input = result({ model: 'inflect-mini-v3-browser-port', proof: {
+    gpuDispatchVerified: true,
+    description: 'Observed actual WebGPU dispatch in the duration graph; bridge and waveform run on WASM.',
+  } });
+  input.cells[0].backendEffective = 'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform';
+  assert.equal(validateResult(input).cells[0].backendEffective,
+    'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform');
+  input.cells[0].capability.gpuDispatchVerified = false;
+  assert.throws(() => validateResult(input), /GPU results require actual dispatch evidence/);
+});
+
 test('historical Kokopop records with legacy capability fields remain readable', () => {
   const proof = { gpuDispatchVerified: true, description: 'Historical dispatch note.' };
   const validated = validateResult(result({ origin: 'historical-import', proof }));
