@@ -14,20 +14,6 @@ on:
       - 'web/workers/inflect-micro-v3.mjs'
       - 'tests/inflect-micro-v3-*.test.mjs'
       - 'tools/check-inflect-micro-v3-smoke.mjs'
-  push:
-    branches: [feat/inflect-micro-v3]
-    paths:
-      - '.github/workflows/inflect-micro-v3-smoke.yml'
-      - 'assets.lock.json'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'bin/**'
-      - 'lib/**'
-      - 'web/adapters/inflect-micro-v3.mjs'
-      - 'web/inflect-micro-v3/**'
-      - 'web/workers/inflect-micro-v3.mjs'
-      - 'tests/inflect-micro-v3-*.test.mjs'
-      - 'tools/check-inflect-micro-v3-smoke.mjs'
   workflow_dispatch:
 
 permissions:
@@ -60,6 +46,7 @@ jobs:
           source_commit="$(git rev-parse HEAD)"
           for backend in cpu webgpu; do
             summary=".cache/inflect-micro-v3-browser-smoke/$backend.json"
+            run_exit=0
             node bin/bench.mjs run \
               --model inflect-micro-v3 \
               --backend "$backend" \
@@ -68,8 +55,12 @@ jobs:
               --machine "GitHub-hosted macOS-15" \
               --chrome "$CHROME_PATH" \
               --note "Headed Chrome execution-path smoke only; not a benchmark score." \
-              > "$summary"
+              > "$summary" || run_exit=$?
             node tools/check-inflect-micro-v3-smoke.mjs "$summary" "$backend" "$source_commit"
+            if [ "$run_exit" -ne 0 ]; then
+              echo "Benchmark CLI exited with $run_exit after writing its run summary."
+              exit "$run_exit"
+            fi
           done
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()

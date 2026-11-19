@@ -9,6 +9,20 @@ export function assertMicroTokenIdCount(tokenCount) {
   return tokenCount;
 }
 
+export function assertMicroTextFeatureDimensions(durations, durationFeatures, asrTokens, tokenCount) {
+  assertMicroTokenIdCount(tokenCount);
+  const validDimensions = dimensions => Array.isArray(dimensions)
+    && dimensions.every(value => Number.isSafeInteger(value) && value > 0);
+  if (!validDimensions(durations) || durations.length !== 2
+    || durations[0] !== 1 || durations[1] !== tokenCount
+    || !validDimensions(durationFeatures) || durationFeatures.length !== 3
+    || durationFeatures[0] !== 1 || durationFeatures[1] !== tokenCount
+    || !validDimensions(asrTokens) || asrTokens.length !== 3
+    || asrTokens[0] !== 1 || asrTokens[1] !== 512 || asrTokens[2] !== tokenCount) {
+    throw new Error('Inflect Micro v3 text feature graph returned unexpected token dimensions.');
+  }
+}
+
 function roundTiesToEven(value) {
   const lower = Math.floor(value);
   const fraction = value - lower;

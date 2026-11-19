@@ -1,7 +1,7 @@
 import { phonemizeMicroEnglish } from '../inflect-micro-v3/g2p.mjs';
 import { INTERNAL_GAP_SAMPLES, MAX_PHONEMES, prepareMicroText } from '../inflect-micro-v3/frontend.mjs';
 import { sourceFilterSynthesis } from '../inflect-micro-v3/dsp.mjs';
-import { assertMicroTokenIdCount, buildMicroFramePlan, MICRO_MAX_FRAMES, MICRO_SPEED, microStyleRow } from '../inflect-micro-v3/contract.mjs';
+import { assertMicroTextFeatureDimensions, assertMicroTokenIdCount, buildMicroFramePlan, MICRO_MAX_FRAMES, MICRO_SPEED, microStyleRow } from '../inflect-micro-v3/contract.mjs';
 import { dispatchProbe, hardwareGpu } from './gpu-probe.mjs';
 
 const MODEL_ROOT = '/models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/';
@@ -115,11 +115,12 @@ async function runUtterance(utterance, seed) {
     ]));
     const durationData = await tensorData(features.durations, Float32Array, 'duration');
     const tokenCount = inputIds.length;
-    if (features.duration_features.dims?.length !== 3 || features.duration_features.dims[0] !== 1
-      || features.duration_features.dims[2] !== tokenCount || features.asr_tokens.dims?.length !== 3
-      || features.asr_tokens.dims[0] !== 1 || features.asr_tokens.dims[2] !== tokenCount) {
-      throw new Error('Inflect Micro v3 text feature graph returned unexpected token dimensions.');
-    }
+    assertMicroTextFeatureDimensions(
+      features.durations.dims,
+      features.duration_features.dims,
+      features.asr_tokens.dims,
+      tokenCount,
+    );
     const plan = buildMicroFramePlan(durationData, tokenCount);
     if (features.asr_tokens.dims[1] !== 512) throw new Error('Inflect Micro v3 ASR feature width differs from 512.');
     const alignment = new ort.Tensor('float32', plan.alignment, [1, tokenCount, plan.frameCount]);

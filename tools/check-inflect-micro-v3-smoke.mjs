@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { copyFile, readFile } from 'node:fs/promises';
 import { isAbsolute, relative, resolve, sep } from 'node:path';
 import { validateResult } from './results.mjs';
 
@@ -9,17 +9,22 @@ if (!summaryPath || isAbsolute(summaryPath) || !['cpu', 'webgpu'].includes(expec
 }
 
 const root = process.cwd();
-const summary = JSON.parse(await readFile(resolve(root, summaryPath), 'utf8'));
-assert.equal(summary.status, 'measured', `${expectedBackend} harness smoke did not measure: ${summary.reason ?? 'no reason recorded'}`);
-assert.ok(summary.reason == null, 'A measured smoke cannot report a failure reason.');
-assert.equal(typeof summary.id, 'string');
+const summaryAbsolute = resolve(root, summaryPath);
+const summaryRelative = relative(root, summaryAbsolute);
+if (summaryRelative === '..' || summaryRelative.startsWith(`..${sep}`) || isAbsolute(summaryRelative)) {
+  throw new Error('Harness smoke summary path escapes the checkout.');
+}
+const summary = JSON.parse(await readFile(summaryAbsolute, 'utf8'));
 assert.equal(typeof summary.result, 'string');
-
 const receiptPath = resolve(root, summary.result);
 const receiptRelative = relative(root, receiptPath);
 if (receiptRelative === '..' || receiptRelative.startsWith(`..${sep}`) || isAbsolute(receiptRelative)) {
   throw new Error('Harness smoke receipt path escapes the checkout.');
 }
+await copyFile(receiptPath, `${summaryAbsolute}.result.json`);
+assert.equal(summary.status, 'measured', `${expectedBackend} harness smoke did not measure: ${summary.reason ?? 'no reason recorded'}`);
+assert.ok(summary.reason == null, 'A measured smoke cannot report a failure reason.');
+assert.equal(typeof summary.id, 'string');
 const receipt = JSON.parse(await readFile(receiptPath, 'utf8'));
 validateResult(receipt);
 

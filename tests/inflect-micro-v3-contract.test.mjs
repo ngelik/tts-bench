@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assertMicroTokenIdCount, buildMicroFramePlan, MICRO_MAX_PHONEME_IDS, microStyleRow } from '../web/inflect-micro-v3/contract.mjs';
+import { assertMicroTextFeatureDimensions, assertMicroTokenIdCount, buildMicroFramePlan, MICRO_MAX_PHONEME_IDS, microStyleRow } from '../web/inflect-micro-v3/contract.mjs';
 
 test('Micro worker token budget accepts the maximum sequence and rejects invalid counts', () => {
   assert.equal(assertMicroTokenIdCount(3), 3);
@@ -8,6 +8,13 @@ test('Micro worker token budget accepts the maximum sequence and rejects invalid
   for (const value of [2, 513, 3.5, Number.NaN, Number.POSITIVE_INFINITY]) {
     assert.throws(() => assertMicroTokenIdCount(value), /padded token sequence/);
   }
+});
+
+test('Micro text-feature dimensions follow the exported token axes', () => {
+  assert.doesNotThrow(() => assertMicroTextFeatureDimensions([1, 7], [1, 7, 256], [1, 512, 7], 7));
+  assert.throws(() => assertMicroTextFeatureDimensions([1, 7], [1, 256, 7], [1, 512, 7], 7), /unexpected token dimensions/);
+  assert.throws(() => assertMicroTextFeatureDimensions([1, 6], [1, 7, 256], [1, 512, 7], 7), /unexpected token dimensions/);
+  assert.throws(() => assertMicroTextFeatureDimensions([1, 7], [1, 7, 256], [1, 7, 512], 7), /unexpected token dimensions/);
 });
 
 test('Micro frame alignment mirrors torch round-to-even and exact repeated token spans', () => {
