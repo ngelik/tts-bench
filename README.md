@@ -238,6 +238,11 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Kitten Nano 0.8 FP32 | 8 | 8 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#kitten-nano-0.8) |
 | Sano Amy 1.46M (English) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy) |
 | SanoTTS heart-nano INT8 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-heart-nano) |
+| SanoTTS HFC 1.83M (English) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-hfc) |
+| SanoTTS Kristin 1.40M (English) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-kristin) |
+| SanoTTS Amy-small 1.08M (English) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy-small) |
+| SanoTTS Amy 1.83M (English) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy-1p8m) |
+| SanoTTS Heart 2.27M (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-heart) |
 | Inflect Micro v2 FP32 | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#inflect-micro-v2) |
 | LFM3-Audio-2B (GGUF Q4_K_M / Q8_0) | Unknown | Unknown | 18 | [Details](docs/MODEL_SUPPORT.md#lfm3-audio-2b-gguf) |
 | LFM3-Omni-2B (GGUF Q4_K_M / Q8_0) | Unknown | Unknown | 18 | [Details](docs/MODEL_SUPPORT.md#lfm3-omni-2b-gguf) |
