@@ -412,7 +412,12 @@ function synthesizeBurst(source, burstGains, frames, waveformLength, main, seed)
   for (let index = 0; index < burstFrames; index++) {
     stftFrame(signal, source.white.length, index, BURST_FFT, BURST_HOP, window, frame, frameImag, FFT_150, fftReal, fftImag, true);
     for (let bin = 0; bin <= BURST_FFT / 2; bin++) {
-      const gain = clampLogGain(Number(burstGains.data[bin * burstFrames + index]));
+      // The pinned export returns exp(clamp(log_gain, max=6)) for this head.
+      // Unlike the main source-filter channels, these values are already linear.
+      const gain = Number(burstGains.data[bin * burstFrames + index]);
+      if (!Number.isFinite(gain) || gain < 0 || gain > Math.exp(6) + 1e-3) {
+        throw new Error('Micro burst gain is not a finite linear value from the pinned export.');
+      }
       halfReal[bin] = fftReal[bin] * gain;
       halfImag[bin] = fftImag[bin] * gain;
     }
