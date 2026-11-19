@@ -617,6 +617,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 126 · 2026-11-19 | sano-amy-small/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | [SVG](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/chart.svg) |
 | 127 · 2026-11-19 | sano-amy-1p8m/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | [SVG](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/chart.svg) |
 | 128 · 2026-11-19 | sano-heart/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | [SVG](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/chart.svg) |
+| 129 · 2026-11-19 | sano-heart/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/summary.md) | [SVG](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/chart.svg) |
 
 </details>
 
