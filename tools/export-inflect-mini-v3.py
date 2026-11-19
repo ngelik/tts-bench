@@ -67,6 +67,38 @@ def array_error(expected, actual) -> dict:
             "rms": float(np.sqrt(np.mean(delta * delta)))}
 
 
+def waveform_quality(reference, candidate) -> dict:
+    """Report amplitude, correlation, SNR and spectral convergence without weakening parity gates."""
+    reference = np.asarray(reference, dtype=np.float64).reshape(-1)
+    candidate = np.asarray(candidate, dtype=np.float64).reshape(-1)
+    require(reference.shape == candidate.shape and reference.size > 0,
+            "Waveform quality comparison requires equal nonempty signals")
+    error = candidate - reference
+    reference_rms = float(np.sqrt(np.mean(reference * reference)))
+    error_rms = float(np.sqrt(np.mean(error * error)))
+    correlation = float(np.corrcoef(reference, candidate)[0, 1]) if reference.std() and candidate.std() else 0.0
+    snr_db = float(20 * np.log10(reference_rms / error_rms)) if error_rms else float("inf")
+
+    n_fft = 512
+    hop = 120
+    window = np.hanning(n_fft + 1)[:-1]
+    frames = np.lib.stride_tricks.sliding_window_view(reference, n_fft)[::hop]
+    candidate_frames = np.lib.stride_tricks.sliding_window_view(candidate, n_fft)[::hop]
+    reference_spectrum = np.abs(np.fft.rfft(frames * window, axis=1))
+    candidate_spectrum = np.abs(np.fft.rfft(candidate_frames * window, axis=1))
+    spectral_convergence = float(np.linalg.norm(candidate_spectrum - reference_spectrum)
+                                 / max(np.linalg.norm(reference_spectrum), 1e-30))
+    log_spectral_mae = float(np.mean(np.abs(
+        20 * np.log10(np.maximum(candidate_spectrum, 1e-12))
+        - 20 * np.log10(np.maximum(reference_spectrum, 1e-12)))))
+    return {"referenceRms": reference_rms,
+            "errorRms": error_rms,
+            "snrDb": snr_db,
+            "correlation": correlation,
+            "spectralConvergence": spectral_convergence,
+            "logSpectralMaeDb": log_spectral_mae}
+
+
 def raw_phase_audit(reference, candidate, magnitude) -> dict:
     """Audit unwrapped neural phase features, including signed 2pi flips."""
     reference = np.asarray(reference, dtype=np.float64)
@@ -517,6 +549,11 @@ class ExactTorchSTFT(nn.Module):
         imag = F.conv1d(centered, self.forward_imag, stride=self.hop_length)
         imag = torch.cat((torch.zeros_like(imag[:, :1, :]), imag[:, 1:-1, :],
                           torch.zeros_like(imag[:, -1:, :])), dim=1)
+        # The center-reflected first frame is exactly even around the first
+        # sample for the pinned periodic Hann window. Its imaginary DFT must
+        # be zero; FP32 convolution reduction can otherwise leave a signed
+        # 1e-9 residue and flip angle(-real, ±0) by 2pi.
+        imag = torch.cat((torch.zeros_like(imag[:, :, :1]), imag[:, :, 1:]), dim=2)
         return real, imag, torch.sqrt(real.square() + imag.square()), self._atan2(imag, real)
 
     def inverse(self, magnitude: torch.Tensor, phase: torch.Tensor) -> torch.Tensor:
@@ -848,6 +885,10 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             native_complex.real.detach().cpu().numpy(), ort_source_real),
         "torchStftVsOrtSourceImag": array_error(
             native_complex.imag.detach().cpu().numpy(), ort_source_imag),
+        "wrapperEagerVsNativeWaveform": array_error(
+            native["audio"].detach().cpu().numpy()[None, :], wrapper_eager.detach().cpu().numpy()),
+        "wrapperEagerVsNativeWaveformQuality": waveform_quality(
+            native["audio"].detach().cpu().numpy(), wrapper_eager.detach().cpu().numpy()[0]),
     }
     diagnostic_errors["nativeVsWrapperEagerSourcePhase"] = raw_phase_audit(
         native_source_spec[:, bins:, :], wrapper_source_spec[:, bins:, :],
@@ -901,14 +942,42 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "phase_uniform": phase_torch.numpy(),
         "harmonic_noise": noise_torch.numpy(),
     })[0]
+    native_f0_source_spec = source_session.run(None, {
+        "f0": predicted["F0"].detach().cpu().numpy(),
+        "phase_uniform": phase_torch.numpy(),
+        "harmonic_noise": noise_torch.numpy(),
+    })[0]
     separated_source_error = array_error(native_source_spec, source_spec_onnx)
     separated_source_phase_audit = raw_phase_audit(
         native_source_spec[:, bins:, :], source_spec_onnx[:, bins:, :],
         native_source_spec[:, :bins, :])
     diagnostic_errors["nativeVsSeparatedWasmSourceSpec"] = separated_source_error
     diagnostic_errors["nativeVsSeparatedWasmSourcePhase"] = separated_source_phase_audit
+    diagnostic_errors["nativeVsSeparatedWasmSourceSpecWithNativeF0"] = array_error(
+        native_source_spec, native_f0_source_spec)
+    diagnostic_errors["nativeVsSeparatedWasmSourcePhaseWithNativeF0"] = raw_phase_audit(
+        native_source_spec[:, bins:, :], native_f0_source_spec[:, bins:, :],
+        native_source_spec[:, :bins, :])
     diagnostic_errors["separatedWasmVsCombinedOrtSourceSpec"] = array_error(
         ort_source_spec, source_spec_onnx)
+    identical_source_neural = waveform_session.run(None, {
+        "hidden": native_hidden.detach().cpu().numpy(),
+        "style": style,
+        "source_spec": native_source_spec,
+    })[0]
+    diagnostic_errors["ortNeuralWithNativeHiddenAndSourceWaveform"] = array_error(
+        native["audio"].detach().cpu().numpy()[None, :], identical_source_neural)
+    diagnostic_errors["ortNeuralWithNativeHiddenAndSourceWaveformQuality"] = waveform_quality(
+        native["audio"].detach().cpu().numpy(), identical_source_neural[0])
+    source_native_f0_waveform = waveform_session.run(None, {
+        "hidden": native_hidden.detach().cpu().numpy(),
+        "style": style,
+        "source_spec": native_f0_source_spec,
+    })[0]
+    diagnostic_errors["ortNeuralWithSeparatedSourceAndNativeF0Waveform"] = array_error(
+        native["audio"].detach().cpu().numpy()[None, :], source_native_f0_waveform)
+    diagnostic_errors["ortNeuralWithSeparatedSourceAndNativeF0WaveformQuality"] = waveform_quality(
+        native["audio"].detach().cpu().numpy(), source_native_f0_waveform[0])
     waveform_onnx = waveform_session.run(None, {
         "hidden": hidden_onnx,
         "style": style,
@@ -919,6 +988,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             "ONNX waveform is nonfinite or clipped")
     waveform_max_error = float(np.max(np.abs(waveform_onnx[0] - native["audio"].numpy())))
     waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
+    waveform_quality_metrics = waveform_quality(native["audio"].numpy(), waveform_onnx[0])
     require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
             "ONNX waveform diverges from native Mini: max=" + str(waveform_max_error)
             + " rms=" + str(waveform_rms_error) + " stages=" + json.dumps(diagnostic_errors, sort_keys=True))
@@ -974,6 +1044,8 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         dynamic_excitation[0] - dynamic_native["audio"].numpy())))
     dynamic_waveform_rms_error = float(np.sqrt(np.mean(
         (dynamic_excitation[0] - dynamic_native["audio"].numpy()) ** 2)))
+    dynamic_waveform_quality_metrics = waveform_quality(
+        dynamic_native["audio"].numpy(), dynamic_excitation[0])
     require(dynamic_waveform_max_error <= 2e-3 and dynamic_waveform_rms_error <= 2e-4,
             "Dynamic ONNX waveform diverges from native Mini: max="
             + str(dynamic_waveform_max_error) + " rms=" + str(dynamic_waveform_rms_error))
@@ -1043,9 +1115,11 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             "stftPhaseWrapAudit": source_phase_audit,
             "waveformMaxAbsError": waveform_max_error,
             "waveformRmsError": waveform_rms_error,
+            "waveformQuality": waveform_quality_metrics,
             "generatorParityStages": diagnostic_errors,
             "dynamicWaveformMaxAbsError": dynamic_waveform_max_error,
             "dynamicWaveformRmsError": dynamic_waveform_rms_error,
+            "dynamicWaveformQuality": dynamic_waveform_quality_metrics,
             "dynamicTokenIds": int(dynamic_ids.shape[1]),
             "dynamicFrames": int(dynamic_frames),
             "dynamicWaveformSamples": int(dynamic_excitation.shape[1]),
