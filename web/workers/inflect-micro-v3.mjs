@@ -305,6 +305,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     ...(backend === 'webgpu' ? { gpu } : {}),
     capability: {
       gpuDispatchVerified: backend === 'cpu' ? null : probe ? dispatches > 0 : null,
+      ...(backend === 'webgpu' && probe ? { dispatches } : {}),
       description: backend === 'cpu'
         ? probe ? 'Explicit one-thread ONNX Runtime WASM; untimed PCM inference passed.' : 'Explicit one-thread ONNX Runtime WASM provider.'
         : probe
