@@ -58,6 +58,52 @@ def require(condition: bool, message: str) -> None:
         raise RuntimeError(message)
 
 
+def array_error(expected, actual) -> dict:
+    expected = np.asarray(expected)
+    actual = np.asarray(actual)
+    require(expected.shape == actual.shape, "Parity tensor shapes differ")
+    delta = actual.astype(np.float64) - expected.astype(np.float64)
+    return {"maxAbs": float(np.max(np.abs(delta))),
+            "rms": float(np.sqrt(np.mean(delta * delta)))}
+
+
+def raw_phase_audit(reference, candidate, magnitude) -> dict:
+    """Audit unwrapped neural phase features, including signed 2pi flips."""
+    reference = np.asarray(reference, dtype=np.float64)
+    candidate = np.asarray(candidate, dtype=np.float64)
+    magnitude = np.asarray(magnitude, dtype=np.float64)
+    require(reference.shape == candidate.shape == magnitude.shape, "Phase audit tensor shapes differ")
+    delta = candidate - reference
+    threshold = max(1e-7, float(np.max(magnitude)) * 1e-6)
+    near_zero = magnitude <= threshold
+    significant = ~near_zero
+    wrap_tolerance = 1e-3
+    positive_wrap = (np.abs(delta - 2 * math.pi) <= wrap_tolerance)
+    negative_wrap = (np.abs(delta + 2 * math.pi) <= wrap_tolerance)
+
+    examples = []
+    for mask, label in ((positive_wrap, "+2pi"), (negative_wrap, "-2pi")):
+        for index in np.argwhere(mask)[:16]:
+            location = tuple(int(value) for value in index)
+            examples.append({"sign": label,
+                             "batch": location[0],
+                             "bin": location[1],
+                             "frame": location[2],
+                             "magnitude": float(magnitude[location]),
+                             "delta": float(delta[location])})
+
+    return {
+        "rawMaxAbsSignificant": float(np.max(np.abs(delta[significant]))) if significant.any() else 0.0,
+        "rawRmsSignificant": float(np.sqrt(np.mean(delta[significant] ** 2))) if significant.any() else 0.0,
+        "rawMaxAbsNearZero": float(np.max(np.abs(delta[near_zero]))) if near_zero.any() else 0.0,
+        "positiveTwoPiFlipCount": int(np.count_nonzero(positive_wrap)),
+        "negativeTwoPiFlipCount": int(np.count_nonzero(negative_wrap)),
+        "nearZeroPositiveTwoPiFlipCount": int(np.count_nonzero(positive_wrap & near_zero)),
+        "nearZeroNegativeTwoPiFlipCount": int(np.count_nonzero(negative_wrap & near_zero)),
+        "wrapExamples": examples,
+    }
+
+
 @contextmanager
 def fixed_source_randomness(phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor):
     """Feed the same explicit random arrays to native and exported source paths."""
@@ -248,12 +294,22 @@ class WaveformGraph(nn.Module):
 
     def forward(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
                 phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> torch.Tensor:
+        return self._evaluate(hidden, style, f0, phase_uniform, harmonic_noise)[0]
+
+    def diagnostic_outputs(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                           phase_uniform: torch.Tensor,
+                           harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
+        return self._evaluate(hidden, style, f0, phase_uniform, harmonic_noise)
+
+    def _evaluate(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                  phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
         g = self.generator
         harmonic_source = self.harmonic_source(f0, phase_uniform, harmonic_noise)
         magnitude, source_phase = self.stft.transform(harmonic_source)
         source_spec = torch.cat([magnitude, source_phase], dim=1)
 
         x = hidden
+        first_resblock_input = None
         for i in range(g.num_upsamples):
             x_source = g.noise_convs[i](source_spec)
             x_source = g.noise_res[i](x_source, style)
@@ -261,6 +317,8 @@ class WaveformGraph(nn.Module):
             if i == g.num_upsamples - 1:
                 x = g.reflection_pad(x)
             x = x + x_source
+            if i == 0:
+                first_resblock_input = x
             summed = None
             for j in range(g.num_kernels):
                 block = g.resblocks[i * g.num_kernels + j]
@@ -273,7 +331,20 @@ class WaveformGraph(nn.Module):
         bins = g.post_n_fft // 2 + 1
         magnitude = torch.exp(x[:, :bins, :])
         output_phase = torch.sin(x[:, bins:, :])
-        return self.stft.inverse(magnitude, output_phase).squeeze(1)
+        waveform = self.stft.inverse(magnitude, output_phase).squeeze(1)
+        return waveform, source_spec, first_resblock_input, magnitude, output_phase
+
+
+class WaveformDiagnosticsGraph(nn.Module):
+    """Temporary exporter view that exposes intermediate tensors for parity audit."""
+
+    def __init__(self, graph: WaveformGraph):
+        super().__init__()
+        self.graph = graph
+
+    def forward(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
+        return self.graph.diagnostic_outputs(hidden, style, f0, phase_uniform, harmonic_noise)
 
 
 class ExportInstanceNorm1d(nn.Module):
@@ -321,6 +392,21 @@ def onnx_export_generator(generator: nn.Module) -> nn.Module:
             if isinstance(child, nn.InstanceNorm1d):
                 setattr(parent, name, ExportInstanceNorm1d(child))
     return exported
+
+
+def install_export_voice_affines(generator: nn.Module, model: nn.Module, voice: str) -> None:
+    """Install the pinned voice's G-local affine corrections on the export copy."""
+    recipe = model.styles["affines"][voice]
+    modules = dict(generator.named_modules())
+    require(set(recipe["biases_by_module"]).issubset(modules),
+            "Cassidy affine module names differ from exported generator")
+    for name, bias in recipe["biases_by_module"].items():
+        fc = modules[name].fc
+        def inject(module, args, output, bias=bias, strength=recipe["strength"]):
+            require(output.ndim == 2 and output.shape[1] == bias.numel(),
+                    "Cassidy affine output shape changed")
+            return output + strength * bias.to(device=output.device, dtype=output.dtype)[None]
+        fc.register_forward_hook(inject)
 
 
 class ExactTorchSTFT(nn.Module):
@@ -457,7 +543,9 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         generator.m_source, type(generator.m_source))
     generator.f0_upsamp.forward = type(generator.f0_upsamp).forward.__get__(generator.f0_upsamp, type(generator.f0_upsamp))
     generator.stft.transform = type(generator.stft).transform.__get__(generator.stft, type(generator.stft))
-    waveform_graph = WaveformGraph(onnx_export_generator(generator)).eval()
+    export_generator = onnx_export_generator(generator)
+    install_export_voice_affines(export_generator, model, VOICE)
+    waveform_graph = WaveformGraph(export_generator).eval()
 
     if output_dir.exists() and any(output_dir.iterdir()):
         raise RuntimeError("Refusing to overwrite a nonempty ONNX output directory")
@@ -465,6 +553,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     duration_path = output_dir / "text-duration.onnx"
     bridge_path = output_dir / "text-bridge.onnx"
     waveform_path = output_dir / "waveform-generator.onnx"
+    waveform_diagnostic_path = output_dir / "diagnostic-waveform.onnx"
     style_path = output_dir / "cassidy-style-table.f32"
     vocab_path = output_dir / "phoneme-vocab.json"
 
@@ -502,20 +591,37 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     # own random arrays and verifies the unchanged official waveform path.
     phase = torch.zeros((1, generator.m_source.l_sin_gen.harmonic_num + 1), dtype=torch.float32)
     harmonic_noise = torch.zeros((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
-    with model._affines(VOICE):
-        export_graph(
-            waveform_graph,
-            (hidden, torch.zeros((1, 128), dtype=torch.float32), f0, phase, harmonic_noise),
-            waveform_path,
-            input_names=["hidden", "style", "f0", "phase_uniform", "harmonic_noise"],
-            output_names=["waveform"],
-            dynamic_axes={
-                "hidden": {2: "expanded_frames"},
-                "f0": {1: "f0_frames"},
-                "harmonic_noise": {1: "samples"},
-                "waveform": {1: "samples"},
-            },
-        )
+    export_graph(
+        waveform_graph,
+        (hidden, torch.zeros((1, 128), dtype=torch.float32), f0, phase, harmonic_noise),
+        waveform_path,
+        input_names=["hidden", "style", "f0", "phase_uniform", "harmonic_noise"],
+        output_names=["waveform"],
+        dynamic_axes={
+            "hidden": {2: "expanded_frames"},
+            "f0": {1: "f0_frames"},
+            "harmonic_noise": {1: "samples"},
+            "waveform": {1: "samples"},
+        },
+    )
+    export_graph(
+        WaveformDiagnosticsGraph(waveform_graph),
+        (hidden, torch.zeros((1, 128), dtype=torch.float32), f0, phase, harmonic_noise),
+        waveform_diagnostic_path,
+        input_names=["hidden", "style", "f0", "phase_uniform", "harmonic_noise"],
+        output_names=["waveform", "source_spec", "first_resblock_input",
+                      "predicted_magnitude", "predicted_phase"],
+        dynamic_axes={
+            "hidden": {2: "expanded_frames"},
+            "f0": {1: "f0_frames"},
+            "harmonic_noise": {1: "samples"},
+            "waveform": {1: "samples"},
+            "source_spec": {2: "source_spec_frames"},
+            "first_resblock_input": {2: "first_resblock_frames"},
+            "predicted_magnitude": {2: "predicted_spectral_frames"},
+            "predicted_phase": {2: "predicted_spectral_frames"},
+        },
+    )
 
     voice_index = SPEAKER_ID
     donor = native_mini_inference.DONORS[voice_index]
@@ -532,6 +638,8 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     duration_session = ort.InferenceSession(str(duration_path), providers=["CPUExecutionProvider"])
     bridge_session = ort.InferenceSession(str(bridge_path), providers=["CPUExecutionProvider"])
     waveform_session = ort.InferenceSession(str(waveform_path), providers=["CPUExecutionProvider"])
+    waveform_diagnostic_session = ort.InferenceSession(
+        str(waveform_diagnostic_path), providers=["CPUExecutionProvider"])
     ids_np = ids.numpy()
     duration_onnx, features_onnx, asr_onnx = duration_session.run(None, {"ids": ids_np})
     speaker = torch.tensor([SPEAKER_ID], dtype=torch.long)
@@ -578,10 +686,11 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     exported_magnitude, exported_phase = waveform_graph.stft.transform(exported_harmonic)
     stft_magnitude_max_error = float((exported_magnitude - native_magnitude).abs().max())
     stft_magnitude_rms_error = float(torch.sqrt((exported_magnitude - native_magnitude).square().mean()))
-    phase_delta = torch.remainder(exported_phase - native_phase + math.pi, 2.0 * math.pi) - math.pi
-    phase_mask = native_magnitude > max(1e-7, float(native_magnitude.max()) * 1e-6)
-    stft_phase_max_error = float(phase_delta[phase_mask].abs().max())
-    stft_phase_rms_error = float(torch.sqrt(phase_delta[phase_mask].square().mean()))
+    source_phase_audit = raw_phase_audit(
+        native_phase.detach().cpu().numpy(), exported_phase.detach().cpu().numpy(),
+        native_magnitude.detach().cpu().numpy())
+    stft_phase_max_error = source_phase_audit["rawMaxAbsSignificant"]
+    stft_phase_rms_error = source_phase_audit["rawRmsSignificant"]
     require(stft_magnitude_max_error <= 2e-5 and stft_magnitude_rms_error <= 3e-6,
             "Explicit STFT magnitude differs from native Mini: max=" + str(stft_magnitude_max_error)
             + " rms=" + str(stft_magnitude_rms_error))
@@ -593,6 +702,109 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             and not bool(torch.signbit(waveform_graph.stft.forward_imag[[0, -1]]).any())
             and not bool(torch.signbit(waveform_graph.stft.inverse_imag[[0, -1]]).any()),
             "Real-input DC/Nyquist imaginary basis must be exact positive zero")
+    def capture_input(target, key):
+        def hook(module, inputs):
+            target[key] = inputs[0].detach().cpu().clone()
+        return hook
+
+    def capture_output(target, key):
+        def hook(module, inputs, output):
+            target[key] = output.detach().cpu().clone()
+        return hook
+
+    native_capture = {}
+    native_hooks = [
+        generator.noise_convs[0].register_forward_pre_hook(capture_input(native_capture, "source_spec")),
+        generator.resblocks[0].register_forward_pre_hook(capture_input(native_capture, "first_resblock_input")),
+        generator.conv_post.register_forward_hook(capture_output(native_capture, "post_logits")),
+    ]
+    try:
+        with fixed_source_randomness(phase_torch, noise_torch):
+            native = model.synthesize_ids(model.phoneme_ids("həˈloʊ."), VOICE, seed=42)
+    finally:
+        for handle in native_hooks:
+            handle.remove()
+
+    wrapper_capture = {}
+    wrapper_generator = waveform_graph.generator
+    wrapper_hooks = [
+        wrapper_generator.noise_convs[0].register_forward_pre_hook(capture_input(wrapper_capture, "source_spec")),
+        wrapper_generator.resblocks[0].register_forward_pre_hook(
+            capture_input(wrapper_capture, "first_resblock_input")),
+        wrapper_generator.conv_post.register_forward_hook(capture_output(wrapper_capture, "post_logits")),
+    ]
+    style_tensor = torch.from_numpy(style)
+    with torch.inference_mode():
+        wrapper_eager = waveform_graph(native_hidden, style_tensor, predicted["F0"],
+                                       phase_torch, noise_torch)
+    for handle in wrapper_hooks:
+        handle.remove()
+
+    diagnostic_outputs = waveform_diagnostic_session.run(None, {
+        "hidden": native_hidden.detach().cpu().numpy(),
+        "style": style,
+        "f0": predicted["F0"].detach().cpu().numpy(),
+        "phase_uniform": phase_torch.numpy(),
+        "harmonic_noise": noise_torch.numpy(),
+    })
+    diagnostic_waveform, ort_source_spec, ort_first_resblock_input, ort_magnitude, ort_phase = diagnostic_outputs
+    native_source_spec = native_capture["source_spec"].numpy()
+    wrapper_source_spec = wrapper_capture["source_spec"].numpy()
+    native_first_resblock_input = native_capture["first_resblock_input"].numpy()
+    wrapper_first_resblock_input = wrapper_capture["first_resblock_input"].numpy()
+    native_logits = native_capture["post_logits"].numpy()
+    wrapper_logits = wrapper_capture["post_logits"].numpy()
+    bins = generator.post_n_fft // 2 + 1
+    native_magnitude_output = np.exp(native_logits[:, :bins, :])
+    native_phase_output = np.sin(native_logits[:, bins:, :])
+    wrapper_magnitude_output = np.exp(wrapper_logits[:, :bins, :])
+    wrapper_phase_output = np.sin(wrapper_logits[:, bins:, :])
+
+    diagnostic_errors = {
+        "nativeVsWrapperEagerSourceSpec": array_error(native_source_spec, wrapper_source_spec),
+        "nativeVsOrtSourceSpec": array_error(native_source_spec, ort_source_spec),
+        "nativeVsWrapperEagerBeforeFirstResblock": array_error(
+            native_first_resblock_input, wrapper_first_resblock_input),
+        "nativeVsOrtBeforeFirstResblock": array_error(
+            native_first_resblock_input, ort_first_resblock_input),
+        "nativeVsWrapperEagerPredictedMagnitude": array_error(
+            native_magnitude_output, wrapper_magnitude_output),
+        "nativeVsOrtPredictedMagnitude": array_error(native_magnitude_output, ort_magnitude),
+        "nativeVsWrapperEagerPredictedPhase": array_error(native_phase_output, wrapper_phase_output),
+        "nativeVsOrtPredictedPhase": array_error(native_phase_output, ort_phase),
+        "wrapperEagerVsOrtWaveform": array_error(wrapper_eager.detach().cpu().numpy(), diagnostic_waveform),
+    }
+    diagnostic_errors["nativeVsWrapperEagerSourcePhase"] = raw_phase_audit(
+        native_source_spec[:, bins:, :], wrapper_source_spec[:, bins:, :],
+        native_source_spec[:, :bins, :])
+    diagnostic_errors["nativeVsOrtSourcePhase"] = raw_phase_audit(
+        native_source_spec[:, bins:, :], ort_source_spec[:, bins:, :],
+        native_source_spec[:, :bins, :])
+    diagnostic_errors["nativeVsWrapperEagerPredictedPhaseRaw"] = raw_phase_audit(
+        native_phase_output, wrapper_phase_output, native_magnitude_output)
+    diagnostic_errors["nativeVsOrtPredictedPhaseRaw"] = raw_phase_audit(
+        native_phase_output, ort_phase, native_magnitude_output)
+
+    # Pass identical ONNX-learned magnitude/phase tensors into the native
+    # torch.istft and the explicit conv iSTFT, isolating inverse math from the
+    # upstream waveform graph and its stochastic source.
+    shared_magnitude = torch.from_numpy(np.asarray(ort_magnitude))
+    shared_phase = torch.from_numpy(np.asarray(ort_phase))
+    native_inverse_shared = generator.stft.inverse(shared_magnitude, shared_phase).squeeze(1)
+    wrapper_inverse_shared = waveform_graph.stft.inverse(shared_magnitude, shared_phase).squeeze(1)
+    diagnostic_errors["ortWaveformVsNativeInverseSharedSpec"] = array_error(
+        diagnostic_waveform, native_inverse_shared.detach().cpu().numpy())
+    diagnostic_errors["ortWaveformVsWrapperInverseSharedSpec"] = array_error(
+        diagnostic_waveform, wrapper_inverse_shared.detach().cpu().numpy())
+    diagnostic_errors["nativeWaveformVsNativeInverse"] = array_error(
+        native["audio"].detach().cpu().numpy()[None, :],
+        generator.stft.inverse(torch.from_numpy(native_magnitude_output),
+                               torch.from_numpy(native_phase_output)).squeeze(1).detach().cpu().numpy())
+    diagnostic_errors["wrapperEagerVsWrapperInverse"] = array_error(
+        wrapper_eager.detach().cpu().numpy(),
+        waveform_graph.stft.inverse(torch.from_numpy(wrapper_magnitude_output),
+                                    torch.from_numpy(wrapper_phase_output)).squeeze(1).detach().cpu().numpy())
+
     waveform_onnx = waveform_session.run(None, {
         "hidden": hidden_onnx,
         "style": style,
@@ -600,8 +812,6 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "phase_uniform": phase_torch.numpy(),
         "harmonic_noise": noise_torch.numpy(),
     })[0]
-    with fixed_source_randomness(phase_torch, noise_torch):
-        native = model.synthesize_ids(model.phoneme_ids("həˈloʊ."), VOICE, seed=42)
     require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
     require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
             "ONNX waveform is nonfinite or clipped")
@@ -609,7 +819,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
     require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
             "ONNX waveform diverges from native Mini: max=" + str(waveform_max_error)
-            + " rms=" + str(waveform_rms_error))
+            + " rms=" + str(waveform_rms_error) + " stages=" + json.dumps(diagnostic_errors, sort_keys=True))
 
     # Exercise genuinely dynamic token and frame axes as well as the export
     # trace shape. A repeated valid vowel sequence is not used as audio evidence.
@@ -663,6 +873,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             "Dynamic ONNX waveform diverges from native Mini: max="
             + str(dynamic_waveform_max_error) + " rms=" + str(dynamic_waveform_rms_error))
 
+    waveform_diagnostic_path.unlink()
     files = []
     for path in (duration_path, bridge_path, waveform_path, style_path, vocab_path):
         files.append({"path": path.name, "bytes": path.stat().st_size, "sha256": sha256_file(path)})
@@ -719,8 +930,10 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             "stftMagnitudeRmsError": stft_magnitude_rms_error,
             "stftPhaseMaxAbsError": stft_phase_max_error,
             "stftPhaseRmsError": stft_phase_rms_error,
+            "stftPhaseWrapAudit": source_phase_audit,
             "waveformMaxAbsError": waveform_max_error,
             "waveformRmsError": waveform_rms_error,
+            "generatorParityStages": diagnostic_errors,
             "dynamicWaveformMaxAbsError": dynamic_waveform_max_error,
             "dynamicWaveformRmsError": dynamic_waveform_rms_error,
             "dynamicTokenIds": int(dynamic_ids.shape[1]),
