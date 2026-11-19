@@ -223,6 +223,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Linnet en-35m (f1) | 83.08 | [1284.58](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/summary.md) | [2778.33](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/summary.md) |
 
+**RAM 17** · Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`8b929d8e`](https://github.com/ngelik/tts-bench/commit/8b929d8e68834b101dd1992981e9b04640222748).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| SanoTTS Heart 2.27M (English, US) | 9.14 | [735.77](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | — |
+
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
 ### Voice and language support
@@ -610,6 +616,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 125 · 2026-11-19 | sano-kristin/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | [SVG](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/chart.svg) |
 | 126 · 2026-11-19 | sano-amy-small/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | [SVG](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/chart.svg) |
 | 127 · 2026-11-19 | sano-amy-1p8m/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | [SVG](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/chart.svg) |
+| 128 · 2026-11-19 | sano-heart/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | [SVG](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/chart.svg) |
 
 </details>
 
