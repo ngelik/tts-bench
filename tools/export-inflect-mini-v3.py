@@ -834,14 +834,14 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             f0_up_native.shape[0], sinegen.dim, device=f0_up_native.device)
         native_initial_phase[:, 0] = 0
         native_rad[:, 0, :] = native_rad[:, 0, :] + native_initial_phase
-        native_phase_input = F.interpolate(
+        native_source_phase_input = F.interpolate(
             native_rad.transpose(1, 2), scale_factor=1 / sinegen.upsample_scale,
             mode="linear").transpose(1, 2)
-        native_phase_input = torch.cumsum(native_phase_input, dim=1) * (2 * math.pi)
-        native_phase_output = F.interpolate(
-            native_phase_input.transpose(1, 2) * sinegen.upsample_scale,
+        native_source_phase_input = torch.cumsum(native_source_phase_input, dim=1) * (2 * math.pi)
+        native_source_phase_up = F.interpolate(
+            native_source_phase_input.transpose(1, 2) * sinegen.upsample_scale,
             scale_factor=sinegen.upsample_scale, mode="linear").transpose(1, 2)
-        native_sines = torch.sin(native_phase_output) * sinegen.sine_amp
+        native_sines = torch.sin(native_source_phase_up) * sinegen.sine_amp
         native_uv = sinegen._f02uv(f0_up_native)
         native_noise_amplitude = (
             native_uv * sinegen.noise_std
@@ -1049,9 +1049,9 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     diagnostic_errors["nativeVsBrowserSourceHarmonicWithNativeF0"] = array_error(
         native_harmonic.detach().cpu().numpy().reshape(-1), browser_native_f0["harmonicSource"])
     diagnostic_errors["nativeVsBrowserPhaseInputWithNativeF0"] = array_error(
-        native_phase_input.detach().cpu().numpy(), browser_native_f0["phaseInput"])
+        native_source_phase_input.detach().cpu().numpy(), browser_native_f0["phaseInput"])
     diagnostic_errors["nativeVsBrowserPhaseOutputWithNativeF0"] = array_error(
-        native_phase_output.detach().cpu().numpy(), browser_native_f0["phaseOutput"])
+        native_source_phase_up.detach().cpu().numpy(), browser_native_f0["phaseOutput"])
     diagnostic_errors["nativeVsBrowserSourceSinesWithNativeF0"] = array_error(
         native_source_sines.detach().cpu().numpy(), browser_native_f0["sourceSines"])
     diagnostic_errors["nativeVsBrowserSourceSpecWithNativeF0"] = array_error(
