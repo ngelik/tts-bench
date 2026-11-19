@@ -21,3 +21,9 @@ python tools/inflect-micro-v3/export.py --source /path/to/Inflect-Micro-v3 --out
 
 See `manifest.json` in the generated artifact for source, precision, export
 versions, parity error bounds, output sizes and SHA-256 digests.
+
+The accepted hosted artifact from workflow run
+[44468829531](https://github.com/ngelik/tts-bench/actions/runs/44468829531)
+is published at [the immutable browser export release](https://github.com/ngelik/tts-bench/releases/tag/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37).
+Its six files are pinned in `assets.lock.json`; `node bin/bench.mjs assets
+fetch --model inflect-micro-v3` stages and verifies the full inference closure.

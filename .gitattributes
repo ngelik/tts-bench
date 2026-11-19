@@ -1,3 +1,5 @@
 * text=auto eol=lf
 # A unified diff uses a single space for an empty context line.
 web/audio-cpp-gguf/ming-session-threadpool.patch whitespace=-blank-at-eol
+/web/inflect-micro-v3/LICENSE.md -text whitespace=cr-at-eol
+/web/inflect-micro-v3/LICENSES/Apache-2.0.txt -text whitespace=cr-at-eol
