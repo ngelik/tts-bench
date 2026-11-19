@@ -11,7 +11,7 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini','sano-heart-nano-gguf-f32','sano-heart-gguf','sano-amy-gguf','sano-amy-small-gguf','sano-amy-1p8m-gguf','sano-hfc-gguf','sano-kristin-gguf']);
+  assert.deepEqual(models.map(model => model.id), ["paradee", "phonon", "leokani-7m", "leokani-4.5m", "pivo-curated", "woof", "piper-en-gb-southern-english-female-low", "supertonic-3", "kokoro-82m", "mms-english", "kitten-nano-0.8", "sano-amy", "inflect-micro-v2", "lfm3-audio-2b-gguf", "lfm3-omni-2b-gguf", "lfm3-audio-2b-fusor-q7-cpu", "lfm3-omni-2b-fusor-q7-cpu", "mach-boom", "pocket-tts-100m-english-int8", "fun-cosyvoice3-0.5b-2512", "audio8-realistic-0.6b-int4", "ming-3.0-tts-0.5b-gguf", "ming-3.0-tts-0.5b-fusor-mix-cpu", "tiny-voca", "sopro-v2-turbo", "supratts-1.0-preview", "klein-tts-x1.5-pro", "linnet-en-35m", "silencio-2", "zonos3-mini", "sano-heart-nano-gguf-f32", "sano-robot-mcu", "sano-trellis", "sano-heart-gguf", "sano-amy-gguf", "sano-amy-small-gguf", "sano-amy-1p8m-gguf", "sano-hfc-gguf", "sano-kristin-gguf"]);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -174,6 +174,21 @@ test('asset lock pins content and permits only identical shared runtime targets'
   assert.equal(lock.models['leokani-4.5m'].license.requiresAcceptance, true);
   assert.equal(lock.models.woof.license.requiresAcceptance, true);
   assert.equal(lock.models['leokani-4.5m'].assets.find(asset => asset.id === 'leokani-4-5m-config').sourcePath, 'web/data/leokani/config-4.5m.json');
+});
+
+
+test('Robot and Trellis have complete separate official browser closures', () => {
+  for (const [id, script, bytes] of [['sano-robot-mcu','snt_tts.js',679832],['sano-trellis','snt_trellis.js',3982096]]) {
+    const m = getAssetLock().models[id];
+    assert.deepEqual(m.backends, ['cpu']);
+    assert.equal(m.support.voiceCount, 1);
+    assert.equal(m.support.languageCount, 1);
+    assert.equal(m.assets.filter(a=>a.kind==='model-weights').reduce((n,a)=>n+a.bytes,0),bytes);
+    for (const file of ['snt_g2p.js','snt_g2p.wasm','snt_g2p.data',script,script.replace('.js','.wasm')]) {
+      assert.ok(m.assets.some(a=>a.target.endsWith('/'+file)),`${id}: ${file}`);
+    }
+    assert.ok(m.assets.every(a=>a.url.includes(m.modelRevision)));
+  }
 });
 
 

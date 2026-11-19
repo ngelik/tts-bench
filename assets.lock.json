@@ -7259,6 +7259,234 @@
         "notes": "One fixed heartnano US English voice is benchmarked at 24 kHz. The GGUF is F32 expanded from the exact pinned Q8 front/decoder blobs; this is distinct from the official Q8 browser configuration. Generation uses speed 1 and seed 42 + canonical chunk id. Kokopop applies the pinned Misaki-normalized eSpeak IPA frontend. The CPU profile is cpu/wasm; WebGPU is webgpu+wasm and requires actual hardware dispatch. Only English (US) eSpeak data is bundled."
       }
     },
+    "sano-robot-mcu": {
+      "displayName": "SanoTTS Robot MCU INT8 (English, US)",
+      "modelRevision": "c0584a51213721faba98135821faab71bae888f0",
+      "runtime": {
+        "package": "Ampixa/sanoTTS official browser runtime",
+        "version": "c0584a51213721faba98135821faab71bae888f0",
+        "license": "GPL-3.0-or-later",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "sano-robot-mcu-web-snt_g2p-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "bytes": 72608,
+          "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-robot-mcu-web-snt_g2p-wasm",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "bytes": 346363,
+          "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-robot-mcu-web-snt_g2p-data",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "bytes": 3266545,
+          "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-robot-mcu-web-snt_tts-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_tts.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_tts.js",
+          "bytes": 11543,
+          "sha256": "e76f87ef55b5cf25b66bc78f76a48c5be16aec18ce5df0ce5250453f1550096c",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-robot-mcu-web-snt_tts-wasm",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_tts.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_tts.wasm",
+          "bytes": 46584,
+          "sha256": "c76ad7755f016cdab530392526e2e855ce80d4a10b53c290fa3151b4130e8ed4",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-robot-mcu-web-assets-front_q8-bin",
+          "target": "models/sano-robot-mcu/c0584a51213721faba98135821faab71bae888f0/web/voices/mcu/front_q8.bin",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/assets/front_q8.bin",
+          "bytes": 280288,
+          "sha256": "921b1aea12a3c982ed0aacac2c3c13f2f627797f24203b6bd542c70a7a8964a8",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-robot-mcu-web-assets-model_q8-bin",
+          "target": "models/sano-robot-mcu/c0584a51213721faba98135821faab71bae888f0/web/voices/mcu/model_q8.bin",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/assets/model_q8.bin",
+          "bytes": 399544,
+          "sha256": "e81c2c35572c58b9e94c218866d04acacb316441875ce82cea68bf87c58a7417",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-robot-mcu-LICENSE",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "sano-robot-mcu-LICENSE-MIT",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE.MIT",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE.MIT",
+          "bytes": 4113,
+          "sha256": "2f544ceb6a679cf706652c9df3bf8a6753197ee36456ba61665d97fbed43210e",
+          "kind": "license"
+        },
+        {
+          "id": "sano-robot-mcu-README-md",
+          "target": "models/sano-robot-mcu/c0584a51213721faba98135821faab71bae888f0/README.md",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/README.md",
+          "bytes": 21562,
+          "sha256": "b78caecf45567eb7d3682f90e60b81ba619bfb29a87c81081dd56e33fca3c99f",
+          "kind": "model-terms"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0-or-later",
+        "runtime": "GPL-3.0-or-later; Robot inference core MIT subset",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned official mcu English checkpoint and CPU/WASM runtime",
+        "notes": "Official demo English preset; 120-character internal pieces preserve all canonical source characters. No WebGPU path in the selected runtime. Robot is the 567,008-parameter MCU model, not Kristin PiperLite.",
+        "sources": [
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+        ]
+      }
+    },
+    "sano-trellis": {
+      "displayName": "SanoTTS Trellis experimental FP32 (English, US)",
+      "modelRevision": "c0584a51213721faba98135821faab71bae888f0",
+      "runtime": {
+        "package": "Ampixa/sanoTTS official browser runtime",
+        "version": "c0584a51213721faba98135821faab71bae888f0",
+        "license": "GPL-3.0-or-later",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "sano-trellis-web-snt_g2p-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "bytes": 72608,
+          "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-trellis-web-snt_g2p-wasm",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "bytes": 346363,
+          "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-trellis-web-snt_g2p-data",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "bytes": 3266545,
+          "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-trellis-web-snt_trellis-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_trellis.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_trellis.js",
+          "bytes": 11279,
+          "sha256": "38a43ddb0affe3faa28b5eaec8702caf57676a763728142fedacfe554eafd923",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-trellis-web-snt_trellis-wasm",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_trellis.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_trellis.wasm",
+          "bytes": 55334,
+          "sha256": "37df81ce5cd3724337c29e9771176035fc44ed0c6658aaa8bca060f355b686e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-trellis-web-trellis_frontend-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/trellis_frontend.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/trellis_frontend.js",
+          "bytes": 20026,
+          "sha256": "1d8523bab2e96f03ea98131a3d575d92851d3870899435ba3a306804238e49b3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-trellis-web-voices-trellis-bundle-bin",
+          "target": "models/sano-trellis/c0584a51213721faba98135821faab71bae888f0/web/voices/trellis/bundle.bin",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/voices/trellis/bundle.bin",
+          "bytes": 3982096,
+          "sha256": "1d102317e1427bfa72171739bed5c7322ee16a18f942d854cd74346d2210689d",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-trellis-LICENSE",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "sano-trellis-LICENSE-MIT",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE.MIT",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE.MIT",
+          "bytes": 4113,
+          "sha256": "2f544ceb6a679cf706652c9df3bf8a6753197ee36456ba61665d97fbed43210e",
+          "kind": "license"
+        },
+        {
+          "id": "sano-trellis-README-md",
+          "target": "models/sano-trellis/c0584a51213721faba98135821faab71bae888f0/README.md",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/README.md",
+          "bytes": 21562,
+          "sha256": "b78caecf45567eb7d3682f90e60b81ba619bfb29a87c81081dd56e33fca3c99f",
+          "kind": "model-terms"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0-or-later",
+        "runtime": "GPL-3.0-or-later; Robot inference core MIT subset",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned official trellis English checkpoint and CPU/WASM runtime",
+        "notes": "Official demo English preset; 120-character internal pieces preserve all canonical source characters. No WebGPU path in the selected runtime. Experimental Trellis-RIFT full pipeline with 995,058 FP32 parameters.",
+        "sources": [
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+        ]
+      }
+    },
     "sano-heart-gguf": {
       "displayName": "sanoTTS Heart (Kokopop F32)",
       "modelRevision": "25410576d005d7f08d186990fd91f6a2651243de",

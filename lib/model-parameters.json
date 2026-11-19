@@ -95,6 +95,18 @@
     "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json",
     "scope": "Exact total published for the selected heartnano synthesis stack: duration 22,858 + acoustic 65,299 + decoder 206,122 = 294,279. The Kokopop F32 GGUF expands the same pinned Q8 matrices without changing tensor count."
   },
+  "sano-robot-mcu": {
+    "parameterCount": 567008,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md",
+    "scope": "Official robot MCU end-to-end neural frontend and decoder, distinct from the PiperLite Kristin voice."
+  },
+  "sano-trellis": {
+    "parameterCount": 995058,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/mcu/ports/wasm/snt_trellis_wasm.c",
+    "scope": "Trellis-RIFT complete English text-to-wave pipeline, including duration/acoustic/decoder weights in the pinned bundle."
+  },
   "sano-heart-gguf": {
     "parameterCount": 2272145,
     "countKind": "exact",
