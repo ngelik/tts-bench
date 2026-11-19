@@ -1,0 +1,356 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+  "sourceManifestSha256": "659bb701ec977ff2b4a083a9b0eeff601fe72cfafcf539084168b68b75c0a5ab",
+  "assetsLockSha256": "0b2aecf884bee02d5579d983e986e0423d6579717f074e0f840387361b46d2df",
+  "selectedProfiles": [
+    {
+      "model": "sano-heart-gguf",
+      "backend": "cpu",
+      "resultId": "2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0",
+      "receiptSha256": "c0ac0f9bd777d9f538692a40efaae8474321c4ee24db2066e00add9ce5fef2ca",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 39.16536500000954,
+      "minSeconds": 39.08353500008583,
+      "maxSeconds": 39.356754999876024,
+      "firstPcmMedianMs": 439.7999999523163,
+      "sampleRate": 24000,
+      "generationSeconds": [
+        39.174140000104906,
+        39.08353500008583,
+        39.16536500000954,
+        39.142204999923706,
+        39.356754999876024
+      ],
+      "effectiveBackend": "cpu/wasm",
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF."
+      },
+      "settings": {
+        "selectedVoice": "heart",
+        "sampleRate": 24000,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "heart",
+        "sourceParameterCount": 2272145,
+        "espeakVoice": "en-us"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu-full.wav",
+        "sha256": "0103ce7493186870b92a04e0ae69fb61ad1e07717725b3fae7e0970e45ad1da6",
+        "bytes": 63840636
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu.wav",
+        "sha256": "d0349bee126599dd82b83531a67d1f8dd37a5e42bf96eabda6940db963e644d4",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      }
+    },
+    {
+      "model": "sano-heart-gguf",
+      "backend": "webgpu",
+      "resultId": "2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6",
+      "receiptSha256": "6c3b50c5df4a2eea208e68b83ff0e39497295db0eae5f7592e25cafcf4ad0f9a",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 6.059754999876023,
+      "minSeconds": 6.029799999952316,
+      "maxSeconds": 6.125210000038147,
+      "firstPcmMedianMs": 81.57999992370605,
+      "sampleRate": 24000,
+      "generationSeconds": [
+        6.125210000038147,
+        6.029799999952316,
+        6.059754999876023,
+        6.033085000038147,
+        6.083679999828338
+      ],
+      "effectiveBackend": "webgpu+wasm",
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 480,
+        "schedulerOperations": {
+          "MUL_MAT": 84,
+          "IM2COL": 54,
+          "ADD": 130,
+          "SILU": 20
+        },
+        "probeFrames": 357536,
+        "probeSampleRate": 24000
+      },
+      "settings": {
+        "selectedVoice": "heart",
+        "sampleRate": 24000,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "heart",
+        "sourceParameterCount": 2272145,
+        "espeakVoice": "en-us"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu-full.wav",
+        "sha256": "5ed6b504bd66953ac523e536197654e29e2ade8de55fcee9b11bf903cecf8966",
+        "bytes": 63840124
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu.wav",
+        "sha256": "3771e5e54ccd54ffb14209df38fdd1e107acf93a377f0f3f6927fbfbde607fbc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      }
+    },
+    {
+      "model": "sano-amy-gguf",
+      "backend": "cpu",
+      "resultId": "2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc",
+      "receiptSha256": "6ac5ecceb870c1624bd21200e8e4a0eed25590dc94be5b496b51dbfd75645ec3",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 1118.8996449999809,
+      "minSeconds": 1117.8906199998855,
+      "maxSeconds": 1119.5083200001716,
+      "firstPcmMedianMs": 12720.835000038147,
+      "sampleRate": 22050,
+      "generationSeconds": [
+        1119.5083200001716,
+        1118.8996449999809,
+        1117.8906199998855,
+        1118.316125,
+        1118.9672999999523
+      ],
+      "effectiveBackend": "cpu/wasm",
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF."
+      },
+      "settings": {
+        "selectedVoice": "amy",
+        "sampleRate": 22050,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop LONG_FORM normalizes text, then the pinned Piper eSpeak/NFD frontend emits phoneme IDs with interleaved PAD.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "amy-en-1p46m",
+        "sourceParameterCount": 1454284,
+        "espeakVoice": "en-us"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu-full.wav",
+        "sha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+        "bytes": 57896302
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu.wav",
+        "sha256": "72f6b7adefd748fac0aa10f171007d06a23b4749d54689736c95a19e483acecd",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    },
+    {
+      "model": "sano-amy-gguf",
+      "backend": "webgpu",
+      "resultId": "2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665",
+      "receiptSha256": "466a49922b31adfc311a7211738fcd66eb65bc586f832732f0135ef8d63e48de",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 173.40834999990463,
+      "minSeconds": 173.0410950000286,
+      "maxSeconds": 173.78577500009536,
+      "firstPcmMedianMs": 2001.039999961853,
+      "sampleRate": 22050,
+      "generationSeconds": [
+        173.78577500009536,
+        173.40834999990463,
+        173.37172499990464,
+        173.72694499993324,
+        173.0410950000286
+      ],
+      "effectiveBackend": "webgpu+wasm",
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 723,
+        "schedulerOperations": {
+          "MUL_MAT": 132,
+          "IM2COL": 120,
+          "ADD": 243,
+          "SILU": 30
+        },
+        "probeFrames": 330139,
+        "probeSampleRate": 22050
+      },
+      "settings": {
+        "selectedVoice": "amy",
+        "sampleRate": 22050,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop LONG_FORM normalizes text, then the pinned Piper eSpeak/NFD frontend emits phoneme IDs with interleaved PAD.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "amy-en-1p46m",
+        "sourceParameterCount": 1454284,
+        "espeakVoice": "en-us"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu-full.wav",
+        "sha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+        "bytes": 57895834
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu.wav",
+        "sha256": "78b3252ac4635013d1d18f20187919be88fd2eced94b91e9419fb431bea3201d",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    }
+  ],
+  "plannedCells": 12,
+  "nativeAudioUnmodified": true,
+  "scope": "Matched CPU/WebGPU comparisons within each individual converted profile only; no official INT8 or hosted numbers.",
+  "listeningScope": "No ASR, pronunciation or intelligibility claim; native substitutions and recordings retained."
+}

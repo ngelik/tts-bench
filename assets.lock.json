@@ -8763,6 +8763,220 @@
         "notes": "One selected voice; 22050 Hz. Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG_FORM normalization and internal chunking are retained. No other voices are bundled."
       }
     },
+    "inflect-micro-v3": {
+      "displayName": "Inflect Micro v3 FP32",
+      "modelRevision": "c1a7db6ef44c931623fc2028cb0409659b83156c",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.23.2",
+        "license": "MIT; bundled third-party notices apply",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.wasm.min.mjs",
+            "bytes": 49856,
+            "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs",
+            "bytes": 66261,
+            "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.mjs",
+            "bytes": 20321,
+            "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.wasm",
+            "bytes": 11905541,
+            "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 51913,
+            "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 25499390,
+            "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada"
+          },
+          {
+            "package": "phonemizer",
+            "version": "1.2.1",
+            "path": "dist/phonemizer.js",
+            "target": "runtimes/phonemizer/1.2.1/phonemizer.js",
+            "bytes": 1322380,
+            "sha256": "193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec"
+          },
+          {
+            "package": "phonemizer",
+            "version": "1.2.1",
+            "path": "LICENSE",
+            "target": "licenses/phonemizer-1.2.1/LICENSE",
+            "bytes": 11357,
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.23.2/LICENSE",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.23.2/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/ThirdPartyNotices.txt",
+            "bytes": 326866,
+            "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "inflect-micro-v3-text-features",
+          "target": "models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/text-features.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37/text-features.onnx",
+          "bytes": 12355400,
+          "sha256": "f5c9a7ba2c52b7a34561327d2adb0778d9087fb7876400b42750618d9bd95644",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-micro-v3-text-prosody",
+          "target": "models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/text-prosody.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37/text-prosody.onnx",
+          "bytes": 4557803,
+          "sha256": "ac6a34527352c124a73d55b39eaf6957a5ba471356b11a119c883e6a61f0044d",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-micro-v3-joint-coefficients",
+          "target": "models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/joint-coefficients.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37/joint-coefficients.onnx",
+          "bytes": 30394832,
+          "sha256": "fd177763f8c3d196772e95cd670b4f15b4d0593bdaa8d4c999958c297e07dd25",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-micro-v3-cassidy-style-bank",
+          "target": "models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/cassidy-style-bank.f32",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37/cassidy-style-bank.f32",
+          "bytes": 261120,
+          "sha256": "62d0cf9546b410b66560ff6bf75b9d7ace3abc1c93e4922df6245fbee68905fe",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-micro-v3-vocab",
+          "target": "models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/vocab.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37/vocab.json",
+          "bytes": 1145,
+          "sha256": "7c0516094866f39c4c6538716002abe3f2eba8ef9e6d5af5544d3b2120534851",
+          "kind": "model-support"
+        },
+        {
+          "id": "inflect-micro-v3-export-manifest",
+          "target": "models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/manifest.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-micro-v3-browser-onnx-v1-f86f7ec2af37/manifest.json",
+          "bytes": 1975,
+          "sha256": "a9672a831671b197c79936560d3d2e3a559cd33ade13296582890e606d410e7a",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-micro-v3-license",
+          "target": "licenses/inflect-micro-v3/LICENSE.md",
+          "sourcePath": "web/inflect-micro-v3/LICENSE.md",
+          "bytes": 10455,
+          "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-micro-v3-license-scope",
+          "target": "licenses/inflect-micro-v3/LICENSE_SCOPE.json",
+          "sourcePath": "web/inflect-micro-v3/LICENSE_SCOPE.json",
+          "bytes": 748,
+          "sha256": "1a486961d9afafc37c4954a04f2bc499fe8f610c3fbd1adf57e8f0902a265410",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-micro-v3-third-party-notices",
+          "target": "licenses/inflect-micro-v3/THIRD_PARTY_NOTICES.md",
+          "sourcePath": "web/inflect-micro-v3/THIRD_PARTY_NOTICES.md",
+          "bytes": 1689,
+          "sha256": "111ed36fbdb054795ccc2e4577c4913b40be158873f159eee308bf117b1faf0a",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-micro-v3-klein-en-us-lexicon",
+          "target": "models/klein-tts-x1.5-pro/en_us_lexicon.json.gz",
+          "url": "https://unpkg.com/@kleinml/kleintts@0.2.0/data/en_us_lexicon.json.gz",
+          "bytes": 1394577,
+          "sha256": "f88c07d53f0bc97adecc70c755416dd1103f61c47f76937339f73a7f32bf5f85",
+          "kind": "frontend-data"
+        },
+        {
+          "id": "inflect-micro-v3-espeak-license",
+          "target": "licenses/espeak-ng/COPYING",
+          "sourcePath": "web/licenses/ESPEAK-NG-COPYING.txt",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-micro-v3-kokoro-apache-license",
+          "target": "licenses/inflect-micro-v3/LICENSES/Apache-2.0.txt",
+          "sourcePath": "web/inflect-micro-v3/LICENSES/Apache-2.0.txt",
+          "bytes": 10455,
+          "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-micro-v3-styletts2-mit-license",
+          "target": "licenses/inflect-micro-v3/LICENSES/StyleTTS2-MIT.txt",
+          "sourcePath": "web/inflect-micro-v3/LICENSES/StyleTTS2-MIT.txt",
+          "bytes": 1075,
+          "sha256": "7f023c12a1d6b25583506f6fc77f5287c7c71b65c0f886922f14153bcc07dfa9",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0 for the pinned Inflect-owned model weights identified by LICENSE_SCOPE.json",
+        "frontend": "Apache-2.0 Klein browser G2P and lexicon; Apache-2.0 phonemizer.js; GPL-3.0-or-later eSpeak NG",
+        "runtime": "MIT (ONNX Runtime Web 1.23.2); bundled third-party notices apply",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 6,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Inflect Micro v3 English checkpoint c1a7db6ef44c931623fc2028cb0409659b83156c",
+        "sources": [
+          "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md",
+          "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json",
+          "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
+        ],
+        "notes": "Upstream checkpoint lists six English voices; only Cassidy (voice 2) is exported and benchmarked. 11,787,634-parameter core; browser export uses three FP32 ONNX graphs and a fixed Cassidy style bank. English G2P uses the separately pinned Klein 0.2.0 browser adaptation and does not claim native Misaki parity. Seeded JavaScript Gaussian noise differs from PyTorch RNG sequence."
+      }
+    },
     "inflect-mini-v3-browser-port": {
       "displayName": "Inflect Mini v3 Browser Port",
       "modelRevision": "fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6",

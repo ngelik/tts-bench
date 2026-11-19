@@ -112,6 +112,17 @@ is described upstream as synthetic, with no reference recording required.
 The model's private training recipe/data are not fully released; open model
 weights do not imply an open training corpus. Weights remain in ignored cache.
 
+Inflect Micro v3 grants Apache-2.0 for the exact Inflect-owned weight file
+identified by its pinned `LICENSE_SCOPE.json`; third-party and voice/recording
+terms are separate. Its pinned notice lists Kokoro under Apache-2.0 and
+StyleTTS2 under MIT, and the matching license texts are retained with the
+registration. The browser G2P uses Klein 0.2.0 (Apache-2.0) and the pinned
+English lexicon, `phonemizer.js` (Apache-2.0) and bundled eSpeak NG data/code
+(GPL-3.0-or-later). ONNX Runtime Web is MIT; its third-party notices apply.
+Only Cassidy is exported from the six-voice English checkpoint. See the
+[Micro v3 source notice](../web/inflect-micro-v3/NOTICE.md) and
+[configuration](INFLECT_MICRO_V3.md).
+
 ## Liquid AI LFM3 Audio / Omni GGUF
 
 The official weights use **LFM Open License v1.0**, not an OSI-approved permissive
