@@ -46,6 +46,7 @@ let phonemize = null;
 let restoreFetch = null;
 let backendEffective = null;
 let activeNeuralDispatchCount = null;
+let diagnosticCaptureEnabled = false;
 
 function unsupported(reason) {
   return {
@@ -79,6 +80,10 @@ async function localBytes(path) {
 function disposeTensor(tensor) {
   if (typeof tensor?.dispose === 'function') tensor.dispose();
   else tensor?.release?.();
+}
+
+function diagnosticTensor(tensor) {
+  return { dtype: 'float32', dims: [...tensor.dims], data: new Float32Array(tensor.data) };
 }
 
 async function runSession(session, feeds, outputNames) {
@@ -202,7 +207,29 @@ function styleFor(phones) {
   return styleTable.slice(begin, begin + STYLE_DIM);
 }
 
-async function synthesizeUtterance(utterance, seed) {
+function validateDiagnosticWaveformInputs(inputs, hidden, source, frames) {
+  if (!inputs || typeof inputs !== 'object') throw new Error('Inflect Mini diagnostic waveform inputs are malformed.');
+  const expected = {
+    hidden: [1, 512, 2 * frames],
+    style: [1, STYLE_DIM],
+    source_spec: [1, 2 * SOURCE_BINS, source.stftFrames],
+  };
+  for (const [name, dims] of Object.entries(expected)) {
+    const tensor = inputs[name];
+    if (tensor?.dtype !== 'float32' || !Array.isArray(tensor.dims)
+        || JSON.stringify(tensor.dims) !== JSON.stringify(dims)
+        || !(tensor.data instanceof Float32Array)
+        || tensor.data.length !== dims.reduce((product, dimension) => product * dimension, 1)) {
+      throw new Error(`Inflect Mini diagnostic ${name} does not match the exact Float32 waveform graph input shape.`);
+    }
+  }
+  if (JSON.stringify(hidden.dims) !== JSON.stringify(expected.hidden)) {
+    throw new Error('Inflect Mini diagnostic hidden graph clock differs from its waveform inputs.');
+  }
+  return inputs;
+}
+
+async function synthesizeUtterance(utterance, seed, diagnosticWaveformInputs = null) {
   const ids = BigInt64Array.from(utterance.ids, value => BigInt(value));
   const duration = await runSession(sessions[0], {
     ids: { type: 'int64', data: ids, dims: [1, ids.length] },
@@ -237,18 +264,45 @@ async function synthesizeUtterance(utterance, seed) {
     nFft: SOURCE_NFFT,
     hopLength: SOURCE_HOP,
   });
+  const naturalWaveformInputs = {
+    hidden: { dtype: 'float32', data: bridge.hidden.data, dims: bridge.hidden.dims },
+    style: { dtype: 'float32', data: style, dims: [1, STYLE_DIM] },
+    source_spec: { dtype: 'float32', data: source.sourceSpec, dims: [1, 2 * SOURCE_BINS, source.stftFrames] },
+  };
+  const waveformInputs = diagnosticWaveformInputs
+    ? validateDiagnosticWaveformInputs(diagnosticWaveformInputs, bridge.hidden, source, frames)
+    : naturalWaveformInputs;
   const generated = await runSession(sessions[2], {
-    hidden: { type: 'float32', data: bridge.hidden.data, dims: bridge.hidden.dims },
-    style: { type: 'float32', data: style, dims: [1, STYLE_DIM] },
-    source_spec: { type: 'float32', data: source.sourceSpec,
-      dims: [1, 2 * SOURCE_BINS, source.stftFrames] },
+    hidden: { type: 'float32', data: waveformInputs.hidden.data, dims: waveformInputs.hidden.dims },
+    style: { type: 'float32', data: waveformInputs.style.data, dims: waveformInputs.style.dims },
+    source_spec: { type: 'float32', data: waveformInputs.source_spec.data,
+      dims: waveformInputs.source_spec.dims },
   }, ['waveform']);
   const expectedSamples = CLOCK_SAMPLES_PER_FRAME * frames;
   if (JSON.stringify(generated.waveform.dims) !== JSON.stringify([1, expectedSamples])
       || generated.waveform.data.length !== expectedSamples) {
     throw new Error('Inflect Mini waveform sample clock differs from its predicted frame count.');
   }
-  return generated.waveform.data;
+  const diagnostics = diagnosticCaptureEnabled ? {
+    seed,
+    phones: utterance.phones,
+    phoneIds: Array.from(ids, value => Number(value)),
+    duration: {
+      durations: diagnosticTensor(duration.durations),
+      duration_features: diagnosticTensor(duration.duration_features),
+      asr_tokens: diagnosticTensor(duration.asr_tokens),
+    },
+    alignment: { dtype: 'float32', dims: [1, ids.length, frames], data: new Float32Array(alignment) },
+    bridge: { hidden: diagnosticTensor(bridge.hidden), f0: diagnosticTensor(bridge.f0) },
+    waveformInputs: {
+      source: diagnosticWaveformInputs ? 'external-diagnostic-reference' : 'natural-backend-output',
+      hidden: diagnosticTensor({ data: waveformInputs.hidden.data, dims: waveformInputs.hidden.dims }),
+      style: diagnosticTensor({ data: waveformInputs.style.data, dims: waveformInputs.style.dims }),
+      source_spec: diagnosticTensor({ data: waveformInputs.source_spec.data, dims: waveformInputs.source_spec.dims }),
+    },
+    waveform: diagnosticTensor(generated.waveform),
+  } : null;
+  return { pcm: generated.waveform.data, diagnostics };
 }
 
 function pause() {
@@ -262,21 +316,29 @@ async function generate(chunk, onFirst) {
   const utterances = prepared?.utterances;
   if (!Array.isArray(utterances) || !utterances.length) throw new Error('Inflect Mini frontend returned no internal utterances.');
   const parts = [];
+  const diagnostics = diagnosticCaptureEnabled ? [] : null;
   let firstReported = false;
   for (const utterance of utterances) {
     if (typeof utterance?.phones !== 'string' || !Array.isArray(utterance?.ids) || utterance.ids.length < 3) {
       throw new Error('Inflect Mini frontend returned a malformed utterance.');
     }
     if (parts.length) parts.push(pause());
-    const pcm = await synthesizeUtterance(utterance, chunkSeed(chunk.id, utterance.index));
+    const diagnosticWaveformInputs = chunk?.diagnosticWaveformInputs?.[utterance.index] ?? null;
+    if (diagnosticWaveformInputs && !diagnosticCaptureEnabled) {
+      throw new Error('Inflect Mini diagnostic waveform overrides require diagnosticCapture=true.');
+    }
+    const synthesis = await synthesizeUtterance(utterance, chunkSeed(chunk.id, utterance.index), diagnosticWaveformInputs);
+    const pcm = synthesis.pcm;
     if (!pcm.length) throw new Error('Inflect Mini returned empty PCM for an internal utterance.');
     parts.push(pcm);
+    if (diagnostics) diagnostics.push(synthesis.diagnostics);
     if (!firstReported) {
       firstReported = true;
       onFirst?.();
     }
   }
-  return { parts, sampleRate: SAMPLE_RATE, completedChunkId: chunk.id };
+  return { parts, sampleRate: SAMPLE_RATE, completedChunkId: chunk.id,
+    ...(diagnostics ? { diagnostics: { backendEffective, utterances: diagnostics } } : {}) };
 }
 
 async function dispose() {
@@ -284,6 +346,7 @@ async function dispose() {
   sessions = [];
   backendEffective = null;
   activeNeuralDispatchCount = null;
+  diagnosticCaptureEnabled = false;
   ort = null;
   vocab = null;
   styleTable = null;
@@ -300,7 +363,11 @@ async function dispose() {
   if (firstError) throw new Error('Inflect Mini session disposal failed: ' + String(firstError?.message ?? firstError));
 }
 
-async function initialize({ backend, probe = false, probeText = 'A short browser speech check.' }) {
+async function initialize({ backend, probe = false, probeText = 'A short browser speech check.', diagnosticCapture = false }) {
+  const captureDiagnostics = diagnosticCapture === true;
+  // The capability probe is not part of the tensor comparison. Avoid cloning
+  // every intermediate result until the actual diagnostic synthesis begins.
+  diagnosticCaptureEnabled = false;
   if (!['cpu', 'webgpu'].includes(backend)) return unsupported('Inflect Mini supports explicit CPU/WASM and WebGPU providers only.');
   let adapter = null;
   let gpu = null;
@@ -387,6 +454,8 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
       return unsupported('No actual WebGPU compute dispatch was observed during Inflect Mini synthesis.');
     }
   }
+
+  diagnosticCaptureEnabled = captureDiagnostics;
 
   return {
     ...INFO,
