@@ -43,7 +43,7 @@ jobs:
           path = snapshot_download(
               repo_id="owensong/Inflect-Micro-v3",
               revision=source_revision,
-              cache_dir=".cache/huggingface",
+              local_dir=".cache/inflect-micro-v3-source",
           )
           print(f"path={path}")
           PY
