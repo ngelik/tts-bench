@@ -6,6 +6,8 @@ on:
       - 'tools/build-sano-kokopop-webgpu.sh'
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/sano-kokopop-browser-smoke.mjs'
+      - 'tools/check-sano-kokopop-harness-smoke.mjs'
+      - 'tools/results.mjs'
       - 'web/adapters/sano-kokopop.mjs'
       - 'web/adapters/sano-kokopop-config.mjs'
       - 'web/sano-kokopop/**'
@@ -18,6 +20,7 @@ on:
       - 'tests/model-parameters.test.mjs'
       - 'tests/runtime-installation.test.mjs'
       - 'tests/sano-kokopop-adapter.test.mjs'
+      - 'tests/kokopop-capability-results.test.mjs'
       - 'package.json'
       - 'package-lock.json'
   push:
@@ -27,6 +30,8 @@ on:
       - 'tools/build-sano-kokopop-webgpu.sh'
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/sano-kokopop-browser-smoke.mjs'
+      - 'tools/check-sano-kokopop-harness-smoke.mjs'
+      - 'tools/results.mjs'
       - 'web/adapters/sano-kokopop.mjs'
       - 'web/adapters/sano-kokopop-config.mjs'
       - 'web/sano-kokopop/**'
@@ -39,6 +44,7 @@ on:
       - 'tests/model-parameters.test.mjs'
       - 'tests/runtime-installation.test.mjs'
       - 'tests/sano-kokopop-adapter.test.mjs'
+      - 'tests/kokopop-capability-results.test.mjs'
       - 'package.json'
       - 'package-lock.json'
   workflow_dispatch:
@@ -146,6 +152,12 @@ jobs:
         env:
           CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
         run: node tools/sano-kokopop-browser-smoke.mjs
+      - name: Validate normal benchmark harness WebGPU smoke receipt
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: |
+          node bin/bench.mjs run --model sano-heart-nano-gguf-f32 --backend webgpu --scenario offline --smoke --machine "GitHub-hosted macOS-15" --chrome "$CHROME_PATH" --accept-license --note "Receipt-schema and adapter proof smoke; not a benchmark score." > .cache/sano-kokopop-browser-evidence/harness-smoke-run.json
+          node tools/check-sano-kokopop-harness-smoke.mjs .cache/sano-kokopop-browser-evidence/harness-smoke-run.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
