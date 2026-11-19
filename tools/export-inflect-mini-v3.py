@@ -292,21 +292,16 @@ class WaveformGraph(nn.Module):
         sine = sine * uv + noise_amplitude * harmonic_noise
         return source.l_tanh(source.l_linear(sine)).transpose(1, 2).squeeze(1)
 
-    def forward(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
-                phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> torch.Tensor:
-        return self._evaluate(hidden, style, f0, phase_uniform, harmonic_noise)[0]
-
-    def diagnostic_outputs(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
-                           phase_uniform: torch.Tensor,
-                           harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
-        return self._evaluate(hidden, style, f0, phase_uniform, harmonic_noise)
-
-    def _evaluate(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
-                  phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
-        g = self.generator
+    def frontend(self, f0: torch.Tensor, phase_uniform: torch.Tensor,
+                 harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
         harmonic_source = self.harmonic_source(f0, phase_uniform, harmonic_noise)
-        magnitude, source_phase = self.stft.transform(harmonic_source)
+        source_real, source_imag, magnitude, source_phase = self.stft.transform_components(harmonic_source)
         source_spec = torch.cat([magnitude, source_phase], dim=1)
+        return source_spec, source_real, source_imag
+
+    def from_source_spec(self, hidden: torch.Tensor, style: torch.Tensor,
+                         source_spec: torch.Tensor) -> tuple[torch.Tensor, ...]:
+        g = self.generator
 
         x = hidden
         first_resblock_input = None
@@ -332,7 +327,48 @@ class WaveformGraph(nn.Module):
         magnitude = torch.exp(x[:, :bins, :])
         output_phase = torch.sin(x[:, bins:, :])
         waveform = self.stft.inverse(magnitude, output_phase).squeeze(1)
-        return waveform, source_spec, first_resblock_input, magnitude, output_phase
+        return waveform, first_resblock_input, magnitude, output_phase
+
+    def forward_from_source_spec(self, hidden: torch.Tensor, style: torch.Tensor,
+                                 source_spec: torch.Tensor) -> torch.Tensor:
+        return self.from_source_spec(hidden, style, source_spec)[0]
+
+    def diagnostic_outputs(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                           phase_uniform: torch.Tensor,
+                           harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
+        return self._evaluate(hidden, style, f0, phase_uniform, harmonic_noise)
+
+    def _evaluate(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                  phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> tuple[torch.Tensor, ...]:
+        source_spec, source_real, source_imag = self.frontend(f0, phase_uniform, harmonic_noise)
+        waveform, first_resblock_input, magnitude, output_phase = self.from_source_spec(
+            hidden, style, source_spec)
+        return (waveform, source_spec, first_resblock_input, magnitude, output_phase,
+                source_real, source_imag)
+
+
+class SourceFrontendGraph(nn.Module):
+    """CPU/WASM stage: deterministic harmonic excitation plus source STFT."""
+
+    def __init__(self, graph: WaveformGraph):
+        super().__init__()
+        self.graph = graph
+
+    def forward(self, f0: torch.Tensor, phase_uniform: torch.Tensor,
+                harmonic_noise: torch.Tensor) -> torch.Tensor:
+        return self.graph.frontend(f0, phase_uniform, harmonic_noise)[0]
+
+
+class NeuralWaveformGraph(nn.Module):
+    """Neural stage consumes the source features prepared outside dispatch."""
+
+    def __init__(self, graph: WaveformGraph):
+        super().__init__()
+        self.graph = graph
+
+    def forward(self, hidden: torch.Tensor, style: torch.Tensor,
+                source_spec: torch.Tensor) -> torch.Tensor:
+        return self.graph.forward_from_source_spec(hidden, style, source_spec)
 
 
 class WaveformDiagnosticsGraph(nn.Module):
@@ -467,13 +503,17 @@ class ExactTorchSTFT(nn.Module):
         return torch.where((y == 0) & (x < 0), torch.full_like(result, pi), result)
 
     def transform(self, waveform: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        _, _, magnitude, phase = self.transform_components(waveform)
+        return magnitude, phase
+
+    def transform_components(self, waveform: torch.Tensor) -> tuple[torch.Tensor, ...]:
         pad = self.n_fft // 2
         centered = F.pad(waveform.unsqueeze(1), (pad, pad), mode="reflect")
         real = F.conv1d(centered, self.forward_real, stride=self.hop_length)
         imag = F.conv1d(centered, self.forward_imag, stride=self.hop_length)
         imag = torch.cat((torch.zeros_like(imag[:, :1, :]), imag[:, 1:-1, :],
                           torch.zeros_like(imag[:, -1:, :])), dim=1)
-        return torch.sqrt(real.square() + imag.square()), self._atan2(imag, real)
+        return real, imag, torch.sqrt(real.square() + imag.square()), self._atan2(imag, real)
 
     def inverse(self, magnitude: torch.Tensor, phase: torch.Tensor) -> torch.Tensor:
         real = magnitude * torch.cos(phase)
@@ -552,6 +592,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     output_dir.mkdir(parents=True, exist_ok=True)
     duration_path = output_dir / "text-duration.onnx"
     bridge_path = output_dir / "text-bridge.onnx"
+    source_path = output_dir / "waveform-source-frontend.onnx"
     waveform_path = output_dir / "waveform-generator.onnx"
     waveform_diagnostic_path = output_dir / "diagnostic-waveform.onnx"
     style_path = output_dir / "cassidy-style-table.f32"
@@ -592,15 +633,27 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     phase = torch.zeros((1, generator.m_source.l_sin_gen.harmonic_num + 1), dtype=torch.float32)
     harmonic_noise = torch.zeros((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
     export_graph(
-        waveform_graph,
-        (hidden, torch.zeros((1, 128), dtype=torch.float32), f0, phase, harmonic_noise),
+        SourceFrontendGraph(waveform_graph),
+        (f0, phase, harmonic_noise),
+        source_path,
+        input_names=["f0", "phase_uniform", "harmonic_noise"],
+        output_names=["source_spec"],
+        dynamic_axes={
+            "f0": {1: "f0_frames"},
+            "harmonic_noise": {1: "samples"},
+            "source_spec": {2: "source_spec_frames"},
+        },
+    )
+    export_graph(
+        NeuralWaveformGraph(waveform_graph),
+        (hidden, torch.zeros((1, 128), dtype=torch.float32),
+         waveform_graph.frontend(f0, phase, harmonic_noise)[0]),
         waveform_path,
-        input_names=["hidden", "style", "f0", "phase_uniform", "harmonic_noise"],
+        input_names=["hidden", "style", "source_spec"],
         output_names=["waveform"],
         dynamic_axes={
             "hidden": {2: "expanded_frames"},
-            "f0": {1: "f0_frames"},
-            "harmonic_noise": {1: "samples"},
+            "source_spec": {2: "source_spec_frames"},
             "waveform": {1: "samples"},
         },
     )
@@ -610,13 +663,15 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         waveform_diagnostic_path,
         input_names=["hidden", "style", "f0", "phase_uniform", "harmonic_noise"],
         output_names=["waveform", "source_spec", "first_resblock_input",
-                      "predicted_magnitude", "predicted_phase"],
+                      "predicted_magnitude", "predicted_phase", "source_real", "source_imag"],
         dynamic_axes={
             "hidden": {2: "expanded_frames"},
             "f0": {1: "f0_frames"},
             "harmonic_noise": {1: "samples"},
             "waveform": {1: "samples"},
             "source_spec": {2: "source_spec_frames"},
+            "source_real": {2: "source_complex_frames"},
+            "source_imag": {2: "source_complex_frames"},
             "first_resblock_input": {2: "first_resblock_frames"},
             "predicted_magnitude": {2: "predicted_spectral_frames"},
             "predicted_phase": {2: "predicted_spectral_frames"},
@@ -637,6 +692,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     # pinned native Python inference. No output is used as benchmark evidence.
     duration_session = ort.InferenceSession(str(duration_path), providers=["CPUExecutionProvider"])
     bridge_session = ort.InferenceSession(str(bridge_path), providers=["CPUExecutionProvider"])
+    source_session = ort.InferenceSession(str(source_path), providers=["CPUExecutionProvider"])
     waveform_session = ort.InferenceSession(str(waveform_path), providers=["CPUExecutionProvider"])
     waveform_diagnostic_session = ort.InferenceSession(
         str(waveform_diagnostic_path), providers=["CPUExecutionProvider"])
@@ -683,7 +739,16 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             "Explicit harmonic source differs from native Mini: max=" + str(harmonic_max_error)
             + " rms=" + str(harmonic_rms_error))
     native_magnitude, native_phase = generator.stft.transform(native_harmonic)
-    exported_magnitude, exported_phase = waveform_graph.stft.transform(exported_harmonic)
+    exported_real, exported_imag, exported_magnitude, exported_phase = \
+        waveform_graph.stft.transform_components(exported_harmonic)
+    native_complex = torch.stft(
+        native_harmonic,
+        generator.stft.filter_length,
+        generator.stft.hop_length,
+        generator.stft.win_length,
+        window=generator.stft.window,
+        return_complex=True,
+    )
     stft_magnitude_max_error = float((exported_magnitude - native_magnitude).abs().max())
     stft_magnitude_rms_error = float(torch.sqrt((exported_magnitude - native_magnitude).square().mean()))
     source_phase_audit = raw_phase_audit(
@@ -744,7 +809,8 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "phase_uniform": phase_torch.numpy(),
         "harmonic_noise": noise_torch.numpy(),
     })
-    diagnostic_waveform, ort_source_spec, ort_first_resblock_input, ort_magnitude, ort_phase = diagnostic_outputs
+    (diagnostic_waveform, ort_source_spec, ort_first_resblock_input, ort_magnitude,
+     ort_phase, ort_source_real, ort_source_imag) = diagnostic_outputs
     native_source_spec = native_capture["source_spec"].numpy()
     wrapper_source_spec = wrapper_capture["source_spec"].numpy()
     native_first_resblock_input = native_capture["first_resblock_input"].numpy()
@@ -770,6 +836,14 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "nativeVsWrapperEagerPredictedPhase": array_error(native_phase_output, wrapper_phase_output),
         "nativeVsOrtPredictedPhase": array_error(native_phase_output, ort_phase),
         "wrapperEagerVsOrtWaveform": array_error(wrapper_eager.detach().cpu().numpy(), diagnostic_waveform),
+        "torchStftVsWrapperEagerSourceReal": array_error(
+            native_complex.real.detach().cpu().numpy(), exported_real.detach().cpu().numpy()),
+        "torchStftVsWrapperEagerSourceImag": array_error(
+            native_complex.imag.detach().cpu().numpy(), exported_imag.detach().cpu().numpy()),
+        "torchStftVsOrtSourceReal": array_error(
+            native_complex.real.detach().cpu().numpy(), ort_source_real),
+        "torchStftVsOrtSourceImag": array_error(
+            native_complex.imag.detach().cpu().numpy(), ort_source_imag),
     }
     diagnostic_errors["nativeVsWrapperEagerSourcePhase"] = raw_phase_audit(
         native_source_spec[:, bins:, :], wrapper_source_spec[:, bins:, :],
@@ -778,6 +852,20 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     diagnostic_errors["nativeVsOrtSourcePhase"] = raw_phase_audit(
         native_source_spec[:, bins:, :], ort_source_spec[:, bins:, :],
         native_source_spec[:, :bins, :])
+    phase_wrap_locations = diagnostic_errors["nativeVsOrtSourcePhase"]["wrapExamples"]
+    phase_component_examples = []
+    for location in phase_wrap_locations:
+        batch, bin_index, frame = location["batch"], location["bin"], location["frame"]
+        phase_component_examples.append({
+            **location,
+            "torchReal": float(native_complex.real[batch, bin_index, frame]),
+            "torchImag": float(native_complex.imag[batch, bin_index, frame]),
+            "wrapperReal": float(exported_real[batch, bin_index, frame]),
+            "wrapperImag": float(exported_imag[batch, bin_index, frame]),
+            "ortReal": float(ort_source_real[batch, bin_index, frame]),
+            "ortImag": float(ort_source_imag[batch, bin_index, frame]),
+        })
+    diagnostic_errors["nativeVsOrtSourcePhase"]["componentExamples"] = phase_component_examples
     diagnostic_errors["nativeVsWrapperEagerPredictedPhaseRaw"] = raw_phase_audit(
         native_phase_output, wrapper_phase_output, native_magnitude_output)
     diagnostic_errors["nativeVsOrtPredictedPhaseRaw"] = raw_phase_audit(
@@ -804,16 +892,21 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         waveform_graph.stft.inverse(torch.from_numpy(wrapper_magnitude_output),
                                     torch.from_numpy(wrapper_phase_output)).squeeze(1).detach().cpu().numpy())
 
-    waveform_onnx = waveform_session.run(None, {
-        "hidden": hidden_onnx,
-        "style": style,
+    source_spec_onnx = source_session.run(None, {
         "f0": f0_onnx,
         "phase_uniform": phase_torch.numpy(),
         "harmonic_noise": noise_torch.numpy(),
     })[0]
+    waveform_onnx = waveform_session.run(None, {
+        "hidden": hidden_onnx,
+        "style": style,
+        "source_spec": source_spec_onnx,
+    })[0]
     require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
     require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
             "ONNX waveform is nonfinite or clipped")
+    require(np.allclose(source_spec_onnx, native_source_spec, rtol=0, atol=1e-6),
+            "CPU/WASM source frontend output differs from the native source features")
     waveform_max_error = float(np.max(np.abs(waveform_onnx[0] - native["audio"].numpy())))
     waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
     require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
@@ -851,12 +944,15 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         dynamic_phase = torch.rand((1, phase.shape[1]), dtype=torch.float32)
         dynamic_phase[:, 0] = 0
         dynamic_noise = torch.randn((1, 600 * dynamic_frames, phase.shape[1]), dtype=torch.float32)
-    dynamic_excitation = waveform_session.run(None, {
-        "hidden": dynamic_hidden,
-        "style": dynamic_style,
+    dynamic_source_spec = source_session.run(None, {
         "f0": dynamic_f0,
         "phase_uniform": dynamic_phase.numpy(),
         "harmonic_noise": dynamic_noise.numpy(),
+    })[0]
+    dynamic_excitation = waveform_session.run(None, {
+        "hidden": dynamic_hidden,
+        "style": dynamic_style,
+        "source_spec": dynamic_source_spec,
     })[0]
     require(dynamic_excitation.shape == (1, 600 * dynamic_frames)
             and np.isfinite(dynamic_excitation).all(), "Dynamic waveform graph clock is invalid")
@@ -874,7 +970,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
 
     waveform_diagnostic_path.unlink()
     files = []
-    for path in (duration_path, bridge_path, waveform_path, style_path, vocab_path):
+    for path in (duration_path, bridge_path, source_path, waveform_path, style_path, vocab_path):
         files.append({"path": path.name, "bytes": path.stat().st_size, "sha256": sha256_file(path)})
 
     # Preserve the active owner grant and the exact upstream Kokoro/StyleTTS2
@@ -908,6 +1004,11 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "maxPhonemes": 510,
         "maxFrames": MAX_FRAMES,
         "seededExcitation": "Explicit uniform/normal graph inputs; browser uses seeded Mulberry32 + Box-Muller, not PyTorch bitwise RNG parity.",
+        "executionSplit": {
+            "sourceFrontend": "Harmonic excitation and exact TorchSTFT source features are evaluated in a separate CPU/WASM session before neural dispatch.",
+            "neuralGenerator": "Hidden/style/source features feed the waveform neural graph; WebGPU runs here when selected, with WASM fallback for unsupported operations.",
+            "timing": "Browser synthesis timing includes the CPU/WASM frontend, all neural graph sessions, inverse-STFT graph work, and PCM readback.",
+        },
         "normalization": {
             "layer": "InstanceNorm1d",
             "inputShape": "[batch, channels, time]",
