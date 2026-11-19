@@ -1,6 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildMicroFramePlan, microStyleRow } from '../web/inflect-micro-v3/contract.mjs';
+import { assertMicroTokenIdCount, buildMicroFramePlan, MICRO_MAX_PHONEME_IDS, microStyleRow } from '../web/inflect-micro-v3/contract.mjs';
+
+test('Micro worker token budget accepts the maximum sequence and rejects invalid counts', () => {
+  assert.equal(assertMicroTokenIdCount(3), 3);
+  assert.equal(assertMicroTokenIdCount(MICRO_MAX_PHONEME_IDS), 512);
+  for (const value of [2, 513, 3.5, Number.NaN, Number.POSITIVE_INFINITY]) {
+    assert.throws(() => assertMicroTokenIdCount(value), /padded token sequence/);
+  }
+});
 
 test('Micro frame alignment mirrors torch round-to-even and exact repeated token spans', () => {
   const plan = buildMicroFramePlan(Float32Array.of(1.5, 2.5, 0), 3);

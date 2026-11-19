@@ -1,7 +1,7 @@
 import { phonemizeMicroEnglish } from '../inflect-micro-v3/g2p.mjs';
 import { INTERNAL_GAP_SAMPLES, MAX_PHONEMES, prepareMicroText } from '../inflect-micro-v3/frontend.mjs';
 import { sourceFilterSynthesis } from '../inflect-micro-v3/dsp.mjs';
-import { buildMicroFramePlan, MICRO_MAX_FRAMES, MICRO_MAX_PHONEME_IDS, MICRO_SPEED, microStyleRow } from '../inflect-micro-v3/contract.mjs';
+import { assertMicroTokenIdCount, buildMicroFramePlan, MICRO_MAX_FRAMES, MICRO_SPEED, microStyleRow } from '../inflect-micro-v3/contract.mjs';
 import { dispatchProbe, hardwareGpu } from './gpu-probe.mjs';
 
 const MODEL_ROOT = '/models/inflect-micro-v3/c1a7db6ef44c931623fc2028cb0409659b83156c/';
@@ -104,9 +104,10 @@ async function runUtterance(utterance, seed) {
   const tensors = new Set();
   try {
     const inputIds = BigInt64Array.from(utterance.ids, value => BigInt(value));
-    if (inputIds.length > MAX_PHONEME_IDS || inputIds.length < 3 || utterance.phones.length > MAX_PHONEMES) {
+    if (utterance.phones.length > MAX_PHONEMES) {
       throw new Error('Inflect Micro v3 token count exceeds the pinned model boundary.');
     }
+    assertMicroTokenIdCount(inputIds.length);
     const idsTensor = new ort.Tensor('int64', inputIds, [1, inputIds.length]);
     tensors.add(idsTensor);
     const features = registerOutputs(tensors, await textFeaturesSession.run({ input_ids: idsTensor }, [

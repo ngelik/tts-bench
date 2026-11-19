@@ -2,6 +2,13 @@ export const MICRO_SPEED = 1;
 export const MICRO_MAX_FRAMES = 1_200;
 export const MICRO_MAX_PHONEME_IDS = 512;
 
+export function assertMicroTokenIdCount(tokenCount) {
+  if (!Number.isSafeInteger(tokenCount) || tokenCount < 3 || tokenCount > MICRO_MAX_PHONEME_IDS) {
+    throw new Error(`Micro padded token sequence must contain 3..${MICRO_MAX_PHONEME_IDS} positions.`);
+  }
+  return tokenCount;
+}
+
 function roundTiesToEven(value) {
   const lower = Math.floor(value);
   const fraction = value - lower;

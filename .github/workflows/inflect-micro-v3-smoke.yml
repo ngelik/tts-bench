@@ -1,0 +1,80 @@
+name: Inflect Micro v3 headed Chrome smoke
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/inflect-micro-v3-smoke.yml'
+      - 'assets.lock.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'bin/**'
+      - 'lib/**'
+      - 'web/adapters/inflect-micro-v3.mjs'
+      - 'web/inflect-micro-v3/**'
+      - 'web/workers/inflect-micro-v3.mjs'
+      - 'tests/inflect-micro-v3-*.test.mjs'
+      - 'tools/check-inflect-micro-v3-smoke.mjs'
+  push:
+    branches: [feat/inflect-micro-v3]
+    paths:
+      - '.github/workflows/inflect-micro-v3-smoke.yml'
+      - 'assets.lock.json'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'bin/**'
+      - 'lib/**'
+      - 'web/adapters/inflect-micro-v3.mjs'
+      - 'web/inflect-micro-v3/**'
+      - 'web/workers/inflect-micro-v3.mjs'
+      - 'tests/inflect-micro-v3-*.test.mjs'
+      - 'tools/check-inflect-micro-v3-smoke.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Fetch and verify the exact locked runtime and model closure
+        run: |
+          node bin/bench.mjs assets fetch --model inflect-micro-v3
+          node bin/bench.mjs assets verify --model inflect-micro-v3
+      - name: Run the normal harness through headed Chrome on CPU and WebGPU
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: |
+          set -euo pipefail
+          mkdir -p .cache/inflect-micro-v3-browser-smoke
+          source_commit="$(git rev-parse HEAD)"
+          for backend in cpu webgpu; do
+            summary=".cache/inflect-micro-v3-browser-smoke/$backend.json"
+            node bin/bench.mjs run \
+              --model inflect-micro-v3 \
+              --backend "$backend" \
+              --scenario offline \
+              --smoke \
+              --machine "GitHub-hosted macOS-15" \
+              --chrome "$CHROME_PATH" \
+              --note "Headed Chrome execution-path smoke only; not a benchmark score." \
+              > "$summary"
+            node tools/check-inflect-micro-v3-smoke.mjs "$summary" "$backend" "$source_commit"
+          done
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: inflect-micro-v3-browser-smoke-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/inflect-micro-v3-browser-smoke/
+          if-no-files-found: warn
+          retention-days: 14
