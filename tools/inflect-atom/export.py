@@ -105,9 +105,10 @@ def main(output):
     frontend_cases = []
     for span in spans:
         text = article[span["start"]:span["end"]]
-        phones, _ = frontend(text)
+        normalized = text.replace("\r", " ").replace("\n", " ").replace("\t", " ")
+        phones, _ = frontend(normalized)
         assert phones and len(phones) <= 510
-        frontend_cases.append({"id": len(frontend_cases), "text": text, "phonemes": phones})
+        frontend_cases.append({"id": len(frontend_cases), "text": text, "frontendText": normalized, "phonemes": phones})
     write_json(output / "frontend-parity.json", frontend_cases)
     unknown = [{**case, "unknown": sorted(set(case["phonemes"]) - set(runtime.vocab))} for case in frontend_cases if set(case["phonemes"]) - set(runtime.vocab)]
     write_json(output / "frontend-unknown.json", unknown)
