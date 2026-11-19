@@ -208,8 +208,9 @@ class WaveformGraph(nn.Module):
         self.generator = generator
         self.stft = ExactTorchSTFT(generator.stft.filter_length, generator.stft.hop_length)
 
-    def forward(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
-                phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> torch.Tensor:
+    def harmonic_source(self, f0: torch.Tensor, phase_uniform: torch.Tensor,
+                        harmonic_noise: torch.Tensor) -> torch.Tensor:
+        """Build the pinned harmonic excitation before its STFT."""
         g = self.generator
         f0_up = g.f0_upsamp(f0[:, None]).transpose(1, 2)
         source = g.m_source
@@ -219,7 +220,6 @@ class WaveformGraph(nn.Module):
                                  device=f0_up.device).reshape(1, 1, harmonic_count)
         rad = (f0_up * harmonics / sinegen.sampling_rate) % 1
         first = rad[:, :1, :] + phase_uniform.unsqueeze(1)
-        first = torch.cat([torch.zeros_like(first[:, :, :1]), first[:, :, 1:]], dim=-1)
         rad = torch.cat([first, rad[:, 1:, :]], dim=1)
         rad = F.interpolate(rad.transpose(1, 2), scale_factor=1 / sinegen.upsample_scale,
                             mode="linear").transpose(1, 2)
@@ -230,8 +230,13 @@ class WaveformGraph(nn.Module):
         uv = (f0_up > sinegen.voiced_threshold).to(torch.float32)
         noise_amplitude = uv * sinegen.noise_std + (1.0 - uv) * sinegen.sine_amp / 3.0
         sine = sine * uv + noise_amplitude * harmonic_noise
-        harmonic_source = source.l_tanh(source.l_linear(sine))
-        magnitude, source_phase = self.stft.transform(harmonic_source.transpose(1, 2).squeeze(1))
+        return source.l_tanh(source.l_linear(sine)).transpose(1, 2).squeeze(1)
+
+    def forward(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> torch.Tensor:
+        g = self.generator
+        harmonic_source = self.harmonic_source(f0, phase_uniform, harmonic_noise)
+        magnitude, source_phase = self.stft.transform(harmonic_source)
         source_spec = torch.cat([magnitude, source_phase], dim=1)
 
         x = hidden
@@ -272,12 +277,17 @@ class ExportInstanceNorm1d(nn.Module):
 
     def __init__(self, source: nn.InstanceNorm1d):
         super().__init__()
-        require(not source.track_running_stats,
+        require(not source.track_running_stats and source.eps == 1e-5,
                 "Only pinned input-statistics InstanceNorm is export-qualified")
+        require(source.num_features > 0,
+                "Pinned InstanceNorm must retain its declared channel count")
         self.eps = float(source.eps)
         self.affine = bool(source.affine)
         self.weight = source.weight if self.affine else None
         self.bias = source.bias if self.affine else None
+        if self.affine:
+            require(self.weight.dtype == torch.float32 and self.bias.dtype == torch.float32,
+                    "Pinned InstanceNorm affine parameters must be FP32")
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         mean = x.mean(dim=-1, keepdim=True)
@@ -313,17 +323,25 @@ class ExactTorchSTFT(nn.Module):
         require(n_fft % 2 == 0 and 0 < hop_length <= n_fft, "Invalid pinned STFT dimensions")
         window = torch.hann_window(n_fft, periodic=True, dtype=torch.float32)
         bins = n_fft // 2 + 1
-        k = torch.arange(bins, dtype=torch.float32).reshape(bins, 1)
-        n = torch.arange(n_fft, dtype=torch.float32).reshape(1, n_fft)
+        k = torch.arange(bins, dtype=torch.float64).reshape(bins, 1)
+        n = torch.arange(n_fft, dtype=torch.float64).reshape(1, n_fft)
         angle = 2.0 * math.pi * k * n / n_fft
-        forward_real = torch.cos(angle) * window
-        forward_imag = -torch.sin(angle) * window
+        window64 = window.to(torch.float64)
+        forward_real = (torch.cos(angle) * window64).to(torch.float32)
+        forward_imag = (-torch.sin(angle) * window64).to(torch.float32)
+        # For real input, rfft's DC and Nyquist bins have exactly zero
+        # imaginary parts. Keep positive zero so torch.angle selects +pi on
+        # a negative real value, rather than a signed-zero/roundoff -pi.
+        forward_imag[0].zero_()
+        forward_imag[-1].zero_()
 
         scale = torch.full((bins,), 2.0 / n_fft, dtype=torch.float32)
         scale[0] = 1.0 / n_fft
         scale[-1] = 1.0 / n_fft
-        inverse_real = torch.cos(angle) * (window * scale[:, None])
-        inverse_imag = torch.sin(angle) * (window * scale[:, None])
+        inverse_real = (torch.cos(angle) * (window64 * scale.to(torch.float64)[:, None])).to(torch.float32)
+        inverse_imag = (torch.sin(angle) * (window64 * scale.to(torch.float64)[:, None])).to(torch.float32)
+        inverse_imag[0].zero_()
+        inverse_imag[-1].zero_()
         envelope = window.square().reshape(1, 1, n_fft)
         self.n_fft, self.hop_length = n_fft, hop_length
         self.register_buffer("forward_real", forward_real.unsqueeze(1))
@@ -353,6 +371,8 @@ class ExactTorchSTFT(nn.Module):
         centered = F.pad(waveform.unsqueeze(1), (pad, pad), mode="reflect")
         real = F.conv1d(centered, self.forward_real, stride=self.hop_length)
         imag = F.conv1d(centered, self.forward_imag, stride=self.hop_length)
+        imag = torch.cat((torch.zeros_like(imag[:, :1, :]), imag[:, 1:-1, :],
+                          torch.zeros_like(imag[:, -1:, :])), dim=1)
         return torch.sqrt(real.square() + imag.square()), self._atan2(imag, real)
 
     def inverse(self, magnitude: torch.Tensor, phase: torch.Tensor) -> torch.Tensor:
@@ -530,6 +550,36 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         phase_torch = torch.rand((1, phase.shape[1]), dtype=torch.float32)
         phase_torch[:, 0] = 0
         noise_torch = torch.randn((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
+    f0_up_native = generator.f0_upsamp(predicted["F0"][:, None]).transpose(1, 2)
+    with torch.random.fork_rng(devices=[]):
+        torch.random.default_generator.manual_seed(42)
+        native_harmonic, _, _ = generator.m_source(f0_up_native)
+    native_harmonic = native_harmonic.transpose(1, 2).squeeze(1)
+    exported_harmonic = waveform_graph.harmonic_source(predicted["F0"], phase_torch, noise_torch)
+    harmonic_max_error = float((exported_harmonic - native_harmonic).abs().max())
+    harmonic_rms_error = float(torch.sqrt((exported_harmonic - native_harmonic).square().mean()))
+    require(harmonic_max_error <= 1e-7 and harmonic_rms_error <= 1e-8,
+            "Explicit harmonic source differs from native Mini: max=" + str(harmonic_max_error)
+            + " rms=" + str(harmonic_rms_error))
+    native_magnitude, native_phase = generator.stft.transform(native_harmonic)
+    exported_magnitude, exported_phase = waveform_graph.stft.transform(exported_harmonic)
+    stft_magnitude_max_error = float((exported_magnitude - native_magnitude).abs().max())
+    stft_magnitude_rms_error = float(torch.sqrt((exported_magnitude - native_magnitude).square().mean()))
+    phase_delta = torch.remainder(exported_phase - native_phase + math.pi, 2.0 * math.pi) - math.pi
+    phase_mask = native_magnitude > max(1e-7, float(native_magnitude.max()) * 1e-6)
+    stft_phase_max_error = float(phase_delta[phase_mask].abs().max())
+    stft_phase_rms_error = float(torch.sqrt(phase_delta[phase_mask].square().mean()))
+    require(stft_magnitude_max_error <= 2e-5 and stft_magnitude_rms_error <= 3e-6,
+            "Explicit STFT magnitude differs from native Mini: max=" + str(stft_magnitude_max_error)
+            + " rms=" + str(stft_magnitude_rms_error))
+    require(stft_phase_max_error <= 2e-4 and stft_phase_rms_error <= 2e-5,
+            "Explicit STFT phase differs from native Mini: max=" + str(stft_phase_max_error)
+            + " rms=" + str(stft_phase_rms_error))
+    require(bool(torch.count_nonzero(waveform_graph.stft.forward_imag[[0, -1]]) == 0)
+            and bool(torch.count_nonzero(waveform_graph.stft.inverse_imag[[0, -1]]) == 0)
+            and not bool(torch.signbit(waveform_graph.stft.forward_imag[[0, -1]]).any())
+            and not bool(torch.signbit(waveform_graph.stft.inverse_imag[[0, -1]]).any()),
+            "Real-input DC/Nyquist imaginary basis must be exact positive zero")
     waveform_onnx = waveform_session.run(None, {
         "hidden": hidden_onnx,
         "style": style,
@@ -635,12 +685,27 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "maxPhonemes": 510,
         "maxFrames": MAX_FRAMES,
         "seededExcitation": "Explicit uniform/normal graph inputs; browser uses seeded Mulberry32 + Box-Muller, not PyTorch bitwise RNG parity.",
+        "normalization": {
+            "layer": "InstanceNorm1d",
+            "inputShape": "[batch, channels, time]",
+            "reductionAxis": -1,
+            "variance": "biased population variance: mean((x - mean)^2)",
+            "epsilon": 1e-5,
+            "dtype": "FP32 input, FP32 reductions and affine parameters",
+            "affine": "Use checkpoint-retained gain/bias; omitted identity pairs remain nonaffine",
+        },
         "runtime": {"torch": torch.__version__, "onnx": onnx.__version__, "onnxruntime": ort.__version__, "opset": OPSET},
         "provenanceFiles": provenance_files,
         "verification": {
-            "reference": "Pinned NativeMini CPU inference at seed 42; exporter verification only, not benchmark evidence.",
+            "reference": "Pinned NativeMini CPU inference at two token/frame lengths with seeded excitation; exporter verification only, not benchmark evidence.",
             "waveformFrames": frames,
             "waveformSamples": 600 * frames,
+            "harmonicSourceMaxAbsError": harmonic_max_error,
+            "harmonicSourceRmsError": harmonic_rms_error,
+            "stftMagnitudeMaxAbsError": stft_magnitude_max_error,
+            "stftMagnitudeRmsError": stft_magnitude_rms_error,
+            "stftPhaseMaxAbsError": stft_phase_max_error,
+            "stftPhaseRmsError": stft_phase_rms_error,
             "waveformMaxAbsError": waveform_max_error,
             "waveformRmsError": waveform_rms_error,
             "dynamicWaveformMaxAbsError": dynamic_waveform_max_error,
