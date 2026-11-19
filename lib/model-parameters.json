@@ -148,5 +148,11 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json",
     "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
+  },
+  "inflect-mini-v3-browser-port": {
+    "parameterCount": 34310790,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
+    "scope": "The pinned Mini v3 model card reports 34.31M core parameters (34,310,790). The browser profile uses the same learned checkpoint tensors converted to dynamic FP32 ONNX graphs; style conditioning and source-linear values are included in its download closure but do not change the registered upstream parameter count."
   }
 }

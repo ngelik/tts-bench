@@ -310,6 +310,14 @@ Supported voices: **6**. Bundled voices: **6**. Supported languages: **1** (Engl
 
 The exact 157,190-parameter core embeds Hope, Sophia, Cassidy, James, Jasper and Mark. This benchmark selects Cassidy, with the official optional eSpeak-light English frontend and local DSP. CPU and WebGPU use the same FP32 weights; WebGPU accelerates the convolutional decoder while the encoder/frontend/DSP stay on WASM. [Pinned model and voice contract](https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py) · [Port, qualification and reproduction](models/inflect-atom-v3.md).
 
+<a id="inflect-mini-v3-browser-port"></a>
+
+## Inflect Mini v3 Browser Port
+
+Supported voices: **6**. Bundled voices: **1**. Supported languages: **1** (en).
+
+The pinned checkpoint publishes six English preset voices; this profile includes only the Cassidy speaker/style table and uses the CPU/WASM browser port. It is a separately named frontend/source-DSP configuration, not the official native output path. Its ONNX graphs were compared with the pinned native implementation at base and dynamic lengths; both exceeded the unchanged strict waveform thresholds, so results must remain labeled as browser-port results. WebGPU is not registered without hardware dispatch evidence. See [configuration and reproducibility](INFLECT_MINI_V3.md) and the [pinned model card](https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md).
+
 ## Additional individual Kokopop Sano profiles
 
 <a id="sano-heart-gguf"></a>

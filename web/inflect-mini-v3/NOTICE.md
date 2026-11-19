@@ -14,13 +14,19 @@ The graph/source implementation is an Apache-2.0 adaptation of the pinned
 Mini inference source. The adjacent `LICENSE` retains the Apache-2.0 terms.
 
 The runtime frontend is a separate browser configuration. It uses the shared
-Inflect Micro v3 numeric normalization and source-preserving splitter plus the
-Klein 0.2.0 contextual English G2P adaptation and pinned local browser eSpeak
-fallback. It does not claim parity with native Mini's Misaki 0.9.4 + bundled
-eSpeak frontend. The fixed Cassidy style table is selected from the Mini
-checkpoint. Noise is seeded with browser Mulberry32 + Box-Muller rather than
-PyTorch's generator. The CPU harmonic source and STFT are a Float32 browser
-port; native waveform comparison remains a separate, strict diagnostic.
+Inflect Micro v3 numeric normalization and source-preserving splitter in
+`web/inflect-micro-v3/{numeric,frontend}.mjs` (introduced from the pinned Micro
+source in commits `267bff695637bd98d181ce59cd3ac2638c5b00f4` and
+`4419a0120fd175d21bc1812c78fc8afc6f893e33`). The shared helper is attributed
+to that Micro implementation and is not presented as Mini-originated code.
+English G2P comes from the Klein 0.2.0 contextual lookup adaptation and pinned
+local browser eSpeak fallback; retain its Apache-2.0 notices in `web/klein/`
+and the GPL-3.0-or-later eSpeak COPYING file. It does not claim parity with
+native Mini's Misaki 0.9.4 + bundled eSpeak frontend. The fixed Cassidy style
+table is selected from the Mini checkpoint. Noise is seeded with browser
+Mulberry32 + Box-Muller rather than PyTorch's generator. The CPU harmonic source
+and STFT are a Float32 browser port; native waveform comparison remains a
+separate, strict diagnostic.
 
 ONNX Runtime Web is MIT with its third-party notices. Klein G2P and lexicon
 retain their Apache-2.0 attribution. Browser eSpeak NG retains GPL-3.0-or-later

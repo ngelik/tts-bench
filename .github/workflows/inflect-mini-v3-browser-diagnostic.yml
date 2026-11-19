@@ -14,6 +14,12 @@ on:
       - 'tools/inflect-mini-v3-conversion.lock.json'
       - 'tools/stage-inflect-mini-v3-diagnostic.mjs'
       - 'tools/inflect-mini-v3-browser-diagnostic.mjs'
+      - 'assets.lock.json'
+      - 'lib/model-parameters.json'
+      - 'web/bench.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'docs/INFLECT_MINI_V3.md'
       - '.github/workflows/inflect-mini-v3-browser-diagnostic.yml'
   workflow_dispatch:
 
@@ -63,6 +69,13 @@ jobs:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           INFLECT_MINI_EXPORT_OUTCOME: ${{ steps.export.outcome }}
         run: node tools/stage-inflect-mini-v3-diagnostic.mjs
+      - name: Verify the registered profile through the benchmark harness
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: |
+          node bin/bench.mjs assets fetch --model inflect-mini-v3-browser-port
+          node bin/bench.mjs assets verify --model inflect-mini-v3-browser-port
+          xvfb-run -a node bin/bench.mjs run --model inflect-mini-v3-browser-port --backend cpu --smoke --note 'Hosted registration smoke; not a score'
       - name: Run real hosted Chrome frontend audit and full-article CPU browser-port diagnostic
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
