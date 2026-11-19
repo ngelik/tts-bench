@@ -1747,6 +1747,35 @@
       }
     },
     {
+      "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+      "model": "sano-heart-nano",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS heart-nano (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; heart-nano INT8 English (US) checkpoint and official CPU/WASM frontend. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu.wav",
+        "sha256": "f62ec56496ed7854bdc3631acb103bc2d412d3d6b0d0021989ab4dbafea31f35",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu-full.wav",
+        "sha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "bytes": 63244844
+      }
+    },
+    {
       "resultId": "2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf",
       "model": "silencio-2",
       "backend": "cpu",
