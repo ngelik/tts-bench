@@ -33,4 +33,4 @@ Inspect any failed smoke before scoring that backend. The campaign runner stops 
 
 ## Published measurements
 
-[Native receipts, generated table and visualization](../../../reports/inflect-atom-v3/overview.md). Warm timings and independent cached-memory observations remain separate.
+[Native receipts, generated table and visualization](../../../reports/inflect-atom-v3/overview.md). Warm timings use five scored repetitions after an excluded full-article warmup. Cached memory uses one separate generation per backend. The main listening examples use each backend’s final scored warm trial; both cached observations remain individually retrievable.
