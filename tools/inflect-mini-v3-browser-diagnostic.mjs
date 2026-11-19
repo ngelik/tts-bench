@@ -50,7 +50,7 @@ try {
     const { prepareMicroText } = await import('/web/inflect-micro-v3/frontend.mjs');
     const { phonemizeMicroEnglish } = await import('/web/inflect-micro-v3/g2p.mjs');
     const revision = 'fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6';
-    const modelRoot = `/models/inflect-mini-v3/${revision}/`;
+    const modelRoot = `/models/inflect-mini-v3-browser-port/${revision}/`;
     const vocabResponse = await fetch(modelRoot + 'phoneme-vocab.json', { cache: 'no-store' });
     if (!vocabResponse.ok) throw new Error(`Mini vocabulary fetch failed: HTTP ${vocabResponse.status}`);
     const vocab = await vocabResponse.json();
@@ -101,12 +101,13 @@ try {
       if (info.status !== 'measured' || info.backendEffective !== 'cpu/wasm') {
         throw new Error('Mini did not initialize the explicit CPU/WASM backend: ' + JSON.stringify(info));
       }
-      for (const chunk of articleChunks.slice(0, 3)) {
+      for (const chunk of articleChunks) {
         const started = performance.now();
         let firstPcmMs = null;
         const output = await adapter.generateChunk(chunk, {
           onFirstPcm: () => { firstPcmMs ??= performance.now() - started; },
         });
+        const generationMs = performance.now() - started;
         if (output.sampleRate !== 24_000 || output.completedChunkId !== chunk.id || !output.parts.length) {
           throw new Error(`Mini browser synthesis returned an invalid clock or chunk id for span ${chunk.id}.`);
         }
@@ -129,9 +130,42 @@ try {
         if (!(peak > 1e-6 && rms > 1e-6)) throw new Error(`Mini produced silent PCM for span ${chunk.id}.`);
         const pcmSha256 = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', pcm.buffer)),
           byte => byte.toString(16).padStart(2, '0')).join('');
-        generated.push({ id: chunk.id, sourceCharacters: chunk.characters,
+        const summary = { id: chunk.id, sourceCharacters: chunk.characters,
           internalParts: output.parts.length, samples: totalSamples, sampleRate: output.sampleRate,
-          firstPcmMs, generationMs: performance.now() - started, rms, peak, pcmSha256 });
+          firstPcmMs, generationMs, rms, peak, pcmSha256 };
+        if (chunk.id < 3) {
+          const wavBytes = new Uint8Array(44 + totalSamples * 2);
+          const wavView = new DataView(wavBytes.buffer);
+          const writeAscii = (offset, value) => {
+            for (let index = 0; index < value.length; index++) wavView.setUint8(offset + index, value.charCodeAt(index));
+          };
+          writeAscii(0, 'RIFF');
+          wavView.setUint32(4, wavBytes.length - 8, true);
+          writeAscii(8, 'WAVEfmt ');
+          wavView.setUint32(16, 16, true);
+          wavView.setUint16(20, 1, true);
+          wavView.setUint16(22, 1, true);
+          wavView.setUint32(24, output.sampleRate, true);
+          wavView.setUint32(28, output.sampleRate * 2, true);
+          wavView.setUint16(32, 2, true);
+          wavView.setUint16(34, 16, true);
+          writeAscii(36, 'data');
+          wavView.setUint32(40, totalSamples * 2, true);
+          let clippedForWav = false;
+          for (let index = 0; index < totalSamples; index++) {
+            const value = pcm[index];
+            clippedForWav ||= value < -1 || value > 1;
+            wavView.setInt16(44 + index * 2, Math.round(Math.max(-1, Math.min(1, value)) * 32767), true);
+          }
+          let wavBinary = '';
+          for (let offset = 0; offset < wavBytes.length; offset += 0x8000) {
+            wavBinary += String.fromCharCode(...wavBytes.subarray(offset, offset + 0x8000));
+          }
+          summary.wavBase64 = btoa(wavBinary);
+          summary.wavClipped = clippedForWav;
+          summary.wavEncoding = 'RIFF PCM16 mono conversion of raw Float32 PCM; no clipping if wavClipped is false';
+        }
+        generated.push(summary);
       }
     } finally {
       await adapter.dispose();
@@ -151,8 +185,31 @@ try {
   serverStats = server.snapshot();
   assert.equal(browserResult.frontend.spanCount, 93);
   assert.equal(browserResult.frontend.sourceCharacters, 20_000);
-  assert.equal(browserResult.generated.length, 3);
+  assert.equal(browserResult.generated.length, 93);
   assert.ok(browserResult.generated.every(span => span.firstPcmMs !== null));
+  const audioDir = resolve(outputDir, 'audio');
+  await mkdir(audioDir, { recursive: true });
+  const generated = [];
+  for (const span of browserResult.generated) {
+    if (span.wavBase64) {
+      assert.equal(span.wavClipped, false, `PCM16 WAV conversion clipped span ${span.id}`);
+      const wav = Buffer.from(span.wavBase64, 'base64');
+      assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+      assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+      assert.equal(wav.readUInt16LE(20), 1);
+      assert.equal(wav.readUInt16LE(22), 1);
+      assert.equal(wav.readUInt32LE(24), span.sampleRate);
+      assert.equal(wav.readUInt32LE(40), span.samples * 2);
+      assert.equal(wav.length, 44 + span.samples * 2);
+      const file = `audio/span-${String(span.id).padStart(2, '0')}.wav`;
+      await writeFile(resolve(outputDir, file), wav);
+      const { wavBase64, ...summary } = span;
+      generated.push({ ...summary, wav: { file, bytes: wav.length,
+        sha256: createHash('sha256').update(wav).digest('hex'), encoding: span.wavEncoding } });
+    } else {
+      generated.push(span);
+    }
+  }
   const externalRequests = requests.filter(url => !url.startsWith(server.url));
   assert.deepEqual(externalRequests, [], 'Chrome made no off-origin requests');
   assert.deepEqual(consoleErrors, [], 'Chrome had no page or console errors');
@@ -160,11 +217,12 @@ try {
     ...staged,
     diagnosticOnly: true,
     scoreEligible: false,
+    configuration: 'inflect-mini-v3-browser-port',
     fixture: { id: 'english-20k-v1', characters: article.length, spans: chunks.length, sha256: articleSha256 },
     browser: browserResult.browser,
     frontend: browserResult.frontend,
     backend: browserResult.backend,
-    generated: browserResult.generated,
+    generated,
     server: serverStats,
     network: { requestCount: requests.length, externalRequests },
     consoleErrors,

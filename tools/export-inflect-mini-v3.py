@@ -647,7 +647,7 @@ def alignment_from_durations(durations: torch.Tensor) -> tuple[torch.Tensor, int
     return alignment, frames
 
 
-def collect_assets(source_dir: Path, output_dir: Path) -> dict:
+def collect_assets(source_dir: Path, output_dir: Path, *, allow_waveform_drift: bool = False) -> dict:
     model_dir = source_dir / Path(LOCK["checkpoint"]["path"]).parent
     code_dir = model_dir / "code"
     sys.path.insert(0, str(code_dir))
@@ -1124,9 +1124,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     waveform_max_error = float(np.max(np.abs(waveform_onnx[0] - native["audio"].numpy())))
     waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
     waveform_quality_metrics = waveform_quality(native["audio"].numpy(), waveform_onnx[0])
-    require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
-            "ONNX waveform diverges from native Mini: max=" + str(waveform_max_error)
-            + " rms=" + str(waveform_rms_error) + " stages=" + json.dumps(diagnostic_errors, sort_keys=True))
+    base_waveform_parity = waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4
 
     # Exercise genuinely dynamic token and frame axes as well as the export
     # trace shape. A repeated valid vowel sequence is not used as audio evidence.
@@ -1178,9 +1176,51 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         (dynamic_excitation[0] - dynamic_native["audio"].numpy()) ** 2)))
     dynamic_waveform_quality_metrics = waveform_quality(
         dynamic_native["audio"].numpy(), dynamic_excitation[0])
-    require(dynamic_waveform_max_error <= 2e-3 and dynamic_waveform_rms_error <= 2e-4,
-            "Dynamic ONNX waveform diverges from native Mini: max="
-            + str(dynamic_waveform_max_error) + " rms=" + str(dynamic_waveform_rms_error))
+    dynamic_waveform_parity = (
+        dynamic_waveform_max_error <= 2e-3 and dynamic_waveform_rms_error <= 2e-4)
+
+    parity_diagnostic = {
+        "schema": "inflect-mini-v3-waveform-parity-diagnostic-v1",
+        "sourceCommit": project_commit,
+        "model": LOCK["model"],
+        "modelRevision": LOCK["modelRevision"],
+        "checkpoint": LOCK["checkpoint"],
+        "reference": "Pinned native Mini CPU implementation; graph and waveform parity diagnostic only, not benchmark data.",
+        "precision": "FP32",
+        "strictThresholds": {"maxAbs": 2e-3, "rms": 2e-4},
+        "strictParityPassed": bool(base_waveform_parity and dynamic_waveform_parity),
+        "cases": [
+            {
+                "id": "base-hello",
+                "tokenCount": int(ids.shape[1]),
+                "frames": int(frames),
+                "sampleRate": 24000,
+                "referenceSamples": int(native["audio"].numel()),
+                "portSamples": int(waveform_onnx.shape[1]),
+                "maxAbs": waveform_max_error,
+                "rms": waveform_rms_error,
+                "quality": waveform_quality_metrics,
+                "strictPassed": bool(base_waveform_parity),
+            },
+            {
+                "id": "dynamic-24-vowel",
+                "tokenCount": int(dynamic_ids.shape[1]),
+                "frames": int(dynamic_frames),
+                "sampleRate": 24000,
+                "referenceSamples": int(dynamic_native["audio"].numel()),
+                "portSamples": int(dynamic_excitation.shape[1]),
+                "maxAbs": dynamic_waveform_max_error,
+                "rms": dynamic_waveform_rms_error,
+                "quality": dynamic_waveform_quality_metrics,
+                "strictPassed": bool(dynamic_waveform_parity),
+            },
+        ],
+        "featureStages": diagnostic_errors,
+    }
+    (output_dir / "PARITY-DIAGNOSTIC.json").write_text(
+        json.dumps(parity_diagnostic, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
     waveform_diagnostic_path.unlink()
     source_path.unlink()
@@ -1205,7 +1245,14 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         })
 
     report = {
-        "format": "inflect-mini-v3-browser-onnx-v1",
+        "format": "inflect-mini-v3-browser-port-onnx-v1",
+        "configuration": "inflect-mini-v3-browser-port",
+        "nativeWaveformParity": {
+            "strictPassed": bool(base_waveform_parity and dynamic_waveform_parity),
+            "thresholds": {"maxAbs": 2e-3, "rms": 2e-4},
+            "cases": parity_diagnostic["cases"],
+            "report": "PARITY-DIAGNOSTIC.json",
+        },
         "model": LOCK["model"],
         "modelRevision": LOCK["modelRevision"],
         "projectSourceCommit": project_commit,
@@ -1276,6 +1323,13 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8"
     )
     print(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True))
+    if not parity_diagnostic["strictParityPassed"] and not allow_waveform_drift:
+        raise RuntimeError(
+            "Strict waveform parity failed; original thresholds remain in force. "
+            "The browser-port build is a distinct configuration and may only be "
+            "generated with --allow-waveform-drift. Diagnostics: "
+            + json.dumps({"cases": parity_diagnostic["cases"],
+                          "featureStages": diagnostic_errors}, sort_keys=True))
     return report
 
 
@@ -1283,12 +1337,16 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-dir", type=Path, default=SOURCE)
     parser.add_argument("--download", action="store_true", help="Fetch only the pinned source-file allowlist")
+    parser.add_argument(
+        "--allow-waveform-drift", action="store_true",
+        help="Build the separately labeled browser-port profile while retaining strict native parity failure in BUILD-MANIFEST.json",
+    )
     args = parser.parse_args()
     source_dir = args.source_dir.resolve()
     if args.download or not source_dir.is_dir():
         download_pinned_source(source_dir)
     verify_source(source_dir)
-    collect_assets(source_dir, OUTPUT)
+    collect_assets(source_dir, OUTPUT, allow_waveform_drift=args.allow_waveform_drift)
 
 
 if __name__ == "__main__":

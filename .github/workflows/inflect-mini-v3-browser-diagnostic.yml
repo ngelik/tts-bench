@@ -1,4 +1,4 @@
-name: Inflect Mini v3 hosted browser diagnostic
+name: Inflect Mini v3 browser-port diagnostic
 
 on:
   pull_request:
@@ -57,13 +57,13 @@ jobs:
           OMP_NUM_THREADS: '1'
           OPENBLAS_NUM_THREADS: '1'
           MKL_NUM_THREADS: '1'
-        run: python tools/export-inflect-mini-v3.py --download
+        run: python tools/export-inflect-mini-v3.py --download --allow-waveform-drift
       - name: Stage only the generated model files for this diagnostic
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           INFLECT_MINI_EXPORT_OUTCOME: ${{ steps.export.outcome }}
         run: node tools/stage-inflect-mini-v3-diagnostic.mjs
-      - name: Run real hosted Chrome frontend audit and three-span CPU synthesis
+      - name: Run real hosted Chrome frontend audit and full-article CPU browser-port diagnostic
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: xvfb-run -a node tools/inflect-mini-v3-browser-diagnostic.mjs

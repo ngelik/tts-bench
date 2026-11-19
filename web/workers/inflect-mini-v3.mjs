@@ -3,7 +3,7 @@ import { phonemizeMicroEnglish } from '../inflect-micro-v3/g2p.mjs';
 import { dispatchProbe } from './gpu-probe.mjs';
 import { inflectMiniSourceFeatures } from '../inflect-mini-v3/source-dsp.mjs';
 
-const MODEL_ROOT = '/models/inflect-mini-v3/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/';
+const MODEL_ROOT = '/models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/';
 const ORT_ROOT = '/runtimes/onnxruntime-web/1.23.2/';
 const SAMPLE_RATE = 24000;
 const SPEAKER_ID = 2;
@@ -17,11 +17,12 @@ const SOURCE_BINS = 11;
 const SOURCE_NFFT = 20;
 const SOURCE_HOP = 5;
 const SOURCE_UPSAMPLE_SCALE = 300;
-const FRONTEND_DESCRIPTION = 'Pinned Inflect v3 numeric normalization and source-preserving 220-character split; Klein 0.2.0 browser G2P port with the pinned English lexicon and local browser eSpeak fallback. Native Mini uses Misaki 0.9.4 with bundled eSpeak; this browser G2P is a disclosed adaptation and has not been qualified for exact native-output parity. Checkpoint phoneme mapping rejects unknown symbols.';
+const FRONTEND_DESCRIPTION = 'Distinct browser-port configuration: pinned Inflect v3 numeric normalization and source-preserving 220-character split; Klein 0.2.0 browser G2P port with the pinned English lexicon and local browser eSpeak fallback. Native Mini uses Misaki 0.9.4 with bundled eSpeak; this frontend is an adaptation and has not been qualified for exact native-output parity. Checkpoint phoneme mapping rejects unknown symbols.';
 const INFO = {
-  voice: 'Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank)',
-  precision: 'FP32 ONNX',
+  voice: 'Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank; browser-port profile)',
+  precision: 'FP32 ONNX browser port; not exact native waveform parity',
   settings: {
+    configuration: 'inflect-mini-v3-browser-port; separate from official/native Inflect Mini v3 execution',
     sampleRate: SAMPLE_RATE,
     speed: 1,
     speakerId: SPEAKER_ID,
@@ -31,7 +32,7 @@ const INFO = {
     frontend: FRONTEND_DESCRIPTION,
     chunking: 'Pinned native-v3 exact source-preserving 220-character internal splitter; 120 ms silence between generated internal utterances.',
     waveform: 'Offline full-utterance graph execution; first PCM follows completion/readback of the first internal utterance. No trimming, fades, gain, or clipping.',
-    sourceFrontend: 'Standalone Float32 CPU harmonic source and source-STFT path; the waveform neural graph receives these features in a separate ONNX session.',
+    sourceFrontend: 'Standalone Float32 CPU harmonic source and source-STFT port; the waveform neural graph receives these features in a separate ONNX session. Strict native waveform parity remains failed and is reported in the pinned conversion artifact.',
     executionProviders: [],
   },
 };

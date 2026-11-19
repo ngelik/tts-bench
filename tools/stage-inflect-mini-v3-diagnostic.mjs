@@ -20,7 +20,7 @@ const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 assert.equal(checkpoint.length, lock.checkpoint.bytes, 'pinned checkpoint length is verified');
 assert.equal(sha(checkpoint), lock.checkpoint.sha256, 'pinned checkpoint digest is verified');
 
-const modelRoot = resolve(root, '.cache/public/models/inflect-mini-v3', revision);
+const modelRoot = resolve(root, '.cache/public/models/inflect-mini-v3-browser-port', revision);
 const onnxRoot = resolve(modelRoot, 'onnx');
 await mkdir(onnxRoot, { recursive: true });
 const files = [
@@ -42,19 +42,58 @@ for (const [sourceName, targetName] of files) {
 }
 assert.equal(staged.find(file => file.path === 'source-linear-weights.f32')?.bytes, 40);
 
+const manifestBytes = await readFile(resolve(generatedRoot, 'BUILD-MANIFEST.json'));
+const buildManifest = JSON.parse(manifestBytes.toString('utf8'));
+assert.equal(buildManifest.projectSourceCommit, sourceCommit, 'generated assets bind to this exact source commit');
+assert.equal(buildManifest.modelRevision, revision, 'generated assets bind to the pinned model revision');
+assert.equal(buildManifest.format, 'inflect-mini-v3-browser-port-onnx-v1');
+const generatedByPath = new Map(buildManifest.files.map(file => [file.path, file]));
+assert.equal(generatedByPath.size, staged.length, 'build manifest and staged file set have the same size');
+for (const file of staged) {
+  const generated = generatedByPath.get(file.path.split('/').at(-1));
+  assert.ok(generated, `build manifest includes ${file.path}`);
+  assert.equal(file.bytes, generated.bytes, `${file.path} size matches build manifest`);
+  assert.equal(file.sha256, generated.sha256, `${file.path} hash matches build manifest`);
+}
+const manifestTarget = resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/build-manifest.json');
+await copyFile(resolve(generatedRoot, 'BUILD-MANIFEST.json'), manifestTarget);
+const buildManifestSummary = {
+  path: 'build-manifest.json',
+  bytes: manifestBytes.length,
+  sha256: sha(manifestBytes),
+  nativeWaveformParity: buildManifest.nativeWaveformParity,
+};
+
+const paritySource = resolve(generatedRoot, 'PARITY-DIAGNOSTIC.json');
+let parity = null;
+try {
+  const parityBytes = await readFile(paritySource);
+  const parityReport = JSON.parse(parityBytes.toString('utf8'));
+  assert.equal(parityReport.sourceCommit, sourceCommit, 'parity diagnostics use this source commit');
+  assert.equal(parityReport.modelRevision, revision, 'parity diagnostics use the locked checkpoint revision');
+  const parityTarget = resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/parity-diagnostic.json');
+  await copyFile(paritySource, parityTarget);
+  parity = { path: 'parity-diagnostic.json', bytes: parityBytes.length, sha256: sha(parityBytes),
+    strictParityPassed: parityReport.strictParityPassed };
+} catch (error) {
+  if (error?.code !== 'ENOENT') throw error;
+}
+
 const diagnostic = {
   schemaVersion: 1,
-  purpose: 'Hosted Chrome runtime/frontend diagnostic only; never score eligible.',
+  purpose: 'Hosted Chrome diagnostic for the separately named browser-port configuration; this is not native-waveform-equivalent and is never itself a score.',
   sourceCommit,
   exporterOutcome: exportOutcome,
   model: lock.model,
   modelRevision: revision,
   checkpoint: lock.checkpoint,
   files: staged,
+  buildManifest: buildManifestSummary,
+  parityDiagnostic: parity,
 };
 await mkdir(resolve(root, '.cache/inflect-mini-v3-browser-diagnostic'), { recursive: true });
 await writeFile(
   resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/staged-model.json'),
   JSON.stringify(diagnostic, null, 2) + '\n',
 );
-console.log(JSON.stringify({ modelRoot: `.cache/public/models/inflect-mini-v3/${revision}`, fileCount: staged.length, exportOutcome }, null, 2));
+console.log(JSON.stringify({ modelRoot: `.cache/public/models/inflect-mini-v3-browser-port/${revision}`, fileCount: staged.length, exportOutcome, strictNativeParity: buildManifest.nativeWaveformParity }, null, 2));

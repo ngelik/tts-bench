@@ -42,11 +42,14 @@ jobs:
           OPENBLAS_NUM_THREADS: '1'
           MKL_NUM_THREADS: '1'
         run: python tools/export-inflect-mini-v3.py --download
-      - name: Upload model-only conversion artifact
+      - name: Upload compact strict-parity diagnostics (no generated graphs)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: inflect-mini-v3-onnx-${{ github.event.pull_request.head.sha || github.sha }}
-          path: .cache/inflect-mini-v3-onnx/
-          if-no-files-found: error
+          name: inflect-mini-v3-native-parity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            .cache/inflect-mini-v3-onnx/BUILD-MANIFEST.json
+            .cache/inflect-mini-v3-onnx/PARITY-DIAGNOSTIC.json
+          if-no-files-found: warn
           retention-days: 14
           include-hidden-files: true
