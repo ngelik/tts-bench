@@ -6,6 +6,10 @@ on:
       - 'tools/export-inflect-mini-v3.py'
       - 'tools/inflect-mini-v3-conversion.lock.json'
       - 'tools/inflect-mini-v3-export-requirements.txt'
+      - 'web/inflect-mini-v3/source-dsp.mjs'
+      - 'web/inflect-mini-v3/source-dsp-cli.mjs'
+      - 'web/workers/inflect-mini-v3.mjs'
+      - 'tests/inflect-mini-v3-source-dsp.test.mjs'
       - '.github/workflows/inflect-mini-v3-export.yml'
   workflow_dispatch:
 

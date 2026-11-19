@@ -136,6 +136,48 @@ def raw_phase_audit(reference, candidate, magnitude) -> dict:
     }
 
 
+def browser_source_features(f0, phase_uniform, harmonic_noise, generator) -> dict:
+    """Run the exact browser CPU DSP module on the same arrays used by Torch/ORT."""
+    source = generator.m_source
+    sine = source.l_sin_gen
+    payload = {
+        "f0": np.asarray(f0, dtype=np.float32).reshape(-1).tolist(),
+        "frameCount": int(np.asarray(f0).shape[-1] // 2),
+        "phaseUniform": np.asarray(phase_uniform, dtype=np.float32).reshape(-1).tolist(),
+        "harmonicNoise": np.asarray(harmonic_noise, dtype=np.float32).reshape(-1).tolist(),
+        "linearWeights": source.l_linear.weight.detach().cpu().numpy().astype(np.float32).reshape(-1).tolist(),
+        "linearBias": float(source.l_linear.bias.detach().cpu().item()),
+        "sampleRate": int(sine.sampling_rate),
+        "upsampleScale": int(sine.upsample_scale),
+        "nFft": int(generator.stft.filter_length),
+        "hopLength": int(generator.stft.hop_length),
+        "sineAmplitude": float(sine.sine_amp),
+        "noiseStd": float(sine.noise_std),
+        "voicedThreshold": float(sine.voiced_threshold),
+    }
+    command = ["node", str(ROOT / "web" / "inflect-mini-v3" / "source-dsp-cli.mjs")]
+    result = subprocess.run(command, input=json.dumps(payload, allow_nan=False), text=True,
+                            capture_output=True, check=True, timeout=120)
+    decoded = json.loads(result.stdout)
+    expected_samples = int(np.asarray(harmonic_noise).shape[-2])
+    expected_frames = expected_samples // payload["hopLength"] + 1
+    expected_bins = payload["nFft"] // 2 + 1
+    require(decoded.get("samples") == expected_samples
+            and decoded.get("stftFrames") == expected_frames
+            and decoded.get("bins") == expected_bins,
+            "Browser source DSP returned the wrong sample or STFT clock")
+    for name in ("harmonicSource", "sourceReal", "sourceImag", "magnitude", "phase", "sourceSpec"):
+        require(name in decoded and all(math.isfinite(value) for value in decoded[name]),
+                "Browser source DSP returned malformed/nonfinite " + name)
+    decoded["harmonicSource"] = np.asarray(decoded["harmonicSource"], dtype=np.float32)
+    decoded["sourceReal"] = np.asarray(decoded["sourceReal"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
+    decoded["sourceImag"] = np.asarray(decoded["sourceImag"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
+    decoded["magnitude"] = np.asarray(decoded["magnitude"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
+    decoded["phase"] = np.asarray(decoded["phase"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
+    decoded["sourceSpec"] = np.asarray(decoded["sourceSpec"], dtype=np.float32).reshape(1, 2 * expected_bins, expected_frames)
+    return decoded
+
+
 @contextmanager
 def fixed_source_randomness(phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor):
     """Feed the same explicit random arrays to native and exported source paths."""
@@ -638,6 +680,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     waveform_diagnostic_path = output_dir / "diagnostic-waveform.onnx"
     style_path = output_dir / "cassidy-style-table.f32"
     vocab_path = output_dir / "phoneme-vocab.json"
+    source_params_path = output_dir / "source-linear-weights.f32"
 
     export_graph(
         text_graph,
@@ -728,6 +771,11 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
                 and 0 < index < 178 for symbol, index in model.vocab.items()), "Mini symbol-to-id vocabulary is invalid")
     require(len(set(model.vocab.values())) == len(model.vocab), "Mini phoneme ids are not unique")
     vocab_path.write_text(json.dumps(model.vocab, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
+    source_linear = torch.cat([
+        generator.m_source.l_linear.weight.detach().cpu().reshape(-1),
+        generator.m_source.l_linear.bias.detach().cpu().reshape(-1),
+    ]).numpy().astype("<f4", copy=False)
+    source_params_path.write_bytes(source_linear.tobytes())
 
     # Compare each graph stage and a complete seeded utterance against the
     # pinned native Python inference. No output is used as benchmark evidence.
@@ -854,6 +902,10 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
      ort_phase, ort_source_real, ort_source_imag) = diagnostic_outputs
     native_source_spec = native_capture["source_spec"].numpy()
     wrapper_source_spec = wrapper_capture["source_spec"].numpy()
+    browser_native_f0 = browser_source_features(
+        predicted["F0"], phase_torch, noise_torch, generator)
+    browser_onnx_f0 = browser_source_features(
+        f0_onnx, phase_torch, noise_torch, generator)
     native_first_resblock_input = native_capture["first_resblock_input"].numpy()
     wrapper_first_resblock_input = wrapper_capture["first_resblock_input"].numpy()
     native_logits = native_capture["post_logits"].numpy()
@@ -958,6 +1010,22 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     diagnostic_errors["nativeVsSeparatedWasmSourcePhaseWithNativeF0"] = raw_phase_audit(
         native_source_spec[:, bins:, :], native_f0_source_spec[:, bins:, :],
         native_source_spec[:, :bins, :])
+    diagnostic_errors["nativeVsBrowserSourceSpecWithOnnxF0"] = array_error(
+        native_source_spec, browser_onnx_f0["sourceSpec"])
+    diagnostic_errors["nativeVsBrowserSourcePhaseWithOnnxF0"] = raw_phase_audit(
+        native_source_spec[:, bins:, :], browser_onnx_f0["sourceSpec"][:, bins:, :],
+        native_source_spec[:, :bins, :])
+    diagnostic_errors["nativeVsBrowserSourceHarmonicWithNativeF0"] = array_error(
+        native_harmonic.detach().cpu().numpy().reshape(-1), browser_native_f0["harmonicSource"])
+    diagnostic_errors["nativeVsBrowserSourceSpecWithNativeF0"] = array_error(
+        native_source_spec, browser_native_f0["sourceSpec"])
+    diagnostic_errors["nativeVsBrowserSourceRealWithNativeF0"] = array_error(
+        native_complex.real.detach().cpu().numpy(), browser_native_f0["sourceReal"])
+    diagnostic_errors["nativeVsBrowserSourceImagWithNativeF0"] = array_error(
+        native_complex.imag.detach().cpu().numpy(), browser_native_f0["sourceImag"])
+    diagnostic_errors["nativeVsBrowserSourcePhaseWithNativeF0"] = raw_phase_audit(
+        native_source_spec[:, bins:, :], browser_native_f0["sourceSpec"][:, bins:, :],
+        native_source_spec[:, :bins, :])
     diagnostic_errors["separatedWasmVsCombinedOrtSourceSpec"] = array_error(
         ort_source_spec, source_spec_onnx)
     identical_source_neural = waveform_session.run(None, {
@@ -969,19 +1037,28 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         native["audio"].detach().cpu().numpy()[None, :], identical_source_neural)
     diagnostic_errors["ortNeuralWithNativeHiddenAndSourceWaveformQuality"] = waveform_quality(
         native["audio"].detach().cpu().numpy(), identical_source_neural[0])
-    source_native_f0_waveform = waveform_session.run(None, {
+    ort_source_native_f0_waveform = waveform_session.run(None, {
         "hidden": native_hidden.detach().cpu().numpy(),
         "style": style,
         "source_spec": native_f0_source_spec,
     })[0]
-    diagnostic_errors["ortNeuralWithSeparatedSourceAndNativeF0Waveform"] = array_error(
-        native["audio"].detach().cpu().numpy()[None, :], source_native_f0_waveform)
-    diagnostic_errors["ortNeuralWithSeparatedSourceAndNativeF0WaveformQuality"] = waveform_quality(
-        native["audio"].detach().cpu().numpy(), source_native_f0_waveform[0])
+    diagnostic_errors["ortNeuralWithSeparatedOrtSourceAndNativeF0Waveform"] = array_error(
+        native["audio"].detach().cpu().numpy()[None, :], ort_source_native_f0_waveform)
+    diagnostic_errors["ortNeuralWithSeparatedOrtSourceAndNativeF0WaveformQuality"] = waveform_quality(
+        native["audio"].detach().cpu().numpy(), ort_source_native_f0_waveform[0])
+    browser_native_f0_waveform = waveform_session.run(None, {
+        "hidden": native_hidden.detach().cpu().numpy(),
+        "style": style,
+        "source_spec": browser_native_f0["sourceSpec"],
+    })[0]
+    diagnostic_errors["ortNeuralWithBrowserSourceAndNativeF0Waveform"] = array_error(
+        native["audio"].detach().cpu().numpy()[None, :], browser_native_f0_waveform)
+    diagnostic_errors["ortNeuralWithBrowserSourceAndNativeF0WaveformQuality"] = waveform_quality(
+        native["audio"].detach().cpu().numpy(), browser_native_f0_waveform[0])
     waveform_onnx = waveform_session.run(None, {
         "hidden": hidden_onnx,
         "style": style,
-        "source_spec": source_spec_onnx,
+        "source_spec": browser_onnx_f0["sourceSpec"],
     })[0]
     require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
     require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
@@ -1024,15 +1101,12 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         dynamic_phase = torch.rand((1, phase.shape[1]), dtype=torch.float32)
         dynamic_phase[:, 0] = 0
         dynamic_noise = torch.randn((1, 600 * dynamic_frames, phase.shape[1]), dtype=torch.float32)
-    dynamic_source_spec = source_session.run(None, {
-        "f0": dynamic_f0,
-        "phase_uniform": dynamic_phase.numpy(),
-        "harmonic_noise": dynamic_noise.numpy(),
-    })[0]
+    dynamic_browser_source = browser_source_features(
+        dynamic_f0, dynamic_phase, dynamic_noise, generator)
     dynamic_excitation = waveform_session.run(None, {
         "hidden": dynamic_hidden,
         "style": dynamic_style,
-        "source_spec": dynamic_source_spec,
+        "source_spec": dynamic_browser_source["sourceSpec"],
     })[0]
     require(dynamic_excitation.shape == (1, 600 * dynamic_frames)
             and np.isfinite(dynamic_excitation).all(), "Dynamic waveform graph clock is invalid")
@@ -1051,8 +1125,10 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             + str(dynamic_waveform_max_error) + " rms=" + str(dynamic_waveform_rms_error))
 
     waveform_diagnostic_path.unlink()
+    source_path.unlink()
     files = []
-    for path in (duration_path, bridge_path, source_path, waveform_path, style_path, vocab_path):
+    for path in (duration_path, bridge_path, waveform_path, style_path,
+                 vocab_path, source_params_path):
         files.append({"path": path.name, "bytes": path.stat().st_size, "sha256": sha256_file(path)})
 
     # Preserve the active owner grant and the exact upstream Kokoro/StyleTTS2
@@ -1087,9 +1163,20 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "maxFrames": MAX_FRAMES,
         "seededExcitation": "Explicit uniform/normal graph inputs; browser uses seeded Mulberry32 + Box-Muller, not PyTorch bitwise RNG parity.",
         "executionSplit": {
-            "sourceFrontend": "Harmonic excitation and exact TorchSTFT source features are evaluated in a separate CPU/WASM session before neural dispatch.",
+            "sourceFrontend": "Standalone Float32 CPU browser DSP computes harmonic excitation and source STFT before neural dispatch; source-linear-weights.f32 is extracted from the pinned checkpoint.",
             "neuralGenerator": "Hidden/style/source features feed the waveform neural graph; WebGPU runs here when selected, with WASM fallback for unsupported operations.",
-            "timing": "Browser synthesis timing includes the CPU/WASM frontend, all neural graph sessions, inverse-STFT graph work, and PCM readback.",
+            "timing": "Browser synthesis timing includes standalone CPU source DSP, all ONNX neural graph sessions, inverse-STFT graph work, and PCM readback.",
+        },
+        "sourceDsp": {
+            "sourceParameters": "source-linear-weights.f32",
+            "sampleRate": int(generator.m_source.l_sin_gen.sampling_rate),
+            "upsampleScale": int(generator.m_source.l_sin_gen.upsample_scale),
+            "nFft": int(generator.stft.filter_length),
+            "hopLength": int(generator.stft.hop_length),
+            "harmonicCount": int(generator.m_source.l_sin_gen.harmonic_num + 1),
+            "sineAmplitude": float(generator.m_source.l_sin_gen.sine_amp),
+            "noiseStd": float(generator.m_source.l_sin_gen.noise_std),
+            "voicedThreshold": float(generator.m_source.l_sin_gen.voiced_threshold),
         },
         "normalization": {
             "layer": "InstanceNorm1d",
