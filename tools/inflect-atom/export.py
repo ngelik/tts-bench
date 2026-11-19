@@ -150,7 +150,13 @@ def main(output):
             reference = model.predict(ids, lengths, speaker, max_frames=4096)
             encoded, durations, pitch = sessions["encoder"].run(None, {"ids": ids.numpy(), "speaker": speaker.numpy()})
             frames = int(durations.sum())
-            assert frames == int(reference["frame_lengths"][0]) and frames <= 4096
+            if frames != int(reference["frame_lengths"][0]):
+                native_encoded = model._encode(ids, lengths, speaker).numpy()
+                native_duration = torch.round(torch.expm1(reference["log_duration"]).clamp_min(1.0)).long().numpy()
+                wrapped_encoded, wrapped_duration, _ = encoder(ids, speaker)
+                write_json(output / "duration-failure.json", {"span": item["id"], "frames": frames, "nativeFrames": int(reference["frame_lengths"][0]), "encoderMaxError": float(np.max(np.abs(encoded - native_encoded))), "wrappedEncoderMaxError": float(np.max(np.abs(wrapped_encoded.numpy() - native_encoded))), "nativeDurations": native_duration.tolist(), "onnxDurations": durations.tolist(), "wrappedDurations": wrapped_duration.tolist(), "nativeLogDuration": reference["log_duration"].tolist()})
+                raise AssertionError(f"Span {item['id']} duration frames {frames} != native {int(reference['frame_lengths'][0])}")
+            assert frames <= 4096
             actual = sessions["decoder"].run(None, {"encoded": encoded, "durations": durations.astype(np.float32), "pitch": pitch, "frames": np.arange(frames, dtype=np.float32)})
             errors = {}
             for name, value in zip(["f0_norm", "voiced_logits", "harmonic_log", "noise_log"], actual):
