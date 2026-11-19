@@ -21,3 +21,21 @@ The noise source is explicitly adapted to a specified MT19937/polar Box–Muller
 The current upstream [license grant](https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md) covers owner-controlled code and weights under Apache-2.0, and explicitly supersedes older evaluation/noncommercial language. Historical notices remain in the release; third-party licenses and voice/data provenance obligations remain separate. eSpeak NG and the ported phonemizer punctuation layer use GPL-3.0-or-later. Misaki uses Apache-2.0, ONNX Runtime Web uses MIT with its bundled notices, and Emscripten's LLVM/runtime notices apply to the built WASM modules. Source and notices must accompany redistributed runtime assets.
 
 No native browser results are claimed until the pinned source, staged assets, acoustic/frontend/DSP parity and actual Chrome campaign pass qualification.
+
+## Reproduce the browser campaign
+
+```sh
+npm ci
+npm run assets -- fetch --model inflect-atom-v3 --accept-license
+npm run assets -- verify --model inflect-atom-v3 --accept-license
+npm run bench -- run --model inflect-atom-v3 --backend cpu --scenario offline --smoke --accept-license
+npm run bench -- run --model inflect-atom-v3 --backend webgpu --scenario offline --smoke --accept-license
+npm run bench -- run --model inflect-atom-v3 --backend cpu --scenario cached --repetitions 1 --resources --accept-license
+npm run bench -- run --model inflect-atom-v3 --backend webgpu --scenario cached --repetitions 1 --resources --accept-license
+npm run bench -- run --model inflect-atom-v3 --backend cpu --scenario warm --repetitions 5 --accept-license
+npm run bench -- run --model inflect-atom-v3 --backend webgpu --scenario warm --repetitions 5 --accept-license
+```
+
+Use the repository's baseline machine and pinned Google Chrome for reference submissions, and run each command serially on an otherwise idle machine. Warm mode excludes its first complete article before scoring five repetitions. Cached resource diagnostics are separate observations. Submit native receipts, final scored recordings and generated reports through the repository skill and normal pull-request process; hosted compatibility outputs are not reference results.
+
+The [immutable compiled runtime](https://github.com/ngelik/tts-bench/releases/tag/inflect-atom-v3-browser-v1) includes source-bound qualification evidence and licenses. `assets.lock.json` pins every downloaded file's byte count and SHA-256.
