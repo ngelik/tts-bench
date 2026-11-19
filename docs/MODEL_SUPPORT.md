@@ -156,6 +156,17 @@ Pinned Inflect Micro v2 complete English checkpoint and official FP32 ONNX expor
 
 [Primary source 1](https://huggingface.co/owensong/Inflect-Micro-v2-ONNX/blob/91b1ab6432323064ec0e8e9704d92fcecd24855f/README.md), [Primary source 2](https://huggingface.co/owensong/Inflect-Micro-v2-ONNX/blob/91b1ab6432323064ec0e8e9704d92fcecd24855f/onnx/SOURCE.json), [Primary source 3](https://huggingface.co/owensong/Inflect-Micro-v2/blob/9d862840734dcc53afb5d27ef468459daad020fa/README.md).
 
+<a id="inflect-micro-v3"></a>
+
+## Inflect Micro v3 FP32
+
+The pinned checkpoint lists **6 English voices**. The browser export bundles and
+benchmarks **Cassidy (voice 2)** only. It contains three FP32 ONNX graphs and a
+fixed Cassidy style bank; the exported model-weight assets total **47.57 MB**.
+The browser frontend uses the separately pinned Klein 0.2.0 G2P adaptation and
+does not claim exact native Misaki parity. Seeded JavaScript Gaussian noise is
+not bitwise identical to the PyTorch generator. [Pinned model card](https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md) · [Weight license scope](https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json) · [Browser/export notes](INFLECT_MICRO_V3.md).
+
 <a id="lfm3-audio-2b-gguf"></a>
 
 ## LFM3-Audio-2B (GGUF Q4_K_M / Q8_0)

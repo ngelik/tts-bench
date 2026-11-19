@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc",
+  "receiptSha256": "6ac5ecceb870c1624bd21200e8e4a0eed25590dc94be5b496b51dbfd75645ec3",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+    "bytes": 57896302,
+    "rate": 22050,
+    "samples": 28948129,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 120,
+        "samples": 536363,
+        "zeroSamples": 536363
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 19766826,
+      "endSampleExclusive": 19772451,
+      "samples": 5625,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "72f6b7adefd748fac0aa10f171007d06a23b4749d54689736c95a19e483acecd",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 34603,
+    "started": 1795073081.9066648
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu-full.wav",
+    "sha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+    "bytes": 57896302
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu.wav",
+    "sha256": "72f6b7adefd748fac0aa10f171007d06a23b4749d54689736c95a19e483acecd",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/result.json",
+  "privateTerminalSha256": "294883d7f9751027d018ee6c5a92cde9b322ce9eb8d25d9e87a450ec8f4fc86d",
+  "independentReviewSha256": "9d04d77f46fe7c873b3fb4eeee7a3e2fa69cfe937aa82c9021fcc5bc2ab59933"
+}
