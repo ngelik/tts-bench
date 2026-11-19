@@ -229,6 +229,35 @@
       }
     },
     {
+      "resultId": "2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c",
+      "model": "inflect-atom-v3",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu.wav",
+        "sha256": "259d607633a9131c44d12dfad29199e262c2a448df3170c87ea13ccb9ffb3fb9",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu-full.wav",
+        "sha256": "d4379a6f165ced40acc06f5fc92620ef9f5975b0f683a84984af1c368f0b8111",
+        "bytes": 60318644
+      }
+    },
+    {
       "resultId": "2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6",
       "model": "inflect-micro-v2",
       "backend": "cpu",

@@ -221,6 +221,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Linnet en-35m (f1) | 83.08 | [1284.58](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/summary.md) | [2778.33](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/summary.md) |
 
+**RAM 17** · MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`913fb381`](https://github.com/ngelik/tts-bench/commit/913fb381bba216d744b3168705029d0da3ab9a5c).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Inflect Atom v3 157K FP32 | 0.71 | [1047.34](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | — |
+
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
 ### Voice and language support
@@ -330,6 +336,10 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![five-tiny-models — campaign metrics](reports/five-tiny-models/overview.svg)
 
+[inflect-atom-v3 — all-metrics table and source receipts](reports/inflect-atom-v3/overview.md)
+
+![inflect-atom-v3 — campaign metrics](reports/inflect-atom-v3/overview.svg)
+
 [klein-x1-5-pro — all-metrics table and source receipts](reports/klein-x1-5-pro/overview.md)
 
 ![klein-x1-5-pro — campaign metrics](reports/klein-x1-5-pro/overview.svg)
@@ -408,6 +418,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | cpu | [Receipt](results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4--fun-cosyvoice3-0.5b-2512--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4--fun-cosyvoice3-0.5b-2512--cpu-full.wav) |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | webgpu | [Receipt](results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4--fun-cosyvoice3-0.5b-2512--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4--fun-cosyvoice3-0.5b-2512--webgpu-full.wav) |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | webgpu | [Receipt](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6--fun-cosyvoice3-0.5b-2512--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6--fun-cosyvoice3-0.5b-2512--webgpu-full.wav) |
+| Inflect Atom v3 157K FP32 | cpu | [Receipt](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu-full.wav) |
 | Inflect Micro v2 FP32 | cpu | [Receipt](results/2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6--inflect-micro-v2--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6--inflect-micro-v2--cpu-full.wav) |
 | Inflect Micro v2 FP32 | webgpu | [Receipt](results/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201--inflect-micro-v2--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201--inflect-micro-v2--webgpu-full.wav) |
 | Kitten Nano 0.8 FP32 | cpu | [Receipt](results/2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636--kitten-nano-0.8--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636--kitten-nano-0.8--cpu-full.wav) |
@@ -611,6 +622,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 123 · 2026-11-19 | audio8-realistic-0.6b-int4/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) | [SVG](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/chart.svg) |
 | 124 · 2026-11-19 | sano-heart-nano-gguf-f32/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [SVG](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/chart.svg) |
 | 125 · 2026-11-19 | sano-heart-nano-gguf-f32/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | [SVG](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/chart.svg) |
+| 126 · 2026-11-19 | inflect-atom-v3/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [SVG](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/chart.svg) |
 
 </details>
 
