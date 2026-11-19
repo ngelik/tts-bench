@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-sano-heartnano-int8-publication-evidence",
+  "source": {
+    "commit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+    "dirty": false,
+    "manifestSha256": "169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027",
+    "assetsLockSha256": "3f8c85f42e18f1d5d74662890103a553c87a0111c92d4b253e39ec968b50a2b5",
+    "fixture": {
+      "id": "english-20k-v1",
+      "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "characters": 20000,
+      "chunks": 93
+    }
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "profile": {
+    "model": "sano-heart-nano",
+    "modelRevision": "4a8194aa1dd958033ee449b3ad30c37e536b216e",
+    "runtimeSourceRevision": "c0584a51213721faba98135821faab71bae888f0",
+    "voice": "SanoTTS heart-nano (English, US)",
+    "voiceKey": "heartnano",
+    "lineage": "en_us_e13b",
+    "precision": "Official heart-nano int8 front and decoder weights with the matching int8 snt_nano WebAssembly build",
+    "sampleRate": 24000,
+    "parameterCount": 294279,
+    "splitPolicy": "Official web/index.html splitChunks; sentence and clause pieces up to 120 characters; 93 canonical source IDs preserved.",
+    "frontend": "Pinned SaanoTrellisFrontend + espeak-ng WASM en-us; max 207 phoneme tokens including BOS/EOS; non-whitespace dropped symbols fail closed.",
+    "deterministicSeed": "Official snt_nano SHA-256(text)[:8] seed, independently derived for each sentence/clause piece.",
+    "outputCapSecondsPerPiece": 30
+  },
+  "results": [
+    {
+      "scenario": "warm",
+      "id": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+      "receiptPath": "results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/result.json",
+      "receiptSha256": "0ad0916d279c782090b441416beac7531cfaf796cdcb3fdc188edf77326425aa",
+      "status": "measured",
+      "requestedBackend": "cpu",
+      "effectiveBackend": "cpu/wasm",
+      "protocolId": "browser-tts-warm-v1",
+      "excludedWarmups": 1,
+      "n": 5,
+      "generationMs": {
+        "median": 19593.875,
+        "min": 19582.610000133514,
+        "max": 19634.860000133514
+      },
+      "firstSourceChunkCompletedMsMedian": 218.99500012397766,
+      "firstPcmMsMedian": 57.94500017166138,
+      "audioSecondsMedian": 1317.6,
+      "rtfMedian": 0.014870882665452338,
+      "chunkValidation": {
+        "count": 93,
+        "allFinite": true,
+        "allNonempty": true
+      },
+      "pcmFloatSha256s": [
+        "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad"
+      ],
+      "selectedTrialIndex": 5,
+      "selectedWav": {
+        "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+        "resultSha256": "0ad0916d279c782090b441416beac7531cfaf796cdcb3fdc188edf77326425aa",
+        "nativePathRelativeToScoreCheckout": "runs/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/sano-heart-nano-cpu.wav",
+        "fullWavSha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "fullWavBytes": 63244844,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "frames": 31622400,
+        "durationSeconds": 1317.6,
+        "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+        "prefix30SecondsSha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+        "prefixBytes": 1440044,
+        "trialIndex": 5,
+        "headerHex": "52494646240ac50357415645666d74201000000001000100c05d000080bb00000200100064617461000ac503"
+      }
+    },
+    {
+      "scenario": "cached",
+      "id": "2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271",
+      "receiptPath": "results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/result.json",
+      "receiptSha256": "0ecbddb9a3c06369888f3fe12fc1400086cb490bb23430e1d30cf46caa293636",
+      "status": "measured",
+      "requestedBackend": "cpu",
+      "effectiveBackend": "cpu/wasm",
+      "protocolId": "browser-tts-cached-v1-resources",
+      "resources": true,
+      "n": 1,
+      "loadMs": 46.46112499999981,
+      "downloadBytes": 38404,
+      "idealDownloadSecondsAt1Mbps": 0.307232,
+      "memory": {
+        "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+        "intervalMs": 500,
+        "sampleCount": 38,
+        "generationMeanRssBytes": 842877898,
+        "generationPeakSampledRssBytes": 906788864,
+        "articleCallPeakRssBytes": 1483227136
+      },
+      "audioSeconds": 1317.6,
+      "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+      "selectedTrialIndex": 1,
+      "selectedWav": {
+        "resultId": "2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271",
+        "resultSha256": "0ecbddb9a3c06369888f3fe12fc1400086cb490bb23430e1d30cf46caa293636",
+        "nativePathRelativeToScoreCheckout": "runs/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/sano-heart-nano-cpu.wav",
+        "fullWavSha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "fullWavBytes": 63244844,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "frames": 31622400,
+        "durationSeconds": 1317.6,
+        "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+        "prefix30SecondsSha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+        "prefixBytes": 1440044,
+        "trialIndex": 1,
+        "headerHex": "52494646240ac50357415645666d74201000000001000100c05d000080bb00000200100064617461000ac503"
+      }
+    },
+    {
+      "scenario": "warm",
+      "id": "2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638",
+      "receiptPath": "results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/result.json",
+      "receiptSha256": "4ee31557fb48dcf553baf019cc2837f1966ad3802a34f1f24b3d3e85684b8fff",
+      "status": "unsupported",
+      "requestedBackend": "webgpu",
+      "effectiveBackend": "none",
+      "protocolId": "browser-tts-warm-v1",
+      "n": 0,
+      "reason": "The pinned official SanoTTS heart-nano browser path is CPU WebAssembly; it does not implement WebGPU dispatch."
+    }
+  ],
+  "nativeAudio": {
+    "schemaVersion": 1,
+    "kind": "native-full-wav-byte-proof",
+    "verifiedAt": "2026-11-19T05:12:30.600289+00:00",
+    "sourceCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+    "sourceManifestSha256": "169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027",
+    "fixture": {
+      "id": "english-20k-v1",
+      "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "characters": 20000,
+      "chunks": 93
+    },
+    "format": "canonical mono PCM16 WAV; full file digests verified by streaming reads; exact first 30 seconds also hashed separately",
+    "warmAndCachedAudioByteIdentical": true,
+    "files": {
+      "warm": {
+        "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+        "resultSha256": "0ad0916d279c782090b441416beac7531cfaf796cdcb3fdc188edf77326425aa",
+        "nativePathRelativeToScoreCheckout": "runs/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/sano-heart-nano-cpu.wav",
+        "fullWavSha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "fullWavBytes": 63244844,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "frames": 31622400,
+        "durationSeconds": 1317.6,
+        "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+        "prefix30SecondsSha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+        "prefixBytes": 1440044,
+        "trialIndex": 5,
+        "headerHex": "52494646240ac50357415645666d74201000000001000100c05d000080bb00000200100064617461000ac503"
+      },
+      "cached": {
+        "resultId": "2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271",
+        "resultSha256": "0ecbddb9a3c06369888f3fe12fc1400086cb490bb23430e1d30cf46caa293636",
+        "nativePathRelativeToScoreCheckout": "runs/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/sano-heart-nano-cpu.wav",
+        "fullWavSha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "fullWavBytes": 63244844,
+        "sampleRate": 24000,
+        "channels": 1,
+        "bitsPerSample": 16,
+        "frames": 31622400,
+        "durationSeconds": 1317.6,
+        "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+        "prefix30SecondsSha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+        "prefixBytes": 1440044,
+        "trialIndex": 1,
+        "headerHex": "52494646240ac50357415645666d74201000000001000100c05d000080bb00000200100064617461000ac503"
+      }
+    }
+  },
+  "plans": {
+    "warm": "plans/cpu-warm.json",
+    "cached": "plans/cpu-cached-resources.json",
+    "webgpu": "plans/webgpu-status.json"
+  },
+  "setupAttempts": [
+    "setup-attempt-001.json",
+    "setup-attempt-002.json"
+  ]
+}

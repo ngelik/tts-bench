@@ -42,6 +42,8 @@ Liquid LFM3: [interactive table](https://ngelik.github.io/tts-bench/?q=LFM3) · 
 
 [Liquid LFM3 run notes](docs/LIQUID_LFM3_RUN_NOTES.md) document retained initialization failures, the selected clean memory repeat, and speech-completeness observations.
 
+The official [SanoTTS heart-nano INT8 native report](docs/campaigns/sano-heartnano-int8-m1/README.md) records its CPU warm score, separate cached RAM diagnostic and explicit unsupported WebGPU result.
+
 <!-- benchmark-results:start -->
 
 Warm and memory tables prefer native receipts that verify the registered model and runtime files for each backend and environment. The latest attempt within that version is shown, including errors. When it has no receipt, earlier evidence stays visible. All runs and recordings remain linked below.
@@ -86,6 +88,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Sopro v2 Turbo | E5 | 509.82 | [616.59 s (n=5)](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | [507.48 s (n=5)](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/summary.md) | Native; independent attempts |
 | Tiny Voca 4.5M | E5 | 21.39 | [54.86 s (n=5)](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | [21.47 s (n=5)](results/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d/summary.md) | Native; matched configuration |
 | Linnet en-35m (f1) | E6 | 83.08 | [212.58 s (n=5)](results/2026-11-18t12-05-28-956z-linnet-en-35m-cpu-warm-f59450f4/summary.md) | [831.84 s (n=5)](results/2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30/summary.md) | Native; independent attempts |
+| SanoTTS heart-nano INT8 (English, US) | E7 | 0.35 | [19.59 s (n=5)](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/summary.md) | [unsupported](results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/summary.md) | Native; independent attempts |
 | sanoTTS heart-nano 294k (Kokopop F32) | E7 | 1.46 | [11.57 s (n=5)](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [3.71 s (n=5)](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | Native; matched configuration |
 
 Each native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
@@ -220,6 +223,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Linnet en-35m (f1) | 83.08 | [1284.58](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/summary.md) | [2778.33](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/summary.md) |
+
+**RAM 17** · Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`b0f8c888`](https://github.com/ngelik/tts-bench/commit/b0f8c8887e9dfab5cef7b8fac9a15af865d722ef).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| SanoTTS heart-nano INT8 (English, US) | 0.35 | [842.88](results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/summary.md) | — |
 
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
@@ -605,6 +614,9 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 123 · 2026-11-19 | audio8-realistic-0.6b-int4/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) | [SVG](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/chart.svg) |
 | 124 · 2026-11-19 | sano-heart-nano-gguf-f32/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [SVG](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/chart.svg) |
 | 125 · 2026-11-19 | sano-heart-nano-gguf-f32/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | [SVG](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/chart.svg) |
+| 126 · 2026-11-19 | sano-heart-nano/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/summary.md) | [SVG](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/chart.svg) |
+| 127 · 2026-11-19 | sano-heart-nano/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/summary.md) | [SVG](results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/chart.svg) |
+| 128 · 2026-11-19 | sano-heart-nano/webgpu | warm / browser-tts-warm-v1 | unsupported | [Report](results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/summary.md) | [SVG](results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/chart.svg) |
 
 </details>
 

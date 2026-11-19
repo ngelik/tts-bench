@@ -146,6 +146,8 @@ Pinned 294,279-parameter heart-nano int8 checkpoint, official US-English eSpeak/
 
 [Pinned checkpoint metadata](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json) · [Model card](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md) · [Official browser source](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web).
 
+[Native CPU warm, cached-memory and WebGPU-status results](campaigns/sano-heartnano-int8-m1/README.md).
+
 <a id="sano-heart-nano-gguf-f32"></a>
 
 ## sanoTTS heart-nano 294k (Kokopop F32)

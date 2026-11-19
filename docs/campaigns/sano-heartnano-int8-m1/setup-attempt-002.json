@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "attempt": "002",
+  "stage": "campaign dry-run preflight",
+  "outcome": "setup failure before assets or inference",
+  "at": "2026-11-19T04:58:39.599427Z",
+  "recordedError": "The campaign clean-source guard rejected the checkout because the temporary node_modules symlink appeared as an untracked path. The dependency tree itself was later verified against the exact package lock and locally excluded from Git; no Chrome session or synthesis occurred in this attempt."
+}

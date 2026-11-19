@@ -1,0 +1,27 @@
+# SanoTTS heart-nano INT8: native M1 Pro results
+
+This campaign measures the official Ampixa heart-nano INT8 browser profile, separately from the converted F32/Kokopop configuration. The full `english-20k-v1` fixture (20,000 characters, 93 canonical spans) was run in headed Chrome on an Apple M1 Pro MacBook Pro (8 CPU cores, 16 GiB RAM, arm64), macOS 26.6.2, Chrome 157.0.8103.40. The immutable scoring source is [`b0f8c8887e9dfab5cef7b8fac9a15af865d722ef`](https://github.com/ngelik/tts-bench/tree/b0f8c8887e9dfab5cef7b8fac9a15af865d722ef), with source-manifest SHA-256 `169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027` and `assets.lock.json` SHA-256 `3f8c85f42e18f1d5d74662890103a553c87a0111c92d4b253e39ec968b50a2b5`. The code and results remain in the reviewed [PR #125](https://github.com/ngelik/tts-bench/pull/125); this report does not claim that PR has merged.
+
+| Cell | Result |
+|---|---|
+| CPU warm | `cpu/wasm`, n=5 after one excluded full-article warm-up; median 19.593875 s (19.582610–19.634860 s), first PCM median 57.945 ms, 1,317.6 s audio, median RTF 0.014871. |
+| CPU cached resources | n=1, separate cached-assets/new-engine resource diagnostic; generation-window Chrome process-tree mean RSS 842,877,898 B from 38 samples, sampled generation peak 906,788,864 B, separate whole-call peak 1,483,227,136 B. Load 46.461 ms; transferred body data 38,404 B (ideal 1 Mbps body time 0.307 s, not a measured transfer time). |
+| WebGPU warm request | Explicitly `unsupported`: this official registration only supplies the CPU/WASM path and does not implement WebGPU dispatch. No GPU timing or CPU fallback is reported. |
+
+All 93 source spans in the CPU warm result are finite and nonempty. The selected trial-5 full WAV and cached-resource WAV have matching PCM and complete-file digests. The full WAV is 24 kHz mono PCM16, 31,622,400 frames (1,317.6 s), SHA-256 `ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8` (63,244,844 bytes). Full native file and prefix hashes are bound in [native audio verification](native-audio-verification.json); after release upload, [public readback verification](public-audio-verification.json) will record the anonymous complete-file readback. The in-repository sample is the unmodified first 30 seconds of the scored trial-5 recording.
+
+## Configuration and sources
+
+The pinned model is [Ampixa sanoTTS](https://huggingface.co/ampixa/sanoTTS/tree/4a8194aa1dd958033ee449b3ad30c37e536b216e), model revision `4a8194aa1dd958033ee449b3ad30c37e536b216e`, 294,279 parameters, `heartnano` / `en_us_e13b`, English (US), 24 kHz. The runtime is the official [Ampixa browser implementation](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web), pinned at `c0584a51213721faba98135821faab71bae888f0`. The receipt describes the exact locked weights and runtime files.
+
+The official demo splits each canonical span into sentence/clause pieces of at most 120 characters. Each piece is tokenized and synthesized within the timed source-span call; the WASM API returns a completed piece before PCM is available. The pinned Trellis/eSpeak frontend rejects dropped non-whitespace phonemes. Seed derivation is SHA-256 of each piece's text. This is a single CPU/WASM implementation, not the separate F32 conversion or a WebGPU implementation.
+
+The protocol is `browser-tts-warm-v1`: timing begins with the first source-chunk request and ends at final CPU-readable PCM; initialization, validation, hashing, WAV encoding and saving are excluded. The 5 scored runs and excluded warm-up are preserved under [warm evidence](evidence/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/). The independently submitted receipts are [CPU warm](../../../results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/summary.md), [CPU cached resources](../../../results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/summary.md), and [WebGPU status](../../../results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/summary.md). Exact per-cell plans are preserved in [plans](plans/); the full derived summary and receipt hashes are in [verification.json](verification.json).
+
+## Setup-only attempts and limits
+
+Two setup attempts stopped before model inference and are retained in [attempt 001](setup-attempt-001.json) and [attempt 002](setup-attempt-002.json). The first recorded an `npm ci` failure. The second failed the clean-source guard because the temporary `node_modules` symlink was not excluded locally. Neither produced inference or a score. The successful [third attempt](setup-attempt-003.json) verified the exact-lock installed dependencies, directly imported the waveform-integrity module, dry-ran all plans, verified assets and completed all three cells from the committed source. These setup failures are not backend failures.
+
+Audio hash and waveform-structure checks establish file integrity, not transcript fidelity or perceived quality. No listening or ASR quality rating is claimed. No thermal instrumentation or quantified background-load series was captured.
+
+Model and browser runtime terms are GPL-3.0 / GPL-3.0-or-later, with explicit acknowledgment required to stage the assets. See [component licensing](../../LICENSING.md) and the attribution in the audio manifest. No weights or runtime binaries are included in this PR.
