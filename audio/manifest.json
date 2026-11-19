@@ -2037,6 +2037,62 @@
       }
     },
     {
+      "resultId": "2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8",
+      "model": "sano-robot-mcu",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS Robot MCU (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS Robot MCU INT8 (English, US)",
+      "modelTerms": "GPL-3.0-or-later",
+      "sourceUrls": [
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu.wav",
+        "sha256": "26f21c08feae37ccd9038f83f3452f2ab3c0c47970e47132e08431948789818f",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu-full.wav",
+        "sha256": "b5bf757dd324438fa51b2a141bb3fe4c7c443775e87a735d6beff026f9b73e70",
+        "bytes": 49907244
+      }
+    },
+    {
+      "resultId": "2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc",
+      "model": "sano-trellis",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS Trellis experimental (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS Trellis experimental FP32 (English, US)",
+      "modelTerms": "GPL-3.0-or-later",
+      "sourceUrls": [
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu.wav",
+        "sha256": "512d1c376d03281e56d79ade275d864f6c0d865511c66ee36e353ebe47cb75db",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu-full.wav",
+        "sha256": "7aaac07e1c5bc5a9e80eb4cf7b67306fa973626e18eca2600d69a2d552773316",
+        "bytes": 63770156
+      }
+    },
+    {
       "resultId": "2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf",
       "model": "silencio-2",
       "backend": "cpu",

@@ -1,0 +1,118 @@
+{
+  "sourceCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+  "manifestSha256": "662279cddb19fe0853408d2ed7d38659012c1096ab83ad54dc3907a1a69ce53a",
+  "privatePreflightSha256": "e3c71cc6a83c02646e536170da8ea93922c0a1e9213d62a702cfd613e2ce1b38",
+  "preflight": {
+    "sourceCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+    "sourceDirty": false,
+    "when": "2026-11-19T09:17:10.199537+00:00",
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "architecture": "arm64",
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83",
+    "cpu": "Apple M1 Pro",
+    "cores": 8,
+    "ramBytes": 17179869184,
+    "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22216803)\t78%; AC attached; not charging present: true",
+    "packageLockSha256": "e70e80ca506063b9ab7303717639c8ade0cb54695fb96dfc7f2fa3015d46378b",
+    "assetLockSha256": "b7233e8c5d5c97c069a04824972ba7c8024451b99b2551a3e91f0a5ff8d7560b"
+  },
+  "observedCells": [
+    {
+      "cell": "robot-cached",
+      "resultId": "2026-11-19t09-36-45-778z-sano-robot-mcu-cpu-cached-0c917edc",
+      "receiptSha256": "6d2c17f3a780b92e4fe6c06fb4e56d00090a87e7d1d0642b2458c2eb784bee3c",
+      "createdAt": "2026-11-19T09:37:19.471Z",
+      "status": "measured",
+      "planPath": "plans/robot-cached.json",
+      "planSha256": "8dd58338b0326f5f2e5acaa22326e98e1faf82e19befff02768fb437609f0c8d"
+    },
+    {
+      "cell": "trellis-cached",
+      "resultId": "2026-11-19t11-12-09-964z-sano-trellis-cpu-cached-7b7a68cf",
+      "receiptSha256": "f49c1581752c1e4d2b0b2f2a10b6e0117830256dd0f12cc5f880de9d0930b5f1",
+      "createdAt": "2026-11-19T11:14:29.671Z",
+      "status": "measured",
+      "planPath": "plans/trellis-cached.json",
+      "planSha256": "4bb992867d085307bdd608942be9e0aab2f64d91f23390dd73f8bbfb96709bc3"
+    },
+    {
+      "cell": "robot-gpu-capability",
+      "resultId": "2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf",
+      "receiptSha256": "53d2eed91e1cf84cfdf36cf6d1d3d39b0fb5ea29481f6fa772d97a6e7f035a66",
+      "createdAt": "2026-11-19T13:50:09.243Z",
+      "status": "unsupported",
+      "planPath": "plans/robot-gpu-capability.json",
+      "planSha256": "f7278423d7071c3a6dbca608fcbfb02aec48719301e0e193f604b1d640cb6605",
+      "cellPreflight": {
+        "when": "2026-11-19T13:50:06.730001+00:00",
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22216803)\t78%; AC attached; not charging present: true",
+        "planSha256": "f7278423d7071c3a6dbca608fcbfb02aec48719301e0e193f604b1d640cb6605",
+        "scope": "Private per-cell observations before native Chrome/timing; no source or plan changes."
+      },
+      "privateCellPreflightSha256": "c7e17c9e8783c8d664241cea7970549464bf4fd67fce4404af054f49602010c5"
+    },
+    {
+      "cell": "robot-warm",
+      "resultId": "2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8",
+      "receiptSha256": "88b7282a3552cd78d5b0d99093c8f54f343858bfa965908b702488771ac9b62d",
+      "createdAt": "2026-11-19T14:30:36.772Z",
+      "status": "measured",
+      "planPath": "plans/robot-warm.json",
+      "planSha256": "5773772250496576922693f5e41b9b961af8e3db834e3eef250aa13e2bbe130c",
+      "cellPreflight": {
+        "when": "2026-11-19T14:27:42.060300+00:00",
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22216803)\t78%; AC attached; not charging present: true",
+        "planSha256": "5773772250496576922693f5e41b9b961af8e3db834e3eef250aa13e2bbe130c",
+        "scope": "Private per-cell observations before native Chrome/timing; no source or plan changes."
+      },
+      "privateCellPreflightSha256": "c1255ec585bf571622bf4aa44381bf7a4ec40d6f016e92b2f0202f63f2817b5e"
+    },
+    {
+      "cell": "trellis-warm",
+      "resultId": "2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc",
+      "receiptSha256": "6bb484c37b3256bedd65fce70b430292e37f782cd57e582043cfca27869ba1ff",
+      "createdAt": "2026-11-19T14:44:06.551Z",
+      "status": "measured",
+      "planPath": "plans/trellis-warm.json",
+      "planSha256": "5e5c012f65898d3ec1cf915d6f40c0da5cfe2a2c6e3485699c22c22df35a6294",
+      "cellPreflight": {
+        "when": "2026-11-19T14:30:39.345021+00:00",
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22216803)\t78%; AC attached; not charging present: true",
+        "planSha256": "5e5c012f65898d3ec1cf915d6f40c0da5cfe2a2c6e3485699c22c22df35a6294",
+        "scope": "Private per-cell observations before native Chrome/timing; no source or plan changes."
+      },
+      "privateCellPreflightSha256": "d6d26e53369b9733684042b9fec7b5f45062e2b932528e1e55b144125a02ee44"
+    },
+    {
+      "cell": "trellis-gpu-capability",
+      "resultId": "2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d",
+      "receiptSha256": "58d8bab5922359b02c651e38e4b875b53ea02d6ccdde1dfcdbe6f6827aa476a5",
+      "createdAt": "2026-11-19T16:13:22.177Z",
+      "status": "unsupported",
+      "planPath": "plans/trellis-gpu-capability.json",
+      "planSha256": "e02bf31a1252d0e44d2ee2bc243a5c84e717b00d53d396e084c8239bb1c593c2",
+      "cellPreflight": {
+        "when": "2026-11-19T16:13:19.876390+00:00",
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22216803)\t78%; AC attached; not charging present: true",
+        "planSha256": "e02bf31a1252d0e44d2ee2bc243a5c84e717b00d53d396e084c8239bb1c593c2",
+        "scope": "Private per-cell observations before native Chrome/timing; no source or plan changes."
+      },
+      "privateCellPreflightSha256": "9bd6bbe5cb198e41fef0ea6bfa53ac273a581f3babfdf55c822b04d1980f151f"
+    }
+  ],
+  "scheduling": {
+    "originalHandoffRecordSha256": "e838447c5cd63c2be41d09ba6df62dcffd8e77b28c4cdd1de2cf216732009b60",
+    "state": "complete",
+    "nativeSourceAndPlansUnmodified": true,
+    "note": "Operator-approved unique warm waiters completed before the original controller resumed; existing completed cells were skipped, not synthesized again."
+  },
+  "diagnostic": {
+    "path": "diagnostics/chrome-157.0.8103.79/result.json",
+    "receiptSha256": "28812332f1801f479392ef3a4ff5b540232f3c7001114620c9c7621e2eceddf3",
+    "baselineSelected": false
+  }
+}

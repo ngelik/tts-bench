@@ -54,6 +54,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E6**: MacBook Pro · Apple M1 Pro · 8-core CPU · 16 GiB RAM · Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E7**: Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E8**: Apple MacBook Pro M1 Pro / 16 GB · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E9**: Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
@@ -94,6 +95,8 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | sanoTTS Heart (Kokopop F32) | E7 | 9.38 | [39.17 s (n=5)](results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/summary.md) | [6.06 s (n=5)](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | Native; matched configuration |
 | sanoTTS heart-nano 294k (Kokopop F32) | E7 | 1.46 | [11.57 s (n=5)](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [3.71 s (n=5)](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | Native; matched configuration |
 | ZONOS3-Mini (Imogen) | E8 | 2081.59 | — | [153.41 s (n=1)](results/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772/summary.md) | Native; independent attempts |
+| SanoTTS Robot MCU INT8 (English, US) | E9 | 0.68 | [28.06 s (n=5)](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/summary.md) | [unsupported](results/2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf/summary.md) | Native; independent attempts |
+| SanoTTS Trellis experimental FP32 (English, US) | E9 | 3.98 | [132.56 s (n=5)](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/summary.md) | [unsupported](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/summary.md) | Native; independent attempts |
 
 Each native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
@@ -239,6 +242,13 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | ZONOS3-Mini (Imogen) | 2081.59 | — | [1126.22](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/summary.md) |
+
+**RAM 19** · Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`7f9b7982`](https://github.com/ngelik/tts-bench/commit/7f9b7982e5336be8642f91404584114371582fcd).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| SanoTTS Robot MCU INT8 (English, US) | 0.68 | [835.66](results/2026-11-19t09-36-45-778z-sano-robot-mcu-cpu-cached-0c917edc/summary.md) | — |
+| SanoTTS Trellis experimental FP32 (English, US) | 3.98 | [745.52](results/2026-11-19t11-12-09-964z-sano-trellis-cpu-cached-7b7a68cf/summary.md) | — |
 
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
@@ -407,6 +417,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![sano-kokopop-sizes-m1 — campaign metrics](reports/sano-kokopop-sizes-m1/overview.svg)
 
+[sano-robot-mcu-m1 — all-metrics table and source receipts](reports/sano-robot-mcu-m1/overview.md)
+
+![sano-robot-mcu-m1 — campaign metrics](reports/sano-robot-mcu-m1/overview.svg)
+
+[sano-trellis-m1 — all-metrics table and source receipts](reports/sano-trellis-m1/overview.md)
+
+![sano-trellis-m1 — campaign metrics](reports/sano-trellis-m1/overview.svg)
+
 [silencio2-m1-2026-11-18 — all-metrics table and source receipts](reports/silencio2-m1-2026-11-18/overview.md)
 
 ![silencio2-m1-2026-11-18 — campaign metrics](reports/silencio2-m1-2026-11-18/overview.svg)
@@ -509,6 +527,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | sanoTTS Heart (Kokopop F32) | webgpu | [Receipt](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu-full.wav) |
 | sanoTTS heart-nano 294k (Kokopop F32) | cpu | [Receipt](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu-full.wav) |
 | sanoTTS heart-nano 294k (Kokopop F32) | webgpu | [Receipt](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu-full.wav) |
+| SanoTTS Robot MCU INT8 (English, US) | cpu | [Receipt](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu-full.wav) |
+| SanoTTS Trellis experimental FP32 (English, US) | cpu | [Receipt](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu-full.wav) |
 | Silencio-2 28M FP32 | cpu | [Receipt](results/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf--silencio-2--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf--silencio-2--cpu-full.wav) |
 | Silencio-2 28M FP32 | webgpu | [Receipt](results/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55--silencio-2--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55--silencio-2--webgpu-full.wav) |
 | Sopro v2 Turbo | cpu | [Receipt](results/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e--sopro-v2-turbo--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e--sopro-v2-turbo--cpu-full.wav) |
@@ -668,10 +688,16 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 131 · 2026-11-19 | sano-amy-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/summary.md) | [SVG](results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/chart.svg) |
 | 132 · 2026-11-19 | inflect-atom-v3/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/summary.md) | [SVG](results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/chart.svg) |
 | 133 · 2026-11-19 | zonos3-mini/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/summary.md) | [SVG](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/chart.svg) |
-| 134 · 2026-11-19 | sano-amy-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/summary.md) | [SVG](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/chart.svg) |
-| 135 · 2026-11-19 | inflect-atom-v3/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/summary.md) | [SVG](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/chart.svg) |
-| 136 · 2026-11-19 | sano-amy-small-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | [SVG](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/chart.svg) |
-| 137 · 2026-11-19 | sano-amy-1p8m-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0/summary.md) | [SVG](results/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0/chart.svg) |
+| 134 · 2026-11-19 | sano-robot-mcu/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t09-36-45-778z-sano-robot-mcu-cpu-cached-0c917edc/summary.md) | [SVG](results/2026-11-19t09-36-45-778z-sano-robot-mcu-cpu-cached-0c917edc/chart.svg) |
+| 135 · 2026-11-19 | sano-amy-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/summary.md) | [SVG](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/chart.svg) |
+| 136 · 2026-11-19 | inflect-atom-v3/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/summary.md) | [SVG](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/chart.svg) |
+| 137 · 2026-11-19 | sano-trellis/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t11-12-09-964z-sano-trellis-cpu-cached-7b7a68cf/summary.md) | [SVG](results/2026-11-19t11-12-09-964z-sano-trellis-cpu-cached-7b7a68cf/chart.svg) |
+| 138 · 2026-11-19 | sano-amy-small-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | [SVG](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/chart.svg) |
+| 139 · 2026-11-19 | sano-robot-mcu/webgpu | warm / browser-tts-warm-v1 | unsupported | [Report](results/2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf/summary.md) | [SVG](results/2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf/chart.svg) |
+| 140 · 2026-11-19 | sano-amy-1p8m-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0/summary.md) | [SVG](results/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0/chart.svg) |
+| 141 · 2026-11-19 | sano-robot-mcu/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/summary.md) | [SVG](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/chart.svg) |
+| 142 · 2026-11-19 | sano-trellis/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/summary.md) | [SVG](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/chart.svg) |
+| 143 · 2026-11-19 | sano-trellis/webgpu | warm / browser-tts-warm-v1 | unsupported | [Report](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/summary.md) | [SVG](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/chart.svg) |
 
 </details>
 

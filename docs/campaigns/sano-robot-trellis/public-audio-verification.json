@@ -1,0 +1,45 @@
+{
+  "verifiedAt": "2026-11-19T16:15:39.914113+00:00",
+  "recordings": [
+    {
+      "resultId": "2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8",
+      "model": "sano-robot-mcu",
+      "trialIndex": 5,
+      "receiptSha256": "88b7282a3552cd78d5b0d99093c8f54f343858bfa965908b702488771ac9b62d",
+      "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu-full.wav",
+      "bytes": 49907244,
+      "sha256": "b5bf757dd324438fa51b2a141bb3fe4c7c443775e87a735d6beff026f9b73e70",
+      "assetId": "RA_kwDOVnwShs4tzEZN",
+      "clip": {
+        "path": "audio/samples/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu.wav",
+        "sha256": "26f21c08feae37ccd9038f83f3452f2ab3c0c47970e47132e08431948789818f",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "verification": "Anonymous full-file HTTPS readback after exact immutable release digest/size check; no inference."
+    },
+    {
+      "resultId": "2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc",
+      "model": "sano-trellis",
+      "trialIndex": 5,
+      "receiptSha256": "6bb484c37b3256bedd65fce70b430292e37f782cd57e582043cfca27869ba1ff",
+      "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu-full.wav",
+      "bytes": 63770156,
+      "sha256": "7aaac07e1c5bc5a9e80eb4cf7b67306fa973626e18eca2600d69a2d552773316",
+      "assetId": "RA_kwDOVnwShs4tzEwY",
+      "clip": {
+        "path": "audio/samples/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu.wav",
+        "sha256": "512d1c376d03281e56d79ade275d864f6c0d865511c66ee36e353ebe47cb75db",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "verification": "Anonymous full-file HTTPS readback after exact immutable release digest/size check; no inference."
+    }
+  ]
+}

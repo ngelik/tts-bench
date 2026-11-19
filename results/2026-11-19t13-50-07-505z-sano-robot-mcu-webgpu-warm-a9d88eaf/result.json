@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf",
+  "createdAt": "2026-11-19T13:50:09.243Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+    "dirty": false,
+    "manifestSha256": "662279cddb19fe0853408d2ed7d38659012c1096ab83ad54dc3907a1a69ce53a"
+  },
+  "assets": [
+    {
+      "id": "sano-robot-mcu-web-snt_g2p-js",
+      "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+      "bytes": 72608
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_g2p-wasm",
+      "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+      "bytes": 346363
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_g2p-data",
+      "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+      "bytes": 3266545
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_tts-js",
+      "sha256": "e76f87ef55b5cf25b66bc78f76a48c5be16aec18ce5df0ce5250453f1550096c",
+      "bytes": 11543
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_tts-wasm",
+      "sha256": "c76ad7755f016cdab530392526e2e855ce80d4a10b53c290fa3151b4130e8ed4",
+      "bytes": 46584
+    },
+    {
+      "id": "sano-robot-mcu-web-assets-front_q8-bin",
+      "sha256": "921b1aea12a3c982ed0aacac2c3c13f2f627797f24203b6bd542c70a7a8964a8",
+      "bytes": 280288
+    },
+    {
+      "id": "sano-robot-mcu-web-assets-model_q8-bin",
+      "sha256": "e81c2c35572c58b9e94c218866d04acacb316441875ce82cea68bf87c58a7417",
+      "bytes": 399544
+    },
+    {
+      "id": "sano-robot-mcu-LICENSE",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "sano-robot-mcu-LICENSE-MIT",
+      "sha256": "2f544ceb6a679cf706652c9df3bf8a6753197ee36456ba61665d97fbed43210e",
+      "bytes": 4113
+    },
+    {
+      "id": "sano-robot-mcu-README-md",
+      "sha256": "b78caecf45567eb7d3682f90e60b81ba619bfb29a87c81081dd56e33fca3c99f",
+      "bytes": 21562
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-robot-mcu",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned official mcu English checkpoint and CPU/WASM runtime",
+        "notes": "Official demo English preset; 120-character internal pieces preserve all canonical source characters. No WebGPU path in the selected runtime. Robot is the 567,008-parameter MCU model, not Kristin PiperLite.",
+        "sources": [
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+        ]
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "none",
+      "status": "unsupported",
+      "reason": "The pinned official SanoTTS Robot/Trellis browser path is CPU WebAssembly; it does not implement WebGPU dispatch.",
+      "voice": "SanoTTS Robot MCU (English, US)",
+      "precision": "INT8 Robot front and decoder weights",
+      "settings": {
+        "runtime": "snt_tts WebAssembly",
+        "voiceKey": "mcu",
+        "language": "en-us",
+        "executionProviders": []
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "The pinned official SanoTTS Robot/Trellis browser path is CPU WebAssembly; it does not implement WebGPU dispatch."
+      },
+      "warmup": [],
+      "trials": []
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T13-50-06-913Z-f7278423d707; cell 1/1; source 7f9b7982e5336be8642f91404584114371582fcd; requested n=5; effective n=5; Serial native M1 Pro campaign, disposable headed Google Chrome 157.0.8103.40 from the explicitly preserved executable. Shared OS slot excludes other benchmark/diagnostic/publication work. Cached resource article precedes warm timing. Full-fixture frontend audited separately on this exact clean source; official 304 internal text pieces preserve all non-whitespace source characters. No cold check; no inferred GPU score. Power and hardware observed in companion preflight."
+  ]
+}
