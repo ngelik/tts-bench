@@ -28,6 +28,8 @@ Heart uses the Misaki-normalized eSpeak IPA frontend. Piperlite uses the pinned 
 
 CPU is explicit `cpu/wasm`; GPU is explicit `webgpu+wasm`, with CPU preprocessing and fallback-sensitive operators retained. GPU admission requires a nonsoftware shader-f16 hardware adapter, positive actual compute dispatches and repeated named neural MUL_MAT assignments during a separate probe. A metadata flag alone cannot pass. Probe instrumentation is removed before timed generation; timing resolves only after CPU-readable PCM. No extra PCM scans were added inside timing.
 
+A separate instrumentation-only browser build audits all 93 canonical spans through the same LONG_FORM chunker, eSpeak and actual tokenizer. It records every omitted symbol in the planning passes and once per final inference-token sequence, verifies repeated tokenization equality, and records duration/acoustic vocabulary substitutions. These counts require review: separators and meaningful phoneme losses must be distinguished. The ordinary runtime files are SHA-checked before and after diagnostic compilation and are used for timing unchanged.
+
 The workflow builds/imports each model independently, performs headed Chrome CPU/WebGPU smoke and checks their sample rate, output length, correlation and RMS error, then exercises the regular offline harness and validates its original GPU receipt. Smoke is not a score or speech-quality judgment. Any incompatibility or failed parity remains diagnostic evidence; full warm measurement requires a clean, committed source and independently reviewed real results. New full warm cells use one excluded complete article and five scored articles on each accepted backend. Heart-nano's completed scores are not rerun.
 
 ## Terms

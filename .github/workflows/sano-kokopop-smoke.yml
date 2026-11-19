@@ -7,6 +7,9 @@ on:
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/build-sano-size-models.py'
       - 'tools/test_sano_size_builder.py'
+      - 'tools/instrument-sano-frontend.py'
+      - 'tools/build-sano-frontend-audit.sh'
+      - 'tools/sano-frontend-audit.mjs'
       - 'docs/sano-kokopop-size-pins.json'
       - 'tools/sano-kokopop-browser-smoke.mjs'
       - 'tools/check-sano-kokopop-harness-smoke.mjs'
@@ -34,6 +37,9 @@ on:
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/build-sano-size-models.py'
       - 'tools/test_sano_size_builder.py'
+      - 'tools/instrument-sano-frontend.py'
+      - 'tools/build-sano-frontend-audit.sh'
+      - 'tools/sano-frontend-audit.mjs'
       - 'docs/sano-kokopop-size-pins.json'
       - 'tools/sano-kokopop-browser-smoke.mjs'
       - 'tools/check-sano-kokopop-harness-smoke.mjs'
@@ -97,6 +103,8 @@ jobs:
           KOKOPOP_SOURCE: ${{ github.workspace }}/.cache/sano-kokopop-build/upstream
           BUILD_JOBS: '4'
         run: bash tools/build-sano-kokopop-webgpu.sh
+      - name: Build a separate observation-only frontend diagnostic
+        run: bash tools/build-sano-frontend-audit.sh
       - name: Check converted F32 GGUF against the official heartnano golden fixture
         env:
           KOKOPOP_SOURCE: ${{ github.workspace }}/.cache/sano-kokopop-build/upstream
@@ -158,6 +166,10 @@ jobs:
             node bin/bench.mjs assets import --model "$model" --source .cache/sano-kokopop-build/release --accept-license
             node bin/bench.mjs assets verify --model "$model" --accept-license
           done
+      - name: Audit the full canonical fixture through the actual browser frontend
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: node tools/sano-frontend-audit.mjs
       - name: Run headed Chrome CPU and hardware WebGPU parity smoke
         env:
           CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
