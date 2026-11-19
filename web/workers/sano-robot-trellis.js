@@ -113,7 +113,7 @@ function tokenize(text, auditPhones = false) {
     if (/\S/u.test(result.dropped || '')) throw new Error(`Trellis dropped unsupported phones: ${result.dropped}`);
     return { ids: result.ids, dropped: result.dropped || '' };
   }
-  let tp = 0, op = 0, ipa = 0;
+  let tp = 0, op = 0, ipa = 0, emptyRawQuote = false;
   try {
     const size = g2p.lengthBytesUTF8(text) + 1;
     tp = malloc(g2p, size); op = malloc(g2p, ROBOT_ID_CAP * 4);
@@ -121,7 +121,8 @@ function tokenize(text, auditPhones = false) {
     if (auditPhones) {
       ipa = malloc(g2p, 16384);
       const rawCount = g2p._snt_g2p_text_to_ipa(tp, ipa, 16384);
-      if (rawCount <= 0 || rawCount >= 16383) throw new Error('Robot raw IPA validation overflow/failure.');
+      if (rawCount < 0 || rawCount >= 16383 || (rawCount === 0 && text !== '"')) throw new Error(`Robot raw IPA validation failed: rc=${rawCount}, text=${JSON.stringify(text)}`);
+      emptyRawQuote = rawCount === 0;
       const raw = g2p.UTF8ToString(ipa);
       // The raw API adds U+0361 ties; the ID API does not. Both strip language tags.
       const phones = raw.replace(/\([^)]*\)/g, '').replace(/\u0361/g, '');
@@ -132,7 +133,7 @@ function tokenize(text, auditPhones = false) {
     if (count < 3 || count >= ROBOT_ID_CAP - 1) throw new Error('Robot G2P empty or potentially truncated.');
     const ids = Array.from(g2p.HEAP32.subarray(op >> 2, (op >> 2) + count));
     if (ids[0] !== 1 || ids[1] !== 0 || ids.at(-1) !== 2) throw new Error('Robot missing BOS/pad/EOS.');
-    return { ids, dropped: '' };
+    return { ids, dropped: '', emptyRawQuote };
   } finally { for (const p of [tp, op, ipa]) if (p) g2p._free(p); }
 }
 function synthesize(ids) {
@@ -187,15 +188,17 @@ function generate(chunk) {
 function audit(chunks) {
   if (!Array.isArray(chunks) || chunks.length !== 93) throw new Error('Expected all 93 canonical spans.');
   let count = 0, maxTokens = 0, maxChars = 0, whitespaceDropped = 0;
+  const emptyRawIpaQuotePieces = [];
   for (const [i, chunk] of chunks.entries()) {
     if (chunk.id !== i) throw new Error('Canonical span order mismatch.');
-    for (const text of piecesFor(chunk)) {
+    for (const [pieceIndex, text] of piecesFor(chunk).entries()) {
       const result = tokenize(text, true);
+      if (result.emptyRawQuote) emptyRawIpaQuotePieces.push({ canonicalSpanId: chunk.id, pieceIndex, text, nativeIds: result.ids });
       count++; maxTokens = Math.max(maxTokens, result.ids.length); maxChars = Math.max(maxChars, text.length);
       whitespaceDropped += Array.from(result.dropped).length;
     }
   }
-  return { canonicalSpans: chunks.length, synthesizedPieces: count, maxPieceCharacters: maxChars, maxPhonemeTokensIncludingBosEos: maxTokens, tokenLimit: config.voice === 'mcu' ? 1023 : 207, droppedNonWhitespaceCharacters: 0, droppedWhitespaceCharacters: whitespaceDropped };
+  return { canonicalSpans: chunks.length, synthesizedPieces: count, maxPieceCharacters: maxChars, maxPhonemeTokensIncludingBosEos: maxTokens, tokenLimit: config.voice === 'mcu' ? 1023 : 207, droppedNonWhitespaceCharacters: 0, droppedWhitespaceCharacters: whitespaceDropped, emptyRawIpaQuotePieces };
 }
 function dispose() {
   g2p = null; runtime = null; frontend = null; weights = null;

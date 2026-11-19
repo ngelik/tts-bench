@@ -25,3 +25,9 @@ symbol set to reject silent unknown-phone loss. The raw IPA API inserts a tie ma
 U+0361 absent from the ID API; only that marker and parenthesized language tags are
 ignored. This duplicate G2P validation is excluded from timed synthesis; each timed Robot piece calls the official ID frontend once, with cheap capacity/BOS/EOS guards. The complete-fixture audit must pass at the exact scoring source before benchmarking. Trellis uses
 its official Misaki frontend and rejects dropped non-whitespace symbols.
+
+The official splitter emits isolated closing double-quote pieces in the fixture.
+The raw IPA audit may return zero phones for exactly `"`; it records each such
+piece and the official native IDs, and still submits the unchanged piece through
+the ID frontend and model. Empty IPA for words or other input fails. No source
+punctuation or canonical span is skipped to make the audit pass.

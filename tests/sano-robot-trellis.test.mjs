@@ -216,4 +216,7 @@ test('Robot rejects unknown phones and saturated ID buffers without trusting the
   vm.runInContext("rawIpa = 'Ω'; idCount = 5; cursor = 32;", ctx);
   assert.equal(vm.runInContext("tokenize('test').ids.length", ctx), 5, 'timed path uses native IDs without duplicate raw G2P');
   assert.equal(ctx.freed.length, 11);
+  vm.runInContext("rawIpa = ''; cursor = 32;", ctx);
+  assert.equal(vm.runInContext(`tokenize(${JSON.stringify('"')}, true).emptyRawQuote`, ctx), true);
+  assert.throws(() => vm.runInContext("tokenize('spoken word', true)", ctx), /raw IPA validation failed/);
 });
