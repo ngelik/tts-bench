@@ -1,0 +1,20 @@
+{
+  "kind": "pre-inference-setup-failure",
+  "sourceCommit": "ca54c5ca1954406a72f4f0d705c6a37852ee7761",
+  "observedAt": "2026-11-19T04:26:56.928897+00:00",
+  "stage": "assets verify",
+  "failedCommand": [
+    "node",
+    "bin/bench.mjs",
+    "assets",
+    "verify",
+    "--model",
+    "sano-heart-nano-gguf-f32"
+  ],
+  "cause": "The private worker omitted the required --accept-license flag; the asset CLI rejected setup before scoring.",
+  "disposition": "Attempt 001 preserved; attempt 002 added the required acknowledgement to the private worker. Benchmark source, generated assets and plan were unchanged.",
+  "inferenceStarted": false,
+  "nativeScoreCreated": false,
+  "originalPrivateRecordSha256": "06444e8a1ea1a124656191a936a78602cfbfa563518ea438d6bcdfb07a25dd44",
+  "publicationNote": "Derived summary of the preserved private error log; no missing value is treated as a score."
+}

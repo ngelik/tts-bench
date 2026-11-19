@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "ca54c5ca1954406a72f4f0d705c6a37852ee7761",
+  "conditions": "Native Apple M1 Pro baseline: 8 CPU cores, 16 GiB RAM, macOS 26.6.2, headed preserved Google Chrome 157.0.8103.40. Run CPU then WebGPU sequentially from one clean source and the exact generated F32 heartnano asset/runtime; same canonical 20,000-character, 93-chunk English fixture. Voice heartnano, locale en_us, 24 kHz, speed 1, base seed 42 + zero-based canonical span ID; Kokopop internally normalizes and segments LONG_FORM input, applies its trim/crossfade/pause behavior, and derives internal chunk seeds. Each warm cell has one excluded full-article warm-up and five scored full articles. No RSS or cached-resource diagnostic. Capture actual browser version, effective backend, capability and dispatch evidence, background conditions, all receipt/checkpoint JSON and selected trial WAVs. Preserve failures as recorded; no score or backend fallback. This is the separate Kokopop F32-expanded heartnano configuration, not the official INT8 Sano profile.",
+  "cells": [
+    {
+      "model": "sano-heart-nano-gguf-f32",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 120,
+      "resources": false
+    },
+    {
+      "model": "sano-heart-nano-gguf-f32",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 120,
+      "resources": false
+    }
+  ]
+}
