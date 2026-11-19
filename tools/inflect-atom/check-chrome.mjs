@@ -46,10 +46,11 @@ try {
       for (const part of output.parts) { joined.set(part, offset); offset += part.length; }
       let peak = 0, power = 0, finite = true;
       for (const sample of joined) { finite &&= Number.isFinite(sample); peak = Math.max(peak, Math.abs(sample)); power += sample * sample; }
+      const waveform = atom.validateArticle(joined, output.sampleRate, [count]).waveform;
       const digest = await crypto.subtle.digest('SHA-256', joined.buffer);
       let pcm = null;
       if (preserve) { const bytes = new Uint8Array(joined.buffer); let binary = ''; for (let p = 0; p < bytes.length; p += 16384) binary += String.fromCharCode(...bytes.subarray(p, p + 16384)); pcm = btoa(binary); }
-      return { id, completedChunkId: output.completedChunkId, sampleRate: output.sampleRate, samples: count, finite, peak, rms: Math.sqrt(power / count), pcmSha256: [...new Uint8Array(digest)].map(x => x.toString(16).padStart(2, '0')).join(''), pcm };
+      return { id, waveform, completedChunkId: output.completedChunkId, sampleRate: output.sampleRate, samples: count, finite, peak, rms: Math.sqrt(power / count), pcmSha256: [...new Uint8Array(digest)].map(x => x.toString(16).padStart(2, '0')).join(''), pcm };
     }, { text: article.slice(start, end), id: String(i), preserve: i === 0 });
     assert.equal(result.completedChunkId, String(i)); assert.equal(result.sampleRate, 24000);
     assert(result.finite && result.samples > 0 && result.peak < 1 && result.rms > 1e-5);

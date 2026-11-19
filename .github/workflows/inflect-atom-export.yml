@@ -2,6 +2,12 @@ name: Inflect Atom v3 browser export
 on:
   push:
     branches: [feat/inflect-atom-v3]
+    paths:
+      - 'tools/inflect-atom/**'
+      - 'web/inflect-atom/**'
+      - 'web/workers/inflect-atom.mjs'
+      - 'web/adapters/inflect-atom.mjs'
+      - '.github/workflows/inflect-atom-export.yml'
   workflow_dispatch:
 permissions:
   contents: read

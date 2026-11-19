@@ -3,7 +3,7 @@ import { phonemizeEnglish } from '../inflect-atom/frontend.mjs';
 import { dispatchProbe } from './gpu-probe.mjs';
 const ROOT = '/models/inflect-atom-v3/';
 const ORT = '/runtimes/onnxruntime-web/1.23.2/';
-const REVISION = '6d517b3580e0167556148770760bbbb6a8870b99';
+const REVISION = '6d517b3580e0167556148770760bbbb6a8870b99:browser-v1';
 const RATE = 24000;
 const INFO = {
   voice: 'Cassidy (official fixed voice, index 2)', precision: 'FP32 ONNX acoustic core; FP32 DSP with FP64 long-utterance phase accumulation',
@@ -132,6 +132,11 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     if (espeak._atom_espeak_init() !== 0) throw new Error('Pinned eSpeak English initialization failed');
     encoder = await ort.InferenceSession.create(await bytes('encoder.onnx'), { executionProviders: ['wasm'], graphOptimizationLevel: 'all' });
     decoder = await ort.InferenceSession.create(await bytes('decoder.onnx'), { executionProviders: providers, graphOptimizationLevel: 'all', preferredOutputLocation: 'cpu' });
+    if (backend === 'webgpu') {
+      const actualDevice = await ort.env.webgpu.device;
+      const actualAdapter = ort.env.webgpu.adapter;
+      if (actualDevice?.adapterInfo?.isFallbackAdapter || actualAdapter?.isFallbackAdapter || actualAdapter?.info?.isFallbackAdapter) { await dispose(); return unsupported('ONNX Runtime selected a software fallback WebGPU device'); }
+    }
     let dispatches = 0;
     if (probe) {
       const hook = backend === 'webgpu' ? dispatchProbe() : null;

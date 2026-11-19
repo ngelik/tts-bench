@@ -25,6 +25,7 @@ import { createSanoAdapter } from './adapters/sano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
 import { createInflectAdapter } from './adapters/inflect.mjs';
+import { createInflectAtomAdapter } from './adapters/inflect-atom.mjs';
 import { createSilencio2Adapter } from './adapters/silencio2.mjs';
 import { createKleinAdapter } from './adapters/klein.mjs';
 import { createZonos3Adapter } from './adapters/zonos3.mjs';
@@ -59,6 +60,7 @@ const FACTORIES = {
   'sano-amy': createSanoAdapter,
   'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
+  'inflect-atom-v3': createInflectAtomAdapter,
   'silencio-2': createSilencio2Adapter,
   'klein-tts-x1.5-pro': createKleinAdapter,
   'zonos3-mini': createZonos3Adapter,

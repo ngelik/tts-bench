@@ -1475,7 +1475,7 @@
           "https://huggingface.co/Supertone/supertonic-3/tree/3cadd1ee6394adea1bd021217a0e650ede09a323/voice_styles",
           "https://huggingface.co/spaces/Supertone/supertonic-3/blob/4402acca094e2ff2b3dff446e0bf915f3fccc462/script.js"
         ],
-        "notes": "Ten supplied presets F1–F5 and M1–M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
+        "notes": "Ten supplied presets F1\u2013F5 and M1\u2013M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
       }
     },
     "kokoro-82m": {
@@ -5246,7 +5246,7 @@
           "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/blob/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
           "https://github.com/ngelik/tts-bench/blob/f456cce4422663e3217a885a4c52e8ef4735dd6d/audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav"
         ],
-        "notes": "English, synthetic F2 reference from the benchmark’s Tiny Voca CPU warm recording."
+        "notes": "English, synthetic F2 reference from the benchmark\u2019s Tiny Voca CPU warm recording."
       },
       "assets": [
         {
@@ -7091,6 +7091,275 @@
           "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
         ],
         "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. The WebGPU profile loads its reference codes and speaker embedding; the CPU/WASM profile loads the speaker embedding only. The benchmark skips unused preview audio. No other preset or language is exercised."
+      }
+    },
+    "inflect-atom-v3": {
+      "displayName": "Inflect Atom v3 157K FP32",
+      "modelRevision": "6d517b3580e0167556148770760bbbb6a8870b99",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.23.2",
+        "license": "MIT; bundled third-party notices apply",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.wasm.min.mjs",
+            "bytes": 49856,
+            "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs",
+            "bytes": 66261,
+            "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.mjs",
+            "bytes": 20321,
+            "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.wasm",
+            "bytes": 11905541,
+            "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 51913,
+            "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 25499390,
+            "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.23.2/LICENSE",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.23.2/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/ThirdPartyNotices.txt",
+            "bytes": 326866,
+            "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "inflect-atom-v3-encoder.onnx",
+          "target": "models/inflect-atom-v3/encoder.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/encoder.onnx",
+          "bytes": 419098,
+          "sha256": "7f01cf98b3fb0063ae29de9b4a1f9b083353dac1a75e2007ccead439983fe4b4",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-atom-v3-decoder.onnx",
+          "target": "models/inflect-atom-v3/decoder.onnx",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/decoder.onnx",
+          "bytes": 284762,
+          "sha256": "d8e2c11e1cf80382771ad901b79a7e95f4bc8bfa272df1cd34c74891cbc4a8b2",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-atom-v3-dsp.json",
+          "target": "models/inflect-atom-v3/dsp.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/dsp.json",
+          "bytes": 4178,
+          "sha256": "d4e96cee04b1f7c88ecf6c63f772abd2f067c84d8424ffdc324d287468a07c96",
+          "kind": "model-weights"
+        },
+        {
+          "id": "inflect-atom-v3-vocab.json",
+          "target": "models/inflect-atom-v3/vocab.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/vocab.json",
+          "bytes": 1416,
+          "sha256": "8d65b0188b77eafc60751dac42bbac7ab5f5685074af44db91d1877b42dc1d7c",
+          "kind": "config"
+        },
+        {
+          "id": "inflect-atom-v3-dsp.mjs",
+          "target": "models/inflect-atom-v3/dsp.mjs",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/dsp.mjs",
+          "bytes": 10455,
+          "sha256": "a552489e9e4dda60b1428185ba1d731b42957af4d4b1d2d2bea5627ac71653f5",
+          "kind": "runtime"
+        },
+        {
+          "id": "inflect-atom-v3-dsp.wasm",
+          "target": "models/inflect-atom-v3/dsp.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/dsp.wasm",
+          "bytes": 29177,
+          "sha256": "0775e74e4e440a2f71e9c7167387d377ec60ddccdb230fe76a6b9e039e7c29ad",
+          "kind": "runtime"
+        },
+        {
+          "id": "inflect-atom-v3-espeak.mjs",
+          "target": "models/inflect-atom-v3/espeak.mjs",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/espeak.mjs",
+          "bytes": 73422,
+          "sha256": "71f9dddd13d9753bd8f747c146dfa8a4dabf2707bd567126f006351d6750cc59",
+          "kind": "runtime"
+        },
+        {
+          "id": "inflect-atom-v3-espeak.wasm",
+          "target": "models/inflect-atom-v3/espeak.wasm",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/espeak.wasm",
+          "bytes": 305272,
+          "sha256": "becd0761e0f38c3ffd8d26a273323e69fbb37e3b1ec6465e8a5024e283713b37",
+          "kind": "runtime"
+        },
+        {
+          "id": "inflect-atom-v3-espeak.data",
+          "target": "models/inflect-atom-v3/espeak.data",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/espeak.data",
+          "bytes": 827621,
+          "sha256": "66c36c462cf1693ab179baaea74a2d4330cbc8dd72eed20696b12e734fa702dd",
+          "kind": "frontend-data"
+        },
+        {
+          "id": "inflect-atom-v3-provenance.json",
+          "target": "models/inflect-atom-v3/provenance.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/provenance.json",
+          "bytes": 1686,
+          "sha256": "cdce3a263ff97a537e30a63b98e1ac1d5deb643e9a9849a792933047468089c0",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-atom-v3-export-evidence.json",
+          "target": "models/inflect-atom-v3/export-evidence.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/export-evidence.json",
+          "bytes": 34599,
+          "sha256": "d93ac8ec797a90f83fb8e458712fbf64cae79704fd7ce2270fac6f85c3f255d6",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-atom-v3-dsp-native-parity.json",
+          "target": "models/inflect-atom-v3/dsp-native-parity.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/dsp-native-parity.json",
+          "bytes": 208,
+          "sha256": "f9c8fe5d72cbe4fbb2dcb682b6acc2f322e42993e9b71480533e7f412a20cffa",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-atom-v3-dsp-wasm-parity.json",
+          "target": "models/inflect-atom-v3/dsp-wasm-parity.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/dsp-wasm-parity.json",
+          "bytes": 173,
+          "sha256": "645f659d7747024d4b643047acae58e4c50ebff8aecf99e15d6294eeb1c12b39",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-atom-v3-chrome-cpu-compatibility.json",
+          "target": "models/inflect-atom-v3/chrome-cpu-compatibility.json",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/chrome-cpu-compatibility.json",
+          "bytes": 28521,
+          "sha256": "8e5fe50324366d1223954690d32ce7da9fd789cf5a3c17f5a544b76604b75289",
+          "kind": "provenance"
+        },
+        {
+          "id": "inflect-atom-v3-espeak-COPYING",
+          "target": "models/inflect-atom-v3/espeak-COPYING",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/espeak-COPYING",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-emscripten-LICENSE",
+          "target": "models/inflect-atom-v3/emscripten-LICENSE",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/emscripten-LICENSE",
+          "bytes": 5093,
+          "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-misaki-LICENSE",
+          "target": "models/inflect-atom-v3/misaki-LICENSE",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/misaki-LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-phonemizer-fork-LICENSE",
+          "target": "models/inflect-atom-v3/phonemizer-fork-LICENSE",
+          "url": "https://github.com/ngelik/tts-bench/releases/download/inflect-atom-v3-browser-v1/phonemizer-fork-LICENSE",
+          "bytes": 35142,
+          "sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-LICENSE.md",
+          "target": "models/inflect-atom-v3/upstream/LICENSE.md",
+          "url": "https://huggingface.co/owensong/Inflect-Atom-v3/resolve/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md",
+          "bytes": 10455,
+          "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-LICENSE_SCOPE.json",
+          "target": "models/inflect-atom-v3/upstream/LICENSE_SCOPE.json",
+          "url": "https://huggingface.co/owensong/Inflect-Atom-v3/resolve/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE_SCOPE.json",
+          "bytes": 719,
+          "sha256": "3d5def598a9fcc36b5e7eec17caeff40a1c3369ef868fadfdd387172ce6c5879",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-LICENSING.md",
+          "target": "models/inflect-atom-v3/upstream/LICENSING.md",
+          "url": "https://huggingface.co/owensong/Inflect-Atom-v3/resolve/6d517b3580e0167556148770760bbbb6a8870b99/LICENSING.md",
+          "bytes": 1489,
+          "sha256": "b3845f9871aff6faefe97373982f201250d179b42bd81a1453e9731adfbe9cfd",
+          "kind": "license"
+        },
+        {
+          "id": "inflect-atom-v3-THIRD_PARTY_NOTICES.md",
+          "target": "models/inflect-atom-v3/upstream/THIRD_PARTY_NOTICES.md",
+          "url": "https://huggingface.co/owensong/Inflect-Atom-v3/resolve/6d517b3580e0167556148770760bbbb6a8870b99/THIRD_PARTY_NOTICES.md",
+          "bytes": 1262,
+          "sha256": "8c939b9eb4538c7fb0dcfc72916f75d56e025ba4c75fe3f838a5f1efa472080e",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "runtime": "Apache-2.0 acoustic/DSP port and Misaki; GPL-3.0-or-later eSpeak/phonemizer frontend; ONNX Runtime MIT; Emscripten MIT/NCSA and bundled notices",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 6,
+        "bundledVoiceCount": 6,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Exact 157,190-parameter Atom v3 core and six fixed voice embeddings; rule-based English frontend with no neural POS model",
+        "notes": "Hope, Sophia, Cassidy, James, Jasper and Mark; benchmark selects Cassidy. Local FP32 ONNX + WASM DSP browser port, with explicitly normalized line whitespace and a specified seeded noise stream. WebGPU accelerates the convolutional decoder; GRU encoder/frontend/DSP remain WASM.",
+        "sources": [
+          "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+          "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+          "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+        ]
       }
     }
   }
