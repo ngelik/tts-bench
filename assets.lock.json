@@ -2204,6 +2204,551 @@
         ]
       }
     },
+    "sano-hfc": {
+      "displayName": "SanoTTS HFC 1.83M (English)",
+      "modelRevision": "bc04c49fd137607b60294b3894441bbfbe5c6659",
+      "runtime": {
+        "package": "sanotts-web",
+        "version": "0.3.0",
+        "license": "GPL-3.0-or-later",
+        "files": [
+          {
+            "path": "dist/index.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/index.js",
+            "bytes": 21528,
+            "sha256": "0f52b0e87337f5fbcc075b30f2ffb7130b1f319d35995f5ac01d2003c2d9a3e6"
+          },
+          {
+            "path": "dist/snt_g2p.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.js",
+            "bytes": 70136,
+            "sha256": "16c09da27d88404fc312fa84ed2b1e1b2584f24fd41337f34a8293a25146b7ab"
+          },
+          {
+            "path": "dist/snt_g2p.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.wasm",
+            "bytes": 322974,
+            "sha256": "31da95f157c942c17078f9fa87a0f981cc8d199669b28f8f0d4b61f9e8a9301e"
+          },
+          {
+            "path": "dist/snt_g2p.data",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.data",
+            "bytes": 2132172,
+            "sha256": "7f999dfd6efa655018fa19a7c32a1ed889a7576751fbdbec61053f6b8a0cc827"
+          },
+          {
+            "path": "dist/snt_voice.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.js",
+            "bytes": 10406,
+            "sha256": "73745db50516d6052802994a02dd8d0e3e27fcd26efa8cbe7e849d7ee5634266"
+          },
+          {
+            "path": "dist/snt_voice.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.wasm",
+            "bytes": 40787,
+            "sha256": "cdcfa5bf3ec162797d8556be7b90ce334f88666141956a1650846bdff9517d1c"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "sano-hfc-meta-json",
+          "target": "models/sano-hfc/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json",
+          "bytes": 1208,
+          "sha256": "a8b068eb1c3753b378a487abc92c331180383fe812f1ef6a05e6cddb788ed2a1",
+          "kind": "model-support",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json"
+        },
+        {
+          "id": "sano-hfc-front_f32-bin",
+          "target": "models/sano-hfc/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/front_f32.bin",
+          "bytes": 3336804,
+          "sha256": "c3f4631101e8db147cc42f4a6be894bb9c701f265cf602f843e785f143d67582",
+          "kind": "model-weights",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/front_f32.bin"
+        },
+        {
+          "id": "sano-hfc-dec_f32-bin",
+          "target": "models/sano-hfc/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/dec_f32.bin",
+          "bytes": 4001700,
+          "sha256": "922e0d4210f606f9bf6e9ef26c8276b9880aea0352881df67a6bca71f1165f9a",
+          "kind": "model-weights",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/dec_f32.bin"
+        },
+        {
+          "id": "sano-hfc-gpl-license",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "GPL-3.0-or-later",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "One pinned English HFC 1.83M (English) voice checkpoint with the official piperlite WASM runtime",
+        "notes": "The official HFC piperlite voice uses its pinned FP32 front/decoder package, eSpeak en-us, G2P voice slot 2, length scale 1.08 and 22,050 Hz output. Synthesis runs in the official sanotts-web 0.3.0 WebAssembly runtime; no WebGPU provider is available.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json"
+        ]
+      }
+    },
+    "sano-kristin": {
+      "displayName": "SanoTTS Kristin 1.40M (English)",
+      "modelRevision": "bc04c49fd137607b60294b3894441bbfbe5c6659",
+      "runtime": {
+        "package": "sanotts-web",
+        "version": "0.3.0",
+        "license": "GPL-3.0-or-later",
+        "files": [
+          {
+            "path": "dist/index.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/index.js",
+            "bytes": 21528,
+            "sha256": "0f52b0e87337f5fbcc075b30f2ffb7130b1f319d35995f5ac01d2003c2d9a3e6"
+          },
+          {
+            "path": "dist/snt_g2p.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.js",
+            "bytes": 70136,
+            "sha256": "16c09da27d88404fc312fa84ed2b1e1b2584f24fd41337f34a8293a25146b7ab"
+          },
+          {
+            "path": "dist/snt_g2p.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.wasm",
+            "bytes": 322974,
+            "sha256": "31da95f157c942c17078f9fa87a0f981cc8d199669b28f8f0d4b61f9e8a9301e"
+          },
+          {
+            "path": "dist/snt_g2p.data",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.data",
+            "bytes": 2132172,
+            "sha256": "7f999dfd6efa655018fa19a7c32a1ed889a7576751fbdbec61053f6b8a0cc827"
+          },
+          {
+            "path": "dist/snt_voice.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.js",
+            "bytes": 10406,
+            "sha256": "73745db50516d6052802994a02dd8d0e3e27fcd26efa8cbe7e849d7ee5634266"
+          },
+          {
+            "path": "dist/snt_voice.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.wasm",
+            "bytes": 40787,
+            "sha256": "cdcfa5bf3ec162797d8556be7b90ce334f88666141956a1650846bdff9517d1c"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "sano-kristin-meta-json",
+          "target": "models/sano-kristin/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json",
+          "bytes": 1035,
+          "sha256": "c2847a3886e483aea48e93f60a51afd710b62b32b7396046b8714025fe7ade1b",
+          "kind": "model-support",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json"
+        },
+        {
+          "id": "sano-kristin-front_f32-bin",
+          "target": "models/sano-kristin/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/front_f32.bin",
+          "bytes": 1581712,
+          "sha256": "b1b099ae95e9e30c04559023dd92027780ef937179d317e974beaf17526beab6",
+          "kind": "model-weights",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/front_f32.bin"
+        },
+        {
+          "id": "sano-kristin-dec_f32-bin",
+          "target": "models/sano-kristin/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/dec_f32.bin",
+          "bytes": 4003988,
+          "sha256": "87e061c82b467cd2c6729d292298614189e45dc7a3c2777c0aa30ecf812242a3",
+          "kind": "model-weights",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/dec_f32.bin"
+        },
+        {
+          "id": "sano-kristin-gpl-license",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "GPL-3.0-or-later",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "One pinned English Kristin 1.40M (English) voice checkpoint with the official piperlite WASM runtime",
+        "notes": "The official Kristin piperlite voice uses its pinned FP32 front/decoder package, eSpeak voice en, G2P voice slot 0, length scale 1.08 and 22,050 Hz output. Synthesis runs in the official sanotts-web 0.3.0 WebAssembly runtime; no WebGPU provider is available.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json"
+        ]
+      }
+    },
+    "sano-amy-small": {
+      "displayName": "SanoTTS Amy-small 1.08M (English)",
+      "modelRevision": "25410576d005d7f08d186990fd91f6a2651243de",
+      "runtime": {
+        "package": "sanotts-web",
+        "version": "0.3.0",
+        "license": "GPL-3.0-or-later",
+        "files": [
+          {
+            "path": "dist/index.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/index.js",
+            "bytes": 21528,
+            "sha256": "0f52b0e87337f5fbcc075b30f2ffb7130b1f319d35995f5ac01d2003c2d9a3e6"
+          },
+          {
+            "path": "dist/snt_g2p.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.js",
+            "bytes": 70136,
+            "sha256": "16c09da27d88404fc312fa84ed2b1e1b2584f24fd41337f34a8293a25146b7ab"
+          },
+          {
+            "path": "dist/snt_g2p.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.wasm",
+            "bytes": 322974,
+            "sha256": "31da95f157c942c17078f9fa87a0f981cc8d199669b28f8f0d4b61f9e8a9301e"
+          },
+          {
+            "path": "dist/snt_g2p.data",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.data",
+            "bytes": 2132172,
+            "sha256": "7f999dfd6efa655018fa19a7c32a1ed889a7576751fbdbec61053f6b8a0cc827"
+          },
+          {
+            "path": "dist/snt_voice.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.js",
+            "bytes": 10406,
+            "sha256": "73745db50516d6052802994a02dd8d0e3e27fcd26efa8cbe7e849d7ee5634266"
+          },
+          {
+            "path": "dist/snt_voice.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.wasm",
+            "bytes": 40787,
+            "sha256": "cdcfa5bf3ec162797d8556be7b90ce334f88666141956a1650846bdff9517d1c"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "sano-amy-small-meta-json",
+          "target": "models/sano-amy-small/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p1m/meta.json",
+          "bytes": 175,
+          "sha256": "15088da1a5cfb37eec5a2ece93bca87e0244afda8ea89a0bc44c2299d5759574",
+          "kind": "model-support",
+          "generated": {
+            "artifactPath": "models/sano-amy-small/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p1m/meta.json",
+            "build": "Run `python3 tools/stage-sano-amy.py --model sano-amy-small` to fetch the pinned source package, validate it and stage this generated browser asset; see docs/SANO_AMY_SIZES.md."
+          }
+        },
+        {
+          "id": "sano-amy-small-front_f32-bin",
+          "target": "models/sano-amy-small/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p1m/front_f32.bin",
+          "bytes": 1417572,
+          "sha256": "f02528441a16dedb3ba9b6b283ed3193973af09f686e71b48ce0faaf11917836",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "models/sano-amy-small/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p1m/front_f32.bin",
+            "build": "Run `python3 tools/stage-sano-amy.py --model sano-amy-small` to fetch the pinned source package, validate it and stage this generated browser asset; see docs/SANO_AMY_SIZES.md."
+          }
+        },
+        {
+          "id": "sano-amy-small-dec_f32-bin",
+          "target": "models/sano-amy-small/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p1m/dec_f32.bin",
+          "bytes": 2923300,
+          "sha256": "754d79420be131780ae4e4d6742231f92624c1a5f567bb520949a8da83724a10",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "models/sano-amy-small/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p1m/dec_f32.bin",
+            "build": "Run `python3 tools/stage-sano-amy.py --model sano-amy-small` to fetch the pinned source package, validate it and stage this generated browser asset; see docs/SANO_AMY_SIZES.md."
+          }
+        },
+        {
+          "id": "sano-amy-small-gpl-license",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "GPL-3.0-or-later",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "One pinned English Amy-small 1.08M (English) voice checkpoint with the official piperlite WASM runtime",
+        "notes": "The source package is the pinned official Amy-small FP16 piperlite package. A reproducible converter emits the matching FP32 browser front/decoder ABI; the pinned en-us phoneme config and voice slot 1 are retained. Output is 22,050 Hz. The bundled browser artifact is a reproducible benchmark conversion, not an upstream prebuilt browser voice package.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json"
+        ]
+      }
+    },
+    "sano-amy-1p8m": {
+      "displayName": "SanoTTS Amy 1.83M (English)",
+      "modelRevision": "25410576d005d7f08d186990fd91f6a2651243de",
+      "runtime": {
+        "package": "sanotts-web",
+        "version": "0.3.0",
+        "license": "GPL-3.0-or-later",
+        "files": [
+          {
+            "path": "dist/index.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/index.js",
+            "bytes": 21528,
+            "sha256": "0f52b0e87337f5fbcc075b30f2ffb7130b1f319d35995f5ac01d2003c2d9a3e6"
+          },
+          {
+            "path": "dist/snt_g2p.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.js",
+            "bytes": 70136,
+            "sha256": "16c09da27d88404fc312fa84ed2b1e1b2584f24fd41337f34a8293a25146b7ab"
+          },
+          {
+            "path": "dist/snt_g2p.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.wasm",
+            "bytes": 322974,
+            "sha256": "31da95f157c942c17078f9fa87a0f981cc8d199669b28f8f0d4b61f9e8a9301e"
+          },
+          {
+            "path": "dist/snt_g2p.data",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_g2p.data",
+            "bytes": 2132172,
+            "sha256": "7f999dfd6efa655018fa19a7c32a1ed889a7576751fbdbec61053f6b8a0cc827"
+          },
+          {
+            "path": "dist/snt_voice.js",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.js",
+            "bytes": 10406,
+            "sha256": "73745db50516d6052802994a02dd8d0e3e27fcd26efa8cbe7e849d7ee5634266"
+          },
+          {
+            "path": "dist/snt_voice.wasm",
+            "target": "runtimes/sanotts-web/0.3.0/dist/snt_voice.wasm",
+            "bytes": 40787,
+            "sha256": "cdcfa5bf3ec162797d8556be7b90ce334f88666141956a1650846bdff9517d1c"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "sano-amy-1p8m-meta-json",
+          "target": "models/sano-amy-1p8m/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p8m/meta.json",
+          "bytes": 175,
+          "sha256": "930aef9150b2a9a5164d7d04d11e61748d901a733f93359fad5ddb5b78c3a5a2",
+          "kind": "model-support",
+          "generated": {
+            "artifactPath": "models/sano-amy-1p8m/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p8m/meta.json",
+            "build": "Run `python3 tools/stage-sano-amy.py --model sano-amy-1p8m` to fetch the pinned source package, validate it and stage this generated browser asset; see docs/SANO_AMY_SIZES.md."
+          }
+        },
+        {
+          "id": "sano-amy-1p8m-front_f32-bin",
+          "target": "models/sano-amy-1p8m/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p8m/front_f32.bin",
+          "bytes": 3336804,
+          "sha256": "38fcc6ddb4aab9cd5b4dc0f87467f9e9160a1a3917ab4af7d758aee4d98c3a53",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "models/sano-amy-1p8m/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p8m/front_f32.bin",
+            "build": "Run `python3 tools/stage-sano-amy.py --model sano-amy-1p8m` to fetch the pinned source package, validate it and stage this generated browser asset; see docs/SANO_AMY_SIZES.md."
+          }
+        },
+        {
+          "id": "sano-amy-1p8m-dec_f32-bin",
+          "target": "models/sano-amy-1p8m/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p8m/dec_f32.bin",
+          "bytes": 4001700,
+          "sha256": "fa1ee442380f9090562c22e1d723daeb828688a3a02068cc922b0d188d97fbd7",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "models/sano-amy-1p8m/25410576d005d7f08d186990fd91f6a2651243de/web/voices/amy-en-1p8m/dec_f32.bin",
+            "build": "Run `python3 tools/stage-sano-amy.py --model sano-amy-1p8m` to fetch the pinned source package, validate it and stage this generated browser asset; see docs/SANO_AMY_SIZES.md."
+          }
+        },
+        {
+          "id": "sano-amy-1p8m-gpl-license",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "GPL-3.0-or-later",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "One pinned English Amy 1.83M (English) voice checkpoint with the official piperlite WASM runtime",
+        "notes": "The source package is the pinned official Amy 1.8M FP16 piperlite package. A reproducible converter emits the matching FP32 browser front/decoder ABI; the pinned en-us phoneme config and voice slot 1 are retained. Output is 22,050 Hz. The bundled browser artifact is a reproducible benchmark conversion, not an upstream prebuilt browser voice package.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json"
+        ]
+      }
+    },
+    "sano-heart": {
+      "displayName": "SanoTTS Heart 2.27M (English, US)",
+      "modelRevision": "bc04c49fd137607b60294b3894441bbfbe5c6659",
+      "runtime": {
+        "package": "Ampixa/sanoTTS browser runtime",
+        "version": "c0584a51213721faba98135821faab71bae888f0",
+        "license": "GPL-3.0-or-later",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "sano-heart-meta-json",
+          "target": "models/sano-heart/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
+          "bytes": 1186,
+          "sha256": "9a19af32725f503a4237339ab91cee66c6cfc7fb9aadbef38322d1dafadd7f87",
+          "kind": "model-support"
+        },
+        {
+          "id": "sano-heart-front_f32-bin",
+          "target": "models/sano-heart/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/front_f32.bin",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/front_f32.bin",
+          "bytes": 3273696,
+          "sha256": "02e8086ebedf70216efa7beae274351d7ee916579277e83161748a08325d0b49",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-heart-model_f32-bin",
+          "target": "models/sano-heart/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/model_f32.bin",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/model_f32.bin",
+          "bytes": 5864224,
+          "sha256": "2d685fc751bc096b956d76a9e6ad105ed6da33c61faaa43c7423d935eeb7481b",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-heart-runtime-snt_g2p-data",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "bytes": 3266545,
+          "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-runtime-snt_g2p-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "bytes": 72608,
+          "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-runtime-snt_g2p-wasm",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "bytes": 346363,
+          "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-runtime-trellis_frontend-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/trellis_frontend.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/trellis_frontend.js",
+          "bytes": 20026,
+          "sha256": "1d8523bab2e96f03ea98131a3d575d92851d3870899435ba3a306804238e49b3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-runtime-snt_nano_heart-js",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heart.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heart.js",
+          "bytes": 11137,
+          "sha256": "c52d8377eaeda2adf57a12db8e179e326886bdf8081ac066a9de6a1e743ac31f",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-runtime-snt_nano_heart-wasm",
+          "target": "runtimes/sano-family/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heart.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heart.wasm",
+          "bytes": 42552,
+          "sha256": "aeadfe62d09ab41a1e9e021bb39316318d6d465ef3b81abb16ff4a8daeb92812",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-gpl-license",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "GPL-3.0-or-later",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "One pinned Heart full-size FP32 English (US) mel-100 voice with the official snt_nano browser runtime",
+        "notes": "The official Heart model uses its full-size FP32 `snt_nano` module, distinct from heart-nano INT8 and piperlite voices. The same official English G2P/Trellis frontend splits each canonical span into sentence/clause pieces up to 120 characters; non-whitespace dropped symbols, token/output caps or empty synthesis fail closed. CPU/WASM only.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
+          "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+        ]
+      }
+    },
     "inflect-micro-v2": {
       "displayName": "Inflect Micro v2 FP32",
       "modelRevision": "91b1ab6432323064ec0e8e9704d92fcecd24855f",

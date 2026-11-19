@@ -48,6 +48,11 @@ test('Ming counts the registered synthesis path and Audio8 includes its decoder 
   const heartNano = getModelParameters('sano-heart-nano');
   assert.equal(heartNano.parameterCount, 294_279);
   assert.equal(heartNano.countKind, 'exact');
+  assert.equal(getModelParameters('sano-heart').parameterCount, 2_272_145);
+  assert.equal(getModelParameters('sano-hfc').parameterCount, 1_834_380);
+  assert.equal(getModelParameters('sano-kristin').parameterCount, 1_396_151);
+  assert.equal(getModelParameters('sano-amy-small').parameterCount, 1_084_972);
+  assert.equal(getModelParameters('sano-amy-1p8m').parameterCount, 1_834_380);
   const zonos = getModelParameters('zonos3-mini');
   assert.equal(zonos.parameterCount, 1_029_247_872);
   assert.equal(zonos.parameterCountUpperBound, 1_070_816_040);

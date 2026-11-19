@@ -132,9 +132,59 @@ Pinned Kitten Nano 0.8 checkpoint and supplied voice archive. Eight preset voice
 
 Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
 
-Pinned Sano Amy 1.46M checkpoint and FP32 browser bundle only. Amy browser bundle uses the official en-us eSpeak frontend and synthesizes at 22,050 Hz. The broader Sano family supports additional voices and languages; they are outside this pinned checkpoint.
+Pinned Sano Amy 1.46M checkpoint and FP32 browser bundle. This profile uses the official en-us eSpeak frontend and synthesizes at 22,050 Hz. Other Sano voice checkpoints are registered as separate models below.
 
 [Primary source 1](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/amy-en-1p46m/README.md), [Primary source 2](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/amy/meta.json).
+
+<a id="sano-amy-small"></a>
+
+## SanoTTS Amy-small 1.08M (English)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned Amy-small FP16 piperlite source package, deterministically packed to the official FP32 browser ABI. The conversion validates every source tensor and its pinned manifest, preserves all 1,084,972 model parameters, and uses the official en-us G2P slot 1, length scale 1.08 and 22,050 Hz output. The converted browser files are a benchmark build because this checkpoint has no upstream `web/voices` package.
+
+[Pinned source manifest](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json) · [Model card](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md) · [Conversion provenance](sano-amy-sizes/provenance.json).
+
+<a id="sano-amy-1p8m"></a>
+
+## SanoTTS Amy 1.83M (English)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned Amy 1.8M FP16 piperlite source package, deterministically packed to the official FP32 browser ABI. The conversion validates every source tensor and its pinned manifest, preserves all 1,834,380 model parameters, and uses the official en-us G2P slot 1, length scale 1.08 and 22,050 Hz output. The converted browser files are a benchmark build because this checkpoint has no upstream `web/voices` package.
+
+[Pinned source manifest](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json) · [Model card](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md) · [Conversion provenance](sano-amy-sizes/provenance.json).
+
+<a id="sano-hfc"></a>
+
+## SanoTTS HFC 1.83M (English)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned official HFC piperlite FP32 browser checkpoint. It uses eSpeak en-us, G2P slot 2, length scale 1.08 and 22,050 Hz output through the official `sanotts-web` 0.3.0 WebAssembly runtime. WebGPU is unsupported by this runtime.
+
+[Pinned browser metadata](https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json) · [Model card](https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md).
+
+<a id="sano-kristin"></a>
+
+## SanoTTS Kristin 1.40M (English)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned official Kristin piperlite FP32 browser checkpoint. It uses eSpeak voice `en`, G2P slot 0, length scale 1.08 and 22,050 Hz output through the official `sanotts-web` 0.3.0 WebAssembly runtime. WebGPU is unsupported by this runtime.
+
+[Pinned browser metadata](https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json) · [Model card](https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md).
+
+<a id="sano-heart"></a>
+
+## SanoTTS Heart 2.27M (English, US)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned full-size Heart FP32 mel-100 checkpoint and matching official `snt_nano` browser runtime. It is distinct from heart-nano INT8 and from the piperlite voice architecture. The official eSpeak/Trellis frontend splits canonical spans into sentence/clause pieces up to 120 characters; each piece is tokenized and synthesized inside the timed call. CPU/WASM only.
+
+[Pinned browser metadata](https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json) · [Model card](https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md) · [Official browser source](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web).
 
 <a id="sano-heart-nano"></a>
 

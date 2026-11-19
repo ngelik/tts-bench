@@ -10,7 +10,7 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'sano-heart-nano', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini']);
+  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'sano-heart-nano', 'sano-hfc', 'sano-kristin', 'sano-amy-small', 'sano-amy-1p8m', 'sano-heart', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini']);
   const heartNano = getAssetLock().models['sano-heart-nano'];
   assert.deepEqual(heartNano.backends, ['cpu']);
   assert.equal(heartNano.modelRevision, '4a8194aa1dd958033ee449b3ad30c37e536b216e');
@@ -23,6 +23,30 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(heartNano.assets.find(asset => asset.id === 'sano-heart-nano-meta-json').sha256, '873c9264c16c99cf10f2b65f73eb388b4935c4f46e3f529d2b89b13f8f9e5659');
   assert.equal(heartNano.assets.find(asset => asset.id === 'sano-heart-nano-front-q8-bin').sha256, '5553ae5abf37c18d31c0b64ea791785b30e7a08cc32c07bff8bb2ab4aae0b94b');
   assert.equal(heartNano.assets.find(asset => asset.id === 'sano-heart-nano-model-q8-bin').sha256, '4a6cdf0d0bf1996aa2c056298265ea8dd0c200c9025cba4a9b04e0e987bea88c');
+  const sanoVariants = getAssetLock().models;
+  for (const id of ['sano-hfc', 'sano-kristin', 'sano-amy-small', 'sano-amy-1p8m', 'sano-heart']) {
+    assert.deepEqual(sanoVariants[id].backends, ['cpu']);
+    assert.equal(sanoVariants[id].license.requiresAcceptance, true);
+    assert.equal(sanoVariants[id].support.voiceCount, 1);
+    assert.equal(sanoVariants[id].support.languageCount, 1);
+  }
+  const hfc = sanoVariants['sano-hfc'];
+  assert.equal(hfc.modelRevision, 'bc04c49fd137607b60294b3894441bbfbe5c6659');
+  assert.equal(hfc.assets.find(asset => asset.id === 'sano-hfc-front_f32-bin').bytes, 3336804);
+  assert.equal(hfc.assets.find(asset => asset.id === 'sano-hfc-dec_f32-bin').sha256, '922e0d4210f606f9bf6e9ef26c8276b9880aea0352881df67a6bca71f1165f9a');
+  const kristin = sanoVariants['sano-kristin'];
+  assert.equal(kristin.assets.find(asset => asset.id === 'sano-kristin-front_f32-bin').sha256, 'b1b099ae95e9e30c04559023dd92027780ef937179d317e974beaf17526beab6');
+  const amySmall = sanoVariants['sano-amy-small'];
+  assert.equal(amySmall.modelRevision, '25410576d005d7f08d186990fd91f6a2651243de');
+  assert.equal(amySmall.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 4340872);
+  assert.ok(amySmall.assets.every(asset => asset.url || asset.generated));
+  const amy18 = sanoVariants['sano-amy-1p8m'];
+  assert.equal(amy18.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 7338504);
+  assert.ok(amy18.assets.every(asset => asset.url || asset.generated));
+  const heart = sanoVariants['sano-heart'];
+  assert.equal(heart.modelRevision, 'bc04c49fd137607b60294b3894441bbfbe5c6659');
+  assert.equal(heart.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 9137920);
+  assert.equal(heart.assets.find(asset => asset.id === 'sano-heart-runtime-snt_nano_heart-wasm').sha256, 'aeadfe62d09ab41a1e9e021bb39316318d6d465ef3b81abb16ff4a8daeb92812');
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -150,8 +174,12 @@ test('asset lock pins content and permits only identical shared runtime targets'
       const isPinnedNpmRuntime = runtimeFiles.has(asset)
         && Boolean(asset.package ?? model.runtime.package)
         && Boolean(asset.version ?? model.runtime.version);
-      assert.ok(asset.url || asset.sourcePath || isPinnedNpmRuntime,
-        'asset needs a pinned URL, checked-in source, or package-pinned runtime path: ' + asset.target);
+      assert.ok(asset.url || asset.sourcePath || asset.generated || isPinnedNpmRuntime,
+        'asset needs a pinned URL, checked-in source, generated build record, or package-pinned runtime path: ' + asset.target);
+      if (asset.generated) {
+        assert.ok(asset.generated.artifactPath, 'generated asset needs an exact artifact path: ' + asset.id);
+        assert.match(asset.generated.build, /tools\/stage-sano-amy\.py/);
+      }
       const existing = targets.get(asset.target);
       if (existing) {
         assert.equal(asset.bytes, existing.bytes, 'shared target byte count differs: ' + asset.target);
