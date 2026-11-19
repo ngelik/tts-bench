@@ -561,6 +561,113 @@
         "samples": 661500,
         "seconds": 30
       }
+    },
+    {
+      "model": "sano-hfc-gguf",
+      "backend": "webgpu",
+      "resultId": "2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f",
+      "receiptSha256": "8714646cfa767dca8a7d9555e58b7bd2e5b5dc6e00c8e68cb6457d9313825182",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 140.0636099998951,
+      "minSeconds": 139.12288000011444,
+      "maxSeconds": 140.57330500006677,
+      "firstPcmMedianMs": 1609.920000076294,
+      "sampleRate": 22050,
+      "generationSeconds": [
+        140.57330500006677,
+        140.0636099998951,
+        140.07224000000954,
+        139.72726999998093,
+        139.12288000011444
+      ],
+      "effectiveBackend": "webgpu+wasm",
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 723,
+        "schedulerOperations": {
+          "MUL_MAT": 132,
+          "IM2COL": 120,
+          "ADD": 243,
+          "SILU": 30
+        },
+        "probeFrames": 263284,
+        "probeSampleRate": 22050
+      },
+      "settings": {
+        "selectedVoice": "hfc",
+        "sampleRate": 22050,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop LONG_FORM normalizes text, then the pinned Piper eSpeak/NFD frontend emits phoneme IDs with interleaved PAD.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "hfc-en-1p8m",
+        "sourceParameterCount": 1834380,
+        "espeakVoice": "en-us"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu-full.wav",
+        "sha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+        "bytes": 46411352
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu.wav",
+        "sha256": "031344d4e5cad2527dfda6b6a13b2b0bdacedfd0b40e13e68393e7884723b1d2",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
     }
   ],
   "plannedCells": 12,
