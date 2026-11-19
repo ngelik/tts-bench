@@ -51,6 +51,9 @@ export EM_CACHE="$RUN/em-cache" EM_PORTS="$RUN/em-cache/ports"
 mkdir -p "$TMPDIR" "$EM_CACHE"
 MAPS="-ffile-prefix-map=$SOURCE=audio.cpp -ffile-prefix-map=$BUILD=audio.cpp-build -ffile-prefix-map=$SDK=emsdk -ffile-prefix-map=$EM_CACHE=emsdk-cache -ffile-prefix-map=$TMPDIR=emscripten-tmp"
 
+# audio.cpp's speech FFT helper eagerly creates a persistent hardware_concurrency
+# worker pool on first parallel transform. Keep that auxiliary pool on the caller
+# thread in Wasm so the separately configured GGML CPU pool can use its workers.
 emcmake cmake -G Ninja -S "$SOURCE" -B "$BUILD" \
   -DCMAKE_BUILD_TYPE=Release \
   -DAUDIOCPP_MODEL_SET=custom -DAUDIOCPP_MODELS=zonos3 \
@@ -63,7 +66,7 @@ emcmake cmake -G Ninja -S "$SOURCE" -B "$BUILD" \
   -DAUDIOCPP_BUILD_NATIVE_MODEL_MANAGER=OFF \
   -DAUDIOCPP_BUILD_SERVER_FRONTENDS=OFF -DAUDIOCPP_BUILD_C_API=OFF \
   -DENGINE_BUILD_TESTS=OFF -DGGML_NATIVE=OFF -DGGML_CPU_ALL_VARIANTS=OFF \
-  "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread $MAPS" \
+  "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread -DENGINE_SPEECHFFT_NO_MULTITHREADING $MAPS" \
   "-DCMAKE_C_FLAGS=-O3 -msimd128 -pthread $MAPS" \
   "-DCMAKE_EXE_LINKER_FLAGS=-pthread -sPTHREAD_POOL_SIZE=12 -sPTHREAD_POOL_SIZE_STRICT=2 $MAPS"
 cmake --build "$BUILD" --target bench_zonos3_cpu --parallel "$JOBS"
