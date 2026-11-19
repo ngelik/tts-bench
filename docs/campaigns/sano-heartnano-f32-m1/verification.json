@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-m1-pro-f32-pair-publication-evidence",
+  "sourceCommit": "ca54c5ca1954406a72f4f0d705c6a37852ee7761",
+  "sourceManifestSha256": "e0861e6953fba9e6c1702db4ed3ff48d9cfe6175afe566a558dcec31214aebe6",
+  "assetsLockSha256": "d9f13c83ce4ace1a34a8a000d7e1ff9b2ab30fce6115e3574ad8409ec4a9d26c",
+  "planSha256": "423a0c3731b9c43b0d320a2aff3f677855c99674902bf36c81e16a66796e618e",
+  "profiles": [
+    {
+      "backend": "cpu",
+      "resultId": "2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa",
+      "receiptSha256": "aba6d28f87fc2d137c4f5afea8a84b50c9cad0e684bcb091d156067f99d971c5",
+      "n": 5,
+      "excludedWarmups": 1,
+      "generationSeconds": [
+        11.572625,
+        11.563144999980926,
+        11.574504999876023,
+        11.574225000143052,
+        11.641550000190735
+      ],
+      "medianSeconds": 11.574225000143052,
+      "minSeconds": 11.563144999980926,
+      "maxSeconds": 11.641550000190735,
+      "firstPcmMedianMs": 129.68499994277954,
+      "audioSeconds": 1303.3896666666667,
+      "rtf": 0.008880095719757676,
+      "effectiveBackend": "cpu/wasm",
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Explicit CPU/WASM mode of the same Kokopop runtime and exact F32 heartnano GGUF."
+      },
+      "settings": {
+        "selectedVoice": "heartnano",
+        "sampleRate": 24000,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English (US) only, from the matching Kokopop Emscripten bundle."
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      }
+    },
+    {
+      "backend": "webgpu",
+      "resultId": "2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57",
+      "receiptSha256": "c145e1089ad92e821304caefdcde7a1a2f09a9f0099049cc7c03b254d93a26e5",
+      "n": 5,
+      "excludedWarmups": 1,
+      "generationSeconds": [
+        3.7578700001239778,
+        3.731024999856949,
+        3.705700000047684,
+        3.6821349999904633,
+        3.6570349998474123
+      ],
+      "medianSeconds": 3.705700000047684,
+      "minSeconds": 3.6570349998474123,
+      "maxSeconds": 3.7578700001239778,
+      "firstPcmMedianMs": 55.81499981880188,
+      "audioSeconds": 1303.4963333333333,
+      "rtf": 0.002842892538540078,
+      "effectiveBackend": "webgpu+wasm",
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded heartnano synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 426,
+        "schedulerOperations": {
+          "MUL_MAT": 74,
+          "IM2COL": 48,
+          "ADD": 114,
+          "SILU": 18
+        },
+        "probeFrames": 350112,
+        "probeSampleRate": 24000
+      },
+      "settings": {
+        "selectedVoice": "heartnano",
+        "sampleRate": 24000,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English (US) only, from the matching Kokopop Emscripten bundle."
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      }
+    }
+  ],
+  "nativeFullWavVerification": {
+    "kind": "protected-native-full-wav-sha256-verification",
+    "checkedAt": "2026-11-19T04:44:45.250700+00:00",
+    "slot": {
+      "purpose": "publication",
+      "pid": 91768,
+      "started": 1795063485.079442
+    },
+    "originalPrivateProofSha256": "a184a71d59447009b1da5d5528df558d5fc82347fdaad15aae1bdeafa499493d",
+    "publicationNote": "Public derivative omits private absolute WAV paths and adds native public recording URLs; source digests, actual WAV/clip hashes and dimensions are unchanged.",
+    "recordings": [
+      {
+        "backend": "cpu",
+        "resultId": "2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa",
+        "receiptSha256": "aba6d28f87fc2d137c4f5afea8a84b50c9cad0e684bcb091d156067f99d971c5",
+        "selectedTrialIndex": 5,
+        "actualFullWavSha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+        "bytes": 62562748,
+        "frames": 31281352,
+        "sampleRate": 24000,
+        "channels": 1,
+        "pcmBits": 16,
+        "first30SecondsWavSha256": "20defe255b60f17390d02ba556b58a3189f5cc4d0fee4a0a194b466cb7314ce6",
+        "samePublicRecordingUrl": "https://github.com/ngelik/tts-bench/releases/download/sano-heart-nano-f32-hosted-macos-ca54c5ca1954-run-44431517354/heart-nano-f32-cpu-full.wav",
+        "identityConclusion": "The entire native WAV and its unchanged exact first30s PCM prefix match the previously verified public bytes.",
+        "nativeReceiptPath": "../../../results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/result.json",
+        "full": {
+          "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu-full.wav",
+          "sha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+          "bytes": 62562748
+        },
+        "clip": {
+          "path": "audio/samples/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu.wav",
+          "sha256": "20defe255b60f17390d02ba556b58a3189f5cc4d0fee4a0a194b466cb7314ce6",
+          "bytes": 1440044,
+          "startSample": 0,
+          "sampleRate": 24000,
+          "samples": 720000,
+          "seconds": 30
+        }
+      },
+      {
+        "backend": "webgpu",
+        "resultId": "2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57",
+        "receiptSha256": "c145e1089ad92e821304caefdcde7a1a2f09a9f0099049cc7c03b254d93a26e5",
+        "selectedTrialIndex": 5,
+        "actualFullWavSha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+        "bytes": 62567868,
+        "frames": 31283912,
+        "sampleRate": 24000,
+        "channels": 1,
+        "pcmBits": 16,
+        "first30SecondsWavSha256": "474b613db05dc67d20d3ec2ebc072960a218242dc804a0376f6ac90cf02f5e49",
+        "samePublicRecordingUrl": "https://github.com/ngelik/tts-bench/releases/download/sano-heart-nano-f32-hosted-macos-ca54c5ca1954-run-44431517354/heart-nano-f32-webgpu-full.wav",
+        "identityConclusion": "The entire native WAV and its unchanged exact first30s PCM prefix match the previously verified public bytes.",
+        "nativeReceiptPath": "../../../results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/result.json",
+        "full": {
+          "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu-full.wav",
+          "sha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+          "bytes": 62567868
+        },
+        "clip": {
+          "path": "audio/samples/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu.wav",
+          "sha256": "474b613db05dc67d20d3ec2ebc072960a218242dc804a0376f6ac90cf02f5e49",
+          "bytes": 1440044,
+          "startSample": 0,
+          "sampleRate": 24000,
+          "samples": 720000,
+          "seconds": 30
+        }
+      }
+    ]
+  },
+  "setupAttempt001": "setup-attempt-001.json",
+  "listeningReview": "No ASR or intelligibility rating is asserted; retained waveform and hashes are integrity evidence."
+}
