@@ -80,12 +80,11 @@ export function inflectMiniSourceFeatures({
         radDownTrace[sample * harmonicCount + harmonic] = down[sample];
       }
     }
-    // Accumulate in JS Number precision, then round each recorded phase to
-    // FP32. The hosted source-feature parity check qualifies this choice
-    // against the pinned Torch implementation.
+    // Torch cumsum returns FP32 here; feeding each rounded result into the
+    // next step also keeps later ×2×pi scaling on the same rounding path.
     let cumulative = 0;
     for (let sample = 0; sample < downsampledLength; sample++) {
-      cumulative += down[sample];
+      cumulative = f32(cumulative + down[sample]);
       if (includeDiagnostics) cumulativeTrace[sample * harmonicCount + harmonic] = cumulative;
       const phase = f32(f32(f32(cumulative * 2) * Math.PI));
       phaseByHarmonic[sample] = f32(phase * upsampleScale);
