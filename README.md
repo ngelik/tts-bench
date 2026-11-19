@@ -262,6 +262,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | sanoTTS heart-nano 294k (Kokopop F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-heart-nano-gguf-f32) |
 | SanoTTS Robot MCU INT8 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-robot-mcu) |
 | SanoTTS Trellis experimental FP32 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-trellis) |
+| Inflect Atom v3 157K FP32 | 6 | 6 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#inflect-atom-v3) |
 
 ### Controlled native comparisons
 

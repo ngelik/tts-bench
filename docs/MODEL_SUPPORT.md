@@ -301,3 +301,11 @@ The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a
 ## sano-trellis
 
 The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html) selects one experimental Trellis-RIFT English (US) voice. Supported/bundled voices: **1/1**; languages: **1** (`en`). The complete 995,058-parameter FP32 bundle emits 24 kHz PCM through the official CPU/WASM implementation. Other Sano models and languages are excluded. [Implementation and input audit](models/sano-robot-trellis.md).
+
+<a id="inflect-atom-v3"></a>
+
+## Inflect Atom v3 157K FP32
+
+Supported voices: **6**. Bundled voices: **6**. Supported languages: **1** (English).
+
+The exact 157,190-parameter core embeds Hope, Sophia, Cassidy, James, Jasper and Mark. This benchmark selects Cassidy, with the official optional eSpeak-light English frontend and local DSP. CPU and WebGPU use the same FP32 weights; WebGPU accelerates the convolutional decoder while the encoder/frontend/DSP stay on WASM. [Pinned model and voice contract](https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py) · [Port, qualification and reproduction](models/inflect-atom-v3.md).
