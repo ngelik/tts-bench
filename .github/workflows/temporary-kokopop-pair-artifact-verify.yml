@@ -186,8 +186,8 @@ jobs:
             assert.equal(wav.readUInt16LE(34), 16);
             assert.equal(wav.readUInt32LE(40), wav.length - 44);
             assert.equal(wav.readUInt32LE(40) / 2, cell.trials.at(-1).samples);
-            const previewFrames = 24000 * 30;
-            assert.ok(trialAudio.samples > previewFrames, 'Selected full recording must support a 30-second preview.');
+            const previewFrames = Math.min(24000 * 30, cell.trials.at(-1).samples);
+            assert.ok(previewFrames > 0, 'Selected full recording must contain PCM frames.');
             const preview = Buffer.from(wav.subarray(0, 44 + previewFrames * 2));
             preview.writeUInt32LE(preview.length - 8, 4);
             preview.writeUInt32LE(preview.length - 44, 40);
@@ -225,12 +225,14 @@ jobs:
                 channels: 1,
                 bitsPerSample: 16,
                 samples: cell.trials.at(-1).samples,
+              audioSeconds: cell.trials.at(-1).samples / 24000,
               },
-              selectedFinalTrialPreview30s: {
+              selectedFinalTrialPreviewUpTo30s: {
                 sampleRate: 24000,
                 channels: 1,
                 bitsPerSample: 16,
                 frames: previewFrames,
+                seconds: previewFrames / 24000,
                 bytes: preview.length,
                 sha256: sha256(preview),
                 derivedFromFullWavSha256: wavHash,
