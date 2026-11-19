@@ -1,0 +1,74 @@
+name: Verify Sano size frontend and backends from pinned build
+on:
+  push:
+    branches: [verification/sano-size-audit-01d9c9f]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  browser-verification:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: 01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Fetch exact original build archive and verify its GitHub digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .cache/sano-kokopop-build/release .cache/sano-kokopop-browser-evidence
+          gh api repos/ngelik/tts-bench/actions/artifacts/14501757771 > .cache/sano-kokopop-browser-evidence/build-artifact.json
+          gh api repos/ngelik/tts-bench/actions/artifacts/14501757771/zip > .cache/kokopop-build.zip
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          info=json.loads(Path('.cache/sano-kokopop-browser-evidence/build-artifact.json').read_text())
+          expected='d028e673bce0be5befe175b8ab91f12084276e8a20fd4464fabcfb4ea92f7d78'
+          assert info['id']==14501757771 and info['workflow_run']['id']==44464635380
+          assert info['digest']=='sha256:'+expected and info['expired'] is False
+          assert hashlib.sha256(Path('.cache/kokopop-build.zip').read_bytes()).hexdigest()==expected
+          PY
+          unzip -q .cache/kokopop-build.zip -d .cache/sano-kokopop-build/release
+      - name: Verify all exact model and ordinary runtime inputs
+        run: |
+          for model in sano-heart-nano-gguf-f32 sano-heart-gguf sano-amy-gguf sano-amy-small-gguf sano-amy-1p8m-gguf sano-hfc-gguf sano-kristin-gguf; do
+            node bin/bench.mjs assets import --model "$model" --source .cache/sano-kokopop-build/release --accept-license
+            node bin/bench.mjs assets verify --model "$model" --accept-license
+          done
+      - name: Audit all 93 spans without inference using unchanged frontend logic
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: node tools/sano-frontend-audit.mjs
+      - name: Verify real CPU and hardware WebGPU parity for each profile
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: |
+          for model in sano-heart-nano-gguf-f32 sano-heart-gguf sano-amy-gguf sano-amy-small-gguf sano-amy-1p8m-gguf sano-hfc-gguf sano-kristin-gguf; do
+            node tools/sano-kokopop-browser-smoke.mjs "$model"
+          done
+      - name: Verify normal offline harness GPU receipt and sample rate per profile
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: |
+          for model in sano-heart-nano-gguf-f32 sano-heart-gguf sano-amy-gguf sano-amy-small-gguf sano-amy-1p8m-gguf sano-hfc-gguf sano-kristin-gguf; do
+            node bin/bench.mjs run --model "$model" --backend webgpu --scenario offline --smoke --machine "GitHub-hosted macOS-15" --chrome "$CHROME_PATH" --accept-license --note "Profile compatibility diagnostic only, not a score." > ".cache/sano-kokopop-browser-evidence/harness-smoke-$model.json"
+            node tools/check-sano-kokopop-harness-smoke.mjs ".cache/sano-kokopop-browser-evidence/harness-smoke-$model.json" "$model"
+          done
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: sano-size-frontend-and-backend-evidence-01d9c9f
+          path: |
+            .cache/sano-kokopop-browser-evidence/
+            runs/**/result.json
+            runs/**/status.json
+          if-no-files-found: warn
+          retention-days: 14
