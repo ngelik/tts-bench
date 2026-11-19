@@ -11,6 +11,13 @@ policy, precision or inference algorithm is a new disclosed configuration.
    exact SHA-256/byte counts, relative staging targets, runtime package/version,
    backend declarations and terms acknowledgment requirements. Hash-pin mutable
    upstream URLs too: if their content changes, fail instead of silently updating.
+   For source-built assets that have no exact public URL, use a `generated`
+   declaration with an artifact-relative path and explicit pinned build command
+   and inputs. `assets fetch` must fail clearly when such bytes are absent;
+   `assets import --source BUILD_ARTIFACT_DIR` stages them only after SHA-256 and
+   size verification, and `assets verify` checks the staged bytes normally.
+   Do not point a generated asset at a different upstream file or upload weights
+   merely to make the URL field nonempty.
    Record evidence for the deployed parameter count in `lib/model-parameters.json`
    when establishing the warm schedule. Cite an immutable upstream source for the
    selected checkpoint or its logical tensor shapes. Identify which speech

@@ -136,6 +136,16 @@ Pinned Sano Amy 1.46M checkpoint and FP32 browser bundle only. Amy browser bundl
 
 [Primary source 1](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/amy-en-1p46m/README.md), [Primary source 2](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/amy/meta.json).
 
+<a id="sano-heart-nano-gguf-f32"></a>
+
+## sanoTTS heart-nano 294k (Kokopop F32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned heartnano package, expanded from its exact int8 front/decoder source blobs into a separate F32 GGUF profile by the pinned Kokopop converter. The benchmark uses the fixed heartnano US English voice at 24 kHz and speed 1. CPU/WASM and hardware WebGPU use the same F32 weights and frontend; WebGPU reports `webgpu+wasm` and requires observed device dispatch. This is not the official Ampixa int8 browser build. Weights and generated runtime remain in the ignored asset cache and are imported from the hash-verified build artifact.
+
+[Heartnano model metadata](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json) · [Kokopop source](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88) · [Build and runtime details](SANO_HEART_NANO.md).
+
 <a id="inflect-micro-v2"></a>
 
 ## Inflect Micro v2 FP32

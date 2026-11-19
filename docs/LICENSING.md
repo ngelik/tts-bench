@@ -94,6 +94,16 @@ text staged separately. The project's MCU/mobile MIT carve-outs do not cover
 this browser runtime. The root MIT license does not relicense those components;
 any redistribution of a combined browser application must respect their terms.
 
+The separate **heart-nano Kokopop F32** profile derives a GGUF from the exact
+heartnano Q8 front/decoder files at the pinned Ampixa revision using the pinned
+MIT Kokopop converter. Ampixa's repository is GPL-3.0-or-later; the heartnano
+metadata does not declare separate voice-package terms, so the weights are not
+described as MIT-only. Kokopop, GGML and yyjson retain MIT notices; the bundled
+eSpeak NG implementation and English data retain GPL-3.0-or-later. The locked
+license sidecars accompany the generated artifact in the ignored asset cache.
+The WebGPU path is a distinct F32 conversion profile, not the official int8
+browser implementation. See [source/build provenance and configuration](SANO_HEART_NANO.md).
+
 Inflect Micro v2's [official package](https://huggingface.co/owensong/Inflect-Micro-v2-ONNX/tree/91b1ab6432323064ec0e8e9704d92fcecd24855f)
 is Apache-2.0; the VITS/Tacotron-derived symbol inventory retains its MIT notice.
 The browser frontend port retains notices under `web/inflect/`. The fixed voice
