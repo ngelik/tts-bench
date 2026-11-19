@@ -40,6 +40,10 @@ try {
   page.on('pageerror', error => consoleErrors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
   page.on('request', request => requests.push(request.url()));
+  // Chrome requests a conventional favicon even though this local harness
+  // page intentionally has no product favicon. Return an empty no-content
+  // response so the diagnostic can keep failing on all real resource errors.
+  await page.route('**/favicon.ico', route => route.fulfill({ status: 204, body: '' }));
   await page.goto(server.url, { waitUntil: 'domcontentloaded' });
 
   browserResult = await page.evaluate(async ({ chunks: articleChunks }) => {
