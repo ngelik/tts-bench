@@ -184,3 +184,31 @@ test('each timed span re-tokenizes pieces and emits the first PCM before finishi
   assert.equal(result.parts.length, 1);
   assert.equal(ctx.events[0].samples.length, 1);
 });
+
+test('Robot rejects unknown phones and saturated ID buffers without trusting the native count', () => {
+  const ctx = workerContext();
+  ctx.heap = new ArrayBuffer(65536); ctx.freed = [];
+  vm.runInContext(`
+    config = CONFIGS['sano-robot-mcu'];
+    self.SanoRobotPhonemeCodepoints = [32, 116, 115];
+    let cursor = 32;
+    let rawIpa = 't͡s';
+    let idCount = 5;
+    g2p = {
+      HEAP32: new Int32Array(heap), lengthBytesUTF8: text => text.length,
+      _malloc: n => {const p=cursor; cursor += Math.ceil(n/4)*4; return p;},
+      _free: p => freed.push(p), stringToUTF8() {},
+      _snt_g2p_text_to_ipa: () => rawIpa.length,
+      UTF8ToString: () => rawIpa,
+      _snt_g2p_text_to_ids: (text, out) => {
+        g2p.HEAP32.set([1,0,12,0,2], out >> 2); return idCount;
+      },
+    };
+  `, ctx);
+  assert.equal(vm.runInContext("tokenize('test').ids.length", ctx), 5);
+  vm.runInContext("rawIpa = 'tΩ';", ctx);
+  assert.throws(() => vm.runInContext("tokenize('test')", ctx), /would drop phoneme/);
+  vm.runInContext("rawIpa = 'ts'; idCount = 1023;", ctx);
+  assert.throws(() => vm.runInContext("tokenize('test')", ctx), /potentially truncated/);
+  assert.equal(ctx.freed.length, 9);
+});
