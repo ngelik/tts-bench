@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "913fb381bba216d744b3168705029d0da3ab9a5c",
+  "conditions": "English 20k, Cassidy, FP32 ONNX, one WASM thread, local eSpeak-light and DSP, fixed MT19937/polar noise seed7717. CPU/WASM vs actual hardware WebGPU decoder with WASM encoder/frontend/DSP. Exclusive M1 Pro baseline slot, pinned headed Google Chrome; one excluded complete warmup then five scored warm repetitions; independent one-article RSS diagnostics.",
+  "cells": [
+    {
+      "model": "inflect-atom-v3",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "inflect-atom-v3",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "inflect-atom-v3",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    },
+    {
+      "model": "inflect-atom-v3",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 1440,
+      "resources": false
+    }
+  ]
+}
