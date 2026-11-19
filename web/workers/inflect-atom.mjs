@@ -3,7 +3,8 @@ import { phonemizeEnglish } from '../inflect-atom/frontend.mjs';
 import { dispatchProbe } from './gpu-probe.mjs';
 const ROOT = '/models/inflect-atom-v3/';
 const ORT = '/runtimes/onnxruntime-web/1.23.2/';
-const REVISION = '6d517b3580e0167556148770760bbbb6a8870b99:browser-v1';
+// Cache identity is the immutable compiled-runtime source, not just the checkpoint.
+const ASSET_REVISION = '1957f001c43f4f556e94501f47a268ed8810f366';
 const RATE = 24000;
 const INFO = {
   voice: 'Cassidy (official fixed voice, index 2)', precision: 'FP32 ONNX acoustic core; FP32 DSP with FP64 long-utterance phase accumulation',
@@ -18,7 +19,7 @@ const INFO = {
 };
 let ort, encoder, decoder, dsp, espeak, constants, vocab, chosenBackend;
 async function bytes(name) {
-  const response = await fetchModelAsset(ROOT + name, REVISION);
+  const response = await fetchModelAsset(ROOT + name, ASSET_REVISION);
   if (!response.ok) throw new Error(`Atom asset ${name}: HTTP ${response.status}`);
   return response.arrayBuffer();
 }
