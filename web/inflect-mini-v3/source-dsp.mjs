@@ -1,4 +1,5 @@
 const f32 = Math.fround;
+const PI_F32 = f32(Math.PI);
 
 function interpolateLinear(input, inputLength, outputLength, sourceScale) {
   const output = new Float32Array(outputLength);
@@ -88,7 +89,7 @@ export function inflectMiniSourceFeatures({
       cumulative += down[sample];
       const cumulativeF32 = f32(cumulative);
       if (includeDiagnostics) cumulativeTrace[sample * harmonicCount + harmonic] = cumulativeF32;
-      const phase = f32(f32(cumulativeF32 * 2) * Math.PI);
+      const phase = f32(f32(cumulativeF32 * 2) * PI_F32);
       phaseByHarmonic[sample] = f32(phase * upsampleScale);
       if (includeDiagnostics) phaseInputTrace[sample * harmonicCount + harmonic] = phaseByHarmonic[sample];
     }
