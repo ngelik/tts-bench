@@ -313,3 +313,49 @@ The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a
 ## sano-trellis
 
 The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html) selects one experimental Trellis-RIFT English (US) voice. Supported/bundled voices: **1/1**; languages: **1** (`en`). The complete 995,058-parameter FP32 bundle emits 24 kHz PCM through the official CPU/WASM implementation. Other Sano models and languages are excluded. [Implementation and input audit](models/sano-robot-trellis.md).
+
+<a id="inflect-atom-v3"></a>
+
+## Inflect Atom v3 157K FP32
+
+Supported voices: **6**. Bundled voices: **6**. Supported languages: **1** (English).
+
+The exact 157,190-parameter core embeds Hope, Sophia, Cassidy, James, Jasper and Mark. This benchmark selects Cassidy, with the official optional eSpeak-light English frontend and local DSP. CPU and WebGPU use the same FP32 weights; WebGPU accelerates the convolutional decoder while the encoder/frontend/DSP stay on WASM. [Pinned model and voice contract](https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py) · [Port, qualification and reproduction](models/inflect-atom-v3.md).
+
+## Additional individual Kokopop Sano profiles
+
+<a id="sano-heart-gguf"></a>
+
+### sanoTTS Heart (Kokopop F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `heart` at 24,000 Hz is selected. This separate converted profile contains 2,272,145 source synthesis parameters and F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-amy-gguf"></a>
+
+### sanoTTS Amy 1.45M (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `amy` at 22,050 Hz is selected. This separate converted profile contains 1,454,284 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-amy-small-gguf"></a>
+
+### sanoTTS Amy small (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `amy-1p1m` at 22,050 Hz is selected. This separate converted profile contains 1,084,972 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-amy-1p8m-gguf"></a>
+
+### sanoTTS Amy 1.83M (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `amy-1p8m` at 22,050 Hz is selected. This separate converted profile contains 1,834,380 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-hfc-gguf"></a>
+
+### sanoTTS HFC (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `hfc` at 22,050 Hz is selected. This separate converted profile contains 1,834,380 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/hfc-en-1p8m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-kristin-gguf"></a>
+
+### sanoTTS Kristin (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `kristin` at 22,050 Hz is selected. This separate converted profile contains 1,396,151 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
