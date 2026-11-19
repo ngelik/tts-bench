@@ -8,7 +8,7 @@ if (!outputPath || isAbsolute(outputPath)) throw new Error('Pass the relative pa
 const root = process.cwd();
 const run = JSON.parse(await readFile(resolve(root, outputPath), 'utf8'));
 assert.equal(run.status, 'measured', 'Normal benchmark harness smoke must measure a result.');
-assert.equal(run.reason, undefined);
+assert.ok(run.reason === null || run.reason === undefined, 'A measured benchmark smoke cannot report a failure reason.');
 assert.equal(typeof run.result, 'string');
 const receiptPath = resolve(root, run.result);
 const receiptRelative = relative(root, receiptPath);
