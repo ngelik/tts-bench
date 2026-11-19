@@ -1659,6 +1659,62 @@
       }
     },
     {
+      "resultId": "2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39",
+      "model": "sano-amy-1p8m",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Amy 1.8M (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Amy 1.8M English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu.wav",
+        "sha256": "58dbaf2dc55e8752b985220d3f30334b9749a4a41e87cf973fa6b9ac2dd92bab",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu-full.wav",
+        "sha256": "b04eedd55fea8eb75a7a1c64d940967f8621be29dd9c2b917198b8200711e508",
+        "bytes": 53059628
+      }
+    },
+    {
+      "resultId": "2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa",
+      "model": "sano-amy-small",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Amy-small (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; small Amy English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu.wav",
+        "sha256": "47b6f5aacc78eaf49eac15dadbb091f5c92e6fe2e58349630f89429e93ce792c",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu-full.wav",
+        "sha256": "ce957737fa88e8c9a2a802cd9121d5f70976a072d3835e5627d964ed20e48b87",
+        "bytes": 53541932
+      }
+    },
+    {
       "resultId": "2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0",
       "model": "sano-amy",
       "backend": "cpu",
