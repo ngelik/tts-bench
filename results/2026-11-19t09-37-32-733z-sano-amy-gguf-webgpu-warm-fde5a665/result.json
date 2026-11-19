@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665",
+  "createdAt": "2026-11-19T09:55:04.068Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+    "dirty": false,
+    "manifestSha256": "659bb701ec977ff2b4a083a9b0eeff601fe72cfafcf539084168b68b75c0a5ab"
+  },
+  "assets": [
+    {
+      "id": "runtime:sano-amy-gguf:kokopop:kokopop-runtime.js",
+      "sha256": "265aeb2be06ed0f8361cd791aa419b31379c57f59447044694df12f4d99ef8ab",
+      "bytes": 115452
+    },
+    {
+      "id": "runtime:sano-amy-gguf:kokopop:kokopop-runtime.wasm",
+      "sha256": "8033619c686c11bd737de88636f6a1145e4170d25c248cb6d16823ee25790e4a",
+      "bytes": 4170114
+    },
+    {
+      "id": "runtime:sano-amy-gguf:kokopop:kokopop-runtime.data",
+      "sha256": "525df9e3f5126afaf5b8b65626833e7850073e92ead87a39a085a9992838bca2",
+      "bytes": 880605
+    },
+    {
+      "id": "sano-amy-gguf-model",
+      "sha256": "4e89c02b3548bc632ed33b1d3ded9f893f524639a0362a093e4329688a0e6f5f",
+      "bytes": 3236900
+    },
+    {
+      "id": "sano-amy-gguf-kokopop-kokopop-license",
+      "sha256": "d505422e7b052295783dd137c7101fd18d8077a62987a69b4ff2405e6fbcf08c",
+      "bytes": 1059
+    },
+    {
+      "id": "sano-amy-gguf-kokopop-espeak-ng-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "sano-amy-gguf-kokopop-ggml-license",
+      "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+      "bytes": 1078
+    },
+    {
+      "id": "sano-amy-gguf-kokopop-yyjson-license",
+      "sha256": "45e384d3d52c73cba3a64d6e6c25d47cd738cd8a55c30629e3201046eda62947",
+      "bytes": 1084
+    },
+    {
+      "id": "sano-amy-gguf-notice",
+      "sha256": "bfa3b698de1899f7260c86d5736e477159ac2e1ccd34bb89fccd06fecd27788f",
+      "bytes": 879
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-amy-gguf",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Individual pinned amy-en-1p46m voice converted with Kokopop",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json",
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+          "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+        ],
+        "notes": "One selected voice; 22050 Hz. Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG_FORM normalization and internal chunking are retained. No other voices are bundled."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "amy (US English; Piper NFD phonemes with interleaved PAD)",
+      "precision": "Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU.",
+      "settings": {
+        "selectedVoice": "amy",
+        "sampleRate": 22050,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop LONG_FORM normalizes text, then the pinned Piper eSpeak/NFD frontend emits phoneme IDs with interleaved PAD.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "amy-en-1p46m",
+        "sourceParameterCount": 1454284,
+        "espeakVoice": "en-us"
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 723,
+        "schedulerOperations": {
+          "MUL_MAT": 132,
+          "IM2COL": 120,
+          "ADD": 243,
+          "SILU": 30
+        },
+        "probeFrames": 330139,
+        "probeSampleRate": 22050
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 175057.32500004768,
+          "samples": 28947895,
+          "sampleRate": 22050,
+          "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2074.4049999713898,
+            "firstSourceChunkCompletedMs": 2074.420000076294,
+            "audioSeconds": 1312.8297052154196,
+            "realTimeFactor": 0.1333435131034934,
+            "minSamplesPerChunk": 237569,
+            "maxSamplesPerChunk": 407030
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 173785.77500009537,
+          "samples": 28947895,
+          "sampleRate": 22050,
+          "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1999.1849999427795,
+            "firstSourceChunkCompletedMs": 1999.2050001621246,
+            "audioSeconds": 1312.8297052154196,
+            "realTimeFactor": 0.13237495640882013,
+            "minSamplesPerChunk": 237569,
+            "maxSamplesPerChunk": 407030
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 173408.34999990463,
+          "samples": 28947895,
+          "sampleRate": 22050,
+          "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2001.039999961853,
+            "firstSourceChunkCompletedMs": 2001.0499999523163,
+            "audioSeconds": 1312.8297052154196,
+            "realTimeFactor": 0.13208746672246452,
+            "minSamplesPerChunk": 237569,
+            "maxSamplesPerChunk": 407030
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 173371.72499990463,
+          "samples": 28947895,
+          "sampleRate": 22050,
+          "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2019.5049998760223,
+            "firstSourceChunkCompletedMs": 2019.5149998664856,
+            "audioSeconds": 1312.8297052154196,
+            "realTimeFactor": 0.13205956896858637,
+            "minSamplesPerChunk": 237569,
+            "maxSamplesPerChunk": 407030
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 173726.94499993324,
+          "samples": 28947895,
+          "sampleRate": 22050,
+          "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1995.0499999523163,
+            "firstSourceChunkCompletedMs": 1995.0550000667572,
+            "audioSeconds": 1312.8297052154196,
+            "realTimeFactor": 0.13233014480840585,
+            "minSamplesPerChunk": 237569,
+            "maxSamplesPerChunk": 407030
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 173041.0950000286,
+          "samples": 28947895,
+          "sampleRate": 22050,
+          "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2116.1500000953674,
+            "firstSourceChunkCompletedMs": 2116.164999961853,
+            "audioSeconds": 1312.8297052154196,
+            "realTimeFactor": 0.13180772366179408,
+            "minSamplesPerChunk": 237569,
+            "maxSamplesPerChunk": 407030
+          },
+          "audio": {
+            "sha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+            "bytes": 57895834
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T09-37-32-213Z-ac7fc4ee90ae; cell 1/1; source 01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661; requested n=5; effective n=5; Native Apple M1 Pro 8 CPU cores/16 GiB, preserved headed Chrome 157.0.8103.40; exact public tested source; one excluded full English 20k/93-span warmup plus five scored articles; no RSS/cached measurement. Separate individual converted Kokopop F16,F32 profile, voice amy, 22050 Hz. Speed1/base seed42+canonical span ID; pinned native LONG_FORM normalization/internal segmentation, pauses/crossfade and internal seeds retained. CPU then WebGPU per profile; separate fresh browser profile and shared compute lock per cell. No skipped input symbols across all93 audited spans. Native component substitutions to schwa are preserved: {\"duration\": [{\"sourceId\": 144, \"symbol\": \"̩\", \"codepoints\": [\"U+0329\"], \"replacementId\": 59, \"replacementSymbol\": \"ə\", \"count\": 5}, {\"sourceId\": 150, \"symbol\": \"\\\"\", \"codepoints\": [\"U+0022\"], \"replacementId\": 59, \"replacementSymbol\": \"ə\", \"count\": 52}], \"acoustic\": [{\"sourceId\": 150, \"symbol\": \"\\\"\", \"codepoints\": [\"U+0022\"], \"replacementId\": 59, \"replacementSymbol\": \"ə\", \"count\": 52}]}. This is frontend behavior, not an intelligibility claim; original output retained for listening. Counts are separate untimed diagnostic evidence, no altered inference runtime."
+  ]
+}
