@@ -10,6 +10,7 @@ const release = '.cache/sano-kokopop-build/release';
 const out = resolve(root, '.cache/sano-kokopop-browser-evidence/frontend-audit');
 const hash = value => createHash('sha256').update(value).digest('hex');
 const build = JSON.parse(await readFile(resolve(root, release, 'frontend-audit/AUDIT-BUILD.json')));
+assert.equal(hash(await readFile(resolve(root, 'tools/instrument-sano-frontend.py'))), build.instrumentationSha256);
 for (const [name, pin] of Object.entries(build.diagnosticRuntime)) {
   const bytes = await readFile(resolve(root, release, 'frontend-audit', name));
   assert.equal(bytes.length, pin.bytes); assert.equal(hash(bytes), pin.sha256);
@@ -27,7 +28,7 @@ const server = createServer(async (request, response) => {
     const rel = relative(root, file);
     if (rel === '..' || rel.startsWith('..' + sep) || path.includes('/.git/')) throw new Error('forbidden');
     const body = path === '/' ? '<!doctype html><title>Untimed frontend audit</title>' : await readFile(file);
-    response.writeHead(200, { 'Content-Type': /\.(mjs|js)$/.test(path) ? 'text/javascript' : path.endsWith('.wasm') ? 'application/wasm' : 'application/octet-stream' }).end(body);
+    response.writeHead(200, { 'Content-Type': path === '/' ? 'text/html; charset=utf-8' : /\.(mjs|js)$/.test(path) ? 'text/javascript' : path.endsWith('.wasm') ? 'application/wasm' : 'application/octet-stream' }).end(body);
   } catch { response.writeHead(404).end(); }
 });
 await new Promise(done => server.listen(0, '127.0.0.1', done));
