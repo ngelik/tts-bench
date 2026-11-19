@@ -37,8 +37,13 @@ class Encoder(torch.nn.Module):
 
     def forward(self, ids, speaker):
         # The public browser API accepts one unpadded sequence at a time.
-        lengths = torch.ones_like(speaker) * ids.shape[1]
-        encoded = self.model._encode(ids, lengths, speaker)
+        x = self.model.phoneme(ids) + self.model.speaker_projection(self.model.speaker(speaker))[:, None, :]
+        for conv_norm, ffn_norm in zip(self.model.encoder_norms, self.model.encoder_ffn_norms):
+            x = x + self.model.encoder_conv(conv_norm(x))
+            x = x + self.model.encoder_ffn(ffn_norm(x))
+        # A single full-length utterance needs neither sorting nor packed padding.
+        x, _ = self.model.encoder_gru(x)
+        encoded = self.model.gru_projection(x)
         log_duration = self.model.duration_predictor(encoded).squeeze(-1).clamp(-4.0, 8.0)
         pitch = self.model.pitch_predictor(encoded).squeeze(-1)
         durations = torch.round((torch.exp(log_duration) - 1.0).clamp_min(1.0)).long()

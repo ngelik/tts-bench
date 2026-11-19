@@ -24,6 +24,11 @@ jobs:
       - run: |
           g++ -std=c++17 -O3 -ffp-contract=off -shared -fPIC tools/inflect-atom/dsp.cpp -o /tmp/atom-dsp.so
           python tools/inflect-atom/check-dsp.py generated/inflect-atom /tmp/atom-dsp.so
+      - uses: mymindstorm/setup-emsdk@6ab9eb1bda2574c4ddb79809fc9247783eaf9021
+        with:
+          version: '3.1.74'
+      - run: bash tools/inflect-atom/build-wasm.sh generated/inflect-atom
+      - run: node tools/inflect-atom/check-frontend.mjs generated/inflect-atom
       - uses: actions/upload-artifact@v4
         if: always()
         with:
