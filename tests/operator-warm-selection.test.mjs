@@ -81,6 +81,9 @@ test('Audio8 n1 display preserves native error, n5 plan, cached lineage and visi
   });
   assert.match(report.overviewMd, /n=1 of 5 planned/);
   assert.match(report.overviewMd, /n=1 is a single observation/);
+  assert.match(report.overviewMd, /1 completed scored article selected/);
+  assert.doesNotMatch(report.overviewMd, /All submitted cells are measured/);
+  assert.match(report.overviewMd, /\| cpu \| Error \| Synthetic unit fixture/);
   assert.match(report.overviewSvg, /n=1 of 5 planned/);
   assert.doesNotMatch(report.overviewMd, /operator stopped during the next trial/i);
 

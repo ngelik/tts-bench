@@ -189,7 +189,8 @@ function statusLabel(row) {
 
 function outcomeNotes(byKey) {
   const unique = new Map();
-  for (const row of byKey.values()) {
+  for (const displayed of byKey.values()) {
+    const row = displayed.selection ? { ...displayed, cell: { ...displayed.cell, status: displayed.selection.rawReceiptStatus, reason: displayed.selection.rawReceiptReason } } : displayed;
     if (row.cell.status === 'measured') continue;
     const detail = String(row.cell.reason ?? 'No reason recorded');
     const signature = JSON.stringify([row.cell.model, row.cell.backendRequested, row.cell.status, detail]);
@@ -310,7 +311,7 @@ function markdownReport(prepared, reportDir) {
       const selectionPath = resolve(ROOT, row.selection.selectionPath);
       const selectionHref = relative(reportDir, selectionPath).split(sep).join('/');
       const reasonHeadline = row.selection.rawReceiptReason.split(/\r?\n/, 1)[0];
-      md += `**${markdownText(row.cell.model)} · ${row.cell.backendRequested.toUpperCase()}:** this table and chart use ${row.selection.selectedScoredTrialIndexes.length} completed scored articles selected from ${row.selection.originalPlannedRepetitions} originally planned. ${row.selection.modelId === 'fun-cosyvoice3-0.5b-2512' ? 'The operator stopped during the next trial.' : markdownText(row.selection.stopReason)} The original native receipt remains ${markdownText(row.selection.rawReceiptStatus)} and records: ${markdownText(reasonHeadline)} The selection is bound to that receipt’s SHA-256 and lists the completed checkpoints in [the reviewed sidecar](${selectionHref}); ${row.selection.modelId === 'fun-cosyvoice3-0.5b-2512' ? 'the incomplete trial is not included.' : 'uncompleted repetitions are not included, and n=1 is a single observation.'}\n\n`;
+      md += `**${markdownText(row.cell.model)} · ${row.cell.backendRequested.toUpperCase()}:** this table and chart use ${row.selection.selectedScoredTrialIndexes.length} completed scored ${row.selection.selectedScoredTrialIndexes.length === 1 ? 'article' : 'articles'} selected from ${row.selection.originalPlannedRepetitions} originally planned. ${row.selection.modelId === 'fun-cosyvoice3-0.5b-2512' ? 'The operator stopped during the next trial.' : markdownText(row.selection.stopReason)} The original native receipt remains ${markdownText(row.selection.rawReceiptStatus)} and records: ${markdownText(reasonHeadline)} The selection is bound to that receipt’s SHA-256 and lists the completed checkpoints in [the reviewed sidecar](${selectionHref}); ${row.selection.modelId === 'fun-cosyvoice3-0.5b-2512' ? 'the incomplete trial is not included.' : 'uncompleted repetitions are not included, and n=1 is a single observation.'}\n\n`;
     }
   }
 

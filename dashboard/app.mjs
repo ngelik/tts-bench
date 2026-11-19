@@ -39,7 +39,7 @@ const statusDetails = metric => {
       ? `${reason ? `An earlier run failed (${reason}).` : 'An earlier run failed.'} ${metric.pendingCurrent ?? 'The displayed scores use only the completed trials selected from the original receipt.'}`
       : metric?.reason || 'No published measurement for this path';
   return metric?.selectionKind
-    ? `${result} Reviewed selection: ${metric.n} completed scored articles from ${metric.originalPlannedRepetitions} planned. ${metric.stopReason}`
+    ? `${result} Reviewed selection: ${metric.n} completed scored ${metric.n === 1 ? 'article' : 'articles'} from ${metric.originalPlannedRepetitions} planned. ${metric.stopReason}`
     : result;
 };
 const isMeasured = metric => metric?.status === 'measured';
