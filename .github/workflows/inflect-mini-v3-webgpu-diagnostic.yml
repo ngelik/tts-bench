@@ -65,7 +65,7 @@ jobs:
           INFLECT_MINI_EXPORT_OUTCOME: success
         run: |
           node tools/stage-inflect-mini-v3-diagnostic.mjs
-          npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx --accept-license
+          npm run assets -- fetch --model inflect-mini-v3-browser-port --accept-license
           npm run assets -- verify --model inflect-mini-v3-browser-port --accept-license
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -100,10 +100,9 @@ jobs:
           system_profiler SPDisplaysDataType
       - name: Install the pinned browser runtime
         run: npm ci --ignore-scripts
-      - name: Import and verify the exact locked graph artifact and runtime assets
+      - name: Stage and verify the exact locked graph artifact and runtime assets
         run: |
           node tools/stage-inflect-mini-v3-diagnostic.mjs
-          npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx --accept-license
           npm run assets -- fetch --model inflect-mini-v3-browser-port --accept-license
           npm run assets -- verify --model inflect-mini-v3-browser-port --accept-license
       - name: Probe real model dispatch on Apple WebGPU
