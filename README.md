@@ -260,6 +260,8 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Silencio-2 28M FP32 | 8 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#silencio-2) |
 | ZONOS3-Mini (Imogen) | 27 | 1 | 43 | [Details](docs/MODEL_SUPPORT.md#zonos3-mini) |
 | sanoTTS heart-nano 294k (Kokopop F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-heart-nano-gguf-f32) |
+| SanoTTS Robot MCU INT8 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-robot-mcu) |
+| SanoTTS Trellis experimental FP32 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-trellis) |
 
 ### Controlled native comparisons
 

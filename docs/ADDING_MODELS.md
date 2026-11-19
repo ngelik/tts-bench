@@ -212,3 +212,7 @@ coverage but can differ from the Node wrapper's frontend behavior. One-thread
 WASM is used for CPU; WebGPU uses WebGPU with WASM fallback and must demonstrate
 dispatch separately. G2P and output PCM readback include CPU work. See [source
 and change notice](../web/klein/NOTICE.md).
+
+## Sano Robot/MCU and experimental Trellis
+
+These use unchanged official CPU/WASM binaries and the demo's 120-character internal pieces. Before scoring, [run the complete frontend audit](models/sano-robot-trellis.md) at the exact clean source; it verifies registered assets and binds all 93 spans to fixture/worker hashes. Robot performs one official ID G2P call per timed piece; its separate raw-IPA vocabulary audit is untimed. Trellis checks native token count, frame count and sample rate and copies waveform bytes before freeing the handle. Both preserve canonical source text and report GPU as unsupported in this official runtime.

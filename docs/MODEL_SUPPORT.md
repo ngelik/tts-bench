@@ -293,3 +293,11 @@ Current M1 Pro measurements, per-backend reports and the validation-only WebGPU 
 Supported voices: **27**. Bundled voices: **1**. Supported languages: **43**.
 
 The pinned model publishes 27 preset voices, 43 languages and 44 server locale codes. This configuration stages and benchmarks Imogen (English, British female) only. CPU/WASM and WebGPU use the same pinned speaker embedding; the browser benchmark loads Imogen's reference codes and embedding but skips the unused preview clip. See [configuration and asset closure](ZONOS3_MINI.md), the [pinned model card](https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md), and the [pinned upstream browser runtime](https://github.com/Zyphra/ZONOS3-Mini/tree/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web).
+
+## sano-robot-mcu
+
+The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html) selects one English (US) Robot/MCU voice (`mcu`, en-us, slot 0). Supported/bundled voices: **1/1**; languages: **1** (`en`). This is the complete 567,008-parameter INT8 MCU model, not the larger Kristin PiperLite model. Runtime: official CPU/WASM only. [Implementation and input audit](models/sano-robot-trellis.md).
+
+## sano-trellis
+
+The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html) selects one experimental Trellis-RIFT English (US) voice. Supported/bundled voices: **1/1**; languages: **1** (`en`). The complete 995,058-parameter FP32 bundle emits 24 kHz PCM through the official CPU/WASM implementation. Other Sano models and languages are excluded. [Implementation and input audit](models/sano-robot-trellis.md).
