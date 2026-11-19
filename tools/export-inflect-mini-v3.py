@@ -346,6 +346,10 @@ class WaveformGraph(nn.Module):
         return (waveform, source_spec, first_resblock_input, magnitude, output_phase,
                 source_real, source_imag)
 
+    def forward(self, hidden: torch.Tensor, style: torch.Tensor, f0: torch.Tensor,
+                phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor) -> torch.Tensor:
+        return self._evaluate(hidden, style, f0, phase_uniform, harmonic_noise)[0]
+
 
 class SourceFrontendGraph(nn.Module):
     """CPU/WASM stage: deterministic harmonic excitation plus source STFT."""
