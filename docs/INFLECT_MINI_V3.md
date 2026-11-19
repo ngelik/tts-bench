@@ -61,7 +61,7 @@ The exporter compares the pinned native checkpoint and the browser graph at two
 different token/frame lengths. Its strict thresholds remain max absolute error
 `2e-3` and RMS error `2e-4`. The exact-reference workflow records the full
 base/dynamic metrics and fails when either case exceeds either threshold. The
-latest captured strict audit is the artifact built from source commit
+One captured strict audit is the artifact built from source commit
 `3aa0b423b8ba6c36fea0b6ab2db2c046bfb57c49` in the [hosted WebGPU diagnostic
 run](https://github.com/ngelik/tts-bench/actions/runs/44496351275). Its
 `BUILD-MANIFEST.json` SHA-256 is
