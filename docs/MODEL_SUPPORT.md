@@ -136,6 +136,16 @@ Pinned Sano Amy 1.46M checkpoint and FP32 browser bundle only. Amy browser bundl
 
 [Primary source 1](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/amy-en-1p46m/README.md), [Primary source 2](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/amy/meta.json).
 
+<a id="sano-heart-nano-gguf-f32"></a>
+
+## sanoTTS heart-nano 294k (Kokopop F32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (en).
+
+Pinned heartnano package, expanded from its exact int8 front/decoder source blobs into a separate F32 GGUF profile by the pinned Kokopop converter. The benchmark uses the fixed heartnano US English voice at 24 kHz and speed 1. CPU/WASM and hardware WebGPU use the same F32 weights and frontend; WebGPU reports `webgpu+wasm` and requires observed device dispatch. This is not the official Ampixa int8 browser build. Weights and generated runtime remain in the ignored asset cache and are imported from the hash-verified build artifact.
+
+[Heartnano model metadata](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json) · [Kokopop source](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88) · [Build and runtime details](SANO_HEART_NANO.md).
+
 <a id="inflect-micro-v2"></a>
 
 ## Inflect Micro v2 FP32
@@ -283,3 +293,11 @@ Current M1 Pro measurements, per-backend reports and the validation-only WebGPU 
 Supported voices: **27**. Bundled voices: **1**. Supported languages: **43**.
 
 The pinned model publishes 27 preset voices, 43 languages and 44 server locale codes. This configuration stages and benchmarks Imogen (English, British female) only. CPU/WASM and WebGPU use the same pinned speaker embedding; the browser benchmark loads Imogen's reference codes and embedding but skips the unused preview clip. See [configuration and asset closure](ZONOS3_MINI.md), the [pinned model card](https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md), and the [pinned upstream browser runtime](https://github.com/Zyphra/ZONOS3-Mini/tree/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web).
+
+## sano-robot-mcu
+
+The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html) selects one English (US) Robot/MCU voice (`mcu`, en-us, slot 0). Supported/bundled voices: **1/1**; languages: **1** (`en`). This is the complete 567,008-parameter INT8 MCU model, not the larger Kristin PiperLite model. Runtime: official CPU/WASM only. [Implementation and input audit](models/sano-robot-trellis.md).
+
+## sano-trellis
+
+The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html) selects one experimental Trellis-RIFT English (US) voice. Supported/bundled voices: **1/1**; languages: **1** (`en`). The complete 995,058-parameter FP32 bundle emits 24 kHz PCM through the official CPU/WASM implementation. Other Sano models and languages are excluded. [Implementation and input audit](models/sano-robot-trellis.md).

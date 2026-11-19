@@ -89,6 +89,24 @@
     "decoderSource": "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/zac/manifest.json",
     "scope": "Conservative lower bound sums all backbone .weight tensor shapes plus embd_all and codec .weight tensor shapes, excluding the 254-element head.mixer.weight and all codebook tables, biases, fixed windows and resampler. The 1,070,816,040 logical-element upper bound includes the manifest tensors, including known nonlearned window and resampler buffers. The optional speaker encoder is excluded from both counts."
   },
+  "sano-heart-nano-gguf-f32": {
+    "parameterCount": 294279,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json",
+    "scope": "Exact total published for the selected heartnano synthesis stack: duration 22,858 + acoustic 65,299 + decoder 206,122 = 294,279. The Kokopop F32 GGUF expands the same pinned Q8 matrices without changing tensor count."
+  },
+  "sano-robot-mcu": {
+    "parameterCount": 567008,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md",
+    "scope": "Official robot MCU end-to-end neural frontend and decoder, distinct from the PiperLite Kristin voice."
+  },
+  "sano-trellis": {
+    "parameterCount": 995058,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/mcu/ports/wasm/snt_trellis_wasm.c",
+    "scope": "Trellis-RIFT complete English text-to-wave pipeline, including duration/acoustic/decoder weights in the pinned bundle."
+  },
   "inflect-atom-v3": {
     "parameterCount": 157190,
     "countKind": "exact",

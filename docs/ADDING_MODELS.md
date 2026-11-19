@@ -11,6 +11,13 @@ policy, precision or inference algorithm is a new disclosed configuration.
    exact SHA-256/byte counts, relative staging targets, runtime package/version,
    backend declarations and terms acknowledgment requirements. Hash-pin mutable
    upstream URLs too: if their content changes, fail instead of silently updating.
+   For source-built assets that have no exact public URL, use a `generated`
+   declaration with an artifact-relative path and explicit pinned build command
+   and inputs. `assets fetch` must fail clearly when such bytes are absent;
+   `assets import --source BUILD_ARTIFACT_DIR` stages them only after SHA-256 and
+   size verification, and `assets verify` checks the staged bytes normally.
+   Do not point a generated asset at a different upstream file or upload weights
+   merely to make the URL field nonempty.
    Record evidence for the deployed parameter count in `lib/model-parameters.json`
    when establishing the warm schedule. Cite an immutable upstream source for the
    selected checkpoint or its logical tensor shapes. Identify which speech
@@ -205,3 +212,7 @@ coverage but can differ from the Node wrapper's frontend behavior. One-thread
 WASM is used for CPU; WebGPU uses WebGPU with WASM fallback and must demonstrate
 dispatch separately. G2P and output PCM readback include CPU work. See [source
 and change notice](../web/klein/NOTICE.md).
+
+## Sano Robot/MCU and experimental Trellis
+
+These use unchanged official CPU/WASM binaries and the demo's 120-character internal pieces. Before scoring, [run the complete frontend audit](models/sano-robot-trellis.md) at the exact clean source; it verifies registered assets and binds all 93 spans to fixture/worker hashes. Robot performs one official ID G2P call per timed piece; its separate raw-IPA vocabulary audit is untimed. Trellis checks native token count, frame count and sample rate and copies waveform bytes before freeing the handle. Both preserve canonical source text and report GPU as unsupported in this official runtime.

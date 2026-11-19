@@ -107,6 +107,35 @@ function validateNativeBackend(c) {
   check(labels[c.backendRequested].test(c.backendEffective),`Effective backend ${c.backendEffective} does not match requested ${c.backendRequested}`);
 }
 
+function validateCapability(capability) {
+  keys(capability,['gpuDispatchVerified','description','hardwareAdapter','dispatches','schedulerOperations','probeFrames','probeSampleRate'],'capability');
+  check([true,false,null].includes(capability.gpuDispatchVerified)&&text(capability.description,2000),'Invalid capability');
+  if (capability.hardwareAdapter !== undefined) {
+    const adapter = capability.hardwareAdapter;
+    keys(adapter,['identity','vendor','architecture','device','description','features'],'capability.hardwareAdapter');
+    check(text(adapter.identity,160),'Invalid WebGPU adapter identity');
+    for (const field of ['vendor','architecture','device','description']) {
+      if (adapter[field] !== undefined) check(adapter[field] === null || text(adapter[field],160),`Invalid WebGPU adapter ${field}`);
+    }
+    if (adapter.features !== undefined) {
+      check(Array.isArray(adapter.features)&&adapter.features.length<=64,'Invalid WebGPU adapter features');
+      check(adapter.features.every(feature=>text(feature,80))&&new Set(adapter.features).size===adapter.features.length,'Invalid/duplicate WebGPU adapter feature');
+    }
+  }
+  if (capability.dispatches !== undefined) check(int(capability.dispatches,1,1_000_000),'Invalid GPU compute-dispatch count');
+  if (capability.schedulerOperations !== undefined) {
+    const operations=capability.schedulerOperations;
+    check(object(operations)&&Object.keys(operations).length<=64,'Invalid scheduler operation counts');
+    for (const [name,count] of Object.entries(operations)) {
+      check(/^[A-Z0-9_]{1,64}$/.test(name)&&int(count,0,1_000_000),'Invalid scheduler operation name/count');
+    }
+    check(Object.values(operations).some(count=>count>0),'Scheduler evidence must include a positive operation count');
+  }
+  if (capability.probeFrames !== undefined || capability.probeSampleRate !== undefined) {
+    check(int(capability.probeFrames,1,10_000_000)&&int(capability.probeSampleRate,8000,192000),'Probe frame count and sample rate must be supplied together');
+  }
+}
+
 export function validateResult(d, { publication = false } = {}) {
   keys(d, ['schemaVersion','id','createdAt','origin','protocol','environment','fixture','source','assets','cells','notes'], 'result');
   check(d.schemaVersion === 1 && slug(d.id), 'Invalid result version/id');
@@ -151,8 +180,17 @@ export function validateResult(d, { publication = false } = {}) {
     const id=c.model+'/'+c.backendRequested;check(!cellIds.has(id),'Duplicate cell');cellIds.add(id);
     check(['measured','unsupported','error'].includes(c.status) && (c.reason===null || text(c.reason,2000)),'Invalid status/reason');
     check(text(c.voice,150)&&text(c.precision,150)&&object(c.settings),'Voice, precision and settings are required');
-    keys(c.capability,['gpuDispatchVerified','description'],'capability');
-    check([true,false,null].includes(c.capability.gpuDispatchVerified)&&text(c.capability.description,2000),'Invalid capability');
+    validateCapability(c.capability);
+    const requiresKokopopGpuEvidence=d.origin==='native'&&c.model==='sano-heart-nano-gguf-f32'&&c.backendRequested==='webgpu'&&c.status==='measured';
+    if(requiresKokopopGpuEvidence){
+      const proof=c.capability,adapter=proof.hardwareAdapter,operations=proof.schedulerOperations;
+      check(proof.gpuDispatchVerified===true,'Kokopop WebGPU results require verified GPU dispatch');
+      check(object(adapter)&&text(adapter.identity,160)&&text(adapter.vendor,160),'Kokopop WebGPU results require a named hardware adapter');
+      check(Array.isArray(adapter.features)&&adapter.features.includes('shader-f16')&&!/swiftshader|llvmpipe|software raster/i.test(adapter.identity),'Kokopop WebGPU results require a non-software shader-f16 adapter');
+      check(int(proof.dispatches,1,1_000_000),'Kokopop WebGPU results require actual compute dispatches');
+      check(object(operations)&&int(operations.MUL_MAT,4,1_000_000),'Kokopop WebGPU results require repeated neural MUL_MAT assignment');
+      check(int(proof.probeFrames,1,10_000_000)&&int(proof.probeSampleRate,8000,192000),'Kokopop WebGPU results require finite probe frame metadata');
+    }
     check(Array.isArray(c.warmup)&&Array.isArray(c.trials),'Trial arrays required');
     const audio8V2 = d.origin === 'native' && c.model === 'audio8-realistic-0.6b-int4' &&
       (audio8Policy !== undefined || c.settings.providerPolicyVersion === 2);
@@ -178,6 +216,7 @@ export function validateResult(d, { publication = false } = {}) {
         validateWaveform(t, d.fixture.chunks);
       }
       check((t.validation.finitePcm===true||(d.origin==='historical-import'&&t.validation.finitePcm===null)) && t.validation.nonemptyChunks===true && t.validation.chunkCount===d.fixture.chunks,`${group}: invalid PCM/chunk coverage`);
+      if(requiresKokopopGpuEvidence)check(t.sampleRate===c.capability.probeSampleRate,'Kokopop probe sample rate must match every scored/warmup trial');
       if(t.pcmSha256===null)check(t.audio&&hash(t.audio.sha256),'Historical records without float PCM hashes require WAV hashes');
       if(t.audio!==undefined){keys(t.audio,['sha256','bytes'],'audio');check(hash(t.audio.sha256)&&int(t.audio.bytes,1),'Invalid audio digest');}
       if(t.metrics!==undefined){check(object(t.metrics),'Invalid metrics');for(const [k,v] of Object.entries(t.metrics))check(/^[a-zA-Z][a-zA-Z0-9]{0,79}$/.test(k)&&(v===null||finite(v)&&v>=0),'Metrics must be finite, nonnegative or null');}
