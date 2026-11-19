@@ -20,8 +20,8 @@ required before fetching.
 No upstream runtime binary is modified. Integration selects same-origin assets,
 restores the benchmark worker handler after Emscripten initialization, validates
 inputs and output bounds, emits the first completed speech piece, and frees native
-allocations. Robot additionally verifies raw IPA against the exact upstream slot-0
+allocations. The complete-fixture untimed Robot frontend audit additionally verifies raw IPA against the exact upstream slot-0
 symbol set to reject silent unknown-phone loss. The raw IPA API inserts a tie mark
 U+0361 absent from the ID API; only that marker and parenthesized language tags are
-ignored. This extra validation runs inside timed synthesis calls. Trellis uses
+ignored. This duplicate G2P validation is excluded from timed synthesis; each timed Robot piece calls the official ID frontend once, with cheap capacity/BOS/EOS guards. The complete-fixture audit must pass at the exact scoring source before benchmarking. Trellis uses
 its official Misaki frontend and rejects dropped non-whitespace symbols.

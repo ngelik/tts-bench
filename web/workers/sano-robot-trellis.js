@@ -20,6 +20,7 @@ const ARENA_BYTES = 2 * 1024 * 1024;
 const ROBOT_OUT_CAP = 400000;
 const ROBOT_ID_CAP = 1024;
 let config, modelId, g2p, runtime, frontend, weights, nativeFetch, requestId;
+const robotCodepoints = () => new Set(self.SanoRobotPhonemeCodepoints);
 const allowedScripts = new Set(['snt_g2p.js', 'trellis_frontend.js', 'snt_tts.js', 'snt_trellis.js']);
 const textApi = () => self.SanoRobotTrellisText;
 function localUrl(root, file) {
@@ -60,12 +61,12 @@ function info() {
       splitPolicy: 'Official demo sentence/clause splitting, max 120 characters; all 93 canonical span IDs preserved.',
       firstPcm: 'First whole synthesized piece transferred immediately, before subsequent pieces; not an internal neural streaming callback.',
       frontend: config.voice === 'mcu'
-        ? 'Official eSpeak en-us/Kristin slot0 IDs; 1024 capacity, BOS/EOS required. Additional raw-IPA vocabulary check inside each timed call rejects unknown non-whitespace phonemes.'
+        ? 'Official eSpeak en-us/Kristin slot0 IDs; 1024 capacity, BOS/EOS required. Complete-fixture raw-IPA vocabulary audit runs separately before scoring; timed calls invoke official text_to_ids once.'
         : 'Official SaanoTrellisFrontend + eSpeak en-us; 207-token limit; non-whitespace dropped phonemes rejected.',
       deterministicSeed: config.voice === 'mcu' ? 'Official deterministic MCU runtime; no external RNG seed override.' : 'Official seed_key=NULL: deterministic JSON of phoneme IDs per piece.',
       nativeAllocationPolicy: 'Official demo per-piece heap allocation/copy/free; weights retained as JS bytes between pieces.',
       outputLimit: config.voice === 'mcu' ? '400000 samples per piece; native error/cap-sized output rejected.' : 'Native handle output and metadata validated; waveform-only keep=0.',
-      preprocessing: 'Text splitting, G2P, strict phone checks, model inference and PCM transfer run on CPU inside scored calls.',
+      preprocessing: 'Text splitting, G2P, ID boundary checks, model inference and PCM transfer run on CPU inside scored calls; duplicate Robot raw-IPA audit is untimed.',
     },
   };
 }
@@ -105,7 +106,7 @@ async function initialize(options = {}, auditOnly = false) {
     return { ...info(), status: 'measured', backendEffective: 'cpu/wasm', capability: { gpuDispatchVerified: null, description: options.probe ? 'Official CPU WASM completed an untimed speech piece.' : 'Official CPU WASM initialized; no GPU execution.' } };
   } finally { self.onmessage = handler; }
 }
-function tokenize(text) {
+function tokenize(text, auditPhones = false) {
   if (config.voice === 'trellis') {
     const result = frontend.textToIds(text);
     if (!Array.isArray(result.ids) || result.ids.length < 3 || result.ids.length > 207 || result.ids[0] !== 1 || result.ids.at(-1) !== 2) throw new Error('Invalid Trellis BOS/EOS or token count.');
@@ -115,15 +116,18 @@ function tokenize(text) {
   let tp = 0, op = 0, ipa = 0;
   try {
     const size = g2p.lengthBytesUTF8(text) + 1;
-    tp = malloc(g2p, size); op = malloc(g2p, ROBOT_ID_CAP * 4); ipa = malloc(g2p, 16384);
+    tp = malloc(g2p, size); op = malloc(g2p, ROBOT_ID_CAP * 4);
     g2p.stringToUTF8(text, tp, size);
-    const rawCount = g2p._snt_g2p_text_to_ipa(tp, ipa, 16384);
-    if (rawCount <= 0 || rawCount >= 16383) throw new Error('Robot raw IPA validation overflow/failure.');
-    const raw = g2p.UTF8ToString(ipa);
-    // The raw API adds U+0361 ties; the ID API does not. Both strip language tags.
-    const phones = raw.replace(/\([^)]*\)/g, '').replace(/\u0361/g, '');
-    const allowed = new Set(self.SanoRobotPhonemeCodepoints);
-    for (const ch of phones) if (!/\s/u.test(ch) && !allowed.has(ch.codePointAt(0))) throw new Error(`Robot would drop phoneme U+${ch.codePointAt(0).toString(16)}.`);
+    if (auditPhones) {
+      ipa = malloc(g2p, 16384);
+      const rawCount = g2p._snt_g2p_text_to_ipa(tp, ipa, 16384);
+      if (rawCount <= 0 || rawCount >= 16383) throw new Error('Robot raw IPA validation overflow/failure.');
+      const raw = g2p.UTF8ToString(ipa);
+      // The raw API adds U+0361 ties; the ID API does not. Both strip language tags.
+      const phones = raw.replace(/\([^)]*\)/g, '').replace(/\u0361/g, '');
+      const allowed = robotCodepoints();
+      for (const ch of phones) if (!/\s/u.test(ch) && !allowed.has(ch.codePointAt(0))) throw new Error(`Robot would drop phoneme U+${ch.codePointAt(0).toString(16)}.`);
+    }
     const count = g2p._snt_g2p_text_to_ids(tp, op, ROBOT_ID_CAP);
     if (count < 3 || count >= ROBOT_ID_CAP - 1) throw new Error('Robot G2P empty or potentially truncated.');
     const ids = Array.from(g2p.HEAP32.subarray(op >> 2, (op >> 2) + count));
@@ -186,7 +190,7 @@ function audit(chunks) {
   for (const [i, chunk] of chunks.entries()) {
     if (chunk.id !== i) throw new Error('Canonical span order mismatch.');
     for (const text of piecesFor(chunk)) {
-      const result = tokenize(text);
+      const result = tokenize(text, true);
       count++; maxTokens = Math.max(maxTokens, result.ids.length); maxChars = Math.max(maxChars, text.length);
       whitespaceDropped += Array.from(result.dropped).length;
     }

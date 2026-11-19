@@ -2,6 +2,8 @@
 // synthesis or benchmark timing. Tokenization is intentionally not cached for
 // or reused by measured generation.
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -60,7 +62,12 @@ try {
   assert.ok(result.maxPhonemeTokensIncludingBosEos <= result.tokenLimit);
   assert.equal(result.droppedNonWhitespaceCharacters, 0);
   assert.deepEqual(external, []);
+  const benchmarkSourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+  const benchmarkSourceDirty = Boolean(execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], { cwd: root, encoding: 'utf8' }).trim());
+  assert.equal(benchmarkSourceDirty, false, 'Full-fixture audit requires the exact clean scoring implementation');
   const evidence = {
+    benchmarkSourceCommit, benchmarkSourceDirty,
+    workerSha256: createHash('sha256').update(await readFile(join(root, 'web/workers/sano-robot-trellis.js'))).digest('hex'),
     schemaVersion: 1,
     model: modelId,
     browser: 'headed Google Chrome',

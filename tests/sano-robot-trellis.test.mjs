@@ -207,10 +207,13 @@ test('Robot rejects unknown phones and saturated ID buffers without trusting the
       },
     };
   `, ctx);
-  assert.equal(vm.runInContext("tokenize('test').ids.length", ctx), 5);
+  assert.equal(vm.runInContext("tokenize('test', true).ids.length", ctx), 5);
   vm.runInContext("rawIpa = 'tΩ';", ctx);
-  assert.throws(() => vm.runInContext("tokenize('test')", ctx), /would drop phoneme/);
+  assert.throws(() => vm.runInContext("tokenize('test', true)", ctx), /would drop phoneme/);
   vm.runInContext("rawIpa = 'ts'; idCount = 1023;", ctx);
-  assert.throws(() => vm.runInContext("tokenize('test')", ctx), /potentially truncated/);
+  assert.throws(() => vm.runInContext("tokenize('test', true)", ctx), /potentially truncated/);
   assert.equal(ctx.freed.length, 9);
+  vm.runInContext("rawIpa = 'Ω'; idCount = 5; cursor = 32;", ctx);
+  assert.equal(vm.runInContext("tokenize('test').ids.length", ctx), 5, 'timed path uses native IDs without duplicate raw G2P');
+  assert.equal(ctx.freed.length, 11);
 });

@@ -16,14 +16,14 @@ explicit unsupported result without constructing a CPU worker.
 
 The official demo splits each canonical span into sentence/clause pieces of at
 most 120 characters. All non-whitespace source characters are preserved. G2P,
-phone validation, allocation, native inference and PCM copies occur inside each
+ID boundary validation, allocation, native inference and PCM copies occur inside each
 timed call. No phoneme or audio output is precomputed for timing. First PCM means
 the first complete internal piece is transferred to the page; the unchanged
 browser API does not expose its internal neural sink callbacks.
 
 Robot retains the demo's 2 MiB arena and 400,000-sample output capacity; negative
 native returns, missing BOS/EOS and cap-sized output fail. Its ID buffer is 1,024
-entries and is checked for saturation. Trellis retains the official 207-token
+entries and is checked for saturation. A separate full-fixture raw-IPA check rejects unknown phones before scoring; timed Robot calls invoke the official ID frontend once, without duplicate G2P. Trellis retains the official 207-token
 limit, default ID-derived deterministic seed and waveform-only handle (`keep=0`).
 Every handle and temporary allocation is freed, including failure paths. Output
 sample finiteness is checked by the common harness **after** generation timing.
