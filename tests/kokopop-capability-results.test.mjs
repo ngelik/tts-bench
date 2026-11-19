@@ -148,3 +148,11 @@ test('Kokopop probe sample rate must match recorded trial PCM', () => {
   proof.probeSampleRate = 16_000;
   assert.throws(() => validateResult(result({ proof })), /sample rate must match/);
 });
+
+
+test('every additional Sano GGUF model requires real neural WebGPU dispatch', () => {
+  for (const model of ['sano-heart-gguf','sano-amy-gguf','sano-amy-small-gguf','sano-amy-1p8m-gguf','sano-hfc-gguf','sano-kristin-gguf']) {
+    assert.doesNotThrow(() => validateResult(result({ model })));
+    assert.throws(() => validateResult(result({ model, proof: { ...capability(), dispatches: 0 } })), /dispatch/);
+  }
+});

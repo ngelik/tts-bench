@@ -232,3 +232,15 @@ with the local assets. The benchmark uses the checkpoint's one fixed English
 voice. The pinned card does not name a voice performer or grant separate output
 rights. Keep model/runtime licenses separate from any rights in the voice or
 recordings. [Pinned model card and license](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Browser runtime and conversion notice](../web/supratts/NOTICE.md)
+
+## Official Sano Robot/MCU and Trellis
+
+Both registrations pin the browser assets in [Ampixa/sanoTTS c0584a5](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0). Their weight directories have no separate adjacent licensing grant, so the manifest retains the containing repository's **GPL-3.0-or-later** terms; it does not infer distilled-weight rights from a teacher's license. G2P, the Trellis runtime/frontend and demo-derived helper follow GPL-3.0-or-later. The upstream `LICENSE.MIT` explicitly covers the Robot core/reference kernels/browser shim, but not the whole browser pipeline or Trellis files. Fetching requires acknowledgment. [Exact scope and modifications](../web/sano/robot-trellis-NOTICE.md). Upstream binaries and weights are fetched into ignored storage, not committed as benchmark source.
+
+## Inflect Atom v3
+
+The [pinned current license grant](https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md) covers owner-controlled Atom code and weights under **Apache-2.0** and explicitly supersedes older evaluation/noncommercial wording retained in historical notices. Third-party terms and voice/data provenance remain separate. The local eSpeak NG engine and ported phonemizer punctuation layer use **GPL-3.0-or-later**; Misaki uses Apache-2.0. ONNX Runtime's MIT/bundled notices and Emscripten's runtime notices are included in the asset lock. Asset fetching requires acknowledgment. [Exact source and notice inventory](../web/inflect-atom/NOTICE.md) · [Compiled runtime distribution](https://github.com/ngelik/tts-bench/releases/tag/inflect-atom-v3-browser-v1).
+
+## Additional Kokopop Sano voice-size profiles
+
+`sano-heart-gguf`, `sano-amy-gguf`, `sano-amy-small-gguf`, `sano-amy-1p8m-gguf`, `sano-hfc-gguf` and `sano-kristin-gguf` use individual voice packages from [ampixa/sanoTTS at the immutable model revision](https://huggingface.co/ampixa/sanoTTS/tree/25410576d005d7f08d186990fd91f6a2651243de). Retain the GPL-3.0-tagged source distribution and its teacher/data provenance; the selected package manifests do not declare separate model license grants. The [pinned Kokopop converter/runtime](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88), GGML and yyjson are MIT; bundled eSpeak NG and English data are GPL-3.0-or-later. These are distinct from official Ampixa WASM profiles. Local build/import requires terms acknowledgement; generated model/runtime files are not publicly redistributed. See [scope and reproduction](SANO_KOKOPOP_SIZES.md) and [notice](../web/sano-kokopop/SIZE-PROFILES-NOTICE.txt).
