@@ -1,0 +1,227 @@
+name: Temporary Kokopop full warm pair
+on:
+  push:
+    branches: [codex/verify-kokopop-fullpair-20261119]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  full-pair:
+    runs-on: macos-15
+    timeout-minutes: 360
+    env:
+      SOURCE_COMMIT: ca54c5ca1954406a72f4f0d705c6a37852ee7761
+      SOURCE_MANIFEST: e0861e6953fba9e6c1702db4ed3ff48d9cfe6175afe566a558dcec31214aebe6
+      ASSET_LOCK_SHA256: d9f13c83ce4ace1a34a8a000d7e1ff9b2ab30fce6115e3574ad8409ec4a9d26c
+      BUILD_RUN_ID: '44429541760'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          path: scoring
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            bin
+            fixtures
+            lib
+            models
+            tools
+            web
+            assets.lock.json
+            package.json
+            package-lock.json
+          sparse-checkout-cone-mode: true
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          repository: ${{ github.repository }}
+          run-id: ${{ env.BUILD_RUN_ID }}
+          github-token: ${{ github.token }}
+          name: sano-kokopop-runtime-and-model-ca54c5ca1954406a72f4f0d705c6a37852ee7761
+          path: scoring/.cache/sano-kokopop-build/release
+      - name: Install locked dependencies
+        working-directory: scoring
+        run: npm ci --ignore-scripts
+      - name: Verify exact source and lock
+        working-directory: scoring
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { createHash } from 'node:crypto';
+          import { readFile, mkdir, writeFile } from 'node:fs/promises';
+          import { committedManifest } from './tools/provenance.mjs';
+          const commit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+          const manifest = committedManifest(commit);
+          const lockSha = createHash('sha256').update(await readFile('assets.lock.json')).digest('hex');
+          assert.equal(commit, process.env.SOURCE_COMMIT);
+          assert.equal(manifest, process.env.SOURCE_MANIFEST);
+          assert.equal(lockSha, process.env.ASSET_LOCK_SHA256);
+          assert.equal(execFileSync('git', ['status', '--porcelain'], { encoding: 'utf8' }).trim(), '');
+          const report = { commit, manifestSha256: manifest, assetsLockSha256: lockSha, clean: true };
+          console.log(JSON.stringify(report, null, 2));
+          await mkdir('../evidence', { recursive: true });
+          await writeFile('../evidence/preflight.json', JSON.stringify(report, null, 2) + '\n');
+          NODE
+      - name: Import and verify generated Kokopop assets
+        working-directory: scoring
+        run: |
+          node bin/bench.mjs assets import --model sano-heart-nano-gguf-f32 --source .cache/sano-kokopop-build/release --accept-license
+          node bin/bench.mjs assets verify --model sano-heart-nano-gguf-f32 --accept-license
+      - name: Capture hosted hardware and browser
+        run: |
+          mkdir -p evidence
+          {
+            sw_vers
+            printf 'CPU: '
+            sysctl -n machdep.cpu.brand_string
+            printf 'Chrome: '
+            /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
+            printf 'Node: '
+            node --version
+          } | tee evidence/host.txt
+      - name: Dry-run exact source-bound pair plan
+        working-directory: scoring
+        run: |
+          cat > "$RUNNER_TEMP/kokopop-warm-pair-plan.json" <<EOF
+          {
+            "schemaVersion": 1,
+            "sourceCommit": "$SOURCE_COMMIT",
+            "conditions": "Off-baseline hosted supplement for the separate sano-heart-nano-gguf-f32 profile only. Exact source manifest SHA-256 $SOURCE_MANIFEST and assets.lock.json SHA-256 $ASSET_LOCK_SHA256. Execute CPU then WebGPU sequentially on the same GitHub-hosted macOS-15 runner, headed Chrome, fixed canonical fixture, heartnano voice, and the same adapter settings/seed schedule. Runtime internally normalizes and segments long-form spans per model budgets; each canonical span is one harness request. Run one excluded full-article warm-up on each backend, then five scored full articles; no cached/RSS cells. Record actual host/Chrome, exact backendEffective, GPU dispatch and operator assignment evidence. Do not compare to or relabel the official int8 sano-heart-nano CPU profile as a matched pair.",
+            "cells": [
+              {"model":"sano-heart-nano-gguf-f32","backend":"cpu","scenario":"warm","repetitions":5,"timeoutMinutes":120,"resources":false},
+              {"model":"sano-heart-nano-gguf-f32","backend":"webgpu","scenario":"warm","repetitions":5,"timeoutMinutes":120,"resources":false}
+            ]
+          }
+          EOF
+          node tools/run-campaign.mjs --plan "$RUNNER_TEMP/kokopop-warm-pair-plan.json" --dry-run | tee ../evidence/dry-run.json
+          cp "$RUNNER_TEMP/kokopop-warm-pair-plan.json" ../evidence/plan.json
+      - name: Run sequential full-article CPU and WebGPU pair
+        working-directory: scoring
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: |
+          machine="GitHub-hosted macOS-15 / $(sysctl -n machdep.cpu.brand_string)"
+          node tools/run-campaign.mjs --plan "$RUNNER_TEMP/kokopop-warm-pair-plan.json" --machine "$machine" --accept-license
+      - name: Validate pair receipts and selected audio
+        working-directory: scoring
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { createHash } from 'node:crypto';
+          import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
+          import { join } from 'node:path';
+          import { validateResult } from './tools/results.mjs';
+          const model = 'sano-heart-nano-gguf-f32';
+          const wantedCommit = process.env.SOURCE_COMMIT;
+          const runDirs = await readdir('runs', { withFileTypes: true });
+          const found = [];
+          for (const dir of runDirs) {
+            if (!dir.isDirectory() || dir.name.startsWith('campaign-')) continue;
+            const path = join('runs', dir.name, 'result.json');
+            let receipt;
+            try { receipt = JSON.parse(await readFile(path, 'utf8')); } catch { continue; }
+            if (receipt.cells?.[0]?.model === model && receipt.protocol?.scenario === 'warm') found.push({ path, receipt });
+          }
+          assert.equal(found.length, 2, 'Expected exactly one CPU and one WebGPU full warm receipt.');
+          const byBackend = new Map();
+          const outputs = [];
+          for (const { path, receipt } of found) {
+            validateResult(receipt);
+            assert.equal(receipt.origin, 'native');
+            assert.equal(receipt.source.gitCommit, wantedCommit);
+            assert.equal(receipt.source.dirty, false);
+            assert.equal(receipt.source.manifestSha256, process.env.SOURCE_MANIFEST);
+            assert.equal(receipt.protocol.smoke, false);
+            assert.equal(receipt.protocol.warmupRuns, 1);
+            assert.equal(receipt.protocol.repetitions, 5);
+            assert.match(receipt.protocol.timingBoundary, /excludes initialization, validation, hashing, WAV encoding and save/i);
+            assert.equal(receipt.fixture.characters, 20000);
+            assert.equal(receipt.fixture.chunks, 93);
+            const [cell] = receipt.cells;
+            assert.equal(cell.status, 'measured');
+            assert.equal(cell.warmup.length, 1);
+            assert.equal(cell.trials.length, 5);
+            assert.ok(['cpu', 'webgpu'].includes(cell.backendRequested));
+            assert.ok(!byBackend.has(cell.backendRequested));
+            for (const trial of [...cell.warmup, ...cell.trials]) {
+              assert.equal(trial.sampleRate, 24000);
+              assert.equal(trial.validation.finitePcm, true);
+              assert.equal(trial.validation.chunkCount, 93);
+              assert.equal(trial.validation.nonemptyChunks, true);
+              assert.ok(Number.isFinite(trial.generationMs) && trial.generationMs > 0);
+              assert.ok(Number.isFinite(trial.metrics.firstPcmMs) && trial.metrics.firstPcmMs > 0);
+            }
+            if (cell.backendRequested === 'webgpu') {
+              assert.equal(cell.backendEffective, 'webgpu+wasm');
+              assert.equal(cell.capability.gpuDispatchVerified, true);
+              assert.ok(cell.capability.hardwareAdapter.features.includes('shader-f16'));
+              assert.ok(cell.capability.dispatches > 0);
+              assert.ok(cell.capability.schedulerOperations.MUL_MAT >= 4);
+            } else {
+              assert.equal(cell.backendEffective, 'cpu/wasm');
+            }
+            const wavPath = join('runs', receipt.id, `${model}-${cell.backendRequested}.wav`);
+            const wav = await readFile(wavPath);
+            const sha256 = createHash('sha256').update(wav).digest('hex');
+            const audio = cell.trials.at(-1).audio;
+            assert.equal(sha256, audio.sha256, 'Saved final-trial WAV differs from receipt SHA-256.');
+            assert.equal(wav.length, audio.bytes);
+            assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+            assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+            assert.equal(wav.readUInt16LE(20), 1);
+            assert.equal(wav.readUInt16LE(22), 1);
+            assert.equal(wav.readUInt32LE(24), 24000);
+            assert.equal(wav.readUInt16LE(34), 16);
+            assert.equal(wav.readUInt32LE(40), wav.length - 44);
+            assert.equal(wav.readUInt32LE(40) / 2, cell.trials.at(-1).samples);
+            byBackend.set(cell.backendRequested, { receipt, cell, path, wavPath, sha256, bytes: wav.length });
+          }
+          assert.ok(byBackend.has('cpu') && byBackend.has('webgpu'));
+          const cpu = byBackend.get('cpu');
+          const gpu = byBackend.get('webgpu');
+          assert.equal(cpu.receipt.fixture.sha256, gpu.receipt.fixture.sha256);
+          assert.deepEqual(cpu.cell.settings, gpu.cell.settings);
+          assert.equal(cpu.cell.voice, gpu.cell.voice);
+          assert.equal(cpu.cell.precision, gpu.cell.precision);
+          const report = {
+            sourceCommit: wantedCommit,
+            sourceManifestSha256: process.env.SOURCE_MANIFEST,
+            assetLockSha256: process.env.ASSET_LOCK_SHA256,
+            pair: Object.fromEntries([...byBackend].map(([backend, value]) => [backend, {
+              resultId: value.receipt.id,
+              resultPath: value.path,
+              resultSha256: createHash('sha256').update(await readFile(value.path)).digest('hex'),
+              effectiveBackend: value.cell.backendEffective,
+              voice: value.cell.voice,
+              precision: value.cell.precision,
+              warmupRuns: value.cell.warmup.length,
+              scoredTrials: value.cell.trials.length,
+              medianGenerationMs: value.cell.trials.map(trial => trial.generationMs).sort((a,b)=>a-b)[2],
+              trialRangeMs: [Math.min(...value.cell.trials.map(trial => trial.generationMs)), Math.max(...value.cell.trials.map(trial => trial.generationMs))],
+              gpuDispatches: value.cell.capability.dispatches ?? null,
+              schedulerOperations: value.cell.capability.schedulerOperations ?? null,
+              wavPath: value.wavPath,
+              wavSha256: value.sha256,
+              wavBytes: value.bytes,
+              sampleRate: 24000,
+              samples: value.cell.trials.at(-1).samples,
+            }]))
+          };
+          await mkdir('../evidence', { recursive: true });
+          await writeFile('../evidence/verification.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: sano-kokopop-full-warm-pair-${{ github.run_id }}
+          path: |
+            scoring/runs/**
+            evidence/**
+          if-no-files-found: warn
+          retention-days: 30
