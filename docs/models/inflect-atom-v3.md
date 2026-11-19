@@ -41,3 +41,5 @@ Use the repository's baseline machine and pinned Google Chrome for reference sub
 The [immutable compiled runtime](https://github.com/ngelik/tts-bench/releases/tag/inflect-atom-v3-browser-v1) includes source-bound qualification evidence and licenses. `assets.lock.json` pins every downloaded file's byte count and SHA-256.
 
 Compiler-generated assertion path strings in a fresh eSpeak WASM build can contain the hosted SDK's temporary-directory identifier. The immutable published release remains the byte-for-byte reference; do not replace its files with a locally rebuilt binary under the same asset hash. The qualified release and the final implementation's rebuilt runtime produced identical PCM hashes for all 93 canonical spans, despite that diagnostic-path byte difference.
+
+The [source-pinned M1 Pro campaign and replay commands](../campaigns/inflect-atom-v3/README.md) preserve the exact four-cell schedule separately from published scores.
