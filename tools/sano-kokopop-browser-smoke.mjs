@@ -4,26 +4,29 @@ import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { relative, resolve, sep } from 'node:path';
 import { chromium } from 'playwright-core';
-import { SANO_HEART_NANO_F32 } from '../web/adapters/sano-kokopop-config.mjs';
+import { SANO_KOKOPOP_PROFILES } from '../web/adapters/sano-kokopop-config.mjs';
 
 const root = resolve(import.meta.dirname, '..');
+const modelId = process.argv[2] || 'sano-heart-nano-gguf-f32';
+const modelConfig = SANO_KOKOPOP_PROFILES[modelId];
+assert.ok(modelConfig, 'Unknown locked Sano profile');
+const expectedRate = modelConfig.info.settings.sampleRate;
 const release = resolve(root, '.cache/sano-kokopop-build/release');
-const evidenceDir = resolve(root, '.cache/sano-kokopop-browser-evidence');
+const evidenceDir = resolve(root, '.cache/sano-kokopop-browser-evidence', modelId === 'sano-heart-nano-gguf-f32' ? '.' : modelId);
 const manifest = JSON.parse(await readFile(resolve(release, 'BUILD-MANIFEST.json'), 'utf8'));
-const modelBytes = await readFile(resolve(release, 'heartnano-f32.gguf'));
+const modelBytes = await readFile(resolve(release, modelConfig.model.url.split('/').at(-1)));
 const modelSha256 = createHash('sha256').update(modelBytes).digest('hex');
-assert.equal(modelSha256, manifest.model.sha256);
-assert.equal(SANO_HEART_NANO_F32.model.bytes, modelBytes.length);
-assert.equal(SANO_HEART_NANO_F32.model.sha256, modelSha256);
+assert.equal(modelSha256, modelConfig.model.sha256);
+assert.equal(modelConfig.model.bytes, modelBytes.length);
+assert.equal(modelConfig.model.sha256, modelSha256);
 for (const file of manifest.runtimeFiles) {
-  const locked = SANO_HEART_NANO_F32.runtime.files.find(candidate => candidate.path === file.filename);
+  const locked = modelConfig.runtime.files.find(candidate => candidate.path === file.filename);
   assert.ok(locked, 'Runtime asset is present in the shared profile config: ' + file.filename);
   assert.equal(locked.bytes, file.bytes, 'Runtime asset byte count matches the shared profile config: ' + file.filename);
   assert.equal(locked.sha256, file.sha256, 'Runtime asset digest matches the shared profile config: ' + file.filename);
   assert.equal(locked.target, file.target, 'Runtime asset target matches the shared profile config: ' + file.filename);
 }
 const smokeText = 'The quick brown fox jumps over the lazy dog.';
-const modelConfig = SANO_HEART_NANO_F32;
 
 function contentType(path) {
   if (path.endsWith('.mjs') || path.endsWith('.js')) return 'text/javascript; charset=utf-8';
@@ -131,18 +134,18 @@ try {
   const cpu = result.cpu.samples;
   assert.ok(cpu.length > 1000);
   const cpuWav = wav(cpu, result.cpu.sampleRate);
-  await write(resolve(evidenceDir, 'heartnano-cpu.wav'), cpuWav);
+  await write(resolve(evidenceDir, modelId === 'sano-heart-nano-gguf-f32' ? 'heartnano-cpu.wav' : 'cpu.wav'), cpuWav);
   const report = {
     schemaVersion: 1,
     source: manifest.source,
-    model: { sha256: modelSha256, bytes: modelBytes.length, artifactRevision: manifest.model.artifactRevision },
+    model: { sha256: modelSha256, bytes: modelBytes.length, modelId, voice: modelConfig.info.settings.selectedVoice, artifactRevision: modelConfig.model.url.split('/').at(-2) },
     browser: await page.evaluate(() => ({ userAgent: navigator.userAgent, webgpu: Boolean(navigator.gpu), jspi: typeof WebAssembly.Suspending === 'function' })),
     status: result.status,
     cpu: { backend: result.cpuInfo?.backendEffective || 'cpu/wasm', sampleRate: result.cpu.sampleRate, ...audioSummary(cpu), wavSha256: createHash('sha256').update(cpuWav).digest('hex') },
   };
   if (result.status === 'measured') {
-    assert.equal(result.cpu.sampleRate, 24000);
-    assert.equal(result.gpu.sampleRate, 24000);
+    assert.equal(result.cpu.sampleRate, expectedRate);
+    assert.equal(result.gpu.sampleRate, expectedRate);
     const gpu = result.gpu.samples;
     assert.equal(gpu.length, cpu.length, 'CPU and WebGPU output frame counts must match exactly');
     let xy = 0;
@@ -159,11 +162,11 @@ try {
     const rmsError = Math.sqrt(error / cpu.length);
     assert.ok(correlation >= 0.999, 'CPU/WebGPU correlation was ' + correlation);
     assert.ok(rmsError <= 1e-3, 'CPU/WebGPU RMS error was ' + rmsError);
-    const gpuWav = wav(gpu, 24000);
-    await write(resolve(evidenceDir, 'heartnano-webgpu.wav'), gpuWav);
+    const gpuWav = wav(gpu, expectedRate);
+    await write(resolve(evidenceDir, modelId === 'sano-heart-nano-gguf-f32' ? 'heartnano-webgpu.wav' : 'webgpu.wav'), gpuWav);
     report.gpu = {
       backend: result.gpuInfo.backendEffective,
-      sampleRate: 24000,
+      sampleRate: expectedRate,
       ...audioSummary(gpu),
       wavSha256: createHash('sha256').update(gpuWav).digest('hex'),
       capability: result.gpuInfo.capability,

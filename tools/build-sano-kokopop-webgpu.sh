@@ -72,3 +72,6 @@ node "$ROOT/tools/build-sano-kokopop-manifest.mjs" \
   --model "$MODEL" --out "$RELEASE" --stage "$RUNTIME_STAGE" \
   --model-revision "$MODEL_REVISION" --emscripten-version "$EMSCRIPTEN_VERSION" \
   --patch "$PATCH" --project-root "$ROOT"
+
+# Additional single-voice profiles share the exact runtime above.
+python "$ROOT/tools/build-sano-size-models.py"

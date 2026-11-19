@@ -13,9 +13,9 @@ function unsupported(model, reason) {
 }
 
 export function createSanoKokopopAdapter(modelConfig) {
-  if (!modelConfig || modelConfig.id !== 'sano-heart-nano-gguf-f32' || !modelConfig.model ||
-      !modelConfig.runtime || !modelConfig.info) {
-    throw new Error('Kokopop adapter requires the separately locked F32 heart-nano model config.');
+  if (!modelConfig || !/^sano-(?:heart-nano-gguf-f32|heart-gguf|amy-gguf|amy-small-gguf|amy-1p8m-gguf|hfc-gguf|kristin-gguf)$/.test(modelConfig.id) || !modelConfig.model ||
+      !modelConfig.runtime || !modelConfig.info || ![22050, 24000].includes(modelConfig.info.settings?.sampleRate)) {
+    throw new Error('Kokopop adapter requires the separately locked Sano GGUF profile.');
   }
   let workerAdapter = null;
   let initialized = false;
@@ -27,7 +27,7 @@ export function createSanoKokopopAdapter(modelConfig) {
       if (backend !== 'cpu' && backend !== 'webgpu') {
         return unsupported(modelConfig, 'This Kokopop profile requires an explicit CPU or WebGPU backend.');
       }
-      workerAdapter = createRpcAdapter(WORKER_URL, 'Kokopop heart-nano F32');
+      workerAdapter = createRpcAdapter(WORKER_URL, 'Kokopop Sano GGUF');
       try {
         const report = await workerAdapter.initialize({
           ...options,
@@ -63,10 +63,10 @@ export function createSanoKokopopAdapter(modelConfig) {
         throw new Error('Kokopop requires an exact canonical source-text chunk.');
       }
       const response = await workerAdapter.generateChunk(chunk, options);
-      if (!response || response.completedChunkId !== chunk.id || response.sampleRate !== 24000 ||
+      if (!response || response.completedChunkId !== chunk.id || response.sampleRate !== modelConfig.info.settings.sampleRate ||
           !Array.isArray(response.parts) || response.parts.length !== 1 ||
           !(response.parts[0] instanceof Float32Array) || !response.parts[0].length) {
-        throw new Error('Kokopop returned invalid or mismatched 24 kHz heart-nano PCM.');
+        throw new Error('Kokopop returned invalid PCM or a sample rate that differs from the selected Sano profile.');
       }
       return response;
     },

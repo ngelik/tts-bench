@@ -112,5 +112,41 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_dsp_model_20261024.py",
     "scope": "All unique learned weights in the qualified AtomDSP core, including six voice embeddings, encoder/decoder shared weights, harmonic phases and FIR. Official export requires157190. English eSpeak-light frontend is rule/dictionary-based, zero learned frontend parameters."
+  },
+  "sano-heart-gguf": {
+    "parameterCount": 2272145,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+    "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
+  },
+  "sano-amy-gguf": {
+    "parameterCount": 1454284,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json",
+    "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
+  },
+  "sano-amy-small-gguf": {
+    "parameterCount": 1084972,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json",
+    "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
+  },
+  "sano-amy-1p8m-gguf": {
+    "parameterCount": 1834380,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json",
+    "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
+  },
+  "sano-hfc-gguf": {
+    "parameterCount": 1834380,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/hfc-en-1p8m/manifest.json",
+    "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
+  },
+  "sano-kristin-gguf": {
+    "parameterCount": 1396151,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json",
+    "scope": "Exact source duration, acoustic and decoder synthesis-stack count. Conversion changes storage representation, not the declared trainable count."
   }
 }

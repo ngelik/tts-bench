@@ -1,0 +1,187 @@
+{
+  "upstreamCommit": "73ed5710cb37ca0384bc4bfdd7138d13605c9a88",
+  "artifactRevision": "25410576d005d7f08d186990fd91f6a2651243de",
+  "python": "3.13",
+  "numpy": "2.4.4",
+  "unicode": "15.1.0",
+  "profiles": [
+    {
+      "id": "sano-heart-gguf",
+      "voice": "heart",
+      "parameters": 2272145,
+      "sampleRate": 24000,
+      "tensorTypes": [
+        "F32"
+      ],
+      "bytes": 9375272,
+      "sha256": "4f2b1ca6e8f3962b3feb0b712cde68208e3a2565d34fdb6388a8e565f46bfb9d",
+      "inputs": [
+        {
+          "path": "heart/front_f32.bin",
+          "bytes": 3273696,
+          "sha256": "02e8086ebedf70216efa7beae274351d7ee916579277e83161748a08325d0b49"
+        },
+        {
+          "path": "heart/meta.json",
+          "bytes": 1317,
+          "sha256": "38d80a7421d541575aa44ea26648c72ee82346cb1084fad379a6e1e5ce2e007e"
+        },
+        {
+          "path": "heart/model_f32.bin",
+          "bytes": 5864224,
+          "sha256": "2d685fc751bc096b956d76a9e6ad105ed6da33c61faaa43c7423d935eeb7481b"
+        },
+        {
+          "path": "heart/nano_q8_meta.h",
+          "bytes": 7324,
+          "sha256": "989e7192a133b808bcbfb8a34b26a4d6be8ed953a5a9761ad134d060438ae867"
+        }
+      ]
+    },
+    {
+      "id": "sano-amy-gguf",
+      "voice": "amy",
+      "parameters": 1454284,
+      "sampleRate": 22050,
+      "tensorTypes": [
+        "F16",
+        "F32"
+      ],
+      "bytes": 3236900,
+      "sha256": "4e89c02b3548bc632ed33b1d3ded9f893f524639a0362a093e4329688a0e6f5f",
+      "inputs": [
+        {
+          "path": "amy-en-1p46m/manifest.json",
+          "bytes": 41659,
+          "sha256": "5c6b782b0b418758e4dfd8b877a5d34f361c94e5917b2a3ec82542c35b6677b7"
+        },
+        {
+          "path": "amy-en-1p46m/piper-phoneme-config.json",
+          "bytes": 4882,
+          "sha256": "95a23eb4d42909d38df73bb9ac7f45f597dbfcde2d1bf9526fdeaf5466977d77"
+        },
+        {
+          "path": "amy-en-1p46m/weights.fp16.bin",
+          "bytes": 2908568,
+          "sha256": "8a5e3665640cb4df561af2c297e0a9df12ea100555e380916dcc1064687e94f0"
+        }
+      ]
+    },
+    {
+      "id": "sano-amy-small-gguf",
+      "voice": "amy-1p1m",
+      "parameters": 1084972,
+      "sampleRate": 22050,
+      "tensorTypes": [
+        "F16",
+        "F32"
+      ],
+      "bytes": 2489188,
+      "sha256": "b8bd823de3ac17e4dc79017a39cf526118ffaba6b3962fdf9da182598d5e9140",
+      "inputs": [
+        {
+          "path": "amy-en-1p1m/manifest.json",
+          "bytes": 41627,
+          "sha256": "6d4e580326353fdf67d193687714875dace782a0807e108a6858445d2464c62b"
+        },
+        {
+          "path": "amy-en-1p1m/piper-phoneme-config.json",
+          "bytes": 4882,
+          "sha256": "95a23eb4d42909d38df73bb9ac7f45f597dbfcde2d1bf9526fdeaf5466977d77"
+        },
+        {
+          "path": "amy-en-1p1m/weights.fp16.bin",
+          "bytes": 2169944,
+          "sha256": "b45240e7c24ac4ca4a1572a7ccc971dcca1836dcfde9aeb205d54d5515a07610"
+        }
+      ]
+    },
+    {
+      "id": "sano-amy-1p8m-gguf",
+      "voice": "amy-1p8m",
+      "parameters": 1834380,
+      "sampleRate": 22050,
+      "tensorTypes": [
+        "F16",
+        "F32"
+      ],
+      "bytes": 4007428,
+      "sha256": "d904e96762ef2a255349a5ddb327427be69168dc1e9b5796a39dc76a60b072e8",
+      "inputs": [
+        {
+          "path": "amy-en-1p8m/manifest.json",
+          "bytes": 41677,
+          "sha256": "6dc68af208e6ae021b3680940099520d6f4dd809aad6ae7e078ce45c285ffba9"
+        },
+        {
+          "path": "amy-en-1p8m/piper-phoneme-config.json",
+          "bytes": 4882,
+          "sha256": "95a23eb4d42909d38df73bb9ac7f45f597dbfcde2d1bf9526fdeaf5466977d77"
+        },
+        {
+          "path": "amy-en-1p8m/weights.fp16.bin",
+          "bytes": 3668760,
+          "sha256": "bf2daa62fc65a1cb96ef0967fa4f28c45aae8528e62f957e8944370cabbe99b2"
+        }
+      ]
+    },
+    {
+      "id": "sano-hfc-gguf",
+      "voice": "hfc",
+      "parameters": 1834380,
+      "sampleRate": 22050,
+      "tensorTypes": [
+        "F16",
+        "F32"
+      ],
+      "bytes": 4007492,
+      "sha256": "783ccaad326143ef70e5cb79e89fc6d5fa17d510c97cd8027ed2391656b33f8d",
+      "inputs": [
+        {
+          "path": "hfc-en-1p8m/manifest.json",
+          "bytes": 41726,
+          "sha256": "a98f19908fac90af4430939e95298ebca3f5a09e932fa8b9fc83c49deffd0cf2"
+        },
+        {
+          "path": "hfc-en-1p8m/piper-phoneme-config.json",
+          "bytes": 5033,
+          "sha256": "03f1fa0622b80463283592d97aca9f6e89aec345a5c56b7257723e0093c58b6c"
+        },
+        {
+          "path": "hfc-en-1p8m/weights.fp16.bin",
+          "bytes": 3668760,
+          "sha256": "ad1c06f41d9149fc9b0f689e36261dd3b89f96dd9e9433aa1b7dbe50dca49d90"
+        }
+      ]
+    },
+    {
+      "id": "sano-kristin-gguf",
+      "voice": "kristin",
+      "parameters": 1396151,
+      "sampleRate": 22050,
+      "tensorTypes": [
+        "F16",
+        "F32"
+      ],
+      "bytes": 3115300,
+      "sha256": "0d24d22ddbcef76544f5b8f9c3604265741d1f025a1ef4a7540e13a1e9304c85",
+      "inputs": [
+        {
+          "path": "kristin-en-1p4m/manifest.json",
+          "bytes": 45646,
+          "sha256": "d968ae5661ce49ddcb31c03056fb3af98eed7b1eb9f5eab34394a91571eb4501"
+        },
+        {
+          "path": "kristin-en-1p4m/piper-phoneme-config.json",
+          "bytes": 4968,
+          "sha256": "5681426d4aead22195de70531eeeeddb46493cfaffc5764b2ea3db73428b651c"
+        },
+        {
+          "path": "kristin-en-1p4m/weights.fp16.bin",
+          "bytes": 2792302,
+          "sha256": "4691dc92d21f5b979dafd6d3127bebd2721bc019fbc06ce97034e8fed03d6194"
+        }
+      ]
+    }
+  ]
+}
