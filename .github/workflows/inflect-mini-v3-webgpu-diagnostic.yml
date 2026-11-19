@@ -115,6 +115,10 @@ jobs:
           node tools/stage-inflect-mini-v3-diagnostic.mjs
           npm run assets -- fetch --model inflect-mini-v3-browser-port --accept-license
           npm run assets -- verify --model inflect-mini-v3-browser-port --accept-license
+      - name: Smoke the registered hybrid through the ordinary benchmark runner
+        env:
+          CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+        run: node bin/bench.mjs run --model inflect-mini-v3-browser-port --backend webgpu --smoke --note 'Hosted registration smoke; duration graph WebGPU with WASM fallback, bridge and waveform WASM; not a score'
       - name: Probe real model dispatch on Apple WebGPU
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -126,7 +130,9 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: inflect-mini-v3-webgpu-diagnostic-${{ github.event.pull_request.head.sha || github.sha }}
-          path: .cache/inflect-mini-v3-webgpu-diagnostic/
+          path: |
+            .cache/inflect-mini-v3-webgpu-diagnostic/
+            runs/
           if-no-files-found: warn
           retention-days: 14
           include-hidden-files: true
