@@ -124,8 +124,8 @@ async function getHardwareAdapter() {
 }
 
 function requireModelConfig(value) {
-  const model = validateAsset(value?.model, 'heart-nano GGUF', 'heartnano-f32.gguf');
-  if (!value || !value.runtime || !value.info) fail('Kokopop worker requires model, runtime and info configuration.');
+  const model = validateAsset(value?.model, 'Sano GGUF');
+  if (!value || !value.runtime || !value.info || !['heartnano', 'heart', 'amy', 'amy-1p1m', 'amy-1p8m', 'hfc', 'kristin'].includes(value.info.settings?.selectedVoice) || ![22050, 24000].includes(value.info.settings?.sampleRate)) fail('Kokopop worker requires model, runtime and info configuration.');
   return { ...value, model };
 }
 
@@ -145,7 +145,7 @@ async function load(options) {
   }
 
   const files = runtimeAssets(config);
-  const modelBytes = await readVerified(config.model, 'heart-nano F32 GGUF');
+  const modelBytes = await readVerified(config.model, 'Sano GGUF');
   const wasmBinary = await readVerified(files['kokopop-runtime.wasm'], 'Kokopop WebAssembly runtime');
   const dataPackage = await readVerified(files['kokopop-runtime.data'], 'Kokopop eSpeak data');
   // Verify the locked JS module before importing it from its immutable same-origin path.
@@ -165,10 +165,10 @@ async function load(options) {
   module = await createModule(moduleOptions);
   runtime = new Runtime(module);
   const info = await runtime.load(modelBytes, BACKEND_VALUES[options.backend]);
-  if (info.architecture !== 'sanotts' || !info.voices.some(voice => voice.name === 'heartnano' && voice.sampleRate === 24000)) {
+  if (info.architecture !== 'sanotts' || !info.voices.some(voice => voice.name === config.info.settings.selectedVoice && voice.sampleRate === config.info.settings.sampleRate)) {
     await runtime.dispose();
     runtime = null;
-    fail('Locked GGUF did not load the expected 24 kHz sanoTTS heartnano voice.');
+    fail('Locked GGUF did not load the selected Sano voice and its declared sample rate.');
   }
   if (info.backend !== options.backend) {
     await runtime.dispose();
@@ -181,25 +181,25 @@ async function load(options) {
     status: 'measured',
     backendEffective: options.backend === 'webgpu' ? 'webgpu+wasm' : 'cpu/wasm',
     architecture: info.architecture,
-    voice: 'heartnano (US English; upstream Misaki-normalized eSpeak IPA frontend)',
-    precision: 'F32 GGUF expanded from the exact upstream heartnano Q8 front/model blobs; distinct from the official int8 browser profile.',
+    voice: config.info.voice,
+    precision: config.info.precision,
     settings: {
       ...(config.info.settings || {}),
-      selectedVoice: 'heartnano',
-      sampleRate: 24000,
+      selectedVoice: config.info.settings.selectedVoice,
+      sampleRate: config.info.settings.sampleRate,
       seed: 'Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.',
       textInput: 'Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.',
-      textNormalization: 'Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.',
+      textNormalization: config.info.settings.textNormalization,
       internalLongFormChunking: 'Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.',
       streamDecode: 'Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.',
       runtime: config.runtime.version,
-      espeakLanguageData: 'English (US) only, from the matching Kokopop Emscripten bundle.',
+      espeakLanguageData: config.info.settings.espeakLanguageData,
     },
     capability: {
       gpuDispatchVerified: false,
       description: options.backend === 'webgpu'
         ? 'Awaiting the untimed seeded browser probe; a hardware adapter alone does not prove model dispatch.'
-        : 'Explicit CPU/WASM mode of the same Kokopop runtime and exact F32 heartnano GGUF.',
+        : 'Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF.',
       ...(options.backend === 'webgpu' ? { hardwareAdapter } : {}),
     },
   };
@@ -211,13 +211,13 @@ async function load(options) {
     const dispatchObserver = options.backend === 'webgpu' ? observeComputeDispatches() : null;
     let output;
     try {
-      output = await runtime.synthesize(probeText, { voice: 'heartnano', speed: 1, seed: 0x20af, trace: options.backend === 'webgpu' });
+      output = await runtime.synthesize(probeText, { voice: config.info.settings.selectedVoice, speed: 1, seed: 0x20af, trace: options.backend === 'webgpu' });
       if (dispatchObserver) output.gpuDispatches = dispatchObserver.stop();
     } finally {
       dispatchObserver?.stop();
     }
-    if (output.sampleRate !== 24000 || !output.samples.length || !output.samples.every(Number.isFinite)) {
-      fail('Kokopop probe returned invalid 24 kHz heartnano PCM.');
+    if (output.sampleRate !== config.info.settings.sampleRate || !output.samples.length || !output.samples.every(Number.isFinite)) {
+      fail('Kokopop probe returned PCM that did not match the selected Sano profile.');
     }
     if (options.backend === 'webgpu') {
       const ops = output.webgpuOpAssignments || {};
@@ -233,7 +233,7 @@ async function load(options) {
       }
       report.capability = {
         gpuDispatchVerified: true,
-        description: 'An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded heartnano synthesis.',
+        description: 'An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.',
         hardwareAdapter,
         dispatches,
         schedulerOperations: neural,
@@ -252,10 +252,10 @@ async function generate(chunk) {
     fail('Kokopop requires the exact canonical benchmark text span.');
   }
   const output = await runtime.synthesize(chunk.text, {
-    voice: 'heartnano', speed: 1, seed: (42 + chunk.id) >>> 0, trace: false,
+    voice: config.info.settings.selectedVoice, speed: 1, seed: (42 + chunk.id) >>> 0, trace: false,
   });
-  if (output.sampleRate !== 24000 || !output.samples.length) {
-    fail('Kokopop returned invalid heartnano PCM.');
+  if (output.sampleRate !== config.info.settings.sampleRate || !output.samples.length) {
+    fail('Kokopop returned invalid selected-voice PCM.');
   }
   return { parts: [output.samples], sampleRate: output.sampleRate, completedChunkId: chunk.id };
 }

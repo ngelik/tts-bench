@@ -5,13 +5,13 @@ import { resolve } from 'node:path';
 import { listModels } from '../lib/assets.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { LINNET_WEBGPU_RUNTIME } from '../web/linnet/runtime-policy.mjs';
-import { SANO_HEART_NANO_F32 } from '../web/adapters/sano-kokopop-config.mjs';
+import { SANO_HEART_NANO_F32, SANO_KOKOPOP_PROFILES } from '../web/adapters/sano-kokopop-config.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini','sano-heart-nano-gguf-f32','inflect-micro-v3']);
+  assert.deepEqual(models.map(model => model.id), ["paradee", "phonon", "leokani-7m", "leokani-4.5m", "pivo-curated", "woof", "piper-en-gb-southern-english-female-low", "supertonic-3", "kokoro-82m", "mms-english", "kitten-nano-0.8", "sano-amy", "inflect-micro-v2", "lfm3-audio-2b-gguf", "lfm3-omni-2b-gguf", "lfm3-audio-2b-fusor-q7-cpu", "lfm3-omni-2b-fusor-q7-cpu", "mach-boom", "pocket-tts-100m-english-int8", "fun-cosyvoice3-0.5b-2512", "audio8-realistic-0.6b-int4", "ming-3.0-tts-0.5b-gguf", "ming-3.0-tts-0.5b-fusor-mix-cpu", "tiny-voca", "sopro-v2-turbo", "supratts-1.0-preview", "klein-tts-x1.5-pro", "linnet-en-35m", "silencio-2", "zonos3-mini", "sano-heart-nano-gguf-f32", "sano-robot-mcu", "sano-trellis", "inflect-atom-v3", "sano-heart-gguf", "sano-amy-gguf", "sano-amy-small-gguf", "sano-amy-1p8m-gguf", "sano-hfc-gguf", "sano-kristin-gguf", "inflect-micro-v3"]);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -105,11 +105,11 @@ test('catalog entries match the pinned browser backends', () => {
   for (const id of ['lfm3-audio-2b-gguf','lfm3-omni-2b-gguf']) {
     const m=models.find(model=>model.id===id);assert.deepEqual(m.backends,['webgpu']);assert.equal(m.support.languageCount,18);assert.equal(m.support.voiceCount,null);
   }
-  const microV3=models.find(model=>model.id==='inflect-micro-v3');
-  assert.deepEqual(microV3.backends,['cpu','webgpu']);
-  assert.equal(microV3.modelRevision,'c1a7db6ef44c931623fc2028cb0409659b83156c');
-  assert.deepEqual([microV3.support.voiceCount,microV3.support.bundledVoiceCount,microV3.support.languageCount],[6,1,1]);
-  assert.equal(microV3.license.requiresAcceptance,false);
+  const microV3 = models.find(model => model.id === 'inflect-micro-v3');
+  assert.deepEqual(microV3.backends, ['cpu', 'webgpu']);
+  assert.equal(microV3.modelRevision, 'c1a7db6ef44c931623fc2028cb0409659b83156c');
+  assert.deepEqual([microV3.support.voiceCount, microV3.support.bundledVoiceCount, microV3.support.languageCount], [6, 1, 1]);
+  assert.equal(microV3.license.requiresAcceptance, false);
 });
 
 test('Piper has voice and lineage cards plus immutable cache-only runtime pins', async () => {
@@ -179,4 +179,33 @@ test('asset lock pins content and permits only identical shared runtime targets'
   assert.equal(lock.models['leokani-4.5m'].license.requiresAcceptance, true);
   assert.equal(lock.models.woof.license.requiresAcceptance, true);
   assert.equal(lock.models['leokani-4.5m'].assets.find(asset => asset.id === 'leokani-4-5m-config').sourcePath, 'web/data/leokani/config-4.5m.json');
+});
+
+
+test('Robot and Trellis have complete separate official browser closures', () => {
+  for (const [id, script, bytes] of [['sano-robot-mcu','snt_tts.js',679832],['sano-trellis','snt_trellis.js',3982096]]) {
+    const m = getAssetLock().models[id];
+    assert.deepEqual(m.backends, ['cpu']);
+    assert.equal(m.support.voiceCount, 1);
+    assert.equal(m.support.languageCount, 1);
+    assert.equal(m.assets.filter(a=>a.kind==='model-weights').reduce((n,a)=>n+a.bytes,0),bytes);
+    for (const file of ['snt_g2p.js','snt_g2p.wasm','snt_g2p.data',script,script.replace('.js','.wasm')]) {
+      assert.ok(m.assets.some(a=>a.target.endsWith('/'+file)),`${id}: ${file}`);
+    }
+    assert.ok(m.assets.every(a=>a.url.includes(m.modelRevision)));
+  }
+});
+
+test('each Kokopop voice has one individually pinned GGUF and the shared verified runtime', () => {
+  for (const [id, profile] of Object.entries(SANO_KOKOPOP_PROFILES)) {
+    const lock = getAssetLock().models[id];
+    const models = lock.assets.filter(a => a.kind === 'model-weights');
+    assert.equal(models.length, 1);
+    assert.equal('/' + models[0].target, profile.model.url);
+    assert.equal(models[0].sha256, profile.model.sha256);
+    assert.equal(models[0].bytes, profile.model.bytes);
+    assert.deepEqual(lock.runtime.files.map(a => [a.target,a.bytes,a.sha256]), profile.runtime.files.map(a => [a.target,a.bytes,a.sha256]));
+    assert.equal(lock.support.voiceCount, 1);
+    assert.equal(lock.support.bundledVoiceCount, 1);
+  }
 });

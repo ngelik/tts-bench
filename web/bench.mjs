@@ -21,16 +21,18 @@ import { createKokoroAdapter } from './adapters/kokoro.mjs';
 import { createMMSAdapter } from './adapters/mms.mjs';
 import { createKittenAdapter } from './adapters/kitten.mjs';
 
+import { createSanoRobotTrellisAdapter } from './adapters/sano-robot-trellis.mjs';
 import { createSanoAdapter } from './adapters/sano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
 import { createInflectAdapter } from './adapters/inflect.mjs';
 import { createInflectMicroV3Adapter } from './adapters/inflect-micro-v3.mjs';
+import { createInflectAtomAdapter } from './adapters/inflect-atom.mjs';
 import { createSilencio2Adapter } from './adapters/silencio2.mjs';
 import { createKleinAdapter } from './adapters/klein.mjs';
 import { createZonos3Adapter } from './adapters/zonos3.mjs';
 import { createSanoKokopopAdapter } from './adapters/sano-kokopop.mjs';
-import { SANO_HEART_NANO_F32 } from './adapters/sano-kokopop-config.mjs';
+import { SANO_KOKOPOP_PROFILES } from './adapters/sano-kokopop-config.mjs';
 
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
@@ -60,13 +62,16 @@ const FACTORIES = {
   'mms-english': createMMSAdapter,
   'kitten-nano-0.8': createKittenAdapter,
   'sano-amy': createSanoAdapter,
+  'sano-robot-mcu': () => createSanoRobotTrellisAdapter('sano-robot-mcu'),
+  'sano-trellis': () => createSanoRobotTrellisAdapter('sano-trellis'),
   'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
   'inflect-micro-v3': createInflectMicroV3Adapter,
+  'inflect-atom-v3': createInflectAtomAdapter,
   'silencio-2': createSilencio2Adapter,
   'klein-tts-x1.5-pro': createKleinAdapter,
   'zonos3-mini': createZonos3Adapter,
-  'sano-heart-nano-gguf-f32': () => createSanoKokopopAdapter(SANO_HEART_NANO_F32),
+  ...Object.fromEntries(Object.entries(SANO_KOKOPOP_PROFILES).map(([id, profile]) => [id, () => createSanoKokopopAdapter(profile)])),
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
 let canonical = null;

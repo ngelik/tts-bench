@@ -181,7 +181,7 @@ export function validateResult(d, { publication = false } = {}) {
     check(['measured','unsupported','error'].includes(c.status) && (c.reason===null || text(c.reason,2000)),'Invalid status/reason');
     check(text(c.voice,150)&&text(c.precision,150)&&object(c.settings),'Voice, precision and settings are required');
     validateCapability(c.capability);
-    const requiresKokopopGpuEvidence=d.origin==='native'&&c.model==='sano-heart-nano-gguf-f32'&&c.backendRequested==='webgpu'&&c.status==='measured';
+    const requiresKokopopGpuEvidence=d.origin==='native'&&['sano-heart-nano-gguf-f32','sano-heart-gguf','sano-amy-gguf','sano-amy-small-gguf','sano-amy-1p8m-gguf','sano-hfc-gguf','sano-kristin-gguf'].includes(c.model)&&c.backendRequested==='webgpu'&&c.status==='measured';
     if(requiresKokopopGpuEvidence){
       const proof=c.capability,adapter=proof.hardwareAdapter,operations=proof.schedulerOperations;
       check(proof.gpuDispatchVerified===true,'Kokopop WebGPU results require verified GPU dispatch');
