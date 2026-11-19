@@ -6,6 +6,7 @@ on:
       - 'tools/export-inflect-mini-v3.py'
       - 'tools/inflect-mini-v3-conversion.lock.json'
       - 'tools/inflect-mini-v3-export-requirements.txt'
+      - 'tools/check-inflect-mini-v3-export.mjs'
       - 'web/inflect-mini-v3/source-dsp.mjs'
       - 'web/inflect-mini-v3/source-dsp-cli.mjs'
       - 'web/workers/inflect-mini-v3.mjs'
@@ -41,7 +42,11 @@ jobs:
           OMP_NUM_THREADS: '1'
           OPENBLAS_NUM_THREADS: '1'
           MKL_NUM_THREADS: '1'
-        run: python tools/export-inflect-mini-v3.py --download
+        run: python tools/export-inflect-mini-v3.py --download --allow-waveform-drift
+      - name: Verify locked browser-port graphs and complete native parity diagnostics
+        env:
+          INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: node tools/check-inflect-mini-v3-export.mjs
       - name: Upload compact strict-parity diagnostics (no generated graphs)
         if: always()
         uses: actions/upload-artifact@v4
