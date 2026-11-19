@@ -15,6 +15,7 @@ from pathlib import Path
 import sys
 
 SOURCE_REVISION = "c1a7db6ef44c931623fc2028cb0409659b83156c"
+UPSTREAM_RELEASE_SCHEMA = "inflect-english-release-candidate-v2"
 WEIGHTS_SHA256 = "e8121dcec34ea9560c785ba4608d5fa13e1b4d02288f0b76e22bb5d2a44ef328"
 SAMPLE_RATE = 24_000
 VOICE = "cassidy"
@@ -46,7 +47,7 @@ def load_model(source: Path):
     model_root = root / "models" / "micro"
     pinned_file(model_root, "weights.pt", WEIGHTS_SHA256)
     release = json.loads(pinned_file(root, "release-manifest.json").read_text(encoding="utf-8"))
-    if release.get("schema") != "inflect-fastmicro24k-phonemes-v1":
+    if release.get("schema") != UPSTREAM_RELEASE_SCHEMA:
         raise ValueError("Upstream release schema does not match the pinned Micro v3 export")
     for relative, digest in release.get("files", {}).items():
         if not isinstance(digest, str) or len(digest) != 64:
