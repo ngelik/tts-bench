@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+  "conditions": "Native Apple M1 Pro 8 CPU cores/16 GiB, preserved headed Chrome 157.0.8103.40; exact public tested source; one excluded full English 20k/93-span warmup plus five scored articles; no RSS/cached measurement. Separate individual converted Kokopop F16,F32 profile, voice amy-1p1m, 22050 Hz. Speed1/base seed42+canonical span ID; pinned native LONG_FORM normalization/internal segmentation, pauses/crossfade and internal seeds retained. CPU then WebGPU per profile; separate fresh browser profile and shared compute lock per cell. No skipped input symbols across all93 audited spans. Native component substitutions to schwa are preserved: {\"duration\": [{\"sourceId\": 144, \"symbol\": \"̩\", \"codepoints\": [\"U+0329\"], \"replacementId\": 59, \"replacementSymbol\": \"ə\", \"count\": 5}, {\"sourceId\": 150, \"symbol\": \"\\\"\", \"codepoints\": [\"U+0022\"], \"replacementId\": 59, \"replacementSymbol\": \"ə\", \"count\": 52}], \"acoustic\": [{\"sourceId\": 150, \"symbol\": \"\\\"\", \"codepoints\": [\"U+0022\"], \"replacementId\": 59, \"replacementSymbol\": \"ə\", \"count\": 52}]}. This is frontend behavior, not an intelligibility claim; original output retained for listening. Counts are separate untimed diagnostic evidence, no altered inference runtime.",
+  "cells": [
+    {
+      "model": "sano-amy-small-gguf",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 120,
+      "resources": false
+    }
+  ]
+}

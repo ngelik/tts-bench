@@ -229,6 +229,64 @@
       }
     },
     {
+      "resultId": "2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c",
+      "model": "inflect-atom-v3",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu.wav",
+        "sha256": "259d607633a9131c44d12dfad29199e262c2a448df3170c87ea13ccb9ffb3fb9",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu-full.wav",
+        "sha256": "d4379a6f165ced40acc06f5fc92620ef9f5975b0f683a84984af1c368f0b8111",
+        "bytes": 60318644
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a",
+      "model": "inflect-atom-v3",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a--inflect-atom-v3--webgpu.wav",
+        "sha256": "874d88644bb118eb9a63421856a170de4b979b3737b57ce2fd4da6596192f4b2",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a--inflect-atom-v3--webgpu-full.wav",
+        "sha256": "2f43df7394183d579f4313db4740139332485191d73f2db877605a1fe50a7aa2",
+        "bytes": 60318644
+      }
+    },
+    {
       "resultId": "2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6",
       "model": "inflect-micro-v2",
       "backend": "cpu",
@@ -1684,6 +1742,64 @@
         "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0--sano-amy--cpu-full.wav",
         "sha256": "426e3661c303c735314241ca11cdb11de92dfabcdefe95ea828a03bdab98988b",
         "bytes": 53049900
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0",
+      "model": "sano-heart-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "language": "en",
+      "attribution": "sanoTTS Heart (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu.wav",
+        "sha256": "d0349bee126599dd82b83531a67d1f8dd37a5e42bf96eabda6940db963e644d4",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu-full.wav",
+        "sha256": "0103ce7493186870b92a04e0ae69fb61ad1e07717725b3fae7e0970e45ad1da6",
+        "bytes": 63840636
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6",
+      "model": "sano-heart-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "language": "en",
+      "attribution": "sanoTTS Heart (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu.wav",
+        "sha256": "3771e5e54ccd54ffb14209df38fdd1e107acf93a377f0f3f6927fbfbde607fbc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu-full.wav",
+        "sha256": "5ed6b504bd66953ac523e536197654e29e2ade8de55fcee9b11bf903cecf8966",
+        "bytes": 63840124
       }
     },
     {
