@@ -70,11 +70,11 @@ jobs:
           INFLECT_MINI_EXPORT_OUTCOME: ${{ steps.export.outcome }}
         run: node tools/stage-inflect-mini-v3-diagnostic.mjs
       - name: Verify the registered profile through the benchmark harness
-        env:
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: |
           node bin/bench.mjs assets fetch --model inflect-mini-v3-browser-port
           node bin/bench.mjs assets verify --model inflect-mini-v3-browser-port
+          # The harness requires Chromium's sandbox; use the runner-installed
+          # Chrome with its system sandbox helper instead of the unpacked test binary.
           xvfb-run -a node bin/bench.mjs run --model inflect-mini-v3-browser-port --backend cpu --smoke --note 'Hosted registration smoke; not a score'
       - name: Run real hosted Chrome frontend audit and full-article CPU browser-port diagnostic
         env:
