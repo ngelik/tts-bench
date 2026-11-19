@@ -6,6 +6,7 @@ on:
       - 'tools/build-sano-kokopop-webgpu.sh'
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/build-sano-size-models.py'
+      - 'tools/test_sano_size_builder.py'
       - 'docs/sano-kokopop-size-pins.json'
       - 'tools/sano-kokopop-browser-smoke.mjs'
       - 'tools/check-sano-kokopop-harness-smoke.mjs'
@@ -32,6 +33,7 @@ on:
       - 'tools/build-sano-kokopop-webgpu.sh'
       - 'tools/build-sano-kokopop-manifest.mjs'
       - 'tools/build-sano-size-models.py'
+      - 'tools/test_sano_size_builder.py'
       - 'docs/sano-kokopop-size-pins.json'
       - 'tools/sano-kokopop-browser-smoke.mjs'
       - 'tools/check-sano-kokopop-harness-smoke.mjs'
@@ -88,6 +90,8 @@ jobs:
           python-version: '3.13'
       - name: Install pinned build prerequisites
         run: sudo apt-get update && sudo apt-get install -y ninja-build
+      - name: Test interrupted and corrupt model-cache recovery
+        run: python tools/test_sano_size_builder.py
       - name: Build Kokopop WebGPU runtime and convert exact heartnano Q8 sources
         env:
           KOKOPOP_SOURCE: ${{ github.workspace }}/.cache/sano-kokopop-build/upstream
