@@ -7,23 +7,31 @@ on:
       - '.github/workflows/inflect-mini-v3-webgpu-diagnostic.yml'
       - 'assets.lock.json'
       - 'tools/export-inflect-mini-v3.py'
+      - 'tools/inflect-mini-v3-export-requirements.txt'
       - 'tools/inflect-mini-v3-conversion.lock.json'
       - 'tools/stage-inflect-mini-v3-diagnostic.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - 'web/adapters/inflect-mini-v3.mjs'
+      - 'web/inflect-mini-v3/**'
+      - 'web/inflect-micro-v3/**'
+      - 'web/klein/**'
       - 'web/workers/inflect-mini-v3.mjs'
       - 'web/workers/gpu-probe.mjs'
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
-  physical-webgpu-diagnostic:
-    runs-on: macos-15
+  build-pinned-graphs:
+    runs-on: ubuntu-24.04
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
           fetch-depth: 0
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
@@ -35,19 +43,14 @@ jobs:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: tools/inflect-mini-v3-export-requirements.txt
-      - name: Confirm installed Chrome and Apple hardware runner
-        run: |
-          test -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-          sw_vers
-          system_profiler SPDisplaysDataType
-      - name: Install pinned browser, runtime and exporter dependencies
+      - name: Install pinned graph-export dependencies
         run: |
           npm ci --ignore-scripts
-          python -m pip install --disable-pip-version-check 'torch==2.11.0'
+          python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu 'torch==2.11.0+cpu'
           python -m pip install --disable-pip-version-check -r tools/inflect-mini-v3-export-requirements.txt
-      - name: Fetch the locked local G2P and ONNX Runtime CPU assets
+      - name: Fetch the pinned G2P input used by native parity verification
         run: npm run assets -- fetch --model klein-tts-x1.5-pro
-      - name: Export the exact pinned graphs for a separate GPU diagnostic
+      - name: Export exact locked graphs on the pinned Linux CPU runtime
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           HF_HUB_DISABLE_TELEMETRY: '1'
@@ -56,14 +59,53 @@ jobs:
           OPENBLAS_NUM_THREADS: '1'
           MKL_NUM_THREADS: '1'
         run: python tools/export-inflect-mini-v3.py --download --allow-waveform-drift
-      - name: Stage and verify generated ONNX assets
+      - name: Verify generated graph files against the registered asset lock
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           INFLECT_MINI_EXPORT_OUTCOME: success
         run: |
           node tools/stage-inflect-mini-v3-diagnostic.mjs
-          npm run assets -- fetch --model inflect-mini-v3-browser-port
-          npm run assets -- verify --model inflect-mini-v3-browser-port
+          npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx --accept-license
+          npm run assets -- verify --model inflect-mini-v3-browser-port --accept-license
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: inflect-mini-v3-locked-graphs-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/inflect-mini-v3-onnx/
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+
+  physical-webgpu-diagnostic:
+    needs: build-pinned-graphs
+    runs-on: macos-15
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: inflect-mini-v3-locked-graphs-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .cache/inflect-mini-v3-onnx
+      - name: Confirm installed Chrome and Apple hardware runner
+        run: |
+          test -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+          sw_vers
+          system_profiler SPDisplaysDataType
+      - name: Install the pinned browser runtime
+        run: npm ci --ignore-scripts
+      - name: Import and verify the exact locked graph artifact and runtime assets
+        run: |
+          node tools/stage-inflect-mini-v3-diagnostic.mjs
+          npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx --accept-license
+          npm run assets -- fetch --model inflect-mini-v3-browser-port --accept-license
+          npm run assets -- verify --model inflect-mini-v3-browser-port --accept-license
       - name: Probe real model dispatch on Apple WebGPU
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}

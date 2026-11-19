@@ -13,6 +13,23 @@ const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const sourceCommit = process.env.INFLECT_MINI_SOURCE_COMMIT
   || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
 assert.match(sourceCommit, /^[0-9a-f]{40}$/, 'diagnostic is bound to an immutable source commit');
+const assetLockBytes = await readFile(resolve(root, 'assets.lock.json'));
+const assetLock = JSON.parse(assetLockBytes.toString('utf8'));
+const registeredModel = assetLock.models?.['inflect-mini-v3-browser-port'];
+assert.ok(registeredModel, 'registered Mini browser-port model exists in the asset lock');
+const stagedModel = JSON.parse(await readFile(resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/staged-model.json'), 'utf8'));
+assert.equal(stagedModel.sourceCommit, sourceCommit, 'generated graph artifact matches the diagnostic source pin');
+assert.equal(stagedModel.modelRevision, 'fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6');
+const generatedFiles = new Map(stagedModel.files.map(file => [file.path.split('/').at(-1), file]));
+const modelAssets = registeredModel.assets.filter(asset => asset.generated).map(asset => {
+  const filename = asset.generated.artifactPath.split('/').at(-1);
+  const generated = generatedFiles.get(filename);
+  assert.ok(generated, `build manifest contains ${filename}`);
+  assert.equal(generated.bytes, asset.bytes, `${filename} size matches the public lock`);
+  assert.equal(generated.sha256, asset.sha256, `${filename} digest matches the public lock`);
+  return { id: asset.id, target: asset.target, bytes: generated.bytes, sha256: generated.sha256 };
+});
+assert.equal(modelAssets.length, 6, 'all six registered generated model assets are verified');
 const packageJson = JSON.parse(await readFile(resolve(root, 'node_modules/onnxruntime-web/package.json'), 'utf8'));
 const packageLock = JSON.parse(await readFile(resolve(root, 'package-lock.json'), 'utf8'));
 const lockedRuntime = packageLock.packages?.['node_modules/onnxruntime-web'];
@@ -166,6 +183,9 @@ try {
     sourceCommit,
     model: 'inflect-mini-v3-browser-port',
     modelRevision: 'fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6',
+    assetLockSha256: sha256(assetLockBytes),
+    buildManifest: stagedModel.buildManifest,
+    modelAssets,
     packageLockIntegrity: lockedRuntime.integrity,
     gpuRuntime,
     fixture: { id: 'english-20k-v1', articleSha256: sha256(articleBytes), canonicalChunkId: chunk.id,
