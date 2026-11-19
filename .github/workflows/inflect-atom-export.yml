@@ -21,6 +21,9 @@ jobs:
           OMP_NUM_THREADS: '1'
           OPENBLAS_NUM_THREADS: '1'
           MKL_NUM_THREADS: '1'
+      - run: |
+          g++ -std=c++17 -O3 -ffp-contract=off -shared -fPIC tools/inflect-atom/dsp.cpp -o /tmp/atom-dsp.so
+          python tools/inflect-atom/check-dsp.py generated/inflect-atom /tmp/atom-dsp.so
       - uses: actions/upload-artifact@v4
         if: always()
         with:

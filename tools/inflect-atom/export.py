@@ -41,7 +41,7 @@ class Encoder(torch.nn.Module):
         encoded = self.model._encode(ids, lengths, speaker)
         log_duration = self.model.duration_predictor(encoded).squeeze(-1).clamp(-4.0, 8.0)
         pitch = self.model.pitch_predictor(encoded).squeeze(-1)
-        durations = torch.round(torch.expm1(log_duration).clamp_min(1.0)).long()
+        durations = torch.round((torch.exp(log_duration) - 1.0).clamp_min(1.0)).long()
         return encoded, durations, pitch
 
 
