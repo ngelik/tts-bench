@@ -40,3 +40,17 @@ test('Atom compiled runtime identity satisfies the shared cache contract', async
     if (savedCaches === undefined) delete globalThis.caches; else globalThis.caches = savedCaches;
   }
 });
+
+test('Atom provider metadata permits genuine paired reports without hiding other settings', async () => {
+  const { atomProviderSettings } = await import('../web/inflect-atom/constants.mjs');
+  const { pairedWarm } = await import('../tools/result-selection.mjs');
+  const asset = { id: 'atom-test-weight', sha256: 'a'.repeat(64), bytes: 1, kind: 'model-weights' };
+  const model = { assets: [asset], runtime: { files: [] } };
+  const result = { origin: 'native', protocol: { repetitions: 5 }, fixture: {}, source: { manifestSha256: 'b'.repeat(64) }, environment: {}, assets: [asset] };
+  const base = { model: 'inflect-atom-v3', status: 'measured', trials: Array.from({ length: 5 }, () => ({})), voice: 'Cassidy', precision: 'FP32' };
+  const cpu = { result, cell: { ...base, settings: atomProviderSettings({ seed: 7717 }, ['wasm']) } };
+  const gpu = { result, cell: { ...base, settings: atomProviderSettings({ seed: 7717 }, ['webgpu', 'wasm']) } };
+  assert.equal(pairedWarm(cpu, gpu, model), true);
+  gpu.cell.settings.seed = 7718;
+  assert.equal(pairedWarm(cpu, gpu, model), false);
+});

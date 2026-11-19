@@ -1,5 +1,5 @@
 import { fetchModelAsset } from '../cache-model-asset.mjs';
-import { ATOM_ASSET_REVISION } from '../inflect-atom/constants.mjs';
+import { ATOM_ASSET_REVISION, atomProviderSettings } from '../inflect-atom/constants.mjs';
 import { phonemizeEnglish } from '../inflect-atom/frontend.mjs';
 import { dispatchProbe } from './gpu-probe.mjs';
 const ROOT = '/models/inflect-atom-v3/';
@@ -146,7 +146,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
       } finally { dispatches = hook?.stop() ?? 0; }
       if (backend === 'webgpu' && !dispatches) { await dispose(); return unsupported('No actual WebGPU decoder compute dispatch observed'); }
     }
-    return { ...INFO, settings: { ...INFO.settings, executionProviders: providers, encoderExecutionProviders: ['wasm'], decoderExecutionProviders: providers }, status: 'measured', backendEffective: backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm', ...(adapter ? { gpu: adapter.info?.description || adapter.info?.vendor || 'Hardware WebGPU' } : {}), capability: { gpuDispatchVerified: backend === 'cpu' ? null : probe ? dispatches > 0 : null, description: backend === 'cpu' ? 'One-thread WASM acoustic inference and local WASM DSP/frontend' : `Convolution decoder uses WebGPU with WASM fallback; GRU encoder and DSP remain WASM. Untimed dispatches: ${dispatches}.` } };
+    return { ...INFO, settings: atomProviderSettings(INFO.settings, providers), status: 'measured', backendEffective: backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm', ...(adapter ? { gpu: adapter.info?.description || adapter.info?.vendor || 'Hardware WebGPU' } : {}), capability: { gpuDispatchVerified: backend === 'cpu' ? null : probe ? dispatches > 0 : null, description: backend === 'cpu' ? 'One-thread WASM acoustic inference and local WASM DSP/frontend' : `Convolution decoder uses WebGPU with WASM fallback; GRU encoder and DSP remain WASM. Untimed dispatches: ${dispatches}.` } };
   } catch (error) { await dispose().catch(() => {}); throw error; }
 }
 async function dispose() {
