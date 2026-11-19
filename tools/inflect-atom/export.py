@@ -107,9 +107,11 @@ def main(output):
         text = article[span["start"]:span["end"]]
         phones, _ = frontend(text)
         assert phones and len(phones) <= 510
-        assert all(p in runtime.vocab for p in phones)
         frontend_cases.append({"id": len(frontend_cases), "text": text, "phonemes": phones})
     write_json(output / "frontend-parity.json", frontend_cases)
+    unknown = [{**case, "unknown": sorted(set(case["phonemes"]) - set(runtime.vocab))} for case in frontend_cases if set(case["phonemes"]) - set(runtime.vocab)]
+    write_json(output / "frontend-unknown.json", unknown)
+    assert not unknown, f"Official espeak-light frontend emits unsupported phones: {[(case['id'], case['unknown']) for case in unknown]}"
     ids = torch.tensor([[0, *[runtime.vocab[p] for p in frontend_cases[0]["phonemes"]], 0]], dtype=torch.long)
     speaker = torch.tensor([2], dtype=torch.long)  # Official Cassidy preset.
     with torch.inference_mode():
