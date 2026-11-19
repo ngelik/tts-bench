@@ -1,0 +1,37 @@
+{
+  "kind": "authorized-pending-cell-order-change",
+  "sourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+  "originalPrivateHandoffSha256": "9d514b90c7c0fd4538065ffe483e6d6afcba388d4b85e07423060e90d03b3ff3",
+  "changedAt": "2026-11-19T07:37:23.688970+00:00",
+  "actualOrderOfOriginalIndexes": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    7,
+    9,
+    11,
+    4,
+    6,
+    8,
+    10
+  ],
+  "originalCellKeys": [
+    "01-sano-heart-gguf-cpu",
+    "02-sano-heart-gguf-webgpu",
+    "03-sano-amy-gguf-cpu",
+    "04-sano-amy-gguf-webgpu",
+    "05-sano-amy-small-gguf-cpu",
+    "06-sano-amy-small-gguf-webgpu",
+    "07-sano-amy-1p8m-gguf-cpu",
+    "08-sano-amy-1p8m-gguf-webgpu",
+    "09-sano-hfc-gguf-cpu",
+    "10-sano-hfc-gguf-webgpu",
+    "11-sano-kristin-gguf-cpu",
+    "12-sano-kristin-gguf-webgpu"
+  ],
+  "activeCellPreserved": "03-sano-amy-gguf-cpu",
+  "originalPlansAndNativeNotesPreserved": true,
+  "explanation": "The original planned CPU-then-GPU sequencing statements were superseded for unstarted cells only. Missing GPU timings were prioritized; every matched CPU cell remains scheduled. Source, asset bytes, repetitions and active inference were unchanged."
+}
