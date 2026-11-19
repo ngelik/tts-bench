@@ -65,12 +65,15 @@ emcmake cmake -G Ninja -S "$SOURCE" -B "$BUILD" \
   -DENGINE_BUILD_TESTS=OFF -DGGML_NATIVE=OFF -DGGML_CPU_ALL_VARIANTS=OFF \
   "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread $MAPS" \
   "-DCMAKE_C_FLAGS=-O3 -msimd128 -pthread $MAPS" \
-  "-DCMAKE_EXE_LINKER_FLAGS=-pthread -sPTHREAD_POOL_SIZE=12 -sPTHREAD_POOL_SIZE_STRICT=2 $MAPS"
+  "-DCMAKE_EXE_LINKER_FLAGS=-pthread -sPTHREAD_POOL_SIZE=12 -sPTHREAD_POOL_SIZE_STRICT=2 --emit-symbol-map $MAPS"
 cmake --build "$BUILD" --target bench_zonos3_cpu --parallel "$JOBS"
 
 mkdir -p "$OUTPUT"
 cp "$BUILD/bin/bench_zonos3_cpu.js" "$OUTPUT/bench_zonos3_cpu.js"
 cp "$BUILD/bin/bench_zonos3_cpu.wasm" "$OUTPUT/bench_zonos3_cpu.wasm"
+cp "$BUILD/bin/bench_zonos3_cpu.js.symbols" "$OUTPUT/bench_zonos3_cpu.js.symbols"
+[[ -s "$OUTPUT/bench_zonos3_cpu.js.symbols" ]] || { echo "Emscripten symbol map was not generated" >&2; exit 1; }
+sha256sum "$OUTPUT/bench_zonos3_cpu.js.symbols"
 ZONOS3_CPU_AUDIO_CPP_SOURCE="$SOURCE" ZONOS3_CPU_EMSDK="$SDK" \
   node "$ROOT/tools/build-zonos3-cpu-notices.mjs" --out "$OUTPUT/THIRD-PARTY-NOTICES.txt"
 node "$ROOT/tools/check-zonos3-cpu-build.mjs" "$OUTPUT" "$SOURCE" "$SDK"
