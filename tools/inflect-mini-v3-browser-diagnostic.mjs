@@ -26,6 +26,7 @@ assert.equal(chunks.map(chunk => chunk.text).join(''), article);
 
 const server = await startServer(root);
 let browser;
+let browserResult = null;
 let serverStats = null;
 try {
   browser = await chromium.launch({
@@ -41,7 +42,7 @@ try {
   page.on('request', request => requests.push(request.url()));
   await page.goto(server.url, { waitUntil: 'domcontentloaded' });
 
-  const browserResult = await page.evaluate(async ({ chunks: articleChunks }) => {
+  browserResult = await page.evaluate(async ({ chunks: articleChunks }) => {
     const { prepareMicroText } = await import('/web/inflect-micro-v3/frontend.mjs');
     const { phonemizeMicroEnglish } = await import('/web/inflect-micro-v3/g2p.mjs');
     const revision = 'fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6';
@@ -134,7 +135,7 @@ try {
     return {
       browser: { userAgent: navigator.userAgent, hardwareConcurrency: navigator.hardwareConcurrency,
         webgpuAvailable: Boolean(navigator.gpu), wasm: typeof WebAssembly === 'object' },
-      frontend: { spans: perSpan.length, sourceCharacters: articleChunks.reduce((n, chunk) => n + chunk.characters, 0),
+      frontend: { spanCount: perSpan.length, sourceCharacters: articleChunks.reduce((n, chunk) => n + chunk.characters, 0),
         totalPieces: frontendUtterances, totalPhonemes, maxPieceCharacters: maxTextLength,
         maxPiecePhonemes: maxPhonemeCount, numericEdits, spans: perSpan },
       backend: { status: info.status, effective: info.backendEffective, settings: info.settings,
@@ -144,7 +145,7 @@ try {
   }, { chunks });
 
   serverStats = server.snapshot();
-  assert.equal(browserResult.frontend.spans, 93);
+  assert.equal(browserResult.frontend.spanCount, 93);
   assert.equal(browserResult.frontend.sourceCharacters, 20_000);
   assert.equal(browserResult.generated.length, 3);
   assert.ok(browserResult.generated.every(span => span.firstPcmMs !== null));
@@ -170,7 +171,7 @@ try {
     sourceCommit: staged.sourceCommit,
     exportParityOutcome: staged.exporterOutcome,
     fixture: report.fixture,
-    frontend: { spans: report.frontend.spans, pieces: report.frontend.totalPieces,
+    frontend: { spans: report.frontend.spanCount, pieces: report.frontend.totalPieces,
       phonemes: report.frontend.totalPhonemes, maxPiecePhonemes: report.frontend.maxPiecePhonemes },
     backend: report.backend.effective,
     generated: report.generated,
@@ -185,6 +186,7 @@ try {
     scoreEligible: false,
     sourceCommit: staged.sourceCommit,
     exporterOutcome: staged.exporterOutcome,
+    browserResult,
     error: String(error?.stack || error),
     server: serverStats,
   }, null, 2) + '\n');
