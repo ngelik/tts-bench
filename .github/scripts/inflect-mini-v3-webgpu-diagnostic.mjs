@@ -203,12 +203,15 @@ try {
       const { diagnostics, ...rest } = run;
       return { ...rest, stageSummary: diagnostics ? summarizeDiagnostics(diagnostics) : null };
     }
-    async function runBackend(backend, { waveformInputs = null, keepRawWav = false } = {}) {
+    async function runBackend(backend, { waveformInputs = null, keepRawWav = false,
+      sessionProviders = null, label = backend } = {}) {
       const adapter = createInflectMiniV3Adapter();
       try {
-        const info = await adapter.initialize({ backend, probe: backend === 'webgpu', diagnosticCapture: true,
-          ...(backend === 'webgpu' ? { probeText: 'A short WebGPU diagnostic utterance.' } : {}) });
-        if (info.status !== 'measured') return { status: 'unavailable', backend, info, browser };
+        const requestedBackend = sessionProviders ? 'webgpu' : backend;
+        const info = await adapter.initialize({ backend: requestedBackend, probe: requestedBackend === 'webgpu', diagnosticCapture: true,
+          ...(requestedBackend === 'webgpu' ? { probeText: 'A short WebGPU diagnostic utterance.' } : {}),
+          ...(sessionProviders ? { diagnosticSessionProviders: sessionProviders } : {}) });
+        if (info.status !== 'measured') return { status: 'unavailable', backend: label, info, browser };
         const started = performance.now(); let firstPcmMs = null;
         const chunk = waveformInputs ? { ...canonicalChunk, diagnosticWaveformInputs: waveformInputs } : canonicalChunk;
         const generated = await adapter.generateChunk(chunk, { onFirstPcm: () => { firstPcmMs ??= performance.now() - started; } });
@@ -248,7 +251,7 @@ try {
           rawFloatWavBase64 = btoa(binary);
         }
         const dispatchMatch = /Observed (\d+) WebGPU compute dispatches/.exec(info.capability?.description ?? '');
-        return { status: 'measured', backend, info, generation: { canonicalChunkId: canonicalChunk.id,
+        return { status: 'measured', backend: label, info, generation: { canonicalChunkId: canonicalChunk.id,
           sourceCharacters: canonicalChunk.characters, internalParts: generated.parts.length,
           samples: totalSamples, sampleRate: generated.sampleRate, durationSeconds: totalSamples / generated.sampleRate,
           firstPcmMs, generationMs, min: finiteCount ? min : null, max: finiteCount ? max : null,
@@ -272,12 +275,19 @@ try {
     const cpuWithGpuInputs = await runBackend('cpu', {
       waveformInputs: webgpu.diagnostics.utterances.map(item => item.waveformInputs),
     });
+    const durationWebgpuHybrid = await runBackend('webgpu', {
+      sessionProviders: [['webgpu', 'wasm'], ['wasm'], ['wasm']],
+      label: 'webgpu-duration+wasm-bridge+wasm-waveform',
+      keepRawWav: true,
+    });
     return { status: 'compared', cpu: compactRun(cpu), webgpu: compactRun(webgpu),
       gpuWithCpuInputs: compactRun(gpuWithCpuInputs), cpuWithGpuInputs: compactRun(cpuWithGpuInputs),
+      durationWebgpuHybrid: compactRun(durationWebgpuHybrid),
       comparisons: {
         naturalCpuVsWebgpu: compareRuns(cpu, webgpu),
         sameCpuWaveformInputsCpuVsWebgpu: compareRuns(cpu, gpuWithCpuInputs),
         sameGpuWaveformInputsCpuVsWebgpu: compareRuns(cpuWithGpuInputs, webgpu),
+        cpuVsDurationWebgpuHybrid: compareRuns(cpu, durationWebgpuHybrid),
       },
       pageAdapter: pageAdapterInfo, pageAdapterFallback, browser };
   }, { chunk });
@@ -286,7 +296,7 @@ try {
   const externalRequests = requests.filter(url => !url.startsWith(server.url));
   await mkdir(outputDir, { recursive: true });
   const rawWaveFiles = {};
-  for (const name of ['cpu', 'webgpu']) {
+  for (const name of ['cpu', 'webgpu', 'durationWebgpuHybrid']) {
     const run = result?.[name];
     const encoded = run?.generation?.rawFloatWavBase64;
     if (!encoded) continue;
@@ -330,6 +340,8 @@ try {
   await writeFile(resolve(outputDir, 'verification.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ status: report.status, sourceCommit, model: report.model,
     cpu: report.cpu?.generation, webgpu: report.webgpu?.generation,
+    durationWebgpuHybrid: report.durationWebgpuHybrid?.generation,
+    durationDispatches: report.durationWebgpuHybrid?.dispatches,
     dispatches: report.webgpu?.dispatches, comparisons: report.comparisons,
     reason: report.reason,
     server: serverStats, network: report.network }, null, 2));
@@ -339,8 +351,20 @@ try {
   assert.ok(Number.isInteger(result.webgpu.dispatches) && result.webgpu.dispatches > 0,
     'the WebGPU graph reported actual compute dispatches');
   assert.notEqual(result.pageAdapterFallback, true, 'Chrome did not identify a software WebGPU fallback');
-  assert.equal(result.webgpu.generation.clipped, false,
-    'WebGPU Float32 output is within the PCM range; no clipping or gain is applied');
+  assert.ok(Number.isInteger(result.durationWebgpuHybrid.dispatches) && result.durationWebgpuHybrid.dispatches > 0,
+    'duration-only hybrid verified real WebGPU compute dispatches');
+  assert.equal(result.durationWebgpuHybrid.info.backendEffective,
+    'webgpu-duration+wasm-bridge+wasm-waveform');
+  assert.deepEqual(result.durationWebgpuHybrid.info.settings.sessionExecutionProviders,
+    [['webgpu', 'wasm'], ['wasm'], ['wasm']]);
+  assert.equal(result.durationWebgpuHybrid.generation.clipped, false,
+    'duration-only hybrid Float32 output remains unclipped without gain or clipping');
+  assert.equal(result.comparisons.cpuVsDurationWebgpuHybrid.inputIdentityMatch, true,
+    'CPU and duration-only hybrid use identical text, phones, token IDs and seeds');
+  assert.ok(result.comparisons.sameCpuWaveformInputsCpuVsWebgpu.waveformInputs.every(item => item.comparison.exactEqual),
+    'CPU and GPU waveform graphs were compared with identical CPU inputs');
+  assert.ok(result.comparisons.sameGpuWaveformInputsCpuVsWebgpu.waveformInputs.every(item => item.comparison.exactEqual),
+    'CPU and GPU waveform graphs were compared with identical WebGPU inputs');
   assert.deepEqual(externalRequests, [], 'diagnostic made no off-origin requests');
   assert.deepEqual(consoleErrors, [], 'Chrome reported no page or console errors');
 } catch (error) {

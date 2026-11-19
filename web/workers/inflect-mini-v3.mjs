@@ -46,6 +46,7 @@ let phonemize = null;
 let restoreFetch = null;
 let backendEffective = null;
 let activeNeuralDispatchCount = null;
+let activeNeuralDispatchSessionIndices = null;
 let diagnosticCaptureEnabled = false;
 
 function unsupported(reason) {
@@ -95,7 +96,7 @@ async function runSession(session, feeds, outputNames) {
       inputs[name] = tensor;
       owned.push(tensor);
     }
-    const dispatchHook = session === sessions[2] && activeNeuralDispatchCount !== null
+    const dispatchHook = activeNeuralDispatchSessionIndices?.includes(sessions.indexOf(session))
       ? dispatchProbe()
       : null;
     let outputs;
@@ -207,26 +208,30 @@ function styleFor(phones) {
   return styleTable.slice(begin, begin + STYLE_DIM);
 }
 
-function validateDiagnosticWaveformInputs(inputs, hidden, source, frames) {
+function validateDiagnosticWaveformInputs(inputs) {
   if (!inputs || typeof inputs !== 'object') throw new Error('Inflect Mini diagnostic waveform inputs are malformed.');
-  const expected = {
-    hidden: [1, 512, 2 * frames],
-    style: [1, STYLE_DIM],
-    source_spec: [1, 2 * SOURCE_BINS, source.stftFrames],
-  };
-  for (const [name, dims] of Object.entries(expected)) {
+  const expected = { hidden: [1, 512], style: [1, STYLE_DIM], source_spec: [1, 2 * SOURCE_BINS] };
+  for (const [name, leadingDims] of Object.entries(expected)) {
     const tensor = inputs[name];
     if (tensor?.dtype !== 'float32' || !Array.isArray(tensor.dims)
-        || JSON.stringify(tensor.dims) !== JSON.stringify(dims)
+        || tensor.dims.length !== leadingDims.length + (name === 'style' ? 0 : 1)
+        || !leadingDims.every((dimension, index) => tensor.dims[index] === dimension)
+        || (name !== 'style' && (!Number.isInteger(tensor.dims.at(-1)) || tensor.dims.at(-1) < 1))
         || !(tensor.data instanceof Float32Array)
-        || tensor.data.length !== dims.reduce((product, dimension) => product * dimension, 1)) {
+        || tensor.data.length !== tensor.dims.reduce((product, dimension) => product * dimension, 1)) {
       throw new Error(`Inflect Mini diagnostic ${name} does not match the exact Float32 waveform graph input shape.`);
     }
   }
-  if (JSON.stringify(hidden.dims) !== JSON.stringify(expected.hidden)) {
-    throw new Error('Inflect Mini diagnostic hidden graph clock differs from its waveform inputs.');
+  const hiddenFrames2x = inputs.hidden.dims.at(-1);
+  if (hiddenFrames2x < 4 || hiddenFrames2x % 2 !== 0) {
+    throw new Error('Inflect Mini diagnostic hidden graph clock is not a valid 2x frame sequence.');
   }
-  return inputs;
+  const frames = hiddenFrames2x / 2;
+  const expectedSourceFrames = Math.floor((CLOCK_SAMPLES_PER_FRAME * frames) / SOURCE_HOP) + 1;
+  if (inputs.source_spec.dims[2] !== expectedSourceFrames) {
+    throw new Error('Inflect Mini diagnostic source spectrogram clock does not match its hidden frame sequence.');
+  }
+  return { inputs, frames };
 }
 
 async function synthesizeUtterance(utterance, seed, diagnosticWaveformInputs = null) {
@@ -269,16 +274,17 @@ async function synthesizeUtterance(utterance, seed, diagnosticWaveformInputs = n
     style: { dtype: 'float32', data: style, dims: [1, STYLE_DIM] },
     source_spec: { dtype: 'float32', data: source.sourceSpec, dims: [1, 2 * SOURCE_BINS, source.stftFrames] },
   };
-  const waveformInputs = diagnosticWaveformInputs
-    ? validateDiagnosticWaveformInputs(diagnosticWaveformInputs, bridge.hidden, source, frames)
-    : naturalWaveformInputs;
+  const checkedWaveformInputs = diagnosticWaveformInputs
+    ? validateDiagnosticWaveformInputs(diagnosticWaveformInputs)
+    : { inputs: naturalWaveformInputs, frames };
+  const waveformInputs = checkedWaveformInputs.inputs;
   const generated = await runSession(sessions[2], {
     hidden: { type: 'float32', data: waveformInputs.hidden.data, dims: waveformInputs.hidden.dims },
     style: { type: 'float32', data: waveformInputs.style.data, dims: waveformInputs.style.dims },
     source_spec: { type: 'float32', data: waveformInputs.source_spec.data,
       dims: waveformInputs.source_spec.dims },
   }, ['waveform']);
-  const expectedSamples = CLOCK_SAMPLES_PER_FRAME * frames;
+  const expectedSamples = CLOCK_SAMPLES_PER_FRAME * checkedWaveformInputs.frames;
   if (JSON.stringify(generated.waveform.dims) !== JSON.stringify([1, expectedSamples])
       || generated.waveform.data.length !== expectedSamples) {
     throw new Error('Inflect Mini waveform sample clock differs from its predicted frame count.');
@@ -346,6 +352,7 @@ async function dispose() {
   sessions = [];
   backendEffective = null;
   activeNeuralDispatchCount = null;
+  activeNeuralDispatchSessionIndices = null;
   diagnosticCaptureEnabled = false;
   ort = null;
   vocab = null;
@@ -363,12 +370,20 @@ async function dispose() {
   if (firstError) throw new Error('Inflect Mini session disposal failed: ' + String(firstError?.message ?? firstError));
 }
 
-async function initialize({ backend, probe = false, probeText = 'A short browser speech check.', diagnosticCapture = false }) {
+async function initialize({ backend, probe = false, probeText = 'A short browser speech check.', diagnosticCapture = false,
+  diagnosticSessionProviders = null }) {
   const captureDiagnostics = diagnosticCapture === true;
   // The capability probe is not part of the tensor comparison. Avoid cloning
   // every intermediate result until the actual diagnostic synthesis begins.
   diagnosticCaptureEnabled = false;
   if (!['cpu', 'webgpu'].includes(backend)) return unsupported('Inflect Mini supports explicit CPU/WASM and WebGPU providers only.');
+  if (diagnosticSessionProviders !== null) {
+    const durationOnlyPlan = [['webgpu', 'wasm'], ['wasm'], ['wasm']];
+    if (backend !== 'webgpu' || !probe || !captureDiagnostics
+        || JSON.stringify(diagnosticSessionProviders) !== JSON.stringify(durationOnlyPlan)) {
+      throw new Error('Inflect Mini only permits the pinned duration-only provider plan inside diagnostic mode.');
+    }
+  }
   let adapter = null;
   let gpu = null;
   if (backend === 'webgpu') {
@@ -410,17 +425,22 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     vocab = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(vocabBytes));
     if (!vocab || typeof vocab !== 'object' || Array.isArray(vocab)) throw new Error('Inflect Mini checkpoint vocabulary is malformed.');
     phonemize = phonemizeMicroEnglish;
+    const sessionProviders = diagnosticSessionProviders ?? [executionProviders, executionProviders, executionProviders];
     const sessionOptions = {
-      executionProviders,
       graphOptimizationLevel: 'all',
       ...(backend === 'webgpu' ? { preferredOutputLocation: 'cpu' } : {}),
     };
     // Keep creation serial; some browser providers cannot initialize multiple
     // graph sessions concurrently against one device.
-    sessions.push(await ort.InferenceSession.create(durationBytes, sessionOptions));
-    sessions.push(await ort.InferenceSession.create(bridgeBytes, sessionOptions));
-    sessions.push(await ort.InferenceSession.create(waveformBytes, sessionOptions));
-    backendEffective = backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm';
+    sessions.push(await ort.InferenceSession.create(durationBytes,
+      { ...sessionOptions, executionProviders: sessionProviders[0] }));
+    sessions.push(await ort.InferenceSession.create(bridgeBytes,
+      { ...sessionOptions, executionProviders: sessionProviders[1] }));
+    sessions.push(await ort.InferenceSession.create(waveformBytes,
+      { ...sessionOptions, executionProviders: sessionProviders[2] }));
+    backendEffective = diagnosticSessionProviders
+      ? 'webgpu-duration+wasm-bridge+wasm-waveform'
+      : backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm';
     if (backend === 'webgpu') {
       const actualDevice = await ort.env.webgpu.device;
       const actualAdapter = ort.env.webgpu.adapter;
@@ -439,6 +459,8 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
   let dispatches = 0;
   if (probe) {
     activeNeuralDispatchCount = backend === 'webgpu' ? 0 : null;
+    activeNeuralDispatchSessionIndices = backend !== 'webgpu' ? null
+      : diagnosticSessionProviders ? [0] : [2];
     try {
       const output = await generate({ id: 'inflect-mini-probe', text: probeText });
       if (!output.parts.some(part => part.length > 0)) throw new Error('Inflect Mini untimed capability synthesis returned no PCM.');
@@ -448,6 +470,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     } finally {
       dispatches = activeNeuralDispatchCount ?? 0;
       activeNeuralDispatchCount = null;
+      activeNeuralDispatchSessionIndices = null;
     }
     if (backend === 'webgpu' && dispatches === 0) {
       await dispose();
@@ -459,7 +482,8 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
 
   return {
     ...INFO,
-    settings: { ...INFO.settings, executionProviders },
+    settings: { ...INFO.settings, executionProviders,
+      ...(diagnosticSessionProviders ? { sessionExecutionProviders: diagnosticSessionProviders } : {}) },
     status: 'measured',
     backendEffective,
     ...(backend === 'webgpu' ? { gpu } : {}),
@@ -468,7 +492,9 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
       description: backend === 'cpu'
         ? probe ? 'Explicit one-thread ONNX Runtime Web WASM; an untimed Mini utterance completed.' : 'Explicit one-thread ONNX Runtime Web WASM provider.'
         : probe
-          ? `Observed ${dispatches} WebGPU compute dispatches in the waveform neural graph during untimed Mini synthesis; deterministic source excitation and STFT run in standalone CPU DSP, and WASM handles unsupported neural operators. Dispatch probe is removed before timed work.`
+          ? diagnosticSessionProviders
+            ? `Observed ${dispatches} WebGPU compute dispatches in the duration neural graph during untimed Mini synthesis; the bridge and waveform graph are explicitly WASM, and deterministic source excitation/STFT use standalone CPU DSP. Dispatch probe is removed before timed work.`
+            : `Observed ${dispatches} WebGPU compute dispatches in the waveform neural graph during untimed Mini synthesis; deterministic source excitation and STFT run in standalone CPU DSP, and WASM handles unsupported neural operators. Dispatch probe is removed before timed work.`
           : 'WebGPU + WASM operator fallback configured; no dispatch probe was requested.',
     },
   };
