@@ -524,6 +524,30 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     require(np.allclose(hidden_onnx, native_hidden.numpy(), rtol=6e-4, atol=6e-5),
             "ONNX bridge diverges from native Mini")
 
+    style = style_rows[ids.shape[1] - 3][None, :].detach().cpu().numpy().astype(np.float32)
+    with torch.random.fork_rng(devices=[]):
+        torch.random.default_generator.manual_seed(42)
+        phase_torch = torch.rand((1, phase.shape[1]), dtype=torch.float32)
+        phase_torch[:, 0] = 0
+        noise_torch = torch.randn((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
+    waveform_onnx = waveform_session.run(None, {
+        "hidden": hidden_onnx,
+        "style": style,
+        "f0": f0_onnx,
+        "phase_uniform": phase_torch.numpy(),
+        "harmonic_noise": noise_torch.numpy(),
+    })[0]
+    with torch.random.fork_rng(devices=[]):
+        native = model.synthesize_ids(model.phoneme_ids("həˈloʊ."), VOICE, seed=42)
+    require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
+    require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
+            "ONNX waveform is nonfinite or clipped")
+    waveform_max_error = float(np.max(np.abs(waveform_onnx[0] - native["audio"].numpy())))
+    waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
+    require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
+            "ONNX waveform diverges from native Mini: max=" + str(waveform_max_error)
+            + " rms=" + str(waveform_rms_error))
+
     # Exercise genuinely dynamic token and frame axes as well as the export
     # trace shape. A repeated valid vowel sequence is not used as audio evidence.
     dynamic_ids = torch.tensor([model.phoneme_ids("a" * 24)], dtype=torch.long)
@@ -575,30 +599,6 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     require(dynamic_waveform_max_error <= 2e-3 and dynamic_waveform_rms_error <= 2e-4,
             "Dynamic ONNX waveform diverges from native Mini: max="
             + str(dynamic_waveform_max_error) + " rms=" + str(dynamic_waveform_rms_error))
-
-    style = style_rows[ids.shape[1] - 3][None, :].detach().cpu().numpy().astype(np.float32)
-    with torch.random.fork_rng(devices=[]):
-        torch.random.default_generator.manual_seed(42)
-        phase_torch = torch.rand((1, phase.shape[1]), dtype=torch.float32)
-        phase_torch[:, 0] = 0
-        noise_torch = torch.randn((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
-    waveform_onnx = waveform_session.run(None, {
-        "hidden": hidden_onnx,
-        "style": style,
-        "f0": f0_onnx,
-        "phase_uniform": phase_torch.numpy(),
-        "harmonic_noise": noise_torch.numpy(),
-    })[0]
-    with torch.random.fork_rng(devices=[]):
-        native = model.synthesize_ids(model.phoneme_ids("həˈloʊ."), VOICE, seed=42)
-    require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
-    require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
-            "ONNX waveform is nonfinite or clipped")
-    waveform_max_error = float(np.max(np.abs(waveform_onnx[0] - native["audio"].numpy())))
-    waveform_rms_error = float(np.sqrt(np.mean((waveform_onnx[0] - native["audio"].numpy()) ** 2)))
-    require(waveform_max_error <= 2e-3 and waveform_rms_error <= 2e-4,
-            "ONNX waveform diverges from native Mini: max=" + str(waveform_max_error)
-            + " rms=" + str(waveform_rms_error))
 
     files = []
     for path in (duration_path, bridge_path, waveform_path, style_path, vocab_path):
