@@ -31,7 +31,8 @@ function phones(text) {
 function pieces(text) {
   const full = phones(text);
   if (full.length <= 510) return [full];
-  const words = text.match(/\S+\s*/gu) ?? [];
+  const words = text.match(/\s*\S+\s*/gu) ?? [];
+  if (words.join('') !== text) throw new Error('Atom splitter did not preserve complete input');
   const output = [];
   let current = '';
   let currentPhones = '';
