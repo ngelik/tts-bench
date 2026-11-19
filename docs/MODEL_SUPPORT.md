@@ -293,3 +293,41 @@ Current M1 Pro measurements, per-backend reports and the validation-only WebGPU 
 Supported voices: **27**. Bundled voices: **1**. Supported languages: **43**.
 
 The pinned model publishes 27 preset voices, 43 languages and 44 server locale codes. This configuration stages and benchmarks Imogen (English, British female) only. CPU/WASM and WebGPU use the same pinned speaker embedding; the browser benchmark loads Imogen's reference codes and embedding but skips the unused preview clip. See [configuration and asset closure](ZONOS3_MINI.md), the [pinned model card](https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md), and the [pinned upstream browser runtime](https://github.com/Zyphra/ZONOS3-Mini/tree/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web).
+
+## Additional individual Kokopop Sano profiles
+
+<a id="sano-heart-gguf"></a>
+
+### sanoTTS Heart (Kokopop F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `heart` at 24,000 Hz is selected. This separate converted profile contains 2,272,145 source synthesis parameters and F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-amy-gguf"></a>
+
+### sanoTTS Amy 1.45M (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `amy` at 22,050 Hz is selected. This separate converted profile contains 1,454,284 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-amy-small-gguf"></a>
+
+### sanoTTS Amy small (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `amy-1p1m` at 22,050 Hz is selected. This separate converted profile contains 1,084,972 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-amy-1p8m-gguf"></a>
+
+### sanoTTS Amy 1.83M (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `amy-1p8m` at 22,050 Hz is selected. This separate converted profile contains 1,834,380 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-hfc-gguf"></a>
+
+### sanoTTS HFC (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `hfc` at 22,050 Hz is selected. This separate converted profile contains 1,834,380 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/hfc-en-1p8m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="sano-kristin-gguf"></a>
+
+### sanoTTS Kristin (Kokopop F16/F32)
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `kristin` at 22,050 Hz is selected. This separate converted profile contains 1,396,151 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).

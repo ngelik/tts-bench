@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createSanoKokopopAdapter } from '../web/adapters/sano-kokopop.mjs';
-import { SANO_HEART_NANO_F32 } from '../web/adapters/sano-kokopop-config.mjs';
+import { SANO_HEART_NANO_F32, SANO_KOKOPOP_PROFILES } from '../web/adapters/sano-kokopop-config.mjs';
 
 const adapterSource = await readFile(new URL('../web/adapters/sano-kokopop.mjs', import.meta.url), 'utf8');
 const workerSource = await readFile(new URL('../web/workers/sano-kokopop.mjs', import.meta.url), 'utf8');
@@ -28,6 +28,7 @@ class FakeWorker {
   static instances = [];
   static unsupported = false;
   static nonFinite = false;
+  static forcedRate = null;
 
   constructor(url, options) {
     this.url = url;
@@ -39,6 +40,7 @@ class FakeWorker {
 
   postMessage(message) {
     this.sent.push(message);
+    if (message.action === 'initialize') this.sampleRate = message.options.modelConfig.info.settings.sampleRate;
     queueMicrotask(() => {
       const value = message.action === 'initialize'
         ? FakeWorker.unsupported
@@ -48,7 +50,7 @@ class FakeWorker {
             capability: { gpuDispatchVerified: message.options.backend === 'webgpu' },
           }
         : message.action === 'generate'
-          ? { parts: [Float32Array.of(FakeWorker.nonFinite ? Number.NaN : 0.25, -0.125)], sampleRate: 24000, completedChunkId: message.chunk.id }
+          ? { parts: [Float32Array.of(FakeWorker.nonFinite ? Number.NaN : 0.25, -0.125)], sampleRate: FakeWorker.forcedRate ?? this.sampleRate, completedChunkId: message.chunk.id }
           : null;
       this.onmessage?.({ data: { id: message.id, value } });
     });
@@ -176,6 +178,28 @@ test('Kokopop adapter rejects malformed canonical chunk geometry before dispatch
     assert.equal(FakeWorker.instances[0].sent.filter(call => call.action === 'generate').length, 0);
     await adapter.dispose();
   } finally {
+    if (previousWorker === undefined) delete globalThis.Worker;
+    else globalThis.Worker = previousWorker;
+  }
+});
+
+
+test('Piperlite preserves its locked 22050 Hz and rejects a mismatched worker rate', async () => {
+  const previousWorker = globalThis.Worker;
+  globalThis.Worker = FakeWorker;
+  FakeWorker.unsupported = false;
+  FakeWorker.nonFinite = false;
+  try {
+    const profile = SANO_KOKOPOP_PROFILES['sano-amy-small-gguf'];
+    const adapter = createSanoKokopopAdapter(profile);
+    await adapter.initialize({ backend: 'cpu' });
+    const chunk = { id: 0, start: 0, end: 6, text: 'Hello.' };
+    assert.equal((await adapter.generateChunk(chunk)).sampleRate, 22050);
+    FakeWorker.forcedRate = 24000;
+    await assert.rejects(adapter.generateChunk(chunk), /sample rate/);
+    await adapter.dispose();
+  } finally {
+    FakeWorker.forcedRate = null;
     if (previousWorker === undefined) delete globalThis.Worker;
     else globalThis.Worker = previousWorker;
   }

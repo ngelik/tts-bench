@@ -232,3 +232,7 @@ with the local assets. The benchmark uses the checkpoint's one fixed English
 voice. The pinned card does not name a voice performer or grant separate output
 rights. Keep model/runtime licenses separate from any rights in the voice or
 recordings. [Pinned model card and license](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Browser runtime and conversion notice](../web/supratts/NOTICE.md)
+
+## Additional Kokopop Sano voice-size profiles
+
+`sano-heart-gguf`, `sano-amy-gguf`, `sano-amy-small-gguf`, `sano-amy-1p8m-gguf`, `sano-hfc-gguf` and `sano-kristin-gguf` use individual voice packages from [ampixa/sanoTTS at the immutable model revision](https://huggingface.co/ampixa/sanoTTS/tree/25410576d005d7f08d186990fd91f6a2651243de). Retain the GPL-3.0-tagged source distribution and its teacher/data provenance; the selected package manifests do not declare separate model license grants. The [pinned Kokopop converter/runtime](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88), GGML and yyjson are MIT; bundled eSpeak NG and English data are GPL-3.0-or-later. These are distinct from official Ampixa WASM profiles. Local build/import requires terms acknowledgement; generated model/runtime files are not publicly redistributed. See [scope and reproduction](SANO_KOKOPOP_SIZES.md) and [notice](../web/sano-kokopop/SIZE-PROFILES-NOTICE.txt).
