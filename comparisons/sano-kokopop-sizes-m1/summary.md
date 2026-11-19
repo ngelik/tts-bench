@@ -10,6 +10,7 @@ First source-chunk request through final CPU-readable PCM; excludes initializati
 |---|---|---|---:|---:|---:|
 | sano-amy-gguf | cpu | measured | 1118.90 s | 1117.89–1119.51 s | 5 |
 | sano-amy-gguf | webgpu | measured | 173.41 s | 173.04–173.79 s | 5 |
+| sano-amy-small-gguf | webgpu | measured | 141.77 s | 141.59–142.54 s | 5 |
 | sano-heart-gguf | cpu | measured | 39.17 s | 39.08–39.36 s | 5 |
 | sano-heart-gguf | webgpu | measured | 6.06 s | 6.03–6.13 s | 5 |
 
@@ -25,6 +26,10 @@ Additional metrics (median of available observations; scopes are distinct):
 | sano-amy-gguf | webgpu | First PCM block | 2001.040 | ms | 5 |
 | sano-amy-gguf | webgpu | Generated audio | 1312.830 | s | 5 |
 | sano-amy-gguf | webgpu | Generation / audio duration | 0.132 | ratio | 5 |
+| sano-amy-small-gguf | webgpu | First completed source chunk | 1658.255 | ms | 5 |
+| sano-amy-small-gguf | webgpu | First PCM block | 1658.250 | ms | 5 |
+| sano-amy-small-gguf | webgpu | Generated audio | 1331.513 | s | 5 |
+| sano-amy-small-gguf | webgpu | Generation / audio duration | 0.106 | ratio | 5 |
 | sano-heart-gguf | cpu | First completed source chunk | 439.815 | ms | 5 |
 | sano-heart-gguf | cpu | First PCM block | 439.800 | ms | 5 |
 | sano-heart-gguf | cpu | Generated audio | 1330.012 | s | 5 |
@@ -40,6 +45,7 @@ Model support (catalog capability, not coverage of this run):
 |---|---:|---:|---|---|
 | sano-amy-gguf | 1 | 1 | 1 (en) | amy (US English; Piper NFD phonemes with interleaved PAD) |
 | sano-amy-gguf | 1 | 1 | 1 (en) | amy (US English; Piper NFD phonemes with interleaved PAD) |
+| sano-amy-small-gguf | 1 | 1 | 1 (en) | amy-1p1m (US English; Piper NFD phonemes with interleaved PAD) |
 | sano-heart-gguf | 1 | 1 | 1 (en) | heart (US English; Misaki-normalized eSpeak IPA) |
 | sano-heart-gguf | 1 | 1 | 1 (en) | heart (US English; Misaki-normalized eSpeak IPA) |
 
@@ -47,6 +53,9 @@ Individual pinned amy-en-1p46m voice converted with Kokopop. One selected voice;
 
 
 Individual pinned amy-en-1p46m voice converted with Kokopop. One selected voice; 22050 Hz. Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG\_FORM normalization and internal chunking are retained. No other voices are bundled. Sources: [1](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json), [2](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md), [3](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88).
+
+
+Individual pinned amy-en-1p1m voice converted with Kokopop. One selected voice; 22050 Hz. Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG\_FORM normalization and internal chunking are retained. No other voices are bundled. Sources: [1](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json), [2](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md), [3](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88).
 
 
 Individual pinned heart voice converted with Kokopop. One selected voice; 24000 Hz. F32 GGUF from pinned Heart F32 source; Kokopop Vocos. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG\_FORM normalization and internal chunking are retained. No other voices are bundled. Sources: [1](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json), [2](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md), [3](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88).
@@ -59,6 +68,7 @@ Individual pinned heart voice converted with Kokopop. One selected voice; 24000 
 
 - **sano-amy-gguf / cpu**: Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF.
 - **sano-amy-gguf / webgpu**: An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.
+- **sano-amy-small-gguf / webgpu**: An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.
 - **sano-heart-gguf / cpu**: Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF.
 - **sano-heart-gguf / webgpu**: An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.
 
@@ -71,6 +81,8 @@ Input: 2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6
 Input: 2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc
 
 Input: 2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665
+
+Input: 2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce
 
 Read each source result for power, thermal, execution-order and other run-specific notes.
 
