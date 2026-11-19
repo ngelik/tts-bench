@@ -51,3 +51,24 @@ test('Micro source-filter DSP returns finite exact-clock PCM for small synthetic
   assert.ok(output.length > 0 && output.every(Number.isFinite));
   assert.ok(Math.max(...output.slice(0, 100)) < 1);
 });
+
+test('Micro source-filter rejection reports failure-only waveform and excitation diagnostics', () => {
+  const frames = 2;
+  const mainFrames = frames * 4 + 1;
+  const burstFrames = frames * 8 + 1;
+  const gains = new Float32Array(8 * 301 * mainFrames);
+  for (let frame = 0; frame < mainFrames; frame++) {
+    for (let bin = 0; bin < 301; bin++) {
+      gains[(0 * 301 + bin) * mainFrames + frame] = -3;
+      gains[(1 * 301 + bin) * mainFrames + frame] = 1;
+      gains[(3 * 301 + bin) * mainFrames + frame] = -6;
+    }
+  }
+  assert.throws(() => sourceFilterSynthesis({
+    f0: Float32Array.of(110, 112, 114, 116),
+    gains: { data: gains, dims: [1, 8, 301, mainFrames] },
+    pulseShift: new Float32Array(mainFrames),
+    burstGains: { data: new Float32Array(76 * burstFrames).fill(6), dims: [1, 76, burstFrames] },
+    seed: 42,
+  }), /main-plus-burst.*seed.*42.*excitation.*noise.*harmonic/);
+});

@@ -185,7 +185,13 @@ async function generate(chunk, onFirstPcm) {
   const pieces = [];
   let first = true;
   for (const utterance of prepared.utterances) {
-    const pcm = await runUtterance(utterance, seedFor(chunk.id, utterance.index));
+    const seed = seedFor(chunk.id, utterance.index);
+    let pcm;
+    try {
+      pcm = await runUtterance(utterance, seed);
+    } catch (error) {
+      throw new Error(`Inflect Micro v3 synthesis failed at canonical span ${chunk.id}, internal utterance ${utterance.index + 1}/${prepared.utterances.length}, voiceId=${VOICE_ID}, seed=${seed}, paddedTokenIds=${utterance.ids.length}: ${String(error?.message ?? error)}`);
+    }
     if (!pcm.length || !pcm.every(Number.isFinite)) throw new Error(`Inflect Micro v3 returned invalid PCM for canonical span ${chunk.id}.`);
     if (!first) pieces.push(pauseSamples());
     pieces.push(pcm);

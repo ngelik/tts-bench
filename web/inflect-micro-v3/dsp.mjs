@@ -286,7 +286,39 @@ function clampLogGain(value) {
   return Math.exp(Math.min(value, 6));
 }
 
-function synthesizeMain(f0, source, coeffs, frames) {
+function signalStats(length, read) {
+  let minimum = Infinity;
+  let maximum = -Infinity;
+  let maxAbs = 0;
+  let nonfiniteSamples = 0;
+  let clippedSamples = 0;
+  let firstInvalidSample = null;
+  for (let index = 0; index < length; index++) {
+    const value = read(index);
+    if (!Number.isFinite(value)) {
+      nonfiniteSamples++;
+      firstInvalidSample ??= index;
+      continue;
+    }
+    minimum = Math.min(minimum, value);
+    maximum = Math.max(maximum, value);
+    maxAbs = Math.max(maxAbs, Math.abs(value));
+    if (Math.abs(value) >= 1) {
+      clippedSamples++;
+      firstInvalidSample ??= index;
+    }
+  }
+  return {
+    min: Number.isFinite(minimum) ? minimum : null,
+    max: Number.isFinite(maximum) ? maximum : null,
+    maxAbs,
+    nonfiniteSamples,
+    clippedSamples,
+    firstInvalidSample,
+  };
+}
+
+function synthesizeMain(f0, source, coeffs, frames, seed) {
   const dims = coeffs.gains.dims;
   // The decoder trunk expands duration frames 2x before its two-frame-per-
   // trunk main head, then adds the centered-STFT terminal frame.
@@ -363,10 +395,10 @@ function synthesizeMain(f0, source, coeffs, frames) {
   }
 
   const main = finishOverlap(mainAccum, mainDenom, MAIN_FFT, waveformLength);
-  return synthesizeBurst(source, coeffs.burstGains, frames, waveformLength, main);
+  return synthesizeBurst(source, coeffs.burstGains, frames, waveformLength, main, seed);
 }
 
-function synthesizeBurst(source, burstGains, frames, waveformLength, main) {
+function synthesizeBurst(source, burstGains, frames, waveformLength, main, seed) {
   const burstFrames = frames * 8 + 1;
   const window = periodicHann(BURST_FFT);
   const accum = new Float64Array((burstFrames - 1) * BURST_HOP + BURST_FFT);
@@ -389,10 +421,27 @@ function synthesizeBurst(source, burstGains, frames, waveformLength, main) {
   }
   const burst = finishOverlap(accum, denom, BURST_FFT, waveformLength);
   const output = new Float32Array(waveformLength);
+  let firstInvalidSample = null;
   for (let index = 0; index < waveformLength; index++) {
     const value = main[index] + burst[index];
-    if (!Number.isFinite(value) || Math.abs(value) >= 1) throw new Error('Micro source-filter waveform is nonfinite or clipped.');
+    if (!Number.isFinite(value) || Math.abs(value) >= 1) {
+      firstInvalidSample = index;
+      break;
+    }
     output[index] = value;
+  }
+  if (firstInvalidSample !== null) {
+    const mainStats = signalStats(main.length, index => main[index]);
+    const burstStats = signalStats(burst.length, index => burst[index]);
+    const combinedStats = signalStats(waveformLength, index => main[index] + burst[index]);
+    const excitation = {
+      noise: signalStats(source.white.length, index => source.white[index]),
+      harmonic: signalStats(source.sine.length, index => source.sine[index]),
+    };
+    throw new Error(`Micro source-filter waveform failed validation: ${JSON.stringify({
+      stage: 'main-plus-burst', seed, firstInvalidSample,
+      main: mainStats, burst: burstStats, combined: combinedStats, excitation,
+    })}`);
   }
   return output;
 }
@@ -406,5 +455,5 @@ export function sourceFilterSynthesis({ f0, gains, pulseShift, burstGains, seed 
   const expectedMainFrames = frames * 4 + 1;
   if (gains.dims[3] !== expectedMainFrames || pulseShift.length !== expectedMainFrames) throw new Error('Micro source-filter frame clocks differ.');
   const source = seededSource(f0Values, seed);
-  return synthesizeMain(f0Values, source, { gains, pulseShift, burstGains }, frames);
+  return synthesizeMain(f0Values, source, { gains, pulseShift, burstGains }, frames, seed);
 }
