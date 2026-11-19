@@ -14,6 +14,9 @@ on:
       - 'web/workers/inflect-micro-v3.mjs'
       - 'tests/inflect-micro-v3-*.test.mjs'
       - 'tools/check-inflect-micro-v3-smoke.mjs'
+      - 'tools/check-inflect-micro-v3-frontend.mjs'
+      - 'fixtures/en-20000.txt'
+      - 'fixtures/en-20000.chunks.json'
   workflow_dispatch:
 
 permissions:
@@ -37,6 +40,8 @@ jobs:
         run: |
           node bin/bench.mjs assets fetch --model inflect-micro-v3
           node bin/bench.mjs assets verify --model inflect-micro-v3
+      - name: Audit all 93 canonical text spans
+        run: node tools/check-inflect-micro-v3-frontend.mjs
       - name: Run the normal harness through headed Chrome on CPU and WebGPU
         env:
           CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
