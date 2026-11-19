@@ -52,6 +52,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E4**: MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E5**: MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E6**: MacBook Pro · Apple M1 Pro · 8-core CPU · 16 GiB RAM · Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E7**: Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
@@ -85,6 +86,8 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Sopro v2 Turbo | E5 | 509.82 | [616.59 s (n=5)](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | [507.48 s (n=5)](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/summary.md) | Native; independent attempts |
 | Tiny Voca 4.5M | E5 | 21.39 | [54.86 s (n=5)](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | [21.47 s (n=5)](results/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d/summary.md) | Native; matched configuration |
 | Linnet en-35m (f1) | E6 | 83.08 | [212.58 s (n=5)](results/2026-11-18t12-05-28-956z-linnet-en-35m-cpu-warm-f59450f4/summary.md) | [831.84 s (n=5)](results/2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30/summary.md) | Native; independent attempts |
+| SanoTTS Heart 2.27M (English, US) | E7 | 9.14 | [242.94 s (n=5)](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | — | Native; independent attempts |
+| SanoTTS HFC 1.83M (English) | E7 | 7.34 | [612.95 s (n=5)](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | — | Native; independent attempts |
 
 Each native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
@@ -358,6 +361,10 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![nov17-ming-v3-warm-single — campaign metrics](reports/nov17-ming-v3-warm-single/overview.svg)
 
+[sano-english-size-variants — all-metrics table and source receipts](reports/sano-english-size-variants/overview.md)
+
+![sano-english-size-variants — campaign metrics](reports/sano-english-size-variants/overview.svg)
+
 [silencio2-m1-2026-11-18 — all-metrics table and source receipts](reports/silencio2-m1-2026-11-18/overview.md)
 
 ![silencio2-m1-2026-11-18 — campaign metrics](reports/silencio2-m1-2026-11-18/overview.svg)
@@ -590,6 +597,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 120 · 2026-11-18 | linnet-en-35m/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/summary.md) | [SVG](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/chart.svg) |
 | 121 · 2026-11-18 | linnet-en-35m/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/summary.md) | [SVG](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/chart.svg) |
 | 122 · 2026-11-18 | audio8-realistic-0.6b-int4/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/summary.md) | [SVG](results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/chart.svg) |
+| 123 · 2026-11-19 | sano-heart/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | [SVG](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/chart.svg) |
+| 124 · 2026-11-19 | sano-hfc/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | [SVG](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/chart.svg) |
 
 </details>
 
