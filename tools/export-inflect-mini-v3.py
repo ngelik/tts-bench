@@ -166,10 +166,18 @@ def browser_source_features(f0, phase_uniform, harmonic_noise, generator) -> dic
             and decoded.get("stftFrames") == expected_frames
             and decoded.get("bins") == expected_bins,
             "Browser source DSP returned the wrong sample or STFT clock")
-    for name in ("harmonicSource", "sourceReal", "sourceImag", "magnitude", "phase", "sourceSpec"):
+    for name in ("harmonicSource", "phaseInput", "phaseOutput", "sourceSines",
+                 "sourceReal", "sourceImag", "magnitude", "phase", "sourceSpec"):
         require(name in decoded and all(math.isfinite(value) for value in decoded[name]),
                 "Browser source DSP returned malformed/nonfinite " + name)
     decoded["harmonicSource"] = np.asarray(decoded["harmonicSource"], dtype=np.float32)
+    harmonic_count = len(payload["phaseUniform"])
+    decoded["phaseInput"] = np.asarray(decoded["phaseInput"], dtype=np.float32).reshape(
+        1, int(payload["frameCount"] * 2), harmonic_count)
+    decoded["phaseOutput"] = np.asarray(decoded["phaseOutput"], dtype=np.float32).reshape(
+        1, expected_samples, harmonic_count)
+    decoded["sourceSines"] = np.asarray(decoded["sourceSines"], dtype=np.float32).reshape(
+        1, expected_samples, harmonic_count)
     decoded["sourceReal"] = np.asarray(decoded["sourceReal"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
     decoded["sourceImag"] = np.asarray(decoded["sourceImag"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
     decoded["magnitude"] = np.asarray(decoded["magnitude"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
@@ -819,6 +827,29 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         noise_torch = torch.randn((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
     f0_up_native = generator.f0_upsamp(predicted["F0"][:, None]).transpose(1, 2)
     with fixed_source_randomness(phase_torch, noise_torch):
+        sinegen = generator.m_source.l_sin_gen
+        harmonics = torch.FloatTensor([[range(1, sinegen.harmonic_num + 2)]]).to(f0_up_native.device)
+        native_rad = (torch.multiply(f0_up_native, harmonics) / sinegen.sampling_rate) % 1
+        native_initial_phase = torch.rand(
+            f0_up_native.shape[0], sinegen.dim, device=f0_up_native.device)
+        native_initial_phase[:, 0] = 0
+        native_rad[:, 0, :] = native_rad[:, 0, :] + native_initial_phase
+        native_phase_input = F.interpolate(
+            native_rad.transpose(1, 2), scale_factor=1 / sinegen.upsample_scale,
+            mode="linear").transpose(1, 2)
+        native_phase_input = torch.cumsum(native_phase_input, dim=1) * (2 * math.pi)
+        native_phase_output = F.interpolate(
+            native_phase_input.transpose(1, 2) * sinegen.upsample_scale,
+            scale_factor=sinegen.upsample_scale, mode="linear").transpose(1, 2)
+        native_sines = torch.sin(native_phase_output) * sinegen.sine_amp
+        native_uv = sinegen._f02uv(f0_up_native)
+        native_noise_amplitude = (
+            native_uv * sinegen.noise_std
+            + (1 - native_uv) * sinegen.sine_amp / 3.0)
+        native_source_sines = native_sines * native_uv + native_noise_amplitude * noise_torch
+        actual_source_sines, _, _ = sinegen(f0_up_native)
+        require(torch.equal(native_source_sines, actual_source_sines),
+                "Instrumented source sine path differs from the pinned SineGen output")
         native_harmonic, _, _ = generator.m_source(f0_up_native)
     native_harmonic = native_harmonic.transpose(1, 2).squeeze(1)
     exported_harmonic = waveform_graph.harmonic_source(predicted["F0"], phase_torch, noise_torch)
@@ -1017,6 +1048,12 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         native_source_spec[:, :bins, :])
     diagnostic_errors["nativeVsBrowserSourceHarmonicWithNativeF0"] = array_error(
         native_harmonic.detach().cpu().numpy().reshape(-1), browser_native_f0["harmonicSource"])
+    diagnostic_errors["nativeVsBrowserPhaseInputWithNativeF0"] = array_error(
+        native_phase_input.detach().cpu().numpy(), browser_native_f0["phaseInput"])
+    diagnostic_errors["nativeVsBrowserPhaseOutputWithNativeF0"] = array_error(
+        native_phase_output.detach().cpu().numpy(), browser_native_f0["phaseOutput"])
+    diagnostic_errors["nativeVsBrowserSourceSinesWithNativeF0"] = array_error(
+        native_source_sines.detach().cpu().numpy(), browser_native_f0["sourceSines"])
     diagnostic_errors["nativeVsBrowserSourceSpecWithNativeF0"] = array_error(
         native_source_spec, browser_native_f0["sourceSpec"])
     diagnostic_errors["nativeVsBrowserSourceRealWithNativeF0"] = array_error(

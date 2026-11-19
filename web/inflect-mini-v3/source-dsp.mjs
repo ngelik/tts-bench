@@ -62,6 +62,9 @@ export function inflectMiniSourceFeatures({
   const radByHarmonic = new Float32Array(sourceLength);
   const sourceAccumulator = new Float32Array(sourceLength);
   const phaseByHarmonic = new Float32Array(downsampledLength);
+  const phaseInputTrace = includeDiagnostics ? new Float32Array(downsampledLength * harmonicCount) : null;
+  const phaseOutputTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
+  const sourceSinesTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
   for (let harmonic = 0; harmonic < harmonicCount; harmonic++) {
     for (let sample = 0; sample < sourceLength; sample++) {
       let radians = f32(f32(f0[Math.floor(sample / upsampleScale)] * (harmonic + 1)) / sampleRate);
@@ -70,11 +73,15 @@ export function inflectMiniSourceFeatures({
       radByHarmonic[sample] = radians;
     }
     const down = interpolateLinear(radByHarmonic, sourceLength, downsampledLength, upsampleScale);
+    // Accumulate in JS Number precision, then round each recorded phase to
+    // FP32. The hosted source-feature parity check qualifies this choice
+    // against the pinned Torch implementation.
     let cumulative = 0;
     for (let sample = 0; sample < downsampledLength; sample++) {
-      cumulative = f32(cumulative + down[sample]);
+      cumulative += down[sample];
       const phase = f32(f32(f32(cumulative * 2) * Math.PI));
       phaseByHarmonic[sample] = f32(phase * upsampleScale);
+      if (includeDiagnostics) phaseInputTrace[sample * harmonicCount + harmonic] = phaseByHarmonic[sample];
     }
     const up = interpolateLinear(phaseByHarmonic, downsampledLength, sourceLength, 1 / upsampleScale);
     for (let sample = 0; sample < sourceLength; sample++) {
@@ -86,6 +93,10 @@ export function inflectMiniSourceFeatures({
       const clean = f32(sine * uv);
       const noise = f32(noiseAmplitude * harmonicNoise[sample * harmonicCount + harmonic]);
       const source = f32(clean + noise);
+      if (includeDiagnostics) {
+        phaseOutputTrace[sample * harmonicCount + harmonic] = up[sample];
+        sourceSinesTrace[sample * harmonicCount + harmonic] = source;
+      }
       sourceAccumulator[sample] = f32(sourceAccumulator[sample] + f32(source * linearWeights[harmonic]));
     }
   }
@@ -144,6 +155,7 @@ export function inflectMiniSourceFeatures({
   }
 
   return { ...(includeDiagnostics ? { harmonicSource, sourceReal, sourceImag,
+    phaseInput: phaseInputTrace, phaseOutput: phaseOutputTrace, sourceSines: sourceSinesTrace,
     magnitude: new Float32Array(magnitude), phase: new Float32Array(phaseOutput) } : {}),
     sourceSpec, bins, stftFrames, samples: sourceLength };
 }
