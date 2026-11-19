@@ -7,7 +7,6 @@ const $$ = selector => [...document.querySelectorAll(selector)];
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = (value, digits = 2) => Number.isFinite(value) ? value.toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits}) : '—';
 const repo = 'https://github.com/ngelik/tts-bench';
-const cosySelectionReportUrl = `${repo}/blob/main/reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection`;
 const labels = {cpu: 'CPU', webgpu: 'GPU'};
 const shortLicense = value => {
   if (value.startsWith('Model license not separately')) return 'Unclear · CC BY-SA / BY-NC-SA';
@@ -153,7 +152,7 @@ function metricCell(metric, key, max, backend, label, withBar = true, showRunCou
     const accessible = `${label}: no eligible value. ${detail}`;
     return `<td data-label="${label}"><span class="metric-unavailable ${diagnostic ? 'diagnostic-state' : ''}" title="${escape(accessible)}" aria-label="${escape(accessible)}">—</span></td>`;
   }
-  const href = metric?.selectionKind ? cosySelectionReportUrl : metric?.reportUrl;
+  const href = metric?.selectionKind ? metric.selectionReportUrl : metric?.reportUrl;
   const title = metric?.selectionKind
     ? `Open reviewed selection report · ${statusDetails(metric)}`
     : `Open ${label} receipt · ${cohortName(metric)}`;
@@ -190,7 +189,7 @@ function renderCharts(models) {
     const metric = kind === 'size' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
     const countLabel = kind === 'generation' && showWarmCounts(model) ? warmCountLabel(metric) : '';
     const score = metric?.selectionKind && kind === 'generation'
-      ? `<a class="value metric-link selection-report-link" href="${escape(cosySelectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
+      ? `<a class="value metric-link selection-report-link" href="${escape(metric.selectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
       : `<span class="value">${fmt(value)} <span class="sr-only">${units}</span></span>`;
     return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="bar-value">${score}${countLabel}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
   }).join('');
@@ -240,7 +239,7 @@ function waveformNote(metric) {
 }
 function detailMetric(metric, backend, kind) {
   const warm = kind === 'warm';
-  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${metric?.selectionKind || isScheduledRetest(metric) ? `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>` : ''}${isMeasured(metric) ? `<dl>${warm ? `<dt>${metric.n === 1 ? 'Generation time' : 'Median'}</dt><dd>${fmt(metric.medianSeconds)} s</dd>${metric.n === 1 ? '' : `<dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd>`}<dt>Scored articles</dt><dd>${fmt(metric.n, 0)}${metric.selectionKind ? ` selected / ${fmt(metric.originalPlannedRepetitions, 0)} planned` : ''}</dd><dt>First PCM${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${provenance(metric)}</section>`;
+  return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${metric?.selectionKind || isScheduledRetest(metric) ? `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>` : ''}${isMeasured(metric) ? `<dl>${warm ? `<dt>${metric.n === 1 ? 'Generation time' : 'Median'}</dt><dd>${fmt(metric.medianSeconds)} s</dd>${metric.n === 1 ? '' : `<dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd>`}<dt>Scored articles</dt><dd>${fmt(metric.n, 0)}${metric.selectionKind ? ` selected / ${fmt(metric.originalPlannedRepetitions, 0)} planned` : ''}</dd><dt>First PCM${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${metric?.selectionKind && metric.pairedCachedResultId ? `<p class="detail-note">Audio comes from a <a href="${repo}/blob/main/results/${escape(metric.pairedCachedResultId)}/summary.md">separate cached recording</a>. ${metric.cachedAudioMatchesSelectedPcm ? 'Its PCM hash, frame count and sample rate match the selected warm article.' : 'It is a different recording, not the selected warm output.'}</p>` : ''}${provenance(metric)}</section>`;
 }
 function openDetails(id) {
   const model = state.data.models.find(m => m.id === id); if (!model) return;

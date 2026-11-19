@@ -7,7 +7,7 @@ import { getAssetLock } from '../lib/catalog.mjs';
 import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 import { environmentKey as envKey, pairedWarm, preferredAttempts } from './result-selection.mjs';
-import { loadCosyWarmSelection } from './cosy-warm-selection.mjs';
+import { loadWarmSelections } from './warm-selection.mjs';
 export const START='<!-- benchmark-results:start -->', END='<!-- benchmark-results:end -->';
 const md=x=>String(x).replaceAll('|','\\|').replaceAll('\n',' ');
 const report=d=>`results/${d.id}/summary.md`;
@@ -105,7 +105,7 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
     const count=v.c.medianSeconds===null?'':v.selection
       ?` (n=${v.selection.selectedScoredTrialIndexes.length} of ${v.selection.originalPlannedRepetitions} planned; selected)`
       :` (n=${v.c.n})`;
-    const href=v.selection?'reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection':report(v.d);
+    const href=v.selection?v.selection.selectionReportPath:report(v.d);
     return `[${v.c.medianSeconds===null?md(v.c.status):v.c.medianSeconds.toFixed(2)+' s'+count}](${href})`;
   };
   const modelSize=(id,pair)=>{const weights=models[id]?.assets?.filter(a=>a.kind==='model-weights')??[];const measured=pair;if(!weights.length||!measured.length||measured.some(v=>weights.some(w=>!v.d.assets.some(a=>a.sha256===w.sha256&&a.bytes===w.bytes))))return 'Unknown';return (weights.reduce((n,a)=>n+a.bytes,0)/1e6).toFixed(2);};
@@ -120,6 +120,10 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
   out+='\nEach native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.\n\n';
   for(const row of [...groups.values()].flatMap(group=>['cpu','webgpu'].map(backend=>group[backend]).filter(value=>value?.selection))){
     const reasonHeadline=md(row.selection.rawReceiptReason.split(/\r?\n/,1)[0]);
+    if(row.selection.modelId!=='fun-cosyvoice3-0.5b-2512') {
+      out+=`**Reviewed ${md(models[row.selection.modelId]?.displayName??row.selection.modelId)} CPU selection:** the displayed time uses ${row.selection.selectedScoredTrialIndexes.length} completed scored article(s) from ${row.selection.originalPlannedRepetitions} originally planned, after one excluded warm-up. ${md(row.selection.stopReason)} The native receipt remains ${md(row.selection.rawReceiptStatus)} (${reasonHeadline}). [Review the selection](${row.selection.selectionReportPath}), [raw receipt](results/${row.d.id}/summary.md), and [hash-bound sidecar](${row.selection.selectionPath}). Uncompleted repetitions contribute no score.\n\n`;
+      continue;
+    }
     out+=`**Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (${reasonHeadline}). [Review the raw receipt](results/${row.d.id}/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.\n\n`;
   }
   if(ordered.some(d=>d.cells.some(cell=>affectedTrials(cell).length)))out+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The CPU recording has no constant interval lasting 0.10 s. [Full waveform audit](${waveformReport}) and [interval data](diagnostics/audio8-waveform/evidence.json).\n\n`;
@@ -141,14 +145,14 @@ export function referenceBlock(results, models, comparisons=[], audio=[], campai
 export function replaceReference(readme,block){const a=readme.indexOf(START),b=readme.indexOf(END);if(a<0||b<a||readme.indexOf(START,a+1)>=0||readme.indexOf(END,b+1)>=0)throw new Error('README requires exactly one reference-results marker pair');const heading=readme.lastIndexOf('\n## ',a);if(readme.slice(heading+1,a).split('\n')[0]!=='## Reference results')throw new Error('Generated results must be in README Reference results');return readme.slice(0,a)+block+readme.slice(b+END.length);}
 export async function updateReference({check=false}={}){
   const results=await Promise.all((await resultPaths('results')).map(p=>readResult(p,{publication:true})));
-  const warmSelection=await loadCosyWarmSelection(results);
+  const warmSelections=await loadWarmSelections(results);
   const comparisons=(await readdir('comparisons',{withFileTypes:true})).filter(e=>e.isDirectory()).map(e=>e.name).sort();
   let campaigns=[];try{campaigns=(await readdir('reports',{withFileTypes:true})).filter(e=>e.isDirectory()).map(e=>e.name).sort();}catch(error){if(error.code!=='ENOENT')throw error;}
   if(campaigns.some(name=>!/^[a-z0-9][a-z0-9._-]{0,119}$/.test(name)))throw new Error('Invalid campaign report directory');
   let audio=[];try{audio=JSON.parse(await readFile('audio/manifest.json','utf8')).entries;}catch(e){if(e.code!=='ENOENT')throw e;}
   const memorySvg=ramChart([...results].sort((a,b)=>a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)),getAssetLock().models);
   if(memorySvg){if(check){if(await readFile('docs/reference-memory.svg','utf8')!==memorySvg)throw new Error('Stale RAM chart; run npm run reference');}else await writeFile('docs/reference-memory.svg',memorySvg);}
-  const file='README.md',old=await readFile(file,'utf8');const next=replaceReference(old,referenceBlock(results,getAssetLock().models,comparisons,audio,campaigns,[warmSelection]));
+  const file='README.md',old=await readFile(file,'utf8');const next=replaceReference(old,referenceBlock(results,getAssetLock().models,comparisons,audio,campaigns,warmSelections));
   if(check&&next!==old)throw new Error('Stale/missing Reference results; run npm run reference and include README.md in the result PR');
   if(!check)await writeFile(file,next);return {results:results.length,audio:audio.length};
 }

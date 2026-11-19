@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { MAX_RESOURCE_RECEIPT_BYTES, validateResult, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
-import { loadCosyWarmSelection, selectedCellFor, COSY_WARM_SELECTION_RESULT_ID } from './cosy-warm-selection.mjs';
+import { loadWarmSelections, selectedCellFor } from './warm-selection.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BACKENDS = ['cpu', 'webgpu'];
@@ -310,7 +310,7 @@ function markdownReport(prepared, reportDir) {
       const selectionPath = resolve(ROOT, row.selection.selectionPath);
       const selectionHref = relative(reportDir, selectionPath).split(sep).join('/');
       const reasonHeadline = row.selection.rawReceiptReason.split(/\r?\n/, 1)[0];
-      md += `**${markdownText(row.cell.model)} · ${row.cell.backendRequested.toUpperCase()}:** this table and chart use ${row.selection.selectedScoredTrialIndexes.length} completed scored articles selected from ${row.selection.originalPlannedRepetitions} originally planned. The operator stopped during the next trial. The original native receipt remains ${markdownText(row.selection.rawReceiptStatus)} and records: ${markdownText(reasonHeadline)} The selection is bound to that receipt’s SHA-256 and lists the completed checkpoints in [the reviewed sidecar](${selectionHref}); the incomplete trial is not included.\n\n`;
+      md += `**${markdownText(row.cell.model)} · ${row.cell.backendRequested.toUpperCase()}:** this table and chart use ${row.selection.selectedScoredTrialIndexes.length} completed scored articles selected from ${row.selection.originalPlannedRepetitions} originally planned. ${row.selection.modelId === 'fun-cosyvoice3-0.5b-2512' ? 'The operator stopped during the next trial.' : markdownText(row.selection.stopReason)} The original native receipt remains ${markdownText(row.selection.rawReceiptStatus)} and records: ${markdownText(reasonHeadline)} The selection is bound to that receipt’s SHA-256 and lists the completed checkpoints in [the reviewed sidecar](${selectionHref}); ${row.selection.modelId === 'fun-cosyvoice3-0.5b-2512' ? 'the incomplete trial is not included.' : 'uncompleted repetitions are not included, and n=1 is a single observation.'}\n\n`;
     }
   }
 
@@ -531,11 +531,12 @@ export function renderCampaignOverview(entries, { reportDir, manifest = getAsset
   };
 }
 
-function inputsManifest(entries, selection = null) {
+function inputsManifest(entries, selections = []) {
+  const links = selections.map(selection => ({ path: selection.selectionPath, sha256: selection.selectionSha256 }));
   return {
     schemaVersion: 1,
     results: entries.map(entry => ({ id: entry.data.id, sha256: entry.digest })).sort((a, b) => a.id.localeCompare(b.id)),
-    ...(selection ? { warmSelection: { path: selection.selectionPath, sha256: selection.selectionSha256 } } : {}),
+    ...(links.length === 1 ? { warmSelection: links[0] } : links.length ? { warmSelections: links } : {}),
   };
 }
 function checksumsFor(markdown, svg, inputsBytes) {
@@ -557,9 +558,9 @@ async function writeCampaignReport(outValue, inputFiles) {
   for (const file of inputFiles) entries.push(await suppliedResult(file));
   const seenIds = new Set();
   for (const entry of entries) { ensure(!seenIds.has(entry.data.id), `Duplicate result input: ${entry.data.id}`); seenIds.add(entry.data.id); }
-  const warmSelection = seenIds.has(COSY_WARM_SELECTION_RESULT_ID) ? await loadCosyWarmSelection(entries.map(entry => entry.data)) : null;
-  const rendered = renderCampaignOverview(entries, { reportDir: out, warmSelections: warmSelection ? [warmSelection] : [] });
-  const manifest = inputsManifest(entries, warmSelection);
+  const warmSelections = await loadWarmSelections(entries.map(entry => entry.data));
+  const rendered = renderCampaignOverview(entries, { reportDir: out, warmSelections });
+  const manifest = inputsManifest(entries, warmSelections);
   const inputsBytes = Buffer.from(JSON.stringify(manifest, null, 2) + '\n');
   const checksums = checksumsFor(rendered.overviewMd, rendered.overviewSvg, inputsBytes);
   await mkdir(out, { recursive: true });
@@ -588,11 +589,10 @@ async function checkCampaignReport(reportValue, { log = true } = {}) {
   const sourceCache = new Map();
   const entries = [];
   for (const entry of manifest.results) entries.push(await committedResult(entry.id, entry.sha256));
-  const warmSelection = entries.some(entry => entry.data.id === COSY_WARM_SELECTION_RESULT_ID)
-    ? await loadCosyWarmSelection(entries.map(entry => entry.data)) : null;
-  const expectedInputs = Buffer.from(JSON.stringify(inputsManifest(entries, warmSelection), null, 2) + '\n');
+  const warmSelections = await loadWarmSelections(entries.map(entry => entry.data));
+  const expectedInputs = Buffer.from(JSON.stringify(inputsManifest(entries, warmSelections), null, 2) + '\n');
   ensure(inputsBytes.equals(expectedInputs), 'Stale campaign inputs.json or reviewed selection digest');
-  const rendered = renderCampaignOverview(entries, { reportDir: directory, sourceCache, warmSelections: warmSelection ? [warmSelection] : [] });
+  const rendered = renderCampaignOverview(entries, { reportDir: directory, sourceCache, warmSelections });
   ensure(await readFile(join(directory, 'overview.md'), 'utf8') === rendered.overviewMd, 'Stale campaign overview.md');
   ensure(await readFile(join(directory, 'overview.svg'), 'utf8') === rendered.overviewSvg, 'Stale campaign overview.svg');
   const expected = checksumsFor(rendered.overviewMd, rendered.overviewSvg, inputsBytes);
