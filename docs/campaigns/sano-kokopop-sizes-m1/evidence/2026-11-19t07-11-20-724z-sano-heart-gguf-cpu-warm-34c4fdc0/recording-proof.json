@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0",
+  "receiptSha256": "c0ac0f9bd777d9f538692a40efaae8474321c4ee24db2066e00add9ce5fef2ca",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "0103ce7493186870b92a04e0ae69fb61ad1e07717725b3fae7e0970e45ad1da6",
+    "bytes": 63840636,
+    "rate": 24000,
+    "samples": 31920296,
+    "thresholdsSamples": {
+      "2400": {
+        "runs": 165,
+        "samples": 2050933,
+        "zeroSamples": 2050933
+      },
+      "24000": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 20816313,
+      "endSampleExclusive": 20835838,
+      "samples": 19525,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "d0349bee126599dd82b83531a67d1f8dd37a5e42bf96eabda6940db963e644d4",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 85457,
+    "started": 1795072269.843796
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu-full.wav",
+    "sha256": "0103ce7493186870b92a04e0ae69fb61ad1e07717725b3fae7e0970e45ad1da6",
+    "bytes": 63840636
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu.wav",
+    "sha256": "d0349bee126599dd82b83531a67d1f8dd37a5e42bf96eabda6940db963e644d4",
+    "bytes": 1440044,
+    "startSample": 0,
+    "sampleRate": 24000,
+    "samples": 720000,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/result.json",
+  "privateTerminalSha256": "1d98fc721724c0ce4a1d53f46cbe208e6fb15d412544c9a35630de867f99ae0c",
+  "independentReviewSha256": "ad01ce3dcadfcdb94f6d82109b362d2e77aeb8ab9b18da6dffbc5a71919ce897"
+}

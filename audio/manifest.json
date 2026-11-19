@@ -1745,6 +1745,64 @@
       }
     },
     {
+      "resultId": "2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0",
+      "model": "sano-heart-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "language": "en",
+      "attribution": "sanoTTS Heart (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu.wav",
+        "sha256": "d0349bee126599dd82b83531a67d1f8dd37a5e42bf96eabda6940db963e644d4",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu-full.wav",
+        "sha256": "0103ce7493186870b92a04e0ae69fb61ad1e07717725b3fae7e0970e45ad1da6",
+        "bytes": 63840636
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6",
+      "model": "sano-heart-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "language": "en",
+      "attribution": "sanoTTS Heart (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu.wav",
+        "sha256": "3771e5e54ccd54ffb14209df38fdd1e107acf93a377f0f3f6927fbfbde607fbc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu-full.wav",
+        "sha256": "5ed6b504bd66953ac523e536197654e29e2ade8de55fcee9b11bf903cecf8966",
+        "bytes": 63840124
+      }
+    },
+    {
       "resultId": "2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa",
       "model": "sano-heart-nano-gguf-f32",
       "backend": "cpu",

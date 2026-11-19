@@ -1,0 +1,9 @@
+{
+  "kind": "pre-inference-setup-failure",
+  "sourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+  "originalPrivateRecordSha256": "fe7d0f3a76cf45ef5027bf226c23d0a011a616340f79f1a22ae90b4294525611",
+  "cause": "A top-level node_modules symlink appeared as an untracked path; the campaign clean-source gate refused admission.",
+  "disposition": "Unchanged source/assets/plans; ordinary ignored dependency directory with individual package links, followed by successful all 12 plan dry runs and CLI imports before one explicit retry.",
+  "inferenceStarted": false,
+  "nativeScoreCreated": false
+}
