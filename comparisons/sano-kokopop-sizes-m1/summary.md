@@ -8,6 +8,7 @@ First source-chunk request through final CPU-readable PCM; excludes initializati
 
 | Model | Requested backend | Status | Median | Min–max | Runs |
 |---|---|---|---:|---:|---:|
+| sano-amy-1p8m-gguf | webgpu | measured | 170.54 s | 169.98–174.36 s | 5 |
 | sano-amy-gguf | cpu | measured | 1118.90 s | 1117.89–1119.51 s | 5 |
 | sano-amy-gguf | webgpu | measured | 173.41 s | 173.04–173.79 s | 5 |
 | sano-amy-small-gguf | webgpu | measured | 141.77 s | 141.59–142.54 s | 5 |
@@ -18,6 +19,10 @@ Additional metrics (median of available observations; scopes are distinct):
 
 | Model | Backend | Metric | Median | Unit | n |
 |---|---|---|---:|---|---:|
+| sano-amy-1p8m-gguf | webgpu | First completed source chunk | 1980.175 | ms | 5 |
+| sano-amy-1p8m-gguf | webgpu | First PCM block | 1980.175 | ms | 5 |
+| sano-amy-1p8m-gguf | webgpu | Generated audio | 1312.880 | s | 5 |
+| sano-amy-1p8m-gguf | webgpu | Generation / audio duration | 0.130 | ratio | 5 |
 | sano-amy-gguf | cpu | First completed source chunk | 12720.850 | ms | 5 |
 | sano-amy-gguf | cpu | First PCM block | 12720.835 | ms | 5 |
 | sano-amy-gguf | cpu | Generated audio | 1312.840 | s | 5 |
@@ -43,11 +48,15 @@ Model support (catalog capability, not coverage of this run):
 
 | Model | Supported voices | Bundled voices | Languages | Tested voice |
 |---|---:|---:|---|---|
+| sano-amy-1p8m-gguf | 1 | 1 | 1 (en) | amy-1p8m (US English; Piper NFD phonemes with interleaved PAD) |
 | sano-amy-gguf | 1 | 1 | 1 (en) | amy (US English; Piper NFD phonemes with interleaved PAD) |
 | sano-amy-gguf | 1 | 1 | 1 (en) | amy (US English; Piper NFD phonemes with interleaved PAD) |
 | sano-amy-small-gguf | 1 | 1 | 1 (en) | amy-1p1m (US English; Piper NFD phonemes with interleaved PAD) |
 | sano-heart-gguf | 1 | 1 | 1 (en) | heart (US English; Misaki-normalized eSpeak IPA) |
 | sano-heart-gguf | 1 | 1 | 1 (en) | heart (US English; Misaki-normalized eSpeak IPA) |
+
+Individual pinned amy-en-1p8m voice converted with Kokopop. One selected voice; 22050 Hz. Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG\_FORM normalization and internal chunking are retained. No other voices are bundled. Sources: [1](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json), [2](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md), [3](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88).
+
 
 Individual pinned amy-en-1p46m voice converted with Kokopop. One selected voice; 22050 Hz. Mixed F16/F32 GGUF from pinned Piperlite FP16 source; precision preserved across CPU and WebGPU. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG\_FORM normalization and internal chunking are retained. No other voices are bundled. Sources: [1](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json), [2](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md), [3](https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88).
 
@@ -66,6 +75,7 @@ Individual pinned heart voice converted with Kokopop. One selected voice; 24000 
 
 ![Generation chart](chart.svg)
 
+- **sano-amy-1p8m-gguf / webgpu**: An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.
 - **sano-amy-gguf / cpu**: Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF.
 - **sano-amy-gguf / webgpu**: An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.
 - **sano-amy-small-gguf / webgpu**: An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.
@@ -83,6 +93,8 @@ Input: 2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc
 Input: 2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665
 
 Input: 2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce
+
+Input: 2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0
 
 Read each source result for power, thermal, execution-order and other run-specific notes.
 
