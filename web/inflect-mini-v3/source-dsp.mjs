@@ -62,6 +62,8 @@ export function inflectMiniSourceFeatures({
   const radByHarmonic = new Float32Array(sourceLength);
   const sourceAccumulator = new Float32Array(sourceLength);
   const phaseByHarmonic = new Float32Array(downsampledLength);
+  const radDownTrace = includeDiagnostics ? new Float32Array(downsampledLength * harmonicCount) : null;
+  const cumulativeTrace = includeDiagnostics ? new Float32Array(downsampledLength * harmonicCount) : null;
   const phaseInputTrace = includeDiagnostics ? new Float32Array(downsampledLength * harmonicCount) : null;
   const phaseOutputTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
   const sourceSinesTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
@@ -73,12 +75,18 @@ export function inflectMiniSourceFeatures({
       radByHarmonic[sample] = radians;
     }
     const down = interpolateLinear(radByHarmonic, sourceLength, downsampledLength, upsampleScale);
+    if (includeDiagnostics) {
+      for (let sample = 0; sample < downsampledLength; sample++) {
+        radDownTrace[sample * harmonicCount + harmonic] = down[sample];
+      }
+    }
     // Accumulate in JS Number precision, then round each recorded phase to
     // FP32. The hosted source-feature parity check qualifies this choice
     // against the pinned Torch implementation.
     let cumulative = 0;
     for (let sample = 0; sample < downsampledLength; sample++) {
       cumulative += down[sample];
+      if (includeDiagnostics) cumulativeTrace[sample * harmonicCount + harmonic] = cumulative;
       const phase = f32(f32(f32(cumulative * 2) * Math.PI));
       phaseByHarmonic[sample] = f32(phase * upsampleScale);
       if (includeDiagnostics) phaseInputTrace[sample * harmonicCount + harmonic] = phaseByHarmonic[sample];
@@ -155,6 +163,7 @@ export function inflectMiniSourceFeatures({
   }
 
   return { ...(includeDiagnostics ? { harmonicSource, sourceReal, sourceImag,
+    radDown: radDownTrace, cumulative: cumulativeTrace,
     phaseInput: phaseInputTrace, phaseOutput: phaseOutputTrace, sourceSines: sourceSinesTrace,
     magnitude: new Float32Array(magnitude), phase: new Float32Array(phaseOutput) } : {}),
     sourceSpec, bins, stftFrames, samples: sourceLength };

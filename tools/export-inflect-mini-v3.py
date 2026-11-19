@@ -166,12 +166,16 @@ def browser_source_features(f0, phase_uniform, harmonic_noise, generator) -> dic
             and decoded.get("stftFrames") == expected_frames
             and decoded.get("bins") == expected_bins,
             "Browser source DSP returned the wrong sample or STFT clock")
-    for name in ("harmonicSource", "phaseInput", "phaseOutput", "sourceSines",
+    for name in ("harmonicSource", "radDown", "cumulative", "phaseInput", "phaseOutput", "sourceSines",
                  "sourceReal", "sourceImag", "magnitude", "phase", "sourceSpec"):
         require(name in decoded and all(math.isfinite(value) for value in decoded[name]),
                 "Browser source DSP returned malformed/nonfinite " + name)
     decoded["harmonicSource"] = np.asarray(decoded["harmonicSource"], dtype=np.float32)
     harmonic_count = len(payload["phaseUniform"])
+    decoded["radDown"] = np.asarray(decoded["radDown"], dtype=np.float32).reshape(
+        1, int(payload["frameCount"] * 2), harmonic_count)
+    decoded["cumulative"] = np.asarray(decoded["cumulative"], dtype=np.float32).reshape(
+        1, int(payload["frameCount"] * 2), harmonic_count)
     decoded["phaseInput"] = np.asarray(decoded["phaseInput"], dtype=np.float32).reshape(
         1, int(payload["frameCount"] * 2), harmonic_count)
     decoded["phaseOutput"] = np.asarray(decoded["phaseOutput"], dtype=np.float32).reshape(
@@ -834,10 +838,11 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             f0_up_native.shape[0], sinegen.dim, device=f0_up_native.device)
         native_initial_phase[:, 0] = 0
         native_rad[:, 0, :] = native_rad[:, 0, :] + native_initial_phase
-        native_source_phase_input = F.interpolate(
+        native_rad_down = F.interpolate(
             native_rad.transpose(1, 2), scale_factor=1 / sinegen.upsample_scale,
             mode="linear").transpose(1, 2)
-        native_source_phase_input = torch.cumsum(native_source_phase_input, dim=1) * 2 * torch.pi
+        native_cumulative = torch.cumsum(native_rad_down, dim=1)
+        native_source_phase_input = native_cumulative * 2 * torch.pi
         native_source_phase_scaled = native_source_phase_input * sinegen.upsample_scale
         native_source_phase_up = F.interpolate(
             native_source_phase_scaled.transpose(1, 2),
@@ -1051,6 +1056,10 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         native_harmonic.detach().cpu().numpy().reshape(-1), browser_native_f0["harmonicSource"])
     diagnostic_errors["nativeVsBrowserPhaseInputWithNativeF0"] = array_error(
         native_source_phase_scaled.detach().cpu().numpy(), browser_native_f0["phaseInput"])
+    diagnostic_errors["nativeVsBrowserRadDownWithNativeF0"] = array_error(
+        native_rad_down.detach().cpu().numpy(), browser_native_f0["radDown"])
+    diagnostic_errors["nativeVsBrowserCumulativeWithNativeF0"] = array_error(
+        native_cumulative.detach().cpu().numpy(), browser_native_f0["cumulative"])
     diagnostic_errors["nativeVsBrowserPhaseOutputWithNativeF0"] = array_error(
         native_source_phase_up.detach().cpu().numpy(), browser_native_f0["phaseOutput"])
     diagnostic_errors["nativeVsBrowserSourceSinesWithNativeF0"] = array_error(

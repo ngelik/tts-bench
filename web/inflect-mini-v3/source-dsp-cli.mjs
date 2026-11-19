@@ -7,6 +7,8 @@ request.includeDiagnostics = true;
 const result = inflectMiniSourceFeatures(request);
 process.stdout.write(JSON.stringify({
   harmonicSource: Array.from(result.harmonicSource),
+  radDown: Array.from(result.radDown),
+  cumulative: Array.from(result.cumulative),
   phaseInput: Array.from(result.phaseInput),
   phaseOutput: Array.from(result.phaseOutput),
   sourceSines: Array.from(result.sourceSines),
