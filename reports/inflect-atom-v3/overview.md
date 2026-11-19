@@ -6,11 +6,11 @@ The included receipts share one source, exact environment and fixture; voice, pr
 
 ## Warm generation
 
-This report contains no scored warm generation times. The receipt table identifies the submitted scenarios and any terminal errors.
+Each warm run starts with one excluded 20,000-character article (93 chunks). Each generation time shows the observed range and the number of scored articles (n). When n=1, the median and both endpoints are the single observation. First PCM is the median time to the first audio samples. Output duration and real-time factor use the recorded sample count, sample rate and generation time.
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
-| Inflect Atom v3 157K FP32 | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted | Not submitted |
+| Inflect Atom v3 157K FP32 | 89.67 s (89.57–89.69; n=5) | 88.79 s (88.67–88.82; n=5) | 995.84 ms (n=5) | 991.99 ms (n=5) | 1256.64 s / 0.071 | 1256.64 s / 0.071 |
 
 ## Resource diagnostics
 
@@ -26,7 +26,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Inflect Atom v3 157K FP32 | Not submitted | Not submitted | [Report](../../results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [Report](../../results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#inflect-atom-v3) | [Terms](../../docs/LICENSING.md) |
+| Inflect Atom v3 157K FP32 | [Report](../../results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/summary.md) | [Report](../../results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/summary.md) | [Report](../../results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [Report](../../results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#inflect-atom-v3) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
