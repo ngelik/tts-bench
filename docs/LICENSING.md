@@ -104,7 +104,17 @@ ignored cache and are not redistributed by this repository. The benchmark
 adapter and demo-derived sentence/clause split helper are identified in
 [`web/sano/NOTICE.md`](../web/sano/NOTICE.md); the helper retains
 GPL-3.0-or-later terms. The CPU registration does not include the separate
-dequantized-F32 WebGPU conversion.
+converted-F32 WebGPU profile.
+
+The separate **heart-nano Kokopop F32** profile derives a GGUF from the exact
+heartnano Q8 front/decoder files at the pinned Ampixa revision using the pinned
+MIT Kokopop converter. Ampixa's repository is GPL-3.0-or-later; the heartnano
+metadata does not declare separate voice-package terms, so the weights are not
+described as MIT-only. Kokopop, GGML and yyjson retain MIT notices; the bundled
+eSpeak NG implementation and English data retain GPL-3.0-or-later. The locked
+license sidecars accompany the generated artifact in the ignored asset cache.
+The WebGPU path is a distinct F32 conversion profile, not the official int8
+browser implementation. See [source/build provenance and configuration](SANO_HEART_NANO.md).
 
 Inflect Micro v2's [official package](https://huggingface.co/owensong/Inflect-Micro-v2-ONNX/tree/91b1ab6432323064ec0e8e9704d92fcecd24855f)
 is Apache-2.0; the VITS/Tacotron-derived symbol inventory retains its MIT notice.
@@ -234,3 +244,7 @@ with the local assets. The benchmark uses the checkpoint's one fixed English
 voice. The pinned card does not name a voice performer or grant separate output
 rights. Keep model/runtime licenses separate from any rights in the voice or
 recordings. [Pinned model card and license](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Browser runtime and conversion notice](../web/supratts/NOTICE.md)
+
+## Official Sano Robot/MCU and Trellis
+
+Both registrations pin the browser assets in [Ampixa/sanoTTS c0584a5](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0). Their weight directories have no separate adjacent licensing grant, so the manifest retains the containing repository's **GPL-3.0-or-later** terms; it does not infer distilled-weight rights from a teacher's license. G2P, the Trellis runtime/frontend and demo-derived helper follow GPL-3.0-or-later. The upstream `LICENSE.MIT` explicitly covers the Robot core/reference kernels/browser shim, but not the whole browser pipeline or Trellis files. Fetching requires acknowledgment. [Exact scope and modifications](../web/sano/robot-trellis-NOTICE.md). Upstream binaries and weights are fetched into ignored storage, not committed as benchmark source.

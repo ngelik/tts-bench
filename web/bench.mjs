@@ -21,6 +21,7 @@ import { createKokoroAdapter } from './adapters/kokoro.mjs';
 import { createMMSAdapter } from './adapters/mms.mjs';
 import { createKittenAdapter } from './adapters/kitten.mjs';
 
+import { createSanoRobotTrellisAdapter } from './adapters/sano-robot-trellis.mjs';
 import { createSanoAdapter } from './adapters/sano.mjs';
 import { createSanoHeartNanoAdapter } from './adapters/sano-heart-nano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
@@ -29,6 +30,8 @@ import { createInflectAdapter } from './adapters/inflect.mjs';
 import { createSilencio2Adapter } from './adapters/silencio2.mjs';
 import { createKleinAdapter } from './adapters/klein.mjs';
 import { createZonos3Adapter } from './adapters/zonos3.mjs';
+import { createSanoKokopopAdapter } from './adapters/sano-kokopop.mjs';
+import { SANO_HEART_NANO_F32 } from './adapters/sano-kokopop-config.mjs';
 
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
@@ -59,11 +62,14 @@ const FACTORIES = {
   'kitten-nano-0.8': createKittenAdapter,
   'sano-amy': createSanoAdapter,
   'sano-heart-nano': createSanoHeartNanoAdapter,
+  'sano-robot-mcu': () => createSanoRobotTrellisAdapter('sano-robot-mcu'),
+  'sano-trellis': () => createSanoRobotTrellisAdapter('sano-trellis'),
   'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
   'silencio-2': createSilencio2Adapter,
   'klein-tts-x1.5-pro': createKleinAdapter,
   'zonos3-mini': createZonos3Adapter,
+  'sano-heart-nano-gguf-f32': () => createSanoKokopopAdapter(SANO_HEART_NANO_F32),
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
 let canonical = null;
