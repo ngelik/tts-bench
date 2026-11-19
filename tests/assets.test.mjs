@@ -5,12 +5,13 @@ import { resolve } from 'node:path';
 import { listModels } from '../lib/assets.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { LINNET_WEBGPU_RUNTIME } from '../web/linnet/runtime-policy.mjs';
+import { SANO_HEART_NANO_F32 } from '../web/adapters/sano-kokopop-config.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini']);
+  assert.deepEqual(models.map(model => model.id), ['paradee', 'phonon', 'leokani-7m', 'leokani-4.5m', 'pivo-curated', 'woof', 'piper-en-gb-southern-english-female-low', 'supertonic-3', 'kokoro-82m', 'mms-english', 'kitten-nano-0.8', 'sano-amy', 'inflect-micro-v2', 'lfm3-audio-2b-gguf', 'lfm3-omni-2b-gguf', 'lfm3-audio-2b-fusor-q7-cpu', 'lfm3-omni-2b-fusor-q7-cpu', 'mach-boom', 'pocket-tts-100m-english-int8', 'fun-cosyvoice3-0.5b-2512', 'audio8-realistic-0.6b-int4', 'ming-3.0-tts-0.5b-gguf','ming-3.0-tts-0.5b-fusor-mix-cpu','tiny-voca','sopro-v2-turbo','supratts-1.0-preview','klein-tts-x1.5-pro','linnet-en-35m','silencio-2','zonos3-mini','sano-heart-nano-gguf-f32']);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
@@ -35,6 +36,18 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-cpu-backbone-q4q8').bytes, 663150624);
   assert.equal(zonos.assets.filter(asset => asset.id.startsWith('zonos3-web-backbone-shard-') || asset.id.startsWith('zonos3-web-zac-shard-') || asset.id === 'zonos3-web-companions-steer-gguf').reduce((sum, asset) => sum + asset.bytes, 0), 920731032);
   assert.equal(zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-') && asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 1160861792);
+  const sanoF32 = getAssetLock().models['sano-heart-nano-gguf-f32'];
+  assert.deepEqual(sanoF32.backends, ['cpu', 'webgpu']);
+  assert.equal(sanoF32.modelRevision, '4a8194aa1dd958033ee449b3ad30c37e536b216e');
+  assert.equal(sanoF32.runtime.version, SANO_HEART_NANO_F32.runtime.version);
+  assert.equal(sanoF32.assets.find(asset => asset.kind === 'model-weights').sha256, SANO_HEART_NANO_F32.model.sha256);
+  assert.equal(sanoF32.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 1462248);
+  assert.equal(sanoF32.runtime.files.reduce((sum, asset) => sum + asset.bytes, 0), 5166171);
+  assert.ok([...sanoF32.runtime.files, ...sanoF32.assets].every(asset => asset.generated?.artifactPath));
+  assert.deepEqual(sanoF32.runtime.files.map(file => ({ target: '/' + file.target, bytes: file.bytes, sha256: file.sha256 })),
+    SANO_HEART_NANO_F32.runtime.files.map(file => ({ target: file.url, bytes: file.bytes, sha256: file.sha256 })));
+  assert.equal(SANO_HEART_NANO_F32.model.bytes, 1462248);
+  assert.equal(SANO_HEART_NANO_F32.model.sha256, '5e4389e27a9db6d18c5e7d479374f0bdb6eb97ab22273edb8d89c879cc97af1e');
   const cpuRuntime = zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-runtime-'));
   assert.equal(cpuRuntime.reduce((sum, asset) => sum + asset.bytes, 0), 4410876);
   assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v2-690469b7955a/')));
@@ -138,8 +151,12 @@ test('asset lock pins content and permits only identical shared runtime targets'
       const isPinnedNpmRuntime = runtimeFiles.has(asset)
         && Boolean(asset.package ?? model.runtime.package)
         && Boolean(asset.version ?? model.runtime.version);
-      assert.ok(asset.url || asset.sourcePath || isPinnedNpmRuntime,
+      assert.ok(asset.url || asset.sourcePath || asset.generated || isPinnedNpmRuntime,
         'asset needs a pinned URL, checked-in source, or package-pinned runtime path: ' + asset.target);
+      if (asset.generated) {
+        assert.ok(asset.generated.artifactPath);
+        assert.match(asset.generated.build, /tools\/build-sano-kokopop-webgpu\.sh/);
+      }
       const existing = targets.get(asset.target);
       if (existing) {
         assert.equal(asset.bytes, existing.bytes, 'shared target byte count differs: ' + asset.target);

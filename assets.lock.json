@@ -7092,6 +7092,172 @@
         ],
         "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. The WebGPU profile loads its reference codes and speaker embedding; the CPU/WASM profile loads the speaker embedding only. The benchmark skips unused preview audio. No other preset or language is exercised."
       }
+    },
+    "sano-heart-nano-gguf-f32": {
+      "displayName": "sanoTTS heart-nano 294k (Kokopop F32)",
+      "modelRevision": "4a8194aa1dd958033ee449b3ad30c37e536b216e",
+      "assetBuild": {
+        "builder": {
+          "repository": "https://github.com/tterrasson/kokopop",
+          "revision": "73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+        },
+        "modelSource": {
+          "repository": "https://huggingface.co/ampixa/sanoTTS",
+          "revision": "4a8194aa1dd958033ee449b3ad30c37e536b216e",
+          "inputs": [
+            {
+              "path": "heartnano/front_q8.bin",
+              "bytes": 109296,
+              "sha256": "5553ae5abf37c18d31c0b64ea791785b30e7a08cc32c07bff8bb2ab4aae0b94b"
+            },
+            {
+              "path": "heartnano/model_q8.bin",
+              "bytes": 235936,
+              "sha256": "4a6cdf0d0bf1996aa2c056298265ea8dd0c200c9025cba4a9b04e0e987bea88c"
+            }
+          ]
+        },
+        "command": "bash tools/build-sano-kokopop-webgpu.sh",
+        "workflow": ".github/workflows/sano-kokopop-smoke.yml (build-and-golden job)",
+        "artifact": "The workflow build artifact is passed directly to the scoring job; model weights and runtime are not publicly rehosted.",
+        "manifest": "BUILD-MANIFEST.json emitted with each build records dependency revisions, builder source files and output hashes."
+      },
+      "runtime": {
+        "package": "kokopop",
+        "version": "kokopop-sano-heartnano-v1",
+        "license": "MIT Kokopop/GGML/yyjson; GPL-3.0-or-later eSpeak NG and English data",
+        "files": [
+          {
+            "id": "sano-heartnano-kokopop-runtime-js",
+            "path": "kokopop-runtime.js",
+            "target": "runtimes/kokopop-sano-heartnano-v1/kokopop-runtime.js",
+            "bytes": 115452,
+            "sha256": "265aeb2be06ed0f8361cd791aa419b31379c57f59447044694df12f4d99ef8ab",
+            "kind": "runtime",
+            "generated": {
+              "artifactPath": "kokopop-runtime.js",
+              "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+            }
+          },
+          {
+            "id": "sano-heartnano-kokopop-runtime-wasm",
+            "path": "kokopop-runtime.wasm",
+            "target": "runtimes/kokopop-sano-heartnano-v1/kokopop-runtime.wasm",
+            "bytes": 4170114,
+            "sha256": "8033619c686c11bd737de88636f6a1145e4170d25c248cb6d16823ee25790e4a",
+            "kind": "runtime",
+            "generated": {
+              "artifactPath": "kokopop-runtime.wasm",
+              "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+            }
+          },
+          {
+            "id": "sano-heartnano-kokopop-runtime-data",
+            "path": "kokopop-runtime.data",
+            "target": "runtimes/kokopop-sano-heartnano-v1/kokopop-runtime.data",
+            "bytes": 880605,
+            "sha256": "525df9e3f5126afaf5b8b65626833e7850073e92ead87a39a085a9992838bca2",
+            "kind": "runtime",
+            "generated": {
+              "artifactPath": "kokopop-runtime.data",
+              "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+            }
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "sano-heartnano-f32-gguf",
+          "target": "models/sano-heart-nano-gguf-f32/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano-f32.gguf",
+          "bytes": 1462248,
+          "sha256": "5e4389e27a9db6d18c5e7d479374f0bdb6eb97ab22273edb8d89c879cc97af1e",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "heartnano-f32.gguf",
+            "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+          }
+        },
+        {
+          "id": "sano-heartnano-kokopop-kokopop-license",
+          "target": "licenses/kokopop-sano-heartnano-v1/LICENSE",
+          "bytes": 1059,
+          "sha256": "d505422e7b052295783dd137c7101fd18d8077a62987a69b4ff2405e6fbcf08c",
+          "kind": "license",
+          "generated": {
+            "artifactPath": "licenses/kokopop-sano-heartnano-v1/LICENSE",
+            "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+          }
+        },
+        {
+          "id": "sano-heartnano-kokopop-espeak-ng-license",
+          "target": "licenses/kokopop-sano-heartnano-v1/LICENSE.espeak-ng",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license",
+          "generated": {
+            "artifactPath": "licenses/kokopop-sano-heartnano-v1/LICENSE.espeak-ng",
+            "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+          }
+        },
+        {
+          "id": "sano-heartnano-kokopop-ggml-license",
+          "target": "licenses/kokopop-sano-heartnano-v1/LICENSE.ggml",
+          "bytes": 1078,
+          "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+          "kind": "license",
+          "generated": {
+            "artifactPath": "licenses/kokopop-sano-heartnano-v1/LICENSE.ggml",
+            "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+          }
+        },
+        {
+          "id": "sano-heartnano-kokopop-yyjson-license",
+          "target": "licenses/kokopop-sano-heartnano-v1/LICENSE.yyjson",
+          "bytes": 1084,
+          "sha256": "45e384d3d52c73cba3a64d6e6c25d47cd738cd8a55c30629e3201046eda62947",
+          "kind": "license",
+          "generated": {
+            "artifactPath": "licenses/kokopop-sano-heartnano-v1/LICENSE.yyjson",
+            "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+          }
+        },
+        {
+          "id": "sano-heartnano-kokopop-third-party-notices",
+          "target": "licenses/kokopop-sano-heartnano-v1/THIRD-PARTY-NOTICES.txt",
+          "bytes": 830,
+          "sha256": "27835206d921c64db70b08c815e081ec30ec309793b7ec691fa55531862979b6",
+          "kind": "license",
+          "generated": {
+            "artifactPath": "THIRD-PARTY-NOTICES.txt",
+            "build": "Build from the pinned Kokopop and Ampixa sources with `bash tools/build-sano-kokopop-webgpu.sh`; import the output artifact from the workflow build-and-golden job. See docs/SANO_HEART_NANO.md."
+          }
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0-or-later upstream sanoTTS repository; heartnano metadata does not declare separate voice-package terms",
+        "runtime": "MIT Kokopop/GGML/yyjson; GPL-3.0-or-later eSpeak NG and bundled English data",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Ampixa heartnano package converted to the separately named Kokopop F32 GGUF profile",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json",
+          "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88",
+          "https://github.com/Ampixa/sanoTTS/tree/939d982b9faa54cbcf5d24cc878f5cd514b2646e"
+        ],
+        "notes": "One fixed heartnano US English voice is benchmarked at 24 kHz. The GGUF is F32 expanded from the exact pinned Q8 front/decoder blobs; this is distinct from the official Q8 browser configuration. Generation uses speed 1 and seed 42 + canonical chunk id. Kokopop applies the pinned Misaki-normalized eSpeak IPA frontend. The CPU profile is cpu/wasm; WebGPU is webgpu+wasm and requires actual hardware dispatch. Only English (US) eSpeak data is bundled."
+      }
     }
   }
 }
