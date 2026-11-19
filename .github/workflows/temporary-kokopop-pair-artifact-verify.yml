@@ -307,6 +307,13 @@ jobs:
             };
             byBackend.set(backend, { receipt, cell, record });
             audioInfo.push(record);
+
+            const rawOutput = join('../verification-output/raw', backend);
+            await mkdir(rawOutput, { recursive: true });
+            await writeFile(join(rawOutput, 'result.json'), rawReceipt);
+            for (const checkpoint of ['warmup-1.json', ...Array.from({ length: 5 }, (_, index) => `trial-${index + 1}.json`)]) {
+              await writeFile(join(rawOutput, checkpoint), await readFile(join(base, checkpoint)));
+            }
           }
           const cpu = byBackend.get('cpu');
           const gpu = byBackend.get('webgpu');
@@ -347,6 +354,20 @@ jobs:
             profiles: Object.fromEntries(audioInfo.map(record => [record.backendRequested, record])),
           };
           await mkdir('../verification-output', { recursive: true });
+          await mkdir('../verification-output/evidence', { recursive: true });
+          for (const file of ['plan.json', 'preflight.json', 'host.txt', 'dry-run.json']) {
+            await writeFile(
+              join('../verification-output/evidence', file),
+              await readFile(join(artifactRoot, 'evidence', file)),
+            );
+          }
+          await writeFile('../verification-output/README.txt', [
+            'Compact posthoc evidence copied from the original hosted CPU/WebGPU pair artifact.',
+            'Contains exact raw result and warmup/trial checkpoint JSON bytes plus source-bound plan and verification.',
+            'Full WAV files are intentionally not included here; retrieve them from the original run artifact linked in verification.json.',
+            'No inference was run while producing this compact artifact.',
+            '',
+          ].join('\n'));
           await writeFile('../verification-output/verification.json', JSON.stringify(report, null, 2) + '\n');
           console.log(JSON.stringify(report, null, 2));
           NODE
@@ -354,6 +375,6 @@ jobs:
         if: always()
         with:
           name: sano-kokopop-pair-verification-${{ github.run_id }}
-          path: verification-output/verification.json
+          path: verification-output/**
           if-no-files-found: warn
           retention-days: 30
