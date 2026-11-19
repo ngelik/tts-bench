@@ -379,7 +379,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
   if (!['cpu', 'webgpu'].includes(backend)) return unsupported('Inflect Mini supports explicit CPU/WASM and WebGPU providers only.');
   if (diagnosticSessionProviders !== null) {
     const durationOnlyPlan = [['webgpu', 'wasm'], ['wasm'], ['wasm']];
-    if (backend !== 'webgpu' || !probe || !captureDiagnostics
+    if (backend !== 'webgpu' || !probe
         || JSON.stringify(diagnosticSessionProviders) !== JSON.stringify(durationOnlyPlan)) {
       throw new Error('Inflect Mini only permits the pinned duration-only provider plan inside diagnostic mode.');
     }
@@ -439,7 +439,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     sessions.push(await ort.InferenceSession.create(waveformBytes,
       { ...sessionOptions, executionProviders: sessionProviders[2] }));
     backendEffective = diagnosticSessionProviders
-      ? 'webgpu-duration+wasm-bridge+wasm-waveform'
+      ? 'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform'
       : backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm';
     if (backend === 'webgpu') {
       const actualDevice = await ort.env.webgpu.device;
@@ -493,7 +493,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
         ? probe ? 'Explicit one-thread ONNX Runtime Web WASM; an untimed Mini utterance completed.' : 'Explicit one-thread ONNX Runtime Web WASM provider.'
         : probe
           ? diagnosticSessionProviders
-            ? `Observed ${dispatches} WebGPU compute dispatches in the duration neural graph during untimed Mini synthesis; the bridge and waveform graph are explicitly WASM, and deterministic source excitation/STFT use standalone CPU DSP. Dispatch probe is removed before timed work.`
+            ? `Observed ${dispatches} WebGPU compute dispatches in the duration session configured with WebGPU then WASM fallback during untimed Mini synthesis; the bridge and waveform graph are explicitly WASM, and deterministic source excitation/STFT use standalone CPU DSP. This is a hybrid profile, not a claim that every duration operator ran on GPU. Dispatch probe is removed before timed work.`
             : `Observed ${dispatches} WebGPU compute dispatches in the waveform neural graph during untimed Mini synthesis; deterministic source excitation and STFT run in standalone CPU DSP, and WASM handles unsupported neural operators. Dispatch probe is removed before timed work.`
           : 'WebGPU + WASM operator fallback configured; no dispatch probe was requested.',
     },

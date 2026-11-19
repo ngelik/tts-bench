@@ -19,6 +19,12 @@ on:
       - 'web/workers/inflect-mini-v3.mjs'
       - 'web/workers/gpu-probe.mjs'
   workflow_dispatch:
+    inputs:
+      full_hybrid_article:
+        description: 'Run the full 93-span CPU versus duration-WebGPU hybrid diagnostic (~45 minutes)'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
@@ -112,6 +118,7 @@ jobs:
       - name: Probe real model dispatch on Apple WebGPU
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          INFLECT_MINI_FULL_HYBRID_ARTICLE: ${{ inputs.full_hybrid_article || 'false' }}
           CHROME_PATH: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
         run: node .github/scripts/inflect-mini-v3-webgpu-diagnostic.mjs
       - name: Preserve compact WebGPU diagnostic and listening WAV

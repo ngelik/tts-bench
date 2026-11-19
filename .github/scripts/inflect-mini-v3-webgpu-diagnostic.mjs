@@ -64,6 +64,16 @@ assert.equal(chunkText.length, sourceSpan.characters);
 assert.equal(sha256(Buffer.from(chunkText, 'utf8')), sourceSpan.sha256);
 const chunk = { id: sourceSpan.id, start: sourceSpan.start, end: sourceSpan.end,
   characters: sourceSpan.characters, sha256: sourceSpan.sha256, text: chunkText };
+const canonicalChunks = fixture.chunks.map(span => {
+  const text = article.slice(span.start, span.end);
+  assert.equal(text.length, span.characters);
+  assert.equal(sha256(Buffer.from(text, 'utf8')), span.sha256);
+  return { id: span.id, start: span.start, end: span.end, characters: span.characters, sha256: span.sha256, text };
+});
+assert.equal(canonicalChunks.map(span => span.text).join(''), article,
+  'all canonical spans cover the complete source in order');
+const fullArticleRequested = process.env.INFLECT_MINI_FULL_HYBRID_ARTICLE === 'true';
+if (fullArticleRequested) assert.equal(canonicalChunks.length, 93, 'full hybrid mode uses all 93 canonical spans');
 
 const server = await startServer(root);
 let browser;
@@ -76,14 +86,23 @@ try {
     args: ['--no-first-run', '--no-default-browser-check', '--disable-software-rasterizer'] });
   const page = await browser.newPage();
   const consoleErrors = [];
+  const runtimeWarnings = [];
   const requests = [];
   page.on('pageerror', error => consoleErrors.push(error.message));
-  page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
+  page.on('console', message => {
+    if (message.type() !== 'error') return;
+    const raw = message.text();
+    const normalized = raw.replace(/\u001b\[[0-9;]*m/g, '');
+    const providerPlacementWarning = /\[W:onnxruntime:, session_state\.cc:1316 VerifyEachNodeIsAssignedToAnEp\] Some nodes were not assigned to the preferred execution providers which may or may not have an negative impact on performance\. e\.g\. ORT explicitly assigns shape related ops to CPU to improve perf\.$/.test(normalized);
+    const providerPlacementDetail = /\[W:onnxruntime:, session_state\.cc:1318 VerifyEachNodeIsAssignedToAnEp\] Rerunning with verbose output on a non-minimal build will show node assignments\.$/.test(normalized);
+    if (providerPlacementWarning || providerPlacementDetail) runtimeWarnings.push(normalized);
+    else consoleErrors.push(raw);
+  });
   page.on('request', request => requests.push(request.url()));
   await page.route('**/favicon.ico', route => route.fulfill({ status: 204, body: '' }));
   await page.goto(server.url, { waitUntil: 'domcontentloaded' });
 
-  result = await page.evaluate(async ({ chunk: canonicalChunk }) => {
+  result = await page.evaluate(async ({ chunk: canonicalChunk, fullArticleChunks }) => {
     let pageAdapter = null;
     let pageAdapterInfo = null;
     let pageAdapterFallback = null;
@@ -203,6 +222,154 @@ try {
       const { diagnostics, ...rest } = run;
       return { ...rest, stageSummary: diagnostics ? summarizeDiagnostics(diagnostics) : null };
     }
+    function metricAccumulator() {
+      return { pairs: 0, nonfinitePairs: 0, differingValues: 0, maximumAbsoluteError: 0,
+        maximumErrorIndex: null, squareError: 0, sumA: 0, sumB: 0, sumA2: 0, sumB2: 0, sumAB: 0 };
+    }
+    function addPair(acc, a, b, index) {
+      if (!Number.isFinite(a) || !Number.isFinite(b)) { acc.nonfinitePairs++; return; }
+      acc.pairs++;
+      const delta = a - b;
+      if (delta !== 0) acc.differingValues++;
+      const absolute = Math.abs(delta);
+      if (absolute > acc.maximumAbsoluteError) {
+        acc.maximumAbsoluteError = absolute;
+        acc.maximumErrorIndex = index;
+      }
+      acc.squareError += delta * delta;
+      acc.sumA += a; acc.sumB += b;
+      acc.sumA2 += a * a; acc.sumB2 += b * b; acc.sumAB += a * b;
+    }
+    function finishAccumulator(acc) {
+      const meanA = acc.pairs ? acc.sumA / acc.pairs : 0;
+      const meanB = acc.pairs ? acc.sumB / acc.pairs : 0;
+      const varianceA = acc.pairs ? acc.sumA2 / acc.pairs - meanA * meanA : 0;
+      const varianceB = acc.pairs ? acc.sumB2 / acc.pairs - meanB * meanB : 0;
+      const rmsA = acc.pairs ? Math.sqrt(Math.max(0, acc.sumA2 / acc.pairs)) : null;
+      const rmsB = acc.pairs ? Math.sqrt(Math.max(0, acc.sumB2 / acc.pairs)) : null;
+      const rmsError = acc.pairs ? Math.sqrt(acc.squareError / acc.pairs) : null;
+      const covariance = acc.pairs ? acc.sumAB / acc.pairs - meanA * meanB : 0;
+      return { pairs: acc.pairs, nonfinitePairs: acc.nonfinitePairs, differingValues: acc.differingValues,
+        maximumAbsoluteError: acc.maximumAbsoluteError, maximumErrorIndex: acc.maximumErrorIndex,
+        rmsError, relativeRmsError: rmsA > 0 ? rmsError / rmsA : null,
+        rmsRatioHybridToCpu: rmsA > 0 ? rmsB / rmsA : null,
+        correlation: varianceA > 0 && varianceB > 0 ? covariance / Math.sqrt(varianceA * varianceB) : null,
+        cpuRms: rmsA, hybridRms: rmsB };
+    }
+    function compareFullParts(referenceParts, actualParts, globalAccumulator) {
+      const samePartCount = referenceParts.length === actualParts.length;
+      const partLengthsMatch = samePartCount && referenceParts.every((part, index) => part.length === actualParts[index].length);
+      if (!partLengthsMatch) {
+        globalAccumulator.sampleClockMismatchedSpans++;
+        return { samePartCount, partLengthsMatch, cpuPartLengths: referenceParts.map(part => part.length),
+          hybridPartLengths: actualParts.map(part => part.length), comparablePairs: 0 };
+      }
+      const spanAccumulator = metricAccumulator();
+      let sampleOffset = 0;
+      for (let partIndex = 0; partIndex < referenceParts.length; partIndex++) {
+        const cpuPart = referenceParts[partIndex]; const hybridPart = actualParts[partIndex];
+        for (let index = 0; index < cpuPart.length; index++) {
+          addPair(spanAccumulator, cpuPart[index], hybridPart[index], sampleOffset + index);
+          addPair(globalAccumulator, cpuPart[index], hybridPart[index], globalAccumulator.pairs);
+        }
+        sampleOffset += cpuPart.length;
+      }
+      return { samePartCount, partLengthsMatch, comparablePairs: spanAccumulator.pairs,
+        ...finishAccumulator(spanAccumulator) };
+    }
+    async function summarizePcmParts(parts, chunk) {
+      const samples = parts.reduce((sum, part) => sum + part.length, 0);
+      if (!samples || !parts.length || parts.length % 2 !== 1) {
+        throw new Error(`Full Mini diagnostic span ${chunk.id} returned an invalid utterance/pause sequence.`);
+      }
+      const pcm = new Float32Array(samples);
+      let offset = 0; let min = Infinity; let max = -Infinity; let squareSum = 0; let nonfiniteSamples = 0;
+      for (let partIndex = 0; partIndex < parts.length; partIndex++) {
+        const part = parts[partIndex];
+        if (!(part instanceof Float32Array) || part.length < 1) throw new Error(`Full Mini span ${chunk.id} has an invalid PCM part.`);
+        if (partIndex % 2 === 1 && (part.length !== 2_880 || part.some(value => value !== 0))) {
+          throw new Error(`Full Mini span ${chunk.id} contains a malformed 120 ms inter-utterance pause.`);
+        }
+        for (const value of part) {
+          if (!Number.isFinite(value)) { nonfiniteSamples++; continue; }
+          min = Math.min(min, value); max = Math.max(max, value); squareSum += value * value;
+        }
+        pcm.set(part, offset); offset += part.length;
+      }
+      const rms = nonfiniteSamples < samples ? Math.sqrt(squareSum / (samples - nonfiniteSamples)) : null;
+      const peak = nonfiniteSamples < samples ? Math.max(Math.abs(min), Math.abs(max)) : null;
+      const digest = await crypto.subtle.digest('SHA-256', pcm.buffer);
+      return { pcm, summary: { id: chunk.id, sourceCharacters: chunk.characters, sourceSha256: chunk.sha256,
+        internalUtterances: (parts.length + 1) / 2, pcmParts: parts.length, samples, sampleRate: 24_000,
+        durationSeconds: samples / 24_000, nonfiniteSamples, peak, rms,
+        nonSilent: peak > 1e-6 && rms > 1e-6, clipped: min < -1 || max > 1,
+        pcmSha256: Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('') } };
+    }
+    function float32WavBase64(pcm, sampleRate) {
+      const wav = new Uint8Array(44 + pcm.length * 4); const view = new DataView(wav.buffer);
+      const ascii = (at, value) => { for (let index = 0; index < value.length; index++) view.setUint8(at + index, value.charCodeAt(index)); };
+      ascii(0, 'RIFF'); view.setUint32(4, wav.length - 8, true); ascii(8, 'WAVEfmt ');
+      view.setUint32(16, 16, true); view.setUint16(20, 3, true); view.setUint16(22, 1, true);
+      view.setUint32(24, sampleRate, true); view.setUint32(28, sampleRate * 4, true);
+      view.setUint16(32, 4, true); view.setUint16(34, 32, true); ascii(36, 'data');
+      view.setUint32(40, pcm.length * 4, true);
+      for (let index = 0; index < pcm.length; index++) view.setFloat32(44 + index * 4, pcm[index], true);
+      let binary = '';
+      for (let index = 0; index < wav.length; index += 0x8000) binary += String.fromCharCode(...wav.subarray(index, index + 0x8000));
+      return btoa(binary);
+    }
+    async function runFullArticleBackend(backend, { sessionProviders = null, referenceParts = null } = {}) {
+      const adapter = createInflectMiniV3Adapter();
+      try {
+        const info = await adapter.initialize({ backend, probe: backend === 'webgpu', diagnosticCapture: false,
+          ...(backend === 'webgpu' ? { probeText: 'A short WebGPU diagnostic utterance.' } : {}),
+          ...(sessionProviders ? { diagnosticSessionProviders: sessionProviders } : {}) });
+        if (info.status !== 'measured') throw new Error(`Full Mini ${backend} initialization failed: ${info.reason ?? info.status}`);
+        const started = performance.now(); let firstPcmMs = null; let totalSamples = 0;
+        const rows = []; const retainedParts = referenceParts ? null : [];
+        const prefix = new Float32Array(30 * 24_000); let prefixSamples = 0;
+        const globalComparison = referenceParts ? { ...metricAccumulator(), sampleClockMismatchedSpans: 0 } : null;
+        const comparisons = [];
+        for (let spanIndex = 0; spanIndex < fullArticleChunks.length; spanIndex++) {
+          const chunk = fullArticleChunks[spanIndex]; const output = await adapter.generateChunk(chunk, {
+            onFirstPcm: () => { firstPcmMs ??= performance.now() - started; },
+          });
+          if (output.sampleRate !== 24_000 || output.completedChunkId !== chunk.id || !output.parts?.length) {
+            throw new Error(`Full Mini ${backend} returned an invalid span clock or ID for ${chunk.id}.`);
+          }
+          const summarized = await summarizePcmParts(output.parts, chunk);
+          if (summarized.summary.samples < 1) throw new Error(`Full Mini ${backend} returned empty PCM for span ${chunk.id}.`);
+          rows.push(summarized.summary); totalSamples += summarized.summary.samples;
+          if (prefixSamples < prefix.length) {
+            const count = Math.min(prefix.length - prefixSamples, summarized.pcm.length);
+            prefix.set(summarized.pcm.subarray(0, count), prefixSamples); prefixSamples += count;
+          }
+          if (referenceParts) {
+            comparisons.push({ spanId: chunk.id,
+              ...compareFullParts(referenceParts[spanIndex], output.parts, globalComparison) });
+          } else {
+            retainedParts.push(output.parts);
+          }
+        }
+        if (prefixSamples !== prefix.length) throw new Error('Full Mini diagnostic article is shorter than its exact 30-second prefix.');
+        const generationMs = performance.now() - started;
+        const dispatchMatch = /Observed (\d+) WebGPU compute dispatches/.exec(info.capability?.description ?? '');
+        const summary = { backendEffective: info.backendEffective, capability: info.capability,
+          settings: info.settings, chunkCount: rows.length, totalSourceCharacters: rows.reduce((sum, row) => sum + row.sourceCharacters, 0),
+          totalInternalUtterances: rows.reduce((sum, row) => sum + row.internalUtterances, 0),
+          totalSamples, sampleRate: 24_000, audioSeconds: totalSamples / 24_000,
+          firstPcmMs, generationMs, nonfiniteSamples: rows.reduce((sum, row) => sum + row.nonfiniteSamples, 0),
+          silentChunks: rows.filter(row => !row.nonSilent).length, clippedChunks: rows.filter(row => row.clipped).length,
+          pcmChunkSha256: rows.map(row => ({ id: row.id, sha256: row.pcmSha256 })), chunks: rows,
+          dispatches: dispatchMatch ? Number(dispatchMatch[1]) : null };
+        return { summary, retainedParts, comparisons,
+          globalComparison: globalComparison ? { ...finishAccumulator(globalComparison),
+            sampleClockMismatchedSpans: globalComparison.sampleClockMismatchedSpans } : null,
+          prefixWavBase64: float32WavBase64(prefix, 24_000) };
+      } finally {
+        await adapter.dispose();
+      }
+    }
     async function runBackend(backend, { waveformInputs = null, keepRawWav = false,
       sessionProviders = null, label = backend } = {}) {
       const adapter = createInflectMiniV3Adapter();
@@ -277,12 +444,26 @@ try {
     });
     const durationWebgpuHybrid = await runBackend('webgpu', {
       sessionProviders: [['webgpu', 'wasm'], ['wasm'], ['wasm']],
-      label: 'webgpu-duration+wasm-bridge+wasm-waveform',
+      label: 'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform',
       keepRawWav: true,
     });
+    let fullArticle = null;
+    if (fullArticleChunks.length) {
+      const cpuFull = await runFullArticleBackend('cpu');
+      const hybridFull = await runFullArticleBackend('webgpu', {
+        sessionProviders: [['webgpu', 'wasm'], ['wasm'], ['wasm']],
+        referenceParts: cpuFull.retainedParts,
+      });
+      fullArticle = { cpu: cpuFull.summary, durationWebgpuHybrid: hybridFull.summary,
+        comparison: { spans: hybridFull.comparisons, global: hybridFull.globalComparison },
+        cpuPrefixWavBase64: cpuFull.prefixWavBase64,
+        durationWebgpuHybridPrefixWavBase64: hybridFull.prefixWavBase64 };
+      cpuFull.retainedParts = null;
+    }
     return { status: 'compared', cpu: compactRun(cpu), webgpu: compactRun(webgpu),
       gpuWithCpuInputs: compactRun(gpuWithCpuInputs), cpuWithGpuInputs: compactRun(cpuWithGpuInputs),
       durationWebgpuHybrid: compactRun(durationWebgpuHybrid),
+      ...(fullArticle ? { fullArticle } : {}),
       comparisons: {
         naturalCpuVsWebgpu: compareRuns(cpu, webgpu),
         sameCpuWaveformInputsCpuVsWebgpu: compareRuns(cpu, gpuWithCpuInputs),
@@ -290,7 +471,7 @@ try {
         cpuVsDurationWebgpuHybrid: compareRuns(cpu, durationWebgpuHybrid),
       },
       pageAdapter: pageAdapterInfo, pageAdapterFallback, browser };
-  }, { chunk });
+  }, { chunk, fullArticleChunks: fullArticleRequested ? canonicalChunks : [] });
 
   serverStats = server.snapshot();
   const externalRequests = requests.filter(url => !url.startsWith(server.url));
@@ -316,6 +497,26 @@ try {
     rawWaveFiles[name] = { file: filename, bytes: wav.length, sha256: sha256(wav),
       encoding: 'WAVE_FORMAT_IEEE_FLOAT, mono 32-bit Float32; original amplitudes retained without gain or clipping' };
   }
+  const fullArticleAudioFiles = {};
+  for (const [key, name] of [['cpuPrefixWavBase64', 'cpu'],
+    ['durationWebgpuHybridPrefixWavBase64', 'durationWebgpuHybrid']]) {
+    const encoded = result?.fullArticle?.[key];
+    if (!encoded) continue;
+    const wav = Buffer.from(encoded, 'base64');
+    delete result.fullArticle[key];
+    assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+    assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+    assert.equal(wav.readUInt16LE(20), 3, 'full-article prefix retains IEEE Float32 without clipping');
+    assert.equal(wav.readUInt16LE(22), 1);
+    assert.equal(wav.readUInt32LE(24), 24_000);
+    assert.equal(wav.readUInt16LE(34), 32);
+    assert.equal(wav.readUInt32LE(40), 30 * 24_000 * 4);
+    assert.equal(wav.length, 44 + 30 * 24_000 * 4);
+    const filename = `full-article-${name}-prefix-30s-float32.wav`;
+    await writeFile(resolve(outputDir, filename), wav);
+    fullArticleAudioFiles[name] = { file: filename, bytes: wav.length, sha256: sha256(wav),
+      encoding: 'Exact first 30 seconds of canonical-span Float32 PCM; mono 24 kHz, no gain, normalization, or clipping' };
+  }
   const report = {
     schemaVersion: 1,
     diagnosticOnly: true,
@@ -330,11 +531,14 @@ try {
     packageLockIntegrity: lockedRuntime.integrity,
     gpuRuntime,
     fixture: { id: 'english-20k-v1', articleSha256: sha256(articleBytes), canonicalChunkId: chunk.id,
-      sourceCharacters: chunk.characters, sourceSha256: chunk.sha256 },
+      sourceCharacters: chunk.characters, sourceSha256: chunk.sha256,
+      fullArticleRequested, canonicalSpanCount: canonicalChunks.length },
     rawWaveFiles,
+    fullArticleAudioFiles,
     ...result,
     server: serverStats,
     network: { requestCount: requests.length, externalRequests },
+    runtimeWarnings,
     consoleErrors,
   };
   await writeFile(resolve(outputDir, 'verification.json'), JSON.stringify(report, null, 2) + '\n');
@@ -342,6 +546,19 @@ try {
     cpu: report.cpu?.generation, webgpu: report.webgpu?.generation,
     durationWebgpuHybrid: report.durationWebgpuHybrid?.generation,
     durationDispatches: report.durationWebgpuHybrid?.dispatches,
+    fullArticle: report.fullArticle ? {
+      cpu: { chunkCount: report.fullArticle.cpu.chunkCount, totalSamples: report.fullArticle.cpu.totalSamples,
+        generationMs: report.fullArticle.cpu.generationMs, nonfiniteSamples: report.fullArticle.cpu.nonfiniteSamples,
+        silentChunks: report.fullArticle.cpu.silentChunks, clippedChunks: report.fullArticle.cpu.clippedChunks },
+      hybrid: { backendEffective: report.fullArticle.durationWebgpuHybrid.backendEffective,
+        dispatches: report.fullArticle.durationWebgpuHybrid.dispatches,
+        chunkCount: report.fullArticle.durationWebgpuHybrid.chunkCount,
+        totalSamples: report.fullArticle.durationWebgpuHybrid.totalSamples,
+        generationMs: report.fullArticle.durationWebgpuHybrid.generationMs,
+        nonfiniteSamples: report.fullArticle.durationWebgpuHybrid.nonfiniteSamples,
+        silentChunks: report.fullArticle.durationWebgpuHybrid.silentChunks,
+        clippedChunks: report.fullArticle.durationWebgpuHybrid.clippedChunks },
+      comparison: report.fullArticle.comparison.global } : null,
     dispatches: report.webgpu?.dispatches, comparisons: report.comparisons,
     reason: report.reason,
     server: serverStats, network: report.network }, null, 2));
@@ -354,7 +571,7 @@ try {
   assert.ok(Number.isInteger(result.durationWebgpuHybrid.dispatches) && result.durationWebgpuHybrid.dispatches > 0,
     'duration-only hybrid verified real WebGPU compute dispatches');
   assert.equal(result.durationWebgpuHybrid.info.backendEffective,
-    'webgpu-duration+wasm-bridge+wasm-waveform');
+    'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform');
   assert.deepEqual(result.durationWebgpuHybrid.info.settings.sessionExecutionProviders,
     [['webgpu', 'wasm'], ['wasm'], ['wasm']]);
   assert.equal(result.durationWebgpuHybrid.generation.clipped, false,
@@ -365,6 +582,29 @@ try {
     'CPU and GPU waveform graphs were compared with identical CPU inputs');
   assert.ok(result.comparisons.sameGpuWaveformInputsCpuVsWebgpu.waveformInputs.every(item => item.comparison.exactEqual),
     'CPU and GPU waveform graphs were compared with identical WebGPU inputs');
+  if (fullArticleRequested) {
+    assert.ok(result.fullArticle, 'requested full-article hybrid diagnostic completed');
+    const { cpu, durationWebgpuHybrid, comparison } = result.fullArticle;
+    assert.equal(cpu.chunkCount, 93);
+    assert.equal(durationWebgpuHybrid.chunkCount, 93);
+    assert.equal(cpu.totalSourceCharacters, 20_000);
+    assert.equal(durationWebgpuHybrid.totalSourceCharacters, 20_000);
+    assert.equal(cpu.nonfiniteSamples, 0);
+    assert.equal(durationWebgpuHybrid.nonfiniteSamples, 0);
+    assert.equal(cpu.silentChunks, 0);
+    assert.equal(durationWebgpuHybrid.silentChunks, 0);
+    assert.equal(cpu.clippedChunks, 0);
+    assert.equal(durationWebgpuHybrid.clippedChunks, 0);
+    assert.equal(durationWebgpuHybrid.backendEffective,
+      'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform');
+    assert.ok(Number.isInteger(durationWebgpuHybrid.dispatches) && durationWebgpuHybrid.dispatches > 0);
+    assert.equal(comparison.sampleClockMismatchedSpans, 0,
+      'CPU and hybrid produced sample-aligned internal parts for every canonical span');
+    assert.equal(comparison.nonfinitePairs, 0);
+    assert.equal(result.fullArticle.comparison.spans.length, 93);
+    assert.ok(result.fullArticle.comparison.spans.every(span => span.samePartCount && span.partLengthsMatch));
+    assert.deepEqual(Object.keys(fullArticleAudioFiles).sort(), ['cpu', 'durationWebgpuHybrid']);
+  }
   assert.deepEqual(externalRequests, [], 'diagnostic made no off-origin requests');
   assert.deepEqual(consoleErrors, [], 'Chrome reported no page or console errors');
 } catch (error) {
