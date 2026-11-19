@@ -166,7 +166,8 @@ def browser_source_features(f0, phase_uniform, harmonic_noise, generator) -> dic
             and decoded.get("stftFrames") == expected_frames
             and decoded.get("bins") == expected_bins,
             "Browser source DSP returned the wrong sample or STFT clock")
-    for name in ("harmonicSource", "radDown", "cumulative", "phaseInput", "phaseOutput", "sourceSines",
+    for name in ("harmonicSource", "radDown", "cumulative", "phaseInput", "phaseOutput",
+                 "phaseOutputFusedWeighted", "phaseOutputFusedLerp", "sourceSines",
                  "sourceReal", "sourceImag", "magnitude", "phase", "sourceSpec"):
         require(name in decoded and all(math.isfinite(value) for value in decoded[name]),
                 "Browser source DSP returned malformed/nonfinite " + name)
@@ -180,6 +181,12 @@ def browser_source_features(f0, phase_uniform, harmonic_noise, generator) -> dic
         1, int(payload["frameCount"] * 2), harmonic_count)
     decoded["phaseOutput"] = np.asarray(decoded["phaseOutput"], dtype=np.float32).reshape(
         1, expected_samples, harmonic_count)
+    decoded["phaseOutputFusedWeighted"] = np.asarray(
+        decoded["phaseOutputFusedWeighted"], dtype=np.float32).reshape(
+            1, expected_samples, harmonic_count)
+    decoded["phaseOutputFusedLerp"] = np.asarray(
+        decoded["phaseOutputFusedLerp"], dtype=np.float32).reshape(
+            1, expected_samples, harmonic_count)
     decoded["sourceSines"] = np.asarray(decoded["sourceSines"], dtype=np.float32).reshape(
         1, expected_samples, harmonic_count)
     decoded["sourceReal"] = np.asarray(decoded["sourceReal"], dtype=np.float32).reshape(1, expected_bins, expected_frames)
@@ -1062,6 +1069,10 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         native_cumulative.detach().cpu().numpy(), browser_native_f0["cumulative"])
     diagnostic_errors["nativeVsBrowserPhaseOutputWithNativeF0"] = array_error(
         native_source_phase_up.detach().cpu().numpy(), browser_native_f0["phaseOutput"])
+    diagnostic_errors["nativeVsBrowserPhaseOutputFusedWeightedWithNativeF0"] = array_error(
+        native_source_phase_up.detach().cpu().numpy(), browser_native_f0["phaseOutputFusedWeighted"])
+    diagnostic_errors["nativeVsBrowserPhaseOutputFusedLerpWithNativeF0"] = array_error(
+        native_source_phase_up.detach().cpu().numpy(), browser_native_f0["phaseOutputFusedLerp"])
     diagnostic_errors["nativeVsBrowserSourceSinesWithNativeF0"] = array_error(
         native_source_sines.detach().cpu().numpy(), browser_native_f0["sourceSines"])
     diagnostic_errors["nativeVsBrowserSourceSpecWithNativeF0"] = array_error(

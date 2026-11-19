@@ -11,6 +11,8 @@ process.stdout.write(JSON.stringify({
   cumulative: Array.from(result.cumulative),
   phaseInput: Array.from(result.phaseInput),
   phaseOutput: Array.from(result.phaseOutput),
+  phaseOutputFusedWeighted: Array.from(result.phaseOutputFusedWeighted),
+  phaseOutputFusedLerp: Array.from(result.phaseOutputFusedLerp),
   sourceSines: Array.from(result.sourceSines),
   sourceReal: Array.from(result.sourceReal),
   sourceImag: Array.from(result.sourceImag),

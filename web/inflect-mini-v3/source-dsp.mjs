@@ -1,17 +1,24 @@
 const f32 = Math.fround;
 const PI_F32 = f32(Math.PI);
 
-function interpolateLinear(input, inputLength, outputLength, sourceScale) {
+function interpolateLinear(input, inputLength, outputLength, sourceScale, blend = 'separate-products') {
   const output = new Float32Array(outputLength);
   for (let position = 0; position < outputLength; position++) {
-    let sourcePosition = (position + 0.5) * sourceScale - 0.5;
+    let sourcePosition = f32(f32(f32(sourceScale) * f32(position + 0.5)) - 0.5);
     sourcePosition = Math.max(0, Math.min(inputLength - 1, sourcePosition));
     const lower = Math.floor(sourcePosition);
     const upper = Math.min(inputLength - 1, lower + 1);
     const fraction = f32(sourcePosition - lower);
     const left = input[lower];
     const right = input[upper];
-    output[position] = f32(f32(left * f32(1 - fraction)) + f32(right * fraction));
+    const firstWeight = f32(1 - fraction);
+    if (blend === 'fused-weighted') {
+      output[position] = f32(left * firstWeight + right * fraction);
+    } else if (blend === 'fused-lerp') {
+      output[position] = f32(left + fraction * (right - left));
+    } else {
+      output[position] = f32(f32(left * firstWeight) + f32(right * fraction));
+    }
   }
   return output;
 }
@@ -67,6 +74,8 @@ export function inflectMiniSourceFeatures({
   const cumulativeTrace = includeDiagnostics ? new Float32Array(downsampledLength * harmonicCount) : null;
   const phaseInputTrace = includeDiagnostics ? new Float32Array(downsampledLength * harmonicCount) : null;
   const phaseOutputTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
+  const phaseOutputFusedWeightedTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
+  const phaseOutputFusedLerpTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
   const sourceSinesTrace = includeDiagnostics ? new Float32Array(sourceLength * harmonicCount) : null;
   for (let harmonic = 0; harmonic < harmonicCount; harmonic++) {
     for (let sample = 0; sample < sourceLength; sample++) {
@@ -94,6 +103,12 @@ export function inflectMiniSourceFeatures({
       if (includeDiagnostics) phaseInputTrace[sample * harmonicCount + harmonic] = phaseByHarmonic[sample];
     }
     const up = interpolateLinear(phaseByHarmonic, downsampledLength, sourceLength, 1 / upsampleScale);
+    const upFusedWeighted = includeDiagnostics
+      ? interpolateLinear(phaseByHarmonic, downsampledLength, sourceLength, 1 / upsampleScale, 'fused-weighted')
+      : null;
+    const upFusedLerp = includeDiagnostics
+      ? interpolateLinear(phaseByHarmonic, downsampledLength, sourceLength, 1 / upsampleScale, 'fused-lerp')
+      : null;
     for (let sample = 0; sample < sourceLength; sample++) {
       const uv = f0[Math.floor(sample / upsampleScale)] > voicedThreshold ? 1 : 0;
       const sine = f32(f32(Math.sin(up[sample])) * sineAmplitude);
@@ -105,6 +120,8 @@ export function inflectMiniSourceFeatures({
       const source = f32(clean + noise);
       if (includeDiagnostics) {
         phaseOutputTrace[sample * harmonicCount + harmonic] = up[sample];
+        phaseOutputFusedWeightedTrace[sample * harmonicCount + harmonic] = upFusedWeighted[sample];
+        phaseOutputFusedLerpTrace[sample * harmonicCount + harmonic] = upFusedLerp[sample];
         sourceSinesTrace[sample * harmonicCount + harmonic] = source;
       }
       sourceAccumulator[sample] = f32(sourceAccumulator[sample] + f32(source * linearWeights[harmonic]));
@@ -166,7 +183,10 @@ export function inflectMiniSourceFeatures({
 
   return { ...(includeDiagnostics ? { harmonicSource, sourceReal, sourceImag,
     radDown: radDownTrace, cumulative: cumulativeTrace,
-    phaseInput: phaseInputTrace, phaseOutput: phaseOutputTrace, sourceSines: sourceSinesTrace,
+    phaseInput: phaseInputTrace, phaseOutput: phaseOutputTrace,
+    phaseOutputFusedWeighted: phaseOutputFusedWeightedTrace,
+    phaseOutputFusedLerp: phaseOutputFusedLerpTrace,
+    sourceSines: sourceSinesTrace,
     magnitude: new Float32Array(magnitude), phase: new Float32Array(phaseOutput) } : {}),
     sourceSpec, bins, stftFrames, samples: sourceLength };
 }
