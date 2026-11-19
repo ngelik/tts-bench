@@ -30,3 +30,7 @@ node tools/run-campaign.mjs --plan "$plan" --machine "Your actual machine, proce
 ```
 
 Inspect any failed smoke before scoring that backend. The campaign runner stops on an error for review. To continue the remaining cells, copy the plan to another file outside the checkout and remove only the completed cells; keep its source pin and surviving options unchanged. Do not rerun completed measurements merely to finish a later cell. Submit the original native receipts, the final scored WAV, derived listening clips and generated report through a pull request following the [repository skill](../../../skills/browser-tts-benchmark/SKILL.md). Hosted compatibility timings and smoke checks are not reference scores.
+
+## Published measurements
+
+[Native receipts, generated table and visualization](../../../reports/inflect-atom-v3/overview.md). Warm timings and independent cached-memory observations remain separate.
