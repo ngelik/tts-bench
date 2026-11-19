@@ -101,6 +101,9 @@ jobs:
       - name: Install the pinned browser runtime
         run: npm ci --ignore-scripts
       - name: Stage and verify the exact locked graph artifact and runtime assets
+        env:
+          INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+          INFLECT_MINI_EXPORT_OUTCOME: success
         run: |
           node tools/stage-inflect-mini-v3-diagnostic.mjs
           npm run assets -- fetch --model inflect-mini-v3-browser-port --accept-license
