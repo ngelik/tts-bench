@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "observationType": "post-hoc native run stop observation",
+  "observedAt": "2026-11-19T04:27:01Z",
+  "runId": "2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb",
+  "sourceCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+  "runner": {
+    "pid": 14038,
+    "verifiedCommand": "node bin/bench.mjs run --model audio8-realistic-0.6b-int4 --backend cpu --scenario warm --repetitions 5",
+    "signal": "SIGTERM"
+  },
+  "stop": {
+    "requestedPolicy": "Retain the first completed scored CPU article and skip remaining repetitions.",
+    "signalSentAt": "not recorded by watcher; no exact signal timestamp is asserted",
+    "stageAtSignal": "trial-2",
+    "terminalStatusPath": "evidence/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/status.json",
+    "terminalStatus": "error",
+    "terminalTimestamp": "2026-11-19T04:25:25.915Z",
+    "terminalTimestampSource": "status.json updatedAt",
+    "nativeReason": "page.evaluate: Target page, context or browser has been closed",
+    "completedTrialCount": 1,
+    "completedTrialIndices": [
+      1
+    ],
+    "warmupCount": 1,
+    "trial2Completed": false
+  },
+  "checkpoint": {
+    "path": "evidence/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/trial-1.json",
+    "index": 1,
+    "generationMs": 24251094.5,
+    "samples": 63021056,
+    "sampleRate": 44100,
+    "pcmSha256": "a92e055ab76dddff5e6f899aa8f97e8cbf6fb42ec4de159dab4d37296ee703eb",
+    "chunkCount": 93,
+    "finitePcm": true,
+    "waveformGate": "pcm16-constant-run-v1",
+    "waveformPassed": true,
+    "waveformSpanCount": 93
+  },
+  "nativeReceiptPath": "../../../results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/result.json",
+  "evidenceNotes": [
+    "The corrected watcher observed a parseable trial-1.json with index 1, verified the exact run ID and runner PID command, then sent one SIGTERM.",
+    "stageAtSignal was trial-2. The runner wrote a terminal error receipt with exactly one completed scored trial; no second scored trial completed.",
+    "Waveform metrics are copied from the completed native trial-1.json. The terminal timestamp is copied from status.json; the exact SIGTERM timestamp was not recorded."
+  ],
+  "publicCopy": {
+    "transformation": "Only local file paths are replaced with repository-relative evidence links; this metadata is added. The original post-hoc observer record is retained privately.",
+    "originalObserverSha256": "0fde35c593cef68d55e6c604a2e1a49b9844577e6b89bc5c3fee4279e55bc650"
+  }
+}

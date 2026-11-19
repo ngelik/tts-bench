@@ -8,7 +8,7 @@ import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
 import { affectedTrials, waveformFinding, waveformReport } from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
-import { loadCosyWarmSelection } from './cosy-warm-selection.mjs';
+import { loadWarmSelections } from './warm-selection.mjs';
 
 import { ENVIRONMENT_COHORT_FIELDS, stable, pairedWarm, preferredAttempts, sameCampaignRegistration } from './result-selection.mjs';
 
@@ -63,6 +63,8 @@ function metricBase({ result, cell, current, selection }) {
       receiptStatus: selection.rawReceiptStatus,
       receiptReason: selection.rawReceiptReason,
       pairedCachedResultId: selection.pairedCachedResultId,
+      cachedAudioMatchesSelectedPcm: selection.cachedAudioMatchesSelectedPcm,
+      selectionReportUrl: `https://github.com/ngelik/tts-bench/blob/main/${selection.selectionReportPath}`,
     } : {}),
   };
 }
@@ -236,20 +238,20 @@ function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
 }
 
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
-export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null }) {
+export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null, warmSelections = [] }) {
   const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
     .map(cell => `${cell.model}/${cell.backend}`));
   const scheduledMemory = new Set(campaignCells.filter(cell => cell.scenario === 'cached' && cell.resources === true)
     .map(cell => `${cell.model}/${cell.backend}`));
   const warmCandidates = collectByModelBackend(results, models, result => !result.protocol.smoke && result.protocol.scenario === 'warm');
-  if (warmSelection) {
+  for (const selection of [...warmSelections, warmSelection].filter(Boolean)) {
     for (const candidates of warmCandidates.values()) for (let index = 0; index < candidates.length; index++) {
       const candidate = candidates[index];
-      if (candidate.result.id === warmSelection.resultId) {
-        if (candidate.cell.status !== warmSelection.rawReceiptStatus || candidate.cell.reason !== warmSelection.rawReceiptReason) {
-          throw new Error('Reviewed CosyVoice selection no longer matches the displayed source receipt.');
+      if (candidate.result.id === selection.resultId) {
+        if (candidate.cell.status !== selection.rawReceiptStatus || candidate.cell.reason !== selection.rawReceiptReason) {
+          throw new Error('Reviewed warm selection no longer matches the displayed source receipt.');
         }
-        candidates[index] = { ...candidate, cell: warmSelection.cell, selection: warmSelection };
+        candidates[index] = { ...candidate, cell: selection.cell, selection };
       }
     }
   }
@@ -383,6 +385,6 @@ export async function buildDashboardData() {
   await checkAudio();
   verifySourcesOnce(results);
   const campaignCells = await readCampaignCells(lock.models);
-  const warmSelection = await loadCosyWarmSelection(results);
-  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells, warmSelection });
+  const warmSelections = await loadWarmSelections(results);
+  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells, warmSelections });
 }

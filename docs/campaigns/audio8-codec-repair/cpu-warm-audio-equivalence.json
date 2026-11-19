@@ -1,0 +1,48 @@
+{
+  "kind": "reviewed-first-scored-article-evidence",
+  "resultId": "2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb",
+  "sourceCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+  "nativeReceiptSha256": "8c3c0ec9a8348eb679e82127c240117ba9eccedfc26560326f402b11fabde584",
+  "nativeStatus": "error",
+  "nativeReason": "page.evaluate: Target page, context or browser has been closed",
+  "originalPlannedRepetitions": 5,
+  "retainedScoredTrialIndexes": [
+    1
+  ],
+  "excludedWarmupIndex": 1,
+  "trialCheckpointSha256": "6590ce4480d6d7ea98558c48f11e2d3a6776c3ff9b401a4dfd7d3963f7ef97e0",
+  "warmupCheckpointSha256": "d6bcb981f27c4a346193a404dcad26b6eba125d0cc72eab923026d18bc24c815",
+  "generationSeconds": 24251.0945,
+  "audioIdentity": {
+    "float32PcmSha256": "a92e055ab76dddff5e6f899aa8f97e8cbf6fb42ec4de159dab4d37296ee703eb",
+    "samples": 63021056,
+    "sampleRate": 44100
+  },
+  "correspondingCachedRecording": {
+    "resultId": "2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a",
+    "receiptSha256": "93d468f1468e0e2624e7069e52b3464ce1c9a42ed21f98e7a7a2c6650ff9dce5",
+    "recordedTrialIndex": 1,
+    "full": {
+      "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a--audio8-realistic-0.6b-int4--cpu-full.wav",
+      "sha256": "fbeabc3a632a382582d214115966cfe252bf642456f6ef10a860f4a7a8c2bd19",
+      "bytes": 126042156
+    },
+    "clip": {
+      "path": "audio/samples/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a--audio8-realistic-0.6b-int4--cpu.wav",
+      "sha256": "e6fbce213f7076750b62c8f212c4baa7ed5e2f1ca389fe6326d661cbdff80f71",
+      "bytes": 2646044,
+      "startSample": 0,
+      "sampleRate": 44100,
+      "samples": 1323000,
+      "seconds": 30
+    }
+  },
+  "stopEvidence": {
+    "path": "cpu-warm-stop-observation.json",
+    "originalObserverSha256": "0fde35c593cef68d55e6c604a2e1a49b9844577e6b89bc5c3fee4279e55bc650",
+    "publicCopySha256": "eb008ec9489a52eea390a250380a3b07a354f6082562c21a71d3e889a28f94cf"
+  },
+  "note": "Audio remains attributed to its original cached receipt. Exact Float32 PCM hash, frame count and rate match the retained warm trial; no warm WAV is invented.",
+  "trialCheckpointPath": "evidence/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/trial-1.json",
+  "warmupCheckpointPath": "evidence/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/warmup-1.json"
+}
