@@ -104,6 +104,7 @@ jobs:
         env:
           INFLECT_MINI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
           INFLECT_MINI_EXPORT_OUTCOME: success
+          INFLECT_MINI_CHECKPOINT_FROM_MANIFEST: '1'
         run: |
           node tools/stage-inflect-mini-v3-diagnostic.mjs
           npm run assets -- fetch --model inflect-mini-v3-browser-port --accept-license

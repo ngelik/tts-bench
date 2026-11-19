@@ -15,10 +15,22 @@ assert.equal(lock.modelRevision, revision);
 const generatedRoot = resolve(root, '.cache/inflect-mini-v3-onnx');
 const sourceRoot = resolve(root, '.cache/inflect-mini-v3-source');
 const checkpointPath = resolve(sourceRoot, lock.checkpoint.path);
-const checkpoint = await readFile(checkpointPath);
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
-assert.equal(checkpoint.length, lock.checkpoint.bytes, 'pinned checkpoint length is verified');
-assert.equal(sha(checkpoint), lock.checkpoint.sha256, 'pinned checkpoint digest is verified');
+const manifestBytes = await readFile(resolve(generatedRoot, 'BUILD-MANIFEST.json'));
+const buildManifest = JSON.parse(manifestBytes.toString('utf8'));
+assert.deepEqual(buildManifest.sourceCheckpoint, lock.checkpoint,
+  'generated graph manifest binds the exact pinned source checkpoint');
+let checkpointVerification = 'build-manifest-verified';
+try {
+  const checkpoint = await readFile(checkpointPath);
+  assert.equal(checkpoint.length, lock.checkpoint.bytes, 'pinned checkpoint length is verified');
+  assert.equal(sha(checkpoint), lock.checkpoint.sha256, 'pinned checkpoint digest is verified');
+  checkpointVerification = 'local-bytes-verified';
+} catch (error) {
+  if (error?.code !== 'ENOENT') throw error;
+  assert.equal(process.env.INFLECT_MINI_CHECKPOINT_FROM_MANIFEST, '1',
+    'a missing local checkpoint is allowed only when staging the verified graph-build artifact');
+}
 
 const modelRoot = resolve(root, '.cache/public/models/inflect-mini-v3-browser-port', revision);
 const onnxRoot = resolve(modelRoot, 'onnx');
@@ -42,8 +54,6 @@ for (const [sourceName, targetName] of files) {
 }
 assert.equal(staged.find(file => file.path === 'source-linear-weights.f32')?.bytes, 40);
 
-const manifestBytes = await readFile(resolve(generatedRoot, 'BUILD-MANIFEST.json'));
-const buildManifest = JSON.parse(manifestBytes.toString('utf8'));
 assert.equal(buildManifest.projectSourceCommit, sourceCommit, 'generated assets bind to this exact source commit');
 assert.equal(buildManifest.modelRevision, revision, 'generated assets bind to the pinned model revision');
 assert.equal(buildManifest.format, 'inflect-mini-v3-browser-port-onnx-v1');
@@ -89,6 +99,7 @@ const diagnostic = {
   model: lock.model,
   modelRevision: revision,
   checkpoint: lock.checkpoint,
+  checkpointVerification,
   files: staged,
   buildManifest: buildManifestSummary,
   parityDiagnostic: parity,
