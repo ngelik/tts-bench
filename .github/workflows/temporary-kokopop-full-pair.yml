@@ -22,16 +22,20 @@ jobs:
           fetch-depth: 0
           filter: blob:none
           sparse-checkout: |
-            bin
-            fixtures
-            lib
-            models
-            tools
-            web
-            assets.lock.json
-            package.json
-            package-lock.json
-          sparse-checkout-cone-mode: true
+            /*
+            !/*/
+            /bin/
+            /fixtures/
+            /lib/
+            /models/
+            /tools/
+            /web/
+            /audio/
+            !/audio/samples/
+            /assets.lock.json
+            /package.json
+            /package-lock.json
+          sparse-checkout-cone-mode: false
           persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
