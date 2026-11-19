@@ -55,6 +55,8 @@ for (const file of staged) {
   assert.equal(file.bytes, generated.bytes, `${file.path} size matches build manifest`);
   assert.equal(file.sha256, generated.sha256, `${file.path} hash matches build manifest`);
 }
+const diagnosticRoot = resolve(root, '.cache/inflect-mini-v3-browser-diagnostic');
+await mkdir(diagnosticRoot, { recursive: true });
 const manifestTarget = resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/build-manifest.json');
 await copyFile(resolve(generatedRoot, 'BUILD-MANIFEST.json'), manifestTarget);
 const buildManifestSummary = {
@@ -71,7 +73,7 @@ try {
   const parityReport = JSON.parse(parityBytes.toString('utf8'));
   assert.equal(parityReport.sourceCommit, sourceCommit, 'parity diagnostics use this source commit');
   assert.equal(parityReport.modelRevision, revision, 'parity diagnostics use the locked checkpoint revision');
-  const parityTarget = resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/parity-diagnostic.json');
+  const parityTarget = resolve(diagnosticRoot, 'parity-diagnostic.json');
   await copyFile(paritySource, parityTarget);
   parity = { path: 'parity-diagnostic.json', bytes: parityBytes.length, sha256: sha(parityBytes),
     strictParityPassed: parityReport.strictParityPassed };
@@ -91,7 +93,6 @@ const diagnostic = {
   buildManifest: buildManifestSummary,
   parityDiagnostic: parity,
 };
-await mkdir(resolve(root, '.cache/inflect-mini-v3-browser-diagnostic'), { recursive: true });
 await writeFile(
   resolve(root, '.cache/inflect-mini-v3-browser-diagnostic/staged-model.json'),
   JSON.stringify(diagnostic, null, 2) + '\n',
