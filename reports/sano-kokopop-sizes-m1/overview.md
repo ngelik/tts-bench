@@ -11,6 +11,7 @@ Each warm run starts with one excluded 20,000-character article (93 chunks). Eac
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
 | sanoTTS Amy 1.45M (Kokopop F16/F32) | 1118.90 s (1117.89–1119.51; n=5) | 173.41 s (173.04–173.79; n=5) | 12720.84 ms (n=5) | 2001.04 ms (n=5) | 1312.84 s / 0.852 | 1312.83 s / 0.132 |
+| sanoTTS Amy small (Kokopop F16/F32) | Not submitted | 141.77 s (141.59–142.54; n=5) | Not submitted | 1658.25 ms (n=5) | Not submitted | 1331.51 s / 0.106 |
 | sanoTTS Heart (Kokopop F32) | 39.17 s (39.08–39.36; n=5) | 6.06 s (6.03–6.13; n=5) | 439.80 ms (n=5) | 81.58 ms (n=5) | 1330.01 s / 0.029 | 1330.00 s / 0.005 |
 
 ## Resource diagnostics
@@ -20,6 +21,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 | Model | CPU mean Chrome RSS | CPU max sampled RSS | WebGPU mean Chrome RSS | WebGPU max sampled RSS | Pinned model weights |
 |---|---:|---:|---:|---:|---:|
 | sanoTTS Amy 1.45M (Kokopop F16/F32) | Not submitted | Not submitted | Not submitted | Not submitted | 3.24 MB |
+| sanoTTS Amy small (Kokopop F16/F32) | Not submitted | Not submitted | Not submitted | Not submitted | 2.49 MB |
 | sanoTTS Heart (Kokopop F32) | Not submitted | Not submitted | Not submitted | Not submitted | 9.38 MB |
 
 ## Submitted receipts
@@ -29,6 +31,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
 | sanoTTS Amy 1.45M (Kokopop F16/F32) | [Report](../../results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/summary.md) | [Report](../../results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-gguf) | [Terms](../../docs/LICENSING.md) |
+| sanoTTS Amy small (Kokopop F16/F32) | Not submitted | [Report](../../results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-small-gguf) | [Terms](../../docs/LICENSING.md) |
 | sanoTTS Heart (Kokopop F32) | [Report](../../results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/summary.md) | [Report](../../results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-heart-gguf) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
