@@ -2124,6 +2124,35 @@
       }
     },
     {
+      "resultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
+      "model": "sano-kristin-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "kristin (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Kristin (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav",
+        "sha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav",
+        "sha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+        "bytes": 51824480
+      }
+    },
+    {
       "resultId": "2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8",
       "model": "sano-robot-mcu",
       "backend": "cpu",

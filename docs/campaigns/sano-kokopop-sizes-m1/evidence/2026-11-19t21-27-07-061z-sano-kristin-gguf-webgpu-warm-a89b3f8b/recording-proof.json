@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
+  "receiptSha256": "5a1417b1832e4fd1eb6a08ccaf6b76267779c830a5072d25dba43f36e0df429c",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+    "bytes": 51824480,
+    "rate": 22050,
+    "samples": 25912218,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 116,
+        "samples": 512824,
+        "zeroSamples": 512824
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 17695168,
+      "endSampleExclusive": 17700791,
+      "samples": 5623,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 36944,
+    "started": 1795123616.599561
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav",
+    "sha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+    "bytes": 51824480
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav",
+    "sha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/result.json",
+  "privateTerminalSha256": "685780ac6438e199fc919726f45c070900d4aa8bbe0096a5c0ff8761cab79938",
+  "independentReviewSha256": "47f8e5ab7d5a34f658b2568ca1aa9e749c9d16862f4c02e5182f841d133569de"
+}

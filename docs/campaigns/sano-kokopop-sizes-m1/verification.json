@@ -668,6 +668,113 @@
         "samples": 661500,
         "seconds": 30
       }
+    },
+    {
+      "model": "sano-kristin-gguf",
+      "backend": "webgpu",
+      "resultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
+      "receiptSha256": "5a1417b1832e4fd1eb6a08ccaf6b76267779c830a5072d25dba43f36e0df429c",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 157.79688000011444,
+      "minSeconds": 156.04391499996186,
+      "maxSeconds": 159.40554499983787,
+      "firstPcmMedianMs": 1891.1000001430511,
+      "sampleRate": 22050,
+      "generationSeconds": [
+        159.40554499983787,
+        157.79688000011444,
+        156.98252999997138,
+        158.52525,
+        156.04391499996186
+      ],
+      "effectiveBackend": "webgpu+wasm",
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 819,
+        "schedulerOperations": {
+          "MUL_MAT": 150,
+          "IM2COL": 138,
+          "ADD": 270,
+          "SILU": 33
+        },
+        "probeFrames": 310059,
+        "probeSampleRate": 22050
+      },
+      "settings": {
+        "selectedVoice": "kristin",
+        "sampleRate": 22050,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop LONG_FORM normalizes text, then the pinned Piper eSpeak/NFD frontend emits phoneme IDs with interleaved PAD.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en",
+        "sourcePackage": "kristin-en-1p4m",
+        "sourceParameterCount": 1396151,
+        "espeakVoice": "en"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav",
+        "sha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+        "bytes": 51824480
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav",
+        "sha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
     }
   ],
   "plannedCells": 12,
