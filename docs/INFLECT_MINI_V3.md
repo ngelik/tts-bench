@@ -61,20 +61,30 @@ The exporter compares the pinned native checkpoint and the browser graph at two
 different token/frame lengths. Its strict thresholds remain max absolute error
 `2e-3` and RMS error `2e-4`. The exact-reference workflow records the full
 base/dynamic metrics and fails when either case exceeds either threshold. The
-captured strict audit reports:
+latest captured strict audit is the artifact built from source commit
+`3aa0b423b8ba6c36fea0b6ab2db2c046bfb57c49` in the [hosted WebGPU diagnostic
+run](https://github.com/ngelik/tts-bench/actions/runs/44496351275). Its
+`BUILD-MANIFEST.json` SHA-256 is
+`e1a00ccf5af64dc2bf11f6cf24e9d7365ee2b84f11e4ec3ef7606ad7eb08299c`; its
+`PARITY-DIAGNOSTIC.json` SHA-256 is
+`576edb344347f2ba29a182c8366afea129fc8d890a23fb9f379f2ef9cb243170`.
 
 | Case | Tokens | Frames | Max absolute error | RMS error | Correlation | SNR | Spectral convergence | Log-spectral MAE |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Base (`base-hello`) | 9 | 53 | 0.00602216 | 0.000350848 | 0.99997122 | 42.3981 dB | 0.00333546 | 0.090323 dB |
-| Dynamic (`dynamic-24-vowel`) | 26 | 78 | 0.03302294 | 0.00125193 | 0.99955537 | 30.5077 dB | 0.01432071 | 0.454914 dB |
+| Base (`base-hello`), 3aa0 artifact | 9 | 53 | 0.01199115 | 0.0003751270 | 0.99996715 | 41.8183 dB | 0.00388793 | 0.092421 dB |
+| Dynamic (`dynamic-24-vowel`), 3aa0 artifact | 26 | 78 | 0.04322302 | 0.0013899149 | 0.99945192 | 29.6001 dB | 0.01464870 | 0.416804 dB |
+| Base (`base-hello`), earlier be9f artifact | 9 | 53 | 0.00602216 | 0.0003508475 | 0.99997122 | 42.3981 dB | 0.00333546 | 0.090323 dB |
+| Dynamic (`dynamic-24-vowel`), earlier be9f artifact | 26 | 78 | 0.03302294 | 0.0012519321 | 0.99955537 | 30.5077 dB | 0.01432071 | 0.454914 dB |
 
-Both cases failed the unchanged strict max/RMS thresholds. The base source audit
+The earlier be9f values came from the [strict export run](https://github.com/ngelik/tts-bench/actions/runs/44492100495), source commit `be9f9a9a50f5b613d64bef933f73dede1e735bee`. Both builds use the same pinned checkpoint and their six generated graph/style/vocabulary files have identical byte counts and SHA-256 hashes. Their parity metrics nevertheless differ; the cause has not been established, so identify results by artifact and do not treat these measurements as interchangeable or deterministic.
+
+Both cases in both artifacts failed the unchanged strict max/RMS thresholds. The base source audit
 also found one +2π phase-feature wrap at bin 8/frame 0, where the magnitude is
 0.00156027 and tiny signed imaginary components differ. This is diagnostic
 evidence, not a waiver of the waveform difference. The distinct browser-port
-build stores these same metrics in `PARITY-DIAGNOSTIC.json` and marks native
-parity false; scores under this profile must not be described as native-reference
-results.
+build stores artifact-specific metrics in `PARITY-DIAGNOSTIC.json` and marks
+native parity false; scores under this profile must not be described as
+native-reference results.
 
 The browser diagnostic runs the complete 20,000-character fixture through all
 93 canonical spans on hosted Chrome CPU/WASM. It verifies frontend coverage,
