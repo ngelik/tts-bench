@@ -9,6 +9,7 @@ implementation before writing a bundle manifest.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import math
@@ -256,6 +257,44 @@ class WaveformGraph(nn.Module):
         return self.stft.inverse(magnitude, output_phase).squeeze(1)
 
 
+class ExportInstanceNorm1d(nn.Module):
+    """InstanceNorm1d expressed with reductions for dynamic-channel ONNX export.
+
+    The pinned generator uses affine InstanceNorm1d with input statistics
+    (track_running_stats=False). The legacy TorchScript ONNX symbolic rejects
+    its dynamic channel dimension even though the layer's affine tensors bind
+    that dimension. This explicit population-variance form preserves the
+    inference equation and lets ONNX keep both channels and frame count dynamic.
+    The complete waveform parity check below compares it against the untouched
+    upstream native generator.
+    """
+
+    def __init__(self, source: nn.InstanceNorm1d):
+        super().__init__()
+        require(source.affine and not source.track_running_stats,
+                "Only pinned affine/input-statistics InstanceNorm is export-qualified")
+        self.eps = float(source.eps)
+        self.weight = source.weight
+        self.bias = source.bias
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        mean = x.mean(dim=-1, keepdim=True)
+        centered = x - mean
+        variance = centered.square().mean(dim=-1, keepdim=True)
+        normalized = centered * torch.rsqrt(variance + self.eps)
+        return normalized * self.weight.reshape(1, -1, 1) + self.bias.reshape(1, -1, 1)
+
+
+def onnx_export_generator(generator: nn.Module) -> nn.Module:
+    """Copy the native generator and replace only unsupported norm symbols."""
+    exported = copy.deepcopy(generator)
+    for parent in exported.modules():
+        for name, child in list(parent.named_children()):
+            if isinstance(child, nn.InstanceNorm1d):
+                setattr(parent, name, ExportInstanceNorm1d(child))
+    return exported
+
+
 class ExactTorchSTFT(nn.Module):
     """ONNX-friendly realization of the pinned torch.stft/torch.istft calls.
 
@@ -376,9 +415,11 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
     generator = model.generator
     # load_export installs CPU-canonical wrappers; the original modules have the
     # same CPU arithmetic and export cleanly without those Python closures.
+    generator.m_source.forward = type(generator.m_source).forward.__get__(
+        generator.m_source, type(generator.m_source))
     generator.f0_upsamp.forward = type(generator.f0_upsamp).forward.__get__(generator.f0_upsamp, type(generator.f0_upsamp))
     generator.stft.transform = type(generator.stft).transform.__get__(generator.stft, type(generator.stft))
-    waveform_graph = WaveformGraph(generator).eval()
+    waveform_graph = WaveformGraph(onnx_export_generator(generator)).eval()
 
     if output_dir.exists() and any(output_dir.iterdir()):
         raise RuntimeError("Refusing to overwrite a nonempty ONNX output directory")
@@ -504,15 +545,32 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             and np.allclose(dynamic_hidden, dynamic_native_hidden.numpy(), rtol=6e-4, atol=6e-5),
             "Dynamic ONNX frame axis diverges from native Mini")
     dynamic_style = style_rows[dynamic_ids.shape[1] - 3][None].detach().cpu().numpy().astype(np.float32)
+    require(dynamic_frames != frames, "Dynamic waveform parity must exercise a distinct frame count")
+    with torch.random.fork_rng(devices=[]):
+        torch.random.default_generator.manual_seed(43)
+        dynamic_phase = torch.rand((1, phase.shape[1]), dtype=torch.float32)
+        dynamic_phase[:, 0] = 0
+        dynamic_noise = torch.randn((1, 600 * dynamic_frames, phase.shape[1]), dtype=torch.float32)
     dynamic_excitation = waveform_session.run(None, {
         "hidden": dynamic_hidden,
         "style": dynamic_style,
         "f0": dynamic_f0,
-        "phase_uniform": np.zeros((1, phase.shape[1]), dtype=np.float32),
-        "harmonic_noise": np.zeros((1, 600 * dynamic_frames, phase.shape[1]), dtype=np.float32),
+        "phase_uniform": dynamic_phase.numpy(),
+        "harmonic_noise": dynamic_noise.numpy(),
     })[0]
     require(dynamic_excitation.shape == (1, 600 * dynamic_frames)
             and np.isfinite(dynamic_excitation).all(), "Dynamic waveform graph clock is invalid")
+    require(np.allclose(dynamic_f0, dynamic_native_infer["F0"].numpy(), rtol=4e-4, atol=4e-5),
+            "Dynamic ONNX prosody diverges from native Mini")
+    with torch.random.fork_rng(devices=[]):
+        dynamic_native = model.synthesize_ids(model.phoneme_ids("a" * 24), VOICE, seed=43)
+    dynamic_waveform_max_error = float(np.max(np.abs(
+        dynamic_excitation[0] - dynamic_native["audio"].numpy())))
+    dynamic_waveform_rms_error = float(np.sqrt(np.mean(
+        (dynamic_excitation[0] - dynamic_native["audio"].numpy()) ** 2)))
+    require(dynamic_waveform_max_error <= 2e-3 and dynamic_waveform_rms_error <= 2e-4,
+            "Dynamic ONNX waveform diverges from native Mini: max="
+            + str(dynamic_waveform_max_error) + " rms=" + str(dynamic_waveform_rms_error))
 
     style = style_rows[ids.shape[1] - 3][None, :].detach().cpu().numpy().astype(np.float32)
     with torch.random.fork_rng(devices=[]):
@@ -581,6 +639,8 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             "waveformSamples": 600 * frames,
             "waveformMaxAbsError": waveform_max_error,
             "waveformRmsError": waveform_rms_error,
+            "dynamicWaveformMaxAbsError": dynamic_waveform_max_error,
+            "dynamicWaveformRmsError": dynamic_waveform_rms_error,
             "dynamicTokenIds": int(dynamic_ids.shape[1]),
             "dynamicFrames": int(dynamic_frames),
             "dynamicWaveformSamples": int(dynamic_excitation.shape[1]),
