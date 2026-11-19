@@ -1475,7 +1475,7 @@
           "https://huggingface.co/Supertone/supertonic-3/tree/3cadd1ee6394adea1bd021217a0e650ede09a323/voice_styles",
           "https://huggingface.co/spaces/Supertone/supertonic-3/blob/4402acca094e2ff2b3dff446e0bf915f3fccc462/script.js"
         ],
-        "notes": "Ten supplied presets F1\u2013F5 and M1\u2013M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
+        "notes": "Ten supplied presets F1–F5 and M1–M5; only M3 (Robert) is staged and tested in English. Language-agnostic mode na is not an additional language. Custom voice profiles are outside this preset count. Eight denoising steps and effective speed 1.05 match the linked demo defaults (UI speed 1.0)."
       }
     },
     "kokoro-82m": {
@@ -5246,7 +5246,7 @@
           "https://huggingface.co/samuel-vitorino/sopro-v2-turbo-onnx/blob/9fe97bddf52ed785af3634db86a032bb7e07bf18/manifest.json",
           "https://github.com/ngelik/tts-bench/blob/f456cce4422663e3217a885a4c52e8ef4735dd6d/audio/samples/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav"
         ],
-        "notes": "English, synthetic F2 reference from the benchmark\u2019s Tiny Voca CPU warm recording."
+        "notes": "English, synthetic F2 reference from the benchmark’s Tiny Voca CPU warm recording."
       },
       "assets": [
         {
@@ -8975,6 +8975,228 @@
           "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
         ],
         "notes": "Upstream checkpoint lists six English voices; only Cassidy (voice 2) is exported and benchmarked. 11,787,634-parameter core; browser export uses three FP32 ONNX graphs and a fixed Cassidy style bank. English G2P uses the separately pinned Klein 0.2.0 browser adaptation and does not claim native Misaki parity. Seeded JavaScript Gaussian noise differs from PyTorch RNG sequence."
+      }
+    },
+    "inflect-mini-v3-browser-port": {
+      "displayName": "Inflect Mini v3 Browser Port",
+      "modelRevision": "fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.23.2",
+        "license": "ONNX Runtime Web MIT with third-party notices; phonemizer.js Apache-2.0 and eSpeak NG GPL-3.0-or-later; Klein G2P Apache-2.0",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.wasm.min.mjs",
+            "bytes": 49856,
+            "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.mjs",
+            "bytes": 20321,
+            "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.wasm",
+            "bytes": 11905541,
+            "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs",
+            "bytes": 66261,
+            "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 51913,
+            "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 25499390,
+            "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada"
+          },
+          {
+            "package": "phonemizer",
+            "version": "1.2.1",
+            "path": "dist/phonemizer.js",
+            "target": "runtimes/phonemizer/1.2.1/phonemizer.js",
+            "bytes": 1322380,
+            "sha256": "193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec"
+          },
+          {
+            "package": "phonemizer",
+            "version": "1.2.1",
+            "path": "LICENSE",
+            "target": "licenses/phonemizer-1.2.1/LICENSE",
+            "bytes": 11357,
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.23.2/LICENSE",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.23.2/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/ThirdPartyNotices.txt",
+            "bytes": 326866,
+            "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "inflect-mini-v3-browser-klein-en-us-lexicon",
+          "target": "models/klein-tts-x1.5-pro/en_us_lexicon.json.gz",
+          "url": "https://unpkg.com/@kleinml/kleintts@0.2.0/data/en_us_lexicon.json.gz",
+          "bytes": 1394577,
+          "sha256": "f88c07d53f0bc97adecc70c755416dd1103f61c47f76937339f73a7f32bf5f85",
+          "kind": "frontend-data"
+        },
+        {
+          "id": "inflect-mini-v3-browser-duration-onnx",
+          "target": "models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/onnx/text-duration.onnx",
+          "bytes": 28931080,
+          "sha256": "b0716ac511cf194e286f5917767d64c042790060ebba9775d187c4a10a3ba390",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "text-duration.onnx",
+            "build": "Run python tools/export-inflect-mini-v3.py --download --allow-waveform-drift, then import with `npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx`. See docs/INFLECT_MINI_V3.md; strict native waveform parity remains separately reported as failed."
+          }
+        },
+        {
+          "id": "inflect-mini-v3-browser-text-bridge-onnx",
+          "target": "models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/onnx/text-bridge.onnx",
+          "bytes": 28904388,
+          "sha256": "b2b99366a2895f75d3917e29e3c1ed8f0a1477c57efe5e4d94582807875c1c41",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "text-bridge.onnx",
+            "build": "Run python tools/export-inflect-mini-v3.py --download --allow-waveform-drift, then import with `npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx`. See docs/INFLECT_MINI_V3.md; strict native waveform parity remains separately reported as failed."
+          }
+        },
+        {
+          "id": "inflect-mini-v3-browser-waveform-onnx",
+          "target": "models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/onnx/waveform-generator.onnx",
+          "bytes": 79014191,
+          "sha256": "8ccfe043cf0cef606347738bde888de5bd2d2c716cc9b30675d22deef440c0a7",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "waveform-generator.onnx",
+            "build": "Run python tools/export-inflect-mini-v3.py --download --allow-waveform-drift, then import with `npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx`. See docs/INFLECT_MINI_V3.md; strict native waveform parity remains separately reported as failed."
+          }
+        },
+        {
+          "id": "inflect-mini-v3-browser-cassidy-style",
+          "target": "models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/cassidy-style-table.f32",
+          "bytes": 261120,
+          "sha256": "62d0cf9546b410b66560ff6bf75b9d7ace3abc1c93e4922df6245fbee68905fe",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "cassidy-style-table.f32",
+            "build": "Run python tools/export-inflect-mini-v3.py --download --allow-waveform-drift, then import with `npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx`. See docs/INFLECT_MINI_V3.md; strict native waveform parity remains separately reported as failed."
+          }
+        },
+        {
+          "id": "inflect-mini-v3-browser-phoneme-vocab",
+          "target": "models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/phoneme-vocab.json",
+          "bytes": 1145,
+          "sha256": "7c0516094866f39c4c6538716002abe3f2eba8ef9e6d5af5544d3b2120534851",
+          "kind": "config",
+          "generated": {
+            "artifactPath": "phoneme-vocab.json",
+            "build": "Run python tools/export-inflect-mini-v3.py --download --allow-waveform-drift, then import with `npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx`. See docs/INFLECT_MINI_V3.md; strict native waveform parity remains separately reported as failed."
+          }
+        },
+        {
+          "id": "inflect-mini-v3-browser-source-linear",
+          "target": "models/inflect-mini-v3-browser-port/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/source-linear-weights.f32",
+          "bytes": 40,
+          "sha256": "4d0be6c9712b1627889fdf7bdcd342d61c1f8a4b6c3ee356709ef3748f33d425",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "source-linear-weights.f32",
+            "build": "Run python tools/export-inflect-mini-v3.py --download --allow-waveform-drift, then import with `npm run assets -- import --model inflect-mini-v3-browser-port --source .cache/inflect-mini-v3-onnx`. See docs/INFLECT_MINI_V3.md; strict native waveform parity remains separately reported as failed."
+          }
+        },
+        {
+          "id": "inflect-mini-v3-browser-license",
+          "target": "licenses/inflect-mini-v3-browser-port/LICENSE",
+          "bytes": 10455,
+          "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+          "kind": "license",
+          "sourcePath": "web/inflect-mini-v3/LICENSE"
+        },
+        {
+          "id": "inflect-mini-v3-browser-klein-notice",
+          "target": "licenses/inflect-mini-v3-browser-port/Klein-NOTICE-upstream",
+          "bytes": 637,
+          "sha256": "eb11089a0da709267f34fe1f51f1d496bef6b6e964b3a37a63e72df275e55e52",
+          "kind": "provenance",
+          "sourcePath": "web/klein/NOTICE-upstream"
+        },
+        {
+          "id": "inflect-mini-v3-browser-klein-license",
+          "target": "licenses/inflect-mini-v3-browser-port/Klein-LICENSE-upstream",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license",
+          "sourcePath": "web/klein/LICENSE-upstream"
+        },
+        {
+          "id": "inflect-mini-v3-browser-misaki-license",
+          "target": "licenses/inflect-mini-v3-browser-port/Klein-LICENSE-misaki",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "kind": "license",
+          "sourcePath": "web/klein/LICENSE-misaki"
+        },
+        {
+          "id": "inflect-mini-v3-browser-espeak-license",
+          "target": "licenses/espeak-ng/COPYING",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license",
+          "sourcePath": "web/licenses/ESPEAK-NG-COPYING.txt"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "runtime": "ONNX Runtime Web MIT; Apache-2.0 Klein G2P/Misaki-derived rules and browser phonemizer; GPL-3.0-or-later eSpeak NG/data",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 6,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Inflect Mini v3 checkpoint and the separately converted browser-port configuration",
+        "sources": [
+          "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
+          "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/core/baseline/models/mini/manifest.json"
+        ],
+        "notes": "The upstream checkpoint supports six English presets; this configuration bundles Cassidy speaker 2 only. Reference enrollment, non-speech events and 48 kHz enhancement are outside this profile. Browser synthesis is a distinct frontend/source-DSP port and failed the recorded strict native waveform gate. CPU uses ONNX Runtime Web WASM for all three graphs. The registered WebGPU option is scoped: only the duration graph uses WebGPU with WASM fallback; text-bridge and waveform graphs run on WASM, while deterministic source excitation/STFT run on CPU. Actual duration-graph dispatch is required. A separate all-graph WebGPU control clipped output and is not a registered profile."
       }
     }
   }
