@@ -403,6 +403,64 @@
       }
     },
     {
+      "resultId": "2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326",
+      "model": "inflect-micro-v3",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (fixed voice 2)",
+      "language": "en",
+      "attribution": "Inflect Micro v3 by Owen Song; Cassidy (voice 2) fixed English preset. Apache-2.0 identified model weights; browser path uses a Klein 0.2.0 G2P adaptation and a custom source-filter implementation.",
+      "modelTerms": "Apache-2.0 for the pinned Inflect-owned model weights identified by LICENSE_SCOPE.json",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326--inflect-micro-v3--cpu.wav",
+        "sha256": "acc797a1fd8f2946dcdc259cda524dfe09c02f40fa471eb64b15e3e9bc1b45dd",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326--inflect-micro-v3--cpu-full.wav",
+        "sha256": "1c11e5d018a7c6119c7102cd506ef14c81975581fd6901ff462d59ea178bb02b",
+        "bytes": 61873484
+      }
+    },
+    {
+      "resultId": "2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1",
+      "model": "inflect-micro-v3",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (fixed voice 2)",
+      "language": "en",
+      "attribution": "Inflect Micro v3 by Owen Song; Cassidy (voice 2) fixed English preset. Apache-2.0 identified model weights; browser path uses a Klein 0.2.0 G2P adaptation and a custom source-filter implementation.",
+      "modelTerms": "Apache-2.0 for the pinned Inflect-owned model weights identified by LICENSE_SCOPE.json",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1--inflect-micro-v3--webgpu.wav",
+        "sha256": "91e49b9521b733b6c38c717d8d18baee52210606c9b6ec35f2d1f19d5038aab5",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1--inflect-micro-v3--webgpu-full.wav",
+        "sha256": "7033dd567edbd92a1c37343870930ff930e1a24d0cf7c12dcf0545a0441b3d6c",
+        "bytes": 61873484
+      }
+    },
+    {
       "resultId": "2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636",
       "model": "kitten-nano-0.8",
       "backend": "cpu",

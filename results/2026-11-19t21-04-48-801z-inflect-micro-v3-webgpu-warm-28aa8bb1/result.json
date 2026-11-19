@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1",
+  "createdAt": "2026-11-19T21:26:56.553Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "796a12747ad7c7ed79b3592dfa88c875629c0084",
+    "dirty": false,
+    "manifestSha256": "49ba933ebd70bfe7f17dcc5d67d57b486bd2025b0d50931c26d0d45864d118ab"
+  },
+  "assets": [
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:inflect-micro-v3:phonemizer:dist/phonemizer.js",
+      "sha256": "193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec",
+      "bytes": 1322380
+    },
+    {
+      "id": "runtime:inflect-micro-v3:phonemizer:LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:inflect-micro-v3:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "inflect-micro-v3-text-features",
+      "sha256": "f5c9a7ba2c52b7a34561327d2adb0778d9087fb7876400b42750618d9bd95644",
+      "bytes": 12355400
+    },
+    {
+      "id": "inflect-micro-v3-text-prosody",
+      "sha256": "ac6a34527352c124a73d55b39eaf6957a5ba471356b11a119c883e6a61f0044d",
+      "bytes": 4557803
+    },
+    {
+      "id": "inflect-micro-v3-joint-coefficients",
+      "sha256": "fd177763f8c3d196772e95cd670b4f15b4d0593bdaa8d4c999958c297e07dd25",
+      "bytes": 30394832
+    },
+    {
+      "id": "inflect-micro-v3-cassidy-style-bank",
+      "sha256": "62d0cf9546b410b66560ff6bf75b9d7ace3abc1c93e4922df6245fbee68905fe",
+      "bytes": 261120
+    },
+    {
+      "id": "inflect-micro-v3-vocab",
+      "sha256": "7c0516094866f39c4c6538716002abe3f2eba8ef9e6d5af5544d3b2120534851",
+      "bytes": 1145
+    },
+    {
+      "id": "inflect-micro-v3-export-manifest",
+      "sha256": "a9672a831671b197c79936560d3d2e3a559cd33ade13296582890e606d410e7a",
+      "bytes": 1975
+    },
+    {
+      "id": "inflect-micro-v3-license",
+      "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+      "bytes": 10455
+    },
+    {
+      "id": "inflect-micro-v3-license-scope",
+      "sha256": "1a486961d9afafc37c4954a04f2bc499fe8f610c3fbd1adf57e8f0902a265410",
+      "bytes": 748
+    },
+    {
+      "id": "inflect-micro-v3-third-party-notices",
+      "sha256": "111ed36fbdb054795ccc2e4577c4913b40be158873f159eee308bf117b1faf0a",
+      "bytes": 1689
+    },
+    {
+      "id": "inflect-micro-v3-klein-en-us-lexicon",
+      "sha256": "f88c07d53f0bc97adecc70c755416dd1103f61c47f76937339f73a7f32bf5f85",
+      "bytes": 1394577
+    },
+    {
+      "id": "inflect-micro-v3-espeak-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "inflect-micro-v3-kokoro-apache-license",
+      "sha256": "12c48c640d1d0baf158d45175a4238b9227c71c77f50b0d15791b8efc08cd793",
+      "bytes": 10455
+    },
+    {
+      "id": "inflect-micro-v3-styletts2-mit-license",
+      "sha256": "7f023c12a1d6b25583506f6fc77f5287c7c71b65c0f886922f14153bcc07dfa9",
+      "bytes": 1075
+    }
+  ],
+  "cells": [
+    {
+      "model": "inflect-micro-v3",
+      "support": {
+        "voiceCount": 6,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Inflect Micro v3 English checkpoint c1a7db6ef44c931623fc2028cb0409659b83156c",
+        "sources": [
+          "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md",
+          "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json",
+          "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
+        ],
+        "notes": "Upstream checkpoint lists six English voices; only Cassidy (voice 2) is exported and benchmarked. 11,787,634-parameter core; browser export uses three FP32 ONNX graphs and a fixed Cassidy style bank. English G2P uses the separately pinned Klein 0.2.0 browser adaptation and does not claim native Misaki parity. Seeded JavaScript Gaussian noise differs from PyTorch RNG sequence."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Cassidy (fixed voice 2)",
+      "precision": "FP32 exported ONNX text/prosody/joint graphs plus FP32 style bank",
+      "settings": {
+        "voiceId": 2,
+        "speed": 1,
+        "seed": 42,
+        "sampleRate": 24000,
+        "threads": 1,
+        "frontend": "Conservative numeric preparation, pinned 220-character source-preserving splitting, Klein 0.2.0 English G2P adaptation, strict exported 178-symbol vocabulary; native Misaki parity is not claimed.",
+        "waveform": "Custom real-valued port of pinned 600/150 Hann source-filter STFT/iSTFT; fixed Cassidy style; JavaScript seeded Gaussian source differs from PyTorch RNG sequence.",
+        "chunking": "Maximum 220 characters per internal utterance, strict 512-token limit, 2880 silent samples (120 ms) between internal utterances only; no truncation.",
+        "seedSchedule": "Seed resets per canonical span: (42 + canonicalSpanId × 1024 + internalUtteranceIndex) modulo 2^32.",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 1676,
+        "description": "Observed 1676 ONNX WebGPU dispatches during untimed model inference; source-filter DSP and final PCM assembly ran in JavaScript on CPU. Output tensors were read back to CPU; probe hooks were removed before timed work."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 220295.6100001335,
+          "samples": 30936720,
+          "sampleRate": 24000,
+          "pcmSha256": "4b890fa4f10c670565830e7cf2164cd7642a272dbeceec87a44a0096bd757525",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2484.0350000858307,
+            "firstSourceChunkCompletedMs": 2782.4550001621246,
+            "audioSeconds": 1289.03,
+            "realTimeFactor": 0.17090029712274618,
+            "minSamplesPerChunk": 253800,
+            "maxSamplesPerChunk": 401280
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 219735.13500022888,
+          "samples": 30936720,
+          "sampleRate": 24000,
+          "pcmSha256": "4b890fa4f10c670565830e7cf2164cd7642a272dbeceec87a44a0096bd757525",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2264.9550001621246,
+            "firstSourceChunkCompletedMs": 2547.085000038147,
+            "audioSeconds": 1289.03,
+            "realTimeFactor": 0.17046549343322412,
+            "minSamplesPerChunk": 253800,
+            "maxSamplesPerChunk": 401280
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 219568.56500005722,
+          "samples": 30936720,
+          "sampleRate": 24000,
+          "pcmSha256": "4b890fa4f10c670565830e7cf2164cd7642a272dbeceec87a44a0096bd757525",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2295.170000076294,
+            "firstSourceChunkCompletedMs": 2594.5800001621246,
+            "audioSeconds": 1289.03,
+            "realTimeFactor": 0.1703362722357565,
+            "minSamplesPerChunk": 253800,
+            "maxSamplesPerChunk": 401280
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 218886.51999998093,
+          "samples": 30936720,
+          "sampleRate": 24000,
+          "pcmSha256": "4b890fa4f10c670565830e7cf2164cd7642a272dbeceec87a44a0096bd757525",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2262.835000038147,
+            "firstSourceChunkCompletedMs": 2573.494999885559,
+            "audioSeconds": 1289.03,
+            "realTimeFactor": 0.16980715731983037,
+            "minSamplesPerChunk": 253800,
+            "maxSamplesPerChunk": 401280
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 218511.51999998093,
+          "samples": 30936720,
+          "sampleRate": 24000,
+          "pcmSha256": "4b890fa4f10c670565830e7cf2164cd7642a272dbeceec87a44a0096bd757525",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2263.444999933243,
+            "firstSourceChunkCompletedMs": 2562.3849999904633,
+            "audioSeconds": 1289.03,
+            "realTimeFactor": 0.1695162408943011,
+            "minSamplesPerChunk": 253800,
+            "maxSamplesPerChunk": 401280
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 218089.42999982834,
+          "samples": 30936720,
+          "sampleRate": 24000,
+          "pcmSha256": "4b890fa4f10c670565830e7cf2164cd7642a272dbeceec87a44a0096bd757525",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 2243.1549999713898,
+            "firstSourceChunkCompletedMs": 2530.574999809265,
+            "audioSeconds": 1289.03,
+            "realTimeFactor": 0.1691887931233783,
+            "minSamplesPerChunk": 253800,
+            "maxSamplesPerChunk": 401280
+          },
+          "audio": {
+            "sha256": "7033dd567edbd92a1c37343870930ff930e1a24d0cf7c12dcf0545a0441b3d6c",
+            "bytes": 61873484
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T21-04-48-086Z-3a0fd30c70bd; cell 1/1; source 796a12747ad7c7ed79b3592dfa88c875629c0084; requested n=5; effective n=5; Sequential full-article Micro v3; Google Chrome 157.0.8103.40, Apple M1 Pro on AC power. Normal user background applications remain; thermal state is uninstrumented. Cassidy voice ID 2, speed 1, WebGPU with one-thread WASM fallback. One excluded full 20,000-character/93-span warmup, then five full scored articles; actual GPU dispatch is required."
+  ]
+}
