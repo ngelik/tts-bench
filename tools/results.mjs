@@ -102,7 +102,7 @@ function validateGenerationMemory(t,generationMs) {
 function validateNativeBackend(c) {
   const labels={
     cpu:/^(?:cpu|cpu\/wasm|wasm)$/i,
-    webgpu:/^(?:webgpu|webgpu\+wasm)$/i,
+    webgpu:/^(?:webgpu|webgpu\+wasm|hybrid-webgpu-wasm-duration\+wasm-bridge\+wasm-waveform)$/i,
   };
   check(labels[c.backendRequested].test(c.backendEffective),`Effective backend ${c.backendEffective} does not match requested ${c.backendRequested}`);
 }

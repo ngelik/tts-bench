@@ -17,6 +17,8 @@ const SOURCE_BINS = 11;
 const SOURCE_NFFT = 20;
 const SOURCE_HOP = 5;
 const SOURCE_UPSAMPLE_SCALE = 300;
+const DURATION_WEBGPU_HYBRID_PLAN = [['webgpu', 'wasm'], ['wasm'], ['wasm']];
+const ALL_GRAPH_WEBGPU_DIAGNOSTIC_PLAN = [['webgpu', 'wasm'], ['webgpu', 'wasm'], ['webgpu', 'wasm']];
 const FRONTEND_DESCRIPTION = 'Distinct browser-port configuration: pinned Inflect v3 numeric normalization and source-preserving 220-character split; Klein 0.2.0 browser G2P port with the pinned English lexicon and local browser eSpeak fallback. Native Mini uses Misaki 0.9.4 with bundled eSpeak; this frontend is an adaptation and has not been qualified for exact native-output parity. Checkpoint phoneme mapping rejects unknown symbols.';
 const INFO = {
   voice: 'Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank; browser-port profile)',
@@ -32,7 +34,7 @@ const INFO = {
     frontend: FRONTEND_DESCRIPTION,
     chunking: 'Pinned native-v3 exact source-preserving 220-character internal splitter; 120 ms silence between generated internal utterances.',
     waveform: 'Offline full-utterance graph execution; first PCM follows completion/readback of the first internal utterance. No trimming, fades, gain, or clipping.',
-    sourceFrontend: 'Standalone Float32 CPU harmonic source and source-STFT port; the waveform neural graph receives these features in a separate ONNX session. Strict native waveform parity remains failed and is reported in the pinned conversion artifact.',
+    sourceFrontend: 'Standalone Float32 CPU harmonic source and source-STFT port. Strict native waveform parity remains failed and is reported in the pinned conversion artifact.',
     executionProviders: [],
   },
 };
@@ -378,10 +380,10 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
   diagnosticCaptureEnabled = false;
   if (!['cpu', 'webgpu'].includes(backend)) return unsupported('Inflect Mini supports explicit CPU/WASM and WebGPU providers only.');
   if (diagnosticSessionProviders !== null) {
-    const durationOnlyPlan = [['webgpu', 'wasm'], ['wasm'], ['wasm']];
+    const allowed = [DURATION_WEBGPU_HYBRID_PLAN, ALL_GRAPH_WEBGPU_DIAGNOSTIC_PLAN];
     if (backend !== 'webgpu' || !probe
-        || JSON.stringify(diagnosticSessionProviders) !== JSON.stringify(durationOnlyPlan)) {
-      throw new Error('Inflect Mini only permits the pinned duration-only provider plan inside diagnostic mode.');
+        || !allowed.some(plan => JSON.stringify(diagnosticSessionProviders) === JSON.stringify(plan))) {
+      throw new Error('Inflect Mini only permits its pinned hybrid score plan or all-graph control inside diagnostic mode.');
     }
   }
   let adapter = null;
@@ -395,7 +397,12 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     gpu = adapter.info?.description || adapter.info?.vendor || 'Hardware WebGPU adapter';
   }
 
-    const executionProviders = backend === 'cpu' ? ['wasm'] : ['webgpu', 'wasm'];
+  const executionProviders = backend === 'cpu' ? ['wasm'] : ['webgpu', 'wasm'];
+  const sessionProviders = diagnosticSessionProviders ?? (backend === 'cpu'
+    ? [executionProviders, executionProviders, executionProviders]
+    : DURATION_WEBGPU_HYBRID_PLAN);
+  const durationHybrid = backend === 'webgpu'
+    && JSON.stringify(sessionProviders) === JSON.stringify(DURATION_WEBGPU_HYBRID_PLAN);
   installLocalFetch();
   try {
     ort = await import(ORT_ROOT + (backend === 'cpu' ? 'ort.wasm.min.mjs' : 'ort.webgpu.min.mjs'));
@@ -425,7 +432,6 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
     vocab = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(vocabBytes));
     if (!vocab || typeof vocab !== 'object' || Array.isArray(vocab)) throw new Error('Inflect Mini checkpoint vocabulary is malformed.');
     phonemize = phonemizeMicroEnglish;
-    const sessionProviders = diagnosticSessionProviders ?? [executionProviders, executionProviders, executionProviders];
     const sessionOptions = {
       graphOptimizationLevel: 'all',
       ...(backend === 'webgpu' ? { preferredOutputLocation: 'cpu' } : {}),
@@ -438,9 +444,8 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
       { ...sessionOptions, executionProviders: sessionProviders[1] }));
     sessions.push(await ort.InferenceSession.create(waveformBytes,
       { ...sessionOptions, executionProviders: sessionProviders[2] }));
-    backendEffective = diagnosticSessionProviders
-      ? 'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform'
-      : backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm';
+    backendEffective = backend === 'cpu' ? 'cpu/wasm'
+      : durationHybrid ? 'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform' : 'webgpu+wasm';
     if (backend === 'webgpu') {
       const actualDevice = await ort.env.webgpu.device;
       const actualAdapter = ort.env.webgpu.adapter;
@@ -460,7 +465,7 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
   if (probe) {
     activeNeuralDispatchCount = backend === 'webgpu' ? 0 : null;
     activeNeuralDispatchSessionIndices = backend !== 'webgpu' ? null
-      : diagnosticSessionProviders ? [0] : [2];
+      : durationHybrid ? [0] : [0, 1, 2];
     try {
       const output = await generate({ id: 'inflect-mini-probe', text: probeText });
       if (!output.parts.some(part => part.length > 0)) throw new Error('Inflect Mini untimed capability synthesis returned no PCM.');
@@ -483,7 +488,10 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
   return {
     ...INFO,
     settings: { ...INFO.settings, executionProviders,
-      ...(diagnosticSessionProviders ? { sessionExecutionProviders: diagnosticSessionProviders } : {}) },
+      sourceFrontend: backend === 'webgpu'
+        ? 'Standalone Float32 CPU harmonic source and source-STFT port. The duration ONNX graph uses WebGPU with WASM fallback; text-bridge and waveform graphs use explicit WASM. Strict native waveform parity remains failed and is reported in the pinned conversion artifact.'
+        : 'Standalone Float32 CPU harmonic source and source-STFT port. All three ONNX graphs use explicit WASM. Strict native waveform parity remains failed and is reported in the pinned conversion artifact.',
+      ...(backend === 'webgpu' ? { sessionExecutionProviders: sessionProviders } : {}) },
     status: 'measured',
     backendEffective,
     ...(backend === 'webgpu' ? { gpu } : {}),
@@ -492,10 +500,12 @@ async function initialize({ backend, probe = false, probeText = 'A short browser
       description: backend === 'cpu'
         ? probe ? 'Explicit one-thread ONNX Runtime Web WASM; an untimed Mini utterance completed.' : 'Explicit one-thread ONNX Runtime Web WASM provider.'
         : probe
-          ? diagnosticSessionProviders
-            ? `Observed ${dispatches} WebGPU compute dispatches in the duration session configured with WebGPU then WASM fallback during untimed Mini synthesis; the bridge and waveform graph are explicitly WASM, and deterministic source excitation/STFT use standalone CPU DSP. This is a hybrid profile, not a claim that every duration operator ran on GPU. Dispatch probe is removed before timed work.`
-            : `Observed ${dispatches} WebGPU compute dispatches in the waveform neural graph during untimed Mini synthesis; deterministic source excitation and STFT run in standalone CPU DSP, and WASM handles unsupported neural operators. Dispatch probe is removed before timed work.`
-          : 'WebGPU + WASM operator fallback configured; no dispatch probe was requested.',
+          ? durationHybrid
+            ? `Observed ${dispatches} WebGPU compute dispatches in the duration graph configured with WebGPU then WASM fallback during untimed Mini synthesis; the bridge and waveform graphs are explicitly WASM, and deterministic source excitation/STFT use standalone CPU DSP. Dispatch probe is removed before timed work.`
+            : `Observed ${dispatches} WebGPU compute dispatches across the three neural graph sessions during an untimed all-graph control; deterministic source excitation and STFT use standalone CPU DSP. This diagnostic control is not the registered Mini WebGPU profile. Dispatch probe is removed before timed work.`
+          : durationHybrid
+            ? 'Scoped hybrid configured: duration graph WebGPU with WASM fallback; bridge and waveform graphs WASM; deterministic source excitation/STFT on CPU.'
+            : 'Diagnostic all-graph WebGPU control configured; not the registered Mini WebGPU profile.',
     },
   };
 }

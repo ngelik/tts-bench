@@ -30,10 +30,13 @@ native comparison exceeds its fixed limits.
 
 ## Browser execution
 
-The profile runs duration prediction, text bridging and the waveform neural
-graph through ONNX Runtime Web's one-thread WASM provider. Standalone Float32
-CPU browser code generates the seeded harmonic source and STFT features that
-feed the waveform graph. A canonical span is split with the pinned 220-character
+The CPU profile runs duration prediction, text bridging and the waveform neural
+graph through ONNX Runtime Web's one-thread WASM provider. The registered
+WebGPU option is deliberately scoped: only duration prediction requests the
+WebGPU provider (with WASM fallback); text bridging and the waveform neural
+graph use explicit WASM. Standalone Float32 CPU browser code generates the
+seeded harmonic source and STFT features that feed the waveform graph. A
+canonical span is split with the pinned 220-character
 source-preserving splitter, normalized and tokenized in Chrome, then each piece
 is synthesized in order. The adapter rejects unknown symbols, empty text,
 nonfinite audio, and the pinned 510-phoneme or 1,200-frame limits rather than
@@ -87,12 +90,20 @@ native parity false; scores under this profile must not be described as
 native-reference results.
 
 The browser diagnostic runs the complete 20,000-character fixture through all
-93 canonical spans on hosted Chrome CPU/WASM. It verifies frontend coverage,
-phoneme limits, complete finite PCM, per-span samples and timing, and saves
-small PCM16 listening clips for the first three exact span outputs. That
-diagnostic is not a score. The registered backend is CPU/WASM only; WebGPU is
-not registered until a real hardware run proves compute dispatch and readable
-PCM.
+93 canonical spans and saves small PCM16 listening clips for the first three
+exact span outputs. This hosted diagnostic is compatibility evidence, not a
+score. The WebGPU option requires a successful untimed capability probe with
+real hardware dispatch before a scored run; the dispatch hook is removed before
+timed generation. A one-span all-graph WebGPU control produced clipped output
+and remains an unregistered diagnostic path.
+
+### Hosted duration-only WebGPU diagnostic
+
+The full-article hosted comparison ran on source `169c8560080aedb1b80c3ef919aee2f04131df43` in [Actions run 44508501851](https://github.com/ngelik/tts-bench/actions/runs/44508501851). It synthesized 93 spans (20,000 source characters) in both CPU/WASM and the scoped duration-WebGPU hybrid; each produced 31,634,520 samples (1,318.105 seconds) at 24 kHz. Both outputs had zero nonfinite samples, silent spans and clipped spans. The hybrid observed 361 WebGPU dispatches. The recorded synthesis times were 2,236,948.425 ms CPU/WASM and 2,466,148.975 ms for the hybrid; these hosted diagnostic times are not M1 benchmark scores.
+
+The global full-wave comparison reported zero sample-clock mismatches, zero nonfinite pairs, correlation `0.9999005692`, RMS error `0.000801394166`, relative RMS `0.014101844`, and max absolute error `0.109308839`. The unmodified 30-second Float32 WAV prefixes were 2,880,044 bytes each: CPU/WASM SHA-256 `8b03db1083ffe01f70419c5811024c5280d3e3469f3ccc29e3ea004d65e133ae`; hybrid SHA-256 `09998cd5e460721e8db83ccf5ff497f75b78212bf27a5388bd03e53123bf0b5d`. The artifact ZIP SHA-256 was `67f85623c046ac5312889711ef2576bf48235f60e82575752a4efb4d2b3de44f`.
+
+That Actions job is marked **failed** because its post-synthesis assertion read `sampleClockMismatchedSpans` and `nonfinitePairs` from the wrong level; both fields are under `comparison.global`. Independent artifact readback confirmed the values above, but does not change the hosted job's failed status. The diagnostic script now reads the nested fields and retains explicit CPU, hybrid and all-graph-control labels. The run remains compatibility evidence, not a clean passing job or a benchmark score.
 
 See [`web/inflect-mini-v3/NOTICE.md`](../web/inflect-mini-v3/NOTICE.md) for
 attribution and terms.

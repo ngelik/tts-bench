@@ -18,7 +18,7 @@ test('catalog entries match the pinned browser backends', () => {
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
   assert.equal(supra.modelRevision, '80a6b0bd13c92e30e88b0c22183be9c2bdc7061c');
   const mini = models.find(model => model.id === 'inflect-mini-v3-browser-port');
-  assert.deepEqual(mini.backends, ['cpu'], 'WebGPU is not registered without hardware dispatch proof');
+  assert.deepEqual(mini.backends, ['cpu', 'webgpu']);
   assert.equal(mini.modelRevision, 'fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6');
   assert.equal(mini.support.voiceCount, 6);
   assert.equal(mini.support.bundledVoiceCount, 1);
@@ -222,8 +222,10 @@ test('Inflect Mini browser-port registration binds its exact upstream license an
   const bytes = await readFile(resolve(root, license.sourcePath));
   assert.equal(bytes.length, license.bytes);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), license.sha256);
-  assert.deepEqual(model.backends, ['cpu']);
+  assert.deepEqual(model.backends, ['cpu', 'webgpu']);
   assert.equal(model.assets.filter(asset => asset.generated).length, 6);
   assert.match(model.support.notes, /distinct frontend\/source-DSP port/);
   assert.match(model.support.notes, /failed the recorded strict native waveform gate/);
+  assert.match(model.support.notes, /only the duration graph uses WebGPU with WASM fallback/);
+  assert.match(model.support.notes, /all-graph WebGPU control clipped output/);
 });

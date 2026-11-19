@@ -103,6 +103,8 @@ try {
   await page.goto(server.url, { waitUntil: 'domcontentloaded' });
 
   result = await page.evaluate(async ({ chunk: canonicalChunk, fullArticleChunks }) => {
+    const DURATION_WEBGPU_HYBRID_PLAN = [['webgpu', 'wasm'], ['wasm'], ['wasm']];
+    const ALL_GRAPH_WEBGPU_CONTROL_PLAN = [['webgpu', 'wasm'], ['webgpu', 'wasm'], ['webgpu', 'wasm']];
     let pageAdapter = null;
     let pageAdapterInfo = null;
     let pageAdapterFallback = null;
@@ -433,17 +435,20 @@ try {
 
     const cpu = await runBackend('cpu', { keepRawWav: true });
     if (cpu.status !== 'measured') return { status: 'cpu-comparison-baseline-failed', cpu, pageAdapter: pageAdapterInfo, pageAdapterFallback, browser };
-    const webgpu = await runBackend('webgpu', { keepRawWav: true });
+    const webgpu = await runBackend('webgpu', { sessionProviders: ALL_GRAPH_WEBGPU_CONTROL_PLAN,
+      label: 'all-graph-webgpu-control', keepRawWav: true });
     if (webgpu.status !== 'measured') return { status: 'hardware-or-dispatch-unavailable', reason: webgpu.info?.reason ?? null,
       cpu, webgpu, pageAdapter: pageAdapterInfo, pageAdapterFallback, browser };
     const gpuWithCpuInputs = await runBackend('webgpu', {
+      sessionProviders: ALL_GRAPH_WEBGPU_CONTROL_PLAN,
       waveformInputs: cpu.diagnostics.utterances.map(item => item.waveformInputs),
+      label: 'all-graph-webgpu-with-cpu-waveform-inputs',
     });
     const cpuWithGpuInputs = await runBackend('cpu', {
       waveformInputs: webgpu.diagnostics.utterances.map(item => item.waveformInputs),
     });
     const durationWebgpuHybrid = await runBackend('webgpu', {
-      sessionProviders: [['webgpu', 'wasm'], ['wasm'], ['wasm']],
+      sessionProviders: DURATION_WEBGPU_HYBRID_PLAN,
       label: 'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform',
       keepRawWav: true,
     });
@@ -451,7 +456,7 @@ try {
     if (fullArticleChunks.length) {
       const cpuFull = await runFullArticleBackend('cpu');
       const hybridFull = await runFullArticleBackend('webgpu', {
-        sessionProviders: [['webgpu', 'wasm'], ['wasm'], ['wasm']],
+        sessionProviders: DURATION_WEBGPU_HYBRID_PLAN,
         referenceParts: cpuFull.retainedParts,
       });
       fullArticle = { cpu: cpuFull.summary, durationWebgpuHybrid: hybridFull.summary,
@@ -598,9 +603,9 @@ try {
     assert.equal(durationWebgpuHybrid.backendEffective,
       'hybrid-webgpu-wasm-duration+wasm-bridge+wasm-waveform');
     assert.ok(Number.isInteger(durationWebgpuHybrid.dispatches) && durationWebgpuHybrid.dispatches > 0);
-    assert.equal(comparison.sampleClockMismatchedSpans, 0,
+    assert.equal(comparison.global.sampleClockMismatchedSpans, 0,
       'CPU and hybrid produced sample-aligned internal parts for every canonical span');
-    assert.equal(comparison.nonfinitePairs, 0);
+    assert.equal(comparison.global.nonfinitePairs, 0);
     assert.equal(result.fullArticle.comparison.spans.length, 93);
     assert.ok(result.fullArticle.comparison.spans.every(span => span.samePartCount && span.partLengthsMatch));
     assert.deepEqual(Object.keys(fullArticleAudioFiles).sort(), ['cpu', 'durationWebgpuHybrid']);
