@@ -12,6 +12,7 @@ Each warm run starts with one excluded 20,000-character article (93 chunks). Eac
 |---|---:|---:|---:|---:|---:|---:|
 | SanoTTS Heart 2.27M (English, US) | 242.94 s (242.60–243.05; n=5) | Unsupported (not declared in manifest) | 720.05 ms (n=5) | Unsupported (not declared in manifest) | 1340.62 s / 0.181 | Unsupported (not declared in manifest) |
 | SanoTTS HFC 1.83M (English) | 612.95 s (612.48–613.70; n=5) | Unsupported (not declared in manifest) | 7050.90 ms (n=5) | Unsupported (not declared in manifest) | 968.07 s / 0.633 | Unsupported (not declared in manifest) |
+| SanoTTS Kristin 1.40M (English) | 674.37 s (673.21–674.57; n=5) | Unsupported (not declared in manifest) | 7922.88 ms (n=5) | Unsupported (not declared in manifest) | 1076.42 s / 0.626 | Unsupported (not declared in manifest) |
 
 ## Resource diagnostics
 
@@ -21,6 +22,7 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 |---|---:|---:|---:|---:|---:|
 | SanoTTS Heart 2.27M (English, US) | Not submitted | Not submitted | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 9.14 MB |
 | SanoTTS HFC 1.83M (English) | Not submitted | Not submitted | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 7.34 MB |
+| SanoTTS Kristin 1.40M (English) | Not submitted | Not submitted | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 5.59 MB |
 
 ## Submitted receipts
 
@@ -30,6 +32,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 |---|---|---|---|---|---|---|
 | SanoTTS Heart 2.27M (English, US) | [Report](../../results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | Unsupported (manifest) | Not submitted | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-heart) | [Terms](../../docs/LICENSING.md) |
 | SanoTTS HFC 1.83M (English) | [Report](../../results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | Unsupported (manifest) | Not submitted | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-hfc) | [Terms](../../docs/LICENSING.md) |
+| SanoTTS Kristin 1.40M (English) | [Report](../../results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | Unsupported (manifest) | Not submitted | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-kristin) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 

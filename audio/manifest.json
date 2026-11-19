@@ -1744,6 +1744,34 @@
       }
     },
     {
+      "resultId": "2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0",
+      "model": "sano-kristin",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Kristin (English, eSpeak en)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Kristin English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu.wav",
+        "sha256": "1f0c02a78a72833315daedda4e609592e29b1a9c4e14270fc96cccb3ae12e344",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu-full.wav",
+        "sha256": "a67b5e4bf7c93d8afa3404646821df1e395cf494721cacb3f8e54aa2a3fc3955",
+        "bytes": 47470124
+      }
+    },
+    {
       "resultId": "2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf",
       "model": "silencio-2",
       "backend": "cpu",
