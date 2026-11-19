@@ -1,6 +1,13 @@
 name: Export Inflect Mini v3 browser graphs
 
 on:
+  push:
+    branches: [codex/inflect-mini-v3]
+    paths:
+      - 'tools/export-inflect-mini-v3.py'
+      - 'tools/inflect-mini-v3-conversion.lock.json'
+      - 'tools/inflect-mini-v3-export-requirements.txt'
+      - '.github/workflows/inflect-mini-v3-export.yml'
   pull_request:
     paths:
       - 'tools/export-inflect-mini-v3.py'
