@@ -21,6 +21,7 @@ import { createKokoroAdapter } from './adapters/kokoro.mjs';
 import { createMMSAdapter } from './adapters/mms.mjs';
 import { createKittenAdapter } from './adapters/kitten.mjs';
 
+import { createSanoRobotTrellisAdapter } from './adapters/sano-robot-trellis.mjs';
 import { createSanoAdapter } from './adapters/sano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
@@ -59,6 +60,8 @@ const FACTORIES = {
   'mms-english': createMMSAdapter,
   'kitten-nano-0.8': createKittenAdapter,
   'sano-amy': createSanoAdapter,
+  'sano-robot-mcu': () => createSanoRobotTrellisAdapter('sano-robot-mcu'),
+  'sano-trellis': () => createSanoRobotTrellisAdapter('sano-trellis'),
   'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
   'silencio-2': createSilencio2Adapter,

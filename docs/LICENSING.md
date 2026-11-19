@@ -232,3 +232,7 @@ with the local assets. The benchmark uses the checkpoint's one fixed English
 voice. The pinned card does not name a voice performer or grant separate output
 rights. Keep model/runtime licenses separate from any rights in the voice or
 recordings. [Pinned model card and license](https://huggingface.co/SupraLabs/SupraTTS-1.0-Preview/blob/80a6b0bd13c92e30e88b0c22183be9c2bdc7061c/README.md) · [Browser runtime and conversion notice](../web/supratts/NOTICE.md)
+
+## Official Sano Robot/MCU and Trellis
+
+Both registrations pin the browser assets in [Ampixa/sanoTTS c0584a5](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0). Their weight directories have no separate adjacent licensing grant, so the manifest retains the containing repository's **GPL-3.0-or-later** terms; it does not infer distilled-weight rights from a teacher's license. G2P, the Trellis runtime/frontend and demo-derived helper follow GPL-3.0-or-later. The upstream `LICENSE.MIT` explicitly covers the Robot core/reference kernels/browser shim, but not the whole browser pipeline or Trellis files. Fetching requires acknowledgment. [Exact scope and modifications](../web/sano/robot-trellis-NOTICE.md). Upstream binaries and weights are fetched into ignored storage, not committed as benchmark source.

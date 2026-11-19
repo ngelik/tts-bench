@@ -1,0 +1,68 @@
+name: Sano Robot and Trellis headed Chrome
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/sano-robot-trellis-smoke.yml'
+      - 'assets.lock.json'
+      - 'web/adapters/sano-robot-trellis.mjs'
+      - 'web/workers/sano-robot-trellis.js'
+      - 'web/sano/robot*'
+      - 'web/bench.mjs'
+      - 'tools/check-sano-robot-trellis-*.mjs'
+      - 'tests/sano-robot-trellis.test.mjs'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        model: [sano-robot-mcu, sano-trellis]
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node --test tests/sano-robot-trellis.test.mjs
+      - name: Stage this model alone
+        run: |
+          npm run assets -- fetch --model '${{ matrix.model }}' --accept-license
+          npm run assets -- verify --model '${{ matrix.model }}' --accept-license
+      - name: Audit all 93 source spans
+        run: xvfb-run -a node tools/check-sano-robot-trellis-frontend.mjs '${{ matrix.model }}'
+      - name: Require clean producer source
+        run: test -z "$(git status --porcelain=v1 --untracked-files=all)"
+      - name: Three-span real CPU synthesis
+        run: >-
+          xvfb-run -a node bin/bench.mjs run --model '${{ matrix.model }}'
+          --backend cpu --smoke --machine 'GitHub hosted Ubuntu CPU diagnostic'
+          --chrome /usr/bin/google-chrome --accept-license --timeout-minutes 20
+      - name: Three-span offline replay
+        run: >-
+          xvfb-run -a node bin/bench.mjs run --model '${{ matrix.model }}'
+          --backend cpu --scenario offline --smoke --machine 'GitHub hosted Ubuntu CPU diagnostic'
+          --chrome /usr/bin/google-chrome --accept-license --timeout-minutes 20
+      - name: Verify both native receipts and WAVs
+        run: node tools/check-sano-robot-trellis-smoke.mjs '${{ matrix.model }}'
+      - name: Preserve genuine diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: '${{ matrix.model }}-headed-chrome'
+          if-no-files-found: ignore
+          path: |
+            runs/**/result.json
+            runs/**/status.json
+            runs/**/error.json
+            runs/**/invalid-result.json
+            runs/**/trial-*.json
+            runs/**/*.wav
+            runs/diagnostics/**/frontend-audit.json
