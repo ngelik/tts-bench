@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { isAbsolute, relative, resolve, sep } from 'node:path';
+import { SANO_KOKOPOP_PROFILES } from '../web/adapters/sano-kokopop-config.mjs';
 import { validateResult } from './results.mjs';
 
 const outputPath = process.argv[2];
@@ -20,7 +21,10 @@ assert.equal(receipt.origin, 'native');
 assert.equal(receipt.source.dirty, false, 'Harness smoke must use a clean committed checkout.');
 assert.equal(receipt.cells.length, 1);
 const [cell] = receipt.cells;
-assert.equal(cell.model, 'sano-heart-nano-gguf-f32');
+const modelId = process.argv[3] || 'sano-heart-nano-gguf-f32';
+assert.ok(SANO_KOKOPOP_PROFILES[modelId]);
+assert.equal(cell.model, modelId);
+assert.equal(cell.trials[0].sampleRate, SANO_KOKOPOP_PROFILES[modelId].info.settings.sampleRate);
 assert.equal(cell.backendRequested, 'webgpu');
 assert.equal(cell.backendEffective, 'webgpu+wasm');
 assert.equal(cell.status, 'measured');

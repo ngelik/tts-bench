@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { readFileSync, readdirSync } from 'node:fs';
+const modelId = process.argv[2];
+assert.ok(['sano-robot-mcu', 'sano-trellis'].includes(modelId));
+const expectedRate = modelId === 'sano-robot-mcu' ? 22050 : 24000;
+const found = [];
+for (const name of readdirSync('runs')) {
+  let result;
+  try { result = JSON.parse(readFileSync(`runs/${name}/result.json`, 'utf8')); } catch { continue; }
+  if (!result.protocol.smoke || result.cells?.[0]?.model !== modelId) continue;
+  assert.equal(result.source.dirty, false);
+  const cell = result.cells[0];
+  assert.equal(cell.status, 'measured', cell.reason);
+  assert.equal(cell.backendRequested, 'cpu');
+  assert.equal(cell.backendEffective, 'cpu/wasm');
+  assert.equal(cell.settings.runtimeSourceRevision, 'c0584a51213721faba98135821faab71bae888f0');
+  assert.equal(cell.trials.length, 1);
+  const trial = cell.trials[0];
+  assert.equal(trial.validation.chunkCount, 3);
+  assert.equal(trial.validation.finitePcm, true);
+  assert.equal(trial.sampleRate, expectedRate);
+  assert.ok(trial.metrics.firstPcmMs > 0);
+  const wav = readFileSync(`runs/${name}/${modelId}-cpu.wav`);
+  assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+  assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+  assert.equal(wav.readUInt16LE(20), 1);
+  assert.equal(wav.readUInt16LE(22), 1);
+  assert.equal(wav.readUInt32LE(24), expectedRate);
+  assert.equal(wav.readUInt16LE(34), 16);
+  assert.equal(wav.readUInt32LE(40), trial.samples * 2);
+  assert.equal(wav.length, 44 + trial.samples * 2);
+  assert.equal(wav.length, trial.audio.bytes);
+  assert.equal(createHash('sha256').update(wav).digest('hex'), trial.audio.sha256);
+  if (result.protocol.scenario === 'offline') assert.equal(trial.metrics.offlineInferenceNetworkBytes, 0);
+  found.push({ id: result.id, scenario: result.protocol.scenario, pcmSha256: trial.validation.pcmSha256 ?? trial.pcmSha256, samples: trial.samples, wavSha256: trial.audio.sha256, firstPcmMs: trial.metrics.firstPcmMs });
+}
+assert.deepEqual(found.map(r => r.scenario).sort(), ['offline', 'warm']);
+assert.equal(found[0].samples, found[1].samples);
+assert.equal(found[0].wavSha256, found[1].wavSha256, 'offline replay must reproduce the deterministic output');
+console.log(JSON.stringify({ modelId, expectedRate, results: found }, null, 2));
