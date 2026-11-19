@@ -106,5 +106,11 @@
     "countKind": "exact",
     "parameterCountSource": "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/mcu/ports/wasm/snt_trellis_wasm.c",
     "scope": "Trellis-RIFT complete English text-to-wave pipeline, including duration/acoustic/decoder weights in the pinned bundle."
+  },
+  "inflect-atom-v3": {
+    "parameterCount": 157190,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_dsp_model_20261024.py",
+    "scope": "All unique learned weights in the qualified AtomDSP core, including six voice embeddings, encoder/decoder shared weights, harmonic phases and FIR. Official export requires157190. English eSpeak-light frontend is rule/dictionary-based, zero learned frontend parameters."
   }
 }
