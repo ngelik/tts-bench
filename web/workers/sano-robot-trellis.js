@@ -150,6 +150,7 @@ function synthesize(ids) {
       handle = runtime._snt_trellis_wasm_run(bundle, weights[0].length, idsPtr, ids.length, 0, 0, error);
       const rc = runtime.HEAP32[error >> 2];
       if (!handle || rc !== 0) throw new Error(`Trellis native failure ${rc}`);
+      if (runtime._snt_trellis_wasm_tokens(handle) !== ids.length || runtime._snt_trellis_wasm_frames(handle) <= 0) throw new Error('Trellis native token coverage or frame count mismatch.');
       count = runtime._snt_trellis_wasm_samples(handle);
       pointer = runtime._snt_trellis_wasm_stage(handle, 7);
       if (runtime._snt_trellis_wasm_handle_sample_rate(handle) !== config.rate || !Number.isInteger(count) || count <= 0 || !pointer) throw new Error('Trellis invalid waveform handle.');

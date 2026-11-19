@@ -157,6 +157,8 @@ test('Trellis releases a genuine output handle on invalid metadata and frees all
       _free: p => freed.push(p),
       _snt_trellis_wasm_sample_rate: () => 24000,
       _snt_trellis_wasm_run: () => 1024,
+      _snt_trellis_wasm_tokens: () => 3,
+      _snt_trellis_wasm_frames: () => 1,
       _snt_trellis_wasm_samples: () => 10,
       _snt_trellis_wasm_stage: () => 2048,
       _snt_trellis_wasm_handle_sample_rate: () => 22050,
