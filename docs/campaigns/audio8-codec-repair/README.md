@@ -42,9 +42,9 @@ This table updates as each completed full cell is independently submitted. Pendi
 | webgpu | cached | Measured | [Native receipt](../../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) |
 | webgpu | warm | Measured | [Native receipt](../../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) |
 | cpu | cached | Measured | [Native receipt](../../../results/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a/summary.md) |
-| cpu | warm | No score: error | [Native receipt](../../../results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/summary.md) |
+| cpu | warm | Reviewed retained score: n=1 of 5 planned; native status remains error | [Selection and stop evidence](cpu-warm-selection.md) · [Unchanged receipt](../../../results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) |
 
-No CPU/WebGPU warm speed comparison is published until both warm cells are measured and validated.
+The [combined table and chart](../../../reports/audio8-codec-repair/overview.md) compares one retained CPU article with the five-run WebGPU median. CPU was intentionally stopped after its first scored article; [selection details](cpu-warm-selection.md) preserve the original five-run plan, raw error status and separate cached recording provenance.
 
 <!-- audio8-outcomes:end -->
 
@@ -56,7 +56,7 @@ During the generation window for the [CPU cached receipt](../../../results/2026-
 
 Earlier Audio8 receipts remain linked in [Reference results](../../../README.md#reference-results). They describe the prior asset registration and are not results for this schedule. In particular, the archived WebGPU cached/warm evidence retains the decoder fault and is not treated as a valid repaired speech score. The older CPU cached receipt is also archived relative to this registration; no CPU warm score is inferred from it. The dashboard preserves the older receipts and their status while showing each new cell as it is submitted. New receipts must cite the pinned source and match the current assets before they can satisfy this schedule.
 
-The cell order is fixed and sequential. An error or unsupported backend remains in the record; do not retry an unchanged cell or substitute its warm timing with cached timing. A failed acoustic gate is not a score, but its native receipt and saved failure waveform remain diagnostic evidence. A score is publishable only when all five scored warm trials and the excluded warm-up pass the gate and the final WAV matches the recorded trial.
+The cell order is fixed and sequential. An error or unsupported backend remains in the record; do not retry an unchanged cell or substitute its warm timing with cached timing. A failed acoustic gate is not a score, but its native receipt and saved failure waveform remain diagnostic evidence. The original complete warm schedule requires five scored trials and the excluded warm-up to pass the gate, with a final WAV matching its recorded trial. The explicitly reviewed CPU exception selects one completed scored article after the user requested an early stop; its raw receipt, original plan and separate cached recording attribution remain unchanged.
 
 ## Reproduce
 
@@ -77,8 +77,8 @@ node tools/run-campaign.mjs --plan "$PWD/docs/campaigns/audio8-codec-repair/plan
 
 The smoke checks are installation/capability diagnostics, not scores. The full plan runs one untimed capability synthesis before each measured cell. If native campaign orchestration stops on an error for review, preserve that attempt and resume only the remaining eligible cells with the same source pin; never edit a receipt. Validate every result and waveform with the repository's native publication checks before submitting it.
 
-## Remaining CPU warm measurement
+## CPU warm outcome and prior setup recovery
 
-The CPU warm cell in this corrected schedule supplies the remaining Audio8 comparison, with one excluded article and five scored repetitions on this exact source. The original-source CPU warm cell was superseded before synthesis began. Existing historical recordings and receipts remain available. [Disposition and matching CPU cached evidence](../nov14-english/audio8-cpu-warm-supersession.json)
+The CPU warm cell was planned as one excluded article and five scored repetitions on this exact source. At the user’s request, only its first completed scored article is retained; the remaining repetitions were stopped. [Reviewed n=1 selection](cpu-warm-selection.md). The original-source CPU warm cell was superseded before synthesis began. Existing historical recordings and receipts remain available. [Disposition and matching CPU cached evidence](../nov14-english/audio8-cpu-warm-supersession.json)
 
 The first corrected-source CPU warm attempt stopped before synthesis because the browser could not write one model asset to CacheStorage. It remains a native setup-error receipt, not an unsupported result or score. The separate disk/cache investigation, exact probe artifact hashes, measured headroom, cleanup scope, and SDK restore commands are recorded in [CPU warm setup recovery evidence](recovery-evidence.md) and its [machine-readable summary](recovery-evidence.json). The replacement run is a separate native attempt; neither the error receipt nor its timings are altered.
