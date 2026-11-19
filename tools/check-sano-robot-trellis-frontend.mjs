@@ -12,10 +12,13 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { findChrome } from '../lib/runner.mjs';
 import { startServer } from '../lib/server.mjs';
+import { verifyAllAssets, assetManifestSha256 } from '../lib/assets.mjs';
 
 const modelId = process.argv[2];
 if (!['sano-robot-mcu', 'sano-trellis'].includes(modelId)) throw new Error('Pass sano-robot-mcu or sano-trellis.');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const verifiedAssets = await verifyAllAssets(modelId);
+const assetManifest = await assetManifestSha256();
 const profile = await mkdtemp(join(tmpdir(), 'sano-robot-trellis-frontend-'));
 const article = await readFile(join(root, 'fixtures/en-20000.txt'), 'utf8');
 const manifest = JSON.parse(await readFile(join(root, 'fixtures/en-20000.chunks.json'), 'utf8'));
@@ -66,7 +69,7 @@ try {
   const benchmarkSourceDirty = Boolean(execFileSync('git', ['status', '--porcelain=v1', '--untracked-files=all'], { cwd: root, encoding: 'utf8' }).trim());
   assert.equal(benchmarkSourceDirty, false, 'Full-fixture audit requires the exact clean scoring implementation');
   const evidence = {
-    benchmarkSourceCommit, benchmarkSourceDirty,
+    benchmarkSourceCommit, benchmarkSourceDirty, assetManifestSha256: assetManifest, verifiedAssets,
     workerSha256: createHash('sha256').update(await readFile(join(root, 'web/workers/sano-robot-trellis.js'))).digest('hex'),
     schemaVersion: 1,
     model: modelId,
