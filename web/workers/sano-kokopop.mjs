@@ -187,10 +187,11 @@ async function load(options) {
       ...(config.info.settings || {}),
       selectedVoice: 'heartnano',
       sampleRate: 24000,
-      seed: '42 + canonical chunk id (uint32)',
-      textInput: 'Raw canonical benchmark span; Kokopop applies the pinned sanoTTS frontend and does not split the canonical span further.',
-      textNormalization: 'Upstream heartnano Misaki normalization followed by its pinned eSpeak IPA tokenizer.',
-      streamDecode: 'Synthesis is offline for the complete canonical span; first PCM is returned after full span generation.',
+      seed: 'Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.',
+      textInput: 'Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.',
+      textNormalization: 'Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.',
+      internalLongFormChunking: 'Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.',
+      streamDecode: 'Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.',
       runtime: config.runtime.version,
       espeakLanguageData: 'English (US) only, from the matching Kokopop Emscripten bundle.',
     },
@@ -253,8 +254,8 @@ async function generate(chunk) {
   const output = await runtime.synthesize(chunk.text, {
     voice: 'heartnano', speed: 1, seed: (42 + chunk.id) >>> 0, trace: false,
   });
-  if (output.sampleRate !== 24000 || !output.samples.length || !output.samples.every(Number.isFinite)) {
-    fail('Kokopop returned invalid or non-finite heartnano PCM.');
+  if (output.sampleRate !== 24000 || !output.samples.length) {
+    fail('Kokopop returned invalid heartnano PCM.');
   }
   return { parts: [output.samples], sampleRate: output.sampleRate, completedChunkId: chunk.id };
 }

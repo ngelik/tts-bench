@@ -2,11 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createSanoKokopopAdapter } from '../web/adapters/sano-kokopop.mjs';
+import { SANO_HEART_NANO_F32 } from '../web/adapters/sano-kokopop-config.mjs';
 
 const adapterSource = await readFile(new URL('../web/adapters/sano-kokopop.mjs', import.meta.url), 'utf8');
 const workerSource = await readFile(new URL('../web/workers/sano-kokopop.mjs', import.meta.url), 'utf8');
 const runtimeSource = await readFile(new URL('../web/sano-kokopop/runtime.js', import.meta.url), 'utf8');
 const upstreamPatch = await readFile(new URL('../web/sano-kokopop/patches/kokopop-browser.patch', import.meta.url), 'utf8');
+const benchSource = await readFile(new URL('../web/bench.mjs', import.meta.url), 'utf8');
 
 const model = {
   id: 'sano-heart-nano-gguf-f32',
@@ -25,6 +27,7 @@ const model = {
 class FakeWorker {
   static instances = [];
   static unsupported = false;
+  static nonFinite = false;
 
   constructor(url, options) {
     this.url = url;
@@ -45,7 +48,7 @@ class FakeWorker {
             capability: { gpuDispatchVerified: message.options.backend === 'webgpu' },
           }
         : message.action === 'generate'
-          ? { parts: [Float32Array.of(0.25, -0.125)], sampleRate: 24000, completedChunkId: message.chunk.id }
+          ? { parts: [Float32Array.of(FakeWorker.nonFinite ? Number.NaN : 0.25, -0.125)], sampleRate: 24000, completedChunkId: message.chunk.id }
           : null;
       this.onmessage?.({ data: { id: message.id, value } });
     });
@@ -82,6 +85,46 @@ test('Kokopop adapter forwards the pinned model config and preserves determinist
     if (previousWorker === undefined) delete globalThis.Worker;
     else globalThis.Worker = previousWorker;
   }
+});
+
+test('Kokopop leaves O(samples) PCM finiteness validation to the harness after timing', async () => {
+  const previousWorker = globalThis.Worker;
+  FakeWorker.instances = [];
+  FakeWorker.unsupported = false;
+  FakeWorker.nonFinite = true;
+  globalThis.Worker = FakeWorker;
+  try {
+    const adapter = createSanoKokopopAdapter(model);
+    await adapter.initialize({ backend: 'cpu' });
+    const output = await adapter.generateChunk({ id: 0, start: 0, end: 6, text: 'Hello.' });
+    assert.ok(Number.isNaN(output.parts[0][0]));
+    await adapter.dispose();
+  } finally {
+    FakeWorker.nonFinite = false;
+    if (previousWorker === undefined) delete globalThis.Worker;
+    else globalThis.Worker = previousWorker;
+  }
+});
+
+test('Kokopop settings disclose upstream long-form normalization and internal chunk behavior', () => {
+  const settings = SANO_HEART_NANO_F32.info.settings;
+  assert.match(settings.textInput, /LONG_FORM synthesis without pre-splitting/);
+  assert.match(settings.textNormalization, /normalizes text and punctuation/);
+  assert.match(settings.internalLongFormChunking, /voice-adjusted model token budget/);
+  assert.match(settings.internalLongFormChunking, /trim\/crossfade chunks and insert pauses/);
+  assert.match(settings.seed, /derives internal long-form chunk seeds/);
+  assert.match(settings.streamDecode, /collects the internally generated long-form chunks/);
+});
+
+test('scored Kokopop generation path contains no redundant PCM scans and harness validates after timing', () => {
+  const generateStart = workerSource.indexOf('async function generate(chunk)');
+  const generateEnd = workerSource.indexOf('async function dispose()', generateStart);
+  assert.ok(generateStart >= 0 && generateEnd > generateStart);
+  assert.doesNotMatch(workerSource.slice(generateStart, generateEnd), /\.every\(Number\.isFinite\)/);
+  assert.doesNotMatch(adapterSource, /parts\[0\]\.every\(Number\.isFinite\)/);
+  const generationEnd = benchSource.indexOf('const ended = performance.now();');
+  const finiteScan = benchSource.indexOf('let finitePcm = pcm.length > 0;');
+  assert.ok(generationEnd >= 0 && finiteScan > generationEnd, 'The harness finite scan must stay outside the timed generation interval.');
 });
 
 test('Kokopop adapter rejects unsupported and implicit backend requests', async () => {

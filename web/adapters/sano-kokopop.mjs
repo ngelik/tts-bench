@@ -65,9 +65,8 @@ export function createSanoKokopopAdapter(modelConfig) {
       const response = await workerAdapter.generateChunk(chunk, options);
       if (!response || response.completedChunkId !== chunk.id || response.sampleRate !== 24000 ||
           !Array.isArray(response.parts) || response.parts.length !== 1 ||
-          !(response.parts[0] instanceof Float32Array) || !response.parts[0].length ||
-          !response.parts[0].every(Number.isFinite)) {
-        throw new Error('Kokopop returned invalid, mismatched or non-finite 24 kHz heart-nano PCM.');
+          !(response.parts[0] instanceof Float32Array) || !response.parts[0].length) {
+        throw new Error('Kokopop returned invalid or mismatched 24 kHz heart-nano PCM.');
       }
       return response;
     },
