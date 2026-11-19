@@ -1,0 +1,290 @@
+name: Temporary Kokopop pair artifact verification
+on:
+  push:
+    branches: [codex/verify-kokopop-pair-artifact-20261119]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  verify-preserved-pair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      SOURCE_COMMIT: ca54c5ca1954406a72f4f0d705c6a37852ee7761
+      SOURCE_MANIFEST: e0861e6953fba9e6c1702db4ed3ff48d9cfe6175afe566a558dcec31214aebe6
+      ASSET_LOCK_SHA256: d9f13c83ce4ace1a34a8a000d7e1ff9b2ab30fce6115e3574ad8409ec4a9d26c
+      SCORING_RUN_ID: '44431517354'
+      SCORING_JOB_ID: '135249778510'
+      SCORING_ARTIFACT_ID: '14486683305'
+      SCORING_ARTIFACT_SHA256: dc6bfe8851295bbe0add88d924bb1b2ad0d01a46a6d6eedad1f796d5bc6b1cab
+      EXPECTED_CPU_RESULT_ID: 2026-11-19t00-45-33-954z-sano-heart-nano-gguf-f32-cpu-warm-82eff4ee
+      EXPECTED_GPU_RESULT_ID: 2026-11-19t00-47-06-080z-sano-heart-nano-gguf-f32-webgpu-warm-94daff2e
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ env.SOURCE_COMMIT }}
+          path: scoring
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/*/
+            /bin/
+            /fixtures/
+            /lib/
+            /models/
+            /tools/
+            /web/
+            /audio/
+            !/audio/samples/
+            /assets.lock.json
+            /package.json
+            /package-lock.json
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          repository: ${{ github.repository }}
+          run-id: 44431517354
+          github-token: ${{ github.token }}
+          name: sano-kokopop-full-warm-pair-44431517354
+          path: pair-artifact
+      - name: Verify original run, artifact, raw receipts and full WAVs
+        working-directory: scoring
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPOSITORY: ${{ github.repository }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { createHash } from 'node:crypto';
+          import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
+          import { join } from 'node:path';
+          import { committedManifest } from './tools/provenance.mjs';
+          import { validateResult } from './tools/results.mjs';
+
+          const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+          const requestJson = async url => {
+            const response = await fetch(url, {
+              headers: {
+                authorization: `Bearer ${process.env.GH_TOKEN}`,
+                accept: 'application/vnd.github+json',
+                'x-github-api-version': '2022-11-28',
+              },
+            });
+            assert.equal(response.status, 200, `GitHub API request failed (${response.status}): ${url}`);
+            return response.json();
+          };
+          const repository = process.env.GH_REPOSITORY;
+          const api = `https://api.github.com/repos/${repository}`;
+          const originalRun = await requestJson(`${api}/actions/runs/${process.env.SCORING_RUN_ID}`);
+          assert.equal(originalRun.id, Number(process.env.SCORING_RUN_ID));
+          assert.equal(originalRun.conclusion, 'failure', 'Preserve and disclose the original run conclusion.');
+          const jobs = await requestJson(`${api}/actions/runs/${process.env.SCORING_RUN_ID}/jobs?per_page=100`);
+          const job = jobs.jobs.find(entry => entry.id === Number(process.env.SCORING_JOB_ID));
+          assert.ok(job);
+          assert.equal(job.conclusion, 'failure');
+          const stepConclusion = name => job.steps.find(step => step.name === name)?.conclusion;
+          assert.equal(stepConclusion('Verify exact source and lock'), 'success');
+          assert.equal(stepConclusion('Import and verify generated Kokopop assets'), 'success');
+          assert.equal(stepConclusion('Dry-run exact source-bound pair plan'), 'success');
+          assert.equal(stepConclusion('Run sequential full-article CPU and WebGPU pair'), 'success');
+          assert.equal(stepConclusion('Validate pair receipts and selected audio'), 'failure');
+          assert.equal(stepConclusion('Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02'), 'success');
+          const artifactMeta = await requestJson(`${api}/actions/artifacts/${process.env.SCORING_ARTIFACT_ID}`);
+          assert.equal(artifactMeta.id, Number(process.env.SCORING_ARTIFACT_ID));
+          assert.equal(artifactMeta.workflow_run?.id, Number(process.env.SCORING_RUN_ID));
+          assert.equal(String(artifactMeta.digest).replace(/^sha256:/, ''), process.env.SCORING_ARTIFACT_SHA256);
+          assert.equal(artifactMeta.expired, false);
+
+          const commit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+          assert.equal(commit, process.env.SOURCE_COMMIT);
+          const manifest = committedManifest(commit);
+          assert.equal(manifest, process.env.SOURCE_MANIFEST);
+          const lockBytes = await readFile('assets.lock.json');
+          assert.equal(sha256(lockBytes), process.env.ASSET_LOCK_SHA256);
+
+          const artifactRoot = '../pair-artifact';
+          const pairPlan = JSON.parse(await readFile(join(artifactRoot, 'evidence/plan.json'), 'utf8'));
+          assert.equal(pairPlan.sourceCommit, commit);
+          assert.equal(pairPlan.cells.length, 2);
+          assert.deepEqual(pairPlan.cells.map(cell => [cell.backend, cell.scenario, cell.repetitions]), [
+            ['cpu', 'warm', 5],
+            ['webgpu', 'warm', 5],
+          ]);
+          const preflight = JSON.parse(await readFile(join(artifactRoot, 'evidence/preflight.json'), 'utf8'));
+          assert.equal(preflight.commit, commit);
+          assert.equal(preflight.manifestSha256, manifest);
+          assert.equal(preflight.assetsLockSha256, process.env.ASSET_LOCK_SHA256);
+          assert.equal(preflight.clean, true);
+
+          const ids = {
+            cpu: process.env.EXPECTED_CPU_RESULT_ID,
+            webgpu: process.env.EXPECTED_GPU_RESULT_ID,
+          };
+          const byBackend = new Map();
+          const model = 'sano-heart-nano-gguf-f32';
+          const audioInfo = [];
+          const sourceCommit = process.env.SOURCE_COMMIT;
+          for (const [backend, id] of Object.entries(ids)) {
+            const base = join(artifactRoot, 'scoring/runs', id);
+            const rawReceipt = await readFile(join(base, 'result.json'));
+            const receipt = JSON.parse(rawReceipt.toString('utf8'));
+            validateResult(receipt);
+            assert.equal(receipt.id, id);
+            assert.equal(receipt.origin, 'native');
+            assert.equal(receipt.source.gitCommit, sourceCommit);
+            assert.equal(receipt.source.dirty, false);
+            assert.equal(receipt.source.manifestSha256, manifest);
+            assert.equal(receipt.protocol.scenario, 'warm');
+            assert.equal(receipt.protocol.smoke, false);
+            assert.equal(receipt.protocol.warmupRuns, 1);
+            assert.equal(receipt.protocol.repetitions, 5);
+            assert.match(receipt.protocol.timingBoundary, /excludes initialization, validation, hashing, WAV encoding and save/i);
+            assert.equal(receipt.fixture.characters, 20000);
+            assert.equal(receipt.fixture.chunks, 93);
+            assert.equal(receipt.cells.length, 1);
+            const [cell] = receipt.cells;
+            assert.equal(cell.model, model);
+            assert.equal(cell.backendRequested, backend);
+            assert.equal(cell.status, 'measured');
+            assert.equal(cell.warmup.length, 1);
+            assert.equal(cell.trials.length, 5);
+            for (const trial of [...cell.warmup, ...cell.trials]) {
+              assert.equal(trial.sampleRate, 24000);
+              assert.equal(trial.validation.finitePcm, true);
+              assert.equal(trial.validation.chunkCount, 93);
+              assert.equal(trial.validation.nonemptyChunks, true);
+              assert.ok(Number.isFinite(trial.generationMs) && trial.generationMs > 0);
+              assert.ok(Number.isFinite(trial.metrics.firstPcmMs) && trial.metrics.firstPcmMs > 0);
+              assert.ok(Number.isFinite(trial.metrics.realTimeFactor) && trial.metrics.realTimeFactor > 0);
+            }
+            if (backend === 'cpu') {
+              assert.equal(cell.backendEffective, 'cpu/wasm');
+            } else {
+              assert.equal(cell.backendEffective, 'webgpu+wasm');
+              assert.equal(cell.capability.gpuDispatchVerified, true);
+              assert.ok(cell.capability.hardwareAdapter.features.includes('shader-f16'));
+              assert.ok(cell.capability.dispatches > 0);
+              assert.ok(cell.capability.schedulerOperations.MUL_MAT >= 4);
+            }
+            const wavRelative = `scoring/runs/${id}/${model}-${backend}.wav`;
+            const wav = await readFile(join(artifactRoot, wavRelative));
+            const wavHash = sha256(wav);
+            const trialAudio = cell.trials.at(-1).audio;
+            assert.equal(wavHash, trialAudio.sha256);
+            assert.equal(wav.length, trialAudio.bytes);
+            assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+            assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+            assert.equal(wav.readUInt16LE(20), 1);
+            assert.equal(wav.readUInt16LE(22), 1);
+            assert.equal(wav.readUInt32LE(24), 24000);
+            assert.equal(wav.readUInt16LE(34), 16);
+            assert.equal(wav.readUInt32LE(40), wav.length - 44);
+            assert.equal(wav.readUInt32LE(40) / 2, cell.trials.at(-1).samples);
+            const previewFrames = 24000 * 30;
+            assert.ok(trialAudio.samples > previewFrames, 'Selected full recording must support a 30-second preview.');
+            const preview = Buffer.from(wav.subarray(0, 44 + previewFrames * 2));
+            preview.writeUInt32LE(preview.length - 8, 4);
+            preview.writeUInt32LE(preview.length - 44, 40);
+            const trialRows = cell.trials.map((trial, index) => ({
+              trial: index + 1,
+              firstPcmMs: trial.metrics.firstPcmMs,
+              generationMs: trial.generationMs,
+              samples: trial.samples,
+              audioSeconds: trial.metrics.audioSeconds,
+              realTimeFactor: trial.metrics.realTimeFactor,
+              float32PcmSha256: trial.pcmSha256,
+            }));
+            const record = {
+              resultId: id,
+              backendRequested: backend,
+              backendEffective: cell.backendEffective,
+              receiptSha256: sha256(rawReceipt),
+              warmup: {
+                firstPcmMs: cell.warmup[0].metrics.firstPcmMs,
+                generationMs: cell.warmup[0].generationMs,
+                samples: cell.warmup[0].samples,
+                audioSeconds: cell.warmup[0].metrics.audioSeconds,
+                realTimeFactor: cell.warmup[0].metrics.realTimeFactor,
+                float32PcmSha256: cell.warmup[0].pcmSha256,
+              },
+              trials: trialRows,
+              medianGenerationMs: [...cell.trials.map(trial => trial.generationMs)].sort((a, b) => a - b)[2],
+              trialRangeMs: [Math.min(...cell.trials.map(trial => trial.generationMs)), Math.max(...cell.trials.map(trial => trial.generationMs))],
+              capabilityProbe: cell.capability,
+              selectedFinalTrialFullWav: {
+                path: wavRelative,
+                sha256: wavHash,
+                bytes: wav.length,
+                sampleRate: 24000,
+                channels: 1,
+                bitsPerSample: 16,
+                samples: cell.trials.at(-1).samples,
+              },
+              selectedFinalTrialPreview30s: {
+                sampleRate: 24000,
+                channels: 1,
+                bitsPerSample: 16,
+                frames: previewFrames,
+                bytes: preview.length,
+                sha256: sha256(preview),
+                derivedFromFullWavSha256: wavHash,
+              },
+            };
+            byBackend.set(backend, { receipt, cell, record });
+            audioInfo.push(record);
+          }
+          const cpu = byBackend.get('cpu');
+          const gpu = byBackend.get('webgpu');
+          assert.equal(cpu.receipt.fixture.sha256, gpu.receipt.fixture.sha256);
+          assert.deepEqual(cpu.cell.settings, gpu.cell.settings);
+          assert.equal(cpu.cell.voice, gpu.cell.voice);
+          assert.equal(cpu.cell.precision, gpu.cell.precision);
+          assert.deepEqual(
+            cpu.receipt.assets.map(({ id, bytes, sha256 }) => ({ id, bytes, sha256 })),
+            gpu.receipt.assets.map(({ id, bytes, sha256 }) => ({ id, bytes, sha256 })),
+          );
+
+          const report = {
+            verificationStatus: 'passed',
+            kind: 'posthoc-artifact-verification-no-inference',
+            originalRun: {
+              id: Number(process.env.SCORING_RUN_ID),
+              url: `https://github.com/${repository}/actions/runs/${process.env.SCORING_RUN_ID}`,
+              conclusion: originalRun.conclusion,
+              jobId: Number(process.env.SCORING_JOB_ID),
+              jobConclusion: job.conclusion,
+              scoringStep: stepConclusion('Run sequential full-article CPU and WebGPU pair'),
+              originalVerifierStep: stepConclusion('Validate pair receipts and selected audio'),
+              verifierFailureReason: 'Inline post-run verification script failed to parse because it used await inside a synchronous map callback; no benchmark receipt or audio was modified.',
+            },
+            originalArtifact: {
+              id: Number(process.env.SCORING_ARTIFACT_ID),
+              name: artifactMeta.name,
+              digest: artifactMeta.digest,
+              expectedDigest: `sha256:${process.env.SCORING_ARTIFACT_SHA256}`,
+              expired: artifactMeta.expired,
+              url: `https://github.com/${repository}/actions/runs/${process.env.SCORING_RUN_ID}/artifacts/${process.env.SCORING_ARTIFACT_ID}`,
+            },
+            source: { commit, manifestSha256: manifest, assetsLockSha256: sha256(lockBytes) },
+            campaignPlanSha256: sha256(await readFile(join(artifactRoot, 'evidence/plan.json'))),
+            fixture: cpu.receipt.fixture,
+            profilesMatchWithinF32Runtime: true,
+            profiles: Object.fromEntries(audioInfo.map(record => [record.backendRequested, record])),
+          };
+          await mkdir('../verification-output', { recursive: true });
+          await writeFile('../verification-output/verification.json', JSON.stringify(report, null, 2) + '\n');
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: sano-kokopop-pair-verification-${{ github.run_id }}
+          path: verification-output/verification.json
+          if-no-files-found: warn
+          retention-days: 30
