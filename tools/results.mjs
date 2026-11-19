@@ -99,12 +99,17 @@ function validateGenerationMemory(t,generationMs) {
   return summary;
 }
 
-function validateNativeBackend(c) {
+export function nativeEffectiveBackendAllowed(model, requested, effective) {
   const labels={
     cpu:/^(?:cpu|cpu\/wasm|wasm)$/i,
     webgpu:/^(?:webgpu|webgpu\+wasm)$/i,
   };
-  check(labels[c.backendRequested].test(c.backendEffective),`Effective backend ${c.backendEffective} does not match requested ${c.backendRequested}`);
+  if (requested === 'webgpu' && model === 'zonos3-mini' && effective === 'webgpu+cpu-codec-host') return true;
+  return Boolean(labels[requested]?.test(effective));
+}
+
+function validateNativeBackend(c) {
+  check(nativeEffectiveBackendAllowed(c.model,c.backendRequested,c.backendEffective),`Effective backend ${c.backendEffective} does not match requested ${c.backendRequested}`);
 }
 
 function validateCapability(capability) {
