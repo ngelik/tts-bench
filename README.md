@@ -53,6 +53,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E5**: MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E6**: MacBook Pro · Apple M1 Pro · 8-core CPU · 16 GiB RAM · Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E7**: Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E8**: Apple MacBook Pro M1 Pro / 16 GB · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
@@ -91,6 +92,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | sanoTTS Amy small (Kokopop F16/F32) | E7 | 2.49 | — | [141.77 s (n=5)](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | Native; independent attempts |
 | sanoTTS Heart (Kokopop F32) | E7 | 9.38 | [39.17 s (n=5)](results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/summary.md) | [6.06 s (n=5)](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | Native; matched configuration |
 | sanoTTS heart-nano 294k (Kokopop F32) | E7 | 1.46 | [11.57 s (n=5)](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [3.71 s (n=5)](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | Native; matched configuration |
+| ZONOS3-Mini (Imogen) | E8 | 2081.59 | — | [153.41 s (n=1)](results/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772/summary.md) | Native; independent attempts |
 
 Each native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
@@ -230,6 +232,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Inflect Atom v3 157K FP32 | 0.71 | [1047.34](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [1788.98](results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/summary.md) |
+
+**RAM 18** · Apple MacBook Pro M1 Pro / 16 GB · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`de9dded4`](https://github.com/ngelik/tts-bench/commit/de9dded4722f160d185b4dcbbb720edec8ee595f).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| ZONOS3-Mini (Imogen) | 2081.59 | — | [1126.22](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/summary.md) |
 
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
@@ -410,6 +418,10 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![tiny-voca-english — campaign metrics](reports/tiny-voca-english/overview.svg)
 
+[zonos3-mini-webgpu — all-metrics table and source receipts](reports/zonos3-mini-webgpu/overview.md)
+
+![zonos3-mini-webgpu — campaign metrics](reports/zonos3-mini-webgpu/overview.svg)
+
 ### Historical resource measurements
 
 Startup, memory and download figures below belong to the original campaign. They were not remeasured in subsequent warm-only runs. CPU and later GPU timer boundaries differ; do not calculate a speedup ratio across them.
@@ -513,6 +525,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Tiny Voca 4.5M | webgpu | [Receipt](results/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d--tiny-voca--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d--tiny-voca--webgpu-full.wav) |
 | Underdog Woof one-voice (Isla) | webgpu | [Receipt](results/2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663--woof--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663--woof--webgpu-full.wav) |
 | Underdog Woof one-voice (Isla) | webgpu | [Receipt](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=historical-2026-11-08-m1pro-gpu-warm--woof--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/historical-2026-11-08-m1pro-gpu-warm--woof--webgpu-full.wav) |
+| ZONOS3-Mini (Imogen) | webgpu | [Receipt](results/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772--zonos3-mini--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772--zonos3-mini--webgpu-full.wav) |
+| ZONOS3-Mini (Imogen) | webgpu | [Receipt](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76--zonos3-mini--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76--zonos3-mini--webgpu-full.wav) |
 
 <details>
 <summary>All submitted results — every scenario and earlier run</summary>
@@ -644,15 +658,17 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 123 · 2026-11-19 | audio8-realistic-0.6b-int4/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) | [SVG](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/chart.svg) |
 | 124 · 2026-11-19 | sano-heart-nano-gguf-f32/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [SVG](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/chart.svg) |
 | 125 · 2026-11-19 | sano-heart-nano-gguf-f32/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | [SVG](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/chart.svg) |
-| 126 · 2026-11-19 | sano-heart-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/summary.md) | [SVG](results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/chart.svg) |
-| 127 · 2026-11-19 | inflect-atom-v3/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [SVG](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/chart.svg) |
-| 128 · 2026-11-19 | sano-heart-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | [SVG](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/chart.svg) |
-| 129 · 2026-11-19 | inflect-atom-v3/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/summary.md) | [SVG](results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/chart.svg) |
-| 130 · 2026-11-19 | sano-amy-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/summary.md) | [SVG](results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/chart.svg) |
-| 131 · 2026-11-19 | inflect-atom-v3/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/summary.md) | [SVG](results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/chart.svg) |
-| 132 · 2026-11-19 | sano-amy-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/summary.md) | [SVG](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/chart.svg) |
-| 133 · 2026-11-19 | inflect-atom-v3/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/summary.md) | [SVG](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/chart.svg) |
-| 134 · 2026-11-19 | sano-amy-small-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | [SVG](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/chart.svg) |
+| 126 · 2026-11-19 | zonos3-mini/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772/summary.md) | [SVG](results/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772/chart.svg) |
+| 127 · 2026-11-19 | sano-heart-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/summary.md) | [SVG](results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/chart.svg) |
+| 128 · 2026-11-19 | inflect-atom-v3/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/summary.md) | [SVG](results/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c/chart.svg) |
+| 129 · 2026-11-19 | sano-heart-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | [SVG](results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/chart.svg) |
+| 130 · 2026-11-19 | inflect-atom-v3/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/summary.md) | [SVG](results/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a/chart.svg) |
+| 131 · 2026-11-19 | sano-amy-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/summary.md) | [SVG](results/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc/chart.svg) |
+| 132 · 2026-11-19 | inflect-atom-v3/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/summary.md) | [SVG](results/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db/chart.svg) |
+| 133 · 2026-11-19 | zonos3-mini/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/summary.md) | [SVG](results/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76/chart.svg) |
+| 134 · 2026-11-19 | sano-amy-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/summary.md) | [SVG](results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/chart.svg) |
+| 135 · 2026-11-19 | inflect-atom-v3/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/summary.md) | [SVG](results/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60/chart.svg) |
+| 136 · 2026-11-19 | sano-amy-small-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | [SVG](results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/chart.svg) |
 
 </details>
 
