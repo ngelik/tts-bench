@@ -68,6 +68,71 @@ jobs:
           import { validateResult } from './tools/results.mjs';
 
           const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+          function auditPcm16(wav, samples) {
+            let minimum = 32767;
+            let maximum = -32768;
+            let sumSquares = 0;
+            let zeroSamples = 0;
+            let fullScaleSamples = 0;
+            let lastValue = null;
+            let runStart = 0;
+            let runLength = 0;
+            let longestRun = { value: null, startSample: null, samples: 0 };
+            let runsAtLeast100ms = 0;
+            let samplesInRunsAtLeast100ms = 0;
+            let runsAtLeast1s = 0;
+            let samplesInRunsAtLeast1s = 0;
+            const closeRun = () => {
+              if (runLength > longestRun.samples) {
+                longestRun = { value: lastValue, startSample: runStart, samples: runLength };
+              }
+              if (runLength >= 2400) {
+                runsAtLeast100ms++;
+                samplesInRunsAtLeast100ms += runLength;
+              }
+              if (runLength >= 24000) {
+                runsAtLeast1s++;
+                samplesInRunsAtLeast1s += runLength;
+              }
+            };
+            for (let index = 0; index < samples; index++) {
+              const value = wav.readInt16LE(44 + index * 2);
+              minimum = Math.min(minimum, value);
+              maximum = Math.max(maximum, value);
+              sumSquares += (value / 32768) ** 2;
+              if (value === 0) zeroSamples++;
+              if (value === -32768 || value === 32767) fullScaleSamples++;
+              if (lastValue === null) {
+                lastValue = value;
+                runStart = index;
+                runLength = 1;
+              } else if (value === lastValue) {
+                runLength++;
+              } else {
+                closeRun();
+                lastValue = value;
+                runStart = index;
+                runLength = 1;
+              }
+            }
+            if (runLength) closeRun();
+            return {
+              sampleCount: samples,
+              minimumPcm16: minimum,
+              maximumPcm16: maximum,
+              peakNormalized: Math.max(Math.abs(minimum), Math.abs(maximum)) / 32768,
+              rmsNormalized: Math.sqrt(sumSquares / samples),
+              zeroSamples,
+              fullScaleSamples,
+              longestExactConstantRun: {
+                ...longestRun,
+                seconds: longestRun.samples / 24000,
+              },
+              exactConstantRunsAtLeast100ms: { count: runsAtLeast100ms, samples: samplesInRunsAtLeast100ms },
+              exactConstantRunsAtLeast1s: { count: runsAtLeast1s, samples: samplesInRunsAtLeast1s },
+              note: 'Informational PCM16 scan; constant runs and full-scale samples are reported without a pass/fail threshold.',
+            };
+          }
           const requestJson = async url => {
             const response = await fetch(url, {
               headers: {
@@ -186,6 +251,7 @@ jobs:
             assert.equal(wav.readUInt16LE(34), 16);
             assert.equal(wav.readUInt32LE(40), wav.length - 44);
             assert.equal(wav.readUInt32LE(40) / 2, cell.trials.at(-1).samples);
+            const waveformAudit = auditPcm16(wav, cell.trials.at(-1).samples);
             const previewFrames = Math.min(24000 * 30, cell.trials.at(-1).samples);
             assert.ok(previewFrames > 0, 'Selected full recording must contain PCM frames.');
             const preview = Buffer.from(wav.subarray(0, 44 + previewFrames * 2));
@@ -226,6 +292,7 @@ jobs:
                 bitsPerSample: 16,
                 samples: cell.trials.at(-1).samples,
               audioSeconds: cell.trials.at(-1).samples / 24000,
+                pcm16Audit: waveformAudit,
               },
               selectedFinalTrialPreviewUpTo30s: {
                 sampleRate: 24000,
