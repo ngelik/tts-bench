@@ -24,6 +24,15 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(mini.support.bundledVoiceCount, 1);
   assert.equal(mini.support.languageCount, 1);
   const miniLock = getAssetLock().models['inflect-mini-v3-browser-port'];
+  assert.deepEqual(miniLock.runtime.files.filter(file => file.path.includes('webgpu') || file.path.includes('asyncify'))
+    .map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })).sort((a, b) => a.path.localeCompare(b.path)), [
+      { path: 'dist/ort-wasm-simd-threaded.asyncify.mjs', bytes: 51913,
+        sha256: '249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff' },
+      { path: 'dist/ort-wasm-simd-threaded.asyncify.wasm', bytes: 25499390,
+        sha256: 'babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada' },
+      { path: 'dist/ort.webgpu.min.mjs', bytes: 66261,
+        sha256: '8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864' },
+    ]);
   assert.equal(miniLock.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 137110819);
   assert.equal(miniLock.assets.filter(asset => asset.generated).length, 6);
   assert.ok(miniLock.assets.some(asset => asset.id === 'inflect-mini-v3-browser-klein-en-us-lexicon'));

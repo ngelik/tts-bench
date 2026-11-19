@@ -44,6 +44,11 @@ truncating. It inserts the pinned 120 ms pause between internal pieces. First
 PCM is available only after the first full internal piece has completed and
 been read back from ONNX Runtime.
 
+The locked ONNX Runtime Web 1.23.2 closure includes both execution paths: the
+CPU/WASM entry point and SIMD runtime, plus the WebGPU entry point and its
+asyncify WASM runtime. The WebGPU-only files add 25,617,564 bytes to the pinned
+runtime and are verified from the same npm package version before inference.
+
 The browser frontend combines the shared Micro v3 numeric normalization and
 220-character source-preserving splitter with the Klein 0.2.0 English G2P
 adaptation, its pinned lexicon and same-origin browser eSpeak fallback. These
@@ -104,6 +109,8 @@ The full-article hosted comparison ran on source `169c8560080aedb1b80c3ef919aee2
 The global full-wave comparison reported zero sample-clock mismatches, zero nonfinite pairs, correlation `0.9999005692`, RMS error `0.000801394166`, relative RMS `0.014101844`, and max absolute error `0.109308839`. The unmodified 30-second Float32 WAV prefixes were 2,880,044 bytes each: CPU/WASM SHA-256 `8b03db1083ffe01f70419c5811024c5280d3e3469f3ccc29e3ea004d65e133ae`; hybrid SHA-256 `09998cd5e460721e8db83ccf5ff497f75b78212bf27a5388bd03e53123bf0b5d`. The artifact ZIP SHA-256 was `67f85623c046ac5312889711ef2576bf48235f60e82575752a4efb4d2b3de44f`.
 
 That Actions job is marked **failed** because its post-synthesis assertion read `sampleClockMismatchedSpans` and `nonfinitePairs` from the wrong level; both fields are under `comparison.global`. Independent artifact readback confirmed the values above, but does not change the hosted job's failed status. The diagnostic script now reads the nested fields and retains explicit CPU, hybrid and all-graph-control labels. The run remains compatibility evidence, not a clean passing job or a benchmark score.
+
+The first ordinary benchmark-runner WebGPU smoke on source `28f75eb2bf84052a1a705eea682b9b6a04de17f1` also failed before synthesis in [Actions run 44524938796](https://github.com/ngelik/tts-bench/actions/runs/44524938796): the locked runtime omitted `ort.webgpu.min.mjs` and the asyncify WASM assets configured by this worker. The exact ONNX Runtime Web 1.23.2 files and hashes are now in `assets.lock.json`; that failed smoke is an integration diagnostic, not a model result.
 
 See [`web/inflect-mini-v3/NOTICE.md`](../web/inflect-mini-v3/NOTICE.md) for
 attribution and terms.
