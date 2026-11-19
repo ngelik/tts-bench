@@ -17,7 +17,9 @@ import os
 import shutil
 import subprocess
 import sys
+from contextlib import contextmanager
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 import onnx
@@ -54,6 +56,18 @@ def sha256_file(path: Path) -> str:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise RuntimeError(message)
+
+
+@contextmanager
+def fixed_source_randomness(phase_uniform: torch.Tensor, harmonic_noise: torch.Tensor):
+    """Feed the same explicit random arrays to native and exported source paths."""
+    def randn_like(value: torch.Tensor, *args, **kwargs) -> torch.Tensor:
+        if value.shape == harmonic_noise.shape and value.dtype == harmonic_noise.dtype:
+            return harmonic_noise.to(device=value.device)
+        return torch.zeros_like(value)
+
+    with patch("torch.rand", return_value=phase_uniform), patch("torch.randn_like", side_effect=randn_like):
+        yield
 
 
 def download_pinned_source(source_dir: Path) -> Path:
@@ -551,8 +565,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         phase_torch[:, 0] = 0
         noise_torch = torch.randn((1, 600 * frames, phase.shape[1]), dtype=torch.float32)
     f0_up_native = generator.f0_upsamp(predicted["F0"][:, None]).transpose(1, 2)
-    with torch.random.fork_rng(devices=[]):
-        torch.random.default_generator.manual_seed(42)
+    with fixed_source_randomness(phase_torch, noise_torch):
         native_harmonic, _, _ = generator.m_source(f0_up_native)
     native_harmonic = native_harmonic.transpose(1, 2).squeeze(1)
     exported_harmonic = waveform_graph.harmonic_source(predicted["F0"], phase_torch, noise_torch)
@@ -587,7 +600,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
         "phase_uniform": phase_torch.numpy(),
         "harmonic_noise": noise_torch.numpy(),
     })[0]
-    with torch.random.fork_rng(devices=[]):
+    with fixed_source_randomness(phase_torch, noise_torch):
         native = model.synthesize_ids(model.phoneme_ids("həˈloʊ."), VOICE, seed=42)
     require(waveform_onnx.shape == (1, 600 * frames), "ONNX waveform clock differs")
     require(np.isfinite(waveform_onnx).all() and np.max(np.abs(waveform_onnx)) < 1,
@@ -640,7 +653,7 @@ def collect_assets(source_dir: Path, output_dir: Path) -> dict:
             and np.isfinite(dynamic_excitation).all(), "Dynamic waveform graph clock is invalid")
     require(np.allclose(dynamic_f0, dynamic_native_infer["F0"].numpy(), rtol=4e-4, atol=4e-5),
             "Dynamic ONNX prosody diverges from native Mini")
-    with torch.random.fork_rng(devices=[]):
+    with fixed_source_randomness(dynamic_phase, dynamic_noise):
         dynamic_native = model.synthesize_ids(model.phoneme_ids("a" * 24), VOICE, seed=43)
     dynamic_waveform_max_error = float(np.max(np.abs(
         dynamic_excitation[0] - dynamic_native["audio"].numpy())))
