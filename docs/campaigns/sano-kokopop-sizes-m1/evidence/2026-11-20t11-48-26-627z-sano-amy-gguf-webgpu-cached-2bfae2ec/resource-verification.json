@@ -1,0 +1,65 @@
+{
+  "model": "sano-amy-gguf",
+  "backend": "webgpu",
+  "effectiveBackend": "webgpu+wasm",
+  "resultId": "2026-11-20t11-48-26-627z-sano-amy-gguf-webgpu-cached-2bfae2ec",
+  "receiptSha256": "28f630b441500535fedffb56a2d7ff6603caae32951f29292b5f3759aa20ae82",
+  "n": 1,
+  "sampleCount": 341,
+  "generationMeanRssBytes": 1719455492,
+  "articleCallPeakRssBytes": 2296512512,
+  "generationSeconds": 171.50013000011444,
+  "audioSeconds": 1312.8297052154196,
+  "sampleRate": 22050,
+  "pcmSha256": "2f590384eda19d355e0f816e8ef7a5f41e11b08f8d3395c49630e4ada14748e7",
+  "nativeFullWavSha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+  "protectedWavAudit": {
+    "wavSha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+    "bytes": 57895834,
+    "rate": 22050,
+    "samples": 28947895,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 120,
+        "samples": 536416,
+        "zeroSamples": 536416
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 19766592,
+      "endSampleExclusive": 19772217,
+      "samples": 5625,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "separateIdenticalRecordings": [
+    {
+      "recordingResultId": "2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665",
+      "recordingTrialIndex": 5,
+      "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+      "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu-full.wav",
+        "sha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+        "bytes": 57895834
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu.wav",
+        "sha256": "78b3252ac4635013d1d18f20187919be88fd2eced94b91e9419fb431bea3201d",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    }
+  ],
+  "privateTerminalSha256": "af4f5c4bed6d0bb9713bd543e0536bd0c1ae5be3732337952a05eeb5af11c511",
+  "independentReviewSha256": "f262ff8616a01765223c3f21e46bc01831931ef0a5ccb381c37611c3c0dde2f3"
+}

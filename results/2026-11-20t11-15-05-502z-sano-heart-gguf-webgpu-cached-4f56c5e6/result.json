@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-20t11-15-05-502z-sano-heart-gguf-webgpu-cached-4f56c5e6",
+  "createdAt": "2026-11-20T11:15:16.697Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+    "dirty": false,
+    "manifestSha256": "659bb701ec977ff2b4a083a9b0eeff601fe72cfafcf539084168b68b75c0a5ab"
+  },
+  "assets": [
+    {
+      "id": "runtime:sano-heart-gguf:kokopop:kokopop-runtime.js",
+      "sha256": "265aeb2be06ed0f8361cd791aa419b31379c57f59447044694df12f4d99ef8ab",
+      "bytes": 115452
+    },
+    {
+      "id": "runtime:sano-heart-gguf:kokopop:kokopop-runtime.wasm",
+      "sha256": "8033619c686c11bd737de88636f6a1145e4170d25c248cb6d16823ee25790e4a",
+      "bytes": 4170114
+    },
+    {
+      "id": "runtime:sano-heart-gguf:kokopop:kokopop-runtime.data",
+      "sha256": "525df9e3f5126afaf5b8b65626833e7850073e92ead87a39a085a9992838bca2",
+      "bytes": 880605
+    },
+    {
+      "id": "sano-heart-gguf-model",
+      "sha256": "4f2b1ca6e8f3962b3feb0b712cde68208e3a2565d34fdb6388a8e565f46bfb9d",
+      "bytes": 9375272
+    },
+    {
+      "id": "sano-heart-gguf-kokopop-kokopop-license",
+      "sha256": "d505422e7b052295783dd137c7101fd18d8077a62987a69b4ff2405e6fbcf08c",
+      "bytes": 1059
+    },
+    {
+      "id": "sano-heart-gguf-kokopop-espeak-ng-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "sano-heart-gguf-kokopop-ggml-license",
+      "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+      "bytes": 1078
+    },
+    {
+      "id": "sano-heart-gguf-kokopop-yyjson-license",
+      "sha256": "45e384d3d52c73cba3a64d6e6c25d47cd738cd8a55c30629e3201046eda62947",
+      "bytes": 1084
+    },
+    {
+      "id": "sano-heart-gguf-notice",
+      "sha256": "bfa3b698de1899f7260c86d5736e477159ac2e1ccd34bb89fccd06fecd27788f",
+      "bytes": 879
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-heart-gguf",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Individual pinned heart voice converted with Kokopop",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+          "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+          "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+        ],
+        "notes": "One selected voice; 24000 Hz. F32 GGUF from pinned Heart F32 source; Kokopop Vocos. CPU is cpu/wasm; GPU is webgpu+wasm with mandatory actual dispatch proof. Kokopop LONG_FORM normalization and internal chunking are retained. No other voices are bundled."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "precision": "F32 GGUF from pinned Heart F32 source; Kokopop Vocos.",
+      "settings": {
+        "selectedVoice": "heart",
+        "sampleRate": 24000,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop long-form preparation normalizes text and punctuation before the pinned sanoTTS Misaki/eSpeak English phoneme frontend.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "heart",
+        "sourceParameterCount": 2272145,
+        "espeakVoice": "en-us"
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "An eligible hardware WebGPU adapter was selected; ggml scheduler telemetry assigned named neural ops and GPUComputePassEncoder recorded dispatches during seeded selected-voice synthesis.",
+        "hardwareAdapter": {
+          "identity": "apple metal-3",
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": null,
+          "description": null,
+          "features": [
+            "bgra8unorm-storage",
+            "clip-distances",
+            "core-features-and-limits",
+            "depth-clip-control",
+            "depth32float-stencil8",
+            "dual-source-blending",
+            "float32-blendable",
+            "float32-filterable",
+            "indirect-first-instance",
+            "primitive-index",
+            "rg11b10ufloat-renderable",
+            "shader-f16",
+            "subgroup-size-control",
+            "subgroups",
+            "texture-component-swizzle",
+            "texture-compression-astc",
+            "texture-compression-astc-sliced-3d",
+            "texture-compression-bc",
+            "texture-compression-bc-sliced-3d",
+            "texture-compression-etc2",
+            "texture-compression-unaligned",
+            "texture-formats-tier1",
+            "texture-formats-tier2",
+            "timestamp-query"
+          ]
+        },
+        "dispatches": 480,
+        "schedulerOperations": {
+          "MUL_MAT": 84,
+          "IM2COL": 54,
+          "ADD": 130,
+          "SILU": 20
+        },
+        "probeFrames": 357536,
+        "probeSampleRate": 24000
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 5808.899999856949,
+          "samples": 31920040,
+          "sampleRate": 24000,
+          "pcmSha256": "9ae0fdaa71fad5e21f2521ea93ec3507378da585f3cf4fe79fa90cebf719328c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 171.4649999141693,
+            "firstSourceChunkCompletedMs": 171.48499989509583,
+            "audioSeconds": 1330.0016666666668,
+            "realTimeFactor": 0.0043675885116862875,
+            "minSamplesPerChunk": 269696,
+            "maxSamplesPerChunk": 438968,
+            "articleCallPeakRssBytes": 1749270528,
+            "generationMeanRssBytes": 1087790359,
+            "generationRssSampleCount": 11,
+            "loadMs": 90.73295899999994,
+            "controllerTrialElapsedMs": 9735.686791,
+            "downloadBytes": 38404,
+            "idealDownloadSecondsAt1Mbps": 0.307232
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795173307431.5552,
+            "finalPcmAtEpochMs": 1795173313240.455,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795173307969,
+                961478656
+              ],
+              [
+                1795173308472,
+                1030471680
+              ],
+              [
+                1795173308973,
+                1048363008
+              ],
+              [
+                1795173309472,
+                1064386560
+              ],
+              [
+                1795173309973,
+                1082376192
+              ],
+              [
+                1795173310477,
+                1096466432
+              ],
+              [
+                1795173310980,
+                1108967424
+              ],
+              [
+                1795173311478,
+                1123303424
+              ],
+              [
+                1795173311979,
+                1134166016
+              ],
+              [
+                1795173312483,
+                1150238720
+              ],
+              [
+                1795173312982,
+                1165475840
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "5ed6b504bd66953ac523e536197654e29e2ade8de55fcee9b11bf903cecf8966",
+            "bytes": 63840124
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-20T11-15-05-004Z-9073a82c27bd; cell 1/1; source 01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661; requested n=1; effective n=1; Separate native cached-resource diagnostic after the primary12 converted warm cells. One full English20k/93-span article, n=1 with --resources. Chrome RSS sampling belongs only to this cached run and does not alter previous warm timings. Same clean source, pinned weights/runtime/voice and actual baseline Apple M1 Pro/8cores/16GiB/headed Chrome157.0.8103.40. No cold measurement or warmup; preserve full native receipt, in-window Chrome process-tree RSS observations, effective backend and actual waveform. Require working backend and absence of any existing qualified cached measurement before admission. Native Kokopop frontend substitutions remain unchanged; see source-bound frontend-admission.json.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

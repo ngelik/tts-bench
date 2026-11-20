@@ -69,3 +69,5 @@ The first private admission stopped before model staging or synthesis because a 
 ## Reported operational context for Heart
 
 The operator reported seconds of unrelated local receipt/Markdown metadata work sometime between 07:10:36 and 07:19:58 UTC on 19 November 2026. Exact overlap with either Heart cell is unknown. No other synthesis or WAV processing was reported for that interval. Original receipts and timings are preserved without adjustment; no quantitative effect is inferred. [Bounded provenance note and exact receipt hashes](heart-operational-provenance.json).
+
+[Separate cached Chrome RSS measurements](resources.md) are recorded independently; the warm trials above are unchanged.

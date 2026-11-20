@@ -273,6 +273,13 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Inflect Mini v3 Browser Port | 137.11 | — | [1109.12](results/2026-11-19t20-24-45-805z-inflect-mini-v3-browser-port-webgpu-cached-1daec6ab/summary.md) |
 
+**RAM 23** · Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`01d9c9f5`](https://github.com/ngelik/tts-bench/commit/01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| sanoTTS Amy 1.45M (Kokopop F16/F32) | 3.24 | [1311.49](results/2026-11-20t11-28-38-392z-sano-amy-gguf-cpu-cached-93814559/summary.md) | [1719.46](results/2026-11-20t11-48-26-627z-sano-amy-gguf-webgpu-cached-2bfae2ec/summary.md) |
+| sanoTTS Heart (Kokopop F32) | 9.38 | [1066.71](results/2026-11-20t11-13-31-659z-sano-heart-gguf-cpu-cached-4b20114d/summary.md) | [1087.79](results/2026-11-20t11-15-05-502z-sano-heart-gguf-webgpu-cached-4f56c5e6/summary.md) |
+
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
 ### Voice and language support
@@ -761,6 +768,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 155 · 2026-11-20 | inflect-mini-v3-browser-port/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/summary.md) | [SVG](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/chart.svg) |
 | 156 · 2026-11-20 | sano-hfc-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10/summary.md) | [SVG](results/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10/chart.svg) |
 | 157 · 2026-11-20 | sano-kristin-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20/summary.md) | [SVG](results/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20/chart.svg) |
+| 158 · 2026-11-20 | sano-heart-gguf/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-13-31-659z-sano-heart-gguf-cpu-cached-4b20114d/summary.md) | [SVG](results/2026-11-20t11-13-31-659z-sano-heart-gguf-cpu-cached-4b20114d/chart.svg) |
+| 159 · 2026-11-20 | sano-heart-gguf/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-15-05-502z-sano-heart-gguf-webgpu-cached-4f56c5e6/summary.md) | [SVG](results/2026-11-20t11-15-05-502z-sano-heart-gguf-webgpu-cached-4f56c5e6/chart.svg) |
+| 160 · 2026-11-20 | sano-amy-gguf/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-28-38-392z-sano-amy-gguf-cpu-cached-93814559/summary.md) | [SVG](results/2026-11-20t11-28-38-392z-sano-amy-gguf-cpu-cached-93814559/chart.svg) |
+| 161 · 2026-11-20 | sano-amy-gguf/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-48-26-627z-sano-amy-gguf-webgpu-cached-2bfae2ec/summary.md) | [SVG](results/2026-11-20t11-48-26-627z-sano-amy-gguf-webgpu-cached-2bfae2ec/chart.svg) |
 
 </details>
 

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+  "conditions": "Separate native cached-resource diagnostic after the primary12 converted warm cells. One full English20k/93-span article, n=1 with --resources. Chrome RSS sampling belongs only to this cached run and does not alter previous warm timings. Same clean source, pinned weights/runtime/voice and actual baseline Apple M1 Pro/8cores/16GiB/headed Chrome157.0.8103.40. No cold measurement or warmup; preserve full native receipt, in-window Chrome process-tree RSS observations, effective backend and actual waveform. Require working backend and absence of any existing qualified cached measurement before admission. Native Kokopop frontend substitutions remain unchanged; see source-bound frontend-admission.json.",
+  "cells": [
+    {
+      "model": "sano-kristin-gguf",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 120,
+      "resources": true
+    }
+  ]
+}
