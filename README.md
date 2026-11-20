@@ -229,6 +229,7 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | SanoTTS Heart 2.27M (English, US) | 9.14 | [735.77](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | — |
 | SanoTTS HFC 1.83M (English) | 7.34 | [922.89](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/summary.md) | — |
+| SanoTTS Kristin 1.40M (English) | 5.59 | [850.11](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/summary.md) | — |
 
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
@@ -621,6 +622,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 129 · 2026-11-19 | sano-heart/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/summary.md) | [SVG](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/chart.svg) |
 | 130 · 2026-11-19 | sano-hfc/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/summary.md) | [SVG](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/chart.svg) |
 | 131 · 2026-11-20 | sano-hfc/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/summary.md) | [SVG](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/chart.svg) |
+| 132 · 2026-11-20 | sano-kristin/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/summary.md) | [SVG](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/chart.svg) |
 
 </details>
 
