@@ -6,6 +6,9 @@ import {chromium} from 'playwright-core';
 import {findChrome} from '../lib/runner.mjs';
 import {matchesAuditedWav} from '../audio/waveform-integrity.mjs';
 const expected = JSON.parse(await readFile('.cache/listening-site/assets/data.json', 'utf8'));
+const languageGroups = [expected, ...Object.values(expected.byLanguage ?? {})];
+const allLanguageModels = languageGroups.flatMap(group => group.models ?? []);
+const ukData = expected.byLanguage?.uk ?? null;
 const campaignModelIds = [
   'audio8-realistic-0.6b-int4',
   'fun-cosyvoice3-0.5b-2512',
@@ -29,6 +32,7 @@ const eligibleMemory = metric => metric?.status === 'measured' && Number.isFinit
 const hasEligibleResult = model => ['cpu','webgpu'].some(backend => eligibleWarm(model.warm[backend]) || eligibleMemory(model.memory[backend]));
 const resultModels = models => models.filter(hasEligibleResult);
 const expectedResultModels = resultModels(expected.models);
+const ukResultModels = resultModels(ukData?.models ?? []);
 const campaignResultModels = resultModels(campaignModels);
 const resultCountLabel = count => `${count} result${count === 1 ? '' : 's'}`;
 assert.ok(campaignResultModels.length > 0, 'The dashboard campaign subset includes eligible results');
@@ -41,8 +45,39 @@ const currentWaveformFault = model => ['cpu','webgpu'].some(backend => {
 });
 const expectedGeneration = (models, backend) => models.filter(model => eligibleWarm(model.warm[backend]));
 const expectedMemory = (models, backend) => models.filter(model => eligibleMemory(model.memory[backend]));
-const expectedAudioEntries = expected.models.flatMap(model => model.audio);
+const expectedAudioEntries = allLanguageModels.flatMap(model => model.audio);
 const flaggedAudioPaths = new Set(expectedAudioEntries.filter(entry => matchesAuditedWav(entry.full.sha256)).map(entry => entry.clip.path));
+const capabilityCount = value => Number.isSafeInteger(value) && value >= 1 ? value : null;
+const capabilityCodes = model => [...new Set((Array.isArray(model.support?.languages) ? model.support.languages : [])
+  .filter(code => typeof code === 'string' && code.trim()).map(code => code.trim()))];
+function matchesCapabilityRange(value, bucket, kind) {
+  if (bucket === 'all') return true;
+  if (bucket === 'unknown') return value === null;
+  if (value === null) return false;
+  if (kind === 'weight') return bucket === 'le10' ? value <= 10
+    : bucket === '10to50' ? value > 10 && value <= 50
+    : bucket === '50to200' ? value > 50 && value <= 200
+    : bucket === '200to1000' ? value > 200 && value <= 1000
+    : bucket === 'gt1000' ? value > 1000 : false;
+  if (kind === 'languages') return bucket === 'one' ? value === 1
+    : bucket === '2to5' ? value >= 2 && value <= 5
+    : bucket === '6to20' ? value >= 6 && value <= 20
+    : bucket === 'gt20' ? value > 20 : false;
+  return bucket === 'one' ? value === 1
+    : bucket === '2to10' ? value >= 2 && value <= 10
+    : bucket === '11to100' ? value >= 11 && value <= 100
+    : bucket === 'gt100' ? value > 100 : false;
+}
+function matchesCapabilityFilters(model, filters) {
+  const weight = Number.isFinite(model.modelMB) && model.modelMB >= 0 ? model.modelMB : null;
+  const languageCount = capabilityCount(model.support?.languageCount);
+  const voiceCount = capabilityCount(model.support?.voiceCount);
+  const codes = capabilityCodes(model);
+  return matchesCapabilityRange(weight, filters.weight, 'weight') &&
+    matchesCapabilityRange(languageCount, filters.languages, 'languages') &&
+    matchesCapabilityRange(voiceCount, filters.voices, 'voices') &&
+    (filters.supports === 'all' || (filters.supports === 'unlisted' ? codes.length === 0 : codes.includes(filters.supports)));
+}
 const errors = [], external = [], failedResponses = [];
 const review = '.cache/dashboard-review';
 const waveformBadge = row => row.locator('button.output-warning').filter({hasText:'Waveform fault'});
@@ -87,11 +122,19 @@ try {
   assert.ok(candidateLayout.firstResultRowTop < 650, `First result row should remain near the top; observed y=${candidateLayout.firstResultRowTop}`);
   assert.equal(await page.locator('#model-count').innerText(), String(expectedResultModels.length));
   assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length));
+  assert.equal(await page.locator('#language-en').getAttribute('aria-selected'), 'true');
+  assert.equal(await page.locator('[data-language-count="en"]').innerText(), String(expectedResultModels.length));
+  assert.ok(ukData?.fixture?.id === 'uk-article-v1', 'The built dashboard data contains the registered Ukrainian fixture');
+  assert.equal(await page.locator('[data-language-count="uk"]').innerText(), String(ukResultModels.length));
+  const ukPlayback = ukResultModels.flatMap(model => ['cpu','webgpu'].map(backend => ({model,backend,sample:model.playbackAudio?.[backend]})))
+    .find(entry => entry.sample?.language === 'uk' && !matchesAuditedWav(entry.sample.full.sha256));
   for (const model of expected.models.filter(model => !hasEligibleResult(model))) {
     assert.equal(await page.locator(`tr[data-model="${model.id}"]`).count(), 0, `${model.id} remains registered without an eligible result row`);
   }
   const visibleAbove = await page.locator('body').innerText();
   assert.doesNotMatch(visibleAbove, /PUBLISHED MEASUREMENTS|Open evidence\. Local inference\./);
+  assert.equal(await page.locator('.evidence-tag.historical').count(), 0, 'Historical status is not a visible model badge');
+  assert.equal(await page.locator('.model-sub').getByText(/Matched pair|Historical/, {exact:false}).count(), 0, 'Paired and historical labels are absent from model rows');
   let baselineLayout = null;
   if (baselineUrl) {
     const baseline = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
@@ -111,28 +154,90 @@ try {
       await baseline.screenshot({path:`${review}/baseline-desktop.png`,fullPage:true});
     } finally {await baseline.close();}
   }
-  const rankedIds = (models, value) => [...models].sort((a, b) => {
+  const rankedIds = (models, value, direction = 1) => [...models].sort((a, b) => {
     const av = value(a), bv = value(b);
-    return av == null && bv == null ? a.name.localeCompare(b.name) : av == null ? 1 : bv == null ? -1 : av - bv || a.name.localeCompare(b.name);
+    return av == null && bv == null ? a.name.localeCompare(b.name) : av == null ? 1 : bv == null ? -1 : (av - bv) * direction || a.name.localeCompare(b.name);
   }).map(model => model.id);
+  const assertRows = async models => {
+    assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)),
+      rankedIds(models, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
+  };
   const assertDefaultOrder = async () => {
     assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(expectedResultModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
     assert.equal(await page.locator('th[data-column="cpu"]').getAttribute('aria-sort'), 'ascending');
     assert.equal(await page.locator('#sort-select').inputValue(), 'cpu');
   };
   const assertChartOrder = async (models, metric) => {
-    for (const backend of metric === 'size' ? ['size'] : ['cpu', 'webgpu']) {
-      const panel = page.getByRole('region', {name: `${backend === 'size' ? 'Model size' : backend === 'cpu' ? 'CPU' : 'GPU'} chart`, exact:true});
-      const value = model => backend === 'size' ? model.modelMB : model[metric === 'generation' ? 'warm' : 'memory'][backend][metric === 'generation' ? 'medianSeconds' : 'meanMB'];
-      const eligible = backend === 'size' ? models.filter(model => hasEligibleResult(model) && Number.isFinite(model.modelMB)) : metric === 'generation' ? expectedGeneration(models, backend) : expectedMemory(models, backend);
+    const backends = metric === 'size' ? ['size'] : metric === 'coverage' ? ['languages','voices'] : ['cpu','webgpu'];
+    for (const backend of backends) {
+      const panelName = backend === 'size' ? 'Model size' : backend === 'cpu' ? 'CPU' : backend === 'webgpu' ? 'GPU' : backend === 'languages' ? 'Supported languages' : 'Supported voices';
+      const panel = page.getByRole('region', {name: `${panelName} chart`, exact:true});
+      const value = model => backend === 'size' ? model.modelMB : metric === 'coverage' ? model.support?.[backend === 'languages' ? 'languageCount' : 'voiceCount'] : model[metric === 'generation' ? 'warm' : 'memory'][backend][metric === 'generation' ? 'medianSeconds' : 'meanMB'];
+      const eligible = backend === 'size' ? models.filter(model => hasEligibleResult(model) && Number.isFinite(model.modelMB))
+        : metric === 'coverage' ? models.filter(model => capabilityCount(value(model)) !== null)
+        : metric === 'generation' ? expectedGeneration(models, backend) : expectedMemory(models, backend);
       if (metric === 'generation') {
         for (const model of eligible.filter(model => model.warm[backend].n === 1 && !model.warm[backend].selectionKind)) {
           assert.equal(await panel.locator(`.bar-row[data-model="${model.id}"] .metric-count`).innerText(), 'n=1');
         }
       }
-      assert.deepEqual(await panel.locator('.bar-row [data-detail]').evaluateAll(buttons => buttons.map(button => button.dataset.detail)), rankedIds(eligible, value));
+      assert.deepEqual(await panel.locator('.bar-row [data-detail]').evaluateAll(buttons => buttons.map(button => button.dataset.detail)), rankedIds(eligible, value, metric === 'coverage' ? -1 : 1));
     }
   };
+  await page.locator('#language-uk').click();
+  await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, ukResultModels.length);
+  assert.equal(await page.locator('#language-uk').getAttribute('aria-selected'), 'true');
+  assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), 'language-uk');
+  assert.equal(await page.locator('#fixture-language').innerText(), `${ukData.fixture.characters.toLocaleString('en-US')} Ukrainian characters`);
+  assert.equal(await page.locator('#model-count').innerText(), String(ukResultModels.length));
+  assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(ukData.models, 'cpu').length + expectedGeneration(ukData.models, 'webgpu').length));
+  await assertRows(ukResultModels);
+  const ukCapabilityCases = [
+    ['weight-filter','weight','unknown'],
+    ['language-count','languages','unknown'],
+    ['voice-count','voices','unknown'],
+    ['supported-language','supports','unlisted'],
+  ];
+  for (const [selectId,key,value] of ukCapabilityCases) {
+    await page.locator('#reset').click();
+    await page.locator(`#${selectId}`).selectOption(value);
+    const filters = {weight:'all',supports:'all',languages:'all',voices:'all',[key]:value};
+    await assertRows(ukResultModels.filter(model => matchesCapabilityFilters(model, filters)));
+    const param = { 'weight-filter':'weight','supported-language':'supports','language-count':'languages','voice-count':'voices' }[selectId];
+    assert.equal(new URL(page.url()).searchParams.get(param),value,`Ukrainian ${selectId} selection is shareable`);
+  }
+  await page.locator('#reset').click();
+  await assertRows(ukResultModels);
+  if (ukResultModels.length > 0) {
+    assert.ok(ukPlayback, 'A healthy selected Ukrainian recording is available from a measured Ukrainian configuration');
+    const ukRow = page.locator(`tr[data-model="${ukPlayback.model.id}"]`);
+    const ukPlayButton = ukRow.locator(`[data-play="${ukPlayback.model.id}"][data-backend="${ukPlayback.backend}"]`);
+    assert.equal(await ukPlayButton.count(), 1, 'The Ukrainian result row exposes its selected audio action');
+    assert.equal(await ukPlayButton.isVisible(), true);
+    await page.locator('#sample-audio').evaluate(audio => { audio.muted = true; });
+    await ukPlayButton.click();
+    await page.waitForFunction(() => {const audio=document.querySelector('#sample-audio');return audio.currentTime > .15 && !audio.paused && audio.readyState >= 2;});
+    assert.equal(await page.locator('#player-error').isVisible(), false);
+    assert.ok((await page.locator('#player-title').innerText()).includes(ukPlayback.model.name));
+    assert.ok((await page.locator('#player-caption').innerText()).includes(ukPlayback.sample.voice));
+    assert.equal(await page.locator('#sample-audio').evaluate(audio => audio.currentSrc), new URL(ukPlayback.sample.clip.path, base).href, 'The Ukrainian tab plays its registered local recording');
+    await page.locator('#close-player').click();
+    const ukDetailUrl = new URL(base);
+    ukDetailUrl.search = '';
+    ukDetailUrl.searchParams.set('lang','uk');
+    ukDetailUrl.searchParams.set('model',ukPlayback.model.id);
+    await page.goto(ukDetailUrl.href);
+    await page.waitForFunction(() => document.querySelector('dialog')?.open);
+    assert.equal(await page.locator('#detail-title').innerText(),ukPlayback.model.name,'A language-scoped Ukrainian model deep link opens the right details');
+    assert.equal(new URL(page.url()).searchParams.get('lang'),'uk');
+    await page.locator('#close-details').click();
+  } else {
+    assert.equal(await page.locator('#no-results h3').innerText(), 'No published Ukrainian results yet.');
+    assert.equal(await page.locator('#language-uk').getAttribute('aria-selected'), 'true', 'The empty Ukrainian fixture remains a selectable language tab');
+  }
+  await page.locator('#language-en').click();
+  await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, expectedResultModels.length);
+  assert.equal(await page.locator('#language-en').getAttribute('aria-selected'), 'true');
   await assertDefaultOrder();
   for (const model of expectedResultModels) {
     for (const [backend, label] of [['cpu', 'CPU'], ['webgpu', 'GPU']]) {
@@ -385,20 +490,57 @@ try {
   await page.locator('#license').selectOption('Apache-2.0');
   assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.filter(m => m.license.model === 'Apache-2.0').length);
   await page.locator('#reset').click();
-  await page.locator('#cohort').selectOption('paired');
-  assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.filter(m => m.pairedWarm).length);
-  await page.locator('#cohort').selectOption('historical');
-  const archivedModels = expectedResultModels.filter(m => ['cpu','webgpu'].some(b => m.warm[b].registration === 'archived' || m.memory[b].registration === 'archived'));
-  assert.equal(await page.locator('#model-rows tr').count(), archivedModels.length);
-  assert.equal(await page.locator('.evidence-tag.historical').count(), archivedModels.length);
-  const cohortOptions = await page.locator('#cohort option').evaluateAll(options => options.map(option => ({value:option.value,label:option.textContent})).filter(option => !['all','paired','historical'].includes(option.value)));
-  const cohorts = cohortOptions.map(option => option.value);
-  assert.ok(cohortOptions.some(option => option.label.includes('cached RAM')), 'Native cached-memory source cohorts remain filterable');
-  for (const key of cohorts) {
-    await page.locator('#cohort').selectOption(key);
-    const expectedCohortModels = expected.models.filter(model => ['cpu','webgpu'].some(backend => (eligibleWarm(model.warm[backend]) && model.warm[backend].cohortKey === key) || (eligibleMemory(model.memory[backend]) && model.memory[backend].cohortKey === key)));
-    assert.equal(await page.locator('#model-rows tr').count(), expectedCohortModels.length);
+  const expectedForCapabilities = filters => expectedResultModels.filter(model => matchesCapabilityFilters(model, filters));
+  const capabilityValues = {weight:'all',supports:'all',languages:'all',voices:'all'};
+  const filterParams = {'weight-filter':'weight','supported-language':'supports','language-count':'languages','voice-count':'voices'};
+  const assertFilterValues = async (selectId, key, values) => {
+    for (const value of values) {
+      await page.locator('#reset').click();
+      await page.locator(`#${selectId}`).selectOption(value);
+      capabilityValues[key] = value;
+      await assertRows(expectedForCapabilities(capabilityValues));
+      const queryValue = new URL(page.url()).searchParams.get(filterParams[selectId]);
+      assert.equal(queryValue, value === 'all' ? null : value, `${selectId} selection is shareable in the URL`);
+    }
+    capabilityValues[key] = 'all';
+  };
+  const expectedFilterOptions = {
+    'weight-filter':['all','le10','10to50','50to200','200to1000','gt1000','unknown'],
+    'language-count':['all','one','2to5','6to20','gt20','unknown'],
+    'voice-count':['all','one','2to10','11to100','gt100','unknown'],
+  };
+  for (const [id, values] of Object.entries(expectedFilterOptions)) {
+    assert.deepEqual(await page.locator(`#${id} option`).evaluateAll(options => options.map(option => option.value)), values);
+    assert.equal(await page.locator(`#${id}`).isVisible(), true, `${id} is visible on desktop`);
+    await assertFilterValues(id, filterParams[id], values.slice(1));
   }
+  const reportedLanguage = expectedResultModels.flatMap(capabilityCodes)[0];
+  assert.ok(reportedLanguage, 'At least one eligible configuration reports a supported language code');
+  const supportedLanguageValues = await page.locator('#supported-language option').evaluateAll(options => options.map(option => option.value));
+  assert.ok(supportedLanguageValues.includes(reportedLanguage));
+  assert.ok(supportedLanguageValues.includes('unlisted'));
+  await assertFilterValues('supported-language','supports',[reportedLanguage,'unlisted']);
+
+  // Legacy cohort URLs are ignored so they cannot silently hide eligible rows.
+  for (const oldCohort of ['paired','historical','source-cohort-v1']) {
+    const legacyCohortUrl = new URL(base);
+    legacyCohortUrl.search = '';
+    legacyCohortUrl.searchParams.set('cohort', oldCohort);
+    await page.goto(legacyCohortUrl.href);
+    await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
+    await assertRows(expectedResultModels);
+    assert.equal(new URL(page.url()).searchParams.has('cohort'), false, 'Obsolete cohort query is discarded without hiding results');
+  }
+  const scopedLegacyCohortUrl = new URL(base);
+  scopedLegacyCohortUrl.search = '';
+  scopedLegacyCohortUrl.searchParams.set('cohort','paired');
+  scopedLegacyCohortUrl.searchParams.set('weight','unknown');
+  await page.goto(scopedLegacyCohortUrl.href);
+  await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n,
+    expectedForCapabilities({...capabilityValues,weight:'unknown'}).length);
+  await assertRows(expectedForCapabilities({...capabilityValues,weight:'unknown'}));
+  assert.equal(new URL(page.url()).searchParams.has('cohort'), false);
+  assert.equal(new URL(page.url()).searchParams.get('weight'),'unknown','Capability filters survive cleanup of an old cohort parameter');
   await page.locator('#reset').click();
   await assertDefaultOrder();
   await page.locator('[data-sort="webgpu"]').click();
@@ -409,17 +551,18 @@ try {
   await page.locator('[data-sort="webgpu"]').click();
   if (unavailableGpu.length) assert.equal(await page.locator('#model-rows tr').last().getAttribute('data-model'), unavailableGpu.at(-1).id, 'Missing scores remain last even descending');
   await page.locator('[data-view="charts"]').click();
-  for (const metric of ['generation','memory','size']) {
+  for (const metric of ['generation','memory','size','coverage']) {
     await page.locator(`[data-metric="${metric}"]`).click();
     assert.equal(await page.locator('.chart-panel').count(), metric === 'size' ? 1 : 2);
-    const chartCount = metric === 'size' ? expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length : metric === 'generation' ? expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length : expectedMemory(expected.models, 'cpu').length + expectedMemory(expected.models, 'webgpu').length;
+    const chartCount = metric === 'size' ? expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length
+      : metric === 'coverage' ? expectedResultModels.filter(model => capabilityCount(model.support?.languageCount) !== null).length + expectedResultModels.filter(model => capabilityCount(model.support?.voiceCount) !== null).length
+      : metric === 'generation' ? expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length
+      : expectedMemory(expected.models, 'cpu').length + expectedMemory(expected.models, 'webgpu').length;
     assert.equal(await page.locator('.bar-row').count(), chartCount);
     assert.equal(await page.locator('#charts').evaluate(e => e.innerHTML.includes('NaN')), false);
     await assertChartOrder(expected.models, metric);
-    assert.doesNotMatch(await page.locator('#charts .bar-value').allInnerTexts().then(values => values.join(' ')), /\bHistorical\b/i);
   }
   await page.locator('[data-metric="generation"]').click();
-  await page.locator('#cohort').selectOption(cohorts.at(-1));
   await page.screenshot({path:`${review}/charts.png`,fullPage:true});
   await page.locator('#reset').click();
   await page.locator('[data-view="table"]').click();
@@ -443,26 +586,35 @@ try {
   assert.equal(await page.locator('.overview').isVisible(), false, 'Duplicate overview counters are hidden on mobile');
   assert.equal(await page.locator('#updated').isVisible(), false, 'The latest-receipt date is hidden on mobile');
   assert.equal(await page.locator('#visible-count').isVisible(), false, 'The unfiltered configuration count is not repeated');
-  assert.ok((await page.locator('h1').boundingBox()).height < 30, 'The mobile title fits on one line');
+  const mobileTitleLines = await page.locator('h1').evaluate(element => {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    return new Set([...range.getClientRects()].map(rect => Math.round(rect.top))).size;
+  });
+  assert.equal(mobileTitleLines, 1, 'The mobile title fits on one line');
   assert.ok((await page.locator('.intro-copy').boundingBox()).height < 22, 'The mobile hardware and workload baseline fits on one line');
   const filterDetails = page.locator('#filter-details');
   assert.equal(await filterDetails.evaluate(details => details.open), false, 'Less-used filters start collapsed on mobile');
   await filterDetails.locator('summary').click();
   assert.equal(await filterDetails.evaluate(details => details.open), true, 'The Filters disclosure opens accessibly');
-  mobileFilterWidths = await page.evaluate(() => Object.fromEntries(['cohort','license'].map(id => {
+  mobileFilterWidths = await page.evaluate(() => Object.fromEntries(['weight-filter','supported-language','language-count','voice-count','license'].map(id => {
     const control = document.querySelector('#' + id), field = control.parentElement;
     return [id,{field:Math.round(field.getBoundingClientRect().width),control:Math.round(control.getBoundingClientRect().width)}];
   })));
-  assert.ok(mobileFilterWidths.cohort.control > 100, `Mobile evidence selector stays usable: ${JSON.stringify(mobileFilterWidths.cohort)}`);
-  assert.ok(mobileFilterWidths.license.control > 100, `Mobile license selector stays usable: ${JSON.stringify(mobileFilterWidths.license)}`);
+  for (const [id,size] of Object.entries(mobileFilterWidths)) assert.ok(size.control > 100, `Mobile ${id} stays usable: ${JSON.stringify(size)}`);
   await filterDetails.locator('summary').click();
   await page.locator('#sort-select').selectOption('cpu');
   assert.equal(await page.locator('#model-rows tr').first().getAttribute('data-model'), expectedGeneration(expectedResultModels, 'cpu').sort((a,b)=>a.warm.cpu.medianSeconds-b.warm.cpu.medianSeconds)[0].id);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.evaluate(() => {window.scrollTo(0,0);document.activeElement?.blur();});
-  const firstAudioCell = await page.locator('#model-rows tr').first().locator('td[data-label="Listen · 30s"]').boundingBox();
-  assert.ok(firstAudioCell && firstAudioCell.y + firstAudioCell.height <= 844, `The first result and its listen controls fit the initial mobile viewport: ${JSON.stringify(firstAudioCell)}`);
-  const mobileDefaultLayout = {firstAudioCellBottom:Math.round(firstAudioCell.y + firstAudioCell.height),viewportHeight:844};
+  const firstAudioCellLocator = page.locator('#model-rows tr').first().locator('td[data-label="Listen · 30s"]');
+  const initialFirstAudioCell = await firstAudioCellLocator.boundingBox();
+  await firstAudioCellLocator.scrollIntoViewIfNeeded();
+  const firstAudioCell = await firstAudioCellLocator.boundingBox();
+  assert.ok(firstAudioCell && firstAudioCell.y >= 0 && firstAudioCell.y + firstAudioCell.height <= 844,
+    `The first result's listen controls are reachable in the 390px mobile layout: ${JSON.stringify(firstAudioCell)}`);
+  assert.equal(await firstAudioCellLocator.locator('[data-play]').first().isVisible(), true);
+  const mobileDefaultLayout = {initialAudioCellTop:Math.round(initialFirstAudioCell.y),scrolledAudioCellBottom:Math.round(firstAudioCell.y + firstAudioCell.height),viewportHeight:844};
   await page.screenshot({path:`${review}/mobile.png`,fullPage:true});
   await page.evaluate(() => scrollTo(0, 0));
   await page.screenshot({path:`${review}/mobile-viewport.png`});
@@ -512,6 +664,13 @@ try {
     currentRecordingFault.name = 'Synthetic current recording waveform fault';
     currentRecordingFault.pairedWarm = false;
     currentRecordingFault.playbackAudio.webgpu = {...structuredClone(archivedAudio8Fault),resultId:currentRecordingFault.memory.webgpu.resultId,matchesSelectedMemory:true};
+    const unknownCapabilities = structuredClone(expected.models[0]);
+    unknownCapabilities.id = 'synthetic-unknown-capabilities';
+    unknownCapabilities.name = 'Synthetic unknown capabilities';
+    unknownCapabilities.modelMB = null;
+    delete unknownCapabilities.support;
+    unknownCapabilities.audio = [];
+    unknownCapabilities.playbackAudio = {cpu:null,webgpu:null};
     const synthetic = structuredClone(expected.models[0]);
     synthetic.id = 'synthetic-no-eligible-result';
     synthetic.name = 'Synthetic no-result configuration';
@@ -522,13 +681,30 @@ try {
     synthetic.memory.webgpu = {...synthetic.memory.webgpu,status:'error',meanMB:null,reason:'Synthetic pending only'};
     synthetic.audio = [];
     synthetic.playbackAudio = {cpu:null,webgpu:null};
-    syntheticData.models.push(archivedOnly,currentFault,currentRecordingFault,synthetic);
+    syntheticData.models.push(archivedOnly,currentFault,currentRecordingFault,unknownCapabilities,synthetic);
     await syntheticPage.route('**/assets/data.json*', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
     await syntheticPage.goto(base);
-    const syntheticVisibleCount = expectedResultModels.length + 3;
+    const syntheticVisibleCount = expectedResultModels.length + 4;
     await syntheticPage.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, syntheticVisibleCount);
     assert.equal(await syntheticPage.locator('#model-count').innerText(), String(syntheticVisibleCount), 'A model with only error, unsupported and fault-only data is excluded from result counts');
     assert.equal(await syntheticPage.locator('#model-rows tr[data-model="synthetic-no-eligible-result"]').count(), 0);
+    const unknownRow = syntheticPage.locator('tr[data-model="synthetic-unknown-capabilities"]');
+    assert.equal(await unknownRow.count(), 1, 'A measured model with unknown capability metadata remains visible');
+    assert.match(await unknownRow.locator('.capability-counts').innerText(), /Languages not specified · Voices not specified/);
+    assert.equal(await unknownRow.locator('.capability-languages').innerText(), 'Languages not listed');
+    for (const [selectId,key,value] of [
+      ['weight-filter','weight','unknown'],['language-count','languages','unknown'],
+      ['voice-count','voices','unknown'],['supported-language','supports','unlisted'],
+    ]) {
+      await syntheticPage.locator('#reset').click();
+      await syntheticPage.locator(`#${selectId}`).selectOption(value);
+      const filters={weight:'all',supports:'all',languages:'all',voices:'all',[key]:value};
+      const syntheticVisibleModels=[...expectedResultModels,archivedOnly,currentFault,currentRecordingFault,unknownCapabilities]
+        .filter(model=>matchesCapabilityFilters(model,filters));
+      assert.deepEqual(await syntheticPage.locator('#model-rows tr').evaluateAll(rows=>rows.map(row=>row.dataset.model)),rankedIds(syntheticVisibleModels,model=>eligibleWarm(model.warm.cpu)?model.warm.cpu.medianSeconds:null),`${selectId} includes the explicitly unspecified model`);
+      assert.ok(syntheticVisibleModels.some(model=>model.id==='synthetic-unknown-capabilities'));
+    }
+    await syntheticPage.locator('#reset').click();
     const archivedOnlyRow = syntheticPage.locator('tr[data-model="synthetic-archived-waveform-only"]');
     assert.equal(await waveformBadge(archivedOnlyRow).count(),0,'A historical fault is not presented as a current output warning');
     assert.equal(await archivedOnlyRow.locator('[data-play][data-backend="webgpu"]').count(),1,'The healthy selected replacement remains playable');
@@ -540,7 +716,7 @@ try {
     assert.equal(await currentRecordingFaultRow.locator('[data-play][data-backend="webgpu"]').count(),0,'Faulted current playback stays behind diagnostic opt-in');
     await syntheticPage.locator('[data-view="charts"]').click();
     await syntheticPage.locator('[data-metric="size"]').click();
-    const syntheticSizeCount = expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length + [archivedOnly,currentFault,currentRecordingFault].filter(model => Number.isFinite(model.modelMB)).length;
+    const syntheticSizeCount = expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length + [archivedOnly,currentFault,currentRecordingFault,unknownCapabilities].filter(model => Number.isFinite(model.modelMB)).length;
     assert.equal(await syntheticPage.locator('#charts .bar-row').count(), syntheticSizeCount, 'A downloaded weight alone does not add a model to size ranking');
     assert.equal(await syntheticPage.locator('#charts [data-detail="synthetic-no-eligible-result"]').count(), 0);
     await syntheticPage.goto(new URL('?models=synthetic-no-eligible-result',base).href);
@@ -553,13 +729,36 @@ try {
 
   const audioUrl = new URL('audio/', base);
   await page.goto(audioUrl.href);
-  const selectedPaths = new Set(expected.models.flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio[backend]?.clip.path).filter(Boolean)));
+  const selectedPaths = new Set(allLanguageModels.flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio[backend]?.clip.path).filter(Boolean)));
   const selectedHealthy = [...selectedPaths].filter(path => !flaggedAudioPaths.has(path));
   const audio8DiagnosticEntry = expectedAudioEntries.find(entry => entry.model === 'audio8-realistic-0.6b-int4' && entry.backend === 'webgpu' && matchesAuditedWav(entry.full.sha256));
   assert.equal(audio8DiagnosticEntry?.clip.path, audio8ArchivedFault.clip.path, 'The old Audio8 fault remains available in the diagnostic recording set');
+  assert.ok((await page.locator('#show-all').innerText()).includes(`Show all ${expectedAudioEntries.length} clips`), 'Listening-room total includes every registered language');
+  assert.ok((await page.locator('#status').innerText()).includes(`${expectedAudioEntries.length} clips published`), 'Listening-room status total includes data.byLanguage.uk recordings');
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, selectedHealthy.length);
   const defaultAudioPaths = await page.locator('#samples .audio-card').evaluateAll(cards => cards.map(card => `audio/samples/${card.dataset.sample}`));
   assert.deepEqual(new Set(defaultAudioPaths), new Set(selectedHealthy), 'The default listening page shows one healthy selected example per configuration/backend');
+  const ukAudioEntries = (ukData?.models ?? []).flatMap(model => model.audio);
+  const ukSelectedEntries = (ukData?.models ?? []).flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio?.[backend]).filter(Boolean));
+  const ukSelectedHealthy = ukSelectedEntries.filter(entry => !matchesAuditedWav(entry.full.sha256));
+  if (ukResultModels.length > 0) {
+    assert.ok(ukAudioEntries.some(entry => entry.language === 'uk'), 'The listening room catalog contains actual Ukrainian recordings');
+    assert.ok(ukSelectedHealthy.length > 0);
+    for (const entry of ukSelectedHealthy) {
+      const card = page.locator(`#samples .audio-card[data-sample="${entry.clip.path.split('/').at(-1)}"]`);
+      assert.equal(await card.count(), 1, 'Each selected Ukrainian clip is listed in the default listening room');
+      assert.ok((await card.locator('.audio-meta').innerText()).includes('Ukrainian'));
+    }
+    const ukEntry = ukSelectedHealthy[0];
+    const ukCard = page.locator(`#samples .audio-card[data-sample="${ukEntry.clip.path.split('/').at(-1)}"]`);
+    const ukAudioControl = ukCard.locator('audio');
+    await ukAudioControl.evaluate(audio => { audio.muted = true; });
+    await ukAudioControl.evaluate(async audio => { await audio.play(); });
+    await page.waitForFunction(selector => {const audio=document.querySelector(selector);return audio && audio.currentTime>.15 && !audio.paused && audio.readyState>=2;},
+      `#samples .audio-card[data-sample="${ukEntry.clip.path.split('/').at(-1)}"] audio`);
+    assert.equal(await ukAudioControl.evaluate(audio => new URL(audio.getAttribute('src'),document.baseURI).pathname), new URL(`../${ukEntry.clip.path}`,audioUrl).pathname);
+    await ukAudioControl.evaluate(audio => audio.pause());
+  }
   assert.equal(await page.locator('#samples .diagnostic-note').count(), 0);
   assert.equal(await page.locator('#samples details[open]').count(), 0, 'Attribution and receipt details start collapsed');
   if (audio8DiagnosticEntry) assert.equal(await page.locator(`#samples .audio-card[data-sample="${audio8DiagnosticEntry.clip.path.split('/').at(-1)}"]`).count(), 0, 'The faulted Audio8 GPU recording is excluded from default playback');

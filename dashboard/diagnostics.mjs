@@ -34,7 +34,7 @@ function group(section, rows, models) {
   const titleId = 'input-' + rows[0].input + '-' + cohort;
   title.id = titleId;
   article.append(title, element('div', section.characters + ' characters · ' +
-    ({matched:'Matched CPU and WebGPU runs',individual:'Individual measurement',development:'Development probes'}[cohort]), 'input-meta'));
+    ({matched:'CPU and WebGPU measurements',individual:'Individual measurement',development:'Development probes'}[cohort]), 'input-meta'));
   const inputDetails = element('details', undefined, 'input-details');
   inputDetails.append(element('summary', 'Input passage & notes'));
   inputDetails.append(element('blockquote', section.text.trim()));

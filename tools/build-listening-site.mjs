@@ -23,7 +23,8 @@ async function sha256File(file) {
 }
 
 const data=await buildDashboardData();
-const clips=new Set(data.models.flatMap(model=>model.audio.map(entry=>entry.clip.path)));
+const rows = [...data.models, ...Object.values(data.byLanguage).flatMap(group => group.models)];
+const clips=new Set(rows.flatMap(model=>model.audio.map(entry=>entry.clip.path)));
 const out=resolve('.cache/listening-site');
 // This dedicated generated directory never contains model assets or raw runs.
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
@@ -55,4 +56,4 @@ for (const file of outputFiles) {
   if (next.includes(SITE_VERSION_TOKEN)) throw new Error(`Unstamped site version token in ${file.relative}`);
   if (next!==current) await writeFile(file.full,next);
 }
-console.log(`Built benchmark dashboard: ${data.models.length} models, ${clips.size} verified recordings, deployment ${version} in .cache/listening-site`);
+console.log(`Built benchmark dashboard: ${new Set(rows.map(row => row.id)).size} models, ${clips.size} verified recordings, deployment ${version} in .cache/listening-site`);

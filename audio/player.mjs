@@ -26,7 +26,8 @@ function shortName(url) {
 try {
   const response = await fetch(`../assets/data.json?v=${siteVersion}`);
   if (!response.ok) throw new Error('Published audio data unavailable');
-  const {models} = await response.json();
+  const catalog = await response.json();
+  const models = [...catalog.models, ...Object.values(catalog.byLanguage ?? {}).flatMap(group => group.models)];
   const entries = models.flatMap(model => model.audio);
   const byPath = new Map(entries.map(entry => [entry.clip.path, entry]));
   const selectedEntries = [...new Map(models.flatMap(model => ['cpu', 'webgpu']
@@ -39,7 +40,7 @@ try {
   let showAll = new URL(location.href).searchParams.get('all') === '1';
   const params = new URL(location.href).searchParams;
 
-  for (const model of models) {
+  for (const model of new Map(models.map(row => [row.id, row])).values()) {
     const option = document.createElement('option');
     option.value = model.id;
     option.textContent = model.name;
@@ -107,7 +108,7 @@ try {
     meta.className = 'audio-meta';
     const relation = entry.matchesSelectedWarm ? 'selected timing run' : entry.matchesSelectedMemory ? 'selected RAM run' : 'separate run';
     const sourceType = entry.scenario === 'cached' ? 'Cached audio' : 'Warm audio';
-    meta.textContent = `${sourceType} · repetition ${entry.trialIndex} · ${relation}`;
+    meta.textContent = `${new Intl.DisplayNames(['en'], {type: 'language'}).of(entry.language)} · ${sourceType} · repetition ${entry.trialIndex} · ${relation}`;
     const audio = document.createElement('audio');
     audio.controls = true;
     audio.preload = 'none';

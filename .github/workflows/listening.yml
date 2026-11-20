@@ -5,6 +5,7 @@ on:
     paths:
       - 'audio/**'
       - 'dashboard/**'
+      - 'fixtures/**'
       - 'diagnostics/**'
       - 'docs/campaigns/*/plan.json'
       - 'results/**'
