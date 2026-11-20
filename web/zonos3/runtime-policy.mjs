@@ -32,6 +32,8 @@ export const ZONOS3_MODEL_CONFIG = Object.freeze({
     streamDecode: 'prefix; decode after one codebook for the first prefix only',
   }),
   cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v3',
+  // Keep the registered GGML count explicit and separate from the Emscripten pool.
+  cpuThreads: 1,
   cpuRuntimeFiles: Object.freeze({
     jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.js',
     wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.wasm',
