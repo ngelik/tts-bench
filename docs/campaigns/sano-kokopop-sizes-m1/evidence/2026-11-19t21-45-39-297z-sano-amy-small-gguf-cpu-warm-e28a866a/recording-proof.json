@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a",
+  "receiptSha256": "993b98ad000f005cc60cb4b35fe470166d335c6ec3063a7b8becb1f56b53ede6",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+    "bytes": 58720218,
+    "rate": 22050,
+    "samples": 29360087,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 120,
+        "samples": 536259,
+        "zeroSamples": 536259
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 6422959,
+      "endSampleExclusive": 6428582,
+      "samples": 5623,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "d4b502f6f518654a78e2de081db88033b830e47542fba222fd305c099ea07919",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 56821,
+    "started": 1795124729.466966
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu-full.wav",
+    "sha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+    "bytes": 58720218
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu.wav",
+    "sha256": "d4b502f6f518654a78e2de081db88033b830e47542fba222fd305c099ea07919",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/result.json",
+  "privateTerminalSha256": "1bb90daee281b065052f0fd5b3980b1d43b7083ace06ae4e08bdc39934aebfad",
+  "independentReviewSha256": "589c8fe52f0db733175c3e52948bce4ed897b09ca305230ff69edb08e43e43bd"
+}
