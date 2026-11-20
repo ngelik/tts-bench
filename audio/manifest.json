@@ -461,6 +461,62 @@
       }
     },
     {
+      "resultId": "2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d",
+      "model": "inflect-mini-v3-browser-port",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank; browser-port profile)",
+      "language": "en",
+      "attribution": "Inflect Mini v3 Browser Port",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/core/baseline/models/mini/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d--inflect-mini-v3-browser-port--cpu.wav",
+        "sha256": "f2b00ff538f61202638c9cb1a404c197d3cd2b3d549b84affcb7914cc588773b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d--inflect-mini-v3-browser-port--cpu-full.wav",
+        "sha256": "2f164834ae7ffd663dacc86466456f4080a8f5a0e6be6c6f2d7cfaba8b5c50f2",
+        "bytes": 63269084
+      }
+    },
+    {
+      "resultId": "2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4",
+      "model": "inflect-mini-v3-browser-port",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank; browser-port profile)",
+      "language": "en",
+      "attribution": "Inflect Mini v3 Browser Port",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/core/baseline/models/mini/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4--inflect-mini-v3-browser-port--webgpu.wav",
+        "sha256": "e201e2327bcf31e03c855bf3ad3a92773beaef8a47c992d8c64ca2abd830c387",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4--inflect-mini-v3-browser-port--webgpu-full.wav",
+        "sha256": "c1c2483114124107918e140d97df3cc735eed40c6951aace72a737b55b246fdd",
+        "bytes": 63269084
+      }
+    },
+    {
       "resultId": "2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636",
       "model": "kitten-nano-0.8",
       "backend": "cpu",

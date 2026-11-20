@@ -114,3 +114,17 @@ The first ordinary benchmark-runner WebGPU smoke on source `28f75eb2bf84052a1a70
 
 See [`web/inflect-mini-v3/NOTICE.md`](../web/inflect-mini-v3/NOTICE.md) for
 attribution and terms.
+
+## Native M1 published measurements
+
+The results are published in two separate source cohorts: [CPU/WASM warm + cached report](../reports/inflect-mini-v3-cpu-native/overview.md) uses source 3aa0b423b8ba6c36fea0b6ab2db2c046bfb57c49; [scoped WebGPU hybrid warm + cached report](../reports/inflect-mini-v3-webgpu-hybrid/overview.md) uses source c1ec07c3555ab43926a5fdc9213f46f3357065ed. Both use the same pinned 34,310,790-parameter FP32 browser-port graphs, Cassidy speaker 2, 24 kHz and the 20,000-character/93-span fixture, but the source revisions differ, so no CPU/GPU speedup is calculated.
+
+The CPU/WASM warm cell has one excluded full-article warm-up and five scored articles: median 2,398.298 s, range 2,397.787–2,415.964 s; median first PCM 24,205.85 ms. Its separate cached resource observation took 2,365.977 s and sampled mean Chrome process-tree RSS 1,136.974 MB across 4714 in-window samples (n=1). An unrelated local audio manifest check overlapped that cached resource run for about 77 seconds; the native measurement is retained without adjustment and is not used as the warm score.
+
+The registered WebGPU mode is a scoped hybrid: the duration graph dispatched on WebGPU with WASM fallback; text-bridge and waveform graphs use explicit WASM, while source excitation/STFT use CPU DSP. Its warm cell has one excluded full-article warm-up and five scored articles: median 2,342.302 s, range 2,341.745–2,342.895 s; median first PCM 23,665.47 ms. The separate cached observation took 2,361.317 s and sampled mean Chrome process-tree RSS 1,109.124 MB across 4704 in-window samples (n=1). The warm probe recorded 722 WebGPU compute dispatches.
+
+During scored WebGPU warm trial 3 (2,342.895345 s), local result publication overlapped for roughly 03:19–03:29 UTC. It generated small JSON/report files, read and hash-verified the completed CPU warm WAV to create its exact 30-second clip, checked registered local clips, and uploaded the CPU warm WAV. No synthesis or additional Chrome session was launched. Exact subtask timestamps were not recorded; trial 3 remains unadjusted and its raw receipt is unchanged.
+
+An independent offline Whisper Base Q5_1 spot check sampled 15-second windows from the CPU cached WAV (2026-11-19t14-44-23-057z-inflect-mini-v3-browser-port-cpu-cached-fcce4af1, SHA-256 2f164834ae7ffd663dacc86466456f4080a8f5a0e6be6c6f2d7cfaba8b5c50f2). It found ordinary speech at the beginning, middle and end; the longest normalized consecutive-word matches were 39, 36 and 24 words respectively. The windows are approximate locations rather than exact chunk boundaries. This is limited spot evidence, not human listening or article WER.
+
+A prior physical WebGPU cached attempt failed before inference because the score checkout's public asset cache resolved outside the server's permitted root; the cache was localized and a loopback URL smoke passed before the successful retry. That setup failure does not establish model or backend incompatibility. The strict native waveform parity checks above remain failed; the published scores are for this separately named browser-port configuration.
