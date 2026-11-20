@@ -905,6 +905,71 @@
         "samples": 661500,
         "seconds": 30
       }
+    },
+    {
+      "model": "sano-hfc-gguf",
+      "backend": "cpu",
+      "resultId": "2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10",
+      "receiptSha256": "cd535900e5881a3d29c086ba2b48becd72113722ff9d8b1ee27d2b465e7c32f3",
+      "n": 5,
+      "excludedWarmups": 1,
+      "medianSeconds": 901.1694449999333,
+      "minSeconds": 901.1067000000477,
+      "maxSeconds": 901.3194850001336,
+      "firstPcmMedianMs": 10173.81500005722,
+      "sampleRate": 22050,
+      "generationSeconds": [
+        901.3194850001336,
+        901.2663550000191,
+        901.1067000000477,
+        901.1694449999333,
+        901.1581700000763
+      ],
+      "effectiveBackend": "cpu/wasm",
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Explicit CPU/WASM mode of the same Kokopop runtime and selected locked Sano GGUF."
+      },
+      "settings": {
+        "selectedVoice": "hfc",
+        "sampleRate": 22050,
+        "speed": 1,
+        "seed": "Base seed = 42 + zero-based canonical span ID (uint32); Kokopop derives internal long-form chunk seeds.",
+        "textInput": "Harness passes each raw canonical span to Kokopop LONG_FORM synthesis without pre-splitting it.",
+        "textNormalization": "Kokopop LONG_FORM normalizes text, then the pinned Piper eSpeak/NFD frontend emits phoneme IDs with interleaved PAD.",
+        "internalLongFormChunking": "Kokopop chunks to the voice-adjusted model token budget; it may trim/crossfade chunks and insert pauses.",
+        "streamDecode": "Offline synthesis returns PCM after Kokopop collects the internally generated long-form chunks.",
+        "runtime": "kokopop-sano-heartnano-v1",
+        "espeakLanguageData": "English data from the matching Kokopop bundle; selected upstream eSpeak voice en-us",
+        "sourcePackage": "hfc-en-1p8m",
+        "sourceParameterCount": 1834380,
+        "espeakVoice": "en-us"
+      },
+      "environment": {
+        "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+        "os": "Darwin 25.6.0",
+        "arch": "arm64",
+        "cpu": "Apple M1 Pro",
+        "logicalCores": 8,
+        "ramBytes": 17179869184,
+        "chromeVersion": "Google Chrome 157.0.8103.40",
+        "gpu": null,
+        "headless": false
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu-full.wav",
+        "sha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+        "bytes": 46410838
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu.wav",
+        "sha256": "42d6d0c9183befe94d0fd97b28e7c8f1b8f8654f5bd517e72f85b48205e48c41",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
     }
   ],
   "plannedCells": 12,
