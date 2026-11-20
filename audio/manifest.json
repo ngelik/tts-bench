@@ -2907,6 +2907,66 @@
       }
     },
     {
+      "resultId": "2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700",
+      "model": "zonos3-mini",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Imogen (English, British female)",
+      "language": "en",
+      "attribution": "ZONOS3-Mini (Imogen)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700--zonos3-mini--cpu.wav",
+        "sha256": "84d01030c14b101b1b4af1ee09cecee86d39b072f09838e8d156c10e832ff5a5",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700--zonos3-mini--cpu-full.wav",
+        "sha256": "e11b30b30aabd7ecda7b24df1ca21dded869174998ca98261339d5aad2a1a603",
+        "bytes": 113525204
+      }
+    },
+    {
+      "resultId": "2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f",
+      "model": "zonos3-mini",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Imogen (English, British female)",
+      "language": "en",
+      "attribution": "ZONOS3-Mini (Imogen)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f--zonos3-mini--cpu.wav",
+        "sha256": "84d01030c14b101b1b4af1ee09cecee86d39b072f09838e8d156c10e832ff5a5",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f--zonos3-mini--cpu-full.wav",
+        "sha256": "e11b30b30aabd7ecda7b24df1ca21dded869174998ca98261339d5aad2a1a603",
+        "bytes": 113525204
+      }
+    },
+    {
       "resultId": "2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772",
       "model": "zonos3-mini",
       "backend": "webgpu",
