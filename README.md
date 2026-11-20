@@ -281,6 +281,9 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 | sanoTTS Amy 1.45M (Kokopop F16/F32) | 3.24 | [1311.49](results/2026-11-20t11-28-38-392z-sano-amy-gguf-cpu-cached-93814559/summary.md) | [1719.46](results/2026-11-20t11-48-26-627z-sano-amy-gguf-webgpu-cached-2bfae2ec/summary.md) |
 | sanoTTS Amy small (Kokopop F16/F32) | 2.49 | [1233.33](results/2026-11-20t11-56-16-736z-sano-amy-small-gguf-cpu-cached-8ed20ff7/summary.md) | [1765.19](results/2026-11-20t12-11-40-215z-sano-amy-small-gguf-webgpu-cached-6366cda4/summary.md) |
 | sanoTTS Heart (Kokopop F32) | 9.38 | [1066.71](results/2026-11-20t11-13-31-659z-sano-heart-gguf-cpu-cached-4b20114d/summary.md) | [1087.79](results/2026-11-20t11-15-05-502z-sano-heart-gguf-webgpu-cached-4f56c5e6/summary.md) |
+| sanoTTS heart-nano 294k (Kokopop F32) | 1.46 | [1037.36](results/2026-11-20t14-28-12-714z-sano-heart-nano-gguf-f32-cpu-cached-d4f0b122/summary.md) | [1068.82](results/2026-11-20t14-28-42-585z-sano-heart-nano-gguf-f32-webgpu-cached-2e67019f/summary.md) |
+| sanoTTS HFC (Kokopop F16/F32) | 4.01 | [1324.27](results/2026-11-20t13-48-44-853z-sano-hfc-gguf-cpu-cached-42b2bb60/summary.md) | [1751.92](results/2026-11-20t14-04-43-133z-sano-hfc-gguf-webgpu-cached-54adeaeb/summary.md) |
+| sanoTTS Kristin (Kokopop F16/F32) | 3.12 | [1159.06](results/2026-11-20t14-07-22-110z-sano-kristin-gguf-cpu-cached-2680b64b/summary.md) | [1878.49](results/2026-11-20t14-25-16-804z-sano-kristin-gguf-webgpu-cached-9bc5cbe1/summary.md) |
 
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
@@ -778,6 +781,12 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 163 · 2026-11-20 | sano-amy-small-gguf/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t12-11-40-215z-sano-amy-small-gguf-webgpu-cached-6366cda4/summary.md) | [SVG](results/2026-11-20t12-11-40-215z-sano-amy-small-gguf-webgpu-cached-6366cda4/chart.svg) |
 | 164 · 2026-11-20 | sano-amy-1p8m-gguf/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t12-24-52-820z-sano-amy-1p8m-gguf-cpu-cached-6661f50b/summary.md) | [SVG](results/2026-11-20t12-24-52-820z-sano-amy-1p8m-gguf-cpu-cached-6661f50b/chart.svg) |
 | 165 · 2026-11-20 | sano-amy-1p8m-gguf/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t13-45-35-048z-sano-amy-1p8m-gguf-webgpu-cached-41ff0a84/summary.md) | [SVG](results/2026-11-20t13-45-35-048z-sano-amy-1p8m-gguf-webgpu-cached-41ff0a84/chart.svg) |
+| 166 · 2026-11-20 | sano-hfc-gguf/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t13-48-44-853z-sano-hfc-gguf-cpu-cached-42b2bb60/summary.md) | [SVG](results/2026-11-20t13-48-44-853z-sano-hfc-gguf-cpu-cached-42b2bb60/chart.svg) |
+| 167 · 2026-11-20 | sano-hfc-gguf/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-04-43-133z-sano-hfc-gguf-webgpu-cached-54adeaeb/summary.md) | [SVG](results/2026-11-20t14-04-43-133z-sano-hfc-gguf-webgpu-cached-54adeaeb/chart.svg) |
+| 168 · 2026-11-20 | sano-kristin-gguf/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-07-22-110z-sano-kristin-gguf-cpu-cached-2680b64b/summary.md) | [SVG](results/2026-11-20t14-07-22-110z-sano-kristin-gguf-cpu-cached-2680b64b/chart.svg) |
+| 169 · 2026-11-20 | sano-kristin-gguf/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-25-16-804z-sano-kristin-gguf-webgpu-cached-9bc5cbe1/summary.md) | [SVG](results/2026-11-20t14-25-16-804z-sano-kristin-gguf-webgpu-cached-9bc5cbe1/chart.svg) |
+| 170 · 2026-11-20 | sano-heart-nano-gguf-f32/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-28-12-714z-sano-heart-nano-gguf-f32-cpu-cached-d4f0b122/summary.md) | [SVG](results/2026-11-20t14-28-12-714z-sano-heart-nano-gguf-f32-cpu-cached-d4f0b122/chart.svg) |
+| 171 · 2026-11-20 | sano-heart-nano-gguf-f32/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-28-42-585z-sano-heart-nano-gguf-f32-webgpu-cached-2e67019f/summary.md) | [SVG](results/2026-11-20t14-28-42-585z-sano-heart-nano-gguf-f32-webgpu-cached-2e67019f/chart.svg) |
 
 </details>
 
