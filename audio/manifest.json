@@ -2267,6 +2267,35 @@
       }
     },
     {
+      "resultId": "2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20",
+      "model": "sano-kristin-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "kristin (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Kristin (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu.wav",
+        "sha256": "49ff0dcafe77d067d267e4bc25d14f2b157c98bb37e02571cf56e89965738c74",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu-full.wav",
+        "sha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+        "bytes": 51823968
+      }
+    },
+    {
       "resultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
       "model": "sano-kristin-gguf",
       "backend": "webgpu",

@@ -15,7 +15,7 @@ Each warm run starts with one excluded 20,000-character article (93 chunks). Eac
 | sanoTTS Amy small (Kokopop F16/F32) | 831.37 s (831.32–831.85; n=5) | 141.77 s (141.59–142.54; n=5) | 9550.88 ms (n=5) | 1658.25 ms (n=5) | 1331.52 s / 0.624 | 1331.51 s / 0.106 |
 | sanoTTS Heart (Kokopop F32) | 39.17 s (39.08–39.36; n=5) | 6.06 s (6.03–6.13; n=5) | 439.80 ms (n=5) | 81.58 ms (n=5) | 1330.01 s / 0.029 | 1330.00 s / 0.005 |
 | sanoTTS HFC (Kokopop F16/F32) | 901.17 s (901.11–901.32; n=5) | 140.06 s (139.12–140.57; n=5) | 10173.82 ms (n=5) | 1609.92 ms (n=5) | 1052.40 s / 0.856 | 1052.41 s / 0.133 |
-| sanoTTS Kristin (Kokopop F16/F32) | Not submitted | 157.80 s (156.04–159.41; n=5) | Not submitted | 1891.10 ms (n=5) | Not submitted | 1175.16 s / 0.134 |
+| sanoTTS Kristin (Kokopop F16/F32) | 1015.97 s (1014.57–1017.93; n=5) | 157.80 s (156.04–159.41; n=5) | 12093.97 ms (n=5) | 1891.10 ms (n=5) | 1175.15 s / 0.865 | 1175.16 s / 0.134 |
 
 ## Resource diagnostics
 
@@ -41,7 +41,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 | sanoTTS Amy small (Kokopop F16/F32) | [Report](../../results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/summary.md) | [Report](../../results/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-small-gguf) | [Terms](../../docs/LICENSING.md) |
 | sanoTTS Heart (Kokopop F32) | [Report](../../results/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0/summary.md) | [Report](../../results/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-heart-gguf) | [Terms](../../docs/LICENSING.md) |
 | sanoTTS HFC (Kokopop F16/F32) | [Report](../../results/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10/summary.md) | [Report](../../results/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-hfc-gguf) | [Terms](../../docs/LICENSING.md) |
-| sanoTTS Kristin (Kokopop F16/F32) | Not submitted | [Report](../../results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-kristin-gguf) | [Terms](../../docs/LICENSING.md) |
+| sanoTTS Kristin (Kokopop F16/F32) | [Report](../../results/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20/summary.md) | [Report](../../results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/summary.md) | Not submitted | Not submitted | [Support details](../../docs/MODEL_SUPPORT.md#sano-kristin-gguf) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
