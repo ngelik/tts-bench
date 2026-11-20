@@ -386,8 +386,12 @@ function render() {
   const fixtureUrl = fixtureLink(), fixtureAnchor = $('#fixture-link');
   fixtureAnchor.hidden = !fixtureUrl;
   if (fixtureUrl) fixtureAnchor.href = fixtureUrl; else fixtureAnchor.removeAttribute('href');
-  $('#model-count').textContent = activeModels().filter(hasEligibleResult).length;
-  $('#score-count').textContent = activeModels().reduce((sum, model) => sum + ['cpu', 'webgpu'].filter(backend => isEligibleWarm(model.warm[backend])).length, 0);
+  const modelCount = activeModels().filter(hasEligibleResult).length;
+  const scoreCount = activeModels().reduce((sum, model) => sum + ['cpu', 'webgpu'].filter(backend => isEligibleWarm(model.warm[backend])).length, 0);
+  $('#model-count').textContent = modelCount;
+  $('#model-count-label').textContent = modelCount === 1 ? 'configuration' : 'configurations';
+  $('#score-count').textContent = scoreCount;
+  $('#score-count-label').textContent = scoreCount === 1 ? 'eligible timing' : 'eligible timings';
   $$('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === state.view)));
   $$('[data-metric]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.metric === state.metric)));
   const latest = state.language === 'en' ? state.data.updatedAt : activeModels().flatMap(model => ['warm', 'memory'].flatMap(kind => ['cpu', 'webgpu'].map(backend => model[kind][backend]?.createdAt))).filter(Boolean).sort().at(-1);

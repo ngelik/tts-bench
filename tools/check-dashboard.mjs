@@ -190,6 +190,7 @@ try {
   assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), 'language-uk');
   assert.equal(await page.locator('#fixture-language').innerText(), `${ukData.fixture.characters.toLocaleString('en-US')} Ukrainian characters`);
   assert.equal(await page.locator('#model-count').innerText(), String(ukResultModels.length));
+  assert.equal(await page.locator('#model-count-label').innerText(), ukResultModels.length === 1 ? 'configuration' : 'configurations');
   assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(ukData.models, 'cpu').length + expectedGeneration(ukData.models, 'webgpu').length));
   await assertRows(ukResultModels);
   const ukCapabilityCases = [
