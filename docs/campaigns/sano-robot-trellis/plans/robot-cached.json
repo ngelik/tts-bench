@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+  "conditions": "Serial native M1 Pro campaign, disposable headed Google Chrome 157.0.8103.40 from the explicitly preserved executable. Shared OS slot excludes other benchmark/diagnostic/publication work. Cached resource article precedes warm timing. Full-fixture frontend audited separately on this exact clean source; official 304 internal text pieces preserve all non-whitespace source characters. No cold check; no inferred GPU score. Power and hardware observed in companion preflight.",
+  "cells": [
+    {
+      "model": "sano-robot-mcu",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true,
+      "timeoutMinutes": 120
+    }
+  ]
+}

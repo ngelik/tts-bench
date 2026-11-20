@@ -1,0 +1,58 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20",
+  "receiptSha256": "e5ca80353e8d66b8af18cf78dbf9d53c8f3829aa48b6e4fb2c8097fab8cf5d2e",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+    "bytes": 51823968,
+    "rate": 22050,
+    "samples": 25911962,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 116,
+        "samples": 512824,
+        "zeroSamples": 512824
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 17695168,
+      "endSampleExclusive": 17700791,
+      "samples": 5623,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "49ff0dcafe77d067d267e4bc25d14f2b157c98bb37e02571cf56e89965738c74",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "publication",
+    "pid": 33063,
+    "started": 1795173259.266051
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu-full.wav",
+    "sha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+    "bytes": 51823968
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu.wav",
+    "sha256": "49ff0dcafe77d067d267e4bc25d14f2b157c98bb37e02571cf56e89965738c74",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20/result.json",
+  "privateTerminalSha256": "c57a26be8ee76bc20f1da7f4a2d64006e18feff86e5f2acd6ebc103aa7261945",
+  "independentReviewSha256": "0fb981bb463f0828f92ff0b866b05d607ec624856a79d823e32cc25e190ba2b8",
+  "auditRecoveryPath": "audit-recovery.json"
+}

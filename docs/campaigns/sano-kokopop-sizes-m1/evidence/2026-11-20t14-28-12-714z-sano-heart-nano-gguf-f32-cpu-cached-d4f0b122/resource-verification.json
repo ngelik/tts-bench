@@ -1,0 +1,65 @@
+{
+  "model": "sano-heart-nano-gguf-f32",
+  "backend": "cpu",
+  "effectiveBackend": "cpu/wasm",
+  "resultId": "2026-11-20t14-28-12-714z-sano-heart-nano-gguf-f32-cpu-cached-d4f0b122",
+  "receiptSha256": "831d16074dc289665ab505fa6c734ca97eb87b7e47b0c46ad8e39bce865dc1d9",
+  "n": 1,
+  "sampleCount": 23,
+  "generationMeanRssBytes": 1037355809,
+  "articleCallPeakRssBytes": 1731395584,
+  "generationSeconds": 11.74852999997139,
+  "audioSeconds": 1303.3896666666667,
+  "sampleRate": 24000,
+  "pcmSha256": "38a64780e288cd06f2aee2fac2526667fc8b885c0d637a2eaa65b38a16faf861",
+  "nativeFullWavSha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+  "protectedWavAudit": {
+    "wavSha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+    "bytes": 62562748,
+    "rate": 24000,
+    "samples": 31281352,
+    "thresholdsSamples": {
+      "2400": {
+        "runs": 169,
+        "samples": 2186562,
+        "zeroSamples": 2186562
+      },
+      "24000": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 18004884,
+      "endSampleExclusive": 18022645,
+      "samples": 17761,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "separateIdenticalRecordings": [
+    {
+      "recordingResultId": "2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa",
+      "recordingTrialIndex": 5,
+      "recordingSourceCommit": "ca54c5ca1954406a72f4f0d705c6a37852ee7761",
+      "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu-full.wav",
+        "sha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+        "bytes": 62562748
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu.wav",
+        "sha256": "20defe255b60f17390d02ba556b58a3189f5cc4d0fee4a0a194b466cb7314ce6",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      }
+    }
+  ],
+  "privateTerminalSha256": "b15b0b5ffaf51715c86a38ba24918abf091311b013a58ad07255376a8dcd1c68",
+  "independentReviewSha256": "75fcc1334190ab9d02f4f632e576f0b475481c9604c3e0123619da60c317e044"
+}

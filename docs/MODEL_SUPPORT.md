@@ -218,6 +218,17 @@ Pinned Inflect Micro v2 complete English checkpoint and official FP32 ONNX expor
 
 [Primary source 1](https://huggingface.co/owensong/Inflect-Micro-v2-ONNX/blob/91b1ab6432323064ec0e8e9704d92fcecd24855f/README.md), [Primary source 2](https://huggingface.co/owensong/Inflect-Micro-v2-ONNX/blob/91b1ab6432323064ec0e8e9704d92fcecd24855f/onnx/SOURCE.json), [Primary source 3](https://huggingface.co/owensong/Inflect-Micro-v2/blob/9d862840734dcc53afb5d27ef468459daad020fa/README.md).
 
+<a id="inflect-micro-v3"></a>
+
+## Inflect Micro v3 FP32
+
+The pinned checkpoint lists **6 English voices**. The browser export bundles and
+benchmarks **Cassidy (voice 2)** only. It contains three FP32 ONNX graphs and a
+fixed Cassidy style bank; the exported model-weight assets total **47.57 MB**.
+The browser frontend uses the separately pinned Klein 0.2.0 G2P adaptation and
+does not claim exact native Misaki parity. Seeded JavaScript Gaussian noise is
+not bitwise identical to the PyTorch generator. [Pinned model card](https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md) · [Weight license scope](https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json) · [Browser/export notes](INFLECT_MICRO_V3.md).
+
 <a id="lfm3-audio-2b-gguf"></a>
 
 ## LFM3-Audio-2B (GGUF Q4_K_M / Q8_0)
@@ -371,6 +382,14 @@ The [pinned official browser demo](https://github.com/Ampixa/sanoTTS/blob/c0584a
 Supported voices: **6**. Bundled voices: **6**. Supported languages: **1** (English).
 
 The exact 157,190-parameter core embeds Hope, Sophia, Cassidy, James, Jasper and Mark. This benchmark selects Cassidy, with the official optional eSpeak-light English frontend and local DSP. CPU and WebGPU use the same FP32 weights; WebGPU accelerates the convolutional decoder while the encoder/frontend/DSP stay on WASM. [Pinned model and voice contract](https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py) · [Port, qualification and reproduction](models/inflect-atom-v3.md).
+
+<a id="inflect-mini-v3-browser-port"></a>
+
+## Inflect Mini v3 Browser Port
+
+Supported voices: **6**. Bundled voices: **1**. Supported languages: **1** (en).
+
+The pinned checkpoint publishes six English preset voices; this profile includes only the Cassidy speaker/style table. It is a separately named frontend/source-DSP configuration, not the official native output path. Its ONNX graphs were compared with the pinned native implementation at base and dynamic lengths; both exceeded the unchanged strict waveform thresholds, so results must remain labeled as browser-port results. CPU uses WASM for all three graphs. The registered WebGPU profile uses WebGPU with WASM fallback for the duration graph only; the text-bridge and waveform graphs run on WASM, while deterministic source excitation/STFT run on CPU. A separate all-graph WebGPU control produced clipped output and is not registered. See [configuration and reproducibility](INFLECT_MINI_V3.md) and the [pinned model card](https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md).
 
 ## Additional individual Kokopop Sano profiles
 

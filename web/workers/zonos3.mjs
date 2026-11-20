@@ -1,4 +1,5 @@
 import { createRpcAdapter } from '../adapters/rpc-bridge.mjs';
+import { resolveZonos3WebBase } from '../zonos3/local-web-base.mjs';
 import { engine, localFetch, dispose as disposeEngine, getLastDispatchProbe, getSelectedAdapterInfo } from '../zonos3/runtime/engine.js';
 import {
   ZONOS3_MODEL_CONFIG, ZONOS3_REQUEST_SETTINGS, ZONOS3_VOICE_ID, ZONOS3_VOICE_LABEL, ZONOS3_WEB_BASE,
@@ -89,7 +90,8 @@ async function initialize({ backend, probe = false, probeText = 'A short local s
       engineFatal = new Error(`ZONOS3 WebGPU engine failed: ${message}`);
       initialized = false;
     });
-    await engine.init(() => {}, { base: ZONOS3_WEB_BASE, cache: true, voiceIds: [ZONOS3_VOICE_ID], loadVoicePreviews: false });
+    const base = resolveZonos3WebBase(ZONOS3_WEB_BASE, self.location.origin);
+    await engine.init(() => {}, { base, cache: true, voiceIds: [ZONOS3_VOICE_ID], loadVoicePreviews: false });
     if (engineFatal) throw engineFatal;
     initialized = true;
     const dispatches = probe ? await (async () => {

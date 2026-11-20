@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665",
+  "receiptSha256": "466a49922b31adfc311a7211738fcd66eb65bc586f832732f0135ef8d63e48de",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+    "bytes": 57895834,
+    "rate": 22050,
+    "samples": 28947895,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 120,
+        "samples": 536416,
+        "zeroSamples": 536416
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 19766592,
+      "endSampleExclusive": 19772217,
+      "samples": 5625,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "78b3252ac4635013d1d18f20187919be88fd2eced94b91e9419fb431bea3201d",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 36581,
+    "started": 1795081042.00684
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu-full.wav",
+    "sha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+    "bytes": 57895834
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu.wav",
+    "sha256": "78b3252ac4635013d1d18f20187919be88fd2eced94b91e9419fb431bea3201d",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665/result.json",
+  "privateTerminalSha256": "c61a7e31c1a68625cbd91508955f15f813c2edad1695994160ece418b69c7f58",
+  "independentReviewSha256": "16b0867e66471d64e1b6ce2f920632d6133a927f1b813e8c3cdfe5fbd8fc7ff7"
+}

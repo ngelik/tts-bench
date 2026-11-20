@@ -229,6 +229,122 @@
       }
     },
     {
+      "resultId": "2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c",
+      "model": "inflect-atom-v3",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu.wav",
+        "sha256": "259d607633a9131c44d12dfad29199e262c2a448df3170c87ea13ccb9ffb3fb9",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-16-09-709z-inflect-atom-v3-cpu-cached-41e2ea1c--inflect-atom-v3--cpu-full.wav",
+        "sha256": "d4379a6f165ced40acc06f5fc92620ef9f5975b0f683a84984af1c368f0b8111",
+        "bytes": 60318644
+      }
+    },
+    {
+      "resultId": "2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db",
+      "model": "inflect-atom-v3",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db--inflect-atom-v3--cpu.wav",
+        "sha256": "259d607633a9131c44d12dfad29199e262c2a448df3170c87ea13ccb9ffb3fb9",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-17-11-130z-inflect-atom-v3-cpu-warm-9a4a58db--inflect-atom-v3--cpu-full.wav",
+        "sha256": "d4379a6f165ced40acc06f5fc92620ef9f5975b0f683a84984af1c368f0b8111",
+        "bytes": 60318644
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a",
+      "model": "inflect-atom-v3",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a--inflect-atom-v3--webgpu.wav",
+        "sha256": "874d88644bb118eb9a63421856a170de4b979b3737b57ce2fd4da6596192f4b2",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-19-24-698z-inflect-atom-v3-webgpu-cached-6cca4c3a--inflect-atom-v3--webgpu-full.wav",
+        "sha256": "2f43df7394183d579f4313db4740139332485191d73f2db877605a1fe50a7aa2",
+        "bytes": 60318644
+      }
+    },
+    {
+      "resultId": "2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60",
+      "model": "inflect-atom-v3",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (official fixed voice, index 2)",
+      "language": "en",
+      "attribution": "Inflect Atom v3 157K FP32",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/README.md",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/atom_runtime_20261024.py",
+        "https://huggingface.co/owensong/Inflect-Atom-v3/blob/6d517b3580e0167556148770760bbbb6a8870b99/LICENSE.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60--inflect-atom-v3--webgpu.wav",
+        "sha256": "874d88644bb118eb9a63421856a170de4b979b3737b57ce2fd4da6596192f4b2",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-55-07-605z-inflect-atom-v3-webgpu-warm-f29e7b60--inflect-atom-v3--webgpu-full.wav",
+        "sha256": "2f43df7394183d579f4313db4740139332485191d73f2db877605a1fe50a7aa2",
+        "bytes": 60318644
+      }
+    },
+    {
       "resultId": "2026-11-10t17-52-21-838z-inflect-micro-v2-cpu-warm-c57a83a6",
       "model": "inflect-micro-v2",
       "backend": "cpu",
@@ -284,6 +400,120 @@
         "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201--inflect-micro-v2--webgpu-full.wav",
         "sha256": "47be6d2a1cd3c774a17d12b83b3dcd40c608934ddcbfb578addc6d4fa7395278",
         "bytes": 58789068
+      }
+    },
+    {
+      "resultId": "2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326",
+      "model": "inflect-micro-v3",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (fixed voice 2)",
+      "language": "en",
+      "attribution": "Inflect Micro v3 by Owen Song; Cassidy (voice 2) fixed English preset. Apache-2.0 identified model weights; browser path uses a Klein 0.2.0 G2P adaptation and a custom source-filter implementation.",
+      "modelTerms": "Apache-2.0 for the pinned Inflect-owned model weights identified by LICENSE_SCOPE.json",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326--inflect-micro-v3--cpu.wav",
+        "sha256": "acc797a1fd8f2946dcdc259cda524dfe09c02f40fa471eb64b15e3e9bc1b45dd",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326--inflect-micro-v3--cpu-full.wav",
+        "sha256": "1c11e5d018a7c6119c7102cd506ef14c81975581fd6901ff462d59ea178bb02b",
+        "bytes": 61873484
+      }
+    },
+    {
+      "resultId": "2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1",
+      "model": "inflect-micro-v3",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (fixed voice 2)",
+      "language": "en",
+      "attribution": "Inflect Micro v3 by Owen Song; Cassidy (voice 2) fixed English preset. Apache-2.0 identified model weights; browser path uses a Klein 0.2.0 G2P adaptation and a custom source-filter implementation.",
+      "modelTerms": "Apache-2.0 for the pinned Inflect-owned model weights identified by LICENSE_SCOPE.json",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/README.md",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/LICENSE_SCOPE.json",
+        "https://huggingface.co/owensong/Inflect-Micro-v3/blob/c1a7db6ef44c931623fc2028cb0409659b83156c/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1--inflect-micro-v3--webgpu.wav",
+        "sha256": "91e49b9521b733b6c38c717d8d18baee52210606c9b6ec35f2d1f19d5038aab5",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1--inflect-micro-v3--webgpu-full.wav",
+        "sha256": "7033dd567edbd92a1c37343870930ff930e1a24d0cf7c12dcf0545a0441b3d6c",
+        "bytes": 61873484
+      }
+    },
+    {
+      "resultId": "2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d",
+      "model": "inflect-mini-v3-browser-port",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank; browser-port profile)",
+      "language": "en",
+      "attribution": "Inflect Mini v3 Browser Port",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/core/baseline/models/mini/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d--inflect-mini-v3-browser-port--cpu.wav",
+        "sha256": "f2b00ff538f61202638c9cb1a404c197d3cd2b3d549b84affcb7914cc588773b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d--inflect-mini-v3-browser-port--cpu-full.wav",
+        "sha256": "2f164834ae7ffd663dacc86466456f4080a8f5a0e6be6c6f2d7cfaba8b5c50f2",
+        "bytes": 63269084
+      }
+    },
+    {
+      "resultId": "2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4",
+      "model": "inflect-mini-v3-browser-port",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Cassidy (synthetic preset; pinned Mini speaker 2, af_sarah donor bank; browser-port profile)",
+      "language": "en",
+      "attribution": "Inflect Mini v3 Browser Port",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
+        "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/core/baseline/models/mini/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4--inflect-mini-v3-browser-port--webgpu.wav",
+        "sha256": "e201e2327bcf31e03c855bf3ad3a92773beaef8a47c992d8c64ca2abd830c387",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4--inflect-mini-v3-browser-port--webgpu-full.wav",
+        "sha256": "c1c2483114124107918e140d97df3cc735eed40c6951aace72a737b55b246fdd",
+        "bytes": 63269084
       }
     },
     {
@@ -1659,21 +1889,22 @@
       }
     },
     {
-      "resultId": "2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39",
-      "model": "sano-amy-1p8m",
+      "resultId": "2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb",
+      "model": "sano-amy-1p8m-gguf",
       "backend": "cpu",
       "trialIndex": 5,
-      "voice": "Amy 1.8M (English, eSpeak en-us)",
+      "voice": "amy-1p8m (US English; Piper NFD phonemes with interleaved PAD)",
       "language": "en",
-      "attribution": "SanoTTS by Ampixa; Amy 1.8M English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
-      "modelTerms": "GPL-3.0",
+      "attribution": "sanoTTS Amy 1.83M (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
       "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json",
         "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
-        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json"
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
       ],
       "clip": {
-        "path": "audio/samples/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu.wav",
-        "sha256": "58dbaf2dc55e8752b985220d3f30334b9749a4a41e87cf973fa6b9ac2dd92bab",
+        "path": "audio/samples/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb--sano-amy-1p8m-gguf--cpu.wav",
+        "sha256": "0961e29c91fc2fcb05b1fd06a52b7e89ff1677634e7cb4475662fa20c7d7148c",
         "bytes": 1323044,
         "startSample": 0,
         "sampleRate": 22050,
@@ -1681,27 +1912,28 @@
         "seconds": 30
       },
       "full": {
-        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu-full.wav",
-        "sha256": "b04eedd55fea8eb75a7a1c64d940967f8621be29dd9c2b917198b8200711e508",
-        "bytes": 53059628
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb--sano-amy-1p8m-gguf--cpu-full.wav",
+        "sha256": "18ed76327289234fe8bacc1a1823f57bbbe475c5800c5be03e422fbd1e8c4efb",
+        "bytes": 57898544
       }
     },
     {
-      "resultId": "2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa",
-      "model": "sano-amy-small",
-      "backend": "cpu",
+      "resultId": "2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0",
+      "model": "sano-amy-1p8m-gguf",
+      "backend": "webgpu",
       "trialIndex": 5,
-      "voice": "Amy-small (English, eSpeak en-us)",
+      "voice": "amy-1p8m (US English; Piper NFD phonemes with interleaved PAD)",
       "language": "en",
-      "attribution": "SanoTTS by Ampixa; small Amy English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
-      "modelTerms": "GPL-3.0",
+      "attribution": "sanoTTS Amy 1.83M (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
       "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json",
         "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
-        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json"
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
       ],
       "clip": {
-        "path": "audio/samples/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu.wav",
-        "sha256": "47b6f5aacc78eaf49eac15dadbb091f5c92e6fe2e58349630f89429e93ce792c",
+        "path": "audio/samples/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0--sano-amy-1p8m-gguf--webgpu.wav",
+        "sha256": "74786e98934792740e90cc27538794bea7d9444dc21f68065aff009726f50a21",
         "bytes": 1323044,
         "startSample": 0,
         "sampleRate": 22050,
@@ -1709,9 +1941,125 @@
         "seconds": 30
       },
       "full": {
-        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu-full.wav",
-        "sha256": "ce957737fa88e8c9a2a802cd9121d5f70976a072d3835e5627d964ed20e48b87",
-        "bytes": 53541932
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0--sano-amy-1p8m-gguf--webgpu-full.wav",
+        "sha256": "8adaa450141dad7fb29c572aa72dbc0bc2adfbfc2e9220e842bd701d757e10ab",
+        "bytes": 57898032
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc",
+      "model": "sano-amy-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "amy (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Amy 1.45M (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu.wav",
+        "sha256": "72f6b7adefd748fac0aa10f171007d06a23b4749d54689736c95a19e483acecd",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu-full.wav",
+        "sha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+        "bytes": 57896302
+      }
+    },
+    {
+      "resultId": "2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665",
+      "model": "sano-amy-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "amy (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Amy 1.45M (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p46m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu.wav",
+        "sha256": "78b3252ac4635013d1d18f20187919be88fd2eced94b91e9419fb431bea3201d",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-37-32-733z-sano-amy-gguf-webgpu-warm-fde5a665--sano-amy-gguf--webgpu-full.wav",
+        "sha256": "67f3bece1e18a307d18650f4beef5675fba600a90409de192212372518f56d27",
+        "bytes": 57895834
+      }
+    },
+    {
+      "resultId": "2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a",
+      "model": "sano-amy-small-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "amy-1p1m (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Amy small (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu.wav",
+        "sha256": "d4b502f6f518654a78e2de081db88033b830e47542fba222fd305c099ea07919",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu-full.wav",
+        "sha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+        "bytes": 58720218
+      }
+    },
+    {
+      "resultId": "2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce",
+      "model": "sano-amy-small-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "amy-1p1m (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Amy small (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce--sano-amy-small-gguf--webgpu.wav",
+        "sha256": "963420582a056547da3f716f8178921bfba4bd776fee1061811b2a768dcdbb2c",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce--sano-amy-small-gguf--webgpu-full.wav",
+        "sha256": "d78cd8065212e190b1ad6410967a082df9a0a3e33dd7aa39a0156c3d461c6052",
+        "bytes": 58719768
       }
     },
     {
@@ -1740,6 +2088,64 @@
         "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0--sano-amy--cpu-full.wav",
         "sha256": "426e3661c303c735314241ca11cdb11de92dfabcdefe95ea828a03bdab98988b",
         "bytes": 53049900
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0",
+      "model": "sano-heart-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "language": "en",
+      "attribution": "sanoTTS Heart (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu.wav",
+        "sha256": "d0349bee126599dd82b83531a67d1f8dd37a5e42bf96eabda6940db963e644d4",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0--sano-heart-gguf--cpu-full.wav",
+        "sha256": "0103ce7493186870b92a04e0ae69fb61ad1e07717725b3fae7e0970e45ad1da6",
+        "bytes": 63840636
+      }
+    },
+    {
+      "resultId": "2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6",
+      "model": "sano-heart-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "heart (US English; Misaki-normalized eSpeak IPA)",
+      "language": "en",
+      "attribution": "sanoTTS Heart (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/heart/meta.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu.wav",
+        "sha256": "3771e5e54ccd54ffb14209df38fdd1e107acf93a377f0f3f6927fbfbde607fbc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6--sano-heart-gguf--webgpu-full.wav",
+        "sha256": "5ed6b504bd66953ac523e536197654e29e2ade8de55fcee9b11bf903cecf8966",
+        "bytes": 63840124
       }
     },
     {
@@ -1803,79 +2209,22 @@
       }
     },
     {
-      "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
-      "model": "sano-heart-nano",
+      "resultId": "2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10",
+      "model": "sano-hfc-gguf",
       "backend": "cpu",
       "trialIndex": 5,
-      "voice": "SanoTTS heart-nano (English, US)",
+      "voice": "hfc (US English; Piper NFD phonemes with interleaved PAD)",
       "language": "en",
-      "attribution": "SanoTTS by Ampixa; heart-nano INT8 English (US) checkpoint and official CPU/WASM frontend. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
-      "modelTerms": "GPL-3.0",
+      "attribution": "sanoTTS HFC (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
       "sourceUrls": [
-        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
-        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
-        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/hfc-en-1p8m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
       ],
       "clip": {
-        "path": "audio/samples/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu.wav",
-        "sha256": "f62ec56496ed7854bdc3631acb103bc2d412d3d6b0d0021989ab4dbafea31f35",
-        "bytes": 1440044,
-        "startSample": 0,
-        "sampleRate": 24000,
-        "samples": 720000,
-        "seconds": 30
-      },
-      "full": {
-        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu-full.wav",
-        "sha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
-        "bytes": 63244844
-      }
-    },
-    {
-      "resultId": "2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc",
-      "model": "sano-heart",
-      "backend": "cpu",
-      "trialIndex": 5,
-      "voice": "SanoTTS heart (English, US)",
-      "language": "en",
-      "attribution": "SanoTTS by Ampixa; Heart English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
-      "modelTerms": "GPL-3.0",
-      "sourceUrls": [
-        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
-        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
-        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
-      ],
-      "clip": {
-        "path": "audio/samples/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu.wav",
-        "sha256": "020e89702460d4eb622b23678a25ede5a4a0948af159ac08956ab85f59a11222",
-        "bytes": 1440044,
-        "startSample": 0,
-        "sampleRate": 24000,
-        "samples": 720000,
-        "seconds": 30
-      },
-      "full": {
-        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu-full.wav",
-        "sha256": "d72091ac1f032fb919d8214bc12a732fb2912ab2e0c4a2d441c6a2cda3e3c6f4",
-        "bytes": 64349740
-      }
-    },
-    {
-      "resultId": "2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d",
-      "model": "sano-hfc",
-      "backend": "cpu",
-      "trialIndex": 5,
-      "voice": "HFC (English, eSpeak en-us)",
-      "language": "en",
-      "attribution": "SanoTTS by Ampixa; HFC English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
-      "modelTerms": "GPL-3.0",
-      "sourceUrls": [
-        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
-        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json"
-      ],
-      "clip": {
-        "path": "audio/samples/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu.wav",
-        "sha256": "e0b9df9d5900ffa538680e93fb5fe725211a72a5d9474add0854b6306011ca7c",
+        "path": "audio/samples/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu.wav",
+        "sha256": "42d6d0c9183befe94d0fd97b28e7c8f1b8f8654f5bd517e72f85b48205e48c41",
         "bytes": 1323044,
         "startSample": 0,
         "sampleRate": 22050,
@@ -1883,27 +2232,28 @@
         "seconds": 30
       },
       "full": {
-        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu-full.wav",
-        "sha256": "a7723777c395e7fd0919eff93a3677a8fd301b2cc8ecff7865b2e0ee35bb1f1f",
-        "bytes": 42692140
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu-full.wav",
+        "sha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+        "bytes": 46410838
       }
     },
     {
-      "resultId": "2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0",
-      "model": "sano-kristin",
-      "backend": "cpu",
+      "resultId": "2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f",
+      "model": "sano-hfc-gguf",
+      "backend": "webgpu",
       "trialIndex": 5,
-      "voice": "Kristin (English, eSpeak en)",
+      "voice": "hfc (US English; Piper NFD phonemes with interleaved PAD)",
       "language": "en",
-      "attribution": "SanoTTS by Ampixa; Kristin English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
-      "modelTerms": "GPL-3.0",
+      "attribution": "sanoTTS HFC (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
       "sourceUrls": [
-        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
-        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json"
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/hfc-en-1p8m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
       ],
       "clip": {
-        "path": "audio/samples/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu.wav",
-        "sha256": "1f0c02a78a72833315daedda4e609592e29b1a9c4e14270fc96cccb3ae12e344",
+        "path": "audio/samples/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu.wav",
+        "sha256": "031344d4e5cad2527dfda6b6a13b2b0bdacedfd0b40e13e68393e7884723b1d2",
         "bytes": 1323044,
         "startSample": 0,
         "sampleRate": 22050,
@@ -1911,9 +2261,123 @@
         "seconds": 30
       },
       "full": {
-        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu-full.wav",
-        "sha256": "a67b5e4bf7c93d8afa3404646821df1e395cf494721cacb3f8e54aa2a3fc3955",
-        "bytes": 47470124
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu-full.wav",
+        "sha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+        "bytes": 46411352
+      }
+    },
+    {
+      "resultId": "2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20",
+      "model": "sano-kristin-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "kristin (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Kristin (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu.wav",
+        "sha256": "49ff0dcafe77d067d267e4bc25d14f2b157c98bb37e02571cf56e89965738c74",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu-full.wav",
+        "sha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+        "bytes": 51823968
+      }
+    },
+    {
+      "resultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
+      "model": "sano-kristin-gguf",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "kristin (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Kristin (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav",
+        "sha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav",
+        "sha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+        "bytes": 51824480
+      }
+    },
+    {
+      "resultId": "2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8",
+      "model": "sano-robot-mcu",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS Robot MCU (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS Robot MCU INT8 (English, US)",
+      "modelTerms": "GPL-3.0-or-later",
+      "sourceUrls": [
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu.wav",
+        "sha256": "26f21c08feae37ccd9038f83f3452f2ab3c0c47970e47132e08431948789818f",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8--sano-robot-mcu--cpu-full.wav",
+        "sha256": "b5bf757dd324438fa51b2a141bb3fe4c7c443775e87a735d6beff026f9b73e70",
+        "bytes": 49907244
+      }
+    },
+    {
+      "resultId": "2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc",
+      "model": "sano-trellis",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS Trellis experimental (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS Trellis experimental FP32 (English, US)",
+      "modelTerms": "GPL-3.0-or-later",
+      "sourceUrls": [
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+        "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu.wav",
+        "sha256": "512d1c376d03281e56d79ade275d864f6c0d865511c66ee36e353ebe47cb75db",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc--sano-trellis--cpu-full.wav",
+        "sha256": "7aaac07e1c5bc5a9e80eb4cf7b67306fa973626e18eca2600d69a2d552773316",
+        "bytes": 63770156
       }
     },
     {
@@ -2440,6 +2904,296 @@
         "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/historical-2026-11-08-m1pro-gpu-warm--woof--webgpu-full.wav",
         "sha256": "d52b91fef56eb6b78317b6de612593b4e21554ae0ffb6248e9e0ba0a045ccb86",
         "bytes": 60165164
+      }
+    },
+    {
+      "resultId": "2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700",
+      "model": "zonos3-mini",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Imogen (English, British female)",
+      "language": "en",
+      "attribution": "ZONOS3-Mini (Imogen)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700--zonos3-mini--cpu.wav",
+        "sha256": "84d01030c14b101b1b4af1ee09cecee86d39b072f09838e8d156c10e832ff5a5",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700--zonos3-mini--cpu-full.wav",
+        "sha256": "e11b30b30aabd7ecda7b24df1ca21dded869174998ca98261339d5aad2a1a603",
+        "bytes": 113525204
+      }
+    },
+    {
+      "resultId": "2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f",
+      "model": "zonos3-mini",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Imogen (English, British female)",
+      "language": "en",
+      "attribution": "ZONOS3-Mini (Imogen)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f--zonos3-mini--cpu.wav",
+        "sha256": "84d01030c14b101b1b4af1ee09cecee86d39b072f09838e8d156c10e832ff5a5",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f--zonos3-mini--cpu-full.wav",
+        "sha256": "e11b30b30aabd7ecda7b24df1ca21dded869174998ca98261339d5aad2a1a603",
+        "bytes": 113525204
+      }
+    },
+    {
+      "resultId": "2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772",
+      "model": "zonos3-mini",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Imogen (English, British female)",
+      "language": "en",
+      "attribution": "ZONOS3-Mini (Imogen)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772--zonos3-mini--webgpu.wav",
+        "sha256": "a69ce27b3efa28ffe3d076e6dcce0bfba9ba3b348a79ced21bce84a0b30c44ce",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772--zonos3-mini--webgpu-full.wav",
+        "sha256": "13c61adf370cc66bf13cb94b1eec1f5fc6f05d18d83229f4f898e7290938ad0b",
+        "bytes": 113278244
+      }
+    },
+    {
+      "resultId": "2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76",
+      "model": "zonos3-mini",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Imogen (English, British female)",
+      "language": "en",
+      "attribution": "ZONOS3-Mini (Imogen)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+        "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+        "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76--zonos3-mini--webgpu.wav",
+        "sha256": "a69ce27b3efa28ffe3d076e6dcce0bfba9ba3b348a79ced21bce84a0b30c44ce",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t09-31-21-509z-zonos3-mini-webgpu-cached-b311ae76--zonos3-mini--webgpu-full.wav",
+        "sha256": "13c61adf370cc66bf13cb94b1eec1f5fc6f05d18d83229f4f898e7290938ad0b",
+        "bytes": 113278244
+      }
+    },
+    {
+      "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+      "model": "sano-heart-nano",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS heart-nano (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; heart-nano INT8 English (US) checkpoint and official CPU/WASM frontend. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu.wav",
+        "sha256": "f62ec56496ed7854bdc3631acb103bc2d412d3d6b0d0021989ab4dbafea31f35",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu-full.wav",
+        "sha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "bytes": 63244844
+      }
+    },
+    {
+      "resultId": "2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39",
+      "model": "sano-amy-1p8m",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Amy 1.8M (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Amy 1.8M English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu.wav",
+        "sha256": "58dbaf2dc55e8752b985220d3f30334b9749a4a41e87cf973fa6b9ac2dd92bab",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu-full.wav",
+        "sha256": "b04eedd55fea8eb75a7a1c64d940967f8621be29dd9c2b917198b8200711e508",
+        "bytes": 53059628
+      }
+    },
+    {
+      "resultId": "2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa",
+      "model": "sano-amy-small",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Amy-small (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; small Amy English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu.wav",
+        "sha256": "47b6f5aacc78eaf49eac15dadbb091f5c92e6fe2e58349630f89429e93ce792c",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu-full.wav",
+        "sha256": "ce957737fa88e8c9a2a802cd9121d5f70976a072d3835e5627d964ed20e48b87",
+        "bytes": 53541932
+      }
+    },
+    {
+      "resultId": "2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc",
+      "model": "sano-heart",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS heart (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Heart English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
+        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu.wav",
+        "sha256": "020e89702460d4eb622b23678a25ede5a4a0948af159ac08956ab85f59a11222",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu-full.wav",
+        "sha256": "d72091ac1f032fb919d8214bc12a732fb2912ab2e0c4a2d441c6a2cda3e3c6f4",
+        "bytes": 64349740
+      }
+    },
+    {
+      "resultId": "2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d",
+      "model": "sano-hfc",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "HFC (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; HFC English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu.wav",
+        "sha256": "e0b9df9d5900ffa538680e93fb5fe725211a72a5d9474add0854b6306011ca7c",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu-full.wav",
+        "sha256": "a7723777c395e7fd0919eff93a3677a8fd301b2cc8ecff7865b2e0ee35bb1f1f",
+        "bytes": 42692140
+      }
+    },
+    {
+      "resultId": "2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0",
+      "model": "sano-kristin",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Kristin (English, eSpeak en)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Kristin English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu.wav",
+        "sha256": "1f0c02a78a72833315daedda4e609592e29b1a9c4e14270fc96cccb3ae12e344",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu-full.wav",
+        "sha256": "a67b5e4bf7c93d8afa3404646821df1e395cf494721cacb3f8e54aa2a3fc3955",
+        "bytes": 47470124
       }
     }
   ]

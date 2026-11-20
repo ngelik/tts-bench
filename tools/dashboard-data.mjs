@@ -363,7 +363,7 @@ export async function readCampaignCells(models, directory = 'docs/campaigns') {
     for (const cell of plan.cells) {
       validateCampaignCell(cell);
       if (!pinnedModels[cell.model]) throw new Error(`Unknown model ${cell.model} in ${path}`);
-      if (sameCampaignRegistration(cell.model, models[cell.model], pinnedModels[cell.model])) cells.push(cell);
+      if (sameCampaignRegistration(cell.model, models[cell.model], pinnedModels[cell.model], cell.backend)) cells.push(cell);
     }
   }
   return cells;

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d",
+  "createdAt": "2026-11-19T16:13:22.177Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+    "dirty": false,
+    "manifestSha256": "662279cddb19fe0853408d2ed7d38659012c1096ab83ad54dc3907a1a69ce53a"
+  },
+  "assets": [
+    {
+      "id": "sano-trellis-web-snt_g2p-js",
+      "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+      "bytes": 72608
+    },
+    {
+      "id": "sano-trellis-web-snt_g2p-wasm",
+      "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+      "bytes": 346363
+    },
+    {
+      "id": "sano-trellis-web-snt_g2p-data",
+      "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+      "bytes": 3266545
+    },
+    {
+      "id": "sano-trellis-web-snt_trellis-js",
+      "sha256": "38a43ddb0affe3faa28b5eaec8702caf57676a763728142fedacfe554eafd923",
+      "bytes": 11279
+    },
+    {
+      "id": "sano-trellis-web-snt_trellis-wasm",
+      "sha256": "37df81ce5cd3724337c29e9771176035fc44ed0c6658aaa8bca060f355b686e0",
+      "bytes": 55334
+    },
+    {
+      "id": "sano-trellis-web-trellis_frontend-js",
+      "sha256": "1d8523bab2e96f03ea98131a3d575d92851d3870899435ba3a306804238e49b3",
+      "bytes": 20026
+    },
+    {
+      "id": "sano-trellis-web-voices-trellis-bundle-bin",
+      "sha256": "1d102317e1427bfa72171739bed5c7322ee16a18f942d854cd74346d2210689d",
+      "bytes": 3982096
+    },
+    {
+      "id": "sano-trellis-LICENSE",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "sano-trellis-LICENSE-MIT",
+      "sha256": "2f544ceb6a679cf706652c9df3bf8a6753197ee36456ba61665d97fbed43210e",
+      "bytes": 4113
+    },
+    {
+      "id": "sano-trellis-README-md",
+      "sha256": "b78caecf45567eb7d3682f90e60b81ba619bfb29a87c81081dd56e33fca3c99f",
+      "bytes": 21562
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-trellis",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned official trellis English checkpoint and CPU/WASM runtime",
+        "notes": "Official demo English preset; 120-character internal pieces preserve all canonical source characters. No WebGPU path in the selected runtime. Experimental Trellis-RIFT full pipeline with 995,058 FP32 parameters.",
+        "sources": [
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+        ]
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "none",
+      "status": "unsupported",
+      "reason": "The pinned official SanoTTS Robot/Trellis browser path is CPU WebAssembly; it does not implement WebGPU dispatch.",
+      "voice": "SanoTTS Trellis (English, US)",
+      "precision": "FP32 Trellis weights",
+      "settings": {
+        "runtime": "snt_trellis WebAssembly",
+        "voiceKey": "trellis",
+        "language": "en-us",
+        "executionProviders": []
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "The pinned official SanoTTS Robot/Trellis browser path is CPU WebAssembly; it does not implement WebGPU dispatch."
+      },
+      "warmup": [],
+      "trials": []
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T16-13-19-992Z-e02bf31a1252; cell 1/1; source 7f9b7982e5336be8642f91404584114371582fcd; requested n=5; effective n=5; Serial native M1 Pro campaign, disposable headed Google Chrome 157.0.8103.40 from the explicitly preserved executable. Shared OS slot excludes other benchmark/diagnostic/publication work. Cached resource article precedes warm timing. Full-fixture frontend audited separately on this exact clean source; official 304 internal text pieces preserve all non-whitespace source characters. No cold check; no inferred GPU score. Power and hardware observed in companion preflight."
+  ]
+}

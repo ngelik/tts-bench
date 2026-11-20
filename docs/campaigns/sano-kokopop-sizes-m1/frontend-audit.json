@@ -1,0 +1,287 @@
+{
+  "sourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+  "verificationRun": 44465954272,
+  "artifactId": 14502761132,
+  "artifactSha256": "97dd6f43c608226111f582815ccd84fd80f0a08f745ef4e8893245a0f59148f3",
+  "models": [
+    {
+      "modelId": "sano-amy-1p8m-gguf",
+      "auditSha256": "67b59014aa9dc48166319d10f29baf2c6d20d8bf6e257f090a5fbc73b31d7535",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 57,
+        "acousticFallbacks": 52,
+        "internalChunks": 235
+      },
+      "components": {
+        "duration": [
+          {
+            "sourceId": 144,
+            "symbol": "\u0329",
+            "codepoints": [
+              "U+0329"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 5
+          },
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ],
+        "acoustic": [
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ]
+      }
+    },
+    {
+      "modelId": "sano-amy-gguf",
+      "auditSha256": "406a54db1ef6d2ed0a41d3c4aa771daffcb7466ef8465eab548c27761d954fa3",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 57,
+        "acousticFallbacks": 52,
+        "internalChunks": 235
+      },
+      "components": {
+        "duration": [
+          {
+            "sourceId": 144,
+            "symbol": "\u0329",
+            "codepoints": [
+              "U+0329"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 5
+          },
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ],
+        "acoustic": [
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ]
+      }
+    },
+    {
+      "modelId": "sano-amy-small-gguf",
+      "auditSha256": "5ece2f676732afc9b2b23254f8c7c2bda31b581c571f891e703062de611441a0",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 57,
+        "acousticFallbacks": 52,
+        "internalChunks": 235
+      },
+      "components": {
+        "duration": [
+          {
+            "sourceId": 144,
+            "symbol": "\u0329",
+            "codepoints": [
+              "U+0329"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 5
+          },
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ],
+        "acoustic": [
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ]
+      }
+    },
+    {
+      "modelId": "sano-heart-gguf",
+      "auditSha256": "d14ca6a3e78665e2bafd8aaff16e63ef567843855cddebdc68caf66ce74baeb1",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 0,
+        "acousticFallbacks": 0,
+        "internalChunks": 162
+      },
+      "components": {}
+    },
+    {
+      "modelId": "sano-heart-nano-gguf-f32",
+      "auditSha256": "0961642275325d483a957f38b27c67b84fb9a5a90528e38bff40ece2e1cd123c",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 0,
+        "acousticFallbacks": 0,
+        "internalChunks": 162
+      },
+      "components": {}
+    },
+    {
+      "modelId": "sano-hfc-gguf",
+      "auditSha256": "0082e0ed7f78d35ecbca799cec34bf9444d658420a838d68a286b6e447e398e2",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 57,
+        "acousticFallbacks": 52,
+        "internalChunks": 235
+      },
+      "components": {
+        "duration": [
+          {
+            "sourceId": 144,
+            "symbol": "\u0329",
+            "codepoints": [
+              "U+0329"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 5
+          },
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ],
+        "acoustic": [
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ]
+      }
+    },
+    {
+      "modelId": "sano-kristin-gguf",
+      "auditSha256": "88fd58d8d371540272c2342a88298b09a1de1f35cf413be25eff87cf35c43374",
+      "spanCount": 93,
+      "summary": {
+        "finalSkipped": {},
+        "planningSkipped": {},
+        "durationFallbacks": 233,
+        "acousticFallbacks": 52,
+        "internalChunks": 230
+      },
+      "components": {
+        "duration": [
+          {
+            "sourceId": 128,
+            "symbol": "\u1d7b",
+            "codepoints": [
+              "U+1D7B"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 176
+          },
+          {
+            "sourceId": 144,
+            "symbol": "\u0329",
+            "codepoints": [
+              "U+0329"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 5
+          },
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ],
+        "acoustic": [
+          {
+            "sourceId": 150,
+            "symbol": "\"",
+            "codepoints": [
+              "U+0022"
+            ],
+            "replacementId": 59,
+            "replacementSymbol": "\u0259",
+            "count": 52
+          }
+        ]
+      }
+    }
+  ],
+  "admission": "Coordinator independently reviewed observed native substitutions and authorized all six new profiles without changing parameters or output. Record exact per-component counts next to each report/audio; no speech-quality claim.",
+  "inferenceRuntimeModified": false,
+  "fullScoreCreated": false
+}

@@ -8,7 +8,7 @@ import { spawnSync } from 'node:child_process';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.resolve(process.env.ZONOS3_CPU_AUDIO_CPP_SOURCE || '');
 const emsdk = path.resolve(process.env.ZONOS3_CPU_EMSDK || '');
-const outputDefault = path.join(root, '.cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2/THIRD-PARTY-NOTICES.txt');
+const outputDefault = path.join(root, '.cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v3/THIRD-PARTY-NOTICES.txt');
 const sourcePin = '749fffec6ad4a763520388a4240cd24e08a0a2bf';
 const emsdkPin = '708dcbcc9ee23bc7d2dad44fc90db377e38b771c';
 const emscriptenVersion = '6.0.13';

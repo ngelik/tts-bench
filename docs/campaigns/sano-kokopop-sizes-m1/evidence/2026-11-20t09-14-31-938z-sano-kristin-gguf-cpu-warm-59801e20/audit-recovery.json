@@ -1,0 +1,17 @@
+{
+  "kind": "saved-waveform-audit-recovery",
+  "originalPrivateTerminalSha256": "b1d07d02a66b4dea2d7a52b5e5347da8d0bc8b8fe31fca9810050fe706b925c4",
+  "recoveredPrivateTerminalSha256": "c57a26be8ee76bc20f1da7f4a2d64006e18feff86e5f2acd6ebc103aa7261945",
+  "nativeReceiptSha256": "e5ca80353e8d66b8af18cf78dbf9d53c8f3829aa48b6e4fb2c8097fab8cf5d2e",
+  "originalNativeFinishedAt": "2026-11-20T10:56:28.358250+00:00",
+  "recoveredAt": "2026-11-20T11:14:21.714161+00:00",
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "originalPostprocessingError": "FileNotFoundError: temporary audit helper was missing after native timing completed.",
+  "disposition": "The exact reviewed audit code was recovered. The saved original WAV was audited in a separate exclusive publication slot; no new inference or timing adjustment.",
+  "nativeReceiptUnchanged": true,
+  "publicationSlot": {
+    "purpose": "publication",
+    "pid": 33063,
+    "started": 1795173259.266051
+  }
+}
