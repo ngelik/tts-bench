@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "attempt": "001",
+  "stage": "dependency installation",
+  "outcome": "setup failure before assets or inference",
+  "at": "2026-11-19T04:26:37.418559Z",
+  "recordedError": "npm ci --cache .cache/npm exited with status 1. No Chrome session, assets or synthesis were started."
+}

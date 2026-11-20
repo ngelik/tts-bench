@@ -10,7 +10,12 @@ Each warm run starts with one excluded 20,000-character article (93 chunks). Eac
 
 | Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |
 |---|---:|---:|---:|---:|---:|---:|
-| Audio8 TTS Realistic 0.6B INT4 | Error | 9783.96 s (9782.39–9798.06; n=5) | Error | 113932.45 ms (n=5) | Error | 1427.75 s / 6.853 |
+| Audio8 TTS Realistic 0.6B INT4 | 24251.09 s (24251.09–24251.09; n=1 of 5 planned) | 9783.96 s (9782.39–9798.06; n=5) | 308264.64 ms (n=1) | 113932.45 ms (n=5) | 1429.05 s / 16.970 | 1427.75 s / 6.853 |
+
+### Reviewed partial warm selection
+
+**audio8-realistic-0.6b-int4 · CPU:** this table and chart use 1 completed scored article selected from 5 originally planned. At the user’s request, the operator sent SIGTERM to the native CLI after scored trial 1 completed and status had advanced to trial 2. Trial 2 did not complete; trials 3–5 were not run. These repetitions contribute no score. The native receipt remains unchanged with error status after Chrome closed. The original native receipt remains error and records: page.evaluate: Target page, context or browser has been closed The selection is bound to that receipt’s SHA-256 and lists the completed checkpoints in [the reviewed sidecar](../../docs/campaigns/audio8-codec-repair/cpu-warm-selection.json); uncompleted repetitions are not included, and n=1 is a single observation.
+
 
 ## Resource diagnostics
 
@@ -26,7 +31,7 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| Audio8 TTS Realistic 0.6B INT4 | [Report](../../results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/summary.md) | [Report](../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | [Report](../../results/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a/summary.md) | [Report](../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
+| Audio8 TTS Realistic 0.6B INT4 | [Report](../../results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) | [Report](../../results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | [Report](../../results/2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a/summary.md) | [Report](../../results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [Support details](../../docs/MODEL_SUPPORT.md#audio8-realistic-0.6b-int4) | [Terms](../../docs/LICENSING.md) |
 
 ## Unsupported and error outcomes
 
@@ -34,7 +39,7 @@ Reasons are listed once per model, backend, status and reason; the receipt table
 
 | Model | Backend | Status | Reason | Source receipt |
 |---|---|---|---|---|
-| audio8-realistic-0.6b-int4 | cpu | Error | page.evaluate: Error: Failed to execute 'put' on 'Cache': Cache.put() encountered a network error     at worker.onmessage (http://127.0.0.1:62865/web/adapters/rpc-bridge.mjs:43:25) | [Report](../../results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/summary.md) |
+| audio8-realistic-0.6b-int4 | cpu | Error | page.evaluate: Target page, context or browser has been closed | [Report](../../results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) |
 
 
 ![Campaign metrics chart](overview.svg)

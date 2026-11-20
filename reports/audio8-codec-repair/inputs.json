@@ -14,8 +14,12 @@
       "sha256": "93d468f1468e0e2624e7069e52b3464ce1c9a42ed21f98e7a7a2c6650ff9dce5"
     },
     {
-      "id": "2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18",
-      "sha256": "4143b316bdbf2537fe44bbb93d4fa6aebfc21c5279304866bae2e3afc6dddd25"
+      "id": "2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb",
+      "sha256": "8c3c0ec9a8348eb679e82127c240117ba9eccedfc26560326f402b11fabde584"
     }
-  ]
+  ],
+  "warmSelection": {
+    "path": "docs/campaigns/audio8-codec-repair/cpu-warm-selection.json",
+    "sha256": "bac5c82468a5c9663252fea629f59997903f7385bd12306c64be1322e9f9c9ca"
+  }
 }

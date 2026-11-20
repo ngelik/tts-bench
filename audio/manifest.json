@@ -1743,6 +1743,95 @@
       }
     },
     {
+      "resultId": "2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa",
+      "model": "sano-heart-nano-gguf-f32",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "heartnano (US English; upstream Misaki-normalized eSpeak IPA frontend)",
+      "language": "en",
+      "attribution": "sanoTTS heart-nano 294k (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS repository; heartnano metadata does not declare separate voice-package terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88",
+        "https://github.com/Ampixa/sanoTTS/tree/939d982b9faa54cbcf5d24cc878f5cd514b2646e"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu.wav",
+        "sha256": "20defe255b60f17390d02ba556b58a3189f5cc4d0fee4a0a194b466cb7314ce6",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu-full.wav",
+        "sha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+        "bytes": 62562748
+      }
+    },
+    {
+      "resultId": "2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57",
+      "model": "sano-heart-nano-gguf-f32",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "heartnano (US English; upstream Misaki-normalized eSpeak IPA frontend)",
+      "language": "en",
+      "attribution": "sanoTTS heart-nano 294k (Kokopop F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS repository; heartnano metadata does not declare separate voice-package terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/heartnano/meta.json",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88",
+        "https://github.com/Ampixa/sanoTTS/tree/939d982b9faa54cbcf5d24cc878f5cd514b2646e"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu.wav",
+        "sha256": "474b613db05dc67d20d3ec2ebc072960a218242dc804a0376f6ac90cf02f5e49",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu-full.wav",
+        "sha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+        "bytes": 62567868
+      }
+    },
+    {
+      "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+      "model": "sano-heart-nano",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS heart-nano (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; heart-nano INT8 English (US) checkpoint and official CPU/WASM frontend. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu.wav",
+        "sha256": "f62ec56496ed7854bdc3631acb103bc2d412d3d6b0d0021989ab4dbafea31f35",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu-full.wav",
+        "sha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+        "bytes": 63244844
+      }
+    },
+    {
       "resultId": "2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc",
       "model": "sano-heart",
       "backend": "cpu",

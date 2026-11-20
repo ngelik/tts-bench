@@ -42,6 +42,8 @@ Liquid LFM3: [interactive table](https://ngelik.github.io/tts-bench/?q=LFM3) · 
 
 [Liquid LFM3 run notes](docs/LIQUID_LFM3_RUN_NOTES.md) document retained initialization failures, the selected clean memory repeat, and speech-completeness observations.
 
+The official [SanoTTS heart-nano INT8 native report](docs/campaigns/sano-heartnano-int8-m1/README.md) records its CPU warm score, separate cached RAM diagnostic and explicit unsupported WebGPU result.
+
 <!-- benchmark-results:start -->
 
 Warm and memory tables prefer native receipts that verify the registered model and runtime files for each backend and environment. The latest attempt within that version is shown, including errors. When it has no receipt, earlier evidence stays visible. All runs and recordings remain linked below.
@@ -52,7 +54,8 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E4**: MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E5**: MacBook Pro / Apple M1 Pro 8-core / 16 GiB / arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E6**: MacBook Pro · Apple M1 Pro · 8-core CPU · 16 GiB RAM · Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
-- **E7**: Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E7**: Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E8**: Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
@@ -72,7 +75,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Sano Amy 1.46M (English) | E4 | 5.82 | [737.23 s (n=5)](results/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0/summary.md) | [unsupported](results/2026-11-10t16-32-02-384z-sano-amy-webgpu-warm-24afcdc7/summary.md) | Native; independent attempts |
 | Silencio-2 28M FP32 | E4 | 74.51 | [607.96 s (n=5)](results/2026-11-18t03-09-55-956z-silencio-2-cpu-warm-df3b96bf/summary.md) | [1962.27 s (n=5)](results/2026-11-18t04-11-04-421z-silencio-2-webgpu-warm-a22e3d55/summary.md) | Native; matched configuration |
 | SupraTTS 1.0 Preview FP32 | E4 | 6.96 | [21.88 s (n=5)](results/2026-11-18t08-13-28-317z-supratts-1.0-preview-cpu-warm-9a02ca76/summary.md) | [16.47 s (n=5)](results/2026-11-18t08-27-58-590z-supratts-1.0-preview-webgpu-warm-c60a14d6/summary.md) | Native; matched configuration |
-| Audio8 TTS Realistic 0.6B INT4 | E5 | 587.71 | [error](results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/summary.md) | [9783.96 s (n=5)](results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | Native; independent attempts |
+| Audio8 TTS Realistic 0.6B INT4 | E5 | 587.71 | [24251.09 s (n=1 of 5 planned; selected)](docs/campaigns/audio8-codec-repair/cpu-warm-selection.md) | [9783.96 s (n=5)](results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | Native; independent attempts |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | E5 | 905.67 | [15119.14 s (n=2 of 5 planned; selected)](reports/nov14-multilingual-english/overview.md#reviewed-partial-warm-selection) | [1600.61 s (n=5)](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | Native; independent attempts |
 | Klein-TTS X1.5 Pro FP32 | E5 | 52.88 | [251.73 s (n=5)](results/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee/summary.md) | [22.00 s (n=5)](results/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb/summary.md) | Native; matched configuration |
 | LFM3-Audio-2B (Fusor q7 / CPU 6 threads) | E5 | 2276.67 | [526.05 s (n=5)](results/2026-11-11t09-27-11-391z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-174f10d4/summary.md) | — | Native; independent attempts |
@@ -86,15 +89,19 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Sopro v2 Turbo | E5 | 509.82 | [616.59 s (n=5)](results/2026-11-18t09-23-18-739z-sopro-v2-turbo-cpu-warm-db42548c/summary.md) | [507.48 s (n=5)](results/2026-11-18t10-34-26-402z-sopro-v2-turbo-webgpu-warm-d6dbad7d/summary.md) | Native; independent attempts |
 | Tiny Voca 4.5M | E5 | 21.39 | [54.86 s (n=5)](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | [21.47 s (n=5)](results/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d/summary.md) | Native; matched configuration |
 | Linnet en-35m (f1) | E6 | 83.08 | [212.58 s (n=5)](results/2026-11-18t12-05-28-956z-linnet-en-35m-cpu-warm-f59450f4/summary.md) | [831.84 s (n=5)](results/2026-11-18t12-28-45-296z-linnet-en-35m-webgpu-warm-6ac9ec30/summary.md) | Native; independent attempts |
-| SanoTTS Amy 1.83M (English) | E7 | 7.34 | [760.40 s (n=5)](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | — | Native; independent attempts |
-| SanoTTS Amy-small 1.08M (English) | E7 | 4.34 | [529.24 s (n=5)](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | — | Native; independent attempts |
-| SanoTTS Heart 2.27M (English, US) | E7 | 9.14 | [242.94 s (n=5)](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | — | Native; independent attempts |
-| SanoTTS HFC 1.83M (English) | E7 | 7.34 | [612.95 s (n=5)](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | — | Native; independent attempts |
-| SanoTTS Kristin 1.40M (English) | E7 | 5.59 | [674.37 s (n=5)](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | — | Native; independent attempts |
+| SanoTTS heart-nano INT8 (English, US) | E7 | 0.35 | [19.59 s (n=5)](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/summary.md) | [unsupported](results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/summary.md) | Native; independent attempts |
+| sanoTTS heart-nano 294k (Kokopop F32) | E7 | 1.46 | [11.57 s (n=5)](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [3.71 s (n=5)](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | Native; matched configuration |
+| SanoTTS Amy 1.83M (English) | E8 | 7.34 | [760.40 s (n=5)](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | — | Native; independent attempts |
+| SanoTTS Amy-small 1.08M (English) | E8 | 4.34 | [529.24 s (n=5)](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | — | Native; independent attempts |
+| SanoTTS Heart 2.27M (English, US) | E8 | 9.14 | [242.94 s (n=5)](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | — | Native; independent attempts |
+| SanoTTS HFC 1.83M (English) | E8 | 7.34 | [612.95 s (n=5)](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | — | Native; independent attempts |
+| SanoTTS Kristin 1.40M (English) | E8 | 5.59 | [674.37 s (n=5)](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | — | Native; independent attempts |
 
 Each native warm score shows the number of timed 20,000-character articles (n) after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
 **Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the raw receipt](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.
+
+**Reviewed Audio8 TTS Realistic 0.6B INT4 CPU selection:** the displayed time uses 1 completed scored article from 5 originally planned, after one excluded warm-up. At the user’s request, the operator sent SIGTERM to the native CLI after scored trial 1 completed and status had advanced to trial 2. Trial 2 did not complete; trials 3–5 were not run. These repetitions contribute no score. The native receipt remains unchanged with error status after Chrome closed. The native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the selection](docs/campaigns/audio8-codec-repair/cpu-warm-selection.md), [raw receipt](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md), and [hash-bound sidecar](docs/campaigns/audio8-codec-repair/cpu-warm-selection.json). Uncompleted repetitions contribute no score.
 
 **Original Audio8 WebGPU waveform fault.** 90.31% of this recording is constant at one PCM value. Its elapsed time describes a diagnostic execution. The CPU recording has no constant interval lasting 0.10 s. [Full waveform audit](https://github.com/ngelik/tts-bench/tree/main/diagnostics/audio8-waveform) and [interval data](diagnostics/audio8-waveform/evidence.json).
 
@@ -223,7 +230,13 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Linnet en-35m (f1) | 83.08 | [1284.58](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/summary.md) | [2778.33](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/summary.md) |
 
-**RAM 17** · Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`8b929d8e`](https://github.com/ngelik/tts-bench/commit/8b929d8e68834b101dd1992981e9b04640222748).
+**RAM 17** · Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`b0f8c888`](https://github.com/ngelik/tts-bench/commit/b0f8c8887e9dfab5cef7b8fac9a15af865d722ef).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| SanoTTS heart-nano INT8 (English, US) | 0.35 | [842.88](results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/summary.md) | — |
+
+**RAM 18** · Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`8b929d8e`](https://github.com/ngelik/tts-bench/commit/8b929d8e68834b101dd1992981e9b04640222748).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
@@ -277,6 +290,16 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Linnet en-35m (f1) | 2 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#linnet-en-35m) |
 | Silencio-2 28M FP32 | 8 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#silencio-2) |
 | ZONOS3-Mini (Imogen) | 27 | 1 | 43 | [Details](docs/MODEL_SUPPORT.md#zonos3-mini) |
+| sanoTTS heart-nano 294k (Kokopop F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-heart-nano-gguf-f32) |
+| SanoTTS Robot MCU INT8 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-robot-mcu) |
+| SanoTTS Trellis experimental FP32 (English, US) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-trellis) |
+| Inflect Atom v3 157K FP32 | 6 | 6 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#inflect-atom-v3) |
+| sanoTTS Heart (Kokopop F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-heart-gguf) |
+| sanoTTS Amy 1.45M (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy-gguf) |
+| sanoTTS Amy small (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy-small-gguf) |
+| sanoTTS Amy 1.83M (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-amy-1p8m-gguf) |
+| sanoTTS HFC (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-hfc-gguf) |
+| sanoTTS Kristin (Kokopop F16/F32) | 1 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sano-kristin-gguf) |
 
 ### Controlled native comparisons
 
@@ -309,6 +332,10 @@ Only compatible receipts enter these comparisons; source, settings, fixture and 
 [nov17-ming-v3-warm-single — table and input receipts](comparisons/nov17-ming-v3-warm-single/summary.md)
 
 ![nov17-ming-v3-warm-single](comparisons/nov17-ming-v3-warm-single/chart.svg)
+
+[sano-heartnano-f32-m1 — table and input receipts](comparisons/sano-heartnano-f32-m1/summary.md)
+
+![sano-heartnano-f32-m1](comparisons/sano-heartnano-f32-m1/chart.svg)
 
 [tiny-voca-english — table and input receipts](comparisons/tiny-voca-english/summary.md)
 
@@ -377,6 +404,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 [sano-english-size-variants — all-metrics table and source receipts](reports/sano-english-size-variants/overview.md)
 
 ![sano-english-size-variants — campaign metrics](reports/sano-english-size-variants/overview.svg)
+
+[sano-heartnano-f32-m1 — all-metrics table and source receipts](reports/sano-heartnano-f32-m1/overview.md)
+
+![sano-heartnano-f32-m1 — campaign metrics](reports/sano-heartnano-f32-m1/overview.svg)
+
+[sano-heartnano-int8-m1 — all-metrics table and source receipts](reports/sano-heartnano-int8-m1/overview.md)
+
+![sano-heartnano-int8-m1 — campaign metrics](reports/sano-heartnano-int8-m1/overview.svg)
 
 [silencio2-m1-2026-11-18 — all-metrics table and source receipts](reports/silencio2-m1-2026-11-18/overview.md)
 
@@ -466,6 +501,9 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | SanoTTS Amy 1.83M (English) | cpu | [Receipt](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu-full.wav) |
 | SanoTTS Amy-small 1.08M (English) | cpu | [Receipt](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu-full.wav) |
 | Sano Amy 1.46M (English) | cpu | [Receipt](results/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0--sano-amy--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t16-32-03-827z-sano-amy-cpu-warm-0a4ec2a0--sano-amy--cpu-full.wav) |
+| sanoTTS heart-nano 294k (Kokopop F32) | cpu | [Receipt](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu-full.wav) |
+| sanoTTS heart-nano 294k (Kokopop F32) | webgpu | [Receipt](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu-full.wav) |
+| SanoTTS heart-nano INT8 (English, US) | cpu | [Receipt](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu-full.wav) |
 | SanoTTS Heart 2.27M (English, US) | cpu | [Receipt](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu-full.wav) |
 | SanoTTS HFC 1.83M (English) | cpu | [Receipt](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu-full.wav) |
 | SanoTTS Kristin 1.40M (English) | cpu | [Receipt](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu-full.wav) |
@@ -615,21 +653,27 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 120 · 2026-11-18 | linnet-en-35m/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/summary.md) | [SVG](results/2026-11-18t13-57-01-943z-linnet-en-35m-cpu-cached-ba06fb4d/chart.svg) |
 | 121 · 2026-11-18 | linnet-en-35m/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/summary.md) | [SVG](results/2026-11-18t14-04-23-116z-linnet-en-35m-webgpu-cached-d77f90c2/chart.svg) |
 | 122 · 2026-11-18 | audio8-realistic-0.6b-int4/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/summary.md) | [SVG](results/2026-11-18t14-22-42-390z-audio8-realistic-0.6b-int4-cpu-warm-f13e8d18/chart.svg) |
-| 123 · 2026-11-19 | sano-heart/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | [SVG](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/chart.svg) |
-| 124 · 2026-11-19 | sano-hfc/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | [SVG](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/chart.svg) |
-| 125 · 2026-11-19 | sano-kristin/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | [SVG](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/chart.svg) |
-| 126 · 2026-11-19 | sano-amy-small/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | [SVG](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/chart.svg) |
-| 127 · 2026-11-19 | sano-amy-1p8m/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | [SVG](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/chart.svg) |
-| 128 · 2026-11-19 | sano-heart/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | [SVG](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/chart.svg) |
-| 129 · 2026-11-19 | sano-heart/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/summary.md) | [SVG](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/chart.svg) |
-| 130 · 2026-11-19 | sano-hfc/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/summary.md) | [SVG](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/chart.svg) |
-| 131 · 2026-11-20 | sano-hfc/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/summary.md) | [SVG](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/chart.svg) |
-| 132 · 2026-11-20 | sano-kristin/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/summary.md) | [SVG](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/chart.svg) |
-| 133 · 2026-11-20 | sano-kristin/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t10-56-29-899z-sano-kristin-webgpu-cached-f6a2c86f/summary.md) | [SVG](results/2026-11-20t10-56-29-899z-sano-kristin-webgpu-cached-f6a2c86f/chart.svg) |
-| 134 · 2026-11-20 | sano-amy-small/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-04-10-625z-sano-amy-small-cpu-cached-f79f98ef/summary.md) | [SVG](results/2026-11-20t11-04-10-625z-sano-amy-small-cpu-cached-f79f98ef/chart.svg) |
-| 135 · 2026-11-20 | sano-amy-small/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t11-14-53-856z-sano-amy-small-webgpu-cached-21c6b668/summary.md) | [SVG](results/2026-11-20t11-14-53-856z-sano-amy-small-webgpu-cached-21c6b668/chart.svg) |
-| 136 · 2026-11-20 | sano-amy-1p8m/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-15-20-837z-sano-amy-1p8m-cpu-cached-a1f0621c/summary.md) | [SVG](results/2026-11-20t11-15-20-837z-sano-amy-1p8m-cpu-cached-a1f0621c/chart.svg) |
-| 137 · 2026-11-20 | sano-amy-1p8m/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t11-48-14-900z-sano-amy-1p8m-webgpu-cached-da6c4dc1/summary.md) | [SVG](results/2026-11-20t11-48-14-900z-sano-amy-1p8m-webgpu-cached-da6c4dc1/chart.svg) |
+| 123 · 2026-11-19 | audio8-realistic-0.6b-int4/cpu | warm / browser-tts-warm-v1 | error | [Report](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/summary.md) | [SVG](results/2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb/chart.svg) |
+| 124 · 2026-11-19 | sano-heart-nano-gguf-f32/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/summary.md) | [SVG](results/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa/chart.svg) |
+| 125 · 2026-11-19 | sano-heart-nano-gguf-f32/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/summary.md) | [SVG](results/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57/chart.svg) |
+| 126 · 2026-11-19 | sano-heart-nano/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/summary.md) | [SVG](results/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/chart.svg) |
+| 127 · 2026-11-19 | sano-heart-nano/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/summary.md) | [SVG](results/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/chart.svg) |
+| 128 · 2026-11-19 | sano-heart-nano/webgpu | warm / browser-tts-warm-v1 | unsupported | [Report](results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/summary.md) | [SVG](results/2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638/chart.svg) |
+| 129 · 2026-11-19 | sano-heart/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | [SVG](results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/chart.svg) |
+| 130 · 2026-11-19 | sano-hfc/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | [SVG](results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/chart.svg) |
+| 131 · 2026-11-19 | sano-kristin/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | [SVG](results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/chart.svg) |
+| 132 · 2026-11-19 | sano-amy-small/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | [SVG](results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/chart.svg) |
+| 133 · 2026-11-19 | sano-amy-1p8m/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | [SVG](results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/chart.svg) |
+| 134 · 2026-11-19 | sano-heart/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | [SVG](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/chart.svg) |
+| 135 · 2026-11-19 | sano-heart/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/summary.md) | [SVG](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/chart.svg) |
+| 136 · 2026-11-19 | sano-hfc/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/summary.md) | [SVG](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/chart.svg) |
+| 137 · 2026-11-20 | sano-hfc/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/summary.md) | [SVG](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/chart.svg) |
+| 138 · 2026-11-20 | sano-kristin/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/summary.md) | [SVG](results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/chart.svg) |
+| 139 · 2026-11-20 | sano-kristin/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t10-56-29-899z-sano-kristin-webgpu-cached-f6a2c86f/summary.md) | [SVG](results/2026-11-20t10-56-29-899z-sano-kristin-webgpu-cached-f6a2c86f/chart.svg) |
+| 140 · 2026-11-20 | sano-amy-small/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-04-10-625z-sano-amy-small-cpu-cached-f79f98ef/summary.md) | [SVG](results/2026-11-20t11-04-10-625z-sano-amy-small-cpu-cached-f79f98ef/chart.svg) |
+| 141 · 2026-11-20 | sano-amy-small/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t11-14-53-856z-sano-amy-small-webgpu-cached-21c6b668/summary.md) | [SVG](results/2026-11-20t11-14-53-856z-sano-amy-small-webgpu-cached-21c6b668/chart.svg) |
+| 142 · 2026-11-20 | sano-amy-1p8m/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t11-15-20-837z-sano-amy-1p8m-cpu-cached-a1f0621c/summary.md) | [SVG](results/2026-11-20t11-15-20-837z-sano-amy-1p8m-cpu-cached-a1f0621c/chart.svg) |
+| 143 · 2026-11-20 | sano-amy-1p8m/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t11-48-14-900z-sano-amy-1p8m-webgpu-cached-da6c4dc1/summary.md) | [SVG](results/2026-11-20t11-48-14-900z-sano-amy-1p8m-webgpu-cached-da6c4dc1/chart.svg) |
 
 </details>
 

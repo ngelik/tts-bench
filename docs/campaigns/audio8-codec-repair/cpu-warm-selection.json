@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "kind": "operator-shortened-warm-selection",
+  "resultId": "2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb",
+  "receiptSha256": "8c3c0ec9a8348eb679e82127c240117ba9eccedfc26560326f402b11fabde584",
+  "modelId": "audio8-realistic-0.6b-int4",
+  "backend": "cpu",
+  "scenario": "warm",
+  "sourceCommit": "9c7d880199e87a15a3959ae94b632f9d9cdd40da",
+  "originalPlannedRepetitions": 5,
+  "warmupCompleted": true,
+  "selectedScoredTrialIndexes": [
+    1
+  ],
+  "stopReason": "At the user’s request, the operator sent SIGTERM to the native CLI after scored trial 1 completed and status had advanced to trial 2. Trial 2 did not complete; trials 3–5 were not run. These repetitions contribute no score. The native receipt remains unchanged with error status after Chrome closed.",
+  "warmupCheckpoint": {
+    "resultId": "2026-11-18t14-52-21-179z-audio8-realistic-0.6b-int4-cpu-warm-ed2138bb",
+    "trialIndex": 1
+  },
+  "pairedCachedResultId": "2026-11-17t21-08-29-351z-audio8-realistic-0.6b-int4-cpu-cached-026c8c6a"
+}
