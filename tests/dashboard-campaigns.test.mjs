@@ -45,7 +45,7 @@ test('smoke diagnostics leave the scheduled full articles pending', () => {
   const id = 'tiny-voca';
   const model = getAssetLock().models[id];
   const results = ['warm', 'cached'].map(scenario => ({
-    origin: 'native', protocol: { scenario, smoke: true, id: 'browser-tts-cached-v1-resources' },
+    origin: 'native', fixture: { id: 'english-20k-smoke-v1' }, protocol: { scenario, smoke: true, id: 'browser-tts-cached-v1-resources' },
     assets: [], cells: [{ model: id, backendRequested: 'cpu', status: 'measured' }],
   }));
   const campaignCells = [
@@ -64,7 +64,7 @@ test('an archived error remains linked alongside a pending current memory result
     id: 'test-archived-error', origin: 'native', createdAt: '2026-11-14T00:00:00Z',
     source: { gitCommit: 'previous-source', manifestSha256: 'previous-signature' },
     protocol: { scenario: 'cached', smoke: false, id: 'browser-tts-cached-v1-resources' },
-    environment: {}, fixture: {}, assets: [],
+    environment: {}, fixture: { id: 'english-20k-v1' }, assets: [],
     cells: [{ model: id, backendRequested: 'cpu', status: 'error', reason: 'previous runtime error' }],
   };
   const campaignCells = [{ model: id, backend: 'cpu', scenario: 'cached', repetitions: 1, resources: true }];

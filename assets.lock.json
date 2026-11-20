@@ -9201,6 +9201,243 @@
         ],
         "notes": "The upstream checkpoint supports six English presets; this configuration bundles Cassidy speaker 2 only. Reference enrollment, non-speech events and 48 kHz enhancement are outside this profile. Browser synthesis is a distinct frontend/source-DSP port and failed the recorded strict native waveform gate. CPU uses ONNX Runtime Web WASM for all three graphs. The registered WebGPU option is scoped: only the duration graph uses WebGPU with WASM fallback; text-bridge and waveform graphs run on WASM, while deterministic source excitation/STFT run on CPU. Actual duration-graph dispatch is required. A separate all-graph WebGPU control clipped output and is not a registered profile."
       }
+    },
+    "ua-serhiy-0p58m": {
+      "displayName": "Serhiy 0.58M (Ukrainian)",
+      "modelRevision": "1abd585d725a787b405c28a59ce1cbdfd34780bb",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.23.2",
+        "license": "ONNX Runtime Web MIT with third-party notices; local Piper-samples eSpeak module/data have separate or unclarified terms and are not redistributed.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.wasm.min.mjs",
+            "bytes": 49856,
+            "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs",
+            "bytes": 66261,
+            "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.mjs",
+            "bytes": 20321,
+            "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.wasm",
+            "bytes": 11905541,
+            "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 51913,
+            "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 25499390,
+            "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.23.2/LICENSE",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.23.2/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/ThirdPartyNotices.txt",
+            "bytes": 326866,
+            "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "ua-serhiy-upstream-readme",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md",
+          "url": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/resolve/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md",
+          "bytes": 7730,
+          "sha256": "e2a1fdab8efd74bd4f552e4ce128015cb993f1c1a7ff86fd9d239ed96329afbd",
+          "kind": "model-support"
+        },
+        {
+          "id": "ua-serhiy-upstream-notice",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md",
+          "url": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/resolve/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md",
+          "bytes": 927,
+          "sha256": "44ce2df623453b22289e4a735d62c416edd1ea3670638211dcbf287b86c0030e",
+          "kind": "model-support"
+        },
+        {
+          "id": "ua-serhiy-upstream-manifest",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
+          "url": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/resolve/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
+          "bytes": 52619,
+          "sha256": "4af8608e5118cff9718d95516bc7a8298d6f3d350cef4aec7fab8134f39184af",
+          "kind": "model-support"
+        },
+        {
+          "id": "ua-serhiy-source-weights-fp16",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/weights.fp16.bin",
+          "url": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/resolve/1abd585d725a787b405c28a59ce1cbdfd34780bb/weights.fp16.bin",
+          "bytes": 1151776,
+          "sha256": "ea2599b8db3f1a1c431c3ed0e621ca28338b9edf4841dacd3f395fc8404f8090",
+          "kind": "model-support"
+        },
+        {
+          "id": "ua-serhiy-piper-phoneme-config",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/piper-phoneme-config.json",
+          "url": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/resolve/1abd585d725a787b405c28a59ce1cbdfd34780bb/piper-phoneme-config.json",
+          "bytes": 4766,
+          "sha256": "aa1f836148a38ca48585d171706af74e019ac966e1f9230ef1add4f945209557",
+          "kind": "config"
+        },
+        {
+          "id": "ua-serhiy-upstream-provenance",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/provenance.json",
+          "url": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/resolve/1abd585d725a787b405c28a59ce1cbdfd34780bb/provenance.json",
+          "bytes": 2476,
+          "sha256": "0a69330280decc906c58d1388197fbe2c4591efd3f46eaf3705d2d65751fb395",
+          "kind": "model-support"
+        },
+        {
+          "id": "ua-serhiy-espeak-module",
+          "target": "runtimes/piper-samples/da672d1157136d07365790f51da3357a17cf9650/resources/espeakng.worker.js",
+          "url": "https://raw.githubusercontent.com/rhasspy/piper-samples/da672d1157136d07365790f51da3357a17cf9650/resources/espeakng.worker.js",
+          "bytes": 134698,
+          "sha256": "141236dc04b79b13a417ffd10c25a9b25f93dd7cc978448dad58b9b95d2ac210",
+          "kind": "browser-runtime"
+        },
+        {
+          "id": "ua-serhiy-espeak-wasm",
+          "target": "runtimes/piper-samples/da672d1157136d07365790f51da3357a17cf9650/resources/espeakng.worker.wasm",
+          "url": "https://raw.githubusercontent.com/rhasspy/piper-samples/da672d1157136d07365790f51da3357a17cf9650/resources/espeakng.worker.wasm",
+          "bytes": 361999,
+          "sha256": "eb0ea920003d62ed0a97f6d51a0903ff0cb6553d8d5e02eb5dce4c26e055f33f",
+          "kind": "browser-runtime"
+        },
+        {
+          "id": "ua-serhiy-espeak-data",
+          "target": "runtimes/piper-samples/da672d1157136d07365790f51da3357a17cf9650/espeakng.worker.data",
+          "url": "https://raw.githubusercontent.com/rhasspy/piper-samples/da672d1157136d07365790f51da3357a17cf9650/espeakng.worker.data",
+          "bytes": 24183288,
+          "sha256": "07263c3a96e26dcea39e0d7e5001d2121f0f4fccbb8110c2ad9285e527d77e97",
+          "kind": "browser-runtime-data"
+        },
+        {
+          "id": "ua-serhiy-duration-onnx",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/onnx/duration.onnx",
+          "bytes": 166375,
+          "sha256": "8f8d0d8301f9c6ea7ac66a63a841ca6b3cedf90c1b31d929fbb35553fa07dbac",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "duration.onnx",
+            "build": "Run `node tools/build-ua-serhiy-browser.mjs --accept-license`. The wrapper fetches pinned inputs, installs the pinned exporter dependencies, verifies the manifest and FP16 checkpoint hashes, exports the four graphs, imports the generated bytes and verifies the complete asset closure. See docs/UA_SERHIY.md."
+          }
+        },
+        {
+          "id": "ua-serhiy-acousticToken-onnx",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/onnx/acoustic-token.onnx",
+          "bytes": 341591,
+          "sha256": "9984e6f95a41ff2e3ee3b74e2ab3b008671bb06531009a426768753209b90f6a",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "acoustic-token.onnx",
+            "build": "Run `node tools/build-ua-serhiy-browser.mjs --accept-license`. The wrapper fetches pinned inputs, installs the pinned exporter dependencies, verifies the manifest and FP16 checkpoint hashes, exports the four graphs, imports the generated bytes and verifies the complete asset closure. See docs/UA_SERHIY.md."
+          }
+        },
+        {
+          "id": "ua-serhiy-acousticFrame-onnx",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/onnx/acoustic-frame.onnx",
+          "bytes": 487855,
+          "sha256": "e082d8c21bdfc1c4032fc2e90f49d6aef6165dab74894eea2025fe86c9474310",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "acoustic-frame.onnx",
+            "build": "Run `node tools/build-ua-serhiy-browser.mjs --accept-license`. The wrapper fetches pinned inputs, installs the pinned exporter dependencies, verifies the manifest and FP16 checkpoint hashes, exports the four graphs, imports the generated bytes and verifies the complete asset closure. See docs/UA_SERHIY.md."
+          }
+        },
+        {
+          "id": "ua-serhiy-decoder-onnx",
+          "target": "models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/onnx/decoder.onnx",
+          "bytes": 1344164,
+          "sha256": "a1593364ec8ed487b8be35252ee1151dc35a71c6067a1f2cc4f3e984ea75ee09",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "decoder.onnx",
+            "build": "Run `node tools/build-ua-serhiy-browser.mjs --accept-license`. The wrapper fetches pinned inputs, installs the pinned exporter dependencies, verifies the manifest and FP16 checkpoint hashes, exports the four graphs, imports the generated bytes and verifies the complete asset closure. See docs/UA_SERHIY.md."
+          }
+        },
+        {
+          "id": "ua-serhiy-model-license",
+          "target": "licenses/ua-serhiy-0p58m/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license",
+          "sourcePath": "web/ua-serhiy-0p58m/LICENSE"
+        },
+        {
+          "id": "ua-serhiy-teacher-license",
+          "target": "licenses/ua-serhiy-0p58m/LICENSE.teacher",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license",
+          "sourcePath": "web/ua-serhiy-0p58m/LICENSE.teacher"
+        },
+        {
+          "id": "ua-serhiy-espeak-license",
+          "target": "licenses/espeak-ng/COPYING",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license",
+          "sourcePath": "web/licenses/ESPEAK-NG-COPYING.txt"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "ONNX Runtime Web MIT; eSpeak NG/data GPL-3.0-or-later; pinned Piper-samples browser module has no separate license in its source tree.",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "uk"
+        ],
+        "scope": "Pinned dmytro-m/ua-serhiy-0p58m distilled Ukrainian checkpoint; one Serhiy voice with a local browser conversion to four dynamic FP32 ONNX graphs.",
+        "sources": [
+          "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md",
+          "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md",
+          "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
+          "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/inference.py",
+          "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/stress.py",
+          "https://github.com/rhasspy/piper-samples/tree/da672d1157136d07365790f51da3357a17cf9650",
+          "https://github.com/microsoft/onnxruntime/tree/v1.23.2"
+        ],
+        "notes": "One Ukrainian Serhiy synthetic voice is selected. The full inference stack has 575,888 stored scalar values; this is not a trainable-only parameter claim. The checkpoint carries GPL-3.0; teacher and corpus licenses do not grant separate rights to the student checkpoint or generated voice. The upstream notice says speaker-consent and dataset-rights review is not independently completed. Only Ukrainian is exposed; no other voice or language is tested."
+      }
     }
   }
 }

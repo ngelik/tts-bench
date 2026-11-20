@@ -13,7 +13,7 @@ const usage=`Browser TTS Benchmark
   npm run bench -- run --model paradee --backend webgpu --scenario warm --machine "M1 Pro"
 
 Options: --model ID --backend cpu|webgpu --scenario warm|cold|cached|network|offline|switch
-         --repetitions N --machine LABEL --chrome PATH --smoke --resources
+         --repetitions N --machine LABEL --chrome PATH --fixture ID --smoke --resources
          --accept-license --timeout-minutes N --predecessor ID --note TEXT
 
 Warm defaults to one excluded full article plus five full scored articles. New warm tests for models with more than one billion parameters use one scored article after that excluded warm-up. The threshold uses sourced parameter counts for the registered model, not staged weight bytes; requested/default and effective counts are recorded. Fun-CosyVoice3 retains one scored repetition for every new test scenario.
@@ -22,7 +22,7 @@ Cold/cached/network default to three trials; offline/switch default to one.
 Assets are staged separately. Inference cannot contact third-party services.
 Results and optional audio stay in ignored runs/ until explicitly submitted.
 `;
-function options(args){const out={};const flags=new Set(['smoke','resources','accept-license']);const valued=new Set(['model','backend','scenario','repetitions','machine','chrome','source','timeout-minutes','predecessor','note']);for(let i=0;i<args.length;i++){const arg=args[i];if(!arg.startsWith('--'))throw new Error(`Unexpected argument: ${arg}`);const key=arg.slice(2);if(flags.has(key))out[key]=true;else if(valued.has(key)&&args[i+1]&&!args[i+1].startsWith('--'))out[key]=args[++i];else throw new Error(`Unknown option or missing value: ${arg}`);}return out;}
+function options(args){const out={};const flags=new Set(['smoke','resources','accept-license']);const valued=new Set(['model','backend','scenario','repetitions','machine','chrome','fixture','source','timeout-minutes','predecessor','note']);for(let i=0;i<args.length;i++){const arg=args[i];if(!arg.startsWith('--'))throw new Error(`Unexpected argument: ${arg}`);const key=arg.slice(2);if(flags.has(key))out[key]=true;else if(valued.has(key)&&args[i+1]&&!args[i+1].startsWith('--'))out[key]=args[++i];else throw new Error(`Unknown option or missing value: ${arg}`);}return out;}
 try{
  if(!argv.length||argv.includes('--help')||argv[0]==='help'){console.log(usage);}
  else if(argv[0]==='models')console.log(JSON.stringify(await listModels(),null,2));

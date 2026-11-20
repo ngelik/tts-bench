@@ -1,7 +1,9 @@
 # Listening samples
 
-These recordings are synthetic speech from the benchmark's original 20,000-character
-English article. They are actual scored outputs, not upstream demo recordings.
+These recordings are synthetic speech from the benchmark's registered article
+fixtures. The original English fixture has 20,000 characters; translations retain
+their own exact text and actual counts. They are actual scored outputs, not
+upstream demo recordings.
 All model/backend samples are linked in the root README **Reference results** section.
 
 [**Open the listening room**](https://ngelik.github.io/tts-bench/audio/) to play all published clips directly in your browser. Each README **Listen** link selects its exact recording. GitHub strips audio controls from README previews, so the players live on GitHub Pages. No installation or sign-in is needed; clips load only when played. The hosted page serves existing recordings and performs no synthesis.
@@ -30,11 +32,16 @@ then includes the new recording automatically. Full recordings remain release as
 
 ## Provenance and reproduction
 
-`manifest.json` binds every clip to a published result, scored trial index, voice,
+`manifest.json` binds every clip to a published result, scored trial index, voice, language,
 full WAV hash and byte count. A clip contains the first 30 seconds (or the entire
 recording if shorter), copied as PCM16 with no normalization, editing, transcoding
 or re-synthesis. Only its RIFF size fields change. The clip limit is 3 MB, sufficient for 30 seconds of mono PCM16 up to 48 kHz. The source full WAV must match
 an actual scored receipt before the tool will create the clip.
+
+Language comes from the scored fixture and is checked against the shared fixture
+registry. Legacy English receipts remain compatible; a Ukrainian recording must
+declare `uk`, not `en`. Do not infer the spoken language from a model's supported
+language list. See [exact translated fixtures and comparability](../docs/MULTILINGUAL.md).
 
 ```sh
 npm run audio -- add --result results/RUN/result.json --wav /path/to/full.wav --model MODEL --backend cpu
@@ -82,4 +89,5 @@ See [component licensing](../docs/LICENSING.md) and the linked primary sources.
 No listening quality score is inferred from speed, waveform hashes or file size.
 
 - LFM3 Audio and Omni: Liquid AI; American English female prompted style. Official GGUF WebGPU and Fusor q7 CPU configurations are distinguished in every recording. LFM Open License v1.0 applies; runtime licenses do not relicense weights or recordings. Very short output spans, where observed, are disclosed with the results; audio validity does not verify complete reading.
+- Serhiy 0.58M: synthetic Ukrainian speech generated with dmytro-m's student, distilled from the Serhiy Piper teacher; sanoTTS by Ampixa. Student weights/reference GPL-3.0, teacher Apache-2.0 and training corpus MIT. Retain the pinned [notice](https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md) and [model card](https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md) in the registered manifest. These are attributions, not an output-license grant or independent consent audit. Only the assessed original benchmark narration is eligible; upstream sample WAVs are not scored recordings. See [multilingual publication](../docs/MULTILINGUAL.md).
 - Linnet en-35m: include the required notices “Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0” and “Powered by Linnet (VoxRT).” The fixed f1 voice is synthetic; the benchmark license permits distributing generated outputs. Model weights and tokenizer are not included.

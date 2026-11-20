@@ -276,7 +276,7 @@ function markdownReport(prepared, reportDir) {
   md += `## Warm generation\n\n`;
   const measuredWarm = [...byKey.values()].some(row => row.scenario === 'warm' && summarizeWarm(row));
   md += measuredWarm
-    ? 'Each warm run starts with one excluded 20,000-character article (93 chunks). Each generation time shows the observed range and the number of scored articles (n). When n=1, the median and both endpoints are the single observation. First PCM is the median time to the first audio samples. Output duration and real-time factor use the recorded sample count, sample rate and generation time.\n\n'
+    ? `Each warm run starts with one excluded ${base.fixture.characters.toLocaleString('en-US')}-character article (${base.fixture.chunks} chunks). Each generation time shows the observed range and the number of scored articles (n). When n=1, the median and both endpoints are the single observation. First PCM is the median time to the first audio samples. Output duration and real-time factor use the recorded sample count, sample rate and generation time.\n\n`
     : 'This report contains no scored warm generation times. The receipt table identifies the submitted scenarios and any terminal errors.\n\n';
   md += `| Model | CPU generation median (min–max) | WebGPU generation median (min–max) | CPU first PCM median | WebGPU first PCM median | CPU audio / RTF median | WebGPU audio / RTF median |\n|---|---:|---:|---:|---:|---:|---:|\n`;
   for (const model of models) {

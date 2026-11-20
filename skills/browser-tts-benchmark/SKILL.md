@@ -79,6 +79,16 @@ and the checkout's `docs/ADDING_MODELS.md`. Implement and validate it before sco
 
 ## Generate trustworthy evidence
 
+For a non-English evaluation, follow the checkout's `docs/MULTILINGUAL.md`.
+Register and review the exact translation before scoring: immutable text SHA,
+language, actual UTF-16 character count, actual source spans and translation
+provenance. Select the registered `fixtureId` explicitly in the campaign plan and
+verify its dry-run. Do not pad or truncate a translation to mimic the English
+fixture's counts, translate during timing, or infer language from model support.
+Keep English and translated results in separate fixture cohorts and retain the
+existing exact-fixture comparison guards. Use the same registered fixture for
+CPU/GPU and separate cached resource measurements.
+
 ```sh
 npm run assets -- fetch --model MODEL
 npm run assets -- verify --model MODEL
@@ -95,7 +105,9 @@ permission to redistribute weights or publish recordings.
 - A scored run requires a clean **committed** checkout. Preserve unrelated changes;
   use an isolated clone/worktree when needed. Publish the implementation commit
   before publishing results that cite it. Never edit the receipt to claim cleanliness.
-- Run one full 20,000-character article as an excluded warm-up per model and backend.
+- Run one full registered article as an excluded warm-up per model and backend
+  (20,000 characters for the original English fixture; actual registered counts
+  for translations).
   For a registered speech model with **more than 1,000,000,000 parameters**, score
   **one** full article on the resident engine. Fun-CosyVoice3 also uses one scored
   article in every scenario. Other full warm runs default to five. Exactly one
@@ -164,7 +176,7 @@ Then refresh the reference section and validate the complete proposed commit.
 
 ```sh
 npm run reference
-git add -- "results/$run_id" README.md docs/reference-memory.svg
+git add -- "results/$run_id" README.md ":(glob)docs/reference-memory*.svg"
 git diff --cached --stat
 npm test
 npm run validate
@@ -194,6 +206,16 @@ after correcting the cause. Never replace it with a guessed average. Preserve
 unsupported statuses. See
 `docs/MEMORY.md` for generation-window evidence and reproduction. Include comparison tables/charts in that same
 section through the generator.
+
+Keep each language/fixture in its generated Reference section. Stage every
+generated language-specific RAM chart, including `docs/reference-memory-uk.svg`
+when Ukrainian resource receipts exist; do not insert those values into the
+English chart. A planned but unmeasured language gets no invented score or chart.
+The audio tool derives language from the actual scored fixture and rejects a
+mislabeled manifest entry. Preserve the selected trial, full WAV and exact prefix
+clip, and check applicable recording terms and attribution before publication.
+For local-only delivery, provide local playback and truthful pending publication
+status rather than nonexistent public recording links.
 
 Review the four public result files and stage them before the tracked-file
 publication check. Keep `.cache/`, raw runs, browser profiles and model binaries

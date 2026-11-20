@@ -34,9 +34,10 @@ import { createKleinAdapter } from './adapters/klein.mjs';
 import { createZonos3Adapter } from './adapters/zonos3.mjs';
 import { createSanoKokopopAdapter } from './adapters/sano-kokopop.mjs';
 import { SANO_KOKOPOP_PROFILES } from './adapters/sano-kokopop-config.mjs';
+import { createUaSerhiyAdapter } from './adapters/ua-serhiy.mjs';
 
 const statusNode = document.querySelector('#status');
-const state = { fixture: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
+const state = { fixture: null, fixtureId: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
 const FACTORIES = {
   'sopro-v2-turbo': createSoproAdapter,
   'tiny-voca': createTinyVocaAdapter,
@@ -73,10 +74,12 @@ const FACTORIES = {
   'silencio-2': createSilencio2Adapter,
   'klein-tts-x1.5-pro': createKleinAdapter,
   'zonos3-mini': createZonos3Adapter,
+  'ua-serhiy-0p58m': createUaSerhiyAdapter,
   ...Object.fromEntries(Object.entries(SANO_KOKOPOP_PROFILES).map(([id, profile]) => [id, () => createSanoKokopopAdapter(profile)])),
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
-let canonical = null;
+let fixtureRegistry = null;
+const loadedFixtures = new Map();
 
 function setStatus(message) {
   if (statusNode) statusNode.textContent = message;
@@ -87,72 +90,111 @@ async function sha256(bytes) {
   return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-async function loadCanonical() {
-  if (canonical) return canonical;
+const canonical = value => Array.isArray(value) ? value.map(canonical) :
+  value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
+const sameJson = (left, right) => JSON.stringify(canonical(left)) === JSON.stringify(canonical(right));
+
+async function getFixtureRegistry() {
+  if (fixtureRegistry) return fixtureRegistry;
+  const response = await fetch('/fixtures/registry.json', { cache: 'no-store' });
+  if (!response.ok) throw new Error('Could not load the local benchmark fixture registry.');
+  const registry = await response.json();
+  if (registry.schemaVersion !== 1 || !Array.isArray(registry.fixtures)) throw new Error('Invalid benchmark fixture registry.');
+  fixtureRegistry = registry;
+  return registry;
+}
+
+async function loadFixture(fixtureId = 'english-20k-v1') {
+  if (loadedFixtures.has(fixtureId)) return loadedFixtures.get(fixtureId);
+  const registry = await getFixtureRegistry();
+  const spec = registry.fixtures.find(entry => entry.id === fixtureId);
+  if (!spec) throw new Error('Unknown benchmark fixture: ' + fixtureId);
+  for (const file of [spec.articleFile, spec.chunksFile, spec.metadataFile]) {
+    if (typeof file !== 'string' || !/^[a-z0-9][a-z0-9._-]*\.(?:txt|json)$/.test(file)) throw new Error('Invalid fixture path in registry.');
+  }
   const [articleResponse, manifestResponse, metaResponse] = await Promise.all([
-    fetch('/fixtures/en-20000.txt', { cache: 'no-store' }),
-    fetch('/fixtures/en-20000.chunks.json', { cache: 'no-store' }),
-    fetch('/fixtures/en-20000.meta.json', { cache: 'no-store' }),
+    fetch('/fixtures/' + spec.articleFile, { cache: 'no-store' }),
+    fetch('/fixtures/' + spec.chunksFile, { cache: 'no-store' }),
+    fetch('/fixtures/' + spec.metadataFile, { cache: 'no-store' }),
   ]);
-  if (!articleResponse.ok || !manifestResponse.ok || !metaResponse.ok) throw new Error('Could not load the local canonical fixture files.');
+  if (!articleResponse.ok || !manifestResponse.ok || !metaResponse.ok) throw new Error('Could not load the local fixture files for ' + fixtureId + '.');
   const bytes = new Uint8Array(await articleResponse.arrayBuffer());
   const article = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   const manifest = await manifestResponse.json();
   const meta = await metaResponse.json();
   const digest = await sha256(bytes);
-  if (article.length !== 20000 || digest !== manifest.articleSha256 || digest !== meta.sha256) {
-    throw new Error('The canonical article length or SHA-256 does not match its metadata.');
+  const codePoints = Array.from(article).length;
+  if (article.length !== spec.characters || codePoints !== spec.unicodeCodePoints || bytes.length !== spec.utf8Bytes ||
+      digest !== spec.sha256 || digest !== manifest.articleSha256 || digest !== meta.sha256 ||
+      meta.fixtureId !== spec.id || meta.language !== spec.language ||
+      !sameJson(meta.source, spec.source) ||
+      meta.javascriptStringLength !== article.length || meta.unicodeCodePoints !== codePoints ||
+      meta.utf8Bytes !== bytes.length) {
+    throw new Error('Fixture text length, language, byte count or SHA-256 does not match its registry and metadata.');
   }
-  if (manifest.targetCharacters !== 20000 || manifest.chunks.length !== 93 || meta.chunkCount !== 93) {
-    throw new Error('The canonical fixture must contain exactly 20,000 characters across 93 chunks.');
+  if (manifest.targetCharacters !== article.length || manifest.chunks.length !== spec.chunks || meta.chunkCount !== spec.chunks) {
+    throw new Error('Fixture span count or declared character length does not match its registry.');
   }
   let cursor = 0;
   const chunks = [];
   for (let i = 0; i < manifest.chunks.length; i++) {
     const span = manifest.chunks[i];
     const text = article.slice(span.start, span.end);
-    if (span.id !== i || span.start !== cursor || span.end <= span.start || span.characters !== text.length) {
-      throw new Error('Invalid canonical chunk span at index ' + i + '.');
+    if (span.id !== i || span.start !== cursor || span.end <= span.start || span.characters !== text.length ||
+        (span.end < article.length && /[\uD800-\uDBFF]/.test(article[span.end - 1]) && /[\uDC00-\uDFFF]/.test(article[span.end]))) {
+      throw new Error('Invalid fixture chunk span at index ' + i + '.');
     }
-    if (await sha256(new TextEncoder().encode(text)) !== span.sha256) throw new Error('Canonical chunk SHA-256 mismatch at index ' + i + '.');
+    if (await sha256(new TextEncoder().encode(text)) !== span.sha256) throw new Error('Fixture chunk SHA-256 mismatch at index ' + i + '.');
     chunks.push({ id: span.id, start: span.start, end: span.end, text, sha256: span.sha256 });
     cursor = span.end;
   }
   if (cursor !== article.length || chunks.map(chunk => chunk.text).join('') !== article) {
-    throw new Error('Canonical source chunks do not reconstruct the full article.');
+    throw new Error('Fixture source chunks do not reconstruct the full article.');
   }
-  canonical = {
-    fixture: { id: 'english-20k-v1', sha256: digest, characters: article.length, chunks: chunks.length },
+  const fixture = spec.language === 'en'
+    ? { id: spec.id, sha256: digest, characters: article.length, chunks: chunks.length }
+    : { id: spec.id, language: spec.language, sha256: digest, characters: article.length,
+      unicodeCodePoints: codePoints, utf8Bytes: bytes.length, chunks: chunks.length, source: spec.source };
+  const loaded = {
+    fixture,
     chunks,
   };
-  return canonical;
+  loadedFixtures.set(fixtureId, loaded);
+  return loaded;
 }
 
-async function canonicalFixture(smoke = false) {
-  const full = await loadCanonical();
+async function selectedFixture(smoke = false, fixtureId = 'english-20k-v1') {
+  const full = await loadFixture(fixtureId);
   if (!smoke) return full;
   const selected = full.chunks.slice(0, 3);
   const text = selected.map(chunk => chunk.text).join('');
   const smokeBytes = new TextEncoder().encode(text);
+  const spec = (await getFixtureRegistry()).fixtures.find(entry => entry.id === fixtureId);
+  const fixture = spec.language === 'en'
+    ? { id: spec.smokeId, sha256: await sha256(smokeBytes), characters: text.length, chunks: selected.length }
+    : { id: spec.smokeId, language: full.fixture.language, sha256: await sha256(smokeBytes), characters: text.length,
+      unicodeCodePoints: Array.from(text).length, utf8Bytes: smokeBytes.length, chunks: selected.length, source: spec.source };
   return {
-    fixture: { id: 'english-20k-smoke-v1', sha256: await sha256(smokeBytes), characters: text.length, chunks: selected.length },
+    fixture,
     chunks: selected,
   };
 }
 
-export async function fixture(smoke = false) {
-  const loaded = await canonicalFixture(Boolean(smoke));
+export async function fixture(smoke = false, fixtureId = 'english-20k-v1') {
+  const loaded = await selectedFixture(Boolean(smoke), fixtureId);
   state.fixture = loaded.fixture;
+  state.fixtureId = fixtureId;
   state.chunks = loaded.chunks;
   return { ...loaded.fixture };
 }
 
-export async function initialize({ model = 'phonon', backend = 'cpu', smoke = false, probe = false } = {}) {
+export async function initialize({ model = 'phonon', backend = 'cpu', smoke = false, probe = false, fixtureId = 'english-20k-v1' } = {}) {
   await dispose();
   state.model = model;
   state.backend = backend;
   state.smoke = Boolean(smoke);
-  const loaded = await canonicalFixture(Boolean(smoke));
+  state.fixtureId = fixtureId;
+  const loaded = await selectedFixture(Boolean(smoke), fixtureId);
   state.fixture = loaded.fixture;
   state.chunks = loaded.chunks;
   const factory = FACTORIES[model];
@@ -174,6 +216,8 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       backend,
       cache: true,
       probe,
+      fixtureId,
+      language: loaded.fixture.language,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
     });
     if (result.status === 'unsupported') {
@@ -232,9 +276,10 @@ export function encodeWavBase64(pcm, sampleRate) {
   return btoa(binary);
 }
 
-export async function generate({ index = 1, smoke = state.smoke, saveAudio = false, recordMemory = false } = {}) {
+export async function generate({ index = 1, smoke = state.smoke, saveAudio = false, recordMemory = false, fixtureId = state.fixtureId ?? 'english-20k-v1' } = {}) {
   if (!state.engine) throw new Error('Initialize a model before generation.');
-  const loaded = await canonicalFixture(Boolean(smoke));
+  if (fixtureId !== state.fixtureId) throw new Error('Generation fixture differs from the initialized fixture.');
+  const loaded = await selectedFixture(Boolean(smoke), fixtureId);
   const chunks = loaded.chunks;
   state.fixture = loaded.fixture;
   state.chunks = chunks;
@@ -252,6 +297,8 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
   if (recordMemory) generationStartedAtEpochMs = performance.timeOrigin + started;
   for (let i = 0; i < chunks.length; i++) {
     const response = await state.engine.generateChunk(chunks[i], {
+      fixtureId,
+      language: loaded.fixture.language,
       onFirstPcm: () => { firstPcmMs ??= performance.now() - started; },
     });
     const chunkParts = response.parts ?? [];
