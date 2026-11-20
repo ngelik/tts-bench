@@ -7026,6 +7026,15 @@
           "bytes": 57861,
           "sha256": "a47966056c2230037d837c507d812040bd7eaae74cb933a33031af35f0a1064a",
           "kind": "license"
+        },
+        {
+          "id": "zonos3-cpu-session-reset-policy-v1",
+          "backends": ["cpu"],
+          "target": "models/zonos3-mini/2921b8821772b0bd10a04456863d21abf9d2f283/cpu-session-reset-policy-v1.json",
+          "sourcePath": "web/zonos3/cpu-session-reset-policy.json",
+          "bytes": 471,
+          "sha256": "bd012fc3788e59e3bbcb8b63f311cdb9b77a24a15de1b2d02edf5595ecace003",
+          "kind": "model-config"
         }
       ],
       "license": {

@@ -53,6 +53,31 @@ function validateNativeMetrics(t) {
   }
 }
 
+function validateZonosCpuSessionResets(cell, trial, group, chunkCount) {
+  const cap = cell.settings.sessionResetCap;
+  const boundaries = trial.validation.sessionResetBoundaries;
+  check(cap === 16 && text(cell.settings.sessionResetPolicy, 1000), 'ZONOS3 CPU requires its registered 16-span session-reset policy');
+  check(Array.isArray(boundaries), 'ZONOS3 CPU trials must record their session-reset boundaries');
+  check(Number.isSafeInteger(trial.metrics?.sessionResetCount) && trial.metrics.sessionResetCount === boundaries.length &&
+    finite(trial.metrics.sessionResetMs) && trial.metrics.sessionResetMs >= 0 && trial.metrics.sessionResetMs <= trial.generationMs,
+    'ZONOS3 CPU session-reset count/time must match the timed generation');
+
+  const expected = [];
+  const beginsAfterWarmup = group === 'trials' && cell.warmup.length > 0;
+  if (beginsAfterWarmup) expected.push({ afterChunkId: chunkCount - 1, beforeChunkId: 0, reason: 'article-boundary' });
+  for (let afterChunkId = cap - 1; afterChunkId < chunkCount - 1; afterChunkId += cap) {
+    expected.push({ afterChunkId, beforeChunkId: afterChunkId + 1, reason: 'span-cap' });
+  }
+  check(boundaries.length === expected.length, 'ZONOS3 CPU session-reset boundary count differs from the 93-span policy');
+  for (const [index, boundary] of boundaries.entries()) {
+    keys(boundary, ['afterChunkId', 'beforeChunkId', 'reason', 'threads', 'pthreadPoolSize'], 'session reset boundary');
+    check(boundary.afterChunkId === expected[index].afterChunkId &&
+      boundary.beforeChunkId === expected[index].beforeChunkId && boundary.reason === expected[index].reason &&
+      boundary.threads === cell.settings.threads && boundary.pthreadPoolSize === cell.settings.pthreadPoolSize,
+    'ZONOS3 CPU session-reset boundary does not match the registered span/thread policy');
+  }
+}
+
 const GENERATION_RSS_SCOPE='owned-chrome-process-tree-rss-including-browser-baseline';
 export function summarizeGenerationMemory(memory) {
   const samples=memory.samples;
@@ -216,7 +241,7 @@ export function validateResult(d, { publication = false } = {}) {
     for(const [group, trials] of [['warmup',c.warmup],['trials',c.trials]]) for(const [i,t] of trials.entries()){
       keys(t,['index','generationMs','samples','sampleRate','pcmSha256','validation','audio','metrics','memory'],'trial');
       check(t.index===i+1 && finite(t.generationMs)&&t.generationMs>0&&int(t.samples,1)&&int(t.sampleRate,8000,192000)&&(hash(t.pcmSha256)||(d.origin==='historical-import'&&t.pcmSha256===null)),'Invalid trial/index/PCM');
-      keys(t.validation,['finitePcm','chunkCount','nonemptyChunks','waveform'],'validation');
+      keys(t.validation,['finitePcm','chunkCount','nonemptyChunks','waveform','sessionResetBoundaries'],'validation');
       if (t.validation.waveform !== undefined || audio8V2) {
         validateWaveform(t, d.fixture.chunks);
       }
@@ -226,6 +251,9 @@ export function validateResult(d, { publication = false } = {}) {
       if(t.audio!==undefined){keys(t.audio,['sha256','bytes'],'audio');check(hash(t.audio.sha256)&&int(t.audio.bytes,1),'Invalid audio digest');}
       if(t.metrics!==undefined){check(object(t.metrics),'Invalid metrics');for(const [k,v] of Object.entries(t.metrics))check(/^[a-zA-Z][a-zA-Z0-9]{0,79}$/.test(k)&&(v===null||finite(v)&&v>=0),'Metrics must be finite, nonnegative or null');}
       if(d.origin==='native'&&t.metrics!==undefined)validateNativeMetrics(t);
+      if (d.origin === 'native' && c.model === 'zonos3-mini' && c.backendRequested === 'cpu' && c.status === 'measured') {
+        validateZonosCpuSessionResets(c, t, group, d.fixture.chunks);
+      } else check(t.validation.sessionResetBoundaries === undefined, 'Session-reset boundaries are only valid for the registered ZONOS3 CPU profile');
       const resourceRun=d.origin==='native'&&p.id.endsWith('-resources');
       if(resourceRun)validateGenerationMemory(t,t.generationMs);
       else check(t.memory===undefined&&t.metrics?.generationMeanRssBytes===undefined&&t.metrics?.generationRssSampleCount===undefined,'Generation memory evidence is only valid in native --resources runs');

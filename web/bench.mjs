@@ -248,6 +248,7 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
   let generationStartedAtEpochMs = null;
   let finalPcmAtEpochMs = null;
   setStatus('Generating ' + loaded.fixture.characters.toLocaleString() + ' characters in ' + chunks.length + ' ordered chunks…');
+  state.engine.beginGeneration?.();
   started = performance.now();
   if (recordMemory) generationStartedAtEpochMs = performance.timeOrigin + started;
   for (let i = 0; i < chunks.length; i++) {
@@ -287,6 +288,7 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
     return { failedWaveform: { reason: error.message, waveform: error.waveform, index, samples: pcm.length,
       sampleRate, pcmSha256, generationMs }, audioWavBase64: encodeWavBase64(pcm, sampleRate) };
   }
+  const { sessionResetBoundaries, ...engineNumericMetrics } = state.engine.getGenerationMetrics?.() || {};
   const receipt = {
     index,
     generationMs,
@@ -294,7 +296,8 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
     sampleRate,
     pcmSha256,
     validation: { finitePcm: true, chunkCount: chunks.length, nonemptyChunks: sampleCounts.every(count => count > 0),
-      ...articleValidation },
+      ...articleValidation,
+      ...(sessionResetBoundaries ? { sessionResetBoundaries } : {}) },
     metrics: {
       firstPcmMs,
       firstSourceChunkCompletedMs: firstChunkMs,
@@ -302,6 +305,7 @@ export async function generate({ index = 1, smoke = state.smoke, saveAudio = fal
       realTimeFactor: generationMs / (pcm.length / sampleRate * 1000),
       minSamplesPerChunk: Math.min(...sampleCounts),
       maxSamplesPerChunk: Math.max(...sampleCounts),
+      ...engineNumericMetrics,
     },
   };
   if (recordMemory) receipt.memoryWindow = { generationStartedAtEpochMs, finalPcmAtEpochMs };

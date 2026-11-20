@@ -42,6 +42,24 @@
     return { url: url.href, bytes: asset.bytes, sha256: asset.sha256, filename };
   }
 
+  async function loadSessionResetPolicy(asset, expectedId, expectedCap) {
+    const pinned = requireAsset(asset, 'cpu-session-reset-policy-v1.json');
+    const response = await fetch(pinned.url, { cache: 'no-store', credentials: 'same-origin' });
+    if (!response.ok) throw new Error('ZONOS3 CPU reset policy fetch failed with HTTP ' + response.status + '.');
+    const bytes = await response.arrayBuffer();
+    if (bytes.byteLength !== pinned.bytes) throw new Error('ZONOS3 CPU reset policy length mismatch.');
+    const digest = await crypto.subtle.digest('SHA-256', bytes);
+    const sha256 = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+    if (sha256 !== pinned.sha256) throw new Error('ZONOS3 CPU reset policy SHA-256 mismatch.');
+    const policy = JSON.parse(new TextDecoder().decode(bytes));
+    if (!policy || policy.id !== expectedId || policy.sessionResetCap !== expectedCap ||
+        typeof policy.resetBeforeNextSpan !== 'string' || typeof policy.resetAtArticleBoundary !== 'string' ||
+        !Array.isArray(policy.retainedState) || policy.retainedState.length !== 3) {
+      throw new Error('ZONOS3 CPU reset policy does not match the registered profile.');
+    }
+    return policy;
+  }
+
   function rangeKey(asset, start, end) {
     return new Request(new URL('/' + CACHE_PREFIX + '/' + asset.sha256 + '/' + start + '-' + end, self.location.origin));
   }
@@ -187,6 +205,14 @@
     ];
     const threads = options.threads || config.cpuThreads || config.info?.settings?.threads || THREADS;
     if (!Number.isSafeInteger(threads) || threads < 1 || threads > MAX_THREADS) throw new Error('ZONOS3 CPU thread count must be from 1 to 12.');
+    const policyAsset = config.cpuSessionResetPolicy;
+    const resetPolicy = await loadSessionResetPolicy(policyAsset, policyAsset?.id, config.cpuSessionResetCap);
+    const sessionResetCap = resetPolicy.sessionResetCap;
+    if (!Number.isSafeInteger(sessionResetCap) || sessionResetCap < 1 || sessionResetCap > 32) {
+      throw new Error('ZONOS3 CPU session reset cap must be a registered integer from 1 to 32.');
+    }
+    config.cpuThreads = threads;
+    config.cpuSessionResetCap = sessionResetCap;
 
     log('runtime-load', 'Loading the pinned community audio.cpp ZONOS3 CPU WebAssembly runtime.');
     module = await createZonos3Cpu({
@@ -248,6 +274,8 @@
         runtimeRelease: RUNTIME_RELEASE,
         threads,
         pthreadPoolSize: PTHREAD_POOL_SIZE,
+        sessionResetPolicy: resetPolicy.resetBeforeNextSpan + ' ' + resetPolicy.resetAtArticleBoundary,
+        sessionResetCap,
         executionProviders: ['wasm'],
         output: 'Mono 44.1 kHz Float32 PCM; offline audio.cpp API returns a full canonical span before its first-PCM event.',
         assetCache: 'Pinned same-origin GGUF files stored as 16 MiB CacheStorage ranges keyed by SHA-256, then copied to Emscripten MEMFS.',
@@ -273,11 +301,23 @@
     config = null;
   }
 
+  function resetSession(completedChunkId, beforeChunkId, reason) {
+    if (!module || !config) throw new Error('ZONOS3 CPU session cannot reset before initialization.');
+    module._bench_shutdown();
+    const threads = config.cpuThreads;
+    const status = module.ccall('bench_open', 'number', ['string', 'string', 'number'], ['/inputs/backbone-ptq.gguf', 'cpu', threads]);
+    if (status !== 0) throw new Error('audio.cpp ZONOS3 CPU session reset failed (' + status + '): ' + module.ccall('bench_error', 'string', [], []));
+    log('session-reset', 'Reopened after canonical span ' + completedChunkId + ' before span ' + beforeChunkId +
+      ' (' + reason + ') with ' + threads + ' CPU threads.');
+    return { completedChunkId, beforeChunkId, reason, threads, pthreadPoolSize: PTHREAD_POOL_SIZE };
+  }
+
   async function handle(event) {
     const data = event.data || {};
     try {
       let value;
       if (data.action === 'initialize') value = await initialize(data.options || {});
+      else if (data.action === 'reset-session') value = resetSession(data.completedChunkId, data.beforeChunkId, data.reason);
       else if (data.action === 'generate') {
         const chunk = data.chunk;
         if (!chunk || !Number.isSafeInteger(chunk.id) || chunk.id < 0 || !Number.isSafeInteger(chunk.start) ||

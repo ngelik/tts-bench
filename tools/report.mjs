@@ -23,12 +23,22 @@ export function renderReport(d){
     if(affected.length)markdown+=`\n**Waveform fault in ${md(cell.model)} / ${md(cell.backendRequested)}.** ${waveformFinding} Matching timed article(s): ${affected.map(t=>(t.generationMs/1000).toFixed(3)+' s').join(', ')}. [Full waveform audit](${waveformReport}).\n`;
   }
   if(d.origin==='native'){
-    const labels={firstChunkMs:['First completed source chunk','ms'],firstSourceChunkCompletedMs:['First completed source chunk','ms'],offlineInferenceNetworkBytes:['HTTP body bytes after offline toggle','bytes'],firstPcmMs:['First PCM block','ms'],audioSeconds:['Generated audio','s'],realTimeFactor:['Generation / audio duration','ratio'],loadMs:['Model initialization','ms'],controllerTrialElapsedMs:['Complete controller trial including setup/export','ms'],switchTransitionMs:['Dispose predecessor + initialize target','ms'],downloadBytes:['Transferred HTTP body data','bytes'],idealDownloadSecondsAt1Mbps:['Ideal body transfer at 1 Mbps','s'],articleCallPeakRssBytes:['Whole-call Chrome process-tree peak RSS','bytes'],generationMeanRssBytes:['Per-trial mean generation Chrome process-tree RSS','bytes'],generationRssSampleCount:['In-window Chrome RSS observations','samples']};
+    const labels={firstChunkMs:['First completed source chunk','ms'],firstSourceChunkCompletedMs:['First completed source chunk','ms'],offlineInferenceNetworkBytes:['HTTP body bytes after offline toggle','bytes'],firstPcmMs:['First PCM block','ms'],audioSeconds:['Generated audio','s'],realTimeFactor:['Generation / audio duration','ratio'],sessionResetCount:['CPU session resets within generation','resets'],sessionResetMs:['CPU session reset time within generation','ms'],loadMs:['Model initialization','ms'],controllerTrialElapsedMs:['Complete controller trial including setup/export','ms'],switchTransitionMs:['Dispose predecessor + initialize target','ms'],downloadBytes:['Transferred HTTP body data','bytes'],idealDownloadSecondsAt1Mbps:['Ideal body transfer at 1 Mbps','s'],articleCallPeakRssBytes:['Whole-call Chrome process-tree peak RSS','bytes'],generationMeanRssBytes:['Per-trial mean generation Chrome process-tree RSS','bytes'],generationRssSampleCount:['In-window Chrome RSS observations','samples']};
     const metrics=[];
     for(const c of d.cells)if(c.status==='measured')for(const [key,[label,unit]] of Object.entries(labels)){const values=c.trials.map(t=>t.metrics?.[key]).filter(v=>typeof v==='number'&&Number.isFinite(v));if(values.length)metrics.push([c.model,c.backendRequested,label,median(values),unit,values.length]);}
     if(metrics.length){markdown+='\nAdditional metrics (median of available observations; scopes are distinct):\n\n| Model | Backend | Metric | Median | Unit | n |\n|---|---|---|---:|---|---:|\n';for(const [model,backend,label,value,unit,n]of metrics)markdown+=`| ${md(model)} | ${md(backend)} | ${label} | ${value.toFixed(unit==='bytes'?0:3)} | ${unit} | ${n} |\n`;}
   }
   const supportCells=d.cells.filter(c=>c.support);
+  for (const cell of d.cells) {
+    if (cell.model !== 'zonos3-mini' || cell.backendRequested !== 'cpu' || !Number.isSafeInteger(cell.settings.sessionResetCap)) continue;
+    markdown+=`\nCPU session reset policy: close and reopen the audio.cpp session before the next synthesis after ${cell.settings.sessionResetCap} completed spans; retain the same WASM module, pthread pool and MEMFS assets. Reset work is included in the timed generation interval.\n`;
+    for (const [group, trials] of [['warm-up', cell.warmup], ['scored', cell.trials]]) {
+      for (const trial of trials) {
+        const boundaries=trial.validation?.sessionResetBoundaries ?? [];
+        markdown+=`\n${plain(cell.model)} ${group} ${trial.index} reset boundaries: ${boundaries.length ? boundaries.map(boundary=>`after ${boundary.afterChunkId} / before ${boundary.beforeChunkId} (${boundary.reason})`).join('; ') : 'none'}. Reset elapsed time ${Number(trial.metrics?.sessionResetMs ?? 0).toFixed(3)} ms is inside the generation timer.\n`;
+      }
+    }
+  }
   if(supportCells.length){
     markdown+='\nModel support (catalog capability, not coverage of this run):\n\n| Model | Supported voices | Bundled voices | Languages | Tested voice |\n|---|---:|---:|---|---|\n';
     for(const c of supportCells){const s=c.support;markdown+=`| ${md(c.model)} | ${s.voiceCount??'Unknown'} | ${s.bundledVoiceCount??'Unknown'} | ${s.languageCount??'Unknown'}${s.languages?.length>5?'':' ('+md(s.languages?.join(', ')??'unknown')+')'} | ${md(c.voice)} |\n`;}

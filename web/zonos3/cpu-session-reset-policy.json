@@ -1,0 +1,11 @@
+{
+  "id": "zonos3-mini-cpu-session-reset-v1",
+  "sessionResetCap": 16,
+  "resetBeforeNextSpan": "Close and reopen the audio.cpp model session before synthesizing the next canonical span after the cap is reached.",
+  "resetAtArticleBoundary": "If a partial group remains, close and reopen before synthesizing chunk 0 of the next article.",
+  "retainedState": [
+    "same WebAssembly module",
+    "same Emscripten pthread pool",
+    "same verified MEMFS model files"
+  ]
+}

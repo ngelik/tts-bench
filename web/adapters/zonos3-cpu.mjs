@@ -24,6 +24,12 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
   let worker = null;
   let nextId = 0;
   let failed = false;
+  let sessionResetCap = model.cpuSessionResetCap;
+  let chunksSinceReset = 0;
+  let lastCompletedChunkId = null;
+  let generationResetCount = 0;
+  let generationResetMs = 0;
+  let generationResetBoundaries = [];
   const pending = new Map();
 
   function terminate(error) {
@@ -42,8 +48,14 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
         return;
       }
       const id = ++nextId;
-      const timer = action === 'dispose'
-        ? setTimeout(() => { pending.delete(id); reject(new Error('ZONOS3 CPU worker dispose timed out.')); }, 10000)
+      const timeoutMs = action === 'dispose' ? 10000 : action === 'reset-session' ? 120000 : 0;
+      const timer = timeoutMs
+        ? setTimeout(() => {
+          pending.delete(id);
+          const error = new Error('ZONOS3 CPU worker ' + action + ' timed out after ' + timeoutMs + ' ms.');
+          reject(error);
+          if (action === 'reset-session') terminate(error);
+        }, timeoutMs)
         : null;
       pending.set(id, {
         action,
@@ -85,14 +97,14 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
         if (data.error) {
           const error = new Error(data.error);
           call.reject(error);
-          if (call.action === 'initialize') terminate(error);
+          if (call.action === 'initialize' || call.action === 'reset-session') terminate(error);
         } else call.resolve(data.value);
       };
       worker.onerror = event => terminate(new Error('ZONOS3 CPU worker failed: ' + (event?.message || 'unknown worker error')));
       worker.onmessageerror = () => terminate(new Error('ZONOS3 CPU worker message could not be deserialized.'));
 
       try {
-        return await request('initialize', {
+        const initialized = await request('initialize', {
           options: {
             ...options,
             backend,
@@ -103,6 +115,8 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
             modelConfig: model,
           },
         });
+        sessionResetCap = initialized.settings?.sessionResetCap ?? sessionResetCap;
+        return initialized;
       } catch (error) {
         await this.dispose().catch(() => {});
         throw error;
@@ -114,6 +128,10 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
           !Number.isSafeInteger(chunk.end) || typeof chunk.text !== 'string' || chunk.end - chunk.start !== chunk.text.length) {
         throw new Error('ZONOS3 CPU requires an exact canonical source span.');
       }
+      if (chunksSinceReset > 0 && (chunksSinceReset >= sessionResetCap || chunk.id === 0)) {
+        const reason = chunksSinceReset >= sessionResetCap ? 'span-cap' : 'article-boundary';
+        await this.resetSession(lastCompletedChunkId, chunk.id, reason);
+      }
       const response = await request('generate', { chunk }, onFirstPcm);
       if (!response || response.completedChunkId !== chunk.id || response.sampleRate !== 44100 ||
           !Array.isArray(response.parts) || response.parts.length !== 1 ||
@@ -121,7 +139,34 @@ export function createZonos3CpuAdapter(model, { threads = model?.cpuThreads || D
           !response.parts[0].every(Number.isFinite)) {
         throw new Error('ZONOS3 CPU returned invalid or mismatched mono PCM.');
       }
+      chunksSinceReset += 1;
+      lastCompletedChunkId = chunk.id;
       return response;
+    },
+
+    beginGeneration() {
+      generationResetCount = 0;
+      generationResetMs = 0;
+      generationResetBoundaries = [];
+    },
+
+    async resetSession(completedChunkId, beforeChunkId, reason) {
+      const started = performance.now();
+      const result = await request('reset-session', { completedChunkId, beforeChunkId, reason });
+      generationResetMs += performance.now() - started;
+      generationResetCount += 1;
+      generationResetBoundaries.push({ afterChunkId: result.completedChunkId, beforeChunkId: result.beforeChunkId,
+        reason: result.reason, threads: result.threads, pthreadPoolSize: result.pthreadPoolSize });
+      chunksSinceReset = 0;
+      lastCompletedChunkId = null;
+    },
+
+    getGenerationMetrics() {
+      return {
+        sessionResetCount: generationResetCount,
+        sessionResetMs: generationResetMs,
+        sessionResetBoundaries: generationResetBoundaries.map(value => ({ ...value })),
+      };
     },
 
     async dispose() {

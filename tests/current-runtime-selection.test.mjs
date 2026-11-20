@@ -160,6 +160,13 @@ test('ZONOS backend-scoped CPU WASM updates preserve the verified WebGPU profile
   assert.equal(gpuView.warm.webgpu.registration, 'current');
   assert.equal(gpuView.pairedWarm, false);
 
+  const preResetCpu = structuredClone(gpu);
+  preResetCpu.id += '-cpu-v3-before-session-reset';
+  preResetCpu.cells[0].backendRequested = 'cpu';
+  preResetCpu.cells[0].backendEffective = 'cpu/wasm';
+  assert.equal(preferredAttempts([preResetCpu], zonosModels, () => true)[0].current, false,
+    'the prior CPU v3 registration without the pinned reset policy is archived');
+
   const v2Cpu = structuredClone(gpu);
   v2Cpu.id += '-cpu-v2-fixture';
   v2Cpu.cells[0].backendRequested = 'cpu';

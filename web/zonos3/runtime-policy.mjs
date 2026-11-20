@@ -32,6 +32,16 @@ export const ZONOS3_MODEL_CONFIG = Object.freeze({
     streamDecode: 'prefix; decode after one codebook for the first prefix only',
   }),
   cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v3',
+  // The CPU/WASM speech session is recycled after a bounded number of source
+  // spans to prevent long-lived native session state from stalling generation.
+  cpuSessionResetCap: 16,
+  cpuSessionResetPolicy: Object.freeze({
+    modelUrl: `${modelBase}/cpu-session-reset-policy-v1.json`,
+    bytes: 471,
+    sha256: 'bd012fc3788e59e3bbcb8b63f311cdb9b77a24a15de1b2d02edf5595ecace003',
+    filename: 'cpu-session-reset-policy-v1.json',
+    id: 'zonos3-mini-cpu-session-reset-v1',
+  }),
   cpuRuntimeFiles: Object.freeze({
     jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.js',
     wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.wasm',

@@ -10,6 +10,14 @@ const model = {
   id: 'zonos3-mini',
   name: 'ZONOS3-Mini',
   family: 'zonos3',
+  cpuSessionResetCap: 16,
+  cpuSessionResetPolicy: {
+    modelUrl: '/models/zonos3/cpu-session-reset-policy-v1.json',
+    bytes: 471,
+    sha256: 'bd012fc3788e59e3bbcb8b63f311cdb9b77a24a15de1b2d02edf5595ecace003',
+    filename: 'cpu-session-reset-policy-v1.json',
+    id: 'zonos3-mini-cpu-session-reset-v1',
+  },
   cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v3',
   cpuRuntimeFiles: {
     jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.js',
@@ -41,9 +49,12 @@ class FakeWorker {
     if (message.action === 'generate') queueMicrotask(() => this.onmessage?.({ data: { id: message.id, event: 'first-pcm' } }));
     queueMicrotask(() => {
       const value = message.action === 'initialize'
-        ? { status: 'measured', backendEffective: 'cpu/wasm', capability: { gpuDispatchVerified: false } }
+        ? { status: 'measured', backendEffective: 'cpu/wasm', settings: { sessionResetCap: 16 }, capability: { gpuDispatchVerified: false } }
         : message.action === 'generate'
           ? { parts: [Float32Array.of(0.125, -0.25)], sampleRate: 44100, completedChunkId: message.chunk.id }
+          : message.action === 'reset-session'
+            ? { completedChunkId: message.completedChunkId, beforeChunkId: message.beforeChunkId,
+                reason: message.reason, threads: 6, pthreadPoolSize: 12 }
           : null;
       this.onmessage?.({ data: { id: message.id, ...(FakeWorker.failure ? { error: FakeWorker.failure } : { value }) } });
     });
@@ -103,6 +114,40 @@ test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', ()
   assert.throws(() => createZonos3CpuAdapter(model, { threads: 13 }), /thread count must be an integer from 1 to 12/);
   assert.match(workerSource, /const PTHREAD_POOL_SIZE = 12/);
   assert.match(workerSource, /threads > MAX_THREADS/);
+  assert.match(workerSource, /loadSessionResetPolicy/);
+  assert.match(workerSource, /ZONOS3 CPU reset policy SHA-256 mismatch/);
+});
+
+test('ZONOS3 CPU adapter resets before a 17th span and at the next article boundary', async () => {
+  const previousWorker = globalThis.Worker;
+  FakeWorker.instances = [];
+  FakeWorker.failure = null;
+  globalThis.Worker = FakeWorker;
+  try {
+    const adapter = createZonos3CpuAdapter(model);
+    await adapter.initialize({ backend: 'cpu' });
+    adapter.beginGeneration();
+    for (let id = 0; id < 93; id++) {
+      const text = 'span-' + id;
+      await adapter.generateChunk({ id, start: 0, end: text.length, text });
+    }
+    assert.deepEqual(FakeWorker.instances[0].sent.filter(message => message.action === 'reset-session')
+      .map(message => [message.completedChunkId, message.beforeChunkId, message.reason]), [
+      [15, 16, 'span-cap'], [31, 32, 'span-cap'], [47, 48, 'span-cap'],
+      [63, 64, 'span-cap'], [79, 80, 'span-cap'],
+    ]);
+    assert.deepEqual(adapter.getGenerationMetrics().sessionResetBoundaries.map(value => value.afterChunkId), [15, 31, 47, 63, 79]);
+    assert.equal(adapter.getGenerationMetrics().sessionResetCount, 5);
+    adapter.beginGeneration();
+    await adapter.generateChunk({ id: 0, start: 0, end: 6, text: 'span-0' });
+    assert.deepEqual(adapter.getGenerationMetrics().sessionResetBoundaries.map(value => [value.afterChunkId, value.beforeChunkId, value.reason]), [
+      [92, 0, 'article-boundary'],
+    ]);
+    await adapter.dispose();
+  } finally {
+    if (previousWorker === undefined) delete globalThis.Worker;
+    else globalThis.Worker = previousWorker;
+  }
 });
 
 test('ZONOS3 CPU worker verifies local range assets and reports the actual offline CPU backend', () => {

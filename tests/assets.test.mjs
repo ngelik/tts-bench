@@ -50,7 +50,7 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(zonos.support.voiceCount, 27);
   assert.equal(zonos.support.bundledVoiceCount, 1);
   assert.equal(zonos.support.languageCount, 43);
-  assert.equal(zonos.assets.length, 75);
+  assert.equal(zonos.assets.length, 76);
   assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-web-voices-English-Imogen_en-British_F_1-embedding-npy').sha256,
     '683424b91faeade48c8a92e05e1c3679366abbba443ef62eccba8dc40de48e9e');
   assert.equal(zonos.assets.find(asset => asset.id === 'zonos3-cpu-backbone-q4q8').bytes, 663150624);
@@ -73,6 +73,10 @@ test('catalog entries match the pinned browser backends', () => {
   assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/')));
   assert.equal(cpuRuntime.find(asset => asset.id === 'zonos3-cpu-runtime-wasm').sha256,
     '59ca2ce1c12bffd27fa13beb00e2d90d919f00bcc083c963ce29878de3502bf8');
+  const cpuResetPolicy = zonos.assets.find(asset => asset.id === 'zonos3-cpu-session-reset-policy-v1');
+  assert.deepEqual(cpuResetPolicy.backends, ['cpu']);
+  assert.equal(cpuResetPolicy.bytes, 471);
+  assert.equal(cpuResetPolicy.sha256, 'bd012fc3788e59e3bbcb8b63f311cdb9b77a24a15de1b2d02edf5595ecace003');
   const linnet = getAssetLock().models['linnet-en-35m'];
   assert.deepEqual(linnet.backends, ['cpu', 'webgpu']);
   assert.equal(linnet.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');
