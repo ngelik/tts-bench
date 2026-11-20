@@ -276,6 +276,8 @@
         pthreadPoolSize: PTHREAD_POOL_SIZE,
         sessionResetPolicy: resetPolicy.resetBeforeNextSpan + ' ' + resetPolicy.resetAtArticleBoundary,
         sessionResetCap,
+        sessionResetPolicyId: resetPolicy.id,
+        sessionResetPolicySha256: policyAsset.sha256,
         executionProviders: ['wasm'],
         output: 'Mono 44.1 kHz Float32 PCM; offline audio.cpp API returns a full canonical span before its first-PCM event.',
         assetCache: 'Pinned same-origin GGUF files stored as 16 MiB CacheStorage ranges keyed by SHA-256, then copied to Emscripten MEMFS.',

@@ -57,6 +57,9 @@ function validateZonosCpuSessionResets(cell, trial, group, chunkCount) {
   const cap = cell.settings.sessionResetCap;
   const boundaries = trial.validation.sessionResetBoundaries;
   check(cap === 16 && text(cell.settings.sessionResetPolicy, 1000), 'ZONOS3 CPU requires its registered 16-span session-reset policy');
+  check(cell.settings.sessionResetPolicyId === 'zonos3-mini-cpu-session-reset-v1' &&
+    cell.settings.sessionResetPolicySha256 === 'bd012fc3788e59e3bbcb8b63f311cdb9b77a24a15de1b2d02edf5595ecace003',
+    'ZONOS3 CPU session-reset settings must reference the pinned policy asset');
   check(Array.isArray(boundaries), 'ZONOS3 CPU trials must record their session-reset boundaries');
   check(Number.isSafeInteger(trial.metrics?.sessionResetCount) && trial.metrics.sessionResetCount === boundaries.length &&
     finite(trial.metrics.sessionResetMs) && trial.metrics.sessionResetMs >= 0 && trial.metrics.sessionResetMs <= trial.generationMs,

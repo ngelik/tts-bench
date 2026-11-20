@@ -37,7 +37,8 @@ test('ZONOS3 CPU receipts bind the cap, article-boundary reset and in-timer rese
   const cell=d.cells[0];
   cell.model='zonos3-mini';cell.support=structuredClone(zonosSupport);cell.voice='Imogen (English, British female)';
   cell.precision='audio.cpp Q4_0 routed experts / Q8_0 GDN and attention projections; remaining tensors F16/F32';
-  cell.settings={threads:6,pthreadPoolSize:12,sessionResetCap:16,sessionResetPolicy:'Close and reopen before the next synthesis after 16 canonical spans.'};
+  cell.settings={threads:6,pthreadPoolSize:12,sessionResetCap:16,sessionResetPolicy:'Close and reopen before the next synthesis after 16 canonical spans.',
+    sessionResetPolicyId:'zonos3-mini-cpu-session-reset-v1',sessionResetPolicySha256:'bd012fc3788e59e3bbcb8b63f311cdb9b77a24a15de1b2d02edf5595ecace003'};
   cell.trials=[cell.trials[0]];
   const spanBoundaries=[15,31,47,63,79].map(afterChunkId=>({afterChunkId,beforeChunkId:afterChunkId+1,reason:'span-cap',threads:6,pthreadPoolSize:12}));
   const articleBoundary={afterChunkId:92,beforeChunkId:0,reason:'article-boundary',threads:6,pthreadPoolSize:12};

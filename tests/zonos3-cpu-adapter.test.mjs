@@ -116,6 +116,7 @@ test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', ()
   assert.match(workerSource, /threads > MAX_THREADS/);
   assert.match(workerSource, /loadSessionResetPolicy/);
   assert.match(workerSource, /ZONOS3 CPU reset policy SHA-256 mismatch/);
+  assert.match(workerSource, /sessionResetPolicyId: resetPolicy\.id/);
 });
 
 test('ZONOS3 CPU adapter resets before a 17th span and at the next article boundary', async () => {
