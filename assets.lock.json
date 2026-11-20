@@ -2081,6 +2081,129 @@
         ]
       }
     },
+    "sano-heart-nano": {
+      "displayName": "SanoTTS heart-nano INT8 (English, US)",
+      "modelRevision": "4a8194aa1dd958033ee449b3ad30c37e536b216e",
+      "runtime": {
+        "package": "Ampixa/sanoTTS browser runtime",
+        "version": "c0584a51213721faba98135821faab71bae888f0",
+        "license": "GPL-3.0-or-later",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "sano-heart-nano-runtime-g2p-data",
+          "target": "runtimes/sano-heart-nano/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.data",
+          "bytes": 3266545,
+          "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-nano-runtime-g2p-js",
+          "target": "runtimes/sano-heart-nano/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.js",
+          "bytes": 72608,
+          "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-nano-runtime-g2p-wasm",
+          "target": "runtimes/sano-heart-nano/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_g2p.wasm",
+          "bytes": 346363,
+          "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-nano-runtime-nano-js",
+          "target": "runtimes/sano-heart-nano/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heartnano.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heartnano.js",
+          "bytes": 11157,
+          "sha256": "45e9c01f7e1bc661f22875961fa824c2eb503a4e13783c0b035ae7210403b5ec",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-nano-runtime-nano-wasm",
+          "target": "runtimes/sano-heart-nano/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heartnano.wasm",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/snt_nano_heartnano.wasm",
+          "bytes": 50349,
+          "sha256": "d61eb078bc10334d5cb07d36e4eeb58b879d776cd87ceebaf888f43f84053497",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-nano-runtime-trellis-frontend",
+          "target": "runtimes/sano-heart-nano/c0584a51213721faba98135821faab71bae888f0/web/trellis_frontend.js",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/web/trellis_frontend.js",
+          "bytes": 20026,
+          "sha256": "1d8523bab2e96f03ea98131a3d575d92851d3870899435ba3a306804238e49b3",
+          "kind": "runtime"
+        },
+        {
+          "id": "sano-heart-nano-meta-json",
+          "target": "models/sano-heart-nano/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+          "bytes": 1185,
+          "sha256": "873c9264c16c99cf10f2b65f73eb388b4935c4f46e3f529d2b89b13f8f9e5659",
+          "kind": "model-support"
+        },
+        {
+          "id": "sano-heart-nano-front-q8-bin",
+          "target": "models/sano-heart-nano/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/front_q8.bin",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/front_q8.bin",
+          "bytes": 109296,
+          "sha256": "5553ae5abf37c18d31c0b64ea791785b30e7a08cc32c07bff8bb2ab4aae0b94b",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-heart-nano-model-q8-bin",
+          "target": "models/sano-heart-nano/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/model_q8.bin",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/model_q8.bin",
+          "bytes": 235936,
+          "sha256": "4a6cdf0d0bf1996aa2c056298265ea8dd0c200c9025cba4a9b04e0e987bea88c",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sano-heart-nano-model-readme",
+          "target": "models/sano-heart-nano/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+          "url": "https://huggingface.co/ampixa/sanoTTS/resolve/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+          "bytes": 13163,
+          "sha256": "ed743cc1f9ca8a1246c03579b5ec22fda8252e8d6f8ed3264603376a8f9d34db",
+          "kind": "model-terms"
+        },
+        {
+          "id": "sano-heart-nano-gpl-license",
+          "target": "licenses/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "url": "https://raw.githubusercontent.com/Ampixa/sanoTTS/c0584a51213721faba98135821faab71bae888f0/LICENSE",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "GPL-3.0",
+        "runtime": "GPL-3.0-or-later",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned heart-nano int8 voice checkpoint, official en-us browser G2P and snt_nano WASM runtime",
+        "notes": "One bundled heart-nano English (US) voice is exercised. The official demo splits canonical spans into sentence/clause pieces of at most 120 characters; each piece is tokenized and synthesized inside the timed span call, and non-whitespace dropped IPA or output/token caps fail closed. This registration is CPU/WASM only; other Sano voices and separate WebGPU conversions are not included.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+          "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+        ]
+      }
+    },
     "inflect-micro-v2": {
       "displayName": "Inflect Micro v2 FP32",
       "modelRevision": "91b1ab6432323064ec0e8e9704d92fcecd24855f",

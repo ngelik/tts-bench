@@ -1,0 +1,163 @@
+name: SanoTTS heart-nano headed Chrome smoke
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/sano-heart-nano-smoke.yml'
+      - 'assets.lock.json'
+      - 'lib/model-parameters.json'
+      - 'tests/sano-heart-nano.test.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'web/adapters/sano-heart-nano.mjs'
+      - 'web/bench.mjs'
+      - 'web/sano/**'
+      - 'web/workers/sano-heart-nano.js'
+      - 'tools/check-sano-heart-nano-frontend.mjs'
+      - 'tools/package-sano-hosted-diagnostic.mjs'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sano-heart-nano-smoke.yml'
+      - 'assets.lock.json'
+      - 'lib/model-parameters.json'
+      - 'tests/sano-heart-nano.test.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'web/adapters/sano-heart-nano.mjs'
+      - 'web/bench.mjs'
+      - 'web/sano/**'
+      - 'web/workers/sano-heart-nano.js'
+      - 'tools/check-sano-heart-nano-frontend.mjs'
+      - 'tools/package-sano-hosted-diagnostic.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sano-heart-nano-headed-chrome
+  cancel-in-progress: false
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --ignore-scripts
+      - name: Verify adapter and timed split/tokenize behavior
+        run: node --test tests/sano-heart-nano.test.mjs
+      - name: Fetch and verify pinned model/runtime assets
+        run: |
+          npm run assets -- fetch --model sano-heart-nano --accept-license
+          npm run assets -- verify --model sano-heart-nano --accept-license
+      - name: Audit all canonical phoneme pieces in headed Chrome without synthesis
+        run: xvfb-run -a node tools/check-sano-heart-nano-frontend.mjs
+      - name: Require clean committed source before Chrome inference
+        run: |
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          if [[ -n "$status" ]]; then
+            printf 'Dirty source paths before generation:\n%s\n' "$status"
+            echo "::error::Refusing to start Chrome with a dirty source checkout."
+            exit 1
+          fi
+      - name: Run three-span diagnostic in headed Chrome
+        run: >-
+          xvfb-run -a node bin/bench.mjs run
+          --model sano-heart-nano
+          --backend cpu
+          --smoke
+          --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM diagnostic'
+          --chrome /usr/bin/google-chrome
+          --accept-license
+          --timeout-minutes 20
+      - name: Verify diagnostic receipt and WAV
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { createHash } from 'node:crypto';
+          import { readFileSync, readdirSync } from 'node:fs';
+          const runs = readdirSync('runs').map(name => name).filter(name => {
+            try { const value=JSON.parse(readFileSync(`runs/${name}/result.json`,'utf8')); return value.protocol.scenario==='warm' && value.protocol.smoke===true && value.cells?.[0]?.model==='sano-heart-nano'; } catch { return false; }
+          });
+          assert.equal(runs.length, 1, 'exactly one Sano warm-smoke result exists');
+          const root = `runs/${runs[0]}`;
+          const result = JSON.parse(readFileSync(`${root}/result.json`, 'utf8'));
+          assert.equal(result.protocol.smoke, true);
+          assert.equal(result.source.dirty, false);
+          assert.equal(result.cells.length, 1);
+          const [cell] = result.cells;
+          assert.equal(cell.model, 'sano-heart-nano');
+          assert.equal(cell.backendRequested, 'cpu');
+          assert.equal(cell.backendEffective, 'cpu/wasm');
+          assert.equal(cell.status, 'measured', cell.reason);
+          assert.equal(cell.trials.length, 1);
+          const [trial] = cell.trials;
+          assert.equal(trial.validation.finitePcm, true);
+          assert.equal(trial.validation.chunkCount, 3);
+          assert.equal(trial.sampleRate, 24000);
+          assert.ok(Number.isFinite(trial.metrics.firstPcmMs) && trial.metrics.firstPcmMs > 0);
+          const wav = readFileSync(`${root}/sano-heart-nano-cpu.wav`);
+          assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+          assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+          assert.equal(wav.readUInt32LE(24), 24000);
+          assert.equal(wav.readUInt32LE(40), trial.samples * 2);
+          assert.equal(wav.length, 44 + trial.samples * 2);
+          const sha = createHash('sha256').update(wav).digest('hex');
+          assert.equal(sha, trial.audio.sha256);
+          console.log(JSON.stringify({runId:result.id,sourceCommit:result.source.gitCommit,backend:cell.backendEffective,firstPcmMs:trial.metrics.firstPcmMs,sampleRate:trial.sampleRate,samples:trial.samples,wavBytes:wav.length,wavSha256:sha},null,2));
+          JS
+      - name: Run three-span offline cache diagnostic
+        run: >-
+          xvfb-run -a node bin/bench.mjs run
+          --model sano-heart-nano
+          --backend cpu
+          --scenario offline
+          --smoke
+          --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM offline diagnostic'
+          --chrome /usr/bin/google-chrome
+          --accept-license
+          --timeout-minutes 20
+      - name: Verify offline diagnostic receipt
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import {readFileSync,readdirSync} from 'node:fs';
+          const runs=readdirSync('runs').filter(name=>{
+            try{const value=JSON.parse(readFileSync(`runs/${name}/result.json`,'utf8'));return value.protocol.scenario==='offline'&&value.protocol.smoke===true&&value.cells?.[0]?.model==='sano-heart-nano';}catch{return false;}
+          });
+          assert.equal(runs.length,1,'exactly one Sano offline-smoke result exists');
+          const result=JSON.parse(readFileSync(`runs/${runs[0]}/result.json`,'utf8'));
+          assert.equal(result.source.dirty,false);
+          const [cell]=result.cells;
+          assert.equal(cell.model,'sano-heart-nano');
+          assert.equal(cell.backendEffective,'cpu/wasm');
+          assert.equal(cell.status,'measured',cell.reason);
+          const [trial]=cell.trials;
+          assert.equal(trial.validation.finitePcm,true);
+          assert.equal(trial.validation.chunkCount,3);
+          assert.equal(trial.sampleRate,24000);
+          assert.equal(trial.metrics.offlineInferenceNetworkBytes,0);
+          console.log(JSON.stringify({runId:result.id,scenario:result.protocol.scenario,offlineInferenceNetworkBytes:trial.metrics.offlineInferenceNetworkBytes,sampleRate:trial.sampleRate,samples:trial.samples},null,2));
+          JS
+      - name: Preserve smoke and frontend audit diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sano-heart-nano-hosted-chrome-smoke
+          if-no-files-found: ignore
+          path: |
+            runs/**/result.json
+            runs/**/summary.md
+            runs/**/status.json
+            runs/**/error.json
+            runs/**/invalid-result.json
+            runs/**/warmup-*.json
+            runs/**/trial-*.json
+            runs/**/*.wav
+            runs/diagnostics/sano-heart-nano/frontend-audit.json

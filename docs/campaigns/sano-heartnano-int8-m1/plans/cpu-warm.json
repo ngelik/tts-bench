@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+  "conditions": "SanoTTS heart-nano official INT8 CPU/WASM profile; 24 kHz; English-US heartnano voice. Exact source manifest SHA-256 169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027 and assets.lock.json SHA-256 3f8c85f42e18f1d5d74662890103a553c87a0111c92d4b253e39ec968b50a2b5. Headed Google Chrome 157.0.8103.40 on the verified M1 Pro 8-core / 16 GiB baseline, AC power, disposable profile. Record per-cell background load and power; no thermal instrumentation. Preserve all source-span outputs and failed evidence.",
+  "cells": [
+    {
+      "model": "sano-heart-nano",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 120,
+      "resources": false
+    }
+  ]
+}

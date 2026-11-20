@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+  "conditions": "Separate cached-assets, new-engine, n=1 Chrome process-tree RSS diagnostic for the official INT8 CPU/WASM profile; it is not a resident warm timing. Same pinned source, heartnano voice, 24 kHz and host setup as the preceding CPU warm cell. Record pre-run power and background load separately; no thermal instrumentation.",
+  "cells": [
+    {
+      "model": "sano-heart-nano",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 120,
+      "resources": true
+    }
+  ]
+}

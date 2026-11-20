@@ -12,7 +12,19 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee", "phonon", "leokani-7m", "leokani-4.5m", "pivo-curated", "woof", "piper-en-gb-southern-english-female-low", "supertonic-3", "kokoro-82m", "mms-english", "kitten-nano-0.8", "sano-amy", "sano-heart-nano", "inflect-micro-v2", "lfm3-audio-2b-gguf", "lfm3-omni-2b-gguf", "lfm3-audio-2b-fusor-q7-cpu", "lfm3-omni-2b-fusor-q7-cpu", "mach-boom", "pocket-tts-100m-english-int8", "fun-cosyvoice3-0.5b-2512", "audio8-realistic-0.6b-int4", "ming-3.0-tts-0.5b-gguf", "ming-3.0-tts-0.5b-fusor-mix-cpu", "tiny-voca", "sopro-v2-turbo", "supratts-1.0-preview", "klein-tts-x1.5-pro", "linnet-en-35m", "silencio-2", "zonos3-mini", "sano-heart-nano-gguf-f32", "sano-robot-mcu", "sano-trellis", "inflect-atom-v3", "sano-heart-gguf", "sano-amy-gguf", "sano-amy-small-gguf", "sano-amy-1p8m-gguf", "sano-hfc-gguf", "sano-kristin-gguf", "inflect-micro-v3", "inflect-mini-v3-browser-port"]);
+  const heartNano = getAssetLock().models['sano-heart-nano'];
+  assert.deepEqual(heartNano.backends, ['cpu']);
+  assert.equal(heartNano.modelRevision, '4a8194aa1dd958033ee449b3ad30c37e536b216e');
+  assert.equal(heartNano.license.requiresAcceptance, true);
+  assert.equal(heartNano.support.voiceCount, 1);
+  assert.equal(heartNano.support.languageCount, 1);
+  assert.equal(heartNano.assets.length, 11);
+  assert.equal(heartNano.assets.filter(asset => asset.kind === 'runtime').reduce((sum, asset) => sum + asset.bytes, 0), 3767048);
+  assert.equal(heartNano.assets.filter(asset => asset.kind === 'model-weights').reduce((sum, asset) => sum + asset.bytes, 0), 345232);
+  assert.equal(heartNano.assets.find(asset => asset.id === 'sano-heart-nano-meta-json').sha256, '873c9264c16c99cf10f2b65f73eb388b4935c4f46e3f529d2b89b13f8f9e5659');
+  assert.equal(heartNano.assets.find(asset => asset.id === 'sano-heart-nano-front-q8-bin').sha256, '5553ae5abf37c18d31c0b64ea791785b30e7a08cc32c07bff8bb2ab4aae0b94b');
+  assert.equal(heartNano.assets.find(asset => asset.id === 'sano-heart-nano-model-q8-bin').sha256, '4a6cdf0d0bf1996aa2c056298265ea8dd0c200c9025cba4a9b04e0e987bea88c');
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);

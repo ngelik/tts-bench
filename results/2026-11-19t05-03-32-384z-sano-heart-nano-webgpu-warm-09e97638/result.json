@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638",
+  "createdAt": "2026-11-19T05:03:33.544Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+    "dirty": false,
+    "manifestSha256": "169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027"
+  },
+  "assets": [
+    {
+      "id": "sano-heart-nano-runtime-g2p-data",
+      "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+      "bytes": 3266545
+    },
+    {
+      "id": "sano-heart-nano-runtime-g2p-js",
+      "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+      "bytes": 72608
+    },
+    {
+      "id": "sano-heart-nano-runtime-g2p-wasm",
+      "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+      "bytes": 346363
+    },
+    {
+      "id": "sano-heart-nano-runtime-nano-js",
+      "sha256": "45e9c01f7e1bc661f22875961fa824c2eb503a4e13783c0b035ae7210403b5ec",
+      "bytes": 11157
+    },
+    {
+      "id": "sano-heart-nano-runtime-nano-wasm",
+      "sha256": "d61eb078bc10334d5cb07d36e4eeb58b879d776cd87ceebaf888f43f84053497",
+      "bytes": 50349
+    },
+    {
+      "id": "sano-heart-nano-runtime-trellis-frontend",
+      "sha256": "1d8523bab2e96f03ea98131a3d575d92851d3870899435ba3a306804238e49b3",
+      "bytes": 20026
+    },
+    {
+      "id": "sano-heart-nano-meta-json",
+      "sha256": "873c9264c16c99cf10f2b65f73eb388b4935c4f46e3f529d2b89b13f8f9e5659",
+      "bytes": 1185
+    },
+    {
+      "id": "sano-heart-nano-front-q8-bin",
+      "sha256": "5553ae5abf37c18d31c0b64ea791785b30e7a08cc32c07bff8bb2ab4aae0b94b",
+      "bytes": 109296
+    },
+    {
+      "id": "sano-heart-nano-model-q8-bin",
+      "sha256": "4a6cdf0d0bf1996aa2c056298265ea8dd0c200c9025cba4a9b04e0e987bea88c",
+      "bytes": 235936
+    },
+    {
+      "id": "sano-heart-nano-model-readme",
+      "sha256": "ed743cc1f9ca8a1246c03579b5ec22fda8252e8d6f8ed3264603376a8f9d34db",
+      "bytes": 13163
+    },
+    {
+      "id": "sano-heart-nano-gpl-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-heart-nano",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned heart-nano int8 voice checkpoint, official en-us browser G2P and snt_nano WASM runtime",
+        "notes": "One bundled heart-nano English (US) voice is exercised. The official demo splits canonical spans into sentence/clause pieces of at most 120 characters; each piece is tokenized and synthesized inside the timed span call, and non-whitespace dropped IPA or output/token caps fail closed. This registration is CPU/WASM only; other Sano voices and separate WebGPU conversions are not included.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/web/voices/heartnano/meta.json",
+          "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+        ]
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "none",
+      "status": "unsupported",
+      "reason": "The pinned official SanoTTS heart-nano browser path is CPU WebAssembly; it does not implement WebGPU dispatch.",
+      "voice": "SanoTTS heart-nano (English, US)",
+      "precision": "INT8 front and decoder weights",
+      "settings": {
+        "runtime": "snt_nano WebAssembly",
+        "voiceKey": "heartnano",
+        "language": "en-us",
+        "executionProviders": []
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "The pinned official SanoTTS heart-nano browser path is CPU WebAssembly; it does not implement WebGPU dispatch."
+      },
+      "warmup": [],
+      "trials": []
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T05-03-31-857Z-c624daa5564b; cell 1/1; source b0f8c8887e9dfab5cef7b8fac9a15af865d722ef; requested n=5; effective n=5; Capability/status evidence only for the official SanoTTS heart-nano browser registration, which declares CPU/WASM support and no WebGPU provider. Request webgpu explicitly; preserve an explicit unsupported result or any unexpected initialization error. This is not a GPU timing and does not substitute another runtime."
+  ]
+}

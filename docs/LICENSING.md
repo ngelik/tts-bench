@@ -95,6 +95,18 @@ text staged separately. The project's MCU/mobile MIT carve-outs do not cover
 this browser runtime. The root MIT license does not relicense those components;
 any redistribution of a combined browser application must respect their terms.
 
+The pinned [SanoTTS heart-nano model card](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md)
+and its weights are GPL-3.0. The selected G2P, Trellis frontend, nano WASM glue
+and WebAssembly files are pinned from the official [SanoTTS browser source at
+`c0584a51213721faba98135821faab71bae888f0`](https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web)
+and retain GPL-3.0-or-later terms. The license text is included at
+[`web/sano/LICENSE`](../web/sano/LICENSE); runtime/model files remain in
+ignored cache and are not redistributed by this repository. The benchmark
+adapter and demo-derived sentence/clause split helper are identified in
+[`web/sano/NOTICE.md`](../web/sano/NOTICE.md); the helper retains
+GPL-3.0-or-later terms. The CPU registration does not include the separate
+converted-F32 WebGPU profile.
+
 The separate **heart-nano Kokopop F32** profile derives a GGUF from the exact
 heartnano Q8 front/decoder files at the pinned Ampixa revision using the pinned
 MIT Kokopop converter. Ampixa's repository is GPL-3.0-or-later; the heartnano

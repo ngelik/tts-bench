@@ -166,6 +166,41 @@ worker rejects a G2P result at its 1,024-ID capacity. Worker termination release
 the official runtime's allocations because its wrapper has no dispose method.
 Sano's official browser runtime has no WebGPU provider, reported as unsupported.
 
+## SanoTTS heart-nano
+
+The separate `sano-heart-nano` CPU registration pins the official int8
+`heartnano` front/decoder weights and `snt_nano` WebAssembly build. It uses the
+official US-English eSpeak/Trellis frontend and rejects any non-whitespace
+unknown IPA output or sequence beyond the pinned 207-token BOS/EOS limit. The
+official demo's sentence/clause splitting (maximum 120 characters) is applied
+inside every timed source-span request. Each whole piece is returned by WASM;
+the adapter transfers the first piece's complete PCM to the page before
+beginning later pieces. A separate headed-Chrome frontend audit checks all 93
+canonical spans and 304 internal pieces without retaining token plans in
+measured generation. Negative synthesis codes, empty output and the
+30-second-per-piece output boundary fail instead of producing possibly clipped
+audio. The runtime reserves 128 MiB initial WebAssembly memory and a 16 MiB
+synthesis arena; the 345,232-byte int8 weight bundle is not the runtime memory
+requirement. This official browser path is CPU/WASM only. An optional
+third-party dequantized-F32 WebGPU conversion is a different model profile.
+
+The checkpoint metadata reports exactly 294,279 speech-model parameters:
+duration 22,858 + acoustic 65,299 + decoder 206,122. This excludes the
+separately loaded eSpeak frontend/runtime. The checkpoint and official browser
+files retain GPL terms; see the Sano rows in [LICENSING.md](LICENSING.md).
+
+Reproduce the complete canonical-text frontend audit with the pinned runtime
+assets fetched and accepted:
+
+```sh
+npm run assets -- fetch --model sano-heart-nano --accept-license
+xvfb-run -a node tools/check-sano-heart-nano-frontend.mjs
+```
+
+The headed-Chrome audit checks all 93 canonical spans and 304 internal pieces
+without neural synthesis. It is an installation/input check, not a benchmark
+score.
+
 Reproduce the full text audit after fetching Kokoro, Kitten, MMS and Inflect assets:
 
 ```sh
