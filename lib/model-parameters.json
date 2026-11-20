@@ -161,5 +161,42 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
     "scope": "The pinned Mini v3 model card reports 34.31M core parameters (34,310,790). The browser profile uses the same learned checkpoint tensors converted to dynamic FP32 ONNX graphs; style conditioning and source-linear values are included in its download closure but do not change the registered upstream parameter count."
+  },
+  "sano-hfc": {
+    "parameterCount": 1834380,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json",
+    "upstreamModelCard": "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+    "scope": "Exact sum of the pinned piperlite metadata: front 834,059 + decoder 1,000,321 learned weights. The shared eSpeak/G2P runtime is excluded."
+  },
+  "sano-kristin": {
+    "parameterCount": 1396151,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json",
+    "upstreamModelCard": "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+    "scope": "Exact sum of the pinned piperlite metadata: front 395,276 + decoder 1,000,875 learned weights. The shared eSpeak/G2P runtime is excluded."
+  },
+  "sano-amy-small": {
+    "parameterCount": 1084972,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json",
+    "upstreamModelCard": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+    "conversionProvenance": "docs/sano-amy-sizes/provenance.json",
+    "scope": "Exact sum of the pinned Amy-small manifest weight tensor shapes, 1,084,972. The FP32 browser conversion preserves all model tensors; G2P and runtime are excluded."
+  },
+  "sano-amy-1p8m": {
+    "parameterCount": 1834380,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json",
+    "upstreamModelCard": "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+    "conversionProvenance": "docs/sano-amy-sizes/provenance.json",
+    "scope": "Exact sum of the pinned Amy 1.8M manifest weight tensor shapes, 1,834,380. The FP32 browser conversion preserves all model tensors; G2P and runtime are excluded."
+  },
+  "sano-heart": {
+    "parameterCount": 2272145,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
+    "upstreamModelCard": "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+    "scope": "Exact sum of the pinned Heart metadata breakdown: duration 131,652 + acoustic 681,227 + decoder 1,459,266 = 2,272,145 learned speech-model parameters. The separately loaded eSpeak/Trellis frontend and WebAssembly runtime are excluded."
   }
 }

@@ -1,0 +1,107 @@
+{
+  "huggingFaceRepository": "ampixa/sanoTTS",
+  "huggingFaceRevision": "25410576d005d7f08d186990fd91f6a2651243de",
+  "runtimeRepository": "Ampixa/sanoTTS",
+  "runtimeRevision": "c0584a51213721faba98135821faab71bae888f0",
+  "voices": {
+    "amy-en-1p1m": {
+      "parameters": 1084972,
+      "source": {
+        "manifest.json": {
+          "bytes": 41627,
+          "sha256": "6d4e580326353fdf67d193687714875dace782a0807e108a6858445d2464c62b"
+        },
+        "piper-phoneme-config.json": {
+          "bytes": 4882,
+          "sha256": "95a23eb4d42909d38df73bb9ac7f45f597dbfcde2d1bf9526fdeaf5466977d77"
+        },
+        "weights.fp16.bin": {
+          "bytes": 2169944,
+          "sha256": "b45240e7c24ac4ca4a1572a7ccc971dcca1836dcfde9aeb205d54d5515a07610"
+        }
+      },
+      "compiled": {
+        "dec_f32.bin": {
+          "bytes": 2923300,
+          "sha256": "754d79420be131780ae4e4d6742231f92624c1a5f567bb520949a8da83724a10"
+        },
+        "front_f32.bin": {
+          "bytes": 1417572,
+          "sha256": "f02528441a16dedb3ba9b6b283ed3193973af09f686e71b48ce0faaf11917836"
+        },
+        "meta.json": {
+          "bytes": 175,
+          "sha256": "15088da1a5cfb37eec5a2ece93bca87e0244afda8ea89a0bc44c2299d5759574"
+        }
+      }
+    },
+    "amy-en-1p46m": {
+      "parameters": 1454284,
+      "source": {
+        "manifest.json": {
+          "bytes": 41659,
+          "sha256": "5c6b782b0b418758e4dfd8b877a5d34f361c94e5917b2a3ec82542c35b6677b7"
+        },
+        "piper-phoneme-config.json": {
+          "bytes": 4882,
+          "sha256": "95a23eb4d42909d38df73bb9ac7f45f597dbfcde2d1bf9526fdeaf5466977d77"
+        },
+        "weights.fp16.bin": {
+          "bytes": 2908568,
+          "sha256": "8a5e3665640cb4df561af2c297e0a9df12ea100555e380916dcc1064687e94f0"
+        }
+      },
+      "compiled": {
+        "dec_f32.bin": {
+          "bytes": 4001700,
+          "sha256": "d3a0ea7abdee53e244cbe843668a2cbded794f7af6d90e52b84b51c63f164a51"
+        },
+        "front_f32.bin": {
+          "bytes": 1816420,
+          "sha256": "312d2ceb95c24f79c1777c613dec0c3729e6818d94d47298a80933e20ff51d29"
+        },
+        "meta.json": {
+          "bytes": 176,
+          "sha256": "e24bc027e3f4896f69e606e02920ede02a1d4c14381c75736d98b74442ec7f9e"
+        }
+      }
+    },
+    "amy-en-1p8m": {
+      "parameters": 1834380,
+      "source": {
+        "manifest.json": {
+          "bytes": 41677,
+          "sha256": "6dc68af208e6ae021b3680940099520d6f4dd809aad6ae7e078ce45c285ffba9"
+        },
+        "piper-phoneme-config.json": {
+          "bytes": 4882,
+          "sha256": "95a23eb4d42909d38df73bb9ac7f45f597dbfcde2d1bf9526fdeaf5466977d77"
+        },
+        "weights.fp16.bin": {
+          "bytes": 3668760,
+          "sha256": "bf2daa62fc65a1cb96ef0967fa4f28c45aae8528e62f957e8944370cabbe99b2"
+        }
+      },
+      "compiled": {
+        "dec_f32.bin": {
+          "bytes": 4001700,
+          "sha256": "fa1ee442380f9090562c22e1d723daeb828688a3a02068cc922b0d188d97fbd7"
+        },
+        "front_f32.bin": {
+          "bytes": 3336804,
+          "sha256": "38fcc6ddb4aab9cd5b4dc0f87467f9e9160a1a3917ab4af7d758aee4d98c3a53"
+        },
+        "meta.json": {
+          "bytes": 175,
+          "sha256": "930aef9150b2a9a5164d7d04d11e61748d901a733f93359fad5ddb5b78c3a5a2"
+        }
+      }
+    }
+  },
+  "control": {
+    "voice": "amy-en-1p46m",
+    "verifiedTensorSlots": 108,
+    "verifiedParameters": 1454284,
+    "reference": "official FP32 web blobs rounded to FP16 then expanded to FP32, headers and all bytes match"
+  }
+}

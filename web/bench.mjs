@@ -23,6 +23,8 @@ import { createKittenAdapter } from './adapters/kitten.mjs';
 
 import { createSanoRobotTrellisAdapter } from './adapters/sano-robot-trellis.mjs';
 import { createSanoAdapter } from './adapters/sano.mjs';
+import { createSanoPiperliteAdapter } from './adapters/sano-piperlite.mjs';
+import { createSanoHeartAdapter } from './adapters/sano-heart.mjs';
 import { createSanoHeartNanoAdapter } from './adapters/sano-heart-nano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
@@ -64,6 +66,11 @@ const FACTORIES = {
   'mms-english': createMMSAdapter,
   'kitten-nano-0.8': createKittenAdapter,
   'sano-amy': createSanoAdapter,
+  'sano-hfc': () => createSanoPiperliteAdapter('sano-hfc'),
+  'sano-kristin': () => createSanoPiperliteAdapter('sano-kristin'),
+  'sano-amy-small': () => createSanoPiperliteAdapter('sano-amy-small'),
+  'sano-amy-1p8m': () => createSanoPiperliteAdapter('sano-amy-1p8m'),
+  'sano-heart': createSanoHeartAdapter,
   'sano-heart-nano': createSanoHeartNanoAdapter,
   'sano-robot-mcu': () => createSanoRobotTrellisAdapter('sano-robot-mcu'),
   'sano-trellis': () => createSanoRobotTrellisAdapter('sano-trellis'),

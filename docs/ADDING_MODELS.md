@@ -166,6 +166,41 @@ worker rejects a G2P result at its 1,024-ID capacity. Worker termination release
 the official runtime's allocations because its wrapper has no dispose method.
 Sano's official browser runtime has no WebGPU provider, reported as unsupported.
 
+## Sano English size variants
+
+The English family profiles are separate checkpoints and model IDs. HFC and
+Kristin load their official piperlite FP32 browser packages through the shared
+`sanotts-web@0.3.0` runtime. Amy-small and Amy 1.8M start from pinned official
+FP16 piperlite packages, then use the deterministic packer to emit the same
+FP32 browser ABI; every source tensor hash and manifest is checked, and the
+1.46M Amy positive-control conversion matches all 108 official browser tensor
+slots after FP16 rounding. The model weights remain in ignored cache.
+
+The full-size Heart 2.27M profile is a separate `snt_nano` model and WASM
+module. It shares the official eSpeak/Trellis frontend and 120-character
+sentence/clause split used by heart-nano, but pins its own FP32 weights and
+matching runtime. These are CPU/WASM profiles; WebGPU remains explicitly
+unsupported.
+
+For Amy-small and Amy 1.8M, stage the reproducible converted files before the
+ordinary asset verification. This downloads only the pinned source package,
+checks it against the checked-in converter/provenance, and writes the locked
+outputs under `.cache/public`:
+
+```sh
+python3 tools/stage-sano-amy.py --model sano-amy-small
+npm run assets -- fetch --model sano-amy-small --accept-license
+npm run assets -- verify --model sano-amy-small --accept-license
+
+python3 tools/stage-sano-amy.py --model sano-amy-1p8m
+npm run assets -- fetch --model sano-amy-1p8m --accept-license
+npm run assets -- verify --model sano-amy-1p8m --accept-license
+```
+
+HFC, Kristin and Heart use normal immutable asset fetches. All five profiles
+must pass a real headed-Chrome CPU/WASM smoke and then the native warm campaign
+before their timing rows are published.
+
 ## SanoTTS heart-nano
 
 The separate `sano-heart-nano` CPU registration pins the official int8

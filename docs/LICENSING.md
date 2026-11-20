@@ -95,6 +95,16 @@ text staged separately. The project's MCU/mobile MIT carve-outs do not cover
 this browser runtime. The root MIT license does not relicense those components;
 any redistribution of a combined browser application must respect their terms.
 
+The separate Sano HFC and Kristin browser checkpoints and full-size Heart model
+are GPL-3.0 at their pinned Hugging Face revision. They use either the official
+`sanotts-web@0.3.0` runtime or the official `snt_nano` browser files, both
+GPL-3.0-or-later, plus the eSpeak G2P/Trellis frontend. Amy-small and Amy 1.8M
+are likewise GPL-3.0; their FP16 package weights are packed into the browser
+runtime's FP32 ABI by the reproducible scripts in `tools/`. The conversion
+does not change the model tensors or relicense the source package. Model and
+runtime bytes stay in the ignored cache; the pinned license text and conversion
+provenance are recorded separately.
+
 The pinned [SanoTTS heart-nano model card](https://huggingface.co/ampixa/sanoTTS/blob/4a8194aa1dd958033ee449b3ad30c37e536b216e/README.md)
 and its weights are GPL-3.0. The selected G2P, Trellis frontend, nano WASM glue
 and WebAssembly files are pinned from the official [SanoTTS browser source at

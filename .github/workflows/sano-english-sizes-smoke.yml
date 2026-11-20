@@ -1,0 +1,148 @@
+name: Sano English size variants headed Chrome smoke
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/sano-english-sizes-smoke.yml'
+      - 'assets.lock.json'
+      - 'docs/sano-amy-sizes/**'
+      - 'lib/model-parameters.json'
+      - 'tests/sano-heart.test.mjs'
+      - 'tests/sano-piperlite.test.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'tools/pack-sano-amy.py'
+      - 'tools/stage-sano-amy.py'
+      - 'web/adapters/sano-heart.mjs'
+      - 'web/adapters/sano-piperlite.mjs'
+      - 'web/bench.mjs'
+      - 'web/sano/**'
+      - 'web/workers/sano-heart.js'
+      - 'web/workers/sano-piperlite.js'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sano-english-sizes-smoke.yml'
+      - 'assets.lock.json'
+      - 'docs/sano-amy-sizes/**'
+      - 'lib/model-parameters.json'
+      - 'tests/sano-heart.test.mjs'
+      - 'tests/sano-piperlite.test.mjs'
+      - 'tests/assets.test.mjs'
+      - 'tests/model-parameters.test.mjs'
+      - 'tools/pack-sano-amy.py'
+      - 'tools/stage-sano-amy.py'
+      - 'web/adapters/sano-heart.mjs'
+      - 'web/adapters/sano-piperlite.mjs'
+      - 'web/bench.mjs'
+      - 'web/sano/**'
+      - 'web/workers/sano-heart.js'
+      - 'web/workers/sano-piperlite.js'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: sano-english-sizes-headed-chrome-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  cpu-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        model: [sano-heart, sano-hfc, sano-kristin, sano-amy-small, sano-amy-1p8m]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --ignore-scripts
+      - name: Run scoped adapter, lock and parameter tests
+        run: node --test tests/sano-heart.test.mjs tests/sano-piperlite.test.mjs tests/assets.test.mjs tests/model-parameters.test.mjs
+      - name: Build pinned Amy browser bundle from original package
+        if: matrix.model == 'sano-amy-small' || matrix.model == 'sano-amy-1p8m'
+        run: python3 tools/stage-sano-amy.py --model '${{ matrix.model }}'
+      - name: Fetch and verify locked runtime and model assets
+        run: |
+          npm run assets -- fetch --model '${{ matrix.model }}' --accept-license
+          npm run assets -- verify --model '${{ matrix.model }}' --accept-license
+      - name: Require clean committed source before Chrome inference
+        run: |
+          status="$(git status --porcelain=v1 --untracked-files=all)"
+          if [[ -n "$status" ]]; then
+            printf 'Dirty source paths before generation:\n%s\n' "$status"
+            echo '::error::Refusing to start Chrome with a dirty source checkout.'
+            exit 1
+          fi
+      - name: Run three-span diagnostic in headed Chrome
+        run: >-
+          xvfb-run -a node bin/bench.mjs run
+          --model '${{ matrix.model }}'
+          --backend cpu
+          --smoke
+          --machine 'GitHub hosted Ubuntu 24.04 CPU/WASM diagnostic'
+          --chrome /usr/bin/google-chrome
+          --accept-license
+          --timeout-minutes 20
+      - name: Verify measured receipt and actual WAV bytes
+        env:
+          MODEL_ID: ${{ matrix.model }}
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import { createHash } from 'node:crypto';
+          import { readFileSync, readdirSync } from 'node:fs';
+          const model = process.env.MODEL_ID;
+          const sampleRate = model === 'sano-heart' ? 24000 : 22050;
+          const runs = readdirSync('runs').filter(name => {
+            try {
+              const value = JSON.parse(readFileSync(`runs/${name}/result.json`, 'utf8'));
+              return value.protocol.scenario === 'warm' && value.protocol.smoke === true && value.cells?.[0]?.model === model;
+            } catch { return false; }
+          });
+          assert.equal(runs.length, 1, `expected one smoke receipt for ${model}`);
+          const root = `runs/${runs[0]}`;
+          const result = JSON.parse(readFileSync(`${root}/result.json`, 'utf8'));
+          assert.equal(result.source.dirty, false);
+          const [cell] = result.cells;
+          assert.equal(cell.backendRequested, 'cpu');
+          assert.equal(cell.backendEffective, 'cpu/wasm');
+          assert.equal(cell.status, 'measured', cell.reason);
+          assert.equal(cell.trials.length, 1);
+          const [trial] = cell.trials;
+          assert.equal(trial.validation.finitePcm, true);
+          assert.equal(trial.validation.chunkCount, 3);
+          assert.equal(trial.sampleRate, sampleRate);
+          assert.ok(Number.isFinite(trial.metrics.firstPcmMs) && trial.metrics.firstPcmMs > 0);
+          const wav = readFileSync(`${root}/${model}-cpu.wav`);
+          assert.equal(wav.toString('ascii', 0, 4), 'RIFF');
+          assert.equal(wav.toString('ascii', 8, 12), 'WAVE');
+          assert.equal(wav.readUInt32LE(24), sampleRate);
+          assert.equal(wav.readUInt32LE(40), trial.samples * 2);
+          assert.equal(wav.length, 44 + trial.samples * 2);
+          const sha = createHash('sha256').update(wav).digest('hex');
+          assert.equal(sha, trial.audio.sha256);
+          console.log(JSON.stringify({ model, runId: result.id, sourceCommit: result.source.gitCommit,
+            backend: cell.backendEffective, firstPcmMs: trial.metrics.firstPcmMs,
+            sampleRate, samples: trial.samples, wavBytes: wav.length, wavSha256: sha }, null, 2));
+          JS
+      - name: Preserve smoke receipts, WAV and failure evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sano-english-sizes-${{ matrix.model }}-headed-smoke
+          if-no-files-found: ignore
+          path: |
+            runs/**/result.json
+            runs/**/summary.md
+            runs/**/status.json
+            runs/**/error.json
+            runs/**/invalid-result.json
+            runs/**/warmup-*.json
+            runs/**/trial-*.json
+            runs/**/*.wav
