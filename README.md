@@ -55,6 +55,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E7**: Apple M1 Pro MacBook Pro, 8 CPU cores, 16 GiB RAM, macOS 26.6.2, Google Chrome 157.0.8103.40 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E8**: Apple MacBook Pro M1 Pro / 16 GB · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E9**: Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E10**: Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
@@ -64,6 +65,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Phonon 31M q8 | E1 | 64.51 | [270.41 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [51.73 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
 | PiVo 1.4M curated (Pi voice) | E1 | 5.84 | [87.92 s (n=5)](results/historical-2026-11-08-m1pro-primary-warm/summary.md) | [2562.69 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
 | Underdog Woof one-voice (Isla) | E1 | 31.71 | — | [181.81 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
+| Inflect Mini v3 Browser Port | E10 | 137.11 | [2398.30 s (n=5)](results/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d/summary.md) | [2342.30 s (n=5)](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/summary.md) | Archived native; independent attempts |
 | Paradee 8M INT8 | E2 | 8.46 | [103.92 s (n=5)](results/2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f/summary.md) | [18.74 s (n=5)](results/2026-11-09t05-06-08-477z-paradee-webgpu-warm-c3836dc0/summary.md) | Native; matched configuration |
 | Piper en-GB Southern English Female low | E2 | 63.10 | [170.64 s (n=5)](results/2026-11-09t20-33-26-966z-piper-en-gb-southern-english-female-low-cpu-warm-9a0ba981/summary.md) | [12.07 s (n=5)](results/2026-11-09t20-52-18-629z-piper-en-gb-southern-english-female-low-webgpu-warm-d8fb8392/summary.md) | Native; matched configuration |
 | Supertonic 3 FP32 (M3) | E3 | 398.08 | [1332.06 s (n=5)](results/2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0/summary.md) | [67.09 s (n=5)](results/2026-11-10t09-58-29-882z-supertonic-3-webgpu-warm-97865808/summary.md) | Native; matched configuration |
@@ -259,6 +261,18 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Inflect Micro v3 FP32 | 47.57 | [939.74](results/2026-11-19t11-14-33-448z-inflect-micro-v3-cpu-cached-2c490708/summary.md) | [1108.40](results/2026-11-19t13-58-17-329z-inflect-micro-v3-webgpu-cached-90200a0e/summary.md) |
 
+**RAM 21** · Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`3aa0b423`](https://github.com/ngelik/tts-bench/commit/3aa0b423b8ba6c36fea0b6ab2db2c046bfb57c49).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Inflect Mini v3 Browser Port | 137.11 | [1136.97](results/2026-11-19t14-44-23-057z-inflect-mini-v3-browser-port-cpu-cached-fcce4af1/summary.md) | — |
+
+**RAM 22** · Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c1ec07c3`](https://github.com/ngelik/tts-bench/commit/c1ec07c3555ab43926a5fdc9213f46f3357065ed).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Inflect Mini v3 Browser Port | 137.11 | — | [1109.12](results/2026-11-19t20-24-45-805z-inflect-mini-v3-browser-port-webgpu-cached-1daec6ab/summary.md) |
+
 ![Average Chrome RAM during generation](docs/reference-memory.svg)
 
 ### Voice and language support
@@ -386,6 +400,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![inflect-micro-v3 — campaign metrics](reports/inflect-micro-v3/overview.svg)
 
+[inflect-mini-v3-cpu-native — all-metrics table and source receipts](reports/inflect-mini-v3-cpu-native/overview.md)
+
+![inflect-mini-v3-cpu-native — campaign metrics](reports/inflect-mini-v3-cpu-native/overview.svg)
+
+[inflect-mini-v3-webgpu-hybrid — all-metrics table and source receipts](reports/inflect-mini-v3-webgpu-hybrid/overview.md)
+
+![inflect-mini-v3-webgpu-hybrid — campaign metrics](reports/inflect-mini-v3-webgpu-hybrid/overview.svg)
+
 [klein-x1-5-pro — all-metrics table and source receipts](reports/klein-x1-5-pro/overview.md)
 
 ![klein-x1-5-pro — campaign metrics](reports/klein-x1-5-pro/overview.svg)
@@ -488,6 +510,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Inflect Micro v2 FP32 | webgpu | [Receipt](results/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201--inflect-micro-v2--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-11t02-50-06-191z-inflect-micro-v2-webgpu-warm-e21ef201--inflect-micro-v2--webgpu-full.wav) |
 | Inflect Micro v3 FP32 | cpu | [Receipt](results/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326--inflect-micro-v3--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326--inflect-micro-v3--cpu-full.wav) |
 | Inflect Micro v3 FP32 | webgpu | [Receipt](results/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1--inflect-micro-v3--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1--inflect-micro-v3--webgpu-full.wav) |
+| Inflect Mini v3 Browser Port | cpu | [Receipt](results/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d--inflect-mini-v3-browser-port--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d--inflect-mini-v3-browser-port--cpu-full.wav) |
+| Inflect Mini v3 Browser Port | webgpu | [Receipt](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4--inflect-mini-v3-browser-port--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4--inflect-mini-v3-browser-port--webgpu-full.wav) |
 | Kitten Nano 0.8 FP32 | cpu | [Receipt](results/2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636--kitten-nano-0.8--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636--kitten-nano-0.8--cpu-full.wav) |
 | Kitten Nano 0.8 FP32 | webgpu | [Receipt](results/2026-11-10t19-24-19-116z-kitten-nano-0.8-webgpu-warm-cef85ae4/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t19-24-19-116z-kitten-nano-0.8-webgpu-warm-cef85ae4--kitten-nano-0.8--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t19-24-19-116z-kitten-nano-0.8-webgpu-warm-cef85ae4--kitten-nano-0.8--webgpu-full.wav) |
 | Klein-TTS X1.5 Pro FP32 | cpu | [Receipt](results/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee--klein-tts-x1.5-pro--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t11-25-32-056z-klein-tts-x1.5-pro-cpu-warm-9ca9d2ee--klein-tts-x1.5-pro--cpu-full.wav) |
@@ -721,12 +745,16 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 142 · 2026-11-19 | sano-amy-1p8m-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0/summary.md) | [SVG](results/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0/chart.svg) |
 | 143 · 2026-11-19 | sano-robot-mcu/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/summary.md) | [SVG](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/chart.svg) |
 | 144 · 2026-11-19 | sano-trellis/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/summary.md) | [SVG](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/chart.svg) |
-| 145 · 2026-11-19 | inflect-micro-v3/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326/summary.md) | [SVG](results/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326/chart.svg) |
-| 146 · 2026-11-19 | sano-hfc-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f/summary.md) | [SVG](results/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f/chart.svg) |
-| 147 · 2026-11-19 | sano-trellis/webgpu | warm / browser-tts-warm-v1 | unsupported | [Report](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/summary.md) | [SVG](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/chart.svg) |
-| 148 · 2026-11-19 | inflect-micro-v3/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1/summary.md) | [SVG](results/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1/chart.svg) |
-| 149 · 2026-11-19 | sano-kristin-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/summary.md) | [SVG](results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/chart.svg) |
-| 150 · 2026-11-19 | sano-amy-small-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/summary.md) | [SVG](results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/chart.svg) |
+| 145 · 2026-11-19 | inflect-mini-v3-browser-port/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t14-44-23-057z-inflect-mini-v3-browser-port-cpu-cached-fcce4af1/summary.md) | [SVG](results/2026-11-19t14-44-23-057z-inflect-mini-v3-browser-port-cpu-cached-fcce4af1/chart.svg) |
+| 146 · 2026-11-19 | inflect-micro-v3/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326/summary.md) | [SVG](results/2026-11-19t15-32-05-910z-inflect-micro-v3-cpu-warm-eeb09326/chart.svg) |
+| 147 · 2026-11-19 | sano-hfc-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f/summary.md) | [SVG](results/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f/chart.svg) |
+| 148 · 2026-11-19 | sano-trellis/webgpu | warm / browser-tts-warm-v1 | unsupported | [Report](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/summary.md) | [SVG](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/chart.svg) |
+| 149 · 2026-11-19 | inflect-mini-v3-browser-port/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d/summary.md) | [SVG](results/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d/chart.svg) |
+| 150 · 2026-11-19 | inflect-mini-v3-browser-port/webgpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t20-24-45-805z-inflect-mini-v3-browser-port-webgpu-cached-1daec6ab/summary.md) | [SVG](results/2026-11-19t20-24-45-805z-inflect-mini-v3-browser-port-webgpu-cached-1daec6ab/chart.svg) |
+| 151 · 2026-11-19 | inflect-micro-v3/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1/summary.md) | [SVG](results/2026-11-19t21-04-48-801z-inflect-micro-v3-webgpu-warm-28aa8bb1/chart.svg) |
+| 152 · 2026-11-19 | sano-kristin-gguf/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/summary.md) | [SVG](results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/chart.svg) |
+| 153 · 2026-11-19 | sano-amy-small-gguf/cpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/summary.md) | [SVG](results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/chart.svg) |
+| 154 · 2026-11-20 | inflect-mini-v3-browser-port/webgpu | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/summary.md) | [SVG](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/chart.svg) |
 
 </details>
 
