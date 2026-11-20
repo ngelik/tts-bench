@@ -22,8 +22,8 @@ Cached RAM is the mean process-tree RSS sampled during one full generation in a 
 
 | Model | CPU mean Chrome RSS | CPU max sampled RSS | WebGPU mean Chrome RSS | WebGPU max sampled RSS | Pinned model weights |
 |---|---:|---:|---:|---:|---:|
-| SanoTTS Amy 1.83M (English) | Not submitted | Not submitted | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 7.34 MB |
-| SanoTTS Amy-small 1.08M (English) | Not submitted | Not submitted | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 4.34 MB |
+| SanoTTS Amy 1.83M (English) | 977.07 MB (n=1; 1517 samples) | 1073.82 MB (sampled max; n=1; 1517 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 7.34 MB |
+| SanoTTS Amy-small 1.08M (English) | 894.07 MB (n=1; 1054 samples) | 1064.60 MB (sampled max; n=1; 1054 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 4.34 MB |
 | SanoTTS Heart 2.27M (English, US) | 735.77 MB (n=1; 478 samples) | 829.16 MB (sampled max; n=1; 478 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 9.14 MB |
 | SanoTTS HFC 1.83M (English) | 922.89 MB (n=1; 1222 samples) | 1045.07 MB (sampled max; n=1; 1222 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 7.34 MB |
 | SanoTTS Kristin 1.40M (English) | 850.11 MB (n=1; 1342 samples) | 924.71 MB (sampled max; n=1; 1342 samples) | Unsupported (not declared in manifest) | Unsupported (not declared in manifest) | 5.59 MB |
@@ -34,8 +34,8 @@ Each cell links to its submitted receipt and full per-run report. Missing entrie
 
 | Model | Warm CPU | Warm WebGPU | Cached CPU RAM | Cached WebGPU RAM | Support | License |
 |---|---|---|---|---|---|---|
-| SanoTTS Amy 1.83M (English) | [Report](../../results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | Unsupported (manifest) | Not submitted | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-1p8m) | [Terms](../../docs/LICENSING.md) |
-| SanoTTS Amy-small 1.08M (English) | [Report](../../results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | Unsupported (manifest) | Not submitted | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-small) | [Terms](../../docs/LICENSING.md) |
+| SanoTTS Amy 1.83M (English) | [Report](../../results/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39/summary.md) | Unsupported (manifest) | [Report](../../results/2026-11-20t11-15-20-837z-sano-amy-1p8m-cpu-cached-a1f0621c/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-1p8m) | [Terms](../../docs/LICENSING.md) |
+| SanoTTS Amy-small 1.08M (English) | [Report](../../results/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa/summary.md) | Unsupported (manifest) | [Report](../../results/2026-11-20t11-04-10-625z-sano-amy-small-cpu-cached-f79f98ef/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-amy-small) | [Terms](../../docs/LICENSING.md) |
 | SanoTTS Heart 2.27M (English, US) | [Report](../../results/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc/summary.md) | Unsupported (manifest) | [Report](../../results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-heart) | [Terms](../../docs/LICENSING.md) |
 | SanoTTS HFC 1.83M (English) | [Report](../../results/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d/summary.md) | Unsupported (manifest) | [Report](../../results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-hfc) | [Terms](../../docs/LICENSING.md) |
 | SanoTTS Kristin 1.40M (English) | [Report](../../results/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0/summary.md) | Unsupported (manifest) | [Report](../../results/2026-11-20t06-41-40-071z-sano-kristin-cpu-cached-7cfb4ab7/summary.md) | Unsupported (manifest) | [Support details](../../docs/MODEL_SUPPORT.md#sano-kristin) | [Terms](../../docs/LICENSING.md) |
