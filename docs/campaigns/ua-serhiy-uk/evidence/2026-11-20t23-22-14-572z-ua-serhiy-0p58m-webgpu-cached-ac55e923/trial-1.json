@@ -1,0 +1,120 @@
+{
+  "index": 1,
+  "generationMs": 10076.56500005722,
+  "samples": 26141952,
+  "sampleRate": 22050,
+  "pcmSha256": "5ffd72add0f0c930fc78047f766c77b6bd470b72d24ed617c4ce37dda7945113",
+  "validation": {
+    "finitePcm": true,
+    "chunkCount": 92,
+    "nonemptyChunks": true
+  },
+  "metrics": {
+    "firstPcmMs": 92.05000019073486,
+    "firstSourceChunkCompletedMs": 159.3400001525879,
+    "audioSeconds": 1185.5760544217687,
+    "realTimeFactor": 0.008499298684783054,
+    "minSamplesPerChunk": 213248,
+    "maxSamplesPerChunk": 454144,
+    "articleCallPeakRssBytes": 2679078912,
+    "generationMeanRssBytes": 1964758630,
+    "generationRssSampleCount": 20,
+    "loadMs": 409.47233399999914,
+    "controllerTrialElapsedMs": 13993.099334000002,
+    "downloadBytes": 56640,
+    "idealDownloadSecondsAt1Mbps": 0.45312
+  },
+  "memory": {
+    "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+    "generationStartedAtEpochMs": 1795216937729.8552,
+    "finalPcmAtEpochMs": 1795216947806.4202,
+    "samplingIntervalMs": 500,
+    "samples": [
+      [
+        1795216938293,
+        1679540224
+      ],
+      [
+        1795216938780,
+        1824227328
+      ],
+      [
+        1795216939279,
+        1920499712
+      ],
+      [
+        1795216939779,
+        1931542528
+      ],
+      [
+        1795216940278,
+        1947959296
+      ],
+      [
+        1795216940779,
+        1960198144
+      ],
+      [
+        1795216941288,
+        1972731904
+      ],
+      [
+        1795216941788,
+        1973272576
+      ],
+      [
+        1795216942288,
+        1981956096
+      ],
+      [
+        1795216942791,
+        1982971904
+      ],
+      [
+        1795216943285,
+        1991032832
+      ],
+      [
+        1795216943787,
+        1990868992
+      ],
+      [
+        1795216944284,
+        1998684160
+      ],
+      [
+        1795216944786,
+        1993326592
+      ],
+      [
+        1795216945287,
+        2013167616
+      ],
+      [
+        1795216945788,
+        2004189184
+      ],
+      [
+        1795216946289,
+        2019442688
+      ],
+      [
+        1795216946789,
+        2025963520
+      ],
+      [
+        1795216947290,
+        2036236288
+      ],
+      [
+        1795216947793,
+        2047361024
+      ]
+    ],
+    "availability": "measured"
+  },
+  "audio": {
+    "sha256": "9d9a560af31f4f5de944214c58c959223970533aaf8da22c11890dcb9a9c3c0f",
+    "bytes": 52283948
+  }
+}

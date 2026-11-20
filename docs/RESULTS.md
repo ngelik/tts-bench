@@ -15,6 +15,14 @@ must use the canonical article and their recorded source fingerprint must reprod
 from the recorded Git commit. Fetch full history when validating a shallow clone:
 `git fetch --unshallow` (only for a shallow checkout).
 
+For translated runs, the canonical article is the exact registered language
+fixture, with its own digest, actual character/span counts and
+`fixture.language`. The shared registry identifies legacy English receipts that
+predate this field; never rewrite them. Reference selection and memory charts
+keep languages and exact fixture variants separate, so a newer translated run
+cannot replace an English score. Comparisons and campaign reports must retain
+their exact-fixture guards. See [multilingual registration and publication](MULTILINGUAL.md).
+
 `generationMs` is elapsed wall time, not CPU-seconds. `samples` is mono sample
 count and `sampleRate` is Hz. `pcmSha256` hashes the actual float PCM representation
 specified by the adapter. Optional `audio.sha256` identifies the saved WAV and is

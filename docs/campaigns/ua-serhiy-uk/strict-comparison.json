@@ -1,0 +1,13 @@
+{
+  "accepted": false,
+  "inputs": [
+    "results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/result.json",
+    "results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/result.json"
+  ],
+  "reason": "Voice, precision or non-backend settings differ for ua-serhiy-0p58m",
+  "disclosedDifference": {
+    "gpuProvider": "WebGPU with explicit WASM operator fallback",
+    "wasmThreads": 1
+  },
+  "interpretation": "Separate end-to-end browser implementations; no strict matched-kernel comparison is claimed."
+}

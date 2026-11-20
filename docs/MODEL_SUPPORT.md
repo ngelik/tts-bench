@@ -366,3 +366,17 @@ Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `hfc
 ### sanoTTS Kristin (Kokopop F16/F32)
 
 Supported voices: **1**. Bundled voices: **1**. Languages: **1** (en). Only `kristin` at 22,050 Hz is selected. This separate converted profile contains 1,396,151 source synthesis parameters and F16/F32 tensors. [Pinned source](https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/kristin-en-1p4m/manifest.json) · [Build and inference details](SANO_KOKOPOP_SIZES.md).
+
+<a id="ua-serhiy-0p58m"></a>
+
+## Ukrainian Serhiy 0.58M
+
+Supported voices: **1**. Bundled voices: **1**. Languages: **1** (`uk`). The
+pinned student checkpoint contains one Serhiy synthetic voice. The browser
+profile converts its 575,888 stored inference tensor values from the original
+FP16 source bundle into four dynamic FP32 ONNX graphs. That count includes
+stored tensor values and is not asserted as trainable-only. The profile uses
+Piper eSpeak NG Ukrainian phonemization and the checkpoint's explicit stress
+restoration; unknown symbols and overlong unsplittable pieces fail. The
+checkpoint and voice rights are not broadened by the teacher/corpus licenses.
+[Pinned model card](https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md) · [Pinned upstream notice](https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md) · [Browser conversion](UA_SERHIY.md).

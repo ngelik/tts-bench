@@ -154,5 +154,11 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/owensong/Inflect-Mini-v3/blob/fdefa06ed090ba0f3e1c5e455c492d2a0b9512e6/README.md",
     "scope": "The pinned Mini v3 model card reports 34.31M core parameters (34,310,790). The browser profile uses the same learned checkpoint tensors converted to dynamic FP32 ONNX graphs; style conditioning and source-linear values are included in its download closure but do not change the registered upstream parameter count."
+  },
+  "ua-serhiy-0p58m": {
+    "parameterCount": 575888,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
+    "scope": "Exact sum of scalar values in the pinned inference-state manifest (duration, acoustic and decoder tensors). This stored-tensor count may include non-trainable buffers and is not asserted as a trainable-only count; it is far below the one-billion single-repetition threshold."
   }
 }

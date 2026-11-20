@@ -2,6 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { validateCampaignCell } from '../lib/campaign-plan.mjs';
+import { defaultFixtureForModel, listBenchmarkFixtures } from '../lib/benchmark-fixtures.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { readResult, resultPaths, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
@@ -238,7 +239,41 @@ function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
 }
 
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
-export function assembleDashboardData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null, warmSelections = [] }) {
+export function assembleDashboardData(input) {
+  const { results, models, audioEntries = [], campaignCells = [] } = input;
+  const receiptModels = new Set(results.filter(result => !result.protocol.smoke).flatMap(result => result.cells.map(cell => cell.model)));
+  // The last registered translation for a language is its displayed edition.
+  // Older editions stay available by receipt and never enter its leaderboard.
+  const editions = new Map(listBenchmarkFixtures().map(fixture => [fixture.language, fixture]));
+  const languages = [...editions.keys()].map(id => {
+    const name = new Intl.DisplayNames([id], {type: 'language'}).of(id);
+    return {id, label: name[0].toLocaleUpperCase(id) + name.slice(1)};
+  });
+  const byLanguage = {};
+  for (const {id} of languages) {
+    const fixture = editions.get(id);
+    const localResults = results.filter(result => result.fixture.id === fixture.id);
+    const localIds = new Set(localResults.map(result => result.id));
+    const tested = new Set(localResults.flatMap(result => result.cells.map(cell => cell.model)));
+    const localSchedule = campaignCells.filter(cell => (cell.fixtureId ?? 'english-20k-v1') === fixture.id);
+    const scheduled = new Set(localSchedule.map(cell => cell.model));
+    // Keep registered, untested configurations discoverable without treating
+    // advertised language coverage as a measurement.
+    const localModels = Object.fromEntries(Object.entries(models).filter(([key, model]) =>
+      tested.has(key) || scheduled.has(key) || (!receiptModels.has(key) && defaultFixtureForModel(key) === fixture.id)));
+    const localAudio = audioEntries.filter(entry => localIds.has(entry.resultId));
+    byLanguage[id] = {...assembleLanguageData({...input, models: localModels, results: localResults,
+      audioEntries: localAudio, campaignCells: localSchedule}), fixture: {
+        id: fixture.id, language: id, articleFile: fixture.articleFile,
+        characters: fixture.unicodeCodePoints, chunks: fixture.chunks,
+      }};
+
+  }
+  const {en, ...translations} = byLanguage;
+  return {...en, languages, byLanguage: translations};
+}
+
+function assembleLanguageData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null, warmSelections = [] }) {
   const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
     .map(cell => `${cell.model}/${cell.backend}`));
   const scheduledMemory = new Set(campaignCells.filter(cell => cell.scenario === 'cached' && cell.resources === true)
@@ -360,10 +395,13 @@ export async function readCampaignCells(models, directory = 'docs/campaigns') {
       catalogs.set(plan.sourceCommit, JSON.parse(pinned).models);
     }
     const pinnedModels = catalogs.get(plan.sourceCommit);
+    const fixtureId = plan.fixtureId ?? defaultFixtureForModel(plan.cells[0].model);
     for (const cell of plan.cells) {
       validateCampaignCell(cell);
       if (!pinnedModels[cell.model]) throw new Error(`Unknown model ${cell.model} in ${path}`);
-      if (sameCampaignRegistration(cell.model, models[cell.model], pinnedModels[cell.model], cell.backend)) cells.push(cell);
+      if (sameCampaignRegistration(cell.model, models[cell.model], pinnedModels[cell.model], cell.backend)) {
+        cells.push({...cell, fixtureId});
+      }
     }
   }
   return cells;

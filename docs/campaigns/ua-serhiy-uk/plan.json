@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9870c198651481dfed69ece7dc7bb88d870edabd",
+  "fixtureId": "uk-article-v1",
+  "conditions": "Observed MacBook Pro Apple M1 Pro 8-core/16GB, native arm64; headed Chrome 157.0.8103.40; AC power; one serialized model/backend cell at a time.",
+  "cells": [
+    {
+      "model": "ua-serhiy-0p58m",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true
+    },
+    {
+      "model": "ua-serhiy-0p58m",
+      "backend": "cpu",
+      "scenario": "warm",
+      "repetitions": 5
+    },
+    {
+      "model": "ua-serhiy-0p58m",
+      "backend": "webgpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "resources": true
+    },
+    {
+      "model": "ua-serhiy-0p58m",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5
+    }
+  ]
+}

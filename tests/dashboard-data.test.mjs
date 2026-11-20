@@ -19,10 +19,10 @@ before(async () => {
 test('exports all catalog models with explicit warm, memory, license, and support fields', () => {
   const catalog = getAssetLock().models;
   assert.equal(dashboard.schemaVersion, 1);
-  assert.equal(dashboard.models.length, Object.keys(catalog).length);
-  assert.deepEqual(dashboard.models.map(model => model.id).sort(), Object.keys(catalog).sort());
+  const rows = [...dashboard.models, ...Object.values(dashboard.byLanguage).flatMap(group => group.models)];
+  assert.deepEqual([...new Set(rows.map(model => model.id))].sort(), Object.keys(catalog).sort());
   assert.ok(Date.parse(dashboard.updatedAt));
-  for (const model of dashboard.models) {
+  for (const model of rows) {
     assert.equal(model.name, catalog[model.id].displayName);
     if (model.modelMB !== null) assert.ok(Number.isFinite(model.modelMB) && model.modelMB > 0, `${model.id} model size is tied to a selected receipt`);
     assert.equal(model.license.model, catalog[model.id].license.model);
@@ -147,8 +147,9 @@ test('forms comparison-compatible cohorts and only pairs matching measured nativ
 
 test('keeps every verified audio example and marks exact warm matches separately', () => {
   const expectedCount = manifestEntries.length;
-  assert.equal(dashboard.models.reduce((sum, model) => sum + model.audio.length, 0), expectedCount);
-  for (const model of dashboard.models) {
+  const rows = [...dashboard.models, ...Object.values(dashboard.byLanguage).flatMap(group => group.models)];
+  assert.equal(rows.reduce((sum, model) => sum + model.audio.length, 0), expectedCount);
+  for (const model of rows) {
     for (const backend of ['cpu', 'webgpu']) {
       const preferred = model.preferredAudio[backend];
       if (preferred) {
@@ -228,4 +229,19 @@ test('checks each receipt fingerprint even when source commits share the cache k
   const changed = structuredClone(first);
   changed.source.manifestSha256 = '0'.repeat(64);
   assert.throws(() => verifySourcesOnce([first, changed], process.cwd()), /fingerprint does not match/);
+});
+
+test('a newer recording in a translated language cannot displace the English article', () => {
+  const id = 'paradee';
+  const original = results.find(result => result.id === dashboard.models.find(model => model.id === id).warm.cpu.resultId);
+  const translation = structuredClone(original);
+  translation.id = 'ukrainian-language-selection-test';
+  translation.createdAt = '2099-01-01T00:00:00Z';
+  translation.fixture = {id:'uk-article-v1', language:'uk'};
+  const row = assembleDashboardData({
+    results:[original, translation],
+    models:{[id]:getAssetLock().models[id]},
+  });
+  assert.equal(row.models[0].warm.cpu.resultId, original.id);
+  assert.equal(row.byLanguage.uk.models[0].warm.cpu.resultId, translation.id);
 });

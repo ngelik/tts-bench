@@ -1,0 +1,14 @@
+[
+  {
+    "backend": "cpu",
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285--ua-serhiy-0p58m--cpu-full.wav",
+    "bytes": 52283948,
+    "sha256": "57e5d525a9768b9d26252375242a4584526f69105faba031437f12bc91a754f0"
+  },
+  {
+    "backend": "webgpu",
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093--ua-serhiy-0p58m--webgpu-full.wav",
+    "bytes": 52283948,
+    "sha256": "9d9a560af31f4f5de944214c58c959223970533aaf8da22c11890dcb9a9c3c0f"
+  }
+]

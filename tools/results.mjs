@@ -1,7 +1,9 @@
 import { checkSignal } from '../web/audio8/signal.mjs';
 import { validateSupport } from '../lib/model-support.mjs';
 import { minimumWarmRepetitions } from '../lib/benchmark-policy.mjs';
+import { fixtureLanguage, getBenchmarkFixture } from '../lib/benchmark-fixtures.mjs';
 import { createHash } from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 
@@ -172,11 +174,29 @@ export function validateResult(d, { publication = false } = {}) {
   for(const k of ['machineLabel','os','arch','cpu','chromeVersion']) check(text(e[k],200),`Invalid environment.${k}`);
   check(int(e.logicalCores,1,4096) && (e.ramBytes===null || int(e.ramBytes,1)) && (e.gpu===null || text(e.gpu,300)) && typeof e.headless==='boolean','Invalid hardware/browser metadata');
   if(publication) check(!e.headless,'Ranked contributions require headed Chrome; headless runs are diagnostics');
-  keys(d.fixture,['id','sha256','characters','chunks'],'fixture');
+  keys(d.fixture,['id','language','sha256','characters','unicodeCodePoints','utf8Bytes','chunks','source'],'fixture');
   check(slug(d.fixture.id) && hash(d.fixture.sha256) && int(d.fixture.characters,1,10000000) && int(d.fixture.chunks,1,100000),'Invalid fixture');
+  if(d.fixture.language!==undefined)check(typeof d.fixture.language==='string'&&/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(d.fixture.language),'Invalid fixture language');
+  if(d.fixture.unicodeCodePoints!==undefined)check(int(d.fixture.unicodeCodePoints,1,10000000),'Invalid fixture Unicode code-point count');
+  if(d.fixture.utf8Bytes!==undefined)check(int(d.fixture.utf8Bytes,1),'Invalid fixture UTF-8 byte count');
+  const registeredFixture=getBenchmarkFixture(d.fixture.id),registeredLanguage=fixtureLanguage(d.fixture.id);
+  if(registeredLanguage!==null&&d.fixture.language!==undefined)check(d.fixture.language===registeredLanguage,'Fixture language does not match the registered fixture');
+  if(registeredFixture){
+    check(d.fixture.sha256===registeredFixture.sha256&&d.fixture.characters===registeredFixture.characters&&d.fixture.chunks===registeredFixture.chunks,
+      'Fixture identity does not match its registered SHA, JavaScript length and chunk count');
+    if(d.fixture.unicodeCodePoints!==undefined)check(d.fixture.unicodeCodePoints===registeredFixture.unicodeCodePoints,'Fixture Unicode code-point count does not match its registry');
+    if(d.fixture.utf8Bytes!==undefined)check(d.fixture.utf8Bytes===registeredFixture.utf8Bytes,'Fixture UTF-8 byte count does not match its registry');
+    if(d.fixture.source!==undefined)check(isDeepStrictEqual(d.fixture.source,registeredFixture.source),'Fixture source provenance does not match its registry');
+    if(d.origin==='native'&&!p.smoke&&registeredFixture.language!=='en'){
+      check(d.fixture.language===registeredFixture.language&&d.fixture.unicodeCodePoints===registeredFixture.unicodeCodePoints&&
+        d.fixture.utf8Bytes===registeredFixture.utf8Bytes&&isDeepStrictEqual(d.fixture.source,registeredFixture.source),
+        'Native full non-English results must include the exact registered fixture language, Unicode counts and source provenance');
+    }
+  }
   const canonicalFixture=d.fixture.id==='english-20k-v1' && d.fixture.sha256===FIXTURE_SHA && d.fixture.characters===20000 && d.fixture.chunks===93;
   if(!p.smoke && d.fixture.id==='english-20k-v1') check(canonicalFixture,'Canonical fixture mismatch');
-  if(publication && d.origin==='native' && !p.smoke) check(canonicalFixture,'Native publication requires the canonical fixture');
+  if(d.origin==='native'&&!p.smoke)check(registeredFixture!==null,'Native full results require a registered canonical fixture');
+  if(publication && d.origin==='native' && !p.smoke) check(registeredFixture!==null,'Native publication requires a registered canonical fixture');
   keys(d.source,['gitCommit','dirty','manifestSha256'],'source');
   check((d.source.gitCommit===null || /^[a-f0-9]{40,64}$/.test(d.source.gitCommit)) && typeof d.source.dirty==='boolean' && hash(d.source.manifestSha256),'Invalid source provenance');
   if(publication && d.origin==='native') check(d.source.gitCommit!==null && !d.source.dirty,'Publish native runs from a clean committed checkout');

@@ -8,15 +8,43 @@ import {resolve,sep} from 'node:path';
 import {chromium} from 'playwright-core';
 import {findChrome} from '../lib/runner.mjs';
 import {SITE_VERSION_TOKEN,siteVersion} from '../lib/site-cache.mjs';
+import {matchesAuditedWav} from '../audio/waveform-integrity.mjs';
 
 const root=resolve('.cache/listening-site');
 const expected=JSON.parse(await readFile(resolve(root,'assets/data.json'),'utf8'));
+const languageGroups=[{id:'en',group:expected},...Object.entries(expected.byLanguage??{}).map(([id,group])=>({id,group}))];
+const eligibleIds=group=>group.models.filter(model=>['cpu','webgpu'].some(backend=>
+  (model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform)||
+  (model.memory?.[backend]?.status==='measured'&&Number.isFinite(model.memory[backend].meanMB)&&!model.memory[backend].waveform))).map(model=>model.id).sort();
+const audioEntries=languageGroups.flatMap(({group})=>group.models.flatMap(model=>model.audio??[]));
+const selectedAudioEntries=[...new Map(languageGroups.flatMap(({group})=>group.models.flatMap(model=>['cpu','webgpu']
+  .map(backend=>model.playbackAudio?.[backend]).filter(Boolean).map(entry=>[entry.clip.path,entry])))).values()];
+const diagnosticAudioPaths=new Set(audioEntries.filter(entry=>matchesAuditedWav(entry.full.sha256)).map(entry=>entry.clip.path));
+const selectedHealthyAudioCount=selectedAudioEntries.filter(entry=>!diagnosticAudioPaths.has(entry.clip.path)).length;
+const audioPaths=audioEntries.map(entry=>entry.clip.path);
+assert.equal(new Set(audioPaths).size,audioPaths.length,'Published recording paths are unique across all benchmark languages');
+for (const {id,group} of languageGroups) {
+  for (const model of group.models) for (const entry of model.audio??[]) {
+    assert.equal(entry.language,id,`${id} recording ${entry.resultId} is attributed to its benchmark language`);
+  }
+}
+const expectedAudioByLanguage=Object.fromEntries(languageGroups.map(({id,group})=>[id,group.models.reduce((sum,model)=>sum+(model.audio?.length??0),0)]));
 const hasEligibleResult=model=>['cpu','webgpu'].some(backend=>
   (model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform)||
   (model.memory?.[backend]?.status==='measured'&&Number.isFinite(model.memory[backend].meanMB)&&!model.memory[backend].waveform));
-const expectedIds=expected.models.filter(hasEligibleResult).map(model=>model.id).sort();
+const expectedIds=eligibleIds(expected);
 assert.ok(expectedIds.length>0,'The built Pages data contains eligible published rows');
 assert.equal(new Set(expectedIds).size,expectedIds.length,'The built Pages data has unique eligible model IDs');
+for (const {id,group} of languageGroups) {
+  assert.ok(Array.isArray(group.models),`The ${id} language data has a model list`);
+  const ids=eligibleIds(group);
+  assert.equal(new Set(ids).size,ids.length,`The ${id} language data has unique eligible model IDs`);
+  if (id!=='en') assert.equal(typeof group.fixture?.id,'string',`${id} fixture identity is present`);
+}
+for (const language of expected.languages??[]) {
+  if (language.id==='en') continue;
+  assert.ok(languageGroups.some(({id})=>id===language.id),`Registered language ${language.id} has matching byLanguage data`);
+}
 
 async function filesBelow(directory,relative='') {
   const files=[];
@@ -69,7 +97,9 @@ for (const file of stampedFiles) {
 }
 assert.equal(siteVersion(identityEntries),version,'The query identity matches all staged non-WAV assets and receipt-bound manifests');
 
-const staleData=JSON.stringify({schemaVersion:1,models:Array.from({length:13},(_,index)=>({id:`old-${index}`}))});
+const staleData=JSON.stringify({schemaVersion:1,models:Array.from({length:13},(_,index)=>({id:`old-en-${index}`})),
+  languages:[{id:'en',label:'English'},{id:'uk',label:'Ukrainian'}],
+  byLanguage:{uk:{schemaVersion:1,models:Array.from({length:2},(_,index)=>({id:`old-uk-${index}`})),fixture:{id:'old-uk-fixture',language:'uk',characters:19980,chunks:92}}}});
 const staleObservations=JSON.stringify({inputs:{},models:{},observations:[]});
 const legacyApp="import '../audio/waveform-integrity.mjs'; document.querySelector('#recording-count').textContent='cached legacy app'; document.body.dataset.legacyApp='loaded';";
 const legacyPlayer="import './waveform-integrity.mjs'; import './links.mjs'; document.body.dataset.legacyPlayer='loaded';";
@@ -78,7 +108,7 @@ const seedHtml=`<!doctype html><html><head>
 <link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/diagnostics.css"><link rel="stylesheet" href="/audio/player.css">
 <script type="module" src="/assets/app.mjs"></script><script type="module" src="/audio/player.mjs"></script><script type="module" src="/assets/diagnostics.mjs"></script>
 </head><body><span id="recording-count">—</span><script>
-Promise.all([fetch('/assets/data.json').then(r=>r.json()),fetch('/diagnostics/2026-11-multilingual/observations.json').then(r=>r.json())]).then(([data,observations])=>{document.body.dataset.legacyModels=String(data.models.length);document.body.dataset.legacyObservations=String(Object.keys(observations.inputs).length)});
+Promise.all([fetch('/assets/data.json').then(r=>r.json()),fetch('/diagnostics/2026-11-multilingual/observations.json').then(r=>r.json())]).then(([data,observations])=>{document.body.dataset.legacyEnglishModels=String(data.models.length);document.body.dataset.legacyUkModels=String(data.byLanguage?.uk?.models?.length??0);document.body.dataset.legacyLanguageTotal=String(data.models.length+(data.byLanguage?.uk?.models?.length??0));document.body.dataset.legacyObservations=String(Object.keys(observations.inputs).length)});
 </script></body></html>`;
 
 const requestLog=[];
@@ -142,7 +172,9 @@ const server=createServer(async(req,res)=>{
 });
 
 let browser,base;
-const baseReports={deploymentId:version,sourceModels:expected.models.length,expectedVisibleRows:expectedIds.length};
+const baseReports={deploymentId:version,sourceModelsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,group.models.length])),
+  expectedVisibleRowsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,eligibleIds(group).length])),
+  audioEntriesByLanguage:expectedAudioByLanguage,expectedAudioEntries:audioEntries.length,expectedVisibleRows:expectedIds.length};
 const errors=[];
 const publicArg=process.argv.indexOf('--public-url');
 const publicUrl=publicArg>=0 ? process.argv[publicArg+1] : null;
@@ -175,6 +207,33 @@ async function verifyPlayback(page) {
   await page.locator('#close-player').click();
   return playback;
 }
+async function verifyLanguageRows(page,label) {
+  const rows=[];
+  for (const {id,group} of languageGroups) {
+    const ids=eligibleIds(group);
+    const tab=page.locator(`#language-${id}`);
+    assert.equal(await tab.count(),1,`${label} visit exposes the registered ${id} language tab`);
+    assert.equal(await page.locator(`[data-language-count="${id}"]`).innerText(),String(ids.length),`${label} tab count matches ${id} eligible rows`);
+    if (id!=='en') await tab.click();
+    await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,ids.length,{timeout:20000});
+    assert.equal(await tab.getAttribute('aria-selected'),'true',`${label} ${id} tab is selected`);
+    assert.equal(await page.locator('#model-count').innerText(),String(ids.length),`${label} model count reflects ${id} results`);
+    const scoreCount=group.models.reduce((sum,model)=>sum+['cpu','webgpu'].filter(backend=>model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform).length,0);
+    assert.equal(await page.locator('#score-count').innerText(),String(scoreCount),`${label} score count reflects ${id} warm results`);
+    const visibleIds=(await page.locator('#model-rows tr').evaluateAll(items=>items.map(row=>row.dataset.model))).sort();
+    assert.deepEqual(visibleIds,ids,`${label} language tab reads the correct ${id} result models`);
+    if (group.fixture?.characters) {
+      const languageName=new Intl.DisplayNames(['en'],{type:'language'}).of(id);
+      assert.equal(await page.locator('#fixture-language').innerText(),`${group.fixture.characters.toLocaleString('en-US')} ${languageName} characters`,`${label} fixture descriptor matches ${id}`);
+    }
+    const playback=id!=='en'&&ids.length ? await verifyPlayback(page) : null;
+    if (id!=='en'&&!ids.length) assert.equal(await page.locator('#no-results').isVisible(),true,`${label} empty ${id} results show the empty-language state`);
+    rows.push({language:id,rows:ids.length,playback});
+  }
+  if (languageGroups.some(({id})=>id!=='en')) await page.locator('#language-en').click();
+  await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,expectedIds.length,{timeout:20000});
+  return rows;
+}
 async function verifyDashboard(page,label) {
   await page.goto(base);
   await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count || !document.querySelector('#load-error')?.hidden,expectedIds.length,{timeout:20000});
@@ -183,19 +242,30 @@ async function verifyDashboard(page,label) {
   const rowCount=actualIds.length;
   assert.equal(await page.locator('#load-error').isVisible(),false,`${label} visitor has no dashboard load error`);
   const resources=await assertResources(page,['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs']);
+  const languageRows=await verifyLanguageRows(page,label);
   const playback=await verifyPlayback(page);
-  return {rows:rowCount,resources,playback};
+  return {rows:rowCount,resources,playback,languages:languageRows};
 }
 async function verifySecondaryPages(page,label) {
   await page.goto(new URL('audio/',base).href);
-  await page.waitForFunction(()=>document.querySelectorAll('#samples .audio-card').length>0,{timeout:15000});
+  await page.waitForFunction(count=>document.querySelectorAll('#samples .audio-card').length===count,selectedHealthyAudioCount,{timeout:15000});
   const audioCards=await page.locator('#samples .audio-card').count();
+  assert.equal(audioCards,selectedHealthyAudioCount,`${label} selected recording list includes healthy selections across languages`);
   const audioUrls=await page.locator('#samples .audio-card audio').evaluateAll(nodes=>nodes.map(node=>node.src));
   assert.ok(audioUrls.length,`${label} listening page exposes recordings`);
   for (const url of audioUrls) {
     assert.match(new URL(url).pathname,/\/audio\/samples\/[^/]+\.wav$/,'Listening page keeps immutable recordings at stable paths');
     assert.equal(new URL(url).searchParams.has('v'),false,'Listening page can reuse the immutable recording cache');
   }
+  const publishedCountLabel=`${audioEntries.length} clips published`;
+  assert.ok((await page.locator('#show-all').innerText()).includes(`Show all ${audioEntries.length} clips`),`${label} all-clips total includes data.byLanguage recordings`);
+  assert.ok((await page.locator('#status').innerText()).includes(publishedCountLabel),`${label} status total includes every language`);
+  await page.locator('#show-all').click();
+  await page.waitForFunction(count=>document.querySelectorAll('#samples .audio-card').length===count,audioEntries.length-diagnosticAudioPaths.size,{timeout:15000});
+  if (diagnosticAudioPaths.size) await page.locator('#include-diagnostic').check();
+  await page.waitForFunction(count=>document.querySelectorAll('#samples .audio-card').length===count,audioEntries.length,{timeout:15000});
+  const allShownPaths=await page.locator('#samples .audio-card').evaluateAll(cards=>cards.map(card=>`audio/samples/${card.dataset.sample}`));
+  assert.deepEqual(new Set(allShownPaths),new Set(audioPaths),`${label} all-language listening list reads every catalog recording`);
   const audioResources=await assertResources(page,['/audio/player.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/data.json']);
   await page.goto(new URL('diagnostics/',base).href);
   await page.waitForFunction(()=>document.querySelectorAll('#groups .input-group').length>0,{timeout:15000});
@@ -228,6 +298,9 @@ try {
   cleanPage.on('console',message=>{if(message.type()==='error')errors.push(`clean: ${message.text()}`);});
   phase='clean-dashboard';
   const cleanDashboard=await verifyDashboard(cleanPage,'Clean');
+  const cleanBackground=await cleanPage.evaluate(()=>getComputedStyle(document.body).backgroundColor);
+  const staleBackground='rgb(255, 0, 255)';
+  assert.notEqual(cleanBackground,staleBackground,'The clean visit uses a non-stale page background');
   phase='clean-secondary';
   const cleanSecondary=await verifySecondaryPages(cleanPage,'clean');
   await cleanContext.close();
@@ -239,8 +312,9 @@ try {
   mixedPage.on('console',message=>{if(message.type()==='error')mixedErrors.push(message.text());});
   phase='legacy-cache-seed';
   await mixedPage.goto(new URL('__cache_seed__/',base).href);
-  await mixedPage.waitForFunction(()=>document.body.dataset.legacyApp==='loaded'&&document.body.dataset.legacyPlayer==='loaded'&&document.body.dataset.legacyDiagnostics==='loaded'&&document.body.dataset.legacyModels==='13'&&document.body.dataset.legacyObservations==='0');
-  assert.equal(await mixedPage.evaluate(()=>getComputedStyle(document.body).backgroundColor),'rgb(255, 0, 255)','Seed visit cached the stale stylesheet');
+  await mixedPage.waitForFunction(()=>document.body.dataset.legacyApp==='loaded'&&document.body.dataset.legacyPlayer==='loaded'&&document.body.dataset.legacyDiagnostics==='loaded'&&document.body.dataset.legacyEnglishModels==='13'&&document.body.dataset.legacyUkModels==='2'&&document.body.dataset.legacyLanguageTotal==='15'&&document.body.dataset.legacyObservations==='0');
+  assert.equal(await mixedPage.evaluate(()=>getComputedStyle(document.body).backgroundColor),staleBackground,'Seed visit cached the stale stylesheet');
+  assert.equal(await mixedPage.evaluate(()=>document.body.dataset.legacyLanguageTotal),'15','The legacy seed records both English and Ukrainian model groups');
   const seeded=requestLog.filter(entry=>entry.phase==='legacy-cache-seed');
   for (const path of ['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/player.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/diagnostics.mjs','/assets/diagnostics.css','/diagnostics/2026-11-multilingual/observations.json']) {
     assert.ok(seeded.some(entry=>entry.path===path&&!entry.search),`Mixed-cache seed fetched legacy ${path}`);
@@ -248,13 +322,16 @@ try {
   mixedErrors.length=0;
   phase='mixed-dashboard';
   const mixedDashboard=await verifyDashboard(mixedPage,'Mixed-cache');
-  assert.equal(await mixedPage.evaluate(()=>getComputedStyle(document.body).backgroundColor),'rgb(246, 245, 241)','The dashboard does not reuse the legacy stylesheet');
+  const mixedBackground=await mixedPage.evaluate(()=>getComputedStyle(document.body).backgroundColor);
+  assert.equal(mixedBackground,cleanBackground,'The mixed-cache visit has the same computed background as the clean reference');
+  assert.notEqual(mixedBackground,staleBackground,'The mixed-cache visit does not reuse the stale magenta stylesheet');
   phase='mixed-secondary';
   const mixedSecondary=await verifySecondaryPages(mixedPage,'mixed-cache');
   assert.deepEqual(mixedErrors,[],'Mixed-cache pages have no stale-module runtime errors');
   await mixedContext.close();
 
-  report.local={base,chrome:browser.version(),clean:{dashboard:cleanDashboard,secondary:cleanSecondary},mixedCache:{seededLegacyResources:seeded.length,dashboard:mixedDashboard,secondary:mixedSecondary},errors};
+  report.local={base,chrome:browser.version(),background:{clean:cleanBackground,mixedCache:mixedBackground,stale:staleBackground},
+    clean:{dashboard:cleanDashboard,secondary:cleanSecondary},mixedCache:{seededLegacyResources:seeded.length,legacyModelCounts:{en:13,uk:2,total:15},dashboard:mixedDashboard,secondary:mixedSecondary},errors};
 
   if (publicUrl) {
     const publicContext=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
@@ -280,6 +357,7 @@ try {
       assert.equal(new Set(publicIds).size,publicIds.length,'Public result IDs are unique');
       assert.deepEqual(publicIds,expectedIds,'Fresh hosted Chrome shows the same eligible model IDs as this build');
       assert.equal(await publicPage.locator('#load-error').isVisible(),false);
+      const languages=await verifyLanguageRows(publicPage,'Public');
       const playback=await verifyPlayback(publicPage);
       assert.deepEqual(publicErrors,[],'Fresh public visit has no browser runtime errors');
       const assets=await Promise.all(publicAssetResponses);
@@ -289,7 +367,7 @@ try {
         assert.equal(match.status,200,`Fresh public ${assetPath} response is successful`);
         assert.ok(match.bytes>0&&/^[a-f0-9]{64}$/.test(match.sha256),`Fresh public ${assetPath} body was captured and hashed`);
       }
-      report.public={url:freshUrl.href,rows,modelIds:publicIds,playback,assets,errors:publicErrors};
+      report.public={url:freshUrl.href,rows,modelIds:publicIds,languages,playback,assets,errors:publicErrors};
     } catch (error) {
       report.public={url:freshUrl.href,rows:await publicPage.locator('#model-rows tr').count().catch(()=>null),loadError:await publicPage.locator('#load-error').isVisible().catch(()=>null),assets:await Promise.all(publicAssetResponses),errors:publicErrors,error:String(error)};
       throw error;

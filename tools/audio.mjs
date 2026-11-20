@@ -4,6 +4,8 @@ import {pathToFileURL} from 'node:url';
 import {readResult,sha256} from './results.mjs';
 import {getModel} from '../lib/catalog.mjs';
 import {verifySource} from './provenance.mjs';
+import {fixtureLanguage} from './fixture-language.mjs';
+export function verifyAudioLanguage(entry,result){if(entry.language!==fixtureLanguage(result))throw new Error('Audio language does not match scored fixture');}
 const sourceCache=new Map();
 export function verifyAudioAttribution(a){const m=getModel(a.model);if(a.modelTerms!==m.license.model||a.attribution!==(attribution[a.model]??m.displayName)||JSON.stringify(a.sourceUrls)!==JSON.stringify(m.support.sources))throw new Error('Audio attribution differs from verified model catalog');}
 export const MAX_CLIP_BYTES=3000000; // 30 seconds of mono PCM16 at up to 48 kHz.
@@ -28,13 +30,14 @@ const attribution={"lfm3-audio-2b-gguf":"LFM3-Audio-2B by Liquid AI; official GG
 attribution['silencio-2']='Silencio-2 by BlueRose Labs; model and converted graphs CC-BY-4.0. Fine-tuned from Kyutai Pocket TTS with Basis Global Emotions data; bundled synthetic voice 260. Noncommercial benchmark evaluation.';
 attribution['klein-tts-x1.5-pro']='Klein-TTS X1.5 Pro by Klein ML; Sarah (af_heart) English voice. Pinned model is Apache-2.0. Browser implementation is a disclosed port of @kleinml/kleintts 0.2.0.';
 attribution['linnet-en-35m']='Linnet model weights by VoxRT, licensed under the Linnet Weights License 1.0. Powered by Linnet (VoxRT). Fixed f1 voice; benchmark evaluation only.';
+attribution['ua-serhiy-0p58m']='Synthetic Ukrainian speech generated with dmytro-m’s Serhiy 0.58M, distilled from the Serhiy Piper teacher. Student weights/reference GPL-3.0; sanoTTS by Ampixa. Teacher Apache-2.0; training corpus MIT. Attribution only; not an output-license grant.';
 export async function addAudio({result,wav,model,backend}){
  const d=await readResult(resolve(result),{publication:true});verifySource(d,process.cwd(),sourceCache);const c=d.cells.find(c=>c.model===model&&c.backendRequested===backend&&c.status==='measured');if(!c)throw new Error('No measured source cell');
  const b=await readFile(wav),digest=sha256(b),w=wavInfo(b);const t=c.trials.find(t=>t.audio?.sha256===digest&&t.audio.bytes===b.length);if(!t||t.samples!==w.samples||t.sampleRate!==w.sampleRate)throw new Error('Full audio does not match a scored receipt');
- const m=getModel(model),clip=makeClip(b),key=`${d.id}--${model}--${backend}`,path=`audio/samples/${key}.wav`;if(key.length>230)throw new Error('Audio asset name too long');
+ const m=getModel(model),language=fixtureLanguage(d),clip=makeClip(b),key=`${d.id}--${model}--${backend}`,path=`audio/samples/${key}.wav`;if(key.length>230)throw new Error('Audio asset name too long');
  const data=await manifest();if(data.entries.some(a=>a.resultId===d.id&&a.model===model&&a.backend===backend))throw new Error('Audio already registered; do not overwrite');
  await mkdir(dirname(path),{recursive:true});await writeFile(path,clip,{flag:'wx'});
- data.entries.push({resultId:d.id,model,backend,trialIndex:t.index,voice:c.voice,language:'en',attribution:attribution[model]??m.displayName,modelTerms:m.license.model,sourceUrls:m.support.sources,clip:{path,sha256:sha256(clip),bytes:clip.length,startSample:0,...wavInfo(clip)},full:{url:BASE+key+'-full.wav',sha256:digest,bytes:b.length}});
+ data.entries.push({resultId:d.id,model,backend,trialIndex:t.index,voice:c.voice,language,attribution:attribution[model]??m.displayName,modelTerms:m.license.model,sourceUrls:m.support.sources,clip:{path,sha256:sha256(clip),bytes:clip.length,startSample:0,...wavInfo(clip)},full:{url:BASE+key+'-full.wav',sha256:digest,bytes:b.length}});
  data.entries.sort((a,b)=>(a.model+'/'+a.backend+'/'+a.resultId).localeCompare(b.model+'/'+b.backend+'/'+b.resultId));await writeFile('audio/manifest.json',JSON.stringify(data,null,2)+'\n');return data.entries.find(a=>a.clip.path===path);
 }
 export async function checkAudio(){
@@ -45,7 +48,7 @@ export async function checkAudio(){
   if(!/^audio\/samples\/[a-z0-9][a-z0-9._-]{0,239}\.wav$/.test(a.clip?.path)||paths.has(a.clip.path))throw new Error('Invalid audio path');paths.add(a.clip.path);
   if(typeof a.attribution!=='string'||!a.attribution.trim()||typeof a.modelTerms!=='string'||!a.modelTerms.trim()||!Array.isArray(a.sourceUrls)||!a.sourceUrls.length||a.sourceUrls.some(u=>!/^https:\/\//.test(u)))throw new Error('Missing audio attribution');
   verifyAudioAttribution(a);
-  const result=await readResult(`results/${a.resultId}/result.json`,{publication:true});verifySource(result,process.cwd(),sourceCache);const c=result.cells.find(c=>c.model===a.model&&c.backendRequested===a.backend&&c.status==='measured');const t=c?.trials.find(t=>t.index===a.trialIndex);if(!t||a.full.sha256!==t.audio?.sha256||a.full.bytes!==t.audio.bytes||a.voice!==c.voice||a.language!=='en')throw new Error('Audio provenance does not match scored receipt');
+  const result=await readResult(`results/${a.resultId}/result.json`,{publication:true});verifySource(result,process.cwd(),sourceCache);const c=result.cells.find(c=>c.model===a.model&&c.backendRequested===a.backend&&c.status==='measured');const t=c?.trials.find(t=>t.index===a.trialIndex);verifyAudioLanguage(a,result);if(!t||a.full.sha256!==t.audio?.sha256||a.full.bytes!==t.audio.bytes||a.voice!==c.voice)throw new Error('Audio provenance does not match scored receipt');
   if(a.full.url!==BASE+`${a.resultId}--${a.model}--${a.backend}-full.wav`)throw new Error('Unexpected audio release URL');
   const b=await readFile(a.clip.path),w=wavInfo(b);if(b.length>MAX_CLIP_BYTES||b.length!==a.clip.bytes||sha256(b)!==a.clip.sha256||a.clip.startSample!==0||w.samples!==Math.min(t.samples,t.sampleRate*30)||w.sampleRate!==t.sampleRate||['samples','sampleRate','seconds'].some(k=>a.clip[k]!==w[k]))throw new Error('Invalid audio clip or digest');
  }

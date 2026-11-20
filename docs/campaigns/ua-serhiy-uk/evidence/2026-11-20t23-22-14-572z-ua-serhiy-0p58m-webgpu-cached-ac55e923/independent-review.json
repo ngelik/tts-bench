@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "verdict": "accepted",
+  "resultId": "2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923",
+  "receiptSha256": "3004e382a069de2b669747fde912daff2fb41800d631ca848800810f452d1652",
+  "source": {
+    "gitCommit": "9870c198651481dfed69ece7dc7bb88d870edabd",
+    "dirty": false,
+    "manifestSha256": "c02c5861f72e45f36e024ea08887c0ada604abd53da938583d702124cfbdd163"
+  },
+  "fixture": {
+    "id": "uk-article-v1",
+    "language": "uk",
+    "sha256": "542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40",
+    "characters": 19980,
+    "unicodeCodePoints": 19980,
+    "utf8Bytes": 36364,
+    "chunks": 92,
+    "source": {
+      "type": "translation",
+      "description": "AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple",
+    "headless": false
+  },
+  "model": "ua-serhiy-0p58m",
+  "backendRequested": "webgpu",
+  "backendEffective": "webgpu+wasm",
+  "status": "measured",
+  "checks": {
+    "validateResultPublication": true,
+    "verifySourceManifestAndTranslatedFixture": true,
+    "cleanPinnedSource": true,
+    "expectedTrialCounts": true,
+    "finiteNonempty92ChunkPcm": true,
+    "audioReceiptMatchesFullWavHashAndBytes": true,
+    "wavIsMonoPcm16_22050": true,
+    "wavFramesMatchReceiptSamples": true,
+    "fullPcmWaveformScanned": true
+  },
+  "selectedAudio": {
+    "resultId": "2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923",
+    "receiptSha256": "3004e382a069de2b669747fde912daff2fb41800d631ca848800810f452d1652",
+    "scenario": "cached",
+    "backendRequested": "webgpu",
+    "backendEffective": "webgpu+wasm",
+    "trialIndex": 1,
+    "floatPcmSha256": "5ffd72add0f0c930fc78047f766c77b6bd470b72d24ed617c4ce37dda7945113",
+    "audioReceipt": {
+      "sha256": "9d9a560af31f4f5de944214c58c959223970533aaf8da22c11890dcb9a9c3c0f",
+      "bytes": 52283948
+    },
+    "wavAudit": {
+      "wavSha256": "9d9a560af31f4f5de944214c58c959223970533aaf8da22c11890dcb9a9c3c0f",
+      "bytes": 52283948,
+      "channels": 1,
+      "sampleWidthBytes": 2,
+      "encoding": "PCM16_LE",
+      "sampleRate": 22050,
+      "frames": 26141952,
+      "durationSeconds": 1185.5760544217687,
+      "pcmDataSha256": "46779a1195b74b3e9a2176aa8a01e111f64e1f692d7b5c09894be887abaf56de",
+      "rawFirst30SecondsPcmSha256": "2d8c1bcff524c9585a182e8bc321770ce2177f04a8566dd16d681b8a687ca388",
+      "rawFirst30SecondsPcmBytes": 1323000,
+      "pcm": {
+        "minSample": -32768,
+        "maxSample": 26673,
+        "zeroSamples": 219228,
+        "clippedPositiveSamples": 0,
+        "clippedNegativeSamples": 8,
+        "longestConstantRun": {
+          "startSample": 20393984,
+          "endSampleExclusive": 20394252,
+          "samples": 268,
+          "value": 0
+        },
+        "runsAtLeast100ms": {
+          "runs": 0,
+          "samples": 0,
+          "zeroSamples": 0
+        },
+        "runsAtLeast1s": {
+          "runs": 0,
+          "samples": 0,
+          "zeroSamples": 0
+        }
+      }
+    }
+  },
+  "metricSummary": {
+    "trialCount": 1,
+    "generationMs": [
+      10076.56500005722
+    ],
+    "medianGenerationMs": 10076.56500005722,
+    "minGenerationMs": 10076.56500005722,
+    "maxGenerationMs": 10076.56500005722,
+    "audioSeconds": 1185.5760544217687,
+    "rtfRecomputed": [
+      0.008499298684783054
+    ],
+    "firstPcmMs": [
+      92.05000019073486
+    ],
+    "firstSourceChunkCompletedMs": [
+      159.3400001525879
+    ],
+    "floatPcmHashes": [
+      "5ffd72add0f0c930fc78047f766c77b6bd470b72d24ed617c4ce37dda7945113"
+    ],
+    "allFloatPcmHashesEqual": true,
+    "warmupGenerationMs": null,
+    "resourceMetrics": {
+      "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+      "rssSampleCount": 20,
+      "meanRssBytesRecomputed": 1964758630,
+      "meanRssBytesReceipt": 1964758630,
+      "sampledWindowPeakRssBytes": 2047361024,
+      "articleCallPeakRssBytes": 2679078912,
+      "loadMs": 409.47233399999914,
+      "downloadBytes": 56640,
+      "idealDownloadSecondsAt1Mbps": 0.45312
+    },
+    "resourceMeanMatchesReceipt": true
+  },
+  "scanBoundary": {
+    "startedAtUtc": "2026-11-20T23:32:59.383174+00:00",
+    "finishedAtUtc": "2026-11-20T23:33:38.609984+00:00",
+    "serialSlot": "m1-slot.py publication",
+    "method": "Read-only full WAV SHA-256 plus streaming PCM16 scan; no inference or source edits."
+  },
+  "limitations": [
+    "CPU and WebGPU Float32 PCM digests differ; this verifies each backend selected audio against its own receipt and does not claim cross-backend waveform identity.",
+    "Effective WebGPU is webgpu+wasm with explicit WASM fallback; GPU dispatch was verified separately, outside timing.",
+    "No ASR or human listening was performed in this receipt review."
+  ],
+  "acceptanceScope": "Accepted for native receipt, source, protocol, metric, and audio-file integrity. This review does not establish intelligibility or complete text fidelity.",
+  "strictCrossBackendComparison": "The strict comparison records GPU provider and WASM thread metadata differences; executionProviders identifies the requested backend provider chain. Shared non-backend synthesis settings match. Keep per-backend reports separate; any ratio is descriptive full-pipeline context only.",
+  "originalReviewSha256": "03d4ff90bd95eee16a34a325d37b4bf6875c85eab27382f16e992027f8534a5a",
+  "initialReviewSha256": "f54c05df3f03a951f51ad25235e048e6fc38c3366635c88611a84dce84d87202",
+  "publicationNote": "Derivative final review copy; local WAV path omitted. Original and initial review digests retained."
+}

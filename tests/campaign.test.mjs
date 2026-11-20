@@ -12,7 +12,8 @@ const runnerSource = await readFile(join(projectRoot, 'tools/run-campaign.mjs'),
 
 const catalogStub = `
 export function getModel(id) {
-  if (['one', 'two', 'large', 'exact', 'below', 'fun-cosyvoice3-0.5b-2512'].includes(id)) return { id };
+  if (id === 'ua-serhiy-0p58m') return { id, support: { languages: ['uk'] } };
+  if (['one', 'two', 'large', 'exact', 'below', 'fun-cosyvoice3-0.5b-2512'].includes(id)) return { id, support: null };
   throw new Error('Unknown model: ' + id);
 }
 `;
@@ -35,6 +36,7 @@ const model = arg('--model');
 const backend = arg('--backend');
 const scenario = arg('--scenario');
 const repetitions = Number(arg('--repetitions'));
+const fixtureId = arg('--fixture');
 const note = arg('--note');
 const events = process.env.CAMPAIGN_TEST_EVENTS;
 await appendFile(events, JSON.stringify({ event: 'start', model, backend, scenario, repetitions }) + '\\n');
@@ -50,12 +52,20 @@ const id = 'stub-' + model + '-' + backend;
 const result = 'runs/' + id + '/result.json';
 const gitCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 await mkdir(join('runs', id), { recursive: true });
+const fixture = fixtureId === 'uk-article-v1' ? {
+  id: 'uk-article-v1', language: 'uk', sha256: '542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40',
+  characters: 19980, unicodeCodePoints: 19980, utf8Bytes: 36364, chunks: 92,
+  source: { type: 'translation', description: 'AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.', sourceFixtureId: 'english-20k-v1', sourceSha256: '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b', sourceLanguage: 'en' },
+} : {
+  id: 'english-20k-v1', sha256: '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b',
+  characters: 20000, chunks: 93,
+};
 const receipt = {
   id,
   status: 'measured',
   source: { gitCommit, dirty: false },
   protocol: { smoke: false, scenario, repetitions },
-  fixture: { characters: 20000, chunks: 93 },
+  fixture,
   cells: [{ status: 'measured', trials: [] }],
   notes: [note],
 };
@@ -76,11 +86,14 @@ async function sandbox(t, plan, { failModel, dirty = false } = {}) {
   await mkdir(join(directory, 'tools'), { recursive: true });
   await mkdir(join(directory, 'lib'), { recursive: true });
   await mkdir(join(directory, 'bin'), { recursive: true });
+  await mkdir(join(directory, 'fixtures'), { recursive: true });
   await writeFile(join(directory, 'tools/run-campaign.mjs'), runnerSource);
   await writeFile(join(directory, 'lib/catalog.mjs'), catalogStub);
   await writeFile(join(directory, 'lib/model-parameters.mjs'), modelParametersStub);
   await copyFile(join(projectRoot, 'lib/campaign-plan.mjs'), join(directory, 'lib/campaign-plan.mjs'));
   await copyFile(join(projectRoot, 'lib/benchmark-policy.mjs'), join(directory, 'lib/benchmark-policy.mjs'));
+  await copyFile(join(projectRoot, 'lib/benchmark-fixtures.mjs'), join(directory, 'lib/benchmark-fixtures.mjs'));
+  await copyFile(join(projectRoot, 'fixtures/registry.json'), join(directory, 'fixtures/registry.json'));
   await writeFile(join(directory, 'bin/bench.mjs'), benchStub);
   await writeFile(join(directory, '.gitignore'), 'runs/\n');
   await writeFile(join(directory, 'source.txt'), 'committed source\n');
@@ -162,6 +175,31 @@ test('campaign runner waits for each child before starting the next cell and rec
   assert.equal(attempts.length, 2);
   assert.deepEqual(attempts.map(row => row.cell.model), ['one', 'two']);
   assert.deepEqual(attempts.map(row => row.resultId), ['stub-one-cpu', 'stub-two-webgpu']);
+});
+
+test('Ukrainian model defaults to its required fixture and records exact Unicode identity', async t => {
+  const { directory, events } = await sandbox(t, plan([cell('ua-serhiy-0p58m')]));
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  const ledger = await campaignDirectory(directory);
+  const effectivePlan = JSON.parse(await readFile(join(ledger, 'effective-plan.json'), 'utf8'));
+  assert.equal(effectivePlan.fixtureId, 'uk-article-v1');
+  const attempt = JSON.parse((await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim());
+  assert.equal(attempt.fixtureId, 'uk-article-v1');
+  const receipt = JSON.parse(await readFile(join(directory, attempt.resultPath), 'utf8'));
+  assert.deepEqual(receipt.fixture, {
+    id: 'uk-article-v1', language: 'uk', sha256: '542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40',
+    characters: 19980, unicodeCodePoints: 19980, utf8Bytes: 36364, chunks: 92,
+    source: { type: 'translation', description: 'AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.', sourceFixtureId: 'english-20k-v1', sourceSha256: '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b', sourceLanguage: 'en' },
+  });
+});
+
+test('campaign rejects an explicit English fixture for the Ukrainian-only model', async t => {
+  const { directory, events } = await sandbox(t, { ...plan([cell('ua-serhiy-0p58m')]), fixtureId: 'english-20k-v1' });
+  const run = invoke(directory, events);
+  assert.notEqual(run.status, 0);
+  assert.match(run.stderr, /requires campaign fixture uk-article-v1/);
+  assert.deepEqual(await eventRows(events), []);
 });
 
 test('campaign runner accepts a sourceCommit pin matching the clean checkout', async t => {
