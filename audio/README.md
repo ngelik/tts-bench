@@ -70,6 +70,7 @@ commercial-use clearance or a grant of rights in upstream voices.
 - Kokoro 82M: hexgrad, `af_heart` English voice; Apache-2.0 model terms, with official JavaScript source attribution retained.
 - Kitten Nano 0.8: KittenML, Bella preset; Apache-2.0 model terms, with the pinned frontend implementation attributed.
 - Sano Amy: ampixa, Amy English checkpoint; GPL-3.0 model card and GPL-3.0-or-later browser runtime terms are documented separately.
+- Sano English size variants: Ampixa Heart, HFC, Kristin, Amy-small and Amy 1.8M checkpoints use the official piperlite WebAssembly runtime. Amy-small and Amy 1.8M are deterministic repacks of pinned Ampixa FP16 sources into the official browser ABI. GPL-3.0 model and GPL-3.0-or-later runtime terms apply; these evaluation recordings do not grant upstream voice or commercial-use rights.
 - Inflect Micro v2: Owen Song, fixed synthetic English voice; Apache-2.0 model/export terms and MIT symbol-inventory attribution.
 - MMS English: Meta, English single-speaker checkpoint; CC BY-NC 4.0 model terms. Broader MMS language coverage is not claimed for this checkpoint.
 - Mach Boom: SyzygyResearch, tested Zoey voice; the Apache-2.0 checkpoint notice credits Gradium Phonon and Kyutai Pocket TTS/Mimi. This result uses an experimental Chrome Pyodide/NumPy WebAssembly port, not the upstream Linux/x86 optimized runtime. Its WebGPU path was unsupported in this campaign.

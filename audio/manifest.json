@@ -3054,6 +3054,147 @@
         "sha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
         "bytes": 63244844
       }
+    },
+    {
+      "resultId": "2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39",
+      "model": "sano-amy-1p8m",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Amy 1.8M (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Amy 1.8M English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p8m/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu.wav",
+        "sha256": "58dbaf2dc55e8752b985220d3f30334b9749a4a41e87cf973fa6b9ac2dd92bab",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t12-33-24-733z-sano-amy-1p8m-cpu-warm-f43efd39--sano-amy-1p8m--cpu-full.wav",
+        "sha256": "b04eedd55fea8eb75a7a1c64d940967f8621be29dd9c2b917198b8200711e508",
+        "bytes": 53059628
+      }
+    },
+    {
+      "resultId": "2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa",
+      "model": "sano-amy-small",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Amy-small (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; small Amy English checkpoint repacked from the pinned FP16 source for the official piperlite browser ABI. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu.wav",
+        "sha256": "47b6f5aacc78eaf49eac15dadbb091f5c92e6fe2e58349630f89429e93ce792c",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t11-40-02-061z-sano-amy-small-cpu-warm-e81738fa--sano-amy-small--cpu-full.wav",
+        "sha256": "ce957737fa88e8c9a2a802cd9121d5f70976a072d3835e5627d964ed20e48b87",
+        "bytes": 53541932
+      }
+    },
+    {
+      "resultId": "2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc",
+      "model": "sano-heart",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "SanoTTS heart (English, US)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Heart English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/heart/meta.json",
+        "https://github.com/Ampixa/sanoTTS/tree/c0584a51213721faba98135821faab71bae888f0/web"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu.wav",
+        "sha256": "020e89702460d4eb622b23678a25ede5a4a0948af159ac08956ab85f59a11222",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-34-55-044z-sano-heart-cpu-warm-eff21fdc--sano-heart--cpu-full.wav",
+        "sha256": "d72091ac1f032fb919d8214bc12a732fb2912ab2e0c4a2d441c6a2cda3e3c6f4",
+        "bytes": 64349740
+      }
+    },
+    {
+      "resultId": "2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d",
+      "model": "sano-hfc",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "HFC (English, eSpeak en-us)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; HFC English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu.wav",
+        "sha256": "e0b9df9d5900ffa538680e93fb5fe725211a72a5d9474add0854b6306011ca7c",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t06-08-51-824z-sano-hfc-cpu-warm-eefb925d--sano-hfc--cpu-full.wav",
+        "sha256": "a7723777c395e7fd0919eff93a3677a8fd301b2cc8ecff7865b2e0ee35bb1f1f",
+        "bytes": 42692140
+      }
+    },
+    {
+      "resultId": "2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0",
+      "model": "sano-kristin",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Kristin (English, eSpeak en)",
+      "language": "en",
+      "attribution": "SanoTTS by Ampixa; Kristin English checkpoint using the official piperlite WebAssembly runtime. GPL-3.0 model and GPL-3.0-or-later browser runtime; evaluation recording.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+        "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/kristin/meta.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu.wav",
+        "sha256": "1f0c02a78a72833315daedda4e609592e29b1a9c4e14270fc96cccb3ae12e344",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t10-04-14-383z-sano-kristin-cpu-warm-bd5428e0--sano-kristin--cpu-full.wav",
+        "sha256": "a67b5e4bf7c93d8afa3404646821df1e395cf494721cacb3f8e54aa2a3fc3955",
+        "bytes": 47470124
+      }
     }
   ]
 }
