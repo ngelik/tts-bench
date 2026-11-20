@@ -1920,6 +1920,35 @@
       }
     },
     {
+      "resultId": "2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a",
+      "model": "sano-amy-small-gguf",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "amy-1p1m (US English; Piper NFD phonemes with interleaved PAD)",
+      "language": "en",
+      "attribution": "sanoTTS Amy small (Kokopop F16/F32)",
+      "modelTerms": "GPL-3.0-or-later upstream sanoTTS distribution; selected package does not declare independent model terms",
+      "sourceUrls": [
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/amy-en-1p1m/manifest.json",
+        "https://huggingface.co/ampixa/sanoTTS/blob/25410576d005d7f08d186990fd91f6a2651243de/README.md",
+        "https://github.com/tterrasson/kokopop/tree/73ed5710cb37ca0384bc4bfdd7138d13605c9a88"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu.wav",
+        "sha256": "d4b502f6f518654a78e2de081db88033b830e47542fba222fd305c099ea07919",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu-full.wav",
+        "sha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+        "bytes": 58720218
+      }
+    },
+    {
       "resultId": "2026-11-19t11-19-23-941z-sano-amy-small-gguf-webgpu-warm-8ed449ce",
       "model": "sano-amy-small-gguf",
       "backend": "webgpu",
