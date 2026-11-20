@@ -69,10 +69,10 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(SANO_HEART_NANO_F32.model.bytes, 1462248);
   assert.equal(SANO_HEART_NANO_F32.model.sha256, '5e4389e27a9db6d18c5e7d479374f0bdb6eb97ab22273edb8d89c879cc97af1e');
   const cpuRuntime = zonos.assets.filter(asset => asset.id.startsWith('zonos3-cpu-runtime-'));
-  assert.equal(cpuRuntime.reduce((sum, asset) => sum + asset.bytes, 0), 4410876);
-  assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v2-690469b7955a/')));
+  assert.equal(cpuRuntime.reduce((sum, asset) => sum + asset.bytes, 0), 4402467);
+  assert.ok(cpuRuntime.every(asset => asset.url.includes('/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/')));
   assert.equal(cpuRuntime.find(asset => asset.id === 'zonos3-cpu-runtime-wasm').sha256,
-    '690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17');
+    '59ca2ce1c12bffd27fa13beb00e2d90d919f00bcc083c963ce29878de3502bf8');
   const linnet = getAssetLock().models['linnet-en-35m'];
   assert.deepEqual(linnet.backends, ['cpu', 'webgpu']);
   assert.equal(linnet.modelRevision, 'a75fdfe50bc3d3e776b9c5040f149f49a054aaf5');
