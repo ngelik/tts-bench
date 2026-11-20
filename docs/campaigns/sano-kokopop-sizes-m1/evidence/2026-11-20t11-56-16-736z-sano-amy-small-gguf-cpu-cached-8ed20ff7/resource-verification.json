@@ -1,0 +1,65 @@
+{
+  "model": "sano-amy-small-gguf",
+  "backend": "cpu",
+  "effectiveBackend": "cpu/wasm",
+  "resultId": "2026-11-20t11-56-16-736z-sano-amy-small-gguf-cpu-cached-8ed20ff7",
+  "receiptSha256": "ef3ce65c72339368de9c9908cd19c8cef8d3454604bbc56f752863606b76f33d",
+  "n": 1,
+  "sampleCount": 1658,
+  "generationMeanRssBytes": 1233326777,
+  "articleCallPeakRssBytes": 1518256128,
+  "generationSeconds": 832.5383949999809,
+  "audioSeconds": 1331.5232199546485,
+  "sampleRate": 22050,
+  "pcmSha256": "80b202233bd1ed4519930cb3db85314b303c8ff1ffaafa520ed99beece5f3af0",
+  "nativeFullWavSha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+  "protectedWavAudit": {
+    "wavSha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+    "bytes": 58720218,
+    "rate": 22050,
+    "samples": 29360087,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 120,
+        "samples": 536259,
+        "zeroSamples": 536259
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 6422959,
+      "endSampleExclusive": 6428582,
+      "samples": 5623,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "separateIdenticalRecordings": [
+    {
+      "recordingResultId": "2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a",
+      "recordingTrialIndex": 5,
+      "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+      "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu-full.wav",
+        "sha256": "c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a",
+        "bytes": 58720218
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu.wav",
+        "sha256": "d4b502f6f518654a78e2de081db88033b830e47542fba222fd305c099ea07919",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    }
+  ],
+  "privateTerminalSha256": "97d9cc89b035df44539e3467f6115ae4929db430b97e6276baab7c34d789a630",
+  "independentReviewSha256": "b4e325ef80852fdecfd573bc01c80a5409da02851216b728a05bf9612ed2b031"
+}
