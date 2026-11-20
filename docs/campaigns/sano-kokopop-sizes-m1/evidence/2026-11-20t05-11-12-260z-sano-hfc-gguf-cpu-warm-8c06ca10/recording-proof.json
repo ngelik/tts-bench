@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10",
+  "receiptSha256": "cd535900e5881a3d29c086ba2b48becd72113722ff9d8b1ee27d2b465e7c32f3",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+    "bytes": 46410838,
+    "rate": 22050,
+    "samples": 23205397,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 121,
+        "samples": 538137,
+        "zeroSamples": 538137
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 2932169,
+      "endSampleExclusive": 2937793,
+      "samples": 5624,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "42d6d0c9183befe94d0fd97b28e7c8f1b8f8654f5bd517e72f85b48205e48c41",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 46764,
+    "started": 1795151461.7487009
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu-full.wav",
+    "sha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+    "bytes": 46410838
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu.wav",
+    "sha256": "42d6d0c9183befe94d0fd97b28e7c8f1b8f8654f5bd517e72f85b48205e48c41",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10/result.json",
+  "privateTerminalSha256": "d3fc81399c92200af3b1f339db17932a11424d4b890e97a2a5e90d76bb1bb76b",
+  "independentReviewSha256": "e0e91e9a8dec80b80680f3dc278a391ae70825d0aca9ef520f424b02decd96b1"
+}

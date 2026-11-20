@@ -14,6 +14,7 @@ Clean scoring source: [`01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661`](https://githu
 | sano-kristin-gguf | webgpu+wasm (n=5) | 157.796880 | 156.043915–159.405545 | 1891.100 | 22050 Hz |
 | sano-amy-small-gguf | cpu/wasm (n=5) | 831.369655 | 831.318105–831.846190 | 9550.875 | 22050 Hz |
 | sano-amy-1p8m-gguf | cpu/wasm (n=5) | 1122.997310 | 1122.689440–1123.165395 | 12795.995 | 22050 Hz |
+| sano-hfc-gguf | cpu/wasm (n=5) | 901.169445 | 901.106700–901.319485 | 10173.815 | 22050 Hz |
 
 Observed ranges are not confidence intervals. No cached/RSS or cold-load measurements are inferred. WebGPU is a mixed neural-GPU/CPU-WASM path with actual separate hardware dispatch proof in each original receipt. CPU-readable PCM terminates generation timing; integrity scans and recording export are untimed.
 
@@ -21,6 +22,7 @@ Observed ranges are not confidence intervals. No cached/RSS or cold-load measure
 - `sano-amy-gguf` CPU median / WebGPU median: **6.452398×** for this same converted profile and host.
 - `sano-amy-small-gguf` CPU median / WebGPU median: **5.864225×** for this same converted profile and host.
 - `sano-amy-1p8m-gguf` CPU median / WebGPU median: **6.584849×** for this same converted profile and host.
+- `sano-hfc-gguf` CPU median / WebGPU median: **6.434001×** for this same converted profile and host.
 
 [Comparison chart/table](../../../comparisons/sano-kokopop-sizes-m1/summary.md) · [Campaign report](../../../reports/sano-kokopop-sizes-m1/overview.md) · [Exact source, environment, settings and capability evidence](verification.json).
 
@@ -53,6 +55,7 @@ Each recording is the fifth scored article; its clip is the exact first 30 secon
 - **sano-kristin-gguf / webgpu**: [native result](../../../results/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b/summary.md) · [30s clip](../../../audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav) · [full WAV](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav); SHA256 `9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2`.
 - **sano-amy-small-gguf / cpu**: [native result](../../../results/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a/summary.md) · [30s clip](../../../audio/samples/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu.wav) · [full WAV](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-45-39-297z-sano-amy-small-gguf-cpu-warm-e28a866a--sano-amy-small-gguf--cpu-full.wav); SHA256 `c6d03ba7d29e6b77c451679c88b56bc82d5f3e6f21aa7ab330c58d335d4ed78a`.
 - **sano-amy-1p8m-gguf / cpu**: [native result](../../../results/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb/summary.md) · [30s clip](../../../audio/samples/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb--sano-amy-1p8m-gguf--cpu.wav) · [full WAV](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb--sano-amy-1p8m-gguf--cpu-full.wav); SHA256 `18ed76327289234fe8bacc1a1823f57bbbe475c5800c5be03e422fbd1e8c4efb`.
+- **sano-hfc-gguf / cpu**: [native result](../../../results/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10/summary.md) · [30s clip](../../../audio/samples/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu.wav) · [full WAV](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu-full.wav); SHA256 `caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1`.
 
 ## Setup and reproduction
 
