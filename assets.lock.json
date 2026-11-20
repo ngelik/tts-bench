@@ -7002,6 +7002,7 @@
         },
         {
           "id": "zonos3-cpu-runtime-js",
+          "backends": ["cpu"],
           "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.js",
           "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/bench_zonos3_cpu.js",
           "bytes": 121508,
@@ -7010,6 +7011,7 @@
         },
         {
           "id": "zonos3-cpu-runtime-wasm",
+          "backends": ["cpu"],
           "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.wasm",
           "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/bench_zonos3_cpu.wasm",
           "bytes": 4223098,
@@ -7018,6 +7020,7 @@
         },
         {
           "id": "zonos3-cpu-runtime-third-party-notices",
+          "backends": ["cpu"],
           "target": "runtimes/audio-cpp-zonos3-cpu-wasm-v3/THIRD-PARTY-NOTICES.txt",
           "url": "https://github.com/ngelik/tts-bench/releases/download/zonos3-cpu-wasm-v3-59ca2ce1c12b/THIRD-PARTY-NOTICES.txt",
           "bytes": 57861,

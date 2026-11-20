@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { assembleDashboardData } from '../tools/dashboard-data.mjs';
 import { referenceBlock, ramChart, ramReferenceBlock } from '../tools/reference.mjs';
-import { preferredAttempts } from '../tools/result-selection.mjs';
+import { pairedWarm, preferredAttempts, sameCampaignRegistration } from '../tools/result-selection.mjs';
 
 const oldId = '2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63';
 const old = JSON.parse(await readFile(new URL(`../results/${oldId}/result.json`, import.meta.url)));
@@ -145,6 +145,56 @@ test('legacy Paradee runtime IDs prove the same files only with matching digests
   results[0].assets.find(a=>a.id.endsWith('dist/phonemizer.js')).bytes++;
   assert.equal(output().pairedWarm,false);
   assert.equal(output().warm.cpu.registration,'archived');
+});
+
+test('ZONOS backend-scoped CPU WASM updates preserve the verified WebGPU profile', async () => {
+  const gpuId = '2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772';
+  const gpu = JSON.parse(await readFile(new URL(`../results/${gpuId}/result.json`, import.meta.url)));
+  const zonos = getAssetLock().models['zonos3-mini'];
+  const zonosModels = {'zonos3-mini': zonos};
+  const selectedGpu = preferredAttempts([gpu], zonosModels, () => true);
+  assert.equal(gpu.cells[0].backendEffective, 'webgpu+cpu-codec-host', 'the tested WebGPU adapter includes its pinned CPU codec stage');
+  assert.equal(selectedGpu.length, 1);
+  assert.equal(selectedGpu[0].current, true);
+  const gpuView = assembleDashboardData({results: [gpu], models: zonosModels}).models.find(value => value.id === 'zonos3-mini');
+  assert.equal(gpuView.warm.webgpu.registration, 'current');
+  assert.equal(gpuView.pairedWarm, false);
+
+  const v2Cpu = structuredClone(gpu);
+  v2Cpu.id += '-cpu-v2-fixture';
+  v2Cpu.cells[0].backendRequested = 'cpu';
+  const oldWasm = v2Cpu.assets.find(asset => asset.id === 'zonos3-cpu-runtime-wasm');
+  Object.assign(oldWasm, {bytes: 4231507, sha256: '690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17'});
+  assert.equal(preferredAttempts([v2Cpu], zonosModels, () => true)[0].current, false,
+    'the previous CPU runtime remains ineligible under the v3 CPU profile');
+
+  const missingGpuRuntime = structuredClone(gpu);
+  missingGpuRuntime.assets = missingGpuRuntime.assets.filter(asset => !asset.id.endsWith(':worker.js'));
+  assert.equal(preferredAttempts([missingGpuRuntime], zonosModels, () => true)[0].current, false,
+    'the backend-scoped filter still requires the actual WebGPU runtime');
+
+  const changedSharedAsset = structuredClone(gpu);
+  changedSharedAsset.assets.find(asset => asset.id === 'zonos3-web-backbone-manifest-json').sha256 = '0'.repeat(64);
+  assert.equal(preferredAttempts([changedSharedAsset], zonosModels, () => true)[0].current, false,
+    'untagged shared model assets remain required');
+
+  assert.equal(sameCampaignRegistration('zonos3-mini', zonos,
+    {...structuredClone(zonos), assets: zonos.assets.map(asset => asset.id === 'zonos3-cpu-runtime-wasm'
+      ? {...asset, bytes: 4231507, sha256: '690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17'} : asset)}, 'webgpu'), true);
+  assert.equal(sameCampaignRegistration('zonos3-mini', zonos,
+    {...structuredClone(zonos), assets: zonos.assets.map(asset => asset.id === 'zonos3-cpu-runtime-wasm'
+      ? {...asset, bytes: 4231507, sha256: '690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17'} : asset)}, 'cpu'), false);
+
+  const otherRevisionCpu = structuredClone(gpu);
+  otherRevisionCpu.source.manifestSha256 = 'f'.repeat(64);
+  otherRevisionCpu.cells[0].backendRequested = 'cpu';
+  assert.equal(pairedWarm({result: otherRevisionCpu, cell: otherRevisionCpu.cells[0]},
+    {result: gpu, cell: gpu.cells[0]}, zonos), false,
+  'cross-source evidence cannot be labeled as a matched CPU/WebGPU pair');
+
+  const invalidScope = structuredClone(zonos);
+  invalidScope.assets.find(asset => asset.id === 'zonos3-cpu-runtime-wasm').backends = ['webgpu', 'cuda'];
+  assert.throws(() => preferredAttempts([gpu], {'zonos3-mini': invalidScope}, () => true), /Invalid backend scope/);
 });
 
 test('playback prefers the selected current warm clip, then current cached clip, even with later archived audio', () => {
