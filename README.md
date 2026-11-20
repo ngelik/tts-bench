@@ -620,6 +620,7 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 128 · 2026-11-19 | sano-heart/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/summary.md) | [SVG](results/2026-11-19t16-19-15-814z-sano-heart-cpu-cached-865b4f98/chart.svg) |
 | 129 · 2026-11-19 | sano-heart/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/summary.md) | [SVG](results/2026-11-19t21-43-26-563z-sano-heart-webgpu-cached-982189d9/chart.svg) |
 | 130 · 2026-11-19 | sano-hfc/cpu | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/summary.md) | [SVG](results/2026-11-19t23-09-09-954z-sano-hfc-cpu-cached-574942d8/chart.svg) |
+| 131 · 2026-11-20 | sano-hfc/webgpu | cached / browser-tts-cached-v1 | unsupported | [Report](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/summary.md) | [SVG](results/2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b/chart.svg) |
 
 </details>
 

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-20t01-13-56-251z-sano-hfc-webgpu-cached-f104298b",
+  "createdAt": "2026-11-20T01:13:57.404Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro 8-core / 16 GiB baseline",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "8b929d8e68834b101dd1992981e9b04640222748",
+    "dirty": false,
+    "manifestSha256": "df550f024216e8c8e206a9d8e72702dc4afdf845e05f907df855b4d12ceddd4a"
+  },
+  "assets": [
+    {
+      "id": "runtime:sano-hfc:sanotts-web:dist/index.js",
+      "sha256": "0f52b0e87337f5fbcc075b30f2ffb7130b1f319d35995f5ac01d2003c2d9a3e6",
+      "bytes": 21528
+    },
+    {
+      "id": "runtime:sano-hfc:sanotts-web:dist/snt_g2p.js",
+      "sha256": "16c09da27d88404fc312fa84ed2b1e1b2584f24fd41337f34a8293a25146b7ab",
+      "bytes": 70136
+    },
+    {
+      "id": "runtime:sano-hfc:sanotts-web:dist/snt_g2p.wasm",
+      "sha256": "31da95f157c942c17078f9fa87a0f981cc8d199669b28f8f0d4b61f9e8a9301e",
+      "bytes": 322974
+    },
+    {
+      "id": "runtime:sano-hfc:sanotts-web:dist/snt_g2p.data",
+      "sha256": "7f999dfd6efa655018fa19a7c32a1ed889a7576751fbdbec61053f6b8a0cc827",
+      "bytes": 2132172
+    },
+    {
+      "id": "runtime:sano-hfc:sanotts-web:dist/snt_voice.js",
+      "sha256": "73745db50516d6052802994a02dd8d0e3e27fcd26efa8cbe7e849d7ee5634266",
+      "bytes": 10406
+    },
+    {
+      "id": "runtime:sano-hfc:sanotts-web:dist/snt_voice.wasm",
+      "sha256": "cdcfa5bf3ec162797d8556be7b90ce334f88666141956a1650846bdff9517d1c",
+      "bytes": 40787
+    },
+    {
+      "id": "sano-hfc-meta-json",
+      "sha256": "a8b068eb1c3753b378a487abc92c331180383fe812f1ef6a05e6cddb788ed2a1",
+      "bytes": 1208
+    },
+    {
+      "id": "sano-hfc-front_f32-bin",
+      "sha256": "c3f4631101e8db147cc42f4a6be894bb9c701f265cf602f843e785f143d67582",
+      "bytes": 3336804
+    },
+    {
+      "id": "sano-hfc-dec_f32-bin",
+      "sha256": "922e0d4210f606f9bf6e9ef26c8276b9880aea0352881df67a6bca71f1165f9a",
+      "bytes": 4001700
+    },
+    {
+      "id": "sano-hfc-gpl-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-hfc",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "One pinned English HFC 1.83M (English) voice checkpoint with the official piperlite WASM runtime",
+        "notes": "The official HFC piperlite voice uses its pinned FP32 front/decoder package, eSpeak en-us, G2P voice slot 2, length scale 1.08 and 22,050 Hz output. Synthesis runs in the official sanotts-web 0.3.0 WebAssembly runtime; no WebGPU provider is available.",
+        "sources": [
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/README.md",
+          "https://huggingface.co/ampixa/sanoTTS/blob/bc04c49fd137607b60294b3894441bbfbe5c6659/web/voices/hfc/meta.json"
+        ]
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "none",
+      "status": "unsupported",
+      "reason": "Official Sano piperlite inference is CPU WebAssembly; no WebGPU execution provider is available.",
+      "voice": "HFC (English, eSpeak en-us)",
+      "precision": "FP32 official browser voice bundle",
+      "settings": {
+        "runtime": "sanotts-web@0.3.0",
+        "runtimeSourceRevision": "c0584a51213721faba98135821faab71bae888f0",
+        "modelRevision": "bc04c49fd137607b60294b3894441bbfbe5c6659",
+        "voiceKey": "hfc",
+        "language": "en",
+        "espeakVoice": "en-us",
+        "g2pVoiceSlot": 2,
+        "lengthScale": 1.08,
+        "sampleRate": 22050,
+        "parameterCount": 1834380,
+        "maxSeconds": 120,
+        "maxPhonemeIds": 1024,
+        "executionProviders": [],
+        "callPattern": "One official SanoTTS.synthesize call per canonical source span; no harness text splitting.",
+        "assetOrigins": "Explicit same-origin assetBase and voiceBase; cross-origin fetches and script loads are rejected.",
+        "disposal": "The official wrapper has no dispose method; the dedicated worker is terminated to release its WebAssembly modules."
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Official Sano piperlite inference is CPU WebAssembly; no WebGPU execution provider is available."
+      },
+      "warmup": [],
+      "trials": []
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-20T01-13-55-739Z-4ab1532b8920; cell 1/1; source 8b929d8e68834b101dd1992981e9b04640222748; requested n=1; effective n=1; Official pinned Sano browser WASM profile. Explicit no-score WebGPU capability attempt on the full canonical fixture; require unsupported with zero scored trials and no CPU fallback. Not a warm performance measurement. Headed Chrome157.0.8103.40, actual Apple M1 Pro 8-core /16GiB, sequential exclusive M1 slot with disposable browser profile. Actual pre-cell power: Now drawing from 'AC Power'\n -InternalBattery-0 (id=22216803)\t77%; AC attached; not charging present: true; background load snapshot: 17:13  up 15 days,  6:55, 1 user, load averages: 2.20 2.23 2.18; UTC 2026-11-20T01:13:55.461520+00:00"
+  ]
+}
