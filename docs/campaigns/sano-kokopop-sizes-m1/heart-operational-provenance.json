@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "kind": "bounded-operator-reported-background-activity",
+  "reportedBy": "Benchmark operator (Klein task), relayed by campaign coordinator",
+  "intervalStart": "2026-11-19T07:10:36Z",
+  "intervalEnd": "2026-11-19T07:19:58Z",
+  "activity": "Seconds of unrelated local receipt/Markdown metadata operations sometime within this interval.",
+  "exactOverlapWithHeartCells": "unknown",
+  "otherSynthesisReported": false,
+  "wavProcessingReported": false,
+  "timingAdjustmentApplied": false,
+  "originalReceiptsPreserved": true,
+  "affectedContext": [
+    {
+      "resultId": "2026-11-19t07-11-20-724z-sano-heart-gguf-cpu-warm-34c4fdc0",
+      "receiptSha256": "c0ac0f9bd777d9f538692a40efaae8474321c4ee24db2066e00add9ce5fef2ca"
+    },
+    {
+      "resultId": "2026-11-19t07-18-37-488z-sano-heart-gguf-webgpu-warm-52fc27d6",
+      "receiptSha256": "6c3b50c5df4a2eea208e68b83ff0e39497295db0eae5f7592e25cafcf4ad0f9a"
+    }
+  ],
+  "scope": "Reported operational context only; no quantified performance effect is inferred."
+}

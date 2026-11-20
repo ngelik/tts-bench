@@ -1,0 +1,65 @@
+{
+  "model": "sano-kristin-gguf",
+  "backend": "cpu",
+  "effectiveBackend": "cpu/wasm",
+  "resultId": "2026-11-20t14-07-22-110z-sano-kristin-gguf-cpu-cached-2680b64b",
+  "receiptSha256": "2cb750f88b4b8593d199ae69378858f9e69e47bbffdffc8054787d24a4ec4ed1",
+  "n": 1,
+  "sampleCount": 2025,
+  "generationMeanRssBytes": 1159063401,
+  "articleCallPeakRssBytes": 1488715776,
+  "generationSeconds": 1016.5521150000095,
+  "audioSeconds": 1175.1456689342403,
+  "sampleRate": 22050,
+  "pcmSha256": "c06b373e1c752facced5a9115913ce7f00e4c7bb642966f9a993963246ffdb50",
+  "nativeFullWavSha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+  "protectedWavAudit": {
+    "wavSha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+    "bytes": 51823968,
+    "rate": 22050,
+    "samples": 25911962,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 116,
+        "samples": 512824,
+        "zeroSamples": 512824
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 17695168,
+      "endSampleExclusive": 17700791,
+      "samples": 5623,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "separateIdenticalRecordings": [
+    {
+      "recordingResultId": "2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20",
+      "recordingTrialIndex": 5,
+      "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+      "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu-full.wav",
+        "sha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+        "bytes": 51823968
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu.wav",
+        "sha256": "49ff0dcafe77d067d267e4bc25d14f2b157c98bb37e02571cf56e89965738c74",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    }
+  ],
+  "privateTerminalSha256": "352d4a5d66775106ce2f0b961acd670eb77456b07754368a1bbcb4502517e538",
+  "independentReviewSha256": "17792b1e69ec348dadd07c149d956ebe55580d4fc51c6f05b21bbad07976ebd9"
+}

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
-OUTPUT_ARG="${1:-$ROOT/.cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2}"
+OUTPUT_ARG="${1:-$ROOT/.cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v3}"
 OUTPUT="$(mkdir -p "$(dirname "$OUTPUT_ARG")" && cd "$(dirname "$OUTPUT_ARG")" && pwd -P)/$(basename "$OUTPUT_ARG")"
 CACHE="$(cd "${ZONOS3_CPU_CACHE:-$ROOT/.cache/zonos3-cpu-build}" 2>/dev/null && pwd -P || { mkdir -p "${ZONOS3_CPU_CACHE:-$ROOT/.cache/zonos3-cpu-build}"; cd "${ZONOS3_CPU_CACHE:-$ROOT/.cache/zonos3-cpu-build}" && pwd -P; })"
 SOURCE_PIN="749fffec6ad4a763520388a4240cd24e08a0a2bf"
@@ -51,6 +51,9 @@ export EM_CACHE="$RUN/em-cache" EM_PORTS="$RUN/em-cache/ports"
 mkdir -p "$TMPDIR" "$EM_CACHE"
 MAPS="-ffile-prefix-map=$SOURCE=audio.cpp -ffile-prefix-map=$BUILD=audio.cpp-build -ffile-prefix-map=$SDK=emsdk -ffile-prefix-map=$EM_CACHE=emsdk-cache -ffile-prefix-map=$TMPDIR=emscripten-tmp"
 
+# audio.cpp's speech FFT helper eagerly creates a persistent hardware_concurrency
+# worker pool on first parallel transform. Keep that auxiliary pool on the caller
+# thread in Wasm so the separately configured GGML CPU pool can use its workers.
 emcmake cmake -G Ninja -S "$SOURCE" -B "$BUILD" \
   -DCMAKE_BUILD_TYPE=Release \
   -DAUDIOCPP_MODEL_SET=custom -DAUDIOCPP_MODELS=zonos3 \
@@ -63,7 +66,7 @@ emcmake cmake -G Ninja -S "$SOURCE" -B "$BUILD" \
   -DAUDIOCPP_BUILD_NATIVE_MODEL_MANAGER=OFF \
   -DAUDIOCPP_BUILD_SERVER_FRONTENDS=OFF -DAUDIOCPP_BUILD_C_API=OFF \
   -DENGINE_BUILD_TESTS=OFF -DGGML_NATIVE=OFF -DGGML_CPU_ALL_VARIANTS=OFF \
-  "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread $MAPS" \
+  "-DCMAKE_CXX_FLAGS=-O3 -fwasm-exceptions -msimd128 -pthread -DENGINE_SPEECHFFT_NO_MULTITHREADING $MAPS" \
   "-DCMAKE_C_FLAGS=-O3 -msimd128 -pthread $MAPS" \
   "-DCMAKE_EXE_LINKER_FLAGS=-pthread -sPTHREAD_POOL_SIZE=12 -sPTHREAD_POOL_SIZE_STRICT=2 $MAPS"
 cmake --build "$BUILD" --target bench_zonos3_cpu --parallel "$JOBS"

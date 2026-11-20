@@ -23,6 +23,7 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Supertonic 3 model and preset voice styles | OpenRAIL-M at the pinned revision; use-based restrictions apply. The licensor claims no rights in outputs except as stated in the license, and users remain responsible for outputs and their uses. Model/voice assets remain in the ignored cache. |
 | Adapted official Supertonic browser helper | MIT, Supertone Inc.; retained license and exact source/change record in `web/supertonic/`. |
 | Klein-TTS X1.5 Pro | Apache-2.0 model card and weights | The browser adapter is a disclosed port of the Apache-2.0 Node package. Misaki G2P/English dictionary and `phonemizer.js` are Apache-2.0; eSpeak NG is GPL-3.0-or-later; ONNX Runtime Web is MIT with third-party notices. See [`web/klein/NOTICE.md`](../web/klein/NOTICE.md). |
+| Inflect Mini v3 browser-port checkpoint | Apache-2.0 at the pinned model-card revision. The separately named browser port uses FP32 ONNX conversion, the shared Inflect Micro v3 numeric/splitting helpers, Klein's Apache-2.0 contextual G2P/lexicon and browser phonemizer (including GPL-3.0-or-later eSpeak NG/data), plus ONNX Runtime Web MIT. The strict native waveform comparison remains failed and separate from score eligibility. See [`web/inflect-mini-v3/NOTICE.md`](../web/inflect-mini-v3/NOTICE.md). |
 | ONNX Runtime Web | MIT, with third-party notices |
 | Silencio-2 weights, converted ONNX graphs and model-bound voice-260 state | CC-BY-4.0 at the pinned model revision; retain BlueRose Labs, Kyutai Pocket TTS and Basis Global Emotions attribution. The fixed bundled synthetic voice is not a user-supplied voice-cloning input. Follow the model card's permission, anti-impersonation and synthetic-speech disclosure guidance. |
 | Silencio-2 upstream inference source | MIT in `silencio2/core`; exporter attribution and source pins are in `tools/silencio2/NOTICE.md`. |
@@ -132,6 +133,17 @@ The browser frontend port retains notices under `web/inflect/`. The fixed voice
 is described upstream as synthetic, with no reference recording required.
 The model's private training recipe/data are not fully released; open model
 weights do not imply an open training corpus. Weights remain in ignored cache.
+
+Inflect Micro v3 grants Apache-2.0 for the exact Inflect-owned weight file
+identified by its pinned `LICENSE_SCOPE.json`; third-party and voice/recording
+terms are separate. Its pinned notice lists Kokoro under Apache-2.0 and
+StyleTTS2 under MIT, and the matching license texts are retained with the
+registration. The browser G2P uses Klein 0.2.0 (Apache-2.0) and the pinned
+English lexicon, `phonemizer.js` (Apache-2.0) and bundled eSpeak NG data/code
+(GPL-3.0-or-later). ONNX Runtime Web is MIT; its third-party notices apply.
+Only Cassidy is exported from the six-voice English checkpoint. See the
+[Micro v3 source notice](../web/inflect-micro-v3/NOTICE.md) and
+[configuration](INFLECT_MICRO_V3.md).
 
 ## Liquid AI LFM3 Audio / Omni GGUF
 

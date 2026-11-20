@@ -1,0 +1,20 @@
+{
+  "index": 4,
+  "generationMs": 28042.620000123978,
+  "samples": 24953600,
+  "sampleRate": 22050,
+  "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+  "validation": {
+    "finitePcm": true,
+    "chunkCount": 93,
+    "nonemptyChunks": true
+  },
+  "metrics": {
+    "firstPcmMs": 93.92500019073486,
+    "firstSourceChunkCompletedMs": 329.9850001335144,
+    "audioSeconds": 1131.6825396825398,
+    "realTimeFactor": 0.02477958174382589,
+    "minSamplesPerChunk": 207104,
+    "maxSamplesPerChunk": 332800
+  }
+}

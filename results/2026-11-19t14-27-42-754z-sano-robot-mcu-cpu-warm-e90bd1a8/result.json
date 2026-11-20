@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8",
+  "createdAt": "2026-11-19T14:30:36.772Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+    "dirty": false,
+    "manifestSha256": "662279cddb19fe0853408d2ed7d38659012c1096ab83ad54dc3907a1a69ce53a"
+  },
+  "assets": [
+    {
+      "id": "sano-robot-mcu-web-snt_g2p-js",
+      "sha256": "3a4ada6f01bb2110e921d4920c2b8b48311d171c8ee891af7a53907556334b06",
+      "bytes": 72608
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_g2p-wasm",
+      "sha256": "f1a00ae6b856b5c501a87ce08bb29bcc7ef2d84b645d7b69ae91bb2e2fcbcb4f",
+      "bytes": 346363
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_g2p-data",
+      "sha256": "8cc5ae7eab5e73b8ae5a2a4b7f7a4fef9786058733ce4ebccbcdbb67688ff2f3",
+      "bytes": 3266545
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_tts-js",
+      "sha256": "e76f87ef55b5cf25b66bc78f76a48c5be16aec18ce5df0ce5250453f1550096c",
+      "bytes": 11543
+    },
+    {
+      "id": "sano-robot-mcu-web-snt_tts-wasm",
+      "sha256": "c76ad7755f016cdab530392526e2e855ce80d4a10b53c290fa3151b4130e8ed4",
+      "bytes": 46584
+    },
+    {
+      "id": "sano-robot-mcu-web-assets-front_q8-bin",
+      "sha256": "921b1aea12a3c982ed0aacac2c3c13f2f627797f24203b6bd542c70a7a8964a8",
+      "bytes": 280288
+    },
+    {
+      "id": "sano-robot-mcu-web-assets-model_q8-bin",
+      "sha256": "e81c2c35572c58b9e94c218866d04acacb316441875ce82cea68bf87c58a7417",
+      "bytes": 399544
+    },
+    {
+      "id": "sano-robot-mcu-LICENSE",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "sano-robot-mcu-LICENSE-MIT",
+      "sha256": "2f544ceb6a679cf706652c9df3bf8a6753197ee36456ba61665d97fbed43210e",
+      "bytes": 4113
+    },
+    {
+      "id": "sano-robot-mcu-README-md",
+      "sha256": "b78caecf45567eb7d3682f90e60b81ba619bfb29a87c81081dd56e33fca3c99f",
+      "bytes": 21562
+    }
+  ],
+  "cells": [
+    {
+      "model": "sano-robot-mcu",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned official mcu English checkpoint and CPU/WASM runtime",
+        "notes": "Official demo English preset; 120-character internal pieces preserve all canonical source characters. No WebGPU path in the selected runtime. Robot is the 567,008-parameter MCU model, not Kristin PiperLite.",
+        "sources": [
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/web/index.html",
+          "https://github.com/Ampixa/sanoTTS/blob/c0584a51213721faba98135821faab71bae888f0/README.md"
+        ]
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "SanoTTS Robot MCU (English, US)",
+      "precision": "Official Robot INT8 front and decoder weights",
+      "settings": {
+        "runtime": "Official Ampixa SaanoTTS WebAssembly",
+        "runtimeSourceRevision": "c0584a51213721faba98135821faab71bae888f0",
+        "modelRevision": "c0584a51213721faba98135821faab71bae888f0",
+        "voiceKey": "mcu",
+        "language": "en-us",
+        "sampleRate": 22050,
+        "parameterCount": 567008,
+        "executionProviders": [
+          "wasm"
+        ],
+        "threads": 1,
+        "splitPolicy": "Official demo sentence/clause splitting, max 120 characters; all 93 canonical span IDs preserved.",
+        "firstPcm": "First whole synthesized piece transferred immediately, before subsequent pieces; not an internal neural streaming callback.",
+        "frontend": "Official eSpeak en-us/Kristin slot0 IDs; 1024 capacity, BOS/EOS required. Complete-fixture raw-IPA vocabulary audit runs separately before scoring; timed calls invoke official text_to_ids once.",
+        "deterministicSeed": "Official deterministic MCU runtime; no external RNG seed override.",
+        "nativeAllocationPolicy": "Official demo per-piece heap allocation/copy/free; weights retained as JS bytes between pieces.",
+        "outputLimit": "400000 samples per piece; native error/cap-sized output rejected.",
+        "preprocessing": "Text splitting, G2P, ID boundary checks, model inference and PCM transfer run on CPU inside scored calls; duplicate Robot raw-IPA audit is untimed."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Official CPU WASM completed an untimed speech piece."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 28131.509999990463,
+          "samples": 24953600,
+          "sampleRate": 22050,
+          "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 112.1399998664856,
+            "firstSourceChunkCompletedMs": 353.0349998474121,
+            "audioSeconds": 1131.6825396825398,
+            "realTimeFactor": 0.02485812850649965,
+            "minSamplesPerChunk": 207104,
+            "maxSamplesPerChunk": 332800
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 28057.61999988556,
+          "samples": 24953600,
+          "sampleRate": 22050,
+          "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 94.5849997997284,
+            "firstSourceChunkCompletedMs": 332.15499997138977,
+            "audioSeconds": 1131.6825396825398,
+            "realTimeFactor": 0.024792836344153812,
+            "minSamplesPerChunk": 207104,
+            "maxSamplesPerChunk": 332800
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 28086.700000047684,
+          "samples": 24953600,
+          "sampleRate": 22050,
+          "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 95.3199999332428,
+            "firstSourceChunkCompletedMs": 332.11500000953674,
+            "audioSeconds": 1131.6825396825398,
+            "realTimeFactor": 0.024818532596541237,
+            "minSamplesPerChunk": 207104,
+            "maxSamplesPerChunk": 332800
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 28050.884999990463,
+          "samples": 24953600,
+          "sampleRate": 22050,
+          "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 94.84500002861023,
+            "firstSourceChunkCompletedMs": 330.7000000476837,
+            "audioSeconds": 1131.6825396825398,
+            "realTimeFactor": 0.02478688502860468,
+            "minSamplesPerChunk": 207104,
+            "maxSamplesPerChunk": 332800
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 28042.620000123978,
+          "samples": 24953600,
+          "sampleRate": 22050,
+          "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 93.92500019073486,
+            "firstSourceChunkCompletedMs": 329.9850001335144,
+            "audioSeconds": 1131.6825396825398,
+            "realTimeFactor": 0.02477958174382589,
+            "minSamplesPerChunk": 207104,
+            "maxSamplesPerChunk": 332800
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 28127.519999980927,
+          "samples": 24953600,
+          "sampleRate": 22050,
+          "pcmSha256": "c99d7d4a89fc8a333ecb86964bf37c632a5bf0f87399a69fc4771834f214e226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 93.93499994277954,
+            "firstSourceChunkCompletedMs": 329.8900001049042,
+            "audioSeconds": 1131.6825396825398,
+            "realTimeFactor": 0.024854602782747957,
+            "minSamplesPerChunk": 207104,
+            "maxSamplesPerChunk": 332800
+          },
+          "audio": {
+            "sha256": "b5bf757dd324438fa51b2a141bb3fe4c7c443775e87a735d6beff026f9b73e70",
+            "bytes": 49907244
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T14-27-42-190Z-577377225049; cell 1/1; source 7f9b7982e5336be8642f91404584114371582fcd; requested n=5; effective n=5; Serial native M1 Pro campaign, disposable headed Google Chrome 157.0.8103.40 from the explicitly preserved executable. Shared OS slot excludes other benchmark/diagnostic/publication work. Cached resource article precedes warm timing. Full-fixture frontend audited separately on this exact clean source; official 304 internal text pieces preserve all non-whitespace source characters. No cold check; no inferred GPU score. Power and hardware observed in companion preflight."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "resultId": "2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc",
+  "sourceCommit": "7f9b7982e5336be8642f91404584114371582fcd",
+  "receiptSha256": "6bb484c37b3256bedd65fce70b430292e37f782cd57e582043cfca27869ba1ff",
+  "trialIndex": 5,
+  "float32PcmSha256": "3522914abbaeae6727fdcfe4da300adaf051d463a2e68d38babe0d8ae827c069",
+  "fullWave": {
+    "wavSha256": "7aaac07e1c5bc5a9e80eb4cf7b67306fa973626e18eca2600d69a2d552773316",
+    "bytes": 63770156,
+    "rate": 24000,
+    "samples": 31885056,
+    "thresholdsSamples": {
+      "2400": {
+        "runs": 305,
+        "samples": 4786770,
+        "zeroSamples": 4786770
+      },
+      "24000": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 19759776,
+      "endSampleExclusive": 19780862,
+      "samples": 21086,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditScriptSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "scope": "Post-timing full PCM16 integrity and constant-run observations under the retained exclusive slot. Not transcript or pronunciation validation."
+}

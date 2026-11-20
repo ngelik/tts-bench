@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createZonos3CpuAdapter } from '../web/adapters/zonos3-cpu.mjs';
+import { ZONOS3_MODEL_CONFIG } from '../web/zonos3/runtime-policy.mjs';
 
 const workerSource = await readFile(new URL('../web/workers/zonos3-cpu.js', import.meta.url), 'utf8');
 const assetLock = JSON.parse(await readFile(new URL('../assets.lock.json', import.meta.url), 'utf8'));
@@ -10,10 +11,11 @@ const model = {
   id: 'zonos3-mini',
   name: 'ZONOS3-Mini',
   family: 'zonos3',
-  cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v2',
+  cpuThreads: 1,
+  cpuRuntimeVersion: 'audio-cpp-zonos3-cpu-wasm-v3',
   cpuRuntimeFiles: {
-    jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.js',
-    wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v2/bench_zonos3_cpu.wasm',
+    jsUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.js',
+    wasmUrl: '/runtimes/audio-cpp-zonos3-cpu-wasm-v3/bench_zonos3_cpu.wasm',
   },
   cpuAssets: {
     backbone: { modelUrl: '/models/zonos3/backbone-ptq.gguf', filename: 'backbone-ptq.gguf', bytes: 100, sha256: 'a'.repeat(64) },
@@ -65,6 +67,7 @@ test('ZONOS3 CPU adapter passes the pinned config and preserves the PCM chunk co
     const worker = FakeWorker.instances[0];
     assert.equal(worker.options.name, 'tts-bench-zonos3-cpu');
     assert.equal(worker.options.type, undefined);
+    assert.equal(worker.sent[0].options.threads, 1);
     assert.equal(new URL(worker.url).searchParams.get('cpuRuntimeVersion'), model.cpuRuntimeVersion);
     assert.equal(worker.sent[0].options.modelConfig, model);
 
@@ -100,6 +103,7 @@ test('ZONOS3 CPU adapter rejects WebGPU instead of silently falling back', async
 });
 
 test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', () => {
+  assert.equal(ZONOS3_MODEL_CONFIG.cpuThreads, 1, 'the registered CPU profile uses its explicit GGML thread setting');
   assert.throws(() => createZonos3CpuAdapter(model, { threads: 13 }), /thread count must be an integer from 1 to 12/);
   assert.match(workerSource, /const PTHREAD_POOL_SIZE = 12/);
   assert.match(workerSource, /threads > MAX_THREADS/);
@@ -107,7 +111,7 @@ test('ZONOS3 CPU adapter enforces the fixed Emscripten pthread pool ceiling', ()
 
 test('ZONOS3 CPU worker verifies local range assets and reports the actual offline CPU backend', () => {
   assert.match(supportNotes, /WebGPU profile loads its reference codes and speaker embedding; the CPU\/WASM profile loads the speaker embedding only/);
-  assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v2/);
+  assert.match(workerSource, /audio-cpp-zonos3-cpu-wasm-v3/);
   assert.match(workerSource, /requireAsset\(assets\.backbone, 'backbone-ptq\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.decoder, 'zac-keep2\.gguf'\)/);
   assert.match(workerSource, /requireAsset\(assets\.speakerEncoder, 'spk-encoder\.gguf'\)/);

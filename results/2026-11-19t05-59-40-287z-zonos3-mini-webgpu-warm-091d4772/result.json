@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-19t05-59-40-287z-zonos3-mini-webgpu-warm-091d4772",
+  "createdAt": "2026-11-19T06:05:13.239Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple MacBook Pro M1 Pro / 16 GB",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": "apple / metal-3",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "de9dded4722f160d185b4dcbbb720edec8ee595f",
+    "dirty": false,
+    "manifestSha256": "a6f8170eed3e37f5be536c5b27cbf4d239c05f30c4b206c39b6f187b076fa1fe"
+  },
+  "assets": [
+    {
+      "id": "runtime:zonos3-mini:Zyphra/ZONOS3-Mini servers/web:engine.js",
+      "sha256": "46e59a34905f26b18d5e8449a828ce98355db7676b1c34ed77389e160892b6b3",
+      "bytes": 14701
+    },
+    {
+      "id": "runtime:zonos3-mini:Zyphra/ZONOS3-Mini servers/web:worker.js",
+      "sha256": "d4792e98ea1105e3515d96fee8b7dcab2ab5775ec1832c62f207a4fc748ba978",
+      "bytes": 1298592
+    },
+    {
+      "id": "runtime:zonos3-mini:Zyphra/ZONOS3-Mini servers/web:codec-worker.js",
+      "sha256": "2aab09284739314e3270894b051f49d03327ff82f2a0b13d7b693cbf4e574f5e",
+      "bytes": 16058
+    },
+    {
+      "id": "runtime:zonos3-mini:Zyphra/ZONOS3-Mini servers/web:BUILD-MANIFEST.json",
+      "sha256": "230baefb0544c577ebe02be872fc249c5df47aac19b49aa842bbc885256cc1bf",
+      "bytes": 776
+    },
+    {
+      "id": "zonos3-web-backbone-manifest-json",
+      "sha256": "f814bd3f85cf039b99492f1fce92580adee9b879649bb18ee6d9c52411cd6362",
+      "bytes": 33646
+    },
+    {
+      "id": "zonos3-web-backbone-shard-000-bin",
+      "sha256": "90a46772c8b081ad5df4ce63a48d2ef16630fab8e96f547093603bc860b1dc30",
+      "bytes": 101007360
+    },
+    {
+      "id": "zonos3-web-backbone-shard-001-bin",
+      "sha256": "c0516d4e20f421ee92b4ec87449f48d89ad266f39408e36ba1aca572e64a8c69",
+      "bytes": 65155584
+    },
+    {
+      "id": "zonos3-web-backbone-shard-002-bin",
+      "sha256": "9eed55b5cf23af6b88c73cd485b6bbf1fdffbbb51212511149717a858bfd35cc",
+      "bytes": 54345984
+    },
+    {
+      "id": "zonos3-web-backbone-shard-003-bin",
+      "sha256": "36847259c95af1398459616cb27ce51978e1e9993eccb675d253d91124fb98ee",
+      "bytes": 64696832
+    },
+    {
+      "id": "zonos3-web-backbone-shard-004-bin",
+      "sha256": "cd3c788c83f4c07e38c6df3958ac743c3be6a38dea50e5109446385fcfe692ff",
+      "bytes": 67090688
+    },
+    {
+      "id": "zonos3-web-backbone-shard-005-bin",
+      "sha256": "29390aeb6bc52ea192b7d259115922cfe7599d4ca6632f8fcf29e36f6c6adfae",
+      "bytes": 67090688
+    },
+    {
+      "id": "zonos3-web-backbone-shard-006-bin",
+      "sha256": "49518efa5d4e382b9da5e4c2537589288acff9e191cbf2deabecc31694523423",
+      "bytes": 53144320
+    },
+    {
+      "id": "zonos3-web-backbone-shard-007-bin",
+      "sha256": "e26b316ddcdde1a200529502c60359a0016888df91b7a84b5d633b354c263a68",
+      "bytes": 67090688
+    },
+    {
+      "id": "zonos3-web-backbone-shard-008-bin",
+      "sha256": "193fa3416c553b939282c30bfb0468a882a3b3f20c1177baed6155b3545a7b1a",
+      "bytes": 67090688
+    },
+    {
+      "id": "zonos3-web-backbone-shard-009-bin",
+      "sha256": "f98db299230cebb19c3022e13c00565d1f598db00774893b1a6f2674c8b045c7",
+      "bytes": 67090688
+    },
+    {
+      "id": "zonos3-web-backbone-shard-010-bin",
+      "sha256": "75b3d78bb498e829e4a79255cf21fdf6ec59c1159869557dd887b484d13ba4e0",
+      "bytes": 1184000
+    },
+    {
+      "id": "zonos3-web-zac-manifest-json",
+      "sha256": "67e7fcb7a89a216f1866cc96c5a308ef474fc6168862ca856ef51ea59fcab0ff",
+      "bytes": 36774
+    },
+    {
+      "id": "zonos3-web-zac-shard-000-bin",
+      "sha256": "10bd894273348c1591287cf452d247d1378a41dade7d343b3daa760d9ed20aae",
+      "bytes": 6291456
+    },
+    {
+      "id": "zonos3-web-zac-shard-001-bin",
+      "sha256": "0fc3557b110124dc8d9f71900b85c39e758a000b6405134b33a7cc17ac8a03fc",
+      "bytes": 75497472
+    },
+    {
+      "id": "zonos3-web-zac-shard-002-bin",
+      "sha256": "5c54ccdde348b10fcf36029d55d54d021344b81abbcfcdc5197cba19f97013e4",
+      "bytes": 66758656
+    },
+    {
+      "id": "zonos3-web-zac-shard-003-bin",
+      "sha256": "234f64c8b089ff2b69a7fb4f2a0b3bc6167b657ea9b54298513c5fb5666c45cf",
+      "bytes": 67106816
+    },
+    {
+      "id": "zonos3-web-zac-shard-004-bin",
+      "sha256": "c15a760b8a8164e9922fb59fd798c4295e2a31d308e3853db3d3b63ac6f1fe2e",
+      "bytes": 29884152
+    },
+    {
+      "id": "zonos3-web-zac-full_mr-manifest-json",
+      "sha256": "ca892cb90cc3c7592796333cfb2376b6feaa1f0eb21343d88ab383961f54a5d6",
+      "bytes": 153716
+    },
+    {
+      "id": "zonos3-web-edit-manifest-json",
+      "sha256": "8aec095abf2b8db4bd5ddb34605f908f33941951c92734b392074f40f1425912",
+      "bytes": 30451
+    },
+    {
+      "id": "zonos3-web-aligner-manifest-json",
+      "sha256": "fe68218a5a785cd64a08d0a1fa367685f6749a6e71fe3cf9a1dd7f39303ea2b7",
+      "bytes": 33075
+    },
+    {
+      "id": "zonos3-web-companions-steer-gguf",
+      "sha256": "6e8e3f86e89a09801ce083b9286f43263ec696acfaff72e25aca537aa9efa90c",
+      "bytes": 204960
+    },
+    {
+      "id": "zonos3-web-voices-voices-json",
+      "sha256": "03d584a4faa2ac71a9c278c12a61d9099dd98e8ae3e2cb225640ad01af0a41bb",
+      "bytes": 5760
+    },
+    {
+      "id": "zonos3-web-voices-English-Imogen_en-British_F_1-codes-npy",
+      "sha256": "c906f6c405c9078607fe9c54cf1b71ef0e112839490499e34bf8791ed1ad7e86",
+      "bytes": 7728
+    },
+    {
+      "id": "zonos3-web-voices-English-Imogen_en-British_F_1-embedding-npy",
+      "sha256": "683424b91faeade48c8a92e05e1c3679366abbba443ef62eccba8dc40de48e9e",
+      "bytes": 896
+    },
+    {
+      "id": "zonos3-web-laci-index-json",
+      "sha256": "d3a2268d523e6fcf1bfc334a6c42f36eeafe66faf46e8f866c9650e0b508b2b2",
+      "bytes": 1593
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads-json",
+      "sha256": "407e47472224c603b9c3a969e7175f35b637e0c1995eb606d5128ec1b2e88528",
+      "bytes": 7495
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ar-json",
+      "sha256": "e8d283a8eb0647015e26e2c6d49d2ec6fa2bd9941e5390e7b30396ca5e035ed6",
+      "bytes": 7661
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_bg-json",
+      "sha256": "1c4820a421ab318cd62ecc49e52ea4ec9aff520fe510ab54e31a654e394f6828",
+      "bytes": 7608
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_bn-json",
+      "sha256": "9b49a48f9b7bfaf8857ee759736b786f3940c1890c394a4cdbe679e1f522e45e",
+      "bytes": 7654
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_cs-json",
+      "sha256": "97ce6b22613053a17463deccbcd4943c1450c4f73210b09e93eec7679683eff1",
+      "bytes": 7571
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_da-json",
+      "sha256": "bc1971f6054b465b939141bb06d0d07682501e74652fa0023d3f0a2db0c70146",
+      "bytes": 7616
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_de-json",
+      "sha256": "5029f11f7a75c02f68229f87f774e0440dc7bc98c091e8086828a1645d200645",
+      "bytes": 7539
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_el-json",
+      "sha256": "511ccc46c94476a01a0fe3fd96ee2b7e8926b1e5852772000faa9df54e92cee7",
+      "bytes": 7603
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_es-json",
+      "sha256": "20f0e8fae411ca651ddf6ae7fcab63e6b2d94340aa5497ca541b349feeb2d754",
+      "bytes": 7571
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_fi-json",
+      "sha256": "7b7ece889fef904c39ca569d882746d61b105c37a348838041a72aa2164c43ef",
+      "bytes": 7580
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_fr-json",
+      "sha256": "6ceacd45c4618504350532eb5c2628aec69ac8f18911256fa4378653216733d3",
+      "bytes": 7571
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_gu-json",
+      "sha256": "2282bc9873b50cd86e0fe84e0d4478df0558cbfbea9f5e0683f80de6fbe1383f",
+      "bytes": 7362
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_he-json",
+      "sha256": "4cb8baae3d74b3099a68c07e9c69dc388b5c05755ee3544bd2da0860e1ba3956",
+      "bytes": 7639
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_hi-json",
+      "sha256": "0ef8179db4db8e29014faaebdbab9494d33a2974cf21405a884d6269eca1630a",
+      "bytes": 7579
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_hu-json",
+      "sha256": "8d42f5c087bb205a2e67509324ce999c5cdb56b26fd29685664bc8fe10dce143",
+      "bytes": 7614
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_id-json",
+      "sha256": "0b2fe2fbc497b4f821d83488061ca32e6283ce2080975d4986e7c209a619dbad",
+      "bytes": 7597
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_it-json",
+      "sha256": "bd1ab97819057fd0b7c1cb6577a646118b42e1ba7568dff4ee379e925a74e2e7",
+      "bytes": 7557
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ja-json",
+      "sha256": "1da810b373a7ddc591ffc654de363d8024821a407665083748c3eef5bf3e233a",
+      "bytes": 7584
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ka-json",
+      "sha256": "854646c45094c81f5ff1cd7719a6eba1e13d45ed05676b3b4d2fe68ce14649cf",
+      "bytes": 7568
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_kn-json",
+      "sha256": "0a0cf44eab3ebd28266e91750b32383d1e0ac5aa7a87a1e3d812145530b74307",
+      "bytes": 7698
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ko-json",
+      "sha256": "b5ef1551a418333ddc37a74078a825da718ac6434400a46efa98f5e5472c9fb9",
+      "bytes": 7566
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ml-json",
+      "sha256": "99d02ad7afeebe8f08b51ad2b6cde84c2a689c49c5644aab1693ff4937a1b66f",
+      "bytes": 7639
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_mr-json",
+      "sha256": "94d5414ef4c5a76a37b9bce02045e08b5f9a75bffca8379e9411301fcece8a27",
+      "bytes": 7591
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ms-json",
+      "sha256": "723dd6e8c6a63f7eb157c12e9676d7b8ee44de2253a32887bb64483df874a70e",
+      "bytes": 7564
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_nl-json",
+      "sha256": "5a28c72337284768512d274052e76e06a2b804447fcb0b7840740bbf77b631fe",
+      "bytes": 7626
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_no-json",
+      "sha256": "2ce69edde434697ce97e10e4b7c65fbc90bd1d075533dbd1abd27e99d1774a6f",
+      "bytes": 7566
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_or-json",
+      "sha256": "ce438e2cdcfa6e21ee9cddddeb03ea3fae519e8c81ed5a6b485ac03c356490b5",
+      "bytes": 7434
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_pa-json",
+      "sha256": "06ab88201f37b55b5f8ec87fcf9f28e002fc2ca3d983e5257bc2359d3aba531a",
+      "bytes": 7582
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_pl-json",
+      "sha256": "627b2d45c108d7be9afe0d603c24bdff69504145b750b1e3ef06065bad940e45",
+      "bytes": 7569
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_pt-json",
+      "sha256": "cd675f1943ef3b06ee4d33a9c8fc55c0b3d0b41aedcf538889c89965b75036fb",
+      "bytes": 7557
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ro-json",
+      "sha256": "f42815de5929d821cbba40497e97d9cae284791b0651445d825f67e15f1205c9",
+      "bytes": 7574
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ru-json",
+      "sha256": "63be82dca8a36445affdfd6483f31b5f4d3c0770a37b98cb791857a91d7fea3c",
+      "bytes": 7573
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_sk-json",
+      "sha256": "a9323f447a98d91af68d1f5d69f703f833f14f23467ddfe122ff052761127422",
+      "bytes": 7578
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_sv-json",
+      "sha256": "b710183a79178c6aa2ebe2699ec5947f6e1308d21107c166caf161f98c59af3b",
+      "bytes": 7584
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ta-json",
+      "sha256": "4b441fdbfa47587b560c1e3cef388aa0842191fc15c651b81cd65e3c88a6b8e0",
+      "bytes": 7452
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_te-json",
+      "sha256": "c93da663899e460d08de7b158f765e963e231137369c2f7458240aaf3b4a2acf",
+      "bytes": 7459
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_th-json",
+      "sha256": "b882630f4dfd28a1f610b99a9cdc3f8b22ce3abaa1b6b84d273149e32bbc0c92",
+      "bytes": 7630
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_tl-json",
+      "sha256": "6e76d81cff51edff3acf96b3bc52891e7c9aa02b1b217d5c8561287bafffb381",
+      "bytes": 7602
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_tr-json",
+      "sha256": "f48baeea20cdb4bb84b84175a00a8a2307fcb4c5e0978bbb77aa7c856ed7a22e",
+      "bytes": 7679
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_uk-json",
+      "sha256": "f5f6c66f31281e287b21b45cf6b4ab722349e8299c48ed1c0396135edb44c6cc",
+      "bytes": 7631
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_ur-json",
+      "sha256": "bc2c557897ceafcfa8494f8321fa87c22b4b1ce5ae14b2407a91d843a3ffae32",
+      "bytes": 7628
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_vi-json",
+      "sha256": "0ed6768e0fa3aa1a5c444319dbbe813137d0a4083bc0c1dc53bedb06b9635030",
+      "bytes": 7644
+    },
+    {
+      "id": "zonos3-web-laci-zonos3_mini_heads_zh-json",
+      "sha256": "e8ef4f98d7738ca3a5768a125cad4a7362297580f9fcc46581c3eb025fd9273f",
+      "bytes": 7558
+    },
+    {
+      "id": "zonos3-cpu-backbone-q4q8",
+      "sha256": "66fceb6d73a8c30bde80249e4112bb308380ab7f3384fa11c8e4048115e4ceec",
+      "bytes": 663150624
+    },
+    {
+      "id": "zonos3-cpu-zac-keep2",
+      "sha256": "834e5b70b88294afc3c702a478487e0664dcc6b574c16fc6167d72444aabeafd",
+      "bytes": 452325440
+    },
+    {
+      "id": "zonos3-cpu-speaker-encoder",
+      "sha256": "9539f340b70be246005403b9c254732e180e85e0b3c57fb1973f0d6bc6c59bdc",
+      "bytes": 45385728
+    },
+    {
+      "id": "zonos3-cpu-runtime-js",
+      "sha256": "5081914362c042de1e353f9cea93cbe884d9bc5081002cf587f5798122feec7a",
+      "bytes": 121508
+    },
+    {
+      "id": "zonos3-cpu-runtime-wasm",
+      "sha256": "690469b7955ad0742538257769520a14a4766f2cedc4212fdfd91fe150dd4a17",
+      "bytes": 4231507
+    },
+    {
+      "id": "zonos3-cpu-runtime-third-party-notices",
+      "sha256": "a47966056c2230037d837c507d812040bd7eaae74cb933a33031af35f0a1064a",
+      "bytes": 57861
+    }
+  ],
+  "cells": [
+    {
+      "model": "zonos3-mini",
+      "support": {
+        "voiceCount": 27,
+        "bundledVoiceCount": 1,
+        "languageCount": 43,
+        "languages": [
+          "en",
+          "fr",
+          "es",
+          "de",
+          "it",
+          "pt",
+          "nl",
+          "pl",
+          "ru",
+          "sv",
+          "tr",
+          "uk",
+          "cs",
+          "da",
+          "fi",
+          "el",
+          "hu",
+          "no",
+          "ro",
+          "sk",
+          "bg",
+          "zh",
+          "ja",
+          "ko",
+          "ar",
+          "he",
+          "vi",
+          "id",
+          "th",
+          "tl",
+          "ms",
+          "ka",
+          "hi",
+          "bn",
+          "ta",
+          "te",
+          "mr",
+          "gu",
+          "kn",
+          "ml",
+          "pa",
+          "or",
+          "ur"
+        ],
+        "scope": "Pinned ZONOS3-Mini checkpoint and official 27-preset voice catalog; one English preset is staged and benchmarked.",
+        "sources": [
+          "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/README.md",
+          "https://huggingface.co/Zyphra/ZONOS3-Mini/blob/2921b8821772b0bd10a04456863d21abf9d2f283/web/voices/voices.json",
+          "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/servers/web/README.md",
+          "https://github.com/Zyphra/ZONOS3-Mini/blob/a50e14117d99181ba7f28047b451ba03ba1a09a9/model/src/zonos3/registries/languages.json"
+        ],
+        "notes": "The checkpoint advertises 43 languages across 44 server locale codes and the pinned voice manifest lists 27 presets, including 10 English voices. Only Imogen (English, British female) is staged and measured. The WebGPU profile loads its reference codes and speaker embedding; the CPU/WASM profile loads the speaker embedding only. The benchmark skips unused preview audio. No other preset or language is exercised."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+cpu-codec-host",
+      "status": "measured",
+      "reason": null,
+      "voice": "Imogen (English, British female)",
+      "precision": "Pinned official Web export; tensor formats are declared per-tensor in its manifests.",
+      "settings": {
+        "voice": "Imogen (English, British female)",
+        "voiceId": "default_b78b28baf5c31a1d",
+        "voicePreviewAudio": "Disabled for the benchmark; TTS uses the pinned Imogen codes and embedding, not the preview clip.",
+        "language": "en_us",
+        "sampleRate": 44100,
+        "seed": "42 + canonical chunk id",
+        "textFrontend": "Official browser tokenizer; each canonical text span is passed unchanged, without phonemization or text normalization.",
+        "sampling": {
+          "temperature": 0.75,
+          "topk": 80,
+          "top_p": 0.69,
+          "min_p": 0,
+          "repetition_penalty": 2.4,
+          "repetition_window": 96,
+          "repetition_codebooks": 6
+        },
+        "decoder": "keep2_plain",
+        "silencePrefillFrames": 3,
+        "streamDecode": "prefix; decode after one codebook for the first prefix only",
+        "selectedVoiceIds": [
+          "default_b78b28baf5c31a1d"
+        ],
+        "selectedAdapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "gpuExecution": "Official ZONOS3 backbone and keep2_plain decoder WebGPU kernels.",
+        "cpuExecution": "Host iSTFT, FIR mixing, resampling, benchmark text pass-through, streamed float32 readback.",
+        "loadedVoiceAssets": "The benchmark skips unused Imogen preview audio; the worker loads its reference codes and embedding. CPU/WASM uses only the same embedding sidecar.",
+        "dispatchProbe": "Separate untimed generation; hooks are removed before scored generation."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Selected hardware adapter apple / metal-3; observed 42459 compute dispatches during separate untimed generation. The neural backbone and decoder use WebGPU; codec host iSTFT/FIR/resampling and PCM readback use CPU."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 153417.54000020027,
+          "samples": 56639100,
+          "sampleRate": 44100,
+          "pcmSha256": "54365556c9dc9f623afbfc4f4e4577cee77027d588937f3f813980e72160c16c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 111.19500017166138,
+            "firstSourceChunkCompletedMs": 1803.4950001239777,
+            "audioSeconds": 1284.3333333333333,
+            "realTimeFactor": 0.11945305476267865,
+            "minSamplesPerChunk": 470400,
+            "maxSamplesPerChunk": 834960
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 153409.77499985695,
+          "samples": 56639100,
+          "sampleRate": 44100,
+          "pcmSha256": "54365556c9dc9f623afbfc4f4e4577cee77027d588937f3f813980e72160c16c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 112.69000005722046,
+            "firstSourceChunkCompletedMs": 1764.9299998283386,
+            "audioSeconds": 1284.3333333333333,
+            "realTimeFactor": 0.11944700882418138,
+            "minSamplesPerChunk": 470400,
+            "maxSamplesPerChunk": 834960
+          },
+          "audio": {
+            "sha256": "13c61adf370cc66bf13cb94b1eec1f5fc6f05d18d83229f4f898e7290938ad0b",
+            "bytes": 113278244
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-19T05-59-36-390Z-1d2d09933912; cell 1/1; source de9dded4722f160d185b4dcbbb720edec8ee595f; requested n=1; effective n=1; ZONOS3-Mini webgpu profile; Official Zyphra browser runtime pinned at a50e14117d99181ba7f28047b451ba03ba1a09a9. Require a real selected hardware adapter and a separate untimed inference-worker compute-dispatch probe; scored inference requires EOS. Backbone and KEEP-2 neural kernels dispatch on WebGPU; host iSTFT/FIR mixing/resampling and float32 PCM readback use CPU. Short-text/LACI is off; canonical spans pass unchanged. Actual voice: Imogen (English, British female); pinned Imogen codes and embedding; preview audio disabled.. Precision: Pinned official Web export; tensor formats are declared per-tensor in its manifests.. Source: de9dded4722f160d185b4dcbbb720edec8ee595f. Power: AC Power. Background activity: At 2026-11-19T05:43:25Z, this one-cell ZONOS WebGPU warm retry was queued behind Klein Heart CPU warm and Cosy Robot/Trellis setup in the shared serial M1 queue. The previous ZONOS 1-warmup/1-trial cell completed both articles with matching finite PCM but was rejected for a 2,442-character note; that invalid receipt is preserved. Assets are staged; inference cells run one at a time.. Record AC power, background activity, and run order separately; do not infer a matched CPU/GPU speedup across distinct runtime/precision profiles."
+  ]
+}

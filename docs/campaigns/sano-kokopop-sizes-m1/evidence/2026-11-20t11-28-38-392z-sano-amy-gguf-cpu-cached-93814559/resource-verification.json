@@ -1,0 +1,65 @@
+{
+  "model": "sano-amy-gguf",
+  "backend": "cpu",
+  "effectiveBackend": "cpu/wasm",
+  "resultId": "2026-11-20t11-28-38-392z-sano-amy-gguf-cpu-cached-93814559",
+  "receiptSha256": "c94c32ec7d02e64063d7a8ea0814a3b24c4b83b7cf10985d134cc190a116f63f",
+  "n": 1,
+  "sampleCount": 2200,
+  "generationMeanRssBytes": 1311491865,
+  "articleCallPeakRssBytes": 1875656704,
+  "generationSeconds": 1104.719875,
+  "audioSeconds": 1312.8403174603175,
+  "sampleRate": 22050,
+  "pcmSha256": "ea2027443040a259a211b9ecc6898462351cb12dfdde70187013644e1489b944",
+  "nativeFullWavSha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+  "protectedWavAudit": {
+    "wavSha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+    "bytes": 57896302,
+    "rate": 22050,
+    "samples": 28948129,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 120,
+        "samples": 536363,
+        "zeroSamples": 536363
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 19766826,
+      "endSampleExclusive": 19772451,
+      "samples": 5625,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "separateIdenticalRecordings": [
+    {
+      "recordingResultId": "2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc",
+      "recordingTrialIndex": 5,
+      "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+      "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu-full.wav",
+        "sha256": "664f84c215b6b73169d6d0a45f8a065d4d664304bb812e5d66e217c04969cac2",
+        "bytes": 57896302
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t07-24-52-683z-sano-amy-gguf-cpu-warm-aa4c26dc--sano-amy-gguf--cpu.wav",
+        "sha256": "72f6b7adefd748fac0aa10f171007d06a23b4749d54689736c95a19e483acecd",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    }
+  ],
+  "privateTerminalSha256": "167a90f927cfa5ac9af4cad16eba467f257459406b14c9f4fe82e1ab87fb0554",
+  "independentReviewSha256": "34fb4f55366a33bf29c896ab72c767ef2bcf1116dc8291a80b02b7f4e5079edf"
+}
