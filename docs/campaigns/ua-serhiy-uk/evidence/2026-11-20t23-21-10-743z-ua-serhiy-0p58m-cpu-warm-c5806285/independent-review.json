@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "verdict": "accepted",
+  "resultId": "2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285",
+  "receiptSha256": "aad64e3c364b7e129bc709a23d1dabbb8f3a9f948f09790c7b41c7552026cb49",
+  "source": {
+    "gitCommit": "9870c198651481dfed69ece7dc7bb88d870edabd",
+    "dirty": false,
+    "manifestSha256": "c02c5861f72e45f36e024ea08887c0ada604abd53da938583d702124cfbdd163"
+  },
+  "fixture": {
+    "id": "uk-article-v1",
+    "language": "uk",
+    "sha256": "542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40",
+    "characters": 19980,
+    "unicodeCodePoints": 19980,
+    "utf8Bytes": 36364,
+    "chunks": 92,
+    "source": {
+      "type": "translation",
+      "description": "AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.40",
+    "gpu": null,
+    "headless": false
+  },
+  "model": "ua-serhiy-0p58m",
+  "backendRequested": "cpu",
+  "backendEffective": "cpu/wasm",
+  "status": "measured",
+  "checks": {
+    "validateResultPublication": true,
+    "verifySourceManifestAndTranslatedFixture": true,
+    "cleanPinnedSource": true,
+    "expectedTrialCounts": true,
+    "finiteNonempty92ChunkPcm": true,
+    "audioReceiptMatchesFullWavHashAndBytes": true,
+    "wavIsMonoPcm16_22050": true,
+    "wavFramesMatchReceiptSamples": true,
+    "fullPcmWaveformScanned": true
+  },
+  "selectedAudio": {
+    "resultId": "2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285",
+    "receiptSha256": "aad64e3c364b7e129bc709a23d1dabbb8f3a9f948f09790c7b41c7552026cb49",
+    "scenario": "warm",
+    "backendRequested": "cpu",
+    "backendEffective": "cpu/wasm",
+    "trialIndex": 5,
+    "floatPcmSha256": "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d",
+    "audioReceipt": {
+      "sha256": "57e5d525a9768b9d26252375242a4584526f69105faba031437f12bc91a754f0",
+      "bytes": 52283948
+    },
+    "wavAudit": {
+      "wavSha256": "57e5d525a9768b9d26252375242a4584526f69105faba031437f12bc91a754f0",
+      "bytes": 52283948,
+      "channels": 1,
+      "sampleWidthBytes": 2,
+      "encoding": "PCM16_LE",
+      "sampleRate": 22050,
+      "frames": 26141952,
+      "durationSeconds": 1185.5760544217687,
+      "pcmDataSha256": "20b2c620b1796b7306889b6f10ed2b02ddcae1c0497dc3ebe8501144ce138868",
+      "rawFirst30SecondsPcmSha256": "1acc3d3360a161c8e05d75f18e61c6ac07967dfa8591b2fb3ee73ea4099c0f98",
+      "rawFirst30SecondsPcmBytes": 1323000,
+      "pcm": {
+        "minSample": -32768,
+        "maxSample": 26673,
+        "zeroSamples": 219238,
+        "clippedPositiveSamples": 0,
+        "clippedNegativeSamples": 8,
+        "longestConstantRun": {
+          "startSample": 20393984,
+          "endSampleExclusive": 20394252,
+          "samples": 268,
+          "value": 0
+        },
+        "runsAtLeast100ms": {
+          "runs": 0,
+          "samples": 0,
+          "zeroSamples": 0
+        },
+        "runsAtLeast1s": {
+          "runs": 0,
+          "samples": 0,
+          "zeroSamples": 0
+        }
+      }
+    }
+  },
+  "metricSummary": {
+    "trialCount": 5,
+    "generationMs": [
+      9142.909999847412,
+      9047.005000114441,
+      8908.634999990463,
+      8923.44000005722,
+      8908.30999994278
+    ],
+    "medianGenerationMs": 8923.44000005722,
+    "minGenerationMs": 8908.30999994278,
+    "maxGenerationMs": 9142.909999847412,
+    "audioSeconds": 1185.5760544217687,
+    "rtfRecomputed": [
+      0.00771178699649649,
+      0.007630893831207532,
+      0.007514182634479235,
+      0.007526670234925904,
+      0.007513908506095424
+    ],
+    "firstPcmMs": [
+      30.194999933242798,
+      29.830000162124634,
+      29.335000038146973,
+      29.920000076293945,
+      29.619999885559082
+    ],
+    "firstSourceChunkCompletedMs": [
+      81.52499985694885,
+      80.6650002002716,
+      79.7900002002716,
+      79.47000002861023,
+      80.27999997138977
+    ],
+    "floatPcmHashes": [
+      "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d",
+      "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d",
+      "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d",
+      "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d",
+      "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d",
+      "55d0307d0bcef3dd53562af6ded737b08df24f60b2253d3fd7bfeb85fd22239d"
+    ],
+    "allFloatPcmHashesEqual": true,
+    "warmupGenerationMs": 9417.819999933243,
+    "resourceMetrics": null
+  },
+  "scanBoundary": {
+    "startedAtUtc": "2026-11-20T23:32:59.383174+00:00",
+    "finishedAtUtc": "2026-11-20T23:33:38.609984+00:00",
+    "serialSlot": "m1-slot.py publication",
+    "method": "Read-only full WAV SHA-256 plus streaming PCM16 scan; no inference or source edits."
+  },
+  "limitations": [
+    "CPU and WebGPU Float32 PCM digests differ; this verifies each backend selected audio against its own receipt and does not claim cross-backend waveform identity.",
+    "Effective WebGPU is webgpu+wasm with explicit WASM fallback; GPU dispatch was verified separately, outside timing.",
+    "No ASR or human listening was performed in this receipt review."
+  ],
+  "acceptanceScope": "Accepted for native receipt, source, protocol, metric, and audio-file integrity. This review does not establish intelligibility or complete text fidelity.",
+  "strictCrossBackendComparison": "The strict comparison records GPU provider and WASM thread metadata differences; executionProviders identifies the requested backend provider chain. Shared non-backend synthesis settings match. Keep per-backend reports separate; any ratio is descriptive full-pipeline context only.",
+  "originalReviewSha256": "f072660e593411de0a9ca4a65ab4e5634f30c9f34a9f294c8d680a3e1e4c9cf1",
+  "initialReviewSha256": "49f062a76add4d942b3ec304187a0ae6dcfe074b71a9608e6266fe320e018ee1",
+  "publicationNote": "Derivative final review copy; local WAV path omitted. Original and initial review digests retained."
+}

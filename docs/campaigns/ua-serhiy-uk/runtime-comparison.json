@@ -1,0 +1,55 @@
+{
+  "kind": "descriptive-end-to-end-runtime-comparison",
+  "sourceCommit": "9870c198651481dfed69ece7dc7bb88d870edabd",
+  "fixture": {
+    "id": "uk-article-v1",
+    "language": "uk",
+    "sha256": "542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40",
+    "characters": 19980,
+    "unicodeCodePoints": 19980,
+    "utf8Bytes": 36364,
+    "chunks": 92,
+    "source": {
+      "type": "translation",
+      "description": "AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "strictComparatorAccepted": false,
+  "strictDecision": "strict-comparison.json",
+  "rows": [
+    {
+      "backend": "cpu",
+      "id": "2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285",
+      "receiptSha256": "aad64e3c364b7e129bc709a23d1dabbb8f3a9f948f09790c7b41c7552026cb49",
+      "medianSeconds": 8.923440000057221,
+      "minimumSeconds": 8.90830999994278,
+      "maximumSeconds": 9.142909999847411,
+      "trialsSeconds": [
+        9.142909999847411,
+        9.04700500011444,
+        8.908634999990463,
+        8.923440000057221,
+        8.90830999994278
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "id": "2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093",
+      "receiptSha256": "bc38a285169c9c0ac13212ee39a841320b2791746df87b70fd0738238260a5c4",
+      "medianSeconds": 9.35872000002861,
+      "minimumSeconds": 9.261330000162125,
+      "maximumSeconds": 9.44875500011444,
+      "trialsSeconds": [
+        9.309149999856949,
+        9.44875500011444,
+        9.35872000002861,
+        9.261330000162125,
+        9.436795000076295
+      ]
+    }
+  ],
+  "cpuSpeedRatio": 1.0487793944900843
+}

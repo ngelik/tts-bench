@@ -1,0 +1,56 @@
+{
+  "receiptSha256": "b04e2714016af69dc047deb6d88c129c222ce6c4be7ce7ae574d41d01f983502",
+  "selectedTrialIndex": 1,
+  "waveform": {
+    "wavSha256": "57e5d525a9768b9d26252375242a4584526f69105faba031437f12bc91a754f0",
+    "bytes": 52283948,
+    "channels": 1,
+    "sampleWidthBytes": 2,
+    "encoding": "PCM16_LE",
+    "sampleRate": 22050,
+    "frames": 26141952,
+    "durationSeconds": 1185.5760544217687,
+    "pcmDataSha256": "20b2c620b1796b7306889b6f10ed2b02ddcae1c0497dc3ebe8501144ce138868",
+    "rawFirst30SecondsPcmSha256": "1acc3d3360a161c8e05d75f18e61c6ac07967dfa8591b2fb3ee73ea4099c0f98",
+    "rawFirst30SecondsPcmBytes": 1323000,
+    "pcm": {
+      "minSample": -32768,
+      "maxSample": 26673,
+      "zeroSamples": 219238,
+      "clippedPositiveSamples": 0,
+      "clippedNegativeSamples": 8,
+      "longestConstantRun": {
+        "startSample": 20393984,
+        "endSampleExclusive": 20394252,
+        "samples": 268,
+        "value": 0
+      },
+      "runsAtLeast100ms": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      },
+      "runsAtLeast1s": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    }
+  },
+  "prefixPcmSha256": "1acc3d3360a161c8e05d75f18e61c6ac07967dfa8591b2fb3ee73ea4099c0f98",
+  "originalReviewSha256": "14df1b5ea1665c4597dc9d1ba9910076c32bef286f6caa39f8cacd0a2379a80d",
+  "scanBoundary": {
+    "startedAtUtc": "2026-11-20T23:32:59.383174+00:00",
+    "finishedAtUtc": "2026-11-20T23:33:38.609984+00:00",
+    "serialSlot": "m1-slot.py publication",
+    "method": "Read-only full WAV SHA-256 plus streaming PCM16 scan; no inference or source edits."
+  },
+  "publicationSlot": {
+    "purpose": "publication",
+    "pid": 83744,
+    "started": 1795217680.783893
+  },
+  "language": "uk",
+  "fullWaveformRescannedByPublisher": false,
+  "initialReviewSha256": "f89a3a578bd32774a7e8f0122449fb31b3027b9b5c3016acfbb3cd6c88d9dadb"
+}

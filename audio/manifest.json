@@ -2851,6 +2851,72 @@
       }
     },
     {
+      "resultId": "2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285",
+      "model": "ua-serhiy-0p58m",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Serhiy (Ukrainian; one pinned synthetic voice)",
+      "language": "uk",
+      "attribution": "Synthetic Ukrainian speech generated with dmytro-m’s Serhiy 0.58M, distilled from the Serhiy Piper teacher. Student weights/reference GPL-3.0; sanoTTS by Ampixa. Teacher Apache-2.0; training corpus MIT. Attribution only; not an output-license grant.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/inference.py",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/stress.py",
+        "https://github.com/rhasspy/piper-samples/tree/da672d1157136d07365790f51da3357a17cf9650",
+        "https://github.com/microsoft/onnxruntime/tree/v1.23.2"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285--ua-serhiy-0p58m--cpu.wav",
+        "sha256": "01e8334e9ad36c6c12b30ea02a637b211ea07c7b4204d7f123d31211c9a6b39d",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285--ua-serhiy-0p58m--cpu-full.wav",
+        "sha256": "57e5d525a9768b9d26252375242a4584526f69105faba031437f12bc91a754f0",
+        "bytes": 52283948
+      }
+    },
+    {
+      "resultId": "2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093",
+      "model": "ua-serhiy-0p58m",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Serhiy (Ukrainian; one pinned synthetic voice)",
+      "language": "uk",
+      "attribution": "Synthetic Ukrainian speech generated with dmytro-m’s Serhiy 0.58M, distilled from the Serhiy Piper teacher. Student weights/reference GPL-3.0; sanoTTS by Ampixa. Teacher Apache-2.0; training corpus MIT. Attribution only; not an output-license grant.",
+      "modelTerms": "GPL-3.0",
+      "sourceUrls": [
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/inference.py",
+        "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/stress.py",
+        "https://github.com/rhasspy/piper-samples/tree/da672d1157136d07365790f51da3357a17cf9650",
+        "https://github.com/microsoft/onnxruntime/tree/v1.23.2"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093--ua-serhiy-0p58m--webgpu.wav",
+        "sha256": "54cf6491807790e5ecfbc28264e62953d41d8a8205881978e8255dd6ad3ba88a",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093--ua-serhiy-0p58m--webgpu-full.wav",
+        "sha256": "9d9a560af31f4f5de944214c58c959223970533aaf8da22c11890dcb9a9c3c0f",
+        "bytes": 52283948
+      }
+    },
+    {
       "resultId": "2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663",
       "model": "woof",
       "backend": "webgpu",

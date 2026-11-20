@@ -109,6 +109,14 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | SanoTTS Robot MCU INT8 (English, US) | E9 | 0.68 | [28.06 s (n=5)](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/summary.md) | [unsupported](results/2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf/summary.md) | Native; independent attempts |
 | SanoTTS Trellis experimental FP32 (English, US) | E9 | 3.98 | [132.56 s (n=5)](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/summary.md) | [unsupported](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/summary.md) | Native; independent attempts |
 
+### Ukrainian (uk) — uk-article-v1
+
+19980 characters / 92 spans · fixture SHA-256 `542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Serhiy 0.58M (Ukrainian) | E11 | 2.34 | [8.92 s (n=5)](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/summary.md) | [9.36 s (n=5)](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/summary.md) | Native; independent attempts |
+
 Each native warm score shows the number of timed articles (n) using the fixture size shown in its section after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
 **Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the raw receipt](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.
@@ -297,7 +305,15 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | ZONOS3-Mini (Imogen) | 2081.59 | [1879.09](results/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700/summary.md) | — |
 
+**RAM 25** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Serhiy 0.58M (Ukrainian) | 2.34 | [1085.64](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/summary.md) | [1964.76](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) |
+
 ![Average Chrome RAM during generation — English](docs/reference-memory.svg)
+
+![Average Chrome RAM during generation — Ukrainian](docs/reference-memory-uk.svg)
 
 ### Voice and language support
 
@@ -501,6 +517,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![tiny-voca-english — campaign metrics](reports/tiny-voca-english/overview.svg)
 
+[ua-serhiy-uk-cpu — all-metrics table and source receipts](reports/ua-serhiy-uk-cpu/overview.md)
+
+![ua-serhiy-uk-cpu — campaign metrics](reports/ua-serhiy-uk-cpu/overview.svg)
+
+[ua-serhiy-uk-webgpu — all-metrics table and source receipts](reports/ua-serhiy-uk-webgpu/overview.md)
+
+![ua-serhiy-uk-webgpu — campaign metrics](reports/ua-serhiy-uk-webgpu/overview.svg)
+
 [zonos3-mini-webgpu — all-metrics table and source receipts](reports/zonos3-mini-webgpu/overview.md)
 
 ![zonos3-mini-webgpu — campaign metrics](reports/zonos3-mini-webgpu/overview.svg)
@@ -619,6 +643,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Tiny Voca 4.5M | cpu | en | [Receipt](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu-full.wav) |
 | Tiny Voca 4.5M | webgpu | en | [Receipt](results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec--tiny-voca--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec--tiny-voca--webgpu-full.wav) |
 | Tiny Voca 4.5M | webgpu | en | [Receipt](results/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d--tiny-voca--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-17t13-36-15-139z-tiny-voca-webgpu-warm-4f28ad8d--tiny-voca--webgpu-full.wav) |
+| Serhiy 0.58M (Ukrainian) | cpu | uk | [Receipt](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285--ua-serhiy-0p58m--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285--ua-serhiy-0p58m--cpu-full.wav) |
+| Serhiy 0.58M (Ukrainian) | webgpu | uk | [Receipt](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093--ua-serhiy-0p58m--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093--ua-serhiy-0p58m--webgpu-full.wav) |
 | Underdog Woof one-voice (Isla) | webgpu | en | [Receipt](results/2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663--woof--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663--woof--webgpu-full.wav) |
 | Underdog Woof one-voice (Isla) | webgpu | en | [Receipt](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=historical-2026-11-08-m1pro-gpu-warm--woof--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/historical-2026-11-08-m1pro-gpu-warm--woof--webgpu-full.wav) |
 | ZONOS3-Mini (Imogen) | cpu | en | [Receipt](results/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700--zonos3-mini--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700--zonos3-mini--cpu-full.wav) |
@@ -804,6 +830,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 171 · 2026-11-20 | sano-heart-nano-gguf-f32/webgpu | en / english-20k-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-28-42-585z-sano-heart-nano-gguf-f32-webgpu-cached-2e67019f/summary.md) | [SVG](results/2026-11-20t14-28-42-585z-sano-heart-nano-gguf-f32-webgpu-cached-2e67019f/chart.svg) |
 | 172 · 2026-11-20 | zonos3-mini/cpu | en / english-20k-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700/summary.md) | [SVG](results/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700/chart.svg) |
 | 173 · 2026-11-20 | zonos3-mini/cpu | en / english-20k-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f/summary.md) | [SVG](results/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f/chart.svg) |
+| 174 · 2026-11-20 | ua-serhiy-0p58m/cpu | uk / uk-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/summary.md) | [SVG](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/chart.svg) |
+| 175 · 2026-11-20 | ua-serhiy-0p58m/cpu | uk / uk-article-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/summary.md) | [SVG](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/chart.svg) |
+| 176 · 2026-11-20 | ua-serhiy-0p58m/webgpu | uk / uk-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) | [SVG](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/chart.svg) |
+| 177 · 2026-11-20 | ua-serhiy-0p58m/webgpu | uk / uk-article-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/summary.md) | [SVG](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/chart.svg) |
 
 </details>
 
