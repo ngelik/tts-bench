@@ -158,6 +158,17 @@ try {
     assert.equal(await cpuDetails.locator(`a[href="https://github.com/ngelik/tts-bench/blob/main/${cosySelection.selectionPath}"]`).count(), 1, 'Details retain the reviewed sidecar link');
     await page.keyboard.press('Escape');
   }
+  for (const model of expectedResultModels) for (const backend of ['cpu', 'webgpu']) {
+    const metric = model.warm[backend];
+    if (metric.selectionKind !== 'operator-shortened-warm-selection') continue;
+    const row = page.locator(`tr[data-model="${model.id}"]`);
+    const label = backend === 'cpu' ? 'CPU' : 'GPU';
+    const cell = row.locator(`td[data-label="${label} · seconds"]`);
+    assert.equal(await cell.locator('a.metric-link').getAttribute('href'), metric.selectionReportUrl);
+    assert.equal(await cell.locator('.metric-count').innerText(), `n=${metric.n}/${metric.originalPlannedRepetitions} · partial`);
+    assert.equal(metric.receiptStatus, 'error', 'Selection preserves the terminal raw status');
+    assert.ok(metric.n < metric.originalPlannedRepetitions);
+  }
   const audio8 = expected.models.find(model => model.id === 'audio8-realistic-0.6b-int4');
   const audio8ArchivedFault = audio8?.audio.find(entry => matchesAuditedWav(entry.full.sha256));
   const audio8CurrentGpuRecording = audio8?.playbackAudio?.webgpu;
@@ -249,6 +260,14 @@ try {
     const score = chartRow.locator('a.selection-report-link');
     assert.equal(await score.getAttribute('href'), cosySelectionReportUrl, 'The chart score also opens the readable selection report');
     assert.match(await score.getAttribute('title'), /Reviewed selection: 2 completed scored articles from 5 planned/);
+  }
+
+  for (const model of campaignResultModels) for (const backend of ['cpu', 'webgpu']) {
+    const metric = model.warm[backend];
+    if (metric.selectionKind !== 'operator-shortened-warm-selection') continue;
+    const panel = backend === 'cpu' ? 'cpu' : 'gpu';
+    const row = page.locator(`.chart-panel.${panel} .bar-row`).filter({has: page.locator(`[data-detail="${model.id}"]`)});
+    assert.equal(await row.locator('a.selection-report-link').getAttribute('href'), metric.selectionReportUrl);
   }
 
   const campaignUrl = new URL(base);

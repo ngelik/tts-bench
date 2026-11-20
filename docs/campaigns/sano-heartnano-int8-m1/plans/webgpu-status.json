@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+  "conditions": "Capability/status evidence only for the official SanoTTS heart-nano browser registration, which declares CPU/WASM support and no WebGPU provider. Request webgpu explicitly; preserve an explicit unsupported result or any unexpected initialization error. This is not a GPU timing and does not substitute another runtime.",
+  "cells": [
+    {
+      "model": "sano-heart-nano",
+      "backend": "webgpu",
+      "scenario": "warm",
+      "repetitions": 5,
+      "timeoutMinutes": 120,
+      "resources": false
+    }
+  ]
+}

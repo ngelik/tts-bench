@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "native-full-wav-byte-proof",
+  "verifiedAt": "2026-11-19T05:12:30.600289+00:00",
+  "sourceCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+  "sourceManifestSha256": "169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027",
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "format": "canonical mono PCM16 WAV; full file digests verified by streaming reads; exact first 30 seconds also hashed separately",
+  "warmAndCachedAudioByteIdentical": true,
+  "files": {
+    "warm": {
+      "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+      "resultSha256": "0ad0916d279c782090b441416beac7531cfaf796cdcb3fdc188edf77326425aa",
+      "nativePathRelativeToScoreCheckout": "runs/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e/sano-heart-nano-cpu.wav",
+      "fullWavSha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+      "fullWavBytes": 63244844,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "frames": 31622400,
+      "durationSeconds": 1317.6,
+      "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+      "prefix30SecondsSha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+      "prefixBytes": 1440044,
+      "trialIndex": 5,
+      "headerHex": "52494646240ac50357415645666d74201000000001000100c05d000080bb00000200100064617461000ac503"
+    },
+    "cached": {
+      "resultId": "2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271",
+      "resultSha256": "0ecbddb9a3c06369888f3fe12fc1400086cb490bb23430e1d30cf46caa293636",
+      "nativePathRelativeToScoreCheckout": "runs/2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271/sano-heart-nano-cpu.wav",
+      "fullWavSha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+      "fullWavBytes": 63244844,
+      "sampleRate": 24000,
+      "channels": 1,
+      "bitsPerSample": 16,
+      "frames": 31622400,
+      "durationSeconds": 1317.6,
+      "pcmFloatSha256": "dc7d5b2fd59cbabfb406a77920ac116840b227f4bcf16121decae672efdf37ad",
+      "prefix30SecondsSha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+      "prefixBytes": 1440044,
+      "trialIndex": 1,
+      "headerHex": "52494646240ac50357415645666d74201000000001000100c05d000080bb00000200100064617461000ac503"
+    }
+  }
+}

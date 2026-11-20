@@ -1,0 +1,6 @@
+Kokopop Sano voice-size profiles: source and license notice
+
+Kokopop/GGML/yyjson are MIT; bundled eSpeak NG and English language data are GPL-3.0-or-later. Retain the runtime license sidecars.
+The source voice packages are from ampixa/sanoTTS revision 25410576d005d7f08d186990fd91f6a2651243de, in its GPL-3.0-tagged distribution. Their manifests do not independently grant a different license. Retain upstream teacher/dataset provenance; do not infer rights from a converter or the benchmark root MIT license.
+Heart uses original F32 Vocos weights. Amy, Amy-small, Amy-large, HFC and Kristin are Piperlite FP16 distributions converted to mixed F16/F32 GGUF with the exact upstream converter. These are separate profiles from official Ampixa WASM.
+Generated model and runtime binaries are imported locally from verified build artifacts, not publicly rehosted by this integration.

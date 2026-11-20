@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "attempt": "003",
+  "sourceCommit": "b0f8c8887e9dfab5cef7b8fac9a15af865d722ef",
+  "sourceManifestSha256": "169e80e92ff65871eac7fb0de708fb6b2da8c15d9ab96ed7110def2e3341f027",
+  "outcome": "completed setup and three serial cells",
+  "startedAt": "2026-11-19T05:00:52.560382Z",
+  "finishedAt": "2026-11-19T05:03:33.559371Z",
+  "nodeVersion": "v22.22.3",
+  "chromeVersion": "Google Chrome 157.0.8103.40",
+  "dependencyCheck": {
+    "packageJsonSha256": "01385345082cd9eff72e52d18c49c58926bcc62d0d8eff08863ea3a37eb276f4",
+    "packageLockSha256": "e70e80ca506063b9ab7303717639c8ade0cb54695fb96dfc7f2fa3015d46378b",
+    "installedPackages": 79,
+    "missingOptionalPlatformPackages": 53,
+    "missingRequiredPackages": 0,
+    "versionOrIntegrityMismatches": 0
+  },
+  "checksBeforeInference": [
+    "CLI help and direct waveform-integrity module import",
+    "dry-run of all three exact plans",
+    "assets fetch and verify with the previously authorized license acceptance"
+  ],
+  "cells": [
+    "CPU warm: one excluded full-article warm-up plus five scored articles",
+    "CPU cached resources: one article with process-tree RSS sampling",
+    "Explicit WebGPU support/status probe"
+  ],
+  "resultIds": [
+    "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+    "2026-11-19t05-03-03-415z-sano-heart-nano-cpu-cached-ea706271",
+    "2026-11-19t05-03-32-384z-sano-heart-nano-webgpu-warm-09e97638"
+  ],
+  "diskFreeBytesAfterWarmCell": 4682694656,
+  "diskFreeBytesAfterCachedCell": 4616564736,
+  "diskFreeBytesAfterCapabilityCell": 4615745536
+}

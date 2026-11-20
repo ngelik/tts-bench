@@ -1,0 +1,44 @@
+{
+  "kind": "anonymous-public-audio-and-prefix-readback",
+  "checkedAt": "2026-11-19T06:52:26.407632+00:00",
+  "githubActionsRunId": "44475338147",
+  "githubActionsVerificationCommit": "68ca11029a22fe03463cbf39d54bd0c87709a858",
+  "anonymousRequests": true,
+  "releaseTag": "benchmark-audio-v1",
+  "releaseAssetId": 766473112,
+  "resultId": "2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e",
+  "nativeReceiptSha256": "0ad0916d279c782090b441416beac7531cfaf796cdcb3fdc188edf77326425aa",
+  "fullRecording": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu-full.wav",
+    "httpStatus": 200,
+    "bytes": 63244844,
+    "sha256": "ac62be7b0ae91fde2e0ac285b91d7c53185cd2db527c81e755868a2e3ef0d7f8",
+    "frames": 31622400,
+    "sampleRateHz": 24000,
+    "channels": 1,
+    "encoding": "PCM16"
+  },
+  "canonical30SecondClip": {
+    "url": "https://raw.githubusercontent.com/ngelik/tts-bench/58e38941c289cf925a6c013897f38c9f840436ba/audio/samples/2026-11-19t05-00-58-025z-sano-heart-nano-cpu-warm-0b78045e--sano-heart-nano--cpu.wav",
+    "sourceCommit": "58e38941c289cf925a6c013897f38c9f840436ba",
+    "httpStatus": 200,
+    "bytes": 1440044,
+    "sha256": "f62ec56496ed7854bdc3631acb103bc2d412d3d6b0d0021989ab4dbafea31f35",
+    "frames": 720000,
+    "sampleRateHz": 24000,
+    "channels": 1,
+    "encoding": "PCM16"
+  },
+  "fullFileRawPrefix": {
+    "bytes": 1440044,
+    "sha256": "e90baabde924eb2ecdf7958c03720fc9341ae0dab6b0e986284cd5b981e4f363",
+    "includesWavHeader": true
+  },
+  "pcmPrefixComparison": {
+    "bytes": 1440000,
+    "sha256": "bfd3b8112f5478bfba473b68394daec90825cb02a9e91caafc34c84ad503b982",
+    "frames": 720000,
+    "matchesCanonicalClipPcm": true,
+    "clipFileDigestDiffersBecauseWavHeaderIsRewritten": true
+  }
+}
