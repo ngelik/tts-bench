@@ -1,6 +1,7 @@
 import { createUaSerhiyGraphRuntime } from '../ua-serhiy-0p58m/graph-runtime.mjs';
 import { createUaSerhiyPhonemizer, prepareUaSerhiyText } from '../ua-serhiy-0p58m/frontend.mjs';
 import { UA_SERHIY_CONFIG } from '../adapters/ua-serhiy-config.mjs';
+import { fetchVerifiedUaSerhiyAsset, UA_SERHIY_SOURCE_REVISION, uaSerhiyLocalUrl } from '../ua-serhiy-0p58m/assets.mjs';
 
 const SAMPLE_RATE = 22_050;
 let ort = null;
@@ -12,40 +13,26 @@ let restoreFetch = null;
 let disposed = false;
 
 function localUrl(value) {
-  const url = new URL(value, self.location.href);
-  if (url.origin !== self.location.origin) throw new Error(`Ukrainian Serhiy refused non-local asset URL: ${url.origin}`);
-  return url.href;
+  return uaSerhiyLocalUrl(value, self.location.href);
 }
 
 function installLocalFetch() {
+  if (restoreFetch) return;
   const nativeFetch = globalThis.fetch.bind(globalThis);
   globalThis.fetch = async (input, init) => {
     const requested = typeof input === 'string' || input instanceof URL ? String(input) : input.url;
-    const url = new URL(requested, self.location.href);
-    if (url.origin !== self.location.origin) throw new Error(`Ukrainian Serhiy refused external fetch: ${url.origin}`);
+    const url = localUrl(requested);
     return nativeFetch(input, init);
   };
   restoreFetch = () => { globalThis.fetch = nativeFetch; };
 }
 
-async function digestHex(bytes) {
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
-  return Array.from(new Uint8Array(digest), value => value.toString(16).padStart(2, '0')).join('');
-}
-
 async function fetchPinned(asset, label) {
-  const url = localUrl(asset.url);
-  const response = await fetch(url, { cache: 'no-store' });
-  if (!response.ok) throw new Error(`Ukrainian Serhiy ${label} returned HTTP ${response.status}`);
-  const bytes = await response.arrayBuffer();
-  if (bytes.byteLength !== asset.bytes || await digestHex(bytes) !== asset.sha256) {
-    throw new Error(`Ukrainian Serhiy ${label} failed its byte-count or SHA-256 pin.`);
+  try {
+    return await fetchVerifiedUaSerhiyAsset(asset, { baseUrl: self.location.href });
+  } catch (error) {
+    throw new Error(`Ukrainian Serhiy ${label} failed verification: ${String(error?.message ?? error)}`);
   }
-  return bytes;
-}
-
-async function fetchRuntimeFile(url, bytes, sha256, label) {
-  return fetchPinned({ url, bytes, sha256 }, label);
 }
 
 async function releaseSessions() {
@@ -82,8 +69,11 @@ async function initialize(options = {}) {
     };
   }
   if (sessions) await releaseSessions();
-  installLocalFetch();
   const config = options.modelConfig ?? UA_SERHIY_CONFIG;
+  if (config.id !== 'ua-serhiy-0p58m' || config.source?.revision !== UA_SERHIY_SOURCE_REVISION) {
+    throw new Error('Ukrainian Serhiy CPU worker received an unpinned model configuration.');
+  }
+  installLocalFetch();
   const created = {};
   try {
     const ortRoot = localUrl(config.runtime.ortRoot);
@@ -108,9 +98,9 @@ async function initialize(options = {}) {
 
     const espeak = config.runtime.espeak;
     const [moduleBytes, wasmBinary, data] = await Promise.all([
-      fetchRuntimeFile(espeak.moduleUrl, espeak.moduleBytes, espeak.moduleSha256, 'eSpeak module'),
-      fetchRuntimeFile(espeak.wasmUrl, espeak.wasmBytes, espeak.wasmSha256, 'eSpeak WASM'),
-      fetchRuntimeFile(espeak.dataUrl, espeak.dataBytes, espeak.dataSha256, 'eSpeak data'),
+      fetchPinned({ url: espeak.moduleUrl, bytes: espeak.moduleBytes, sha256: espeak.moduleSha256 }, 'eSpeak module'),
+      fetchPinned({ url: espeak.wasmUrl, bytes: espeak.wasmBytes, sha256: espeak.wasmSha256 }, 'eSpeak WASM'),
+      fetchPinned({ url: espeak.dataUrl, bytes: espeak.dataBytes, sha256: espeak.dataSha256 }, 'eSpeak data'),
     ]);
     if (typeof moduleBytes.byteLength !== 'number') throw new Error('Pinned eSpeak module response is invalid.');
     const { default: createEspeak } = await import(localUrl(espeak.moduleUrl));
@@ -152,10 +142,9 @@ async function initialize(options = {}) {
     phonemize = null;
     phonemeIdMap = null;
     ort = null;
-    throw error;
-  } finally {
     restoreFetch?.();
     restoreFetch = null;
+    throw error;
   }
 }
 

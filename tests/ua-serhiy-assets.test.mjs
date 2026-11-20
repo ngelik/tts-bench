@@ -1,66 +1,51 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { getAssetLock } from '../lib/catalog.mjs';
-import { getModelParameters } from '../lib/model-parameters.mjs';
-import { UA_SERHIY_CONFIG } from '../web/adapters/ua-serhiy-config.mjs';
+import { createHash, webcrypto } from 'node:crypto';
+import { fetchVerifiedUaSerhiyAsset, uaSerhiyLocalUrl } from '../web/ua-serhiy-0p58m/assets.mjs';
 
-const root = resolve(import.meta.dirname, '..');
-const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+const baseUrl = 'http://127.0.0.1:51291/worker.mjs';
+const modelUrl = '/models/ua-serhiy-0p58m/1abd585d725a787b405c28a59ce1cbdfd34780bb/onnx/duration.onnx';
+const bytes = new TextEncoder().encode('pinned-test-bytes');
+const sha256 = createHash('sha256').update(bytes).digest('hex');
 
-test('Ukrainian Serhiy registration locks the source, four generated inference graphs and frontend closure', async () => {
-  const model = getAssetLock().models['ua-serhiy-0p58m'];
-  assert.ok(model);
-  assert.equal(model.modelRevision, UA_SERHIY_CONFIG.source.revision);
-  assert.deepEqual(model.backends, ['cpu', 'webgpu']);
-  assert.equal(model.license.model, 'GPL-3.0');
-  assert.equal(model.license.requiresAcceptance, true);
-  assert.equal(model.support.voiceCount, 1);
-  assert.equal(model.support.bundledVoiceCount, 1);
-  assert.deepEqual(model.support.languages, ['uk']);
-  assert.ok(model.support.sources.some(url => url.endsWith('/README.md')));
-  assert.ok(model.support.sources.some(url => url.endsWith('/NOTICE.md')));
+test('Serhiy URL fence accepts only its pinned model revision and local runtimes', () => {
+  assert.equal(uaSerhiyLocalUrl(modelUrl, baseUrl), 'http://127.0.0.1:51291' + modelUrl);
+  assert.equal(uaSerhiyLocalUrl('/runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs', baseUrl),
+    'http://127.0.0.1:51291/runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs');
+  assert.throws(() => uaSerhiyLocalUrl('https://example.org/model.onnx', baseUrl), /pinned local closure/);
+  assert.throws(() => uaSerhiyLocalUrl('/models/ua-serhiy-0p58m/latest/graph.onnx', baseUrl), /pinned local closure/);
+  assert.throws(() => uaSerhiyLocalUrl('/private/secret', baseUrl), /pinned local closure/);
+  assert.throws(() => uaSerhiyLocalUrl(modelUrl + '?token=secret', baseUrl), /pinned local closure/);
+});
 
-  const graphAssets = model.assets.filter(asset => asset.kind === 'model-weights');
-  assert.equal(graphAssets.length, 4);
-  assert.equal(graphAssets.reduce((sum, asset) => sum + asset.bytes, 0), 2_339_985);
-  assert.ok(graphAssets.every(asset => asset.generated?.artifactPath));
-  for (const graph of Object.values(UA_SERHIY_CONFIG.graphs)) {
-    assert.ok(graphAssets.some(asset => asset.bytes === graph.bytes && asset.sha256 === graph.sha256 && graph.url.endsWith(asset.target.split('/').at(-1))));
-  }
-  assert.equal(model.assets.find(asset => asset.id === 'ua-serhiy-source-weights-fp16').kind, 'model-support',
-    'source checkpoint is recorded without double-counting deployed browser weights');
-  assert.equal(model.assets.find(asset => asset.id === 'ua-serhiy-source-weights-fp16').sha256,
-    UA_SERHIY_CONFIG.source.originalWeightsSha256);
+test('Serhiy verified fetch uses normal same-origin HTTP caching and validates the pin', async () => {
+  let request;
+  const asset = { url: modelUrl, bytes: bytes.byteLength, sha256 };
+  const loaded = await fetchVerifiedUaSerhiyAsset(asset, {
+    baseUrl,
+    cryptoImpl: webcrypto,
+    fetchImpl: async (url, init) => {
+      request = { url, init };
+      return new Response(bytes, { status: 200 });
+    },
+  });
+  assert.deepEqual(new Uint8Array(loaded), bytes);
+  assert.equal(request.url, 'http://127.0.0.1:51291' + modelUrl);
+  assert.equal(request.init.cache, 'default');
+  assert.equal(request.init.credentials, 'same-origin');
+  assert.equal(request.init.redirect, 'error');
+});
 
-  const ort = model.runtime.files;
-  assert.ok(ort.some(file => file.path === 'dist/ort-wasm-simd-threaded.wasm'));
-  assert.ok(ort.some(file => file.path === 'dist/ort-wasm-simd-threaded.asyncify.wasm'));
-  assert.ok(ort.some(file => file.path === 'dist/ort.webgpu.min.mjs'));
-  for (const [id, digest, bytes] of [
-    ['ua-serhiy-espeak-module', UA_SERHIY_CONFIG.runtime.espeak.moduleSha256, UA_SERHIY_CONFIG.runtime.espeak.moduleBytes],
-    ['ua-serhiy-espeak-wasm', UA_SERHIY_CONFIG.runtime.espeak.wasmSha256, UA_SERHIY_CONFIG.runtime.espeak.wasmBytes],
-    ['ua-serhiy-espeak-data', UA_SERHIY_CONFIG.runtime.espeak.dataSha256, UA_SERHIY_CONFIG.runtime.espeak.dataBytes],
-  ]) {
-    const asset = model.assets.find(item => item.id === id);
-    assert.equal(asset.sha256, digest);
-    assert.equal(asset.bytes, bytes);
-  }
-
-  for (const [id, path] of [
-    ['ua-serhiy-model-license', 'web/ua-serhiy-0p58m/LICENSE'],
-    ['ua-serhiy-teacher-license', 'web/ua-serhiy-0p58m/LICENSE.teacher'],
-  ]) {
-    const asset = model.assets.find(item => item.id === id);
-    const bytes = await readFile(resolve(root, path));
-    assert.equal(bytes.byteLength, asset.bytes);
-    assert.equal(sha256(bytes), asset.sha256);
-  }
-
-  const parameters = getModelParameters('ua-serhiy-0p58m');
-  assert.equal(parameters.parameterCount, 575_888);
-  assert.equal(parameters.countKind, 'exact');
-  assert.match(parameters.scope, /stored-tensor count may include non-trainable buffers/);
+test('Serhiy verified fetch rejects missing, wrong-size, and tampered assets', async () => {
+  const asset = { url: modelUrl, bytes: bytes.byteLength, sha256 };
+  const fetchImpl = async () => new Response(bytes, { status: 200 });
+  await assert.rejects(fetchVerifiedUaSerhiyAsset({ ...asset, bytes: bytes.byteLength + 1 }, {
+    baseUrl, cryptoImpl: webcrypto, fetchImpl,
+  }), /has 17 bytes; expected 18/);
+  await assert.rejects(fetchVerifiedUaSerhiyAsset({ ...asset, sha256: '0'.repeat(64) }, {
+    baseUrl, cryptoImpl: webcrypto, fetchImpl,
+  }), /SHA-256 mismatch/);
+  await assert.rejects(fetchVerifiedUaSerhiyAsset({ ...asset, sha256: 'bad' }, {
+    baseUrl, cryptoImpl: webcrypto, fetchImpl,
+  }), /byte count and SHA-256/);
 });

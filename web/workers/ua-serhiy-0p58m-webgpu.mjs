@@ -1,9 +1,8 @@
-import { fetchModelAsset } from '../cache-model-asset.mjs';
 import { observeComputeDispatches, requestHardwareWebGpuAdapter } from '../piper/webgpu.mjs';
 import { prepareUaSerhiyText, createUaSerhiyPhonemizer } from '../ua-serhiy-0p58m/frontend.mjs';
 import { createUaSerhiyGraphRuntime } from '../ua-serhiy-0p58m/graph-runtime.mjs';
+import { fetchVerifiedUaSerhiyAsset, UA_SERHIY_SOURCE_REVISION, uaSerhiyLocalUrl } from '../ua-serhiy-0p58m/assets.mjs';
 
-const MODEL_REVISION = '1abd585d725a787b405c28a59ce1cbdfd34780bb';
 const SAMPLE_RATE = 22_050;
 
 let modelConfig = null;
@@ -15,6 +14,10 @@ let phonemeIdMap = null;
 let restoreFetch = null;
 let capability = null;
 let gpuDescription = null;
+
+function localUrl(value) {
+  return uaSerhiyLocalUrl(value, self.location.href);
+}
 
 function responseInfo(executionProviders = ['webgpu', 'wasm']) {
   const info = modelConfig?.info ?? {};
@@ -45,10 +48,7 @@ function installLocalFetchFence() {
   const originalFetch = globalThis.fetch.bind(globalThis);
   globalThis.fetch = (input, init) => {
     const raw = typeof input === 'string' || input instanceof URL ? String(input) : input.url;
-    const url = new URL(raw, self.location.href);
-    if (url.origin !== self.location.origin || !/^\/(models|runtimes)\//.test(url.pathname)) {
-      throw new Error(`Ukrainian Serhiy refused nonlocal asset request: ${url.origin}${url.pathname}`);
-    }
+    localUrl(raw);
     return originalFetch(input, init);
   };
   restoreFetch = () => {
@@ -58,19 +58,11 @@ function installLocalFetchFence() {
 }
 
 async function verifiedBytes(asset, label) {
-  if (!asset || typeof asset.url !== 'string' || !Number.isSafeInteger(asset.bytes) ||
-      !/^[a-f0-9]{64}$/.test(asset.sha256 ?? '')) {
-    throw new Error(`Ukrainian Serhiy ${label} asset metadata is incomplete.`);
+  try {
+    return await fetchVerifiedUaSerhiyAsset(asset, { baseUrl: self.location.href });
+  } catch (error) {
+    throw new Error(`Ukrainian Serhiy ${label} failed verification: ${String(error?.message ?? error)}`);
   }
-  const response = await fetchModelAsset(asset.url, MODEL_REVISION);
-  const bytes = await response.arrayBuffer();
-  if (bytes.byteLength !== asset.bytes) {
-    throw new Error(`Ukrainian Serhiy ${label} has ${bytes.byteLength} bytes; expected ${asset.bytes}.`);
-  }
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
-  const actual = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
-  if (actual !== asset.sha256) throw new Error(`Ukrainian Serhiy ${label} SHA-256 mismatch.`);
-  return bytes;
 }
 
 async function verifiedConfigAsset(asset, label) {
@@ -83,18 +75,23 @@ async function prepareText(text) {
   return prepareUaSerhiyText(text, { phonemize: phonemizer, phonemeIdMap, maxIds: 255 });
 }
 
-async function synthesizeText(text, sourceId) {
+async function synthesizeText(text, sourceId, requestId = null) {
   if (!graphRuntime || !phonemizer || !phonemeIdMap) throw new Error('Ukrainian Serhiy WebGPU is not initialized.');
   const prepared = await prepareText(text);
+  if (prepared.sourceText !== text || prepared.sentences.map(unit => unit.text).join('') !== text) {
+    throw new Error('Ukrainian Serhiy frontend did not preserve the complete source span.');
+  }
   const parts = [];
   for (let index = 0; index < prepared.sentences.length; index++) {
     const unit = prepared.sentences[index];
     try {
       const pcm = await graphRuntime.synthesizeUnit(unit.ids);
-      if (!(pcm instanceof Float32Array) || !pcm.length || !pcm.every(Number.isFinite)) {
-        throw new Error('The graph path returned empty or nonfinite CPU-readable PCM.');
-      }
+      if (!(pcm instanceof Float32Array) || !pcm.length) throw new Error('The graph path returned empty CPU-readable PCM.');
       parts.push(pcm);
+      if (requestId !== null) {
+        self.postMessage({ id: requestId, event: 'first-pcm' });
+        requestId = null;
+      }
     } catch (error) {
       throw new Error(
         `Ukrainian Serhiy WebGPU synthesis failed at source span ${sourceId}, ` +
@@ -104,7 +101,16 @@ async function synthesizeText(text, sourceId) {
     }
   }
   if (!parts.length) throw new Error(`Ukrainian Serhiy produced no PCM for source span ${sourceId}.`);
-  return { parts, sampleRate: SAMPLE_RATE, completedChunkId: sourceId };
+  return {
+    parts,
+    sampleRate: SAMPLE_RATE,
+    completedChunkId: sourceId,
+    frontend: {
+      units: prepared.sentences.length,
+      tokenIds: prepared.tokenIds.length,
+      stressStats: prepared.stressStats,
+    },
+  };
 }
 
 async function releaseSessions() {
@@ -140,7 +146,7 @@ async function initialize(options = {}) {
   if (options?.backend !== 'webgpu') return unsupported('Ukrainian Serhiy WebGPU worker requires explicit backend=webgpu.');
   const incomingConfig = options.modelConfig;
   if (!incomingConfig || incomingConfig.id !== 'ua-serhiy-0p58m' ||
-      incomingConfig.source?.revision !== MODEL_REVISION ||
+      incomingConfig.source?.revision !== UA_SERHIY_SOURCE_REVISION ||
       !incomingConfig.runtime?.ortRoot || !incomingConfig.graphs?.decoder) {
     throw new Error('Ukrainian Serhiy WebGPU worker received a mismatched or incomplete pinned configuration.');
   }
@@ -154,7 +160,7 @@ async function initialize(options = {}) {
 
   installLocalFetchFence();
   try {
-    const ortRoot = modelConfig.runtime.ortRoot;
+    const ortRoot = localUrl(modelConfig.runtime.ortRoot);
     ort = await import(ortRoot + 'ort.webgpu.min.mjs');
     ort.env.logLevel = 'error';
     ort.env.wasm.numThreads = 1;
@@ -191,7 +197,7 @@ async function initialize(options = {}) {
     }
     graphRuntime = createUaSerhiyGraphRuntime({ ort, sessions });
 
-    const espeakFactoryModule = await import(modelConfig.runtime.espeak.moduleUrl);
+    const espeakFactoryModule = await import(localUrl(modelConfig.runtime.espeak.moduleUrl));
     const createEspeak = espeakFactoryModule.default ?? espeakFactoryModule.createEspeak;
     if (typeof createEspeak !== 'function') throw new Error('Pinned eSpeak worker does not export its Emscripten factory.');
     phonemizer = await createUaSerhiyPhonemizer({
@@ -260,7 +266,7 @@ self.onmessage = async ({ data }) => {
       if (!data.chunk || typeof data.chunk.text !== 'string' || !Number.isSafeInteger(data.chunk.id) || data.chunk.id < 0) {
         throw new Error('Ukrainian Serhiy requires a string source span with a numeric nonnegative ID.');
       }
-      value = await synthesizeText(data.chunk.text, data.chunk.id);
+      value = await synthesizeText(data.chunk.text, data.chunk.id, data.id);
     } else if (data.action === 'dispose') { await dispose(); value = null; }
     else throw new Error('Unknown Ukrainian Serhiy WebGPU action.');
     self.postMessage({ id: data.id, value }, value?.parts?.map(part => part.buffer) ?? []);
