@@ -27,7 +27,9 @@ import { createSanoHeartNanoAdapter } from './adapters/sano-heart-nano.mjs';
 import { createSupraTTSAdapter } from './adapters/supratts.mjs';
 
 import { createInflectAdapter } from './adapters/inflect.mjs';
+import { createInflectMicroV3Adapter } from './adapters/inflect-micro-v3.mjs';
 import { createInflectAtomAdapter } from './adapters/inflect-atom.mjs';
+import { createInflectMiniV3Adapter } from './adapters/inflect-mini-v3.mjs';
 import { createSilencio2Adapter } from './adapters/silencio2.mjs';
 import { createKleinAdapter } from './adapters/klein.mjs';
 import { createZonos3Adapter } from './adapters/zonos3.mjs';
@@ -67,6 +69,8 @@ const FACTORIES = {
   'sano-trellis': () => createSanoRobotTrellisAdapter('sano-trellis'),
   'supratts-1.0-preview': createSupraTTSAdapter,
   'inflect-micro-v2': createInflectAdapter,
+  'inflect-micro-v3': createInflectMicroV3Adapter,
+  'inflect-mini-v3-browser-port': createInflectMiniV3Adapter,
   'inflect-atom-v3': createInflectAtomAdapter,
   'silencio-2': createSilencio2Adapter,
   'klein-tts-x1.5-pro': createKleinAdapter,

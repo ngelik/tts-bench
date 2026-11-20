@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "resultId": "2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f",
+  "receiptSha256": "8714646cfa767dca8a7d9555e58b7bd2e5b5dc6e00c8e68cb6457d9313825182",
+  "trialIndex": 5,
+  "audit": {
+    "wavSha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+    "bytes": 46411352,
+    "rate": 22050,
+    "samples": 23205654,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 121,
+        "samples": 538139,
+        "zeroSamples": 538139
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 2932681,
+      "endSampleExclusive": 2938305,
+      "samples": 5624,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "auditCodeSha256": "86dc42c6d388e289f50aa87f36cfc94b8b024c182d80188fed9e9e5311afb4c5",
+  "clipSha256": "031344d4e5cad2527dfda6b6a13b2b0bdacedfd0b40e13e68393e7884723b1d2",
+  "inferenceRuntimeUnmodified": true,
+  "slot": {
+    "purpose": "warm",
+    "pid": 94524,
+    "started": 1795103895.899588
+  },
+  "independentReviewAccepted": true,
+  "full": {
+    "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu-full.wav",
+    "sha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+    "bytes": 46411352
+  },
+  "clip": {
+    "path": "audio/samples/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu.wav",
+    "sha256": "031344d4e5cad2527dfda6b6a13b2b0bdacedfd0b40e13e68393e7884723b1d2",
+    "bytes": 1323044,
+    "startSample": 0,
+    "sampleRate": 22050,
+    "samples": 661500,
+    "seconds": 30
+  },
+  "nativeReceiptPath": "../../../../../results/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f/result.json",
+  "privateTerminalSha256": "7414f41a6c4ce6422c182927ba3a3f2b06774d01094c5250a82453c17131f6b4",
+  "independentReviewSha256": "4b9816b700e142901700e01c565c4313f4730fc7cfd3e1899f85913807444ea2"
+}

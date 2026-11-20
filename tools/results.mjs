@@ -99,12 +99,25 @@ function validateGenerationMemory(t,generationMs) {
   return summary;
 }
 
-function validateNativeBackend(c) {
+export function nativeEffectiveBackendAllowed(model, requested, effective) {
   const labels={
     cpu:/^(?:cpu|cpu\/wasm|wasm)$/i,
-    webgpu:/^(?:webgpu|webgpu\+wasm)$/i,
+    webgpu:/^(?:webgpu|webgpu\+wasm|hybrid-webgpu-wasm-duration\+wasm-bridge\+wasm-waveform)$/i,
   };
-  check(labels[c.backendRequested].test(c.backendEffective),`Effective backend ${c.backendEffective} does not match requested ${c.backendRequested}`);
+  if (requested === 'webgpu' && model === 'zonos3-mini' && effective === 'webgpu+cpu-codec-host') return true;
+  return Boolean(labels[requested]?.test(effective));
+}
+
+export function nativeZonos3CpuSettingsAllowed(model, requested, settings) {
+  if (model !== 'zonos3-mini' || requested !== 'cpu') return true;
+  return settings?.runtimeRelease === 'audio-cpp-zonos3-cpu-wasm-v3' &&
+    settings?.threads === 1 && settings?.pthreadPoolSize === 12;
+}
+
+function validateNativeBackend(c) {
+  check(nativeEffectiveBackendAllowed(c.model,c.backendRequested,c.backendEffective),`Effective backend ${c.backendEffective} does not match requested ${c.backendRequested}`);
+  check(nativeZonos3CpuSettingsAllowed(c.model,c.backendRequested,c.settings),
+    'ZONOS3 CPU v3 requires one GGML thread and its registered 12-thread Emscripten pool');
 }
 
 function validateCapability(capability) {

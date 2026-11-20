@@ -14,10 +14,16 @@ is derived from the MIT-licensed browser implementation in
 at source commit `a50e14117d99181ba7f28047b451ba03ba1a09a9`. The build excludes WebGPU and
 compiles only the `zonos3` family with CPU/WASM execution.
 
+The v3 build defines `ENGINE_SPEECHFFT_NO_MULTITHREADING` for this Wasm target.
+This keeps audio.cpp's independent persistent speech FFT helper pool on the
+calling thread while the six-thread GGML CPU pool uses the bounded Emscripten
+pthread pool. The macro changes only this browser build; native builds retain the
+upstream helper's normal threading behavior.
+
 Rebuild on Linux with:
 
 ```sh
-bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v2
+bash tools/build-zonos3-cpu-browser.sh .cache/public/runtimes/audio-cpp-zonos3-cpu-wasm-v3
 ```
 
 The builder checks both source revisions, emits `bench_zonos3_cpu.js`,

@@ -1,0 +1,65 @@
+{
+  "model": "sano-kristin-gguf",
+  "backend": "webgpu",
+  "effectiveBackend": "webgpu+wasm",
+  "resultId": "2026-11-20t14-25-16-804z-sano-kristin-gguf-webgpu-cached-9bc5cbe1",
+  "receiptSha256": "89583fac9f82b4aed24c5604916c29955c2095069264d086a72efc48881467a0",
+  "n": 1,
+  "sampleCount": 310,
+  "generationMeanRssBytes": 1878487066,
+  "articleCallPeakRssBytes": 2388197376,
+  "generationSeconds": 155.71825,
+  "audioSeconds": 1175.1572789115646,
+  "sampleRate": 22050,
+  "pcmSha256": "e5e76ef75017b00df87afc96583254a92bc3cb3e6f2b06809ff744bc179eb707",
+  "nativeFullWavSha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+  "protectedWavAudit": {
+    "wavSha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+    "bytes": 51824480,
+    "rate": 22050,
+    "samples": 25912218,
+    "thresholdsSamples": {
+      "2205": {
+        "runs": 116,
+        "samples": 512824,
+        "zeroSamples": 512824
+      },
+      "22050": {
+        "runs": 0,
+        "samples": 0,
+        "zeroSamples": 0
+      }
+    },
+    "longest": {
+      "startSample": 17695168,
+      "endSampleExclusive": 17700791,
+      "samples": 5623,
+      "value": 0
+    },
+    "intervalsAtLeastOneSecond": []
+  },
+  "separateIdenticalRecordings": [
+    {
+      "recordingResultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
+      "recordingTrialIndex": 5,
+      "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+      "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav",
+        "sha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+        "bytes": 51824480
+      },
+      "clip": {
+        "path": "audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav",
+        "sha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+        "bytes": 1323044,
+        "startSample": 0,
+        "sampleRate": 22050,
+        "samples": 661500,
+        "seconds": 30
+      }
+    }
+  ],
+  "privateTerminalSha256": "cc2230a784d853f03ed4bde1a598651c6f0c562681523ca57b0b8583630bbf81",
+  "independentReviewSha256": "65c31f2a3f6309ad90f68d93b1c17c7b651431b081363246be84b5764ee52771"
+}

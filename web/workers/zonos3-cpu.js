@@ -5,7 +5,7 @@
   const requestedRelease = new URL(self.location.href).searchParams.get('cpuRuntimeVersion');
   const RUNTIME_RELEASE = /^[a-z0-9][a-z0-9-]{0,95}$/.test(requestedRelease || '')
     ? requestedRelease
-    : 'audio-cpp-zonos3-cpu-wasm-v2';
+    : 'audio-cpp-zonos3-cpu-wasm-v3';
   const RUNTIME_ROOT = '/runtimes/' + RUNTIME_RELEASE + '/';
   const RUNTIME_JS = RUNTIME_ROOT + 'bench_zonos3_cpu.js';
   const RUNTIME_WASM = RUNTIME_ROOT + 'bench_zonos3_cpu.wasm';

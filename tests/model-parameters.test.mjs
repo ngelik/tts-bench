@@ -52,6 +52,10 @@ test('Ming counts the registered synthesis path and Audio8 includes its decoder 
   assert.equal(zonos.parameterCount, 1_029_247_872);
   assert.equal(zonos.parameterCountUpperBound, 1_070_816_040);
   assert.equal(zonos.countKind, 'lower-bound');
+  const mini = getModelParameters('inflect-mini-v3-browser-port');
+  assert.equal(mini.parameterCount, 34_310_790);
+  assert.equal(mini.countKind, 'exact');
+  assert.equal(mini.parameterCountSource, models['inflect-mini-v3-browser-port'].support.sources[0]);
 });
 
 test('invalid evidence cannot convert an upper bound into a demonstrated qualifying count', () => {

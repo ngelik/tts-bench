@@ -18,11 +18,25 @@ function inferenceAsset(asset) {
   return !/^(?:.*-)?README(?:\.md)?$|^(?:SHA256SUMS|PROVENANCE\.JSON)$/i.test(name);
 }
 
-function requiredAssets(id, model) {
+function appliesToBackend(id, asset, backend) {
+  if (asset.backends === undefined) return true;
+  if (!Array.isArray(asset.backends) || !asset.backends.length ||
+      new Set(asset.backends).size !== asset.backends.length ||
+      asset.backends.some(value => !['cpu', 'webgpu'].includes(value))) {
+    throw new Error(`Invalid backend scope for ${id} asset ${asset.id}`);
+  }
+  return backend === null || asset.backends.includes(backend);
+}
+
+function requiredAssets(id, model, backend = null) {
   if (!model) return [];
-  const runtime = (model.runtime?.files ?? []).filter(inferenceAsset);
+  if (backend !== null && !['cpu', 'webgpu'].includes(backend)) throw new Error(`Invalid backend asset scope: ${backend}`);
+  const allAssets = model.assets ?? [];
+  const allRuntime = model.runtime?.files ?? [];
+  for (const asset of [...allAssets, ...allRuntime]) appliesToBackend(id, asset, null);
+  const runtime = allRuntime.filter(asset => inferenceAsset(asset) && appliesToBackend(id, asset, backend));
   return [
-    ...(model.assets ?? []).filter(inferenceAsset),
+    ...allAssets.filter(asset => inferenceAsset(asset) && appliesToBackend(id, asset, backend)),
     ...runtime.map(asset => ({
       ...asset,
       id: runtimeReceiptId({ ...model, id }, asset),
@@ -35,9 +49,9 @@ function requiredAssets(id, model) {
 }
 
 // Campaigns name a model at a source commit. A later registration may reuse its ID.
-export function sameCampaignRegistration(id, current, planned) {
+export function sameCampaignRegistration(id, current, planned, backend = null) {
   if (!current || !planned || current.modelRevision !== planned.modelRevision) return false;
-  const signature = model => requiredAssets(id, model)
+  const signature = model => requiredAssets(id, model, backend)
     .map(({ id, bytes, sha256 }) => [id, bytes, sha256])
     .sort(([a], [b]) => a.localeCompare(b));
   return stable(signature(current)) === stable(signature(planned));
@@ -50,13 +64,12 @@ const sameBytes = (expected, actual) => actual?.sha256 === expected.sha256 && ac
 // displayed model/backend/scenario to receipts proving the registered inputs,
 // when at least one such receipt exists in that view's environment scope.
 export function preferredAttempts(results, models, accept, { perEnvironment = false } = {}) {
-  const inputs = new Map(Object.entries(models).map(([id, model]) => [id, requiredAssets(id, model)]));
   const currentGroups = new Set();
   const attempts = [];
   for (const result of results.filter(accept)) {
     const assets = new Map(result.assets.map(asset => [asset.id, asset]));
     for (const cell of result.cells) {
-      const required = inputs.get(cell.model) ?? [];
+      const required = requiredAssets(cell.model, models[cell.model], cell.backendRequested);
       const current = result.origin === 'native' && required.length > 0 &&
         required.every(asset => sameBytes(asset, lookup(assets, asset)));
       const group = JSON.stringify([cell.model, cell.backendRequested, result.protocol.scenario,
