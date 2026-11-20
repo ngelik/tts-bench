@@ -1,0 +1,68 @@
+{
+  "index": 1,
+  "generationMs": 4009.8849999904633,
+  "samples": 31283912,
+  "sampleRate": 24000,
+  "pcmSha256": "9bdad19bfe96842841f7e584d7b8a5953a7b3719c59db91be4a520717e440f5a",
+  "validation": {
+    "finitePcm": true,
+    "chunkCount": 93,
+    "nonemptyChunks": true
+  },
+  "metrics": {
+    "firstPcmMs": 148.6599998474121,
+    "firstSourceChunkCompletedMs": 148.67499995231628,
+    "audioSeconds": 1303.4963333333333,
+    "realTimeFactor": 0.0030762533790457897,
+    "minSamplesPerChunk": 262528,
+    "maxSamplesPerChunk": 428520,
+    "articleCallPeakRssBytes": 1453883392,
+    "generationMeanRssBytes": 1068817262,
+    "generationRssSampleCount": 7,
+    "loadMs": 74.16733399999976,
+    "controllerTrialElapsedMs": 7966.742125000001,
+    "downloadBytes": 38404,
+    "idealDownloadSecondsAt1Mbps": 0.307232
+  },
+  "memory": {
+    "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+    "generationStartedAtEpochMs": 1795184924456,
+    "finalPcmAtEpochMs": 1795184928465.885,
+    "samplingIntervalMs": 500,
+    "samples": [
+      [
+        1795184925000,
+        968179712
+      ],
+      [
+        1795184925501,
+        1031503872
+      ],
+      [
+        1795184926003,
+        1051852800
+      ],
+      [
+        1795184926507,
+        1077542912
+      ],
+      [
+        1795184927007,
+        1098334208
+      ],
+      [
+        1795184927508,
+        1116782592
+      ],
+      [
+        1795184928011,
+        1137524736
+      ]
+    ],
+    "availability": "measured"
+  },
+  "audio": {
+    "sha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+    "bytes": 62567868
+  }
+}

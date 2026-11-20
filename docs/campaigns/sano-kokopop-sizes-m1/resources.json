@@ -393,6 +393,526 @@
       ],
       "privateTerminalSha256": "146a17cbf358ddf8982d8253f043a39fa7c3780620f637eee7ae10cab8b1e141",
       "independentReviewSha256": "86891ddd666e1587b56ce5ad8a32cfd4106231feb0dbcead5501b598129fc3c0"
+    },
+    {
+      "model": "sano-amy-1p8m-gguf",
+      "backend": "cpu",
+      "effectiveBackend": "cpu/wasm",
+      "resultId": "2026-11-20t12-24-52-820z-sano-amy-1p8m-gguf-cpu-cached-6661f50b",
+      "receiptSha256": "fc0ad10d54ab374352cfa030ad4016212331be101c79c71894ce0fd8aeadc30d",
+      "n": 1,
+      "sampleCount": 2238,
+      "generationMeanRssBytes": 1406883245,
+      "articleCallPeakRssBytes": 1652342784,
+      "generationSeconds": 1123.2923949999808,
+      "audioSeconds": 1312.891156462585,
+      "sampleRate": 22050,
+      "pcmSha256": "fb86e7dbf6a99e772932f15626c81f804eebc92204fa4781f287b1172d75f92e",
+      "nativeFullWavSha256": "18ed76327289234fe8bacc1a1823f57bbbe475c5800c5be03e422fbd1e8c4efb",
+      "protectedWavAudit": {
+        "wavSha256": "18ed76327289234fe8bacc1a1823f57bbbe475c5800c5be03e422fbd1e8c4efb",
+        "bytes": 57898544,
+        "rate": 22050,
+        "samples": 28949250,
+        "thresholdsSamples": {
+          "2205": {
+            "runs": 120,
+            "samples": 536528,
+            "zeroSamples": 536528
+          },
+          "22050": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 6305124,
+          "endSampleExclusive": 6310747,
+          "samples": 5623,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb--sano-amy-1p8m-gguf--cpu-full.wav",
+            "sha256": "18ed76327289234fe8bacc1a1823f57bbbe475c5800c5be03e422fbd1e8c4efb",
+            "bytes": 57898544
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-19t23-21-13-639z-sano-amy-1p8m-gguf-cpu-warm-a61a04eb--sano-amy-1p8m-gguf--cpu.wav",
+            "sha256": "0961e29c91fc2fcb05b1fd06a52b7e89ff1677634e7cb4475662fa20c7d7148c",
+            "bytes": 1323044,
+            "startSample": 0,
+            "sampleRate": 22050,
+            "samples": 661500,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "8335d809148c5ac53ab83d4ad4b76d240a08b59084b6b125eb84a2262d88d512",
+      "independentReviewSha256": "0f8a69e5898d55e99c320162af359965edc4a25fff79abb7fcd2b3eebddbb57c"
+    },
+    {
+      "model": "sano-amy-1p8m-gguf",
+      "backend": "webgpu",
+      "effectiveBackend": "webgpu+wasm",
+      "resultId": "2026-11-20t13-45-35-048z-sano-amy-1p8m-gguf-webgpu-cached-41ff0a84",
+      "receiptSha256": "7f2c6039bba425cf2d49fb3bc7b1be9f171e639ec2bc581181f91827d3f5e48e",
+      "n": 1,
+      "sampleCount": 336,
+      "generationMeanRssBytes": 1819994795,
+      "articleCallPeakRssBytes": 2334310400,
+      "generationSeconds": 168.87635500001906,
+      "audioSeconds": 1312.8795464852608,
+      "sampleRate": 22050,
+      "pcmSha256": "138a2b3e63a70eb963d2ca8b88efc87b9f65a655f2f332090efe307eddb1debc",
+      "nativeFullWavSha256": "8adaa450141dad7fb29c572aa72dbc0bc2adfbfc2e9220e842bd701d757e10ab",
+      "protectedWavAudit": {
+        "wavSha256": "8adaa450141dad7fb29c572aa72dbc0bc2adfbfc2e9220e842bd701d757e10ab",
+        "bytes": 57898032,
+        "rate": 22050,
+        "samples": 28948994,
+        "thresholdsSamples": {
+          "2205": {
+            "runs": 120,
+            "samples": 536524,
+            "zeroSamples": 536524
+          },
+          "22050": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 6305124,
+          "endSampleExclusive": 6310747,
+          "samples": 5623,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0--sano-amy-1p8m-gguf--webgpu-full.wav",
+            "sha256": "8adaa450141dad7fb29c572aa72dbc0bc2adfbfc2e9220e842bd701d757e10ab",
+            "bytes": 57898032
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-19t14-02-37-802z-sano-amy-1p8m-gguf-webgpu-warm-5aeea5f0--sano-amy-1p8m-gguf--webgpu.wav",
+            "sha256": "74786e98934792740e90cc27538794bea7d9444dc21f68065aff009726f50a21",
+            "bytes": 1323044,
+            "startSample": 0,
+            "sampleRate": 22050,
+            "samples": 661500,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "1e4151d6ca8ce8b14f906e0ba0f90adc0b9f1cf588701c8ee09965a1f073c1f0",
+      "independentReviewSha256": "ead2745f98a4d6574adc659a7a0d585078afcb38ae1d98fdd5c9824007d5337e"
+    },
+    {
+      "model": "sano-hfc-gguf",
+      "backend": "cpu",
+      "effectiveBackend": "cpu/wasm",
+      "resultId": "2026-11-20t13-48-44-853z-sano-hfc-gguf-cpu-cached-42b2bb60",
+      "receiptSha256": "1c2aa03ceebd3d978c391bca05b42be8067b297a17f9e4922270a285d56267b1",
+      "n": 1,
+      "sampleCount": 1797,
+      "generationMeanRssBytes": 1324271975,
+      "articleCallPeakRssBytes": 1558757376,
+      "generationSeconds": 902.3340399999619,
+      "audioSeconds": 1052.3989569160997,
+      "sampleRate": 22050,
+      "pcmSha256": "1074dcd140cb5b3fe4b5efde5a37725f519c50ff49798c90856d00245a7a5637",
+      "nativeFullWavSha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+      "protectedWavAudit": {
+        "wavSha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+        "bytes": 46410838,
+        "rate": 22050,
+        "samples": 23205397,
+        "thresholdsSamples": {
+          "2205": {
+            "runs": 121,
+            "samples": 538137,
+            "zeroSamples": 538137
+          },
+          "22050": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 2932169,
+          "endSampleExclusive": 2937793,
+          "samples": 5624,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu-full.wav",
+            "sha256": "caf55d8404bb3a1736d52522db6991f3f714b0a4ccecb0cf26c7d0a7c0344ab1",
+            "bytes": 46410838
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-20t05-11-12-260z-sano-hfc-gguf-cpu-warm-8c06ca10--sano-hfc-gguf--cpu.wav",
+            "sha256": "42d6d0c9183befe94d0fd97b28e7c8f1b8f8654f5bd517e72f85b48205e48c41",
+            "bytes": 1323044,
+            "startSample": 0,
+            "sampleRate": 22050,
+            "samples": 661500,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "7694303b43c352ecc3085e33252a175b6c0f4c179d85828fc89103434494bdaf",
+      "independentReviewSha256": "770e468260600e12eff277b517b35a4bd153c0e1f18decda3e2ceea86c754847"
+    },
+    {
+      "model": "sano-hfc-gguf",
+      "backend": "webgpu",
+      "effectiveBackend": "webgpu+wasm",
+      "resultId": "2026-11-20t14-04-43-133z-sano-hfc-gguf-webgpu-cached-54adeaeb",
+      "receiptSha256": "b43ab40eae086a73f0b27a6656cea767e9fe283eddefd39d7b24022cc773fa7d",
+      "n": 1,
+      "sampleCount": 278,
+      "generationMeanRssBytes": 1751924736,
+      "articleCallPeakRssBytes": 2436874240,
+      "generationSeconds": 139.67513999986647,
+      "audioSeconds": 1052.410612244898,
+      "sampleRate": 22050,
+      "pcmSha256": "56b7daa1cc7d34a10467f6ba9323b1e2a443a9d924c253166e9e68dd1360aa90",
+      "nativeFullWavSha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+      "protectedWavAudit": {
+        "wavSha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+        "bytes": 46411352,
+        "rate": 22050,
+        "samples": 23205654,
+        "thresholdsSamples": {
+          "2205": {
+            "runs": 121,
+            "samples": 538139,
+            "zeroSamples": 538139
+          },
+          "22050": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 2932681,
+          "endSampleExclusive": 2938305,
+          "samples": 5624,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu-full.wav",
+            "sha256": "9bb51de84b1c87b7aff4070b6f14da45694f956a3beaf119d7691cd0f3dcbbf7",
+            "bytes": 46411352
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-19t15-58-25-950z-sano-hfc-gguf-webgpu-warm-b6511d1f--sano-hfc-gguf--webgpu.wav",
+            "sha256": "031344d4e5cad2527dfda6b6a13b2b0bdacedfd0b40e13e68393e7884723b1d2",
+            "bytes": 1323044,
+            "startSample": 0,
+            "sampleRate": 22050,
+            "samples": 661500,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "cd37407430ee56defdd5071c841ad48c7afaa67f73d29bda4ab134f3d7b2fd1a",
+      "independentReviewSha256": "a422eaa124c0ee873a404adb71b570f48432aa376bf5d15591b7013fcfaf042c"
+    },
+    {
+      "model": "sano-kristin-gguf",
+      "backend": "cpu",
+      "effectiveBackend": "cpu/wasm",
+      "resultId": "2026-11-20t14-07-22-110z-sano-kristin-gguf-cpu-cached-2680b64b",
+      "receiptSha256": "2cb750f88b4b8593d199ae69378858f9e69e47bbffdffc8054787d24a4ec4ed1",
+      "n": 1,
+      "sampleCount": 2025,
+      "generationMeanRssBytes": 1159063401,
+      "articleCallPeakRssBytes": 1488715776,
+      "generationSeconds": 1016.5521150000095,
+      "audioSeconds": 1175.1456689342403,
+      "sampleRate": 22050,
+      "pcmSha256": "c06b373e1c752facced5a9115913ce7f00e4c7bb642966f9a993963246ffdb50",
+      "nativeFullWavSha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+      "protectedWavAudit": {
+        "wavSha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+        "bytes": 51823968,
+        "rate": 22050,
+        "samples": 25911962,
+        "thresholdsSamples": {
+          "2205": {
+            "runs": 116,
+            "samples": 512824,
+            "zeroSamples": 512824
+          },
+          "22050": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 17695168,
+          "endSampleExclusive": 17700791,
+          "samples": 5623,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu-full.wav",
+            "sha256": "8114c95d68c0ac6fdd635c754b10d6a3ee5a3058f321b27183d445ff006d1833",
+            "bytes": 51823968
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-20t09-14-31-938z-sano-kristin-gguf-cpu-warm-59801e20--sano-kristin-gguf--cpu.wav",
+            "sha256": "49ff0dcafe77d067d267e4bc25d14f2b157c98bb37e02571cf56e89965738c74",
+            "bytes": 1323044,
+            "startSample": 0,
+            "sampleRate": 22050,
+            "samples": 661500,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "352d4a5d66775106ce2f0b961acd670eb77456b07754368a1bbcb4502517e538",
+      "independentReviewSha256": "17792b1e69ec348dadd07c149d956ebe55580d4fc51c6f05b21bbad07976ebd9"
+    },
+    {
+      "model": "sano-kristin-gguf",
+      "backend": "webgpu",
+      "effectiveBackend": "webgpu+wasm",
+      "resultId": "2026-11-20t14-25-16-804z-sano-kristin-gguf-webgpu-cached-9bc5cbe1",
+      "receiptSha256": "89583fac9f82b4aed24c5604916c29955c2095069264d086a72efc48881467a0",
+      "n": 1,
+      "sampleCount": 310,
+      "generationMeanRssBytes": 1878487066,
+      "articleCallPeakRssBytes": 2388197376,
+      "generationSeconds": 155.71825,
+      "audioSeconds": 1175.1572789115646,
+      "sampleRate": 22050,
+      "pcmSha256": "e5e76ef75017b00df87afc96583254a92bc3cb3e6f2b06809ff744bc179eb707",
+      "nativeFullWavSha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+      "protectedWavAudit": {
+        "wavSha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+        "bytes": 51824480,
+        "rate": 22050,
+        "samples": 25912218,
+        "thresholdsSamples": {
+          "2205": {
+            "runs": 116,
+            "samples": 512824,
+            "zeroSamples": 512824
+          },
+          "22050": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 17695168,
+          "endSampleExclusive": 17700791,
+          "samples": 5623,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "01d9c9f51ed94c41b6dbf480a3a0b1304fc6d661",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu-full.wav",
+            "sha256": "9f14f85d3d2c220f182cae2c9fa20b2036d3ca0efe664c7cc11dc0d94f142ab2",
+            "bytes": 51824480
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-19t21-27-07-061z-sano-kristin-gguf-webgpu-warm-a89b3f8b--sano-kristin-gguf--webgpu.wav",
+            "sha256": "99a71dfb014db7c0c294f14aabe52604164440f9894acf5c63073226fa922620",
+            "bytes": 1323044,
+            "startSample": 0,
+            "sampleRate": 22050,
+            "samples": 661500,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "cc2230a784d853f03ed4bde1a598651c6f0c562681523ca57b0b8583630bbf81",
+      "independentReviewSha256": "65c31f2a3f6309ad90f68d93b1c17c7b651431b081363246be84b5764ee52771"
+    },
+    {
+      "model": "sano-heart-nano-gguf-f32",
+      "backend": "cpu",
+      "effectiveBackend": "cpu/wasm",
+      "resultId": "2026-11-20t14-28-12-714z-sano-heart-nano-gguf-f32-cpu-cached-d4f0b122",
+      "receiptSha256": "831d16074dc289665ab505fa6c734ca97eb87b7e47b0c46ad8e39bce865dc1d9",
+      "n": 1,
+      "sampleCount": 23,
+      "generationMeanRssBytes": 1037355809,
+      "articleCallPeakRssBytes": 1731395584,
+      "generationSeconds": 11.74852999997139,
+      "audioSeconds": 1303.3896666666667,
+      "sampleRate": 24000,
+      "pcmSha256": "38a64780e288cd06f2aee2fac2526667fc8b885c0d637a2eaa65b38a16faf861",
+      "nativeFullWavSha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+      "protectedWavAudit": {
+        "wavSha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+        "bytes": 62562748,
+        "rate": 24000,
+        "samples": 31281352,
+        "thresholdsSamples": {
+          "2400": {
+            "runs": 169,
+            "samples": 2186562,
+            "zeroSamples": 2186562
+          },
+          "24000": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 18004884,
+          "endSampleExclusive": 18022645,
+          "samples": 17761,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "ca54c5ca1954406a72f4f0d705c6a37852ee7761",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu-full.wav",
+            "sha256": "0d3c46d1e9b3bbce11f554f0b0f37643bb41f34da7059a1b554e1ce7b47115aa",
+            "bytes": 62562748
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-19t04-36-30-063z-sano-heart-nano-gguf-f32-cpu-warm-c56188aa--sano-heart-nano-gguf-f32--cpu.wav",
+            "sha256": "20defe255b60f17390d02ba556b58a3189f5cc4d0fee4a0a194b466cb7314ce6",
+            "bytes": 1440044,
+            "startSample": 0,
+            "sampleRate": 24000,
+            "samples": 720000,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "b15b0b5ffaf51715c86a38ba24918abf091311b013a58ad07255376a8dcd1c68",
+      "independentReviewSha256": "75fcc1334190ab9d02f4f632e576f0b475481c9604c3e0123619da60c317e044"
+    },
+    {
+      "model": "sano-heart-nano-gguf-f32",
+      "backend": "webgpu",
+      "effectiveBackend": "webgpu+wasm",
+      "resultId": "2026-11-20t14-28-42-585z-sano-heart-nano-gguf-f32-webgpu-cached-2e67019f",
+      "receiptSha256": "7b509fb0aeda98834a4bce7051283a0c4e99f08c71cfb96097024db76750d717",
+      "n": 1,
+      "sampleCount": 7,
+      "generationMeanRssBytes": 1068817262,
+      "articleCallPeakRssBytes": 1453883392,
+      "generationSeconds": 4.009884999990463,
+      "audioSeconds": 1303.4963333333333,
+      "sampleRate": 24000,
+      "pcmSha256": "9bdad19bfe96842841f7e584d7b8a5953a7b3719c59db91be4a520717e440f5a",
+      "nativeFullWavSha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+      "protectedWavAudit": {
+        "wavSha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+        "bytes": 62567868,
+        "rate": 24000,
+        "samples": 31283912,
+        "thresholdsSamples": {
+          "2400": {
+            "runs": 169,
+            "samples": 2187557,
+            "zeroSamples": 2187557
+          },
+          "24000": {
+            "runs": 0,
+            "samples": 0,
+            "zeroSamples": 0
+          }
+        },
+        "longest": {
+          "startSample": 18005140,
+          "endSampleExclusive": 18023157,
+          "samples": 18017,
+          "value": 0
+        },
+        "intervalsAtLeastOneSecond": []
+      },
+      "separateIdenticalRecordings": [
+        {
+          "recordingResultId": "2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57",
+          "recordingTrialIndex": 5,
+          "recordingSourceCommit": "ca54c5ca1954406a72f4f0d705c6a37852ee7761",
+          "recordingAttribution": "Separate original warm recording with exactly matching PCM, dimensions and WAV bytes.",
+          "full": {
+            "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu-full.wav",
+            "sha256": "5328089c1be1d51f49962ffa5e1959be23e573857b069a63451786a9f1467961",
+            "bytes": 62567868
+          },
+          "clip": {
+            "path": "audio/samples/2026-11-19t04-37-47-792z-sano-heart-nano-gguf-f32-webgpu-warm-29da3d57--sano-heart-nano-gguf-f32--webgpu.wav",
+            "sha256": "474b613db05dc67d20d3ec2ebc072960a218242dc804a0376f6ac90cf02f5e49",
+            "bytes": 1440044,
+            "startSample": 0,
+            "sampleRate": 24000,
+            "samples": 720000,
+            "seconds": 30
+          }
+        }
+      ],
+      "privateTerminalSha256": "1865771fc2f43f4a68a99be366b32a7d164533c5e67fd45b8ae1f166db31a710",
+      "independentReviewSha256": "befa2a1f03c04e5e925c79a535d9b28c77f90d5a4683c3044cbfe494c159e2d8"
     }
   ],
   "scope": "Separate cached n1 runs sample owned Chrome process-tree RSS every 500 ms; browser baseline is included. Warm measurements are unchanged and unsampled."
