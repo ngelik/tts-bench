@@ -595,11 +595,11 @@ try {
     assert.equal(await page.locator('.chart-panel').count(), metric === 'size' ? 1 : 2);
     const chartCount = metric === 'size' ? expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length
       : metric === 'coverage' ? expectedResultModels.filter(model => capabilityCount(model.support?.languageCount) !== null).length + expectedResultModels.filter(model => capabilityCount(model.support?.voiceCount) !== null).length
-      : metric === 'generation' ? expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length
-      : expectedMemory(expected.models, 'cpu').length + expectedMemory(expected.models, 'webgpu').length;
+      : metric === 'generation' ? expectedGeneration(expectedResultModels, 'cpu').length + expectedGeneration(expectedResultModels, 'webgpu').length
+      : expectedMemory(expectedResultModels, 'cpu').length + expectedMemory(expectedResultModels, 'webgpu').length;
     assert.equal(await page.locator('.bar-row').count(), chartCount);
     assert.equal(await page.locator('#charts').evaluate(e => e.innerHTML.includes('NaN')), false);
-    await assertChartOrder(expected.models, metric);
+    await assertChartOrder(expectedResultModels, metric);
   }
   await page.locator('[data-metric="generation"]').click();
   await page.screenshot({path:`${review}/charts.png`,fullPage:true});

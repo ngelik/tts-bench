@@ -4,6 +4,10 @@ For benchmark execution or model onboarding, read
 `skills/browser-tts-benchmark/SKILL.md`, then the relevant documents it names.
 The skill also works when copied outside this checkout.
 
+- Work and commit on `main` by default. Use a feature branch for development
+  only when the user explicitly asks for one. Publish completed work to
+  `origin/main` so dashboard changes can deploy. If branch protection requires
+  a pull request, use a temporary remote branch and merge after required checks.
 - Preserve fixed fixture identity, protocol boundaries, model configuration and
   historical evidence. Version material changes; never manufacture missing scores.
 - Inference belongs in headed Google Chrome. Node serves assets and controls runs.
@@ -16,5 +20,5 @@ The skill also works when copied outside this checkout.
   `node tools/publication-check.mjs`. Test affected adapters in real Chrome.
 - Commit implementation before scoring and publish that exact source before result
   submission. A clean working tree claim must come from the harness, not a JSON edit.
-- Respect the user's scope and existing approval. This file grants no additional
-  authority to publish, merge, change system settings or access credentials.
+- Respect the user's scope and existing approvals. Get separate authorization
+  for recording releases, system settings changes, or credential access.
