@@ -517,6 +517,62 @@
       }
     },
     {
+      "resultId": "2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76",
+      "model": "kale-tts-1-nano-fp32",
+      "backend": "webgpu",
+      "trialIndex": 5,
+      "voice": "Kenzie (s057b)",
+      "language": "en",
+      "attribution": "AI-generated English speech in the synthetic Kenzie voice (s057b), from Kale TTS 1 Nano by KaleComputer. Official FP32 WebGPU export, Apache-2.0 model, based on Maya-1 by Maya Research. Noncommercial benchmark evaluation.",
+      "modelTerms": "Apache-2.0 weights and synthetic presets; upstream Maya-1 use policy",
+      "sourceUrls": [
+        "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+        "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76--kale-tts-1-nano-fp32--webgpu.wav",
+        "sha256": "cf7d5d689cc0a7e697d6619d3834210d65f42cceb8ffc5dd7ee0c45978a4ac35",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76--kale-tts-1-nano-fp32--webgpu-full.wav",
+        "sha256": "23fc646c84e893b50bc9f77ddb2ce4b0b2a908c664d24c7bb6091eaad85250bb",
+        "bytes": 58102844
+      }
+    },
+    {
+      "resultId": "2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8",
+      "model": "kale-tts-1-nano-int8",
+      "backend": "cpu",
+      "trialIndex": 5,
+      "voice": "Kenzie (s057b)",
+      "language": "en",
+      "attribution": "AI-generated English speech in the synthetic Kenzie voice (s057b), from Kale TTS 1 Nano by KaleComputer. Official INT8 CPU/WASM export, Apache-2.0 model, based on Maya-1 by Maya Research. Noncommercial benchmark evaluation.",
+      "modelTerms": "Apache-2.0 weights and synthetic presets; upstream Maya-1 use policy",
+      "sourceUrls": [
+        "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+        "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8--kale-tts-1-nano-int8--cpu.wav",
+        "sha256": "3554009a697e90e97add898a1f4ca789e4f39edaff9435f1caf9e6cca50377a3",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8--kale-tts-1-nano-int8--cpu-full.wav",
+        "sha256": "a5bce7e2ce850c95f8b4ec0b17222a0f0472b6328b6eb831dd78f02258725ba1",
+        "bytes": 58102844
+      }
+    },
+    {
       "resultId": "2026-11-10t15-16-09-599z-kitten-nano-0.8-cpu-warm-624ea636",
       "model": "kitten-nano-0.8",
       "backend": "cpu",

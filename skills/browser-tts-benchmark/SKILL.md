@@ -153,9 +153,18 @@ bytes / 125000; keep estimates distinct from measured throttled load time.
 
 ## Prepare and publish
 
-Work on a clean publication branch based on current upstream main. Preserve the
-scoring checkout and original receipt when publishing from a different revision.
-Set `run_id` to the value of the receipt's `id` field.
+Follow the checkout's `AGENTS.md` for the working branch and keep it current
+with upstream main. Preserve the scoring checkout and original receipt when
+publishing from a different revision. Set `run_id` to the receipt's `id` field.
+
+Track dashboard scores and voice examples as separate deliverables. If the user
+requests a voice example or already approved recordings for this dashboard
+publication, include the receipt-matched clip for each authorized configuration
+in the same release as its score. A request to add a missing voice example to an
+existing dashboard entry uses the already-published result and its original
+scored WAV. Keep the timing evidence as recorded. When only timing publication
+is authorized, tell the user that the voice example is still local and needs
+separate publication authorization.
 
 ```sh
 run_id=YOUR_RUN_ID
@@ -236,18 +245,22 @@ results/RUN_ID/result.json --wav PATH --model MODEL --backend BACKEND`, then
 model/output terms, and upload the exact full WAV to the uniquely named repository
 release asset from the manifest. Verify the uploaded digest. Commit only the
 verified small clip and manifest to Git, refresh `npm run reference`, and include
-them in the result PR. Run `npm run listen:build` to verify the hosted listening
-site bundle. README Listen links must target the exact recording in the player;
-the Pages workflow publishes approved clips after merge to main. Never substitute a demo, regenerate audio outside the scored
-run, silently normalize the recording, or claim the code license covers the voice.
-Prior explicit audio approval persists; do not ask again.
+them in the publication commit. Run `npm run listen:build` to verify the
+listening site bundle. Wait for the matching Pages deployment, then filter the
+live dashboard to the published model and language. Play the voice example
+from each intended model/backend result row. Confirm playback advances, opens
+the manifest's exact clip, and links to the matching receipt and full WAV.
+Also check the README Listen deep link opens that clip in the listening room.
+Report any pending score or playback separately. Never substitute a demo,
+regenerate audio outside the scored run, silently normalize the recording, or
+claim the code license covers the voice. Prior explicit audio approval persists.
 
-When publication is authorized, create a result branch, push to an authorized
-remote (or the user's fork), and open a PR with commands, hardware, source commit,
-backend evidence and limitations. Honor existing publication approval without
-asking again. Merge only when that is within the user's scope and required checks
-pass. If publication is not authorized, prepare the bundle and stop before push.
-Never bypass branch protection or use privileged `pull_request_target` execution.
+When publication is authorized, use the checkout's configured workflow and
+respect branch protection. For a PR, include commands, hardware, source commit,
+backend evidence and limitations. Honor existing publication approval and merge
+within its scope after required checks pass. If publication is not authorized,
+prepare the bundle locally. Never bypass branch protection or use privileged
+`pull_request_target` execution.
 
 Finish with the repo/PR/report links, measured outcome, validation performed and
 material limitations. A green CI checks consistency, not the truth of arbitrary
