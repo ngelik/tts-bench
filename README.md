@@ -364,6 +364,8 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Inflect Micro v3 FP32 | 6 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#inflect-micro-v3) |
 | Inflect Mini v3 Browser Port | 6 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#inflect-mini-v3-browser-port) |
 | Serhiy 0.58M (Ukrainian) | 1 | 1 | 1 (uk) | [Details](docs/MODEL_SUPPORT.md#ua-serhiy-0p58m) |
+| Kale TTS 1 Nano 7.5M (INT8 CPU) | 10 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#kale-tts-1-nano-int8) |
+| Kale TTS 1 Nano 7.5M (FP32 WebGPU) | 10 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#kale-tts-1-nano-fp32) |
 
 ### Controlled native comparisons
 

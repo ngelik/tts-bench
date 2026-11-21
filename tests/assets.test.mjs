@@ -12,8 +12,18 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32"]);
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
+  for (const [id, backend, bytes] of [
+    ['kale-tts-1-nano-int8', 'cpu', 14767138],
+    ['kale-tts-1-nano-fp32', 'webgpu', 30592691],
+  ]) {
+    const profile = getAssetLock().models[id];
+    assert.deepEqual(profile.backends, [backend]);
+    assert.deepEqual(profile.assets.filter(asset => asset.kind === 'model-weights').map(asset => asset.bytes), [bytes]);
+    assert.deepEqual(profile.assets.filter(asset => asset.kind === 'voice').map(asset => asset.target.split('/').at(-1)),
+      ['s057b.bin', 's057b.extra.bin']);
+  }
   const supra = models.find(model => model.id === 'supratts-1.0-preview');
   assert.deepEqual(supra.backends, ['cpu', 'webgpu']);
   assert.equal(supra.modelRevision, '80a6b0bd13c92e30e88b0c22183be9c2bdc7061c');

@@ -216,3 +216,22 @@ and change notice](../web/klein/NOTICE.md).
 ## Sano Robot/MCU and experimental Trellis
 
 These use unchanged official CPU/WASM binaries and the demo's 120-character internal pieces. Before scoring, [run the complete frontend audit](models/sano-robot-trellis.md) at the exact clean source; it verifies registered assets and binds all 93 spans to fixture/worker hashes. Robot performs one official ID G2P call per timed piece; its separate raw-IPA vocabulary audit is untimed. Trellis checks native token count, frame count and sample rate and copies waveform bytes before freeing the handle. Both preserve canonical source text and report GPU as unsupported in this official runtime.
+
+## Kale TTS 1 Nano
+
+The two registrations use the publisher's recommended exports. The CPU WASM
+profile uses the 14,767,138-byte export with its INT8 sound generator and FP32
+timing path. The WebGPU profile uses the 30,592,691-byte FP32 export. Both use
+ONNX Runtime Web 1.31.1 with one WASM thread and select Kenzie (`s057b`) at
+speed 1. The WebGPU profile places the six LSTM nodes on the CPU as in the
+official wrapper and requires dispatch evidence from a separate untimed probe.
+Report each export separately because precision changes with the provider.
+
+The worker uses the [pinned official JS frontend](https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/js/kale-tts.mjs)
+for normalization, G2P, sentence splitting, tokenization, and style selection.
+The worker owns the ONNX session and tensor lifetimes, waits for CPU-readable
+24 kHz PCM, and retains the official `speak()` pause of 120 ms after each
+utterance. After staging either profile, run `node tools/check-kale-frontend.mjs`
+to verify the whole English fixture in headed Chrome. The audit checks that every
+emitted utterance preserves its full IPA, numbers are expanded and the token IDs
+contain every supported phoneme after the official Kokoro-native rules.

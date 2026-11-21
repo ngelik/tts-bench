@@ -20,6 +20,7 @@ import { createSupertonicAdapter } from './adapters/supertonic.mjs';
 import { createKokoroAdapter } from './adapters/kokoro.mjs';
 import { createMMSAdapter } from './adapters/mms.mjs';
 import { createKittenAdapter } from './adapters/kitten.mjs';
+import { createKaleAdapter } from './adapters/kale.mjs';
 
 import { createSanoRobotTrellisAdapter } from './adapters/sano-robot-trellis.mjs';
 import { createSanoAdapter } from './adapters/sano.mjs';
@@ -63,6 +64,8 @@ const FACTORIES = {
   'kokoro-82m': createKokoroAdapter,
   'mms-english': createMMSAdapter,
   'kitten-nano-0.8': createKittenAdapter,
+  'kale-tts-1-nano-int8': () => createKaleAdapter('int8'),
+  'kale-tts-1-nano-fp32': () => createKaleAdapter('fp32'),
   'sano-amy': createSanoAdapter,
   'sano-robot-mcu': () => createSanoRobotTrellisAdapter('sano-robot-mcu'),
   'sano-trellis': () => createSanoRobotTrellisAdapter('sano-trellis'),
