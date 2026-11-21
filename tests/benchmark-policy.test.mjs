@@ -149,7 +149,12 @@ test('warm v2 requests three articles and keeps eligible single-observation poli
 
 test('CLI rejects invalid v2 combinations before creating a run or reaching Chrome', async () => {
   const { readdir } = await import('node:fs/promises');
-  const before = await readdir(new URL('../runs', import.meta.url));
+  const runsDirectory = new URL('../runs', import.meta.url);
+  const snapshotRuns = async () => {
+    try { return { exists: true, entries: (await readdir(runsDirectory)).sort() }; }
+    catch (error) { if (error.code === 'ENOENT') return { exists: false, entries: null }; throw error; }
+  };
+  const before = await snapshotRuns();
   const invalidArgs = [
     [['--scenario', 'warm', '--repetitions', '4'], /warm v2.*three/i],
     [['--scenario', 'cached'], /warm.*only/i],
@@ -164,5 +169,5 @@ test('CLI rejects invalid v2 combinations before creating a run or reaching Chro
     assert.notEqual(run.status, 0);
     assert.match(run.stderr, expected);
   }
-  assert.deepEqual(await readdir(new URL('../runs', import.meta.url)), before);
+  assert.deepEqual(await snapshotRuns(), before);
 });
