@@ -13,28 +13,66 @@ The provenance links the complete original English fixture and describes the
 translation as AI-assisted, without an independent human review. Preserve that
 qualification; audio integrity checks do not establish translation quality.
 
-## Register the exact text before scoring
+## Use an existing language
 
-Register each version in `lib/benchmark-fixtures.mjs`, with immutable text,
-metadata and chunk files under `fixtures/`. Record its language code, exact text
-SHA-256, actual JavaScript UTF-16 character count, actual chunk count and source
-span boundaries. Preserve translation provenance, the original fixture link,
-review status and any intentionally retained names or passages. Do not pad,
-truncate or relabel a translation to force the English article's 20,000-character
-or 93-span counts. A text or segmentation change requires a new fixture version.
+From a clone of `ngelik/tts-bench`, run `npm ci`, then list article editions and validate the one you plan to use.
 
-Select the registered fixture explicitly for a translated run and use the same
-`fixtureId` in its frozen campaign plan. Check the actual CLI help and dry-run
-output before admission. The harness records `fixture.language`, identity, digest
-and actual counts; it must run the registered text, not translate it during the
-timed call. Keep the selected checkpoint, voice, language frontend, synthesis
-settings, clean source and hardware in the original receipt. Model language
-support alone does not prove that a recording used that language.
+```sh
+npm run fixtures -- list
+npm run fixtures -- check --id uk-article-v1
+```
 
-Legacy `english-20k-v1` receipts without `fixture.language` remain English and
-are not rewritten. Unknown or non-English fixtures cannot acquire English by
-omitting the field. Native publication validation must establish the registered
-fixture identity before presentation or audio registration.
+Choose the fixture by its versioned ID. The language tab describes the **article spoken in the benchmark**. A model’s supported-language list describes its wider capabilities. Results in a tab come from actual receipts for that edition.
+
+## Add a translation
+
+You can submit an article on any computer. Check the registry first to avoid duplicating an existing edition. Translate the complete [English source](../fixtures/en-20000.txt), preserving the story, names, numbers and paragraph order. Keep natural punctuation and phrasing in the target language. Save the text as UTF-8 without a byte-order mark and use LF line endings. A final newline, if present, is part of the article hash. Record the translator or tool, actual review status and the license under which the text can be distributed.
+
+For example, with your complete French translation saved in `/path/to/french.txt`, substitute your actual credit, review description and license in this command:
+
+```sh
+npm run fixtures -- add --language fr --id fr-article-v1 \
+  --text /path/to/french.txt \
+  --creator "Translation credit" \
+  --description "How it was translated and which review was performed" \
+  --license MIT
+npm run fixtures -- check --id fr-article-v1
+git diff -- fixtures/registry.json
+git status --short -- fixtures/
+```
+
+The command registers the language in `fixtures/registry.json` and generates three files in `fixtures/`: **article text**, **metadata** and **chunk manifest**. Its metadata binds the exact translation to the English source SHA-256. It records UTF-8 bytes, Unicode code points and JavaScript UTF-16 length. The span offsets use UTF-16 units, and each span has its own hash. The translation keeps its natural length.
+
+Use a language tag such as `fr`, `pt-BR` or `zh-Hant` that represents the actual text and the speech profile you want to test. For a changed article or segmentation, give it a new fixture ID such as `fr-article-v2`. Keep earlier editions so receipts and recordings remain reproducible.
+
+Open a **fixture PR** with the registry change and the three generated files. Include the target language, fixture ID, translation credit, review status, license and check command. A fixture-only PR is ready for review before any measurements exist. The dashboard discovers language tabs from the registry. A new language shows an empty results tab until a qualifying run is published. When revising an existing language, its measured edition stays visible until the newer one has qualifying evidence. Earlier recordings remain available in the listening room.
+
+## Connect a model and run in Chrome
+
+Use `npm run bench -- models --language fr` to list browser profiles for French, or replace `fr` with your article’s language tag. Check the exact model and voice. The active profile’s executable languages are declared in `modelFrontendLanguages` in `fixtures/registry.json`. Profiles without an entry default to English. Some profiles also pin an exact article edition in `modelRequiredFixtures`, including the published Serhiy configuration. Declare a language when the adapter actually selects it in the tokenizer, phonemizer or synthesis call, or when the pinned single-language checkpoint uses it by design. Return the actual language in the adapter’s `settings.language` and exercise the path in Chrome. Language tags are matched exactly after canonicalization; a regional or script variant needs an explicit profile entry. The model card’s language inventory belongs separately in `assets.lock.json`.
+
+The commands below use the published Ukrainian profile. Supply the exact ID of your model and fixture for another language, and use that model’s documented asset preparation. The model’s license determines whether `--accept-license` is needed.
+
+```sh
+model=ua-serhiy-0p58m
+fixture=uk-article-v1
+node tools/build-ua-serhiy-browser.mjs --accept-license
+npm run bench -- run --model "$model" --backend cpu --fixture "$fixture" --smoke --accept-license
+```
+
+Inspect the smoke receipt, voice, resolved language and WAV. Listen to a passage or transcribe a sample in the target language to check that the frontend handles its script and pronunciations. Keep the benchmark article and translation fixed during synthesis.
+
+For baseline timing, commit and publish the implementation and edition first. In a clean checkout on the baseline Mac, set `machine` to the actual hardware label. Run each requested backend sequentially under the existing repetition policy. For example:
+
+```sh
+machine="MacBook Pro (Apple M1 Pro, 16 GB)"
+npm run bench -- run --model "$model" --backend cpu --fixture "$fixture" --scenario warm --machine "$machine" --accept-license
+npm run bench -- run --model "$model" --backend webgpu --fixture "$fixture" --scenario warm --machine "$machine" --accept-license
+```
+
+For a campaign, use the same top-level `fixtureId` for every cell in its plan. From a clean source commit, preview it with `node tools/run-campaign.mjs --plan PLAN.json --dry-run`. Check the printed language, fixture hash and actual length. For RAM, run a separate full `cached` cell with `--resources --repetitions 1` on each requested backend.
+
+For a **result PR**, follow [CONTRIBUTING.md](../CONTRIBUTING.md) for the baseline and submission commands. Include the exact fixture ID, measured voice/language, receipts and authorized audio. Run `npm run reference`, `npm run audio -- check` and `npm run dashboard:build`. Check the generated Reference results section, the dashboard at `?lang=LANGUAGE_TAG`, and the inline audio for that language. For evaluation on the baseline by a maintainer, use the [request template](../evaluation-requests/TEMPLATE.md) with the model URL, target language and fixture or translation PR.
 
 ## Keep comparisons separate
 

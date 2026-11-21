@@ -1,11 +1,13 @@
 #!/usr/bin/env node
+import { frontendLanguagesForModel } from '../lib/benchmark-fixtures.mjs';
 import { runBenchmark } from '../lib/runner.mjs';
 import { prepareAssets, listModels } from '../lib/assets.mjs';
 
 const argv=process.argv.slice(2);
 const usage=`Browser TTS Benchmark
 
-  npm run bench -- models
+  npm run bench -- models [--language TAG]
+  npm run fixtures -- list
   npm run assets -- fetch --model phonon
   npm run assets -- verify --model phonon
   npm run assets -- import --model phonon --source /path/to/asset-tree
@@ -25,7 +27,16 @@ Results and optional audio stay in ignored runs/ until explicitly submitted.
 function options(args){const out={};const flags=new Set(['smoke','resources','accept-license']);const valued=new Set(['model','backend','scenario','repetitions','machine','chrome','fixture','source','timeout-minutes','predecessor','note']);for(let i=0;i<args.length;i++){const arg=args[i];if(!arg.startsWith('--'))throw new Error(`Unexpected argument: ${arg}`);const key=arg.slice(2);if(flags.has(key))out[key]=true;else if(valued.has(key)&&args[i+1]&&!args[i+1].startsWith('--'))out[key]=args[++i];else throw new Error(`Unknown option or missing value: ${arg}`);}return out;}
 try{
  if(!argv.length||argv.includes('--help')||argv[0]==='help'){console.log(usage);}
- else if(argv[0]==='models')console.log(JSON.stringify(await listModels(),null,2));
+ else if (argv[0] === 'models') {
+   if (argv.length !== 1 && (argv.length !== 3 || argv[1] !== '--language')) {
+     throw new Error('Usage: models [--language TAG]');
+   }
+   const language = argv.length === 3 ? Intl.getCanonicalLocales(argv[2])[0] : null;
+   const models = listModels()
+     .map(model => ({ ...model, frontendLanguages: frontendLanguagesForModel(model.id) }))
+     .filter(model => !language || model.frontendLanguages.includes(language));
+   console.log(JSON.stringify(models, null, 2));
+ }
  else if(argv[0]==='assets'){
   const mode=argv[1];if(!['fetch','verify','import'].includes(mode))throw new Error('Choose assets fetch, verify or import');
   const o=options(argv.slice(2));if(!o.model)throw new Error('--model is required');

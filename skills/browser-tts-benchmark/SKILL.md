@@ -1,12 +1,11 @@
 ---
 name: browser-tts-benchmark
-description: Run, extend, verify, and prepare pull requests for reproducible browser-only TTS benchmarks in Google Chrome using ngelik/tts-bench. Use for measuring a TTS model locally, comparing CPU/WASM and WebGPU, or adding a Hugging Face model with reproducible evidence.
+description: Benchmark speech synthesis in Google Chrome using ngelik/tts-bench. Use to test a model in a target language, register a translation of the benchmark article, compare CPU/WASM and WebGPU, or contribute models, recordings and results by pull request.
 ---
 
 # Browser TTS Benchmark
 
-Choose between a baseline evaluation-request PR and a verified local run with
-its generated table/visualization, following the hardware policy below. Publish
+Identify the requested model, spoken language and deliverable. Contributors can submit a translation or adapter PR on any machine. For measured results or an evaluation request, follow the hardware policy below. Publish
 a request or result PR only when authorized. Speech synthesis must run in
 Google Chrome on the user's machine. A server-side or Python synthesis result is
 not a substitute. The Node controller only serves local static assets and drives Chrome.
@@ -29,7 +28,7 @@ If the user wants a new model evaluated for this repository and baseline hardwar
 is absent or cannot be verified, take the **evaluation-request PR** route before
 downloading models or running inference. In the checkout, copy
 `evaluation-requests/TEMPLATE.md` to `evaluation-requests/<model-slug>.md`, fill in
-the model name and public model URL, and open an authorized PR titled
+the model name, public model URL, requested language/locale, and fixture ID when available. Open an authorized PR titled
 `[Evaluation request] <org/model>`. Other template details are optional. No scores,
 adapter or audio are required; do not modify generated Reference results for a
 request. Mark result-specific PR checks not applicable and finish with the request
@@ -77,29 +76,29 @@ Chrome profile without authorization.
 For an unregistered model, read [model onboarding](references/model-onboarding.md)
 and the checkout's `docs/ADDING_MODELS.md`. Implement and validate it before scoring.
 
+## Select or contribute a language
+
+From the checkout, run `npm run fixtures -- list`. Use the user's requested language and exact article edition; English is the default when the user leaves the language open. **Adding a translation is its own contribution** and requires no model download or baseline hardware.
+
+For a new edition, read `docs/MULTILINGUAL.md` in the checkout. [Multilingual contributor guide](https://github.com/ngelik/tts-bench/blob/main/docs/MULTILINGUAL.md). Translate the complete English source article, record who prepared or reviewed it and its redistribution terms, then use `npm run fixtures -- add` and `check` as shown in the guide. Use the translation's actual length and boundaries. Commit the fixture and any adapter changes before scoring. Language tabs come from the registry.
+
+For inference, run `npm run bench -- models --language TAG` with the requested language tag. Confirm the **browser adapter and selected voice** can synthesize it. A model card can list languages beyond those its benchmark adapter selects. If the adapter needs work, add language selection, pass the target through its phonemizer/tokenizer and synthesis call, and verify the resolved language in its returned settings. Record a smoke in that language before the full article. A request-only PR can instead name the target model, language and fixture.
+
 ## Generate trustworthy evidence
 
-For a non-English evaluation, follow the checkout's `docs/MULTILINGUAL.md`.
-Register and review the exact translation before scoring: immutable text SHA,
-language, actual UTF-16 character count, actual source spans and translation
-provenance. Select the registered `fixtureId` explicitly in the campaign plan and
-verify its dry-run. Do not pad or truncate a translation to mimic the English
-fixture's counts, translate during timing, or infer language from model support.
-Keep English and translated results in separate fixture cohorts and retain the
-existing exact-fixture comparison guards. Use the same registered fixture for
-CPU/GPU and separate cached resource measurements.
+In a shell, set the model, fixture and machine to the actual values. This example uses the registered Ukrainian Serhiy profile. Its verified asset builder is documented in `docs/UA_SERHIY.md`. For another profile, stage assets using its own preparation instructions, including any required license acknowledgement.
 
 ```sh
-npm run assets -- fetch --model MODEL
-npm run assets -- verify --model MODEL
-npm run bench -- run --model MODEL --backend cpu --smoke
-npm run bench -- run --model MODEL --backend cpu --scenario warm --machine "Hardware / RAM" --note "Power, run order and relevant conditions"
+model=ua-serhiy-0p58m
+fixture=uk-article-v1
+machine="MacBook Pro (Apple M1 Pro, 16 GB)"
+node tools/build-ua-serhiy-browser.mjs --accept-license
+npm run assets -- verify --model "$model" --accept-license
+npm run bench -- run --model "$model" --backend cpu --fixture "$fixture" --smoke --accept-license
+npm run bench -- run --model "$model" --backend cpu --fixture "$fixture" --scenario warm --machine "$machine" --accept-license
 ```
 
-Replace `MODEL`, hardware and conditions with actual values. Use `--accept-license`
-only after checking applicable terms and the user's authorized use. Prior approval
-persists; do not request it again. Permission to benchmark is not automatically
-permission to redistribute weights or publish recordings.
+Use the same fixture ID for WebGPU and for any requested cached memory runs. Campaign plans use the top-level `fixtureId`; verify it with `node tools/run-campaign.mjs --plan PLAN.json --dry-run`. Check the fixture and actual voice/language in each native receipt. Compare measurements within the same exact article edition. Review applicable terms before using `--accept-license`.
 
 - A smoke run is an installation diagnostic, never a publishable score.
 - A scored run requires a clean **committed** checkout. Preserve unrelated changes;
@@ -208,9 +207,8 @@ unsupported statuses. See
 section through the generator.
 
 Keep each language/fixture in its generated Reference section. Stage every
-generated language-specific RAM chart, including `docs/reference-memory-uk.svg`
-when Ukrainian resource receipts exist; do not insert those values into the
-English chart. A planned but unmeasured language gets no invented score or chart.
+generated language-specific RAM chart, such as `docs/reference-memory-uk.svg`
+for Ukrainian. The generated section and charts follow the receipt language. A planned but unmeasured language gets no invented score or chart.
 The audio tool derives language from the actual scored fixture and rejects a
 mislabeled manifest entry. Preserve the selected trial, full WAV and exact prefix
 clip, and check applicable recording terms and attribution before publication.

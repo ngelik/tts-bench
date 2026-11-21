@@ -31,5 +31,12 @@ export function fixtureGroups(results) {
   });
 }
 
-export const languageLabel = language => ({en: 'English', uk: 'Ukrainian'}[language] ?? language);
+export function languageLabel(language) {
+  if (typeof language !== 'string' || !language) return String(language ?? '');
+  try {
+    return new Intl.DisplayNames(['en'], {type: 'language'}).of(language) ?? language;
+  } catch {
+    return language;
+  }
+}
 export const memoryChartPath = language => language === 'en' ? 'docs/reference-memory.svg' : `docs/reference-memory-${language}.svg`;

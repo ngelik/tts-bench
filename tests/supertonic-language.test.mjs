@@ -1,0 +1,26 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { describeSupertonicFrontend, resolveSupertonicLanguage } from '../web/supertonic/language.mjs';
+import { UnicodeProcessor } from '../web/supertonic/helper.mjs';
+import { FRONTEND_DESCRIPTION } from '../web/supertonic/settings.mjs';
+
+test('Supertonic preserves its English default and resolves fixture language into settings value', () => {
+  assert.equal(resolveSupertonicLanguage(), 'en');
+  assert.equal(resolveSupertonicLanguage('FR'), 'fr');
+  assert.equal(resolveSupertonicLanguage('de'), 'de');
+  assert.match(describeSupertonicFrontend(FRONTEND_DESCRIPTION, 'en'), /<en> tags/);
+  assert.match(describeSupertonicFrontend(FRONTEND_DESCRIPTION, 'fr'), /<fr> tags/);
+});
+
+test('Supertonic accepts only the exact language tags exposed by its official helper', () => {
+  assert.throws(() => resolveSupertonicLanguage('fr-FR'), /does not support fixture language/);
+  assert.throws(() => resolveSupertonicLanguage('na'), /does not support fixture language/);
+  assert.throws(() => resolveSupertonicLanguage('xx'), /does not support fixture language/);
+  assert.throws(() => resolveSupertonicLanguage('  '), /nonempty language code/);
+});
+
+test('official Unicode processor applies the resolved French language tag', () => {
+  const language = resolveSupertonicLanguage('fr');
+  const processor = new UnicodeProcessor([]);
+  assert.match(processor.preprocessText('Bonjour, tout le monde', language), /^<fr>Bonjour, tout le monde\.<\/fr>$/);
+});

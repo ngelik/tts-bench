@@ -151,7 +151,7 @@ async function loadFixture(fixtureId = 'english-20k-v1') {
   if (cursor !== article.length || chunks.map(chunk => chunk.text).join('') !== article) {
     throw new Error('Fixture source chunks do not reconstruct the full article.');
   }
-  const fixture = spec.language === 'en'
+  const fixture = spec.id === 'english-20k-v1'
     ? { id: spec.id, sha256: digest, characters: article.length, chunks: chunks.length }
     : { id: spec.id, language: spec.language, sha256: digest, characters: article.length,
       unicodeCodePoints: codePoints, utf8Bytes: bytes.length, chunks: chunks.length, source: spec.source };
@@ -170,7 +170,7 @@ async function selectedFixture(smoke = false, fixtureId = 'english-20k-v1') {
   const text = selected.map(chunk => chunk.text).join('');
   const smokeBytes = new TextEncoder().encode(text);
   const spec = (await getFixtureRegistry()).fixtures.find(entry => entry.id === fixtureId);
-  const fixture = spec.language === 'en'
+  const fixture = spec.id === 'english-20k-v1'
     ? { id: spec.smokeId, sha256: await sha256(smokeBytes), characters: text.length, chunks: selected.length }
     : { id: spec.smokeId, language: full.fixture.language, sha256: await sha256(smokeBytes), characters: text.length,
       unicodeCodePoints: Array.from(text).length, utf8Bytes: smokeBytes.length, chunks: selected.length, source: spec.source };
@@ -224,6 +224,11 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       await dispose();
       setStatus(result.reason);
       return result;
+    }
+    const language = loaded.fixture.language;
+    if (language && result.settings?.language !== language) {
+      throw new Error(model + ' initialized with language ' + (result.settings?.language ?? '(unspecified)') +
+        ' for a fixture that requires ' + language + '.');
     }
     setStatus(model + ' is ready on ' + result.backendEffective + '.');
     return result;

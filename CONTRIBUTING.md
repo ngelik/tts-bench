@@ -26,6 +26,10 @@ belong in `results/` or in generated score tables. Existing published evidence i
 preserved. Code-only maintenance and adapter proposals remain welcome; they do
 not establish a measured baseline result.
 
+## Contribute a language
+
+Anyone can submit a fixture-only PR with the complete translated article, its provenance and verified spans. Run `npm run fixtures -- list` to check existing editions and follow the [multilingual contributor guide](docs/MULTILINGUAL.md). A model evaluation request can specify a target language and an existing fixture or translation PR. Reserve performance results for full baseline runs on the registered edition.
+
 ## Submit measured baseline results
 
 Result submission is a normal pull request. The CLI does not upload results,

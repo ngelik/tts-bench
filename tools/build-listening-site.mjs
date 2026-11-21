@@ -3,6 +3,7 @@ import {createReadStream} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {resolve,dirname} from 'node:path';
 import {buildDashboardData} from './dashboard-data.mjs';
+import {listeningCatalog} from '../audio/catalog.mjs';
 import {SITE_VERSION_TOKEN,siteVersion,stampSiteVersion} from '../lib/site-cache.mjs';
 
 async function filesBelow(directory,relative='') {
@@ -24,11 +25,11 @@ async function sha256File(file) {
 
 const data=await buildDashboardData();
 const rows = [...data.models, ...Object.values(data.byLanguage).flatMap(group => group.models)];
-const clips=new Set(rows.flatMap(model=>model.audio.map(entry=>entry.clip.path)));
+const clips=new Set(listeningCatalog(data).entries.map(entry=>entry.clip.path));
 const out=resolve('.cache/listening-site');
 // This dedicated generated directory never contains model assets or raw runs.
 await rm(out,{recursive:true,force:true});await mkdir(out,{recursive:true});
-const files=['audio/index.html','audio/player.mjs','audio/player.css','audio/links.mjs','audio/waveform-integrity.mjs','audio/manifest.json',...clips];
+const files=['audio/index.html','audio/player.mjs','audio/player.css','audio/links.mjs','audio/catalog.mjs','audio/waveform-integrity.mjs','audio/manifest.json',...clips];
 for(const file of files){const target=resolve(out,file);await mkdir(dirname(target),{recursive:true});await cp(file,target,{errorOnExist:true,force:false});}
 await writeFile(resolve(out,'.nojekyll'),'');
 await mkdir(resolve(out,'assets'),{recursive:true});

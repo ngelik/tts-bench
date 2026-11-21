@@ -238,13 +238,37 @@ function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
   });
 }
 
+function hasEligibleFullFixtureResult(results, fixtureId, selectedWarmResultIds) {
+  return results.some(result => {
+    if (result.fixture?.id !== fixtureId || result.protocol.smoke) return false;
+    if (selectedWarmResultIds.has(result.id)) return true;
+    return result.cells.some(cell => {
+      if (cell.status !== 'measured' || !cell.trials?.length || affectedTrials(cell).length) return false;
+      if (result.protocol.scenario === 'warm') return true;
+      return result.origin === 'native' && result.protocol.scenario === 'cached' &&
+        result.protocol.id.endsWith('-resources') && summarizeMemoryTrials(cell.trials) !== null;
+    });
+  });
+}
+
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
 export function assembleDashboardData(input) {
-  const { results, models, audioEntries = [], campaignCells = [] } = input;
+  const { results, models, audioEntries = [], campaignCells = [], fixtureRegistry = listBenchmarkFixtures() } = input;
   const receiptModels = new Set(results.filter(result => !result.protocol.smoke).flatMap(result => result.cells.map(cell => cell.model)));
-  // The last registered translation for a language is its displayed edition.
-  // Older editions stay available by receipt and never enter its leaderboard.
-  const editions = new Map(listBenchmarkFixtures().map(fixture => [fixture.language, fixture]));
+  const fixturesByLanguage = new Map();
+  for (const fixture of fixtureRegistry) {
+    const editions = fixturesByLanguage.get(fixture.language) ?? [];
+    editions.push(fixture);
+    fixturesByLanguage.set(fixture.language, editions);
+  }
+  const selectedWarmResultIds = new Set([...(input.warmSelections ?? []), input.warmSelection].filter(Boolean).map(selection => selection.resultId));
+  // A registry-only edition must not hide the most recently measured edition.
+  // Promote a newer version only after it has a usable full-article result.
+  const editions = new Map([...fixturesByLanguage].map(([language, fixtures]) => {
+    const newest = fixtures.at(-1);
+    const displayed = [...fixtures].reverse().find(fixture => hasEligibleFullFixtureResult(results, fixture.id, selectedWarmResultIds)) ?? newest;
+    return [language, displayed];
+  }));
   const languages = [...editions.keys()].map(id => {
     const name = new Intl.DisplayNames([id], {type: 'language'}).of(id);
     return {id, label: name[0].toLocaleUpperCase(id) + name.slice(1)};
@@ -270,7 +294,20 @@ export function assembleDashboardData(input) {
 
   }
   const {en, ...translations} = byLanguage;
-  return {...en, languages, byLanguage: translations};
+  const activeModels = [...(en?.models ?? []), ...Object.values(translations).flatMap(group => group.models ?? [])];
+  const resultsById = new Map(results.map(result => [result.id, result]));
+  const receiptCell = entry => [entry.resultId, entry.model, entry.backend].join('/');
+  const activeAudio = new Map(activeModels.flatMap(model => model.audio).map(entry => [receiptCell(entry), entry]));
+  const recordings = enrichAudio(audioEntries, resultsById, new Map(), new Map()).map(entry => {
+    const selection = activeAudio.get(receiptCell(entry));
+    return {
+      ...entry,
+      name: models[entry.model]?.displayName ?? entry.name ?? entry.model,
+      matchesSelectedWarm: selection?.matchesSelectedWarm ?? false,
+      matchesSelectedMemory: selection?.matchesSelectedMemory ?? false,
+    };
+  });
+  return {...en, languages, byLanguage: translations, recordings};
 }
 
 function assembleLanguageData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null, warmSelections = [] }) {

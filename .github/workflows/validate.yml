@@ -23,6 +23,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
+      - run: npm run fixtures -- check
       - run: npm test
       - name: Test local failed-waveform evidence in Chrome
         run: xvfb-run -a node --test tests/browser-failed-waveform.mjs

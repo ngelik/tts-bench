@@ -1,10 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { defaultFixtureForModel, fixtureLanguage, getBenchmarkFixture, listBenchmarkFixtures, requiredFixtureForModel } from '../lib/benchmark-fixtures.mjs';
+import { copyFile, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import {
+  assertFixtureLanguageForModel,
+  assertSettingsLanguageMatchesFixture,
+  canonicalLanguageTag,
+  defaultFixtureForModel,
+  fixtureLanguage,
+  frontendLanguagesForModel,
+  frontendLanguagesForModelAtSource,
+  getBenchmarkFixture,
+  listBenchmarkFixtures,
+  requiredFixtureForModel,
+} from '../lib/benchmark-fixtures.mjs';
 import { validateResult } from '../tools/results.mjs';
+import { runBenchmark } from '../lib/runner.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const digest = value => createHash('sha256').update(value).digest('hex');
@@ -45,7 +59,10 @@ test('canonical chunks are contiguous, individually hashed, and reconstruct the 
 
 test('registered fixtures match their UTF-8, Unicode, language, source and span identities', async () => {
   const fixtures = listBenchmarkFixtures();
-  assert.deepEqual(fixtures.map(fixture => fixture.id), ['english-20k-v1', 'uk-article-v1']);
+  const fixtureIds = fixtures.map(fixture => fixture.id);
+  assert.ok(fixtureIds.includes('english-20k-v1'));
+  assert.ok(fixtureIds.includes('uk-article-v1'));
+  assert.equal(new Set(fixtureIds).size, fixtureIds.length);
   assert.equal(fixtureLanguage('english-20k-smoke-v1'), 'en');
   assert.equal(fixtureLanguage('uk-article-smoke-v1'), 'uk');
   assert.equal(fixtureLanguage('not-registered'), null);
@@ -55,6 +72,7 @@ test('registered fixtures match their UTF-8, Unicode, language, source and span 
   assert.equal(requiredFixtureForModel('phonon'), null);
 
   for (const fixture of fixtures) {
+    assert.equal(canonicalLanguageTag(fixture.language), fixture.language, 'registered fixture language is canonical');
     const bytes = await readFile(resolve(root, 'fixtures', fixture.articleFile));
     const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
     const meta = JSON.parse(await readFile(resolve(root, 'fixtures', fixture.metadataFile), 'utf8'));
@@ -91,6 +109,68 @@ test('registered fixtures match their UTF-8, Unicode, language, source and span 
     }
     assert.equal(offset, text.length);
   }
+});
+
+test('frontend language profiles are exact BCP-47 tags and default legacy models to English', () => {
+  assert.deepEqual(frontendLanguagesForModel('phonon'), ['en']);
+  assert.deepEqual(frontendLanguagesForModel('ua-serhiy-0p58m'), ['uk']);
+  assert.ok(frontendLanguagesForModel('supertonic-3').includes('uk'));
+  assert.equal(canonicalLanguageTag('zh-hant-tw'), 'zh-Hant-TW');
+  assert.equal(canonicalLanguageTag('ZH-hant-tw'), null, 'fixture/schema subset requires a canonical lowercase primary language');
+  assert.doesNotThrow(() => assertFixtureLanguageForModel('ua-serhiy-0p58m', 'uk-article-v1'));
+  assert.doesNotThrow(() => assertFixtureLanguageForModel('supertonic-3', 'uk-article-v1'));
+  assert.throws(() => assertFixtureLanguageForModel('phonon', 'uk-article-v1'), /frontend profile \[en\].*fixture language uk/);
+
+  const localeFixture = { id: 'locale-fixture', language: 'zh-hant-tw' };
+  assert.equal(assertFixtureLanguageForModel('locale-test', localeFixture, { frontendLanguages: ['zh-Hant-TW'] }), 'zh-Hant-TW');
+  assert.throws(() => assertFixtureLanguageForModel('locale-test', localeFixture, { frontendLanguages: ['zh-Hans-TW'] }), /does not accept fixture language zh-Hant-TW/);
+  assert.throws(() => assertFixtureLanguageForModel('locale-test', localeFixture, { frontendLanguages: ['zh'] }), /does not accept fixture language zh-Hant-TW/);
+});
+
+test('direct CLI execution rejects a family-supported language absent from its frontend profile before Chrome', async () => {
+  assert.ok((await import('../lib/catalog.mjs')).getModel('zonos3-mini').support.languages.includes('uk'));
+  await assert.rejects(runBenchmark({ model: 'zonos3-mini', backend: 'cpu', scenario: 'cached', fixture: 'uk-article-v1', smoke: true }),
+    /frontend profile \[en\] does not accept fixture language uk/);
+});
+
+test('translated result submission requires settings language and preserves pre-policy source profiles', async () => {
+  const id = '2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956';
+  const result = JSON.parse(await readFile(resolve(root, 'results', id, 'result.json'), 'utf8'));
+  assert.equal(frontendLanguagesForModelAtSource(result.cells[0].model, result.source.gitCommit), null,
+    'the original scoring source predates the optional profile field');
+  assert.equal(validateResult(result), result);
+  assert.equal(assertSettingsLanguageMatchesFixture(result.cells[0].settings, result.fixture), 'uk');
+
+  const mislabeled = structuredClone(result);
+  mislabeled.cells[0].settings.language = 'en';
+  assert.throws(() => validateResult(mislabeled), /settings.language must match fixture language uk/);
+});
+
+test('fixture helpers accept a third registered language and render its human-readable name', async t => {
+  const directory = await mkdtemp(join(tmpdir(), 'tts-fixture-third-language-'));
+  t.after(() => rm(directory, {recursive: true, force: true}));
+  await Promise.all(['lib', 'tools', 'fixtures'].map(name => mkdir(join(directory, name))));
+  await copyFile(resolve(root, 'lib/benchmark-fixtures.mjs'), join(directory, 'lib/benchmark-fixtures.mjs'));
+  await copyFile(resolve(root, 'tools/fixture-language.mjs'), join(directory, 'tools/fixture-language.mjs'));
+  const registry = {
+    schemaVersion: 1,
+    defaultFixtureId: 'english-20k-v1',
+    fixtures: [
+      {id:'english-20k-v1',smokeId:'english-smoke',language:'en',articleFile:'en.txt',chunksFile:'en.json',metadataFile:'en.meta.json',sha256:'a'.repeat(64),characters:10,unicodeCodePoints:10,utf8Bytes:10,chunks:1,source:{type:'original'}},
+      {id:'uk-article-v1',smokeId:'uk-smoke',language:'uk',articleFile:'uk.txt',chunksFile:'uk.json',metadataFile:'uk.meta.json',sha256:'b'.repeat(64),characters:10,unicodeCodePoints:10,utf8Bytes:10,chunks:1,source:{type:'translation'}},
+      {id:'fr-article-v1',smokeId:'fr-smoke',language:'fr',articleFile:'fr.txt',chunksFile:'fr.json',metadataFile:'fr.meta.json',sha256:'c'.repeat(64),characters:10,unicodeCodePoints:10,utf8Bytes:10,chunks:1,source:{type:'translation'}},
+    ],
+  };
+  await writeFile(join(directory, 'fixtures/registry.json'), JSON.stringify(registry));
+  const moduleUrl = pathToFileURL(join(directory, 'tools/fixture-language.mjs')).href;
+  const {fixtureLanguage: languageForResult, fixtureGroups, languageLabel, memoryChartPath} = await import(moduleUrl);
+  const frenchResult = {fixture:{id:'fr-article-v1',language:'fr',sha256:'c'.repeat(64),characters:10,chunks:1}};
+  assert.equal(languageForResult(frenchResult), 'fr');
+  assert.deepEqual(fixtureGroups([frenchResult]), [[frenchResult]]);
+  assert.equal(languageLabel('en'), 'English');
+  assert.equal(languageLabel('uk'), 'Ukrainian');
+  assert.equal(languageLabel('fr'), 'French');
+  assert.equal(memoryChartPath('fr'), 'docs/reference-memory-fr.svg');
 });
 
 test('native full results require the registered non-English fixture metadata', () => {

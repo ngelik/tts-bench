@@ -27,7 +27,7 @@ export function getModelParameters(id) {
 
 const benchStub = `
 import { execFileSync } from 'node:child_process';
-import { appendFile, mkdir, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const args = process.argv.slice(2);
@@ -52,21 +52,29 @@ const id = 'stub-' + model + '-' + backend;
 const result = 'runs/' + id + '/result.json';
 const gitCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 await mkdir(join('runs', id), { recursive: true });
-const fixture = fixtureId === 'uk-article-v1' ? {
-  id: 'uk-article-v1', language: 'uk', sha256: '542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40',
-  characters: 19980, unicodeCodePoints: 19980, utf8Bytes: 36364, chunks: 92,
-  source: { type: 'translation', description: 'AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.', sourceFixtureId: 'english-20k-v1', sourceSha256: '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b', sourceLanguage: 'en' },
-} : {
-  id: 'english-20k-v1', sha256: '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b',
-  characters: 20000, chunks: 93,
+const registry = JSON.parse(await readFile('fixtures/registry.json', 'utf8'));
+const registeredFixture = registry.fixtures.find(item => item.id === fixtureId);
+if (!registeredFixture) throw new Error('Test fixture is not registered: ' + fixtureId);
+const fixture = {
+  id: registeredFixture.id,
+  sha256: registeredFixture.sha256,
+  characters: registeredFixture.characters,
+  chunks: registeredFixture.chunks,
+  ...(registeredFixture.language === 'en' ? {} : {
+    language: registeredFixture.language,
+    unicodeCodePoints: registeredFixture.unicodeCodePoints,
+    utf8Bytes: registeredFixture.utf8Bytes,
+    source: registeredFixture.source,
+  }),
 };
+const settings = {language: registeredFixture.language};
 const receipt = {
   id,
   status: 'measured',
   source: { gitCommit, dirty: false },
   protocol: { smoke: false, scenario, repetitions },
   fixture,
-  cells: [{ status: 'measured', trials: [] }],
+  cells: [{ status: 'measured', settings, trials: [] }],
   notes: [note],
 };
 await writeFile(result, JSON.stringify(receipt) + '\\n');
@@ -74,7 +82,7 @@ await appendFile(events, JSON.stringify({ event: 'end', model, exitCode: 0 }) + 
 process.stdout.write(JSON.stringify({ id, status: 'measured', result }) + '\\n');
 `;
 
-async function sandbox(t, plan, { failModel, dirty = false } = {}) {
+async function sandbox(t, plan, { failModel, dirty = false, extraFixtures = [], extraModelFrontendLanguages = {} } = {}) {
   const directory = await mkdtemp(join(tmpdir(), 'tts-campaign-runner-test-'));
   const events = join(tmpdir(), `tts-campaign-events-${process.pid}-${Math.random().toString(16).slice(2)}.jsonl`);
   await writeFile(events, '');
@@ -93,7 +101,10 @@ async function sandbox(t, plan, { failModel, dirty = false } = {}) {
   await copyFile(join(projectRoot, 'lib/campaign-plan.mjs'), join(directory, 'lib/campaign-plan.mjs'));
   await copyFile(join(projectRoot, 'lib/benchmark-policy.mjs'), join(directory, 'lib/benchmark-policy.mjs'));
   await copyFile(join(projectRoot, 'lib/benchmark-fixtures.mjs'), join(directory, 'lib/benchmark-fixtures.mjs'));
-  await copyFile(join(projectRoot, 'fixtures/registry.json'), join(directory, 'fixtures/registry.json'));
+  const registry = JSON.parse(await readFile(join(projectRoot, 'fixtures/registry.json'), 'utf8'));
+  registry.fixtures.push(...extraFixtures);
+  registry.modelFrontendLanguages = {...registry.modelFrontendLanguages, ...extraModelFrontendLanguages};
+  await writeFile(join(directory, 'fixtures/registry.json'), JSON.stringify(registry, null, 2) + '\n');
   await writeFile(join(directory, 'bin/bench.mjs'), benchStub);
   await writeFile(join(directory, '.gitignore'), 'runs/\n');
   await writeFile(join(directory, 'source.txt'), 'committed source\n');
@@ -191,6 +202,32 @@ test('Ukrainian model defaults to its required fixture and records exact Unicode
     id: 'uk-article-v1', language: 'uk', sha256: '542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40',
     characters: 19980, unicodeCodePoints: 19980, utf8Bytes: 36364, chunks: 92,
     source: { type: 'translation', description: 'AI-assisted Ukrainian translation of the complete English benchmark fixture; no independent human review is claimed.', sourceFixtureId: 'english-20k-v1', sourceSha256: '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b', sourceLanguage: 'en' },
+  });
+});
+
+test('campaign runner accepts a third registered language and records its exact fixture identity', async t => {
+  const frenchFixture = {
+    id:'fr-article-v1', smokeId:'fr-article-smoke-v1', language:'fr', articleFile:'fr-article-v1.txt',
+    chunksFile:'fr-article-v1.chunks.json', metadataFile:'fr-article-v1.meta.json', sha256:'f'.repeat(64),
+    characters:1200, unicodeCodePoints:1200, utf8Bytes:1320, chunks:7,
+    source:{type:'translation', description:'Private campaign test fixture.', sourceFixtureId:'english-20k-v1',
+      sourceSha256:'4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b', sourceLanguage:'en'},
+  };
+  const { directory, events } = await sandbox(t, {...plan([cell('one')]), fixtureId:frenchFixture.id}, {
+    extraFixtures:[frenchFixture], extraModelFrontendLanguages:{one:['en','fr']},
+  });
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  const ledger = await campaignDirectory(directory);
+  const effectivePlan = JSON.parse(await readFile(join(ledger, 'effective-plan.json'), 'utf8'));
+  const attempt = JSON.parse((await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim());
+  const receipt = JSON.parse(await readFile(join(directory, attempt.resultPath), 'utf8'));
+  assert.equal(effectivePlan.fixtureId, frenchFixture.id);
+  assert.equal(attempt.fixtureId, frenchFixture.id);
+  assert.deepEqual(receipt.fixture, {
+    id:frenchFixture.id, language:'fr', sha256:frenchFixture.sha256, characters:frenchFixture.characters,
+    unicodeCodePoints:frenchFixture.unicodeCodePoints, utf8Bytes:frenchFixture.utf8Bytes,
+    chunks:frenchFixture.chunks, source:frenchFixture.source,
   });
 });
 

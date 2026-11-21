@@ -2,6 +2,7 @@ import { observeComputeDispatches, requestHardwareWebGpuAdapter } from '../piper
 import { trimWaveToDuration } from '../supertonic/audio.mjs';
 import { beginTensorScope, configureOrt, releaseOrt } from '../supertonic/ort-runtime.mjs';
 import { loadTextToSpeech, loadVoiceStyle } from '../supertonic/helper.mjs';
+import { describeSupertonicFrontend, resolveSupertonicLanguage } from '../supertonic/language.mjs';
 import {
   EXECUTION_PROVIDERS,
   FRONTEND_DESCRIPTION,
@@ -25,6 +26,7 @@ let textToSpeech = null;
 let voiceStyle = null;
 let activeExecutionProviders = [];
 let restoreFetch = null;
+let activeLanguage = LANGUAGE;
 
 function baseInfo() {
   return {
@@ -33,14 +35,14 @@ function baseInfo() {
     settings: {
       executionProviders: [...activeExecutionProviders],
       threads: WASM_THREADS,
-      language: LANGUAGE,
+      language: activeLanguage,
       voiceStyle: VOICE,
       totalSteps: TOTAL_STEP,
       speed: SPEED,
       demoUiSpeedEquivalent: 1,
       silenceDurationSeconds: SILENCE_DURATION,
       sampleRate: SAMPLE_RATE,
-      frontend: FRONTEND_DESCRIPTION,
+      frontend: describeSupertonicFrontend(FRONTEND_DESCRIPTION, activeLanguage),
       outputTrim: OUTPUT_TRIM_DESCRIPTION,
       randomSeed: RANDOMNESS_DESCRIPTION,
       outputLocation: 'ONNX Runtime Web default CPU output; every session.run is awaited before the helper reads output .data.',
@@ -73,7 +75,7 @@ async function synthesize(text) {
   if (!textToSpeech || !voiceStyle) throw new Error('Supertonic has not been initialized.');
   const scope = beginTensorScope();
   try {
-    const result = await textToSpeech.call(text, LANGUAGE, voiceStyle, TOTAL_STEP, SPEED, SILENCE_DURATION);
+    const result = await textToSpeech.call(text, activeLanguage, voiceStyle, TOTAL_STEP, SPEED, SILENCE_DURATION);
     if (!Array.isArray(result?.wav) || !Array.isArray(result?.duration) || result.duration.length !== 1) {
       throw new Error('Official Supertonic helper returned an invalid waveform result.');
     }
@@ -86,7 +88,8 @@ async function synthesize(text) {
   }
 }
 
-async function initialize({ backend, probe, probeText }) {
+async function initialize({ backend, probe, probeText, language } = {}) {
+  activeLanguage = resolveSupertonicLanguage(language, LANGUAGE);
   activeExecutionProviders = EXECUTION_PROVIDERS[backend] ? [...EXECUTION_PROVIDERS[backend]] : [];
   if (!activeExecutionProviders.length) return unsupported('Unsupported Supertonic backend.');
 
@@ -182,6 +185,7 @@ async function dispose() {
   const currentRuntime = ortModule;
   ortModule = null;
   activeExecutionProviders = [];
+  activeLanguage = LANGUAGE;
   if (currentRuntime) await releaseOrt();
 }
 

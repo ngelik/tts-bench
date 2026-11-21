@@ -11,9 +11,12 @@ to record relevant power/thermal conditions without personal information. `--chr
 ```sh
 npm ci
 npm run bench -- models
+npm run bench -- models --language fr
 npm run assets -- fetch --model phonon
 npm run assets -- verify --model phonon
 ```
+
+The optional `models --language TAG` filter lists the browser profiles configured for that exact spoken language. Each entry exposes `frontendLanguages` alongside the source-backed model inventory in `support.languages`.
 
 `assets.lock.json` records upstream URLs, revisions, SHA-256 digests and exact byte
 counts. A changed or missing upstream file fails explicitly. Staged model/runtime
@@ -56,6 +59,15 @@ operations on WASM SIMD128/CPU. Software adapters are unsupported for scored
 runs. CPU results remain on the existing official browser runtime. See the
 Linnet entry in [model support](MODEL_SUPPORT.md) and [licensing](LICENSING.md).
 
+## Choose an article language
+
+```sh
+npm run fixtures -- list
+npm run fixtures -- check --id uk-article-v1
+```
+
+Pass `--fixture ID` to each `bench run`, including the smoke. A campaign accepts the same ID as top-level `fixtureId`. The [multilingual guide](MULTILINGUAL.md) shows how to add and test an edition, including the files to include in a PR.
+
 ## Choose a backend and workload
 
 ```sh
@@ -69,7 +81,7 @@ A software renderer or CPU-only fallback is not a GPU result. `--smoke` uses thr
 chunks, skips the full warm-up and defaults to one scored diagnostic repetition.
 It cannot be submitted as a benchmark score.
 
-Full `warm` runs start with one excluded 20,000-character article on each backend.
+Full `warm` runs start with one excluded full article in the selected language on each backend.
 The engine stays resident for the scored articles.
 
 | Registered model | Scored warm articles per backend |

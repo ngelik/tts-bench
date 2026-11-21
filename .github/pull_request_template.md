@@ -2,13 +2,14 @@
 
 - [ ] Measured baseline result: Apple M1 Pro MacBook Pro, native arm64.
 - [ ] Model evaluation request: no baseline run supplied.
+- [ ] New or revised language fixture: include the language tag, fixture ID, translation credit and review status.
 - [ ] Implementation, documentation or maintenance change.
 
 ## Model evaluation request
 
 For a request-only PR, add `evaluation-requests/<model-slug>.md` using the template,
 link that file here, and provide the model name and public model URL. Optional:
-upstream/browser code, license and preferred voice. No benchmark run or adapter is
+target fixture ID or translation PR, upstream/browser code, license and preferred voice. No benchmark run or adapter is
 required. Mark the result-only checklist below not applicable.
 
 Request file / model URL:
@@ -24,7 +25,8 @@ need a baseline result. Checks below apply only to the files and work submitted.
 - [ ] I ran `npm test`, `npm run validate`, and `npm run reference -- --check`.
 - [ ] Every new result is included in README Reference results via the generated index.
 - [ ] Supported voice/language counts have primary sources, scope and tested-voice distinctions.
-- [ ] Scores use the full fixed fixture; smoke tests are not presented as benchmarks.
+- [ ] For translations: `npm run fixtures -- check` verifies the registered article and spans.
+- [ ] Scores use the full registered fixture and disclose the language/voice used by the adapter.
 - [ ] Requested/effective backend, precision, voice, source and asset hashes are recorded.
 - [ ] Failures and unavailable metrics remain explicit; no missing value is replaced with zero.
 - [ ] I reviewed files for private paths, credentials, hostnames and unrelated data.
