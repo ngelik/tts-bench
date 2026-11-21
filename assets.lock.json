@@ -9438,6 +9438,468 @@
         ],
         "notes": "One Ukrainian Serhiy synthetic voice is selected. The full inference stack has 575,888 stored scalar values; this is not a trainable-only parameter claim. The checkpoint carries GPL-3.0; teacher and corpus licenses do not grant separate rights to the student checkpoint or generated voice. The upstream notice says speaker-consent and dataset-rights review is not independently completed. Only Ukrainian is exposed; no other voice or language is tested."
       }
+    },
+    "kale-tts-1-nano-int8": {
+      "displayName": "Kale TTS 1 Nano 7.5M (INT8 CPU)",
+      "modelRevision": "b6ce1887268c3667994fc3b0b2c82887c069915c",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "MIT ONNX Runtime Web with third-party notices",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "kale-nano-int8-kale-tts-1-nano.onnx",
+          "target": "models/kale-tts-1-nano/kale-tts-1-nano.onnx",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/kale-tts-1-nano.onnx",
+          "bytes": 14767138,
+          "sha256": "4d5269974de4fba7a66f947608a9a5381b4e39c1a8a6073df6001ab7e7f76288",
+          "kind": "model-weights"
+        },
+        {
+          "id": "kale-nano-int8-LICENSE",
+          "target": "models/kale-tts-1-nano/LICENSE",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "kale-nano-int8-THIRD_PARTY_NOTICES.md",
+          "target": "models/kale-tts-1-nano/THIRD_PARTY_NOTICES.md",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/THIRD_PARTY_NOTICES.md",
+          "bytes": 7149,
+          "sha256": "d732919e8cacdfd200cf11a61c12cc8c272e103bf235f060aa99a339a92b8474",
+          "kind": "license"
+        },
+        {
+          "id": "kale-nano-int8-frontend-dizione-LICENSE",
+          "target": "models/kale-tts-1-nano/frontend/dizione/LICENSE",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "kale-nano-int8-tokenizer.json",
+          "target": "models/kale-tts-1-nano/tokenizer.json",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/tokenizer.json",
+          "bytes": 1789,
+          "sha256": "61188314434d9972e42677fb71dba9e19aa8698e980541b1c06a1f9f16086e60",
+          "kind": "tokenizer"
+        },
+        {
+          "id": "kale-nano-int8-voices.json",
+          "target": "models/kale-tts-1-nano/voices.json",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json",
+          "bytes": 4069,
+          "sha256": "b4ceadf14b655bc39d1fbb76571a5ad46007585e8883af8a9962cae6b2b83669",
+          "kind": "config"
+        },
+        {
+          "id": "kale-nano-int8-voices-s057b.bin",
+          "target": "models/kale-tts-1-nano/voices/s057b.bin",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/voices/s057b.bin",
+          "bytes": 522240,
+          "sha256": "6efc770ae27fcbe0ba68b3a8c67b4a7fb86fe7c8b364a4f2b3f2c729e377b4c1",
+          "kind": "voice"
+        },
+        {
+          "id": "kale-nano-int8-voices-s057b.extra.bin",
+          "target": "models/kale-tts-1-nano/voices/s057b.extra.bin",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/voices/s057b.extra.bin",
+          "bytes": 336,
+          "sha256": "35c0e00f2c3500914c791a21af160a4058f3ee30a00cbd0c29941d2503210e89",
+          "kind": "voice"
+        },
+        {
+          "id": "kale-nano-int8-js-kale-tts.mjs",
+          "target": "models/kale-tts-1-nano/js/kale-tts.mjs",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/js/kale-tts.mjs",
+          "bytes": 21175,
+          "sha256": "f4e9916197be000d5909035682da83051fb767ecb4d5162d89b77f23f9bb0039",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-ettin.js",
+          "target": "models/kale-tts-1-nano/frontend/ettin.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/ettin.js",
+          "bytes": 6702,
+          "sha256": "53a50173f4131df186462a9b1d56a66df27c569b6e35d5cc2c82d9077da46135",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-words-kaleTts.js",
+          "target": "models/kale-tts-1-nano/frontend/words/kaleTts.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/kaleTts.js",
+          "bytes": 29771,
+          "sha256": "4d52bfca1176afa867cbc812b4d864e56561e08b51219e624b43a6d2ed3bbae5",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-dizione-spoken.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/spoken.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/spoken.js",
+          "bytes": 45518,
+          "sha256": "2ba64d8740c3d30efc04e6f964f4e5e3342dc93671b0d3f0feabf20c2a44cdfd",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-dizione-tables.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/tables.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/tables.js",
+          "bytes": 9929,
+          "sha256": "7fa8e0f95c3080e28946534fba42b4008905568c2eae553359b49aecc65380c6",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-dizione-homographs.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/homographs.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/homographs.js",
+          "bytes": 7296,
+          "sha256": "dfb3e1f170d18b31053609a3ce944919105b65678a441804f053a9fae22d9125",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-dizione-homographs.data.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/homographs.data.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/homographs.data.js",
+          "bytes": 46920,
+          "sha256": "1dc45e2e5ca7ee6d4b6035f1fb66f4c5b0c0e9bce7f0ce6cb5468481989a1cb0",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-words-g2p.bin",
+          "target": "models/kale-tts-1-nano/frontend/words/g2p.bin",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/g2p.bin",
+          "bytes": 1745840,
+          "sha256": "aba532e5e07fb6887e78148957ab29c890374ead77bf555c247d99b2dc0f51f5",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-words-lexicon.tsv",
+          "target": "models/kale-tts-1-nano/frontend/words/lexicon.tsv",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/lexicon.tsv",
+          "bytes": 2786667,
+          "sha256": "1eec6681dfbc213660f78548c14894e7de6dad6ef73caaac279f2ed400a91b7c",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-words-override.public.tsv",
+          "target": "models/kale-tts-1-nano/frontend/words/override.public.tsv",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/override.public.tsv",
+          "bytes": 76150,
+          "sha256": "0d725b31afd09a33a9908ea889be2d65181cda16c89a6946cfd2b9b0b0220b22",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-int8-frontend-words-terms.tsv",
+          "target": "models/kale-tts-1-nano/frontend/words/terms.tsv",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/terms.tsv",
+          "bytes": 5758,
+          "sha256": "987ce777805e22718e38d23e66d8f00e9509ede28d0d52cc6819d7216e798e3d",
+          "kind": "frontend"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0 weights and synthetic presets; upstream Maya-1 use policy",
+        "runtime": "Apache-2.0 Kale frontend with component notices; MIT ONNX Runtime Web",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 10,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Kale Nano checkpoint and official voice catalog",
+        "notes": "Ten English synthetic presets across US and British accents. Only the American English Kenzie (s057b) voice pack and frontend are staged.",
+        "sources": [
+          "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+          "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json"
+        ]
+      }
+    },
+    "kale-tts-1-nano-fp32": {
+      "displayName": "Kale TTS 1 Nano 7.5M (FP32 WebGPU)",
+      "modelRevision": "b6ce1887268c3667994fc3b0b2c82887c069915c",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "MIT ONNX Runtime Web with third-party notices",
+        "files": [
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "kale-nano-fp32-kale-tts-1-nano.fp32.onnx",
+          "target": "models/kale-tts-1-nano/kale-tts-1-nano.fp32.onnx",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/kale-tts-1-nano.fp32.onnx",
+          "bytes": 30592691,
+          "sha256": "34d408a127f35f732a6860db5b1f7e8e1baac43ee3e32874f2007b5c6360e73a",
+          "kind": "model-weights"
+        },
+        {
+          "id": "kale-nano-fp32-LICENSE",
+          "target": "models/kale-tts-1-nano/LICENSE",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "kale-nano-fp32-THIRD_PARTY_NOTICES.md",
+          "target": "models/kale-tts-1-nano/THIRD_PARTY_NOTICES.md",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/THIRD_PARTY_NOTICES.md",
+          "bytes": 7149,
+          "sha256": "d732919e8cacdfd200cf11a61c12cc8c272e103bf235f060aa99a339a92b8474",
+          "kind": "license"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-dizione-LICENSE",
+          "target": "models/kale-tts-1-nano/frontend/dizione/LICENSE",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "kale-nano-fp32-tokenizer.json",
+          "target": "models/kale-tts-1-nano/tokenizer.json",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/tokenizer.json",
+          "bytes": 1789,
+          "sha256": "61188314434d9972e42677fb71dba9e19aa8698e980541b1c06a1f9f16086e60",
+          "kind": "tokenizer"
+        },
+        {
+          "id": "kale-nano-fp32-voices.json",
+          "target": "models/kale-tts-1-nano/voices.json",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json",
+          "bytes": 4069,
+          "sha256": "b4ceadf14b655bc39d1fbb76571a5ad46007585e8883af8a9962cae6b2b83669",
+          "kind": "config"
+        },
+        {
+          "id": "kale-nano-fp32-voices-s057b.bin",
+          "target": "models/kale-tts-1-nano/voices/s057b.bin",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/voices/s057b.bin",
+          "bytes": 522240,
+          "sha256": "6efc770ae27fcbe0ba68b3a8c67b4a7fb86fe7c8b364a4f2b3f2c729e377b4c1",
+          "kind": "voice"
+        },
+        {
+          "id": "kale-nano-fp32-voices-s057b.extra.bin",
+          "target": "models/kale-tts-1-nano/voices/s057b.extra.bin",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/voices/s057b.extra.bin",
+          "bytes": 336,
+          "sha256": "35c0e00f2c3500914c791a21af160a4058f3ee30a00cbd0c29941d2503210e89",
+          "kind": "voice"
+        },
+        {
+          "id": "kale-nano-fp32-js-kale-tts.mjs",
+          "target": "models/kale-tts-1-nano/js/kale-tts.mjs",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/js/kale-tts.mjs",
+          "bytes": 21175,
+          "sha256": "f4e9916197be000d5909035682da83051fb767ecb4d5162d89b77f23f9bb0039",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-ettin.js",
+          "target": "models/kale-tts-1-nano/frontend/ettin.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/ettin.js",
+          "bytes": 6702,
+          "sha256": "53a50173f4131df186462a9b1d56a66df27c569b6e35d5cc2c82d9077da46135",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-words-kaleTts.js",
+          "target": "models/kale-tts-1-nano/frontend/words/kaleTts.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/kaleTts.js",
+          "bytes": 29771,
+          "sha256": "4d52bfca1176afa867cbc812b4d864e56561e08b51219e624b43a6d2ed3bbae5",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-dizione-spoken.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/spoken.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/spoken.js",
+          "bytes": 45518,
+          "sha256": "2ba64d8740c3d30efc04e6f964f4e5e3342dc93671b0d3f0feabf20c2a44cdfd",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-dizione-tables.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/tables.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/tables.js",
+          "bytes": 9929,
+          "sha256": "7fa8e0f95c3080e28946534fba42b4008905568c2eae553359b49aecc65380c6",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-dizione-homographs.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/homographs.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/homographs.js",
+          "bytes": 7296,
+          "sha256": "dfb3e1f170d18b31053609a3ce944919105b65678a441804f053a9fae22d9125",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-dizione-homographs.data.js",
+          "target": "models/kale-tts-1-nano/frontend/dizione/homographs.data.js",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/dizione/homographs.data.js",
+          "bytes": 46920,
+          "sha256": "1dc45e2e5ca7ee6d4b6035f1fb66f4c5b0c0e9bce7f0ce6cb5468481989a1cb0",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-words-g2p.bin",
+          "target": "models/kale-tts-1-nano/frontend/words/g2p.bin",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/g2p.bin",
+          "bytes": 1745840,
+          "sha256": "aba532e5e07fb6887e78148957ab29c890374ead77bf555c247d99b2dc0f51f5",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-words-lexicon.tsv",
+          "target": "models/kale-tts-1-nano/frontend/words/lexicon.tsv",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/lexicon.tsv",
+          "bytes": 2786667,
+          "sha256": "1eec6681dfbc213660f78548c14894e7de6dad6ef73caaac279f2ed400a91b7c",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-words-override.public.tsv",
+          "target": "models/kale-tts-1-nano/frontend/words/override.public.tsv",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/override.public.tsv",
+          "bytes": 76150,
+          "sha256": "0d725b31afd09a33a9908ea889be2d65181cda16c89a6946cfd2b9b0b0220b22",
+          "kind": "frontend"
+        },
+        {
+          "id": "kale-nano-fp32-frontend-words-terms.tsv",
+          "target": "models/kale-tts-1-nano/frontend/words/terms.tsv",
+          "url": "https://huggingface.co/KaleComputer/kale-tts-1-nano/resolve/b6ce1887268c3667994fc3b0b2c82887c069915c/frontend/words/terms.tsv",
+          "bytes": 5758,
+          "sha256": "987ce777805e22718e38d23e66d8f00e9509ede28d0d52cc6819d7216e798e3d",
+          "kind": "frontend"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0 weights and synthetic presets; upstream Maya-1 use policy",
+        "runtime": "Apache-2.0 Kale frontend with component notices; MIT ONNX Runtime Web",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 10,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Kale Nano checkpoint and official voice catalog",
+        "notes": "Ten English synthetic presets across US and British accents. Only the American English Kenzie (s057b) voice pack and frontend are staged.",
+        "sources": [
+          "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+          "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json"
+        ]
+      }
     }
   }
 }

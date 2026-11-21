@@ -380,3 +380,14 @@ Piper eSpeak NG Ukrainian phonemization and the checkpoint's explicit stress
 restoration; unknown symbols and overlong unsplittable pieces fail. The
 checkpoint and voice rights are not broadened by the teacher/corpus licenses.
 [Pinned model card](https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/README.md) · [Pinned upstream notice](https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/NOTICE.md) · [Browser conversion](UA_SERHIY.md).
+
+<a id="kale-tts-1-nano-int8"></a>
+<a id="kale-tts-1-nano-fp32"></a>
+
+## Kale TTS 1 Nano 7.5M
+
+Supported voices: **10**. Bundled voices: **1** (Kenzie). Supported languages: **1** (en).
+
+Both pinned browser profiles select the first official voice, Kenzie (`s057b`), with American English pronunciation. The publisher also includes British English presets in the full catalog. The benchmark stages Kenzie's style table, decoder controls, and American English frontend.
+
+[Pinned model card](https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md) · [Voice catalog](https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json).

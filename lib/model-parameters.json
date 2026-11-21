@@ -160,5 +160,19 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/dmytro-m/ua-serhiy-0p58m/blob/1abd585d725a787b405c28a59ce1cbdfd34780bb/manifest.json",
     "scope": "Exact sum of scalar values in the pinned inference-state manifest (duration, acoustic and decoder tensors). This stored-tensor count may include non-trainable buffers and is not asserted as a trainable-only count; it is far below the one-billion single-repetition threshold."
+  },
+  "kale-tts-1-nano-int8": {
+    "parameterCount": 3145926,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/kale-tts-1-nano.onnx",
+    "upstreamModelCard": "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+    "scope": "Sum the logical shapes of ONNX graph initializers ending in .weight or .weight_q. This lower bound excludes biases, folded or renamed matrices, constants and voice inputs. The model card reports approximately 7.5 million parameters for the full Nano speech graph."
+  },
+  "kale-tts-1-nano-fp32": {
+    "parameterCount": 4019862,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/kale-tts-1-nano.fp32.onnx",
+    "upstreamModelCard": "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+    "scope": "Sum the logical shapes of ONNX graph initializers ending in .weight or .weight_q. This lower bound excludes biases, folded or renamed matrices, constants and voice inputs. The model card reports approximately 7.5 million parameters for the full Nano speech graph."
   }
 }
