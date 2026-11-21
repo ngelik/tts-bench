@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8",
+  "createdAt": "2026-11-21T00:58:14.781Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v1",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 5,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 8 cores, 16 GiB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "1ddfe29f1ed8c3a05bde8f91559e5e8d4bb330ea",
+    "dirty": false,
+    "manifestSha256": "bb938377a4854186c32102fbc34ac0fc34b7edba0a995f076d6d1397dbadcf6e"
+  },
+  "assets": [
+    {
+      "id": "runtime:kale-tts-1-nano-int8:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:kale-tts-1-nano-int8:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:kale-tts-1-nano-int8:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:kale-tts-1-nano-int8:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:kale-tts-1-nano-int8:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "kale-nano-int8-kale-tts-1-nano.onnx",
+      "sha256": "4d5269974de4fba7a66f947608a9a5381b4e39c1a8a6073df6001ab7e7f76288",
+      "bytes": 14767138
+    },
+    {
+      "id": "kale-nano-int8-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "kale-nano-int8-THIRD_PARTY_NOTICES.md",
+      "sha256": "d732919e8cacdfd200cf11a61c12cc8c272e103bf235f060aa99a339a92b8474",
+      "bytes": 7149
+    },
+    {
+      "id": "kale-nano-int8-frontend-dizione-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "kale-nano-int8-tokenizer.json",
+      "sha256": "61188314434d9972e42677fb71dba9e19aa8698e980541b1c06a1f9f16086e60",
+      "bytes": 1789
+    },
+    {
+      "id": "kale-nano-int8-voices.json",
+      "sha256": "b4ceadf14b655bc39d1fbb76571a5ad46007585e8883af8a9962cae6b2b83669",
+      "bytes": 4069
+    },
+    {
+      "id": "kale-nano-int8-voices-s057b.bin",
+      "sha256": "6efc770ae27fcbe0ba68b3a8c67b4a7fb86fe7c8b364a4f2b3f2c729e377b4c1",
+      "bytes": 522240
+    },
+    {
+      "id": "kale-nano-int8-voices-s057b.extra.bin",
+      "sha256": "35c0e00f2c3500914c791a21af160a4058f3ee30a00cbd0c29941d2503210e89",
+      "bytes": 336
+    },
+    {
+      "id": "kale-nano-int8-js-kale-tts.mjs",
+      "sha256": "f4e9916197be000d5909035682da83051fb767ecb4d5162d89b77f23f9bb0039",
+      "bytes": 21175
+    },
+    {
+      "id": "kale-nano-int8-frontend-ettin.js",
+      "sha256": "53a50173f4131df186462a9b1d56a66df27c569b6e35d5cc2c82d9077da46135",
+      "bytes": 6702
+    },
+    {
+      "id": "kale-nano-int8-frontend-words-kaleTts.js",
+      "sha256": "4d52bfca1176afa867cbc812b4d864e56561e08b51219e624b43a6d2ed3bbae5",
+      "bytes": 29771
+    },
+    {
+      "id": "kale-nano-int8-frontend-dizione-spoken.js",
+      "sha256": "2ba64d8740c3d30efc04e6f964f4e5e3342dc93671b0d3f0feabf20c2a44cdfd",
+      "bytes": 45518
+    },
+    {
+      "id": "kale-nano-int8-frontend-dizione-tables.js",
+      "sha256": "7fa8e0f95c3080e28946534fba42b4008905568c2eae553359b49aecc65380c6",
+      "bytes": 9929
+    },
+    {
+      "id": "kale-nano-int8-frontend-dizione-homographs.js",
+      "sha256": "dfb3e1f170d18b31053609a3ce944919105b65678a441804f053a9fae22d9125",
+      "bytes": 7296
+    },
+    {
+      "id": "kale-nano-int8-frontend-dizione-homographs.data.js",
+      "sha256": "1dc45e2e5ca7ee6d4b6035f1fb66f4c5b0c0e9bce7f0ce6cb5468481989a1cb0",
+      "bytes": 46920
+    },
+    {
+      "id": "kale-nano-int8-frontend-words-g2p.bin",
+      "sha256": "aba532e5e07fb6887e78148957ab29c890374ead77bf555c247d99b2dc0f51f5",
+      "bytes": 1745840
+    },
+    {
+      "id": "kale-nano-int8-frontend-words-lexicon.tsv",
+      "sha256": "1eec6681dfbc213660f78548c14894e7de6dad6ef73caaac279f2ed400a91b7c",
+      "bytes": 2786667
+    },
+    {
+      "id": "kale-nano-int8-frontend-words-override.public.tsv",
+      "sha256": "0d725b31afd09a33a9908ea889be2d65181cda16c89a6946cfd2b9b0b0220b22",
+      "bytes": 76150
+    },
+    {
+      "id": "kale-nano-int8-frontend-words-terms.tsv",
+      "sha256": "987ce777805e22718e38d23e66d8f00e9509ede28d0d52cc6819d7216e798e3d",
+      "bytes": 5758
+    }
+  ],
+  "cells": [
+    {
+      "model": "kale-tts-1-nano-int8",
+      "support": {
+        "voiceCount": 10,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Kale Nano checkpoint and official voice catalog",
+        "notes": "Ten English synthetic presets across US and British accents. Only the American English Kenzie (s057b) voice pack and frontend are staged.",
+        "sources": [
+          "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
+          "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json"
+        ]
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Kenzie (s057b)",
+      "precision": "INT8 decoder / FP32 timing",
+      "settings": {
+        "language": "en",
+        "locale": "en-US",
+        "graph": "kale-tts-1-nano.onnx",
+        "threads": 1,
+        "speed": 1,
+        "sampleRate": 24000,
+        "runtime": "ONNX Runtime Web 1.31.1",
+        "graphOptimizationLevel": "all",
+        "frontend": "Official Kale normalization, English dictionary/G2P, and Kokoro-native tokenization",
+        "sentencePauseMs": 120,
+        "forcedCpuNodes": [],
+        "executionProviders": [
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit single-thread WASM provider."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 50014.55500006676,
+          "samples": 29051400,
+          "sampleRate": 24000,
+          "pcmSha256": "b8bfeb8ea20f711633c8cd2c88b3f59a25f351eda9e8c2decc1ebc138cd54ac4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 207.11999988555908,
+            "firstSourceChunkCompletedMs": 641.8550000190735,
+            "audioSeconds": 1210.475,
+            "realTimeFactor": 0.04131812305092361,
+            "minSamplesPerChunk": 246960,
+            "maxSamplesPerChunk": 399720
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 49745.94499993324,
+          "samples": 29051400,
+          "sampleRate": 24000,
+          "pcmSha256": "20dc85df6a0643c7899f97a8b35fe2aaf7a7bc6ef0bb2dde5de33efd11b58b0d",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 164.35999989509583,
+            "firstSourceChunkCompletedMs": 583.9449999332428,
+            "audioSeconds": 1210.475,
+            "realTimeFactor": 0.04109621842659555,
+            "minSamplesPerChunk": 246960,
+            "maxSamplesPerChunk": 399720
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 49779.52500009537,
+          "samples": 29051400,
+          "sampleRate": 24000,
+          "pcmSha256": "2ed58a8dcded725b870fc6363a3402834694bd8e48a9ec79507b50531d8d5862",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 163.9649999141693,
+            "firstSourceChunkCompletedMs": 586.4249999523163,
+            "audioSeconds": 1210.475,
+            "realTimeFactor": 0.041123959602714116,
+            "minSamplesPerChunk": 246960,
+            "maxSamplesPerChunk": 399720
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 49834.9350001812,
+          "samples": 29051400,
+          "sampleRate": 24000,
+          "pcmSha256": "d1345c1bce46ddd1461938ee469c198efe43c4d8036f1d14ae7ecccfa899950e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 162.47000002861023,
+            "firstSourceChunkCompletedMs": 583.3150000572205,
+            "audioSeconds": 1210.475,
+            "realTimeFactor": 0.0411697350215256,
+            "minSamplesPerChunk": 246960,
+            "maxSamplesPerChunk": 399720
+          }
+        },
+        {
+          "index": 4,
+          "generationMs": 49774.89499998093,
+          "samples": 29051400,
+          "sampleRate": 24000,
+          "pcmSha256": "0dbd2a3e284ee733171479426af3299246a99f6ac33bf0ab691a56d123a6f9ef",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 163.6600000858307,
+            "firstSourceChunkCompletedMs": 583.7699999809265,
+            "audioSeconds": 1210.475,
+            "realTimeFactor": 0.04112013465786648,
+            "minSamplesPerChunk": 246960,
+            "maxSamplesPerChunk": 399720
+          }
+        },
+        {
+          "index": 5,
+          "generationMs": 49868.18499994278,
+          "samples": 29051400,
+          "sampleRate": 24000,
+          "pcmSha256": "53b70d6979e006dabc3aefbcb7515c38f0ce440e9107db10e39e71f0826dae28",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 163.99500012397766,
+            "firstSourceChunkCompletedMs": 584.2349998950958,
+            "audioSeconds": 1210.475,
+            "realTimeFactor": 0.04119720357706089,
+            "minSamplesPerChunk": 246960,
+            "maxSamplesPerChunk": 399720
+          },
+          "audio": {
+            "sha256": "a5bce7e2ce850c95f8b4ec0b17222a0f0472b6328b6eb831dd78f02258725ba1",
+            "bytes": 58102844
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "AC power; macOS 26.6.2 (25G83); single WASM thread; first warm timing cell, before FP32 WebGPU; ambient and thermal conditions unmeasured."
+  ]
+}

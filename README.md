@@ -57,6 +57,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E9**: Apple MacBook Pro M1 Pro / 8 CPU cores / 16 GiB RAM / native arm64 · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E10**: Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E11**: MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
+- **E12**: MacBook Pro (Apple M1 Pro, 8 cores, 16 GiB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0.
 
 ### English (en) — english-20k-v1
 
@@ -72,6 +73,8 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Underdog Woof one-voice (Isla) | E1 | 31.71 | — | [181.81 s (n=5)](results/historical-2026-11-08-m1pro-gpu-warm/summary.md) | Historical; distinct timing protocols |
 | Inflect Mini v3 Browser Port | E10 | 137.11 | [2398.30 s (n=5)](results/2026-11-19t16-23-50-621z-inflect-mini-v3-browser-port-cpu-warm-2bdd861d/summary.md) | [2342.30 s (n=5)](results/2026-11-20t01-14-02-658z-inflect-mini-v3-browser-port-webgpu-warm-aa3f07b4/summary.md) | Archived native; independent attempts |
 | ZONOS3-Mini (Imogen) | E11 | 2081.59 | [3649.82 s (n=1)](results/2026-11-20t15-39-21-013z-zonos3-mini-cpu-warm-8680490f/summary.md) | — | Native; independent attempts |
+| Kale TTS 1 Nano 7.5M (FP32 WebGPU) | E12 | 30.59 | — | [18.83 s (n=5)](results/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76/summary.md) | Native; independent attempts |
+| Kale TTS 1 Nano 7.5M (INT8 CPU) | E12 | 14.77 | [49.78 s (n=5)](results/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8/summary.md) | — | Native; independent attempts |
 | Paradee 8M INT8 | E2 | 8.46 | [103.92 s (n=5)](results/2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f/summary.md) | [18.74 s (n=5)](results/2026-11-09t05-06-08-477z-paradee-webgpu-warm-c3836dc0/summary.md) | Native; matched configuration |
 | Piper en-GB Southern English Female low | E2 | 63.10 | [170.64 s (n=5)](results/2026-11-09t20-33-26-966z-piper-en-gb-southern-english-female-low-cpu-warm-9a0ba981/summary.md) | [12.07 s (n=5)](results/2026-11-09t20-52-18-629z-piper-en-gb-southern-english-female-low-webgpu-warm-d8fb8392/summary.md) | Native; matched configuration |
 | Supertonic 3 FP32 (M3) | E3 | 398.08 | [1332.06 s (n=5)](results/2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0/summary.md) | [67.09 s (n=5)](results/2026-11-10t09-58-29-882z-supertonic-3-webgpu-warm-97865808/summary.md) | Native; matched configuration |
@@ -836,6 +839,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 175 · 2026-11-20 | ua-serhiy-0p58m/cpu | uk / uk-article-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/summary.md) | [SVG](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/chart.svg) |
 | 176 · 2026-11-20 | ua-serhiy-0p58m/webgpu | uk / uk-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) | [SVG](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/chart.svg) |
 | 177 · 2026-11-20 | ua-serhiy-0p58m/webgpu | uk / uk-article-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/summary.md) | [SVG](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/chart.svg) |
+| 178 · 2026-11-21 | kale-tts-1-nano-int8/cpu | en / english-20k-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8/summary.md) | [SVG](results/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8/chart.svg) |
+| 179 · 2026-11-21 | kale-tts-1-nano-fp32/webgpu | en / english-20k-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76/summary.md) | [SVG](results/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76/chart.svg) |
 
 </details>
 
