@@ -255,11 +255,14 @@ test('dashboard assembly includes a third registered language without changing t
   french.createdAt = '2099-01-01T00:00:00Z';
   french.fixture = {id:'fr-article-v1', language:'fr', sha256:'c'.repeat(64), characters:1200,
     unicodeCodePoints:1200, utf8Bytes:1320, chunks:7, source:{type:'translation', sourceLanguage:'en'}};
+  const englishAudio = {resultId:original.id, model:id, backend:'cpu', clip:{path:'audio/samples/english-current.wav'}, full:{sha256:'a'.repeat(64)}};
+  const frenchAudio = {resultId:french.id, model:id, backend:'cpu', clip:{path:'audio/samples/french-current.wav'}, full:{sha256:'b'.repeat(64)}};
   const frenchFixture = {...french.fixture, smokeId:'fr-article-smoke-v1', articleFile:'fr-article-v1.txt',
     chunksFile:'fr-article-v1.chunks.json', metadataFile:'fr-article-v1.meta.json'};
   const assembled = assembleDashboardData({
     results:[original, french],
     models:{[id]:getAssetLock().models[id]},
+    audioEntries:[englishAudio, frenchAudio],
     fixtureRegistry:[...listBenchmarkFixtures(), frenchFixture],
   });
   assert.equal(assembled.models[0].warm.cpu.resultId, original.id);
@@ -267,6 +270,8 @@ test('dashboard assembly includes a third registered language without changing t
   assert.equal(assembled.byLanguage.fr.fixture.id, 'fr-article-v1');
   assert.equal(assembled.byLanguage.fr.fixture.language, 'fr');
   assert.equal(assembled.byLanguage.fr.models[0].warm.cpu.resultId, french.id);
+  assert.equal(assembled.recordings.find(entry => entry.resultId === original.id).matchesSelectedWarm, true);
+  assert.equal(assembled.recordings.find(entry => entry.resultId === french.id).matchesSelectedWarm, true);
 });
 
 test('a fixture-only edition does not replace a measured edition until it has an eligible full result', () => {

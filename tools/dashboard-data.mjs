@@ -251,15 +251,6 @@ function hasEligibleFullFixtureResult(results, fixtureId, selectedWarmResultIds)
   });
 }
 
-function selectedResultMap(models, metricName) {
-  const selected = new Map();
-  for (const model of models) for (const backend of BACKENDS) {
-    const resultId = model[metricName]?.[backend]?.resultId;
-    if (resultId) selected.set(`${model.id}/${backend}`, {result:{id:resultId}});
-  }
-  return selected;
-}
-
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
 export function assembleDashboardData(input) {
   const { results, models, audioEntries = [], campaignCells = [], fixtureRegistry = listBenchmarkFixtures() } = input;
@@ -305,9 +296,11 @@ export function assembleDashboardData(input) {
   const {en, ...translations} = byLanguage;
   const activeModels = [...(en?.models ?? []), ...Object.values(translations).flatMap(group => group.models ?? [])];
   const resultsById = new Map(results.map(result => [result.id, result]));
-  const recordings = enrichAudio(audioEntries, resultsById,
-    selectedResultMap(activeModels, 'warm'), selectedResultMap(activeModels, 'memory'))
-    .map(entry => ({...entry, name:models[entry.model]?.displayName ?? entry.name ?? entry.model}));
+  const activeAudioByPath = new Map(activeModels.flatMap(model => model.audio ?? []).map(entry => [entry.clip.path, entry]));
+  const recordings = enrichAudio(audioEntries, resultsById, new Map(), new Map()).map(entry => {
+    const current = activeAudioByPath.get(entry.clip.path);
+    return {...(current ?? entry), name:models[entry.model]?.displayName ?? entry.name ?? entry.model};
+  });
   return {...en, languages, byLanguage: translations, recordings};
 }
 
