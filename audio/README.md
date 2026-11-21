@@ -27,8 +27,11 @@ GitHub release and linked beside each clip.
 manifest and approved clips in the ignored `.cache/listening-site/` directory.
 The Pages workflow deploys this directory after changes reach `main` through a
 reviewed PR. No model weights, browser profiles or raw runs enter the site.
-New result PRs must include their clip, manifest and regenerated README; deployment
-then includes the new recording automatically. Full recordings remain release assets.
+Include authorized clips, the manifest and the regenerated README with the result
+publication. Full recordings remain release assets. After deployment, play each
+authorized example from its dashboard row and confirm the clip, receipt and full
+recording links. To add an example to an existing result, use the original scored
+WAV and the published receipt.
 
 ## Provenance and reproduction
 
@@ -76,6 +79,7 @@ commercial-use clearance or a grant of rights in upstream voices.
 
 - Kokoro 82M: hexgrad, `af_heart` English voice; Apache-2.0 model terms, with official JavaScript source attribution retained.
 - Kitten Nano 0.8: KittenML, Bella preset; Apache-2.0 model terms, with the pinned frontend implementation attributed.
+- Kale TTS 1 Nano: KaleComputer, synthetic Kenzie (`s057b`) English voice, based on Maya-1 by Maya Research. The INT8 CPU and FP32 WebGPU exports have separate scored recordings and Apache-2.0 model terms.
 - Sano Amy: ampixa, Amy English checkpoint; GPL-3.0 model card and GPL-3.0-or-later browser runtime terms are documented separately.
 - Inflect Micro v2: Owen Song, fixed synthetic English voice; Apache-2.0 model/export terms and MIT symbol-inventory attribution.
 - MMS English: Meta, English single-speaker checkpoint; CC BY-NC 4.0 model terms. Broader MMS language coverage is not claimed for this checkpoint.
