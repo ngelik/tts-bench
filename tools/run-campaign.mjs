@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {isDeepStrictEqual} from 'node:util';
 import {effectiveCampaignCell, validateCampaignCell} from '../lib/campaign-plan.mjs';
+import {resolveProtocolId} from '../lib/benchmark-policy.mjs';
 import {getModel} from '../lib/catalog.mjs';
 import {assertFixtureLanguageForModel, assertSettingsLanguageMatchesFixture, canonicalLanguageTag, defaultFixtureForModel, getBenchmarkFixture, requiredFixtureForModel} from '../lib/benchmark-fixtures.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
@@ -50,6 +51,7 @@ if(options.dryRun) {
       model:requestedCell.model,
       backend:requestedCell.backend,
       scenario:requestedCell.scenario,
+      protocolId:resolveProtocolId(requestedCell),
       requestedRepetitions:requestedCell.repetitions,
       effectiveRepetitions:effectivePlan.cells[index].repetitions,
     })),
@@ -69,7 +71,8 @@ try {
   if(aborted)break;assertSource();
   const repetitionNote=`requested n=${requestedCell.repetitions}; effective n=${cell.repetitions}`;
   const note=`Campaign ${id}; cell ${index+1}/${plan.cells.length}; source ${commit}; fixture ${fixture.id} (${fixture.language}, ${fixture.characters} JavaScript characters, ${fixture.chunks} spans); ${repetitionNote}; ${plan.conditions??'Record local power and background conditions separately.'}`;
-  const command=['bin/bench.mjs','run','--model',cell.model,'--backend',cell.backend,'--scenario',cell.scenario,'--fixture',fixture.id,'--repetitions',String(cell.repetitions),'--machine',options.machine,'--accept-license','--note',note];
+  const command=['bin/bench.mjs','run','--model',cell.model,'--backend',cell.backend,'--scenario',cell.scenario,'--fixture',fixture.id,'--repetitions',String(cell.warmProtocol==='v2'?requestedCell.repetitions:cell.repetitions),'--machine',options.machine,'--accept-license','--note',note];
+  if(cell.warmProtocol==='v2')command.push('--warm-protocol','v2');
   if(cell.timeoutMinutes!==undefined)command.push('--timeout-minutes',String(cell.timeoutMinutes));
   if(cell.resources)command.push('--resources');
   console.log(`START ${index+1}/${plan.cells.length} ${cell.model}/${cell.backend}/${cell.scenario} · requested n=${requestedCell.repetitions}, effective n=${cell.repetitions}`);
@@ -96,6 +99,8 @@ try {
     const canonicalEnglishFixture=fixture.id==='english-20k-v1'&&canonicalLanguageTag(fixture.language)==='en';
     const nonEnglishFixtureComplete=canonicalEnglishFixture||(observedFixture.language===fixture.language&&observedFixture.unicodeCodePoints===fixture.unicodeCodePoints&&observedFixture.utf8Bytes===fixture.utf8Bytes&&isDeepStrictEqual(observedFixture.source,fixture.source));
     if(receipt.source?.dirty!==false||receipt.source?.gitCommit!==commit||receipt.protocol?.smoke!==false||receipt.protocol?.scenario!==cell.scenario||receipt.protocol?.repetitions!==cell.repetitions||!fixtureMatches||!nonEnglishFixtureComplete) throw new Error('Receipt is not a clean-source result for the exact registered campaign fixture and effective cell');
+    if(receipt.protocol?.id!==resolveProtocolId(cell))throw new Error('Receipt protocol does not match the campaign cell');
+    if(cell.warmProtocol==='v2'&&receipt.protocol?.warmupRuns!==1)throw new Error('Receipt protocol does not match the warm v2 campaign cell');
     if(!Array.isArray(receipt.notes)||!receipt.notes.some(entry=>typeof entry==='string'&&entry.includes(repetitionNote))) throw new Error('Receipt does not record requested and effective campaign repetitions');
     if(!Array.isArray(receipt.cells)||receipt.cells.length!==1||!['measured','unsupported'].includes(receipt.cells[0].status)) throw new Error('Unexpected benchmark status');
     if(receipt.cells[0].status==='measured'&&!canonicalEnglishFixture) assertSettingsLanguageMatchesFixture(receipt.cells[0].settings, fixture);

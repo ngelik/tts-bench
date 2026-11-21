@@ -49,10 +49,21 @@ configuration is distinct from its strict frontend.
 9. Report median and observed min–max, sample count, settings and limitations.
    Min–max is not a confidence interval. Do not cherry-pick the fastest repetition.
 
-CPU and GPU use this same timer boundary in native v1 runs. A GPU pipeline is not
+CPU and GPU use this same timer boundary in native warm runs. A GPU pipeline is not
 necessarily GPU-exclusive. Pure CPU fallback must never masquerade as a GPU score.
 Unsupported backends have no timing value, not zero. A GPU-equipped computer may
 still have no usable hardware WebGPU adapter; software rendering is not a GPU score.
+
+`browser-tts-warm-v1` remains the default and retains its five-score schedule.
+Opt in to `browser-tts-warm-v2` with `--warm-protocol v2` for exactly three
+scored full articles after the same single excluded warm-up. Standard models,
+including models with unknown parameter counts and models at exactly one billion
+parameters, use three scores. The established Fun-CosyVoice3 and greater-than-one
+billion-parameter exceptions remain one scored article; invoke v2 with
+`--repetitions 3`, and the receipt records the requested-to-effective adjustment.
+V2 is valid only for full warm runs, not smoke or resource-instrumented runs.
+Keep v1 and v2 in separate comparison cohorts; neither aggregate comparisons nor
+CPU/WebGPU paired ratios cross protocol IDs.
 
 ## Other scenarios
 

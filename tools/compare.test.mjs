@@ -32,3 +32,10 @@ test('comparison rejects nested inference settings and source/protocol drift', (
     const [cpu,gpu] = example();change(gpu);assert.throws(()=>buildComparison([cpu,gpu]));
   }
 });
+
+test('comparison does not mix legacy warm v1 with three-round warm v2', () => {
+  const [cpu,gpu] = example();
+  gpu.protocol = { ...gpu.protocol, id: 'browser-tts-warm-v2', repetitions: 3 };
+  gpu.cells[0].trials = gpu.cells[0].trials.slice(0, 3);
+  assert.throws(() => buildComparison([cpu, gpu]), /Protocol, repetitions or timing boundaries differ/);
+});

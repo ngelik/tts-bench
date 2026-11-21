@@ -109,7 +109,12 @@ Use the same fixture ID for WebGPU and for any requested cached memory runs. Cam
   for translations).
   For a registered speech model with **more than 1,000,000,000 parameters**, score
   **one** full article on the resident engine. Fun-CosyVoice3 also uses one scored
-  article in every scenario. Other full warm runs default to five. Exactly one
+  article in every scenario. Other full warm runs default to five. The opt-in
+  `--warm-protocol v2 --repetitions 3` protocol scores exactly three articles
+  for standard warm runs and records protocol ID `browser-tts-warm-v2`; the
+  existing eligible single-observation exceptions still score one. V2 rejects
+  other explicit counts, smoke, non-warm scenarios and resource instrumentation.
+  Keep v1 and v2 comparisons and paired CPU/WebGPU ratios separate. Exactly one
   billion takes the standard schedule. Check the registered parameter evidence
   in `lib/model-parameters.json` when onboarding or selecting a model.
   A backbone name or quantized file size cannot establish the full parameter count.

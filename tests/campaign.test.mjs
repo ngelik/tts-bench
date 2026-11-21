@@ -35,11 +35,14 @@ const arg = flag => args[args.indexOf(flag) + 1];
 const model = arg('--model');
 const backend = arg('--backend');
 const scenario = arg('--scenario');
-const repetitions = Number(arg('--repetitions'));
+const warmProtocol = args.includes('--warm-protocol') ? arg('--warm-protocol') : null;
+const requestedRepetitions = Number(arg('--repetitions'));
+const repetitions = warmProtocol === 'v2' && model === 'large' ? 1 : requestedRepetitions;
+const protocolId = warmProtocol === 'v2' ? 'browser-tts-warm-v2' : 'browser-tts-' + scenario + '-v1' + (args.includes('--resources') ? '-resources' : '');
 const fixtureId = arg('--fixture');
 const note = arg('--note');
 const events = process.env.CAMPAIGN_TEST_EVENTS;
-await appendFile(events, JSON.stringify({ event: 'start', model, backend, scenario, repetitions }) + '\\n');
+await appendFile(events, JSON.stringify({ event: 'start', model, backend, scenario, repetitions, requestedRepetitions, warmProtocol: warmProtocol ?? null }) + '\\n');
 await new Promise(resolve => setTimeout(resolve, 15));
 
 const failure = model === process.env.CAMPAIGN_TEST_FAIL_MODEL;
@@ -72,7 +75,7 @@ const receipt = {
   id,
   status: 'measured',
   source: { gitCommit, dirty: false },
-  protocol: { smoke: false, scenario, repetitions },
+  protocol: { id: process.env.CAMPAIGN_TEST_PROTOCOL_MISMATCH ?? protocolId, smoke: false, scenario, repetitions, warmupRuns: scenario === 'warm' ? 1 : 0 },
   fixture,
   cells: [{ status: 'measured', settings, trials: [] }],
   notes: [note],
@@ -120,7 +123,7 @@ async function sandbox(t, plan, { failModel, dirty = false, extraFixtures = [], 
   return { directory, events };
 }
 
-function invoke(directory, events, failModel, planPath = 'campaign-plan.json') {
+function invoke(directory, events, failModel, planPath = 'campaign-plan.json', extraEnv = {}) {
   return spawnSync(process.execPath, [
     'tools/run-campaign.mjs', '--plan', planPath,
     '--machine', 'Test machine', '--accept-license',
@@ -131,6 +134,7 @@ function invoke(directory, events, failModel, planPath = 'campaign-plan.json') {
     env: {
       ...process.env,
       CAMPAIGN_TEST_EVENTS: events,
+      ...extraEnv,
       ...(failModel ? { CAMPAIGN_TEST_FAIL_MODEL: failModel } : {}),
     },
   });
@@ -350,6 +354,52 @@ test('hand-authored mixed plans normalize only warm cells above one billion para
   ]);
   assert.deepEqual(await eventRows(events), []);
   await assert.rejects(readdir(join(directory, 'runs')), error => error.code === 'ENOENT');
+});
+
+test('warm v2 campaign dry-run and execution preserve protocol and reject a mismatched receipt', async t => {
+  const warmV2 = plan([
+    cell('one', 'cpu', 'warm', 3, { warmProtocol: 'v2' }),
+    cell('large', 'webgpu', 'warm', 3, { warmProtocol: 'v2' }),
+  ]);
+  const { directory, events } = await sandbox(t, warmV2);
+  const preview = invokeDryRun(directory, events);
+  assert.equal(preview.status, 0, preview.stderr);
+  const effective = JSON.parse(preview.stdout);
+  assert.deepEqual(effective.cells.map(row => [row.protocolId, row.requestedRepetitions, row.effectiveRepetitions]), [
+    ['browser-tts-warm-v2', 3, 3],
+    ['browser-tts-warm-v2', 3, 1],
+  ]);
+  assert.deepEqual(await eventRows(events), []);
+
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual((await eventRows(events)).filter(row => row.event === 'start').map(row => [row.repetitions, row.requestedRepetitions, row.warmProtocol]), [
+    [3, 3, 'v2'], [1, 3, 'v2'],
+  ]);
+  const ledger = await campaignDirectory(directory);
+  const attempts = (await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim().split('\n').map(line => JSON.parse(line));
+  const largeReceipt = JSON.parse(await readFile(join(directory, attempts[1].resultPath), 'utf8'));
+  assert.equal(largeReceipt.protocol.id, 'browser-tts-warm-v2');
+  assert.equal(largeReceipt.protocol.repetitions, 1);
+
+  const mismatch = await sandbox(t, warmV2);
+  const rejected = invoke(mismatch.directory, mismatch.events, undefined, 'campaign-plan.json', {
+    CAMPAIGN_TEST_PROTOCOL_MISMATCH: 'browser-tts-warm-v1',
+  });
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /protocol.*does not match/i);
+  assert.equal((await eventRows(mismatch.events)).filter(row => row.event === 'start').length, 1);
+});
+
+test('legacy large-model campaign rejects a v2 receipt with the same effective single count', async t => {
+  const { directory, events } = await sandbox(t, plan([cell('large', 'cpu', 'warm', 5)]));
+  const rejected = invoke(directory, events, undefined, 'campaign-plan.json', {
+    CAMPAIGN_TEST_PROTOCOL_MISMATCH: 'browser-tts-warm-v2',
+  });
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /protocol.*does not match/i);
+  const start = (await eventRows(events)).find(row => row.event === 'start');
+  assert.deepEqual([start.repetitions, start.requestedRepetitions, start.warmProtocol], [1, 1, null]);
 });
 
 test('large-model campaign receipt preserves original requested and effective counts', async t => {
