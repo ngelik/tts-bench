@@ -296,10 +296,16 @@ export function assembleDashboardData(input) {
   const {en, ...translations} = byLanguage;
   const activeModels = [...(en?.models ?? []), ...Object.values(translations).flatMap(group => group.models ?? [])];
   const resultsById = new Map(results.map(result => [result.id, result]));
-  const activeAudioByPath = new Map(activeModels.flatMap(model => model.audio ?? []).map(entry => [entry.clip.path, entry]));
+  const receiptCell = entry => [entry.resultId, entry.model, entry.backend].join('/');
+  const activeAudio = new Map(activeModels.flatMap(model => model.audio).map(entry => [receiptCell(entry), entry]));
   const recordings = enrichAudio(audioEntries, resultsById, new Map(), new Map()).map(entry => {
-    const current = activeAudioByPath.get(entry.clip.path);
-    return {...(current ?? entry), name:models[entry.model]?.displayName ?? entry.name ?? entry.model};
+    const selection = activeAudio.get(receiptCell(entry));
+    return {
+      ...entry,
+      name: models[entry.model]?.displayName ?? entry.name ?? entry.model,
+      matchesSelectedWarm: selection?.matchesSelectedWarm ?? false,
+      matchesSelectedMemory: selection?.matchesSelectedMemory ?? false,
+    };
   });
   return {...en, languages, byLanguage: translations, recordings};
 }
