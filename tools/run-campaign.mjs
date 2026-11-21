@@ -7,7 +7,7 @@ import {createHash} from 'node:crypto';
 import {isDeepStrictEqual} from 'node:util';
 import {effectiveCampaignCell, validateCampaignCell} from '../lib/campaign-plan.mjs';
 import {getModel} from '../lib/catalog.mjs';
-import {defaultFixtureForModel, getBenchmarkFixture, requiredFixtureForModel} from '../lib/benchmark-fixtures.mjs';
+import {assertFixtureLanguageForModel, assertSettingsLanguageMatchesFixture, canonicalLanguageTag, defaultFixtureForModel, getBenchmarkFixture, requiredFixtureForModel} from '../lib/benchmark-fixtures.mjs';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const args=process.argv.slice(2), options={};
 for(let i=0;i<args.length;i++) {
@@ -29,10 +29,7 @@ if(!fixture)throw new Error('Unknown campaign fixture: '+fixtureId);
 for(const cell of plan.cells){
   const requiredFixture=requiredFixtureForModel(cell.model);
   if(requiredFixture&&fixtureId!==requiredFixture)throw new Error(`Model ${cell.model} requires campaign fixture ${requiredFixture}.`);
-  const languages=getModel(cell.model).support?.languages;
-  if(Array.isArray(languages)&&!languages.some(language=>language.toLowerCase()===fixture.language.toLowerCase()||language.toLowerCase().split('-')[0]===fixture.language.toLowerCase())){
-    throw new Error(`Model ${cell.model} does not declare support for campaign fixture language ${fixture.language}.`);
-  }
+  assertFixtureLanguageForModel(cell.model, fixture);
 }
 const effectivePlan={...plan,fixtureId,cells:plan.cells.map(effectiveCampaignCell)};
 const git=(...args)=>execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim();
@@ -96,10 +93,12 @@ try {
       (observedFixture.unicodeCodePoints===undefined||observedFixture.unicodeCodePoints===fixture.unicodeCodePoints)&&
       (observedFixture.utf8Bytes===undefined||observedFixture.utf8Bytes===fixture.utf8Bytes)&&
       (observedFixture.source===undefined||isDeepStrictEqual(observedFixture.source,fixture.source));
-    const nonEnglishFixtureComplete=fixture.language==='en'||(observedFixture.language===fixture.language&&observedFixture.unicodeCodePoints===fixture.unicodeCodePoints&&observedFixture.utf8Bytes===fixture.utf8Bytes&&isDeepStrictEqual(observedFixture.source,fixture.source));
+    const canonicalEnglishFixture=fixture.id==='english-20k-v1'&&canonicalLanguageTag(fixture.language)==='en';
+    const nonEnglishFixtureComplete=canonicalEnglishFixture||(observedFixture.language===fixture.language&&observedFixture.unicodeCodePoints===fixture.unicodeCodePoints&&observedFixture.utf8Bytes===fixture.utf8Bytes&&isDeepStrictEqual(observedFixture.source,fixture.source));
     if(receipt.source?.dirty!==false||receipt.source?.gitCommit!==commit||receipt.protocol?.smoke!==false||receipt.protocol?.scenario!==cell.scenario||receipt.protocol?.repetitions!==cell.repetitions||!fixtureMatches||!nonEnglishFixtureComplete) throw new Error('Receipt is not a clean-source result for the exact registered campaign fixture and effective cell');
     if(!Array.isArray(receipt.notes)||!receipt.notes.some(entry=>typeof entry==='string'&&entry.includes(repetitionNote))) throw new Error('Receipt does not record requested and effective campaign repetitions');
     if(!Array.isArray(receipt.cells)||receipt.cells.length!==1||!['measured','unsupported'].includes(receipt.cells[0].status)) throw new Error('Unexpected benchmark status');
+    if(receipt.cells[0].status==='measured'&&!canonicalEnglishFixture) assertSettingsLanguageMatchesFixture(receipt.cells[0].settings, fixture);
     if(cell.resources&&receipt.cells[0].status==='measured'&&(!receipt.cells[0].trials.length||receipt.cells[0].trials.some(t=>t.memory?.availability!=='measured'))) throw new Error('Generation RAM was not sufficiently sampled; inspect before continuing');
   } catch(error) { reviewError=String(error.message??error);failures++;stoppedOnFailure=true; }
   await appendFile(join(out,'attempts.jsonl'),JSON.stringify({index,requestedCell,cell,fixtureId,commit,exitCode:code,resultId:summary?.id??null,resultPath:summary?.result??null,reviewError,finishedAt:new Date().toISOString()})+'\n');

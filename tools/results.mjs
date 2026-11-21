@@ -1,7 +1,14 @@
 import { checkSignal } from '../web/audio8/signal.mjs';
 import { validateSupport } from '../lib/model-support.mjs';
 import { minimumWarmRepetitions } from '../lib/benchmark-policy.mjs';
-import { fixtureLanguage, getBenchmarkFixture } from '../lib/benchmark-fixtures.mjs';
+import {
+  assertFixtureLanguageForModel,
+  assertSettingsLanguageMatchesFixture,
+  canonicalLanguageTag,
+  fixtureLanguage,
+  frontendLanguagesForModelAtSource,
+  getBenchmarkFixture,
+} from '../lib/benchmark-fixtures.mjs';
 import { createHash } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { readFile, readdir } from 'node:fs/promises';
@@ -176,7 +183,7 @@ export function validateResult(d, { publication = false } = {}) {
   if(publication) check(!e.headless,'Ranked contributions require headed Chrome; headless runs are diagnostics');
   keys(d.fixture,['id','language','sha256','characters','unicodeCodePoints','utf8Bytes','chunks','source'],'fixture');
   check(slug(d.fixture.id) && hash(d.fixture.sha256) && int(d.fixture.characters,1,10000000) && int(d.fixture.chunks,1,100000),'Invalid fixture');
-  if(d.fixture.language!==undefined)check(typeof d.fixture.language==='string'&&/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(d.fixture.language),'Invalid fixture language');
+  if(d.fixture.language!==undefined)check(canonicalLanguageTag(d.fixture.language)===d.fixture.language,'Invalid or noncanonical fixture language');
   if(d.fixture.unicodeCodePoints!==undefined)check(int(d.fixture.unicodeCodePoints,1,10000000),'Invalid fixture Unicode code-point count');
   if(d.fixture.utf8Bytes!==undefined)check(int(d.fixture.utf8Bytes,1),'Invalid fixture UTF-8 byte count');
   const registeredFixture=getBenchmarkFixture(d.fixture.id),registeredLanguage=fixtureLanguage(d.fixture.id);
@@ -187,7 +194,8 @@ export function validateResult(d, { publication = false } = {}) {
     if(d.fixture.unicodeCodePoints!==undefined)check(d.fixture.unicodeCodePoints===registeredFixture.unicodeCodePoints,'Fixture Unicode code-point count does not match its registry');
     if(d.fixture.utf8Bytes!==undefined)check(d.fixture.utf8Bytes===registeredFixture.utf8Bytes,'Fixture UTF-8 byte count does not match its registry');
     if(d.fixture.source!==undefined)check(isDeepStrictEqual(d.fixture.source,registeredFixture.source),'Fixture source provenance does not match its registry');
-    if(d.origin==='native'&&!p.smoke&&registeredFixture.language!=='en'){
+    const canonicalEnglishFixture = registeredFixture.id === 'english-20k-v1' && canonicalLanguageTag(registeredFixture.language) === 'en';
+    if(d.origin==='native'&&!p.smoke&&!canonicalEnglishFixture){
       check(d.fixture.language===registeredFixture.language&&d.fixture.unicodeCodePoints===registeredFixture.unicodeCodePoints&&
         d.fixture.utf8Bytes===registeredFixture.utf8Bytes&&isDeepStrictEqual(d.fixture.source,registeredFixture.source),
         'Native full non-English results must include the exact registered fixture language, Unicode counts and source provenance');
@@ -213,6 +221,14 @@ export function validateResult(d, { publication = false } = {}) {
     const id=c.model+'/'+c.backendRequested;check(!cellIds.has(id),'Duplicate cell');cellIds.add(id);
     check(['measured','unsupported','error'].includes(c.status) && (c.reason===null || text(c.reason,2000)),'Invalid status/reason');
     check(text(c.voice,150)&&text(c.precision,150)&&object(c.settings),'Voice, precision and settings are required');
+    if(d.origin==='native'&&!p.smoke&&c.status==='measured'&&registeredFixture){
+      const canonicalEnglishFixture = registeredFixture.id === 'english-20k-v1' && canonicalLanguageTag(registeredFixture.language) === 'en';
+      if(!canonicalEnglishFixture){
+        const sourceProfile=frontendLanguagesForModelAtSource(c.model,d.source.gitCommit,{strict:publication});
+        if(sourceProfile!==null)assertFixtureLanguageForModel(c.model,registeredFixture,{frontendLanguages:sourceProfile});
+        assertSettingsLanguageMatchesFixture(c.settings,registeredFixture);
+      }
+    }
     validateCapability(c.capability);
     const requiresKokopopGpuEvidence=d.origin==='native'&&['sano-heart-nano-gguf-f32','sano-heart-gguf','sano-amy-gguf','sano-amy-small-gguf','sano-amy-1p8m-gguf','sano-hfc-gguf','sano-kristin-gguf'].includes(c.model)&&c.backendRequested==='webgpu'&&c.status==='measured';
     if(requiresKokopopGpuEvidence){

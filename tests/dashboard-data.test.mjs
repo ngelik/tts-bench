@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { assembleDashboardData, buildDashboardData, selectLatestAttempt, summarizeMemoryTrials, verifySourcesOnce } from '../tools/dashboard-data.mjs';
 import { resultPaths, readResult } from '../tools/results.mjs';
+import { listBenchmarkFixtures } from '../lib/benchmark-fixtures.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 
 let dashboard;
@@ -244,4 +245,56 @@ test('a newer recording in a translated language cannot displace the English art
   });
   assert.equal(row.models[0].warm.cpu.resultId, original.id);
   assert.equal(row.byLanguage.uk.models[0].warm.cpu.resultId, translation.id);
+});
+
+test('dashboard assembly includes a third registered language without changing the English default', () => {
+  const id = 'paradee';
+  const original = results.find(result => result.id === dashboard.models.find(model => model.id === id).warm.cpu.resultId);
+  const french = structuredClone(original);
+  french.id = 'french-language-selection-test';
+  french.createdAt = '2099-01-01T00:00:00Z';
+  french.fixture = {id:'fr-article-v1', language:'fr', sha256:'c'.repeat(64), characters:1200,
+    unicodeCodePoints:1200, utf8Bytes:1320, chunks:7, source:{type:'translation', sourceLanguage:'en'}};
+  const frenchFixture = {...french.fixture, smokeId:'fr-article-smoke-v1', articleFile:'fr-article-v1.txt',
+    chunksFile:'fr-article-v1.chunks.json', metadataFile:'fr-article-v1.meta.json'};
+  const assembled = assembleDashboardData({
+    results:[original, french],
+    models:{[id]:getAssetLock().models[id]},
+    fixtureRegistry:[...listBenchmarkFixtures(), frenchFixture],
+  });
+  assert.equal(assembled.models[0].warm.cpu.resultId, original.id);
+  assert.ok(assembled.languages.some(language => language.id === 'fr' && language.label === 'Français'));
+  assert.equal(assembled.byLanguage.fr.fixture.id, 'fr-article-v1');
+  assert.equal(assembled.byLanguage.fr.fixture.language, 'fr');
+  assert.equal(assembled.byLanguage.fr.models[0].warm.cpu.resultId, french.id);
+});
+
+test('a fixture-only edition does not replace a measured edition until it has an eligible full result', () => {
+  const id = 'paradee';
+  const original = results.find(result => result.id === dashboard.models.find(model => model.id === id).warm.cpu.resultId);
+  const english = listBenchmarkFixtures().find(fixture => fixture.language === 'en');
+  const newerFixture = {...english, id:'english-20k-v2', smokeId:'english-20k-v2-smoke', articleFile:'en-20000-v2.txt',
+    chunksFile:'en-20000-v2.chunks.json', metadataFile:'en-20000-v2.meta.json', sha256:'d'.repeat(64),
+    characters:20001, unicodeCodePoints:20001, utf8Bytes:20001, chunks:94};
+  const registry = [...listBenchmarkFixtures(), newerFixture];
+  const models = {[id]:getAssetLock().models[id]};
+  const oldAudio = {resultId:original.id, model:id, backend:'cpu', clip:{path:'audio/samples/english-v1.wav'}, full:{sha256:'e'.repeat(64)}};
+  const pending = assembleDashboardData({results:[original], models, fixtureRegistry:registry, audioEntries:[oldAudio]});
+  assert.equal(pending.fixture.id, english.id);
+  assert.equal(pending.models[0].warm.cpu.resultId, original.id);
+  assert.equal(pending.models[0].audio[0].clip.path, oldAudio.clip.path);
+  assert.equal(pending.recordings[0].clip.path, oldAudio.clip.path);
+
+  const v2Result = structuredClone(original);
+  v2Result.id = 'english-v2-full-result';
+  v2Result.createdAt = '2099-01-01T00:00:00Z';
+  v2Result.fixture = {...newerFixture};
+  const newAudio = {resultId:v2Result.id, model:id, backend:'cpu', clip:{path:'audio/samples/english-v2.wav'}, full:{sha256:'f'.repeat(64)}};
+  const promoted = assembleDashboardData({results:[original, v2Result], models, fixtureRegistry:registry, audioEntries:[oldAudio,newAudio]});
+  assert.equal(promoted.fixture.id, newerFixture.id);
+  assert.equal(promoted.models[0].warm.cpu.resultId, v2Result.id);
+  assert.deepEqual(promoted.models[0].audio.map(entry => entry.clip.path), [newAudio.clip.path]);
+  assert.deepEqual(promoted.recordings.map(entry => entry.clip.path).sort(), [oldAudio.clip.path,newAudio.clip.path].sort());
+  assert.equal(promoted.recordings.find(entry => entry.resultId === original.id).matchesSelectedWarm, false);
+  assert.equal(promoted.recordings.find(entry => entry.resultId === v2Result.id).matchesSelectedWarm, true);
 });

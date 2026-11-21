@@ -45,7 +45,10 @@ const currentWaveformFault = model => ['cpu','webgpu'].some(backend => {
 });
 const expectedGeneration = (models, backend) => models.filter(model => eligibleWarm(model.warm[backend]));
 const expectedMemory = (models, backend) => models.filter(model => eligibleMemory(model.memory[backend]));
-const expectedAudioEntries = allLanguageModels.flatMap(model => model.audio);
+const activeAudioEntries = allLanguageModels.flatMap(model => model.audio ?? []);
+const expectedAudioEntries = expected.recordings ?? activeAudioEntries;
+assert.ok(expectedAudioEntries.every(entry => activeAudioEntries.some(active => active.clip.path === entry.clip.path) ||
+  entry.resultId && entry.model && entry.backend && entry.clip?.path), 'The complete recording catalog retains active and archived clip identities');
 const flaggedAudioPaths = new Set(expectedAudioEntries.filter(entry => matchesAuditedWav(entry.full.sha256)).map(entry => entry.clip.path));
 const capabilityCount = value => Number.isSafeInteger(value) && value >= 1 ? value : null;
 const capabilityCodes = model => [...new Set((Array.isArray(model.support?.languages) ? model.support.languages : [])
@@ -124,7 +127,7 @@ try {
   assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length));
   assert.equal(await page.locator('#language-en').getAttribute('aria-selected'), 'true');
   assert.equal(await page.locator('[data-language-count="en"]').innerText(), String(expectedResultModels.length));
-  assert.ok(ukData?.fixture?.id === 'uk-article-v1', 'The built dashboard data contains the registered Ukrainian fixture');
+  assert.ok(typeof ukData?.fixture?.id === 'string' && ukData.fixture.language === 'uk', 'The built dashboard data contains the active registered Ukrainian fixture edition');
   assert.equal(await page.locator('[data-language-count="uk"]').innerText(), String(ukResultModels.length));
   const ukPlayback = ukResultModels.flatMap(model => ['cpu','webgpu'].map(backend => ({model,backend,sample:model.playbackAudio?.[backend]})))
     .find(entry => entry.sample?.language === 'uk' && !matchesAuditedWav(entry.sample.full.sha256));
@@ -209,8 +212,7 @@ try {
   }
   await page.locator('#reset').click();
   await assertRows(ukResultModels);
-  if (ukResultModels.length > 0) {
-    assert.ok(ukPlayback, 'A healthy selected Ukrainian recording is available from a measured Ukrainian configuration');
+  if (ukResultModels.length > 0 && ukPlayback) {
     const ukRow = page.locator(`tr[data-model="${ukPlayback.model.id}"]`);
     const ukPlayButton = ukRow.locator(`[data-play="${ukPlayback.model.id}"][data-backend="${ukPlayback.backend}"]`);
     assert.equal(await ukPlayButton.count(), 1, 'The Ukrainian result row exposes its selected audio action');
@@ -235,6 +237,42 @@ try {
   } else {
     assert.equal(await page.locator('#no-results h3').innerText(), 'No published Ukrainian results yet.');
     assert.equal(await page.locator('#language-uk').getAttribute('aria-selected'), 'true', 'The empty Ukrainian fixture remains a selectable language tab');
+  }
+  for (const [language, group] of Object.entries(expected.byLanguage ?? {})) {
+    if (language === 'uk') continue;
+    const models = resultModels(group.models ?? []);
+    const displayName = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
+    const tabLabel = expected.languages?.find(entry => entry.id === language)?.label ?? displayName;
+    const tab = page.locator(`#language-${language}`);
+    assert.equal(await tab.count(), 1, `A registered ${language} edition has a language tab`);
+    assert.ok((await tab.innerText()).includes(tabLabel), `${language} tab uses a human-readable language name`);
+    await tab.click();
+    await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, models.length);
+    assert.equal(await tab.getAttribute('aria-selected'), 'true');
+    assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), `language-${language}`);
+    assert.equal(await page.locator('[data-language-count="' + language + '"]').innerText(), String(models.length));
+    assert.equal(await page.locator('#model-count').innerText(), String(models.length));
+    assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(group.models, 'cpu').length + expectedGeneration(group.models, 'webgpu').length));
+    if (group.fixture?.characters) {
+      assert.equal(await page.locator('#fixture-language').innerText(), `${group.fixture.characters.toLocaleString('en-US')} ${displayName} characters`);
+    }
+    await assertRows(models);
+    for (const [selectId, key, value] of [
+      ['weight-filter','weight','unknown'],
+      ['language-count','languages','unknown'],
+      ['voice-count','voices','unknown'],
+      ['supported-language','supports','unlisted'],
+    ]) {
+      await page.locator('#reset').click();
+      await page.locator(`#${selectId}`).selectOption(value);
+      const filters = {weight:'all',supports:'all',languages:'all',voices:'all',[key]:value};
+      await assertRows(models.filter(model => matchesCapabilityFilters(model, filters)));
+    }
+    await page.locator('#reset').click();
+    await assertRows(models);
+    if (models.length === 0) {
+      assert.equal(await page.locator('#no-results').isVisible(), true, `${language} remains usable before it has published results`);
+    }
   }
   await page.locator('#language-en').click();
   await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, expectedResultModels.length);
@@ -735,30 +773,58 @@ try {
   const audio8DiagnosticEntry = expectedAudioEntries.find(entry => entry.model === 'audio8-realistic-0.6b-int4' && entry.backend === 'webgpu' && matchesAuditedWav(entry.full.sha256));
   assert.equal(audio8DiagnosticEntry?.clip.path, audio8ArchivedFault.clip.path, 'The old Audio8 fault remains available in the diagnostic recording set');
   assert.ok((await page.locator('#show-all').innerText()).includes(`Show all ${expectedAudioEntries.length} clips`), 'Listening-room total includes every registered language');
-  assert.ok((await page.locator('#status').innerText()).includes(`${expectedAudioEntries.length} clips published`), 'Listening-room status total includes data.byLanguage.uk recordings');
+  assert.ok((await page.locator('#status').innerText()).includes(`${expectedAudioEntries.length} clips published`), 'Listening-room status total includes all data.byLanguage recordings');
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, selectedHealthy.length);
   const defaultAudioPaths = await page.locator('#samples .audio-card').evaluateAll(cards => cards.map(card => `audio/samples/${card.dataset.sample}`));
   assert.deepEqual(new Set(defaultAudioPaths), new Set(selectedHealthy), 'The default listening page shows one healthy selected example per configuration/backend');
   const ukAudioEntries = (ukData?.models ?? []).flatMap(model => model.audio);
   const ukSelectedEntries = (ukData?.models ?? []).flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio?.[backend]).filter(Boolean));
   const ukSelectedHealthy = ukSelectedEntries.filter(entry => !matchesAuditedWav(entry.full.sha256));
-  if (ukResultModels.length > 0) {
+  if (ukAudioEntries.length > 0) {
     assert.ok(ukAudioEntries.some(entry => entry.language === 'uk'), 'The listening room catalog contains actual Ukrainian recordings');
-    assert.ok(ukSelectedHealthy.length > 0);
     for (const entry of ukSelectedHealthy) {
       const card = page.locator(`#samples .audio-card[data-sample="${entry.clip.path.split('/').at(-1)}"]`);
       assert.equal(await card.count(), 1, 'Each selected Ukrainian clip is listed in the default listening room');
       assert.ok((await card.locator('.audio-meta').innerText()).includes('Ukrainian'));
     }
-    const ukEntry = ukSelectedHealthy[0];
-    const ukCard = page.locator(`#samples .audio-card[data-sample="${ukEntry.clip.path.split('/').at(-1)}"]`);
-    const ukAudioControl = ukCard.locator('audio');
-    await ukAudioControl.evaluate(audio => { audio.muted = true; });
-    await ukAudioControl.evaluate(async audio => { await audio.play(); });
-    await page.waitForFunction(selector => {const audio=document.querySelector(selector);return audio && audio.currentTime>.15 && !audio.paused && audio.readyState>=2;},
-      `#samples .audio-card[data-sample="${ukEntry.clip.path.split('/').at(-1)}"] audio`);
-    assert.equal(await ukAudioControl.evaluate(audio => new URL(audio.getAttribute('src'),document.baseURI).pathname), new URL(`../${ukEntry.clip.path}`,audioUrl).pathname);
-    await ukAudioControl.evaluate(audio => audio.pause());
+    if (ukSelectedHealthy.length) {
+      const ukEntry = ukSelectedHealthy[0];
+      const ukCard = page.locator(`#samples .audio-card[data-sample="${ukEntry.clip.path.split('/').at(-1)}"]`);
+      const ukAudioControl = ukCard.locator('audio');
+      await ukAudioControl.evaluate(audio => { audio.muted = true; });
+      await ukAudioControl.evaluate(async audio => { await audio.play(); });
+      await page.waitForFunction(selector => {const audio=document.querySelector(selector);return audio && audio.currentTime>.15 && !audio.paused && audio.readyState>=2;},
+        `#samples .audio-card[data-sample="${ukEntry.clip.path.split('/').at(-1)}"] audio`);
+      assert.equal(await ukAudioControl.evaluate(audio => new URL(audio.getAttribute('src'),document.baseURI).pathname), new URL(`../${ukEntry.clip.path}`,audioUrl).pathname);
+      await ukAudioControl.evaluate(audio => audio.pause());
+    }
+  }
+  for (const [language, group] of Object.entries(expected.byLanguage ?? {})) {
+    if (language === 'uk') continue;
+    const displayName = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
+    const languageEntries = (group.models ?? []).flatMap(model => model.audio ?? []);
+    const healthySelected = (group.models ?? []).flatMap(model => ['cpu','webgpu'].map(backend => model.playbackAudio?.[backend]).filter(Boolean))
+      .filter(entry => !matchesAuditedWav(entry.full.sha256));
+    if (languageEntries.length) assert.ok(languageEntries.every(entry => entry.language === language), `${displayName} recordings retain their fixture language`);
+    for (const entry of healthySelected) {
+      const card = page.locator(`#samples .audio-card[data-sample="${entry.clip.path.split('/').at(-1)}"]`);
+      assert.equal(await card.count(), 1, `A selected ${displayName} clip is listed in the listening room`);
+      assert.ok((await card.locator('.audio-meta').innerText()).includes(displayName), `The ${displayName} clip has a readable language label`);
+    }
+    if (healthySelected.length) {
+      const entry = healthySelected[0];
+      const card = page.locator(`#samples .audio-card[data-sample="${entry.clip.path.split('/').at(-1)}"]`);
+      const audio = card.locator('audio');
+      await audio.evaluate(element => { element.muted = true; });
+      await audio.evaluate(async element => { await element.play(); });
+      await page.waitForFunction(selector => {
+        const element = document.querySelector(selector);
+        return element && element.currentTime > .15 && !element.paused && element.readyState >= 2;
+      }, `#samples .audio-card[data-sample="${entry.clip.path.split('/').at(-1)}"] audio`);
+      assert.equal(await audio.evaluate(element => new URL(element.getAttribute('src'), document.baseURI).pathname),
+        new URL(`../${entry.clip.path}`, audioUrl).pathname, `${displayName} listening card loads its registered clip`);
+      await audio.evaluate(element => element.pause());
+    }
   }
   assert.equal(await page.locator('#samples .diagnostic-note').count(), 0);
   assert.equal(await page.locator('#samples details[open]').count(), 0, 'Attribution and receipt details start collapsed');
@@ -772,6 +838,22 @@ try {
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, expectedAudioEntries.length - flaggedAudioPaths.size);
   await page.locator('#include-diagnostic').check();
   await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, expectedAudioEntries.length);
+  const allAudioPaths = await page.locator('#samples .audio-card').evaluateAll(cards => cards.map(card => `audio/samples/${card.dataset.sample}`));
+  assert.deepEqual(new Set(allAudioPaths), new Set(expectedAudioEntries.map(entry => entry.clip.path)), 'Show all retains old and current fixture edition recordings');
+  const activeResultIds = new Set(activeAudioEntries.map(entry => entry.resultId));
+  const archivedEntries = expectedAudioEntries.filter(entry => !activeResultIds.has(entry.resultId));
+  if (archivedEntries.length) {
+    const archived = archivedEntries[0];
+    const deepLink = new URL('audio/', base);
+    deepLink.searchParams.set('sample', archived.clip.path.split('/').at(-1));
+    const archivedPage = await browser.newPage({viewport:{width:1440,height:1000}, reducedMotion:'reduce'});
+    try {
+      await archivedPage.goto(deepLink.href);
+      const archivedCard = archivedPage.locator(`#samples .audio-card[data-sample="${archived.clip.path.split('/').at(-1)}"]`);
+      await archivedCard.waitFor({state:'visible'});
+      assert.equal(await archivedCard.count(), 1, 'An older-edition recording remains directly accessible by its stable clip link');
+    } finally { await archivedPage.close(); }
+  }
   assert.equal(await page.locator('#samples .diagnostic-note').count(), flaggedAudioPaths.size, 'Waveform-flagged clips are explicit when diagnostic playback is enabled');
   if (audio8DiagnosticEntry) {
     const faultCard = page.locator(`#samples .audio-card[data-sample="${audio8DiagnosticEntry.clip.path.split('/').at(-1)}"]`);

@@ -17,6 +17,7 @@
   },
   "scripts": {
     "bench": "node bin/bench.mjs",
+    "fixtures": "node tools/translation-fixture.mjs",
     "assets": "node bin/bench.mjs assets",
     "linnet:runtime:build": "node tools/build-linnet-webgpu-runtime.mjs",
     "zonos3:runtime:build": "node tools/build-zonos3-runtime.mjs",

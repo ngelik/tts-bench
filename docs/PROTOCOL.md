@@ -11,7 +11,11 @@ text or audio to a remote synthesis endpoint is not.
 Its 20,000 ASCII characters include spaces, punctuation and a final LF.
 The exact SHA-256 is
 `4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b`.
-All models receive the same 93 ordered source spans. Internal normalization
+English runs use the same 93 ordered source spans. Other languages use complete,
+versioned translations with their own byte hashes, character counts and ordered
+spans. Run every backend against the same edition and disclose the actual voice
+and synthesis language. Compare timing within that edition. See the
+[multilingual protocol](MULTILINGUAL.md). Internal normalization
 and model-specific pronunciation overrides must be disclosed. PiVo's curated
 configuration is distinct from its strict frontend.
 

@@ -36,7 +36,7 @@ For the selected model:
    If no usable browser runtime exists, build an adapter and disclose the port,
    export/conversion steps, preprocessing and fallback. A Python/native speed
    claim is not evidence of browser execution.
-3. Implement the adapter contract in `docs/ADDING_MODELS.md`. Each model must stage
+3. Bind the requested fixture language to the actual synthesis profile. Confirm the pinned voice and frontend accept the intended language or locale, include the resolved language in model settings, and exercise each claimed backend with target-language text. See the checkout’s `docs/MULTILINGUAL.md` for registering an executable language. Implement the adapter contract in `docs/ADDING_MODELS.md`. Each model must stage
    every runtime file it needs **by itself**, including compatibility probes.
    Check a fresh model-only cache; a shared development cache can hide missing files.
 4. Verify correct tokenization/phonemes, tensor types and dimensions, speaker,

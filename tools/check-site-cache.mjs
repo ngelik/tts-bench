@@ -16,7 +16,10 @@ const languageGroups=[{id:'en',group:expected},...Object.entries(expected.byLang
 const eligibleIds=group=>group.models.filter(model=>['cpu','webgpu'].some(backend=>
   (model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform)||
   (model.memory?.[backend]?.status==='measured'&&Number.isFinite(model.memory[backend].meanMB)&&!model.memory[backend].waveform))).map(model=>model.id).sort();
-const audioEntries=languageGroups.flatMap(({group})=>group.models.flatMap(model=>model.audio??[]));
+const displayedAudioEntries=languageGroups.flatMap(({group})=>group.models.flatMap(model=>model.audio??[]));
+const audioEntries=expected.recordings??displayedAudioEntries;
+const activeResultIds=new Set(displayedAudioEntries.map(entry=>entry.resultId));
+const archivedAudioEntries=audioEntries.filter(entry=>!activeResultIds.has(entry.resultId));
 const selectedAudioEntries=[...new Map(languageGroups.flatMap(({group})=>group.models.flatMap(model=>['cpu','webgpu']
   .map(backend=>model.playbackAudio?.[backend]).filter(Boolean).map(entry=>[entry.clip.path,entry])))).values()];
 const diagnosticAudioPaths=new Set(audioEntries.filter(entry=>matchesAuditedWav(entry.full.sha256)).map(entry=>entry.clip.path));
@@ -174,7 +177,8 @@ const server=createServer(async(req,res)=>{
 let browser,base;
 const baseReports={deploymentId:version,sourceModelsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,group.models.length])),
   expectedVisibleRowsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,eligibleIds(group).length])),
-  audioEntriesByLanguage:expectedAudioByLanguage,expectedAudioEntries:audioEntries.length,expectedVisibleRows:expectedIds.length};
+  audioEntriesByLanguage:expectedAudioByLanguage,displayedAudioEntries:displayedAudioEntries.length,
+  archivedAudioEntries:archivedAudioEntries.length,expectedAudioEntries:audioEntries.length,expectedVisibleRows:expectedIds.length};
 const errors=[];
 const publicArg=process.argv.indexOf('--public-url');
 const publicUrl=publicArg>=0 ? process.argv[publicArg+1] : null;
@@ -265,8 +269,20 @@ async function verifySecondaryPages(page,label) {
   if (diagnosticAudioPaths.size) await page.locator('#include-diagnostic').check();
   await page.waitForFunction(count=>document.querySelectorAll('#samples .audio-card').length===count,audioEntries.length,{timeout:15000});
   const allShownPaths=await page.locator('#samples .audio-card').evaluateAll(cards=>cards.map(card=>`audio/samples/${card.dataset.sample}`));
-  assert.deepEqual(new Set(allShownPaths),new Set(audioPaths),`${label} all-language listening list reads every catalog recording`);
-  const audioResources=await assertResources(page,['/audio/player.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/data.json']);
+  assert.deepEqual(new Set(allShownPaths),new Set(audioPaths),`${label} all-language listening list reads every displayed and archived catalog recording`);
+  if (archivedAudioEntries.length) {
+    const archived=archivedAudioEntries[0];
+    const deepLink=new URL('audio/',base);
+    deepLink.searchParams.set('sample',archived.clip.path.split('/').at(-1));
+    const archivePage=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+    try {
+      await archivePage.goto(deepLink.href);
+      const archivedCard=archivePage.locator(`#samples .audio-card[data-sample="${archived.clip.path.split('/').at(-1)}"]`);
+      await archivedCard.waitFor({state:'visible'});
+      assert.equal(await archivedCard.count(),1,`${label} old-edition recording deep link remains available`);
+    } finally {await archivePage.close();}
+  }
+  const audioResources=await assertResources(page,['/audio/player.mjs','/audio/catalog.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/data.json']);
   await page.goto(new URL('diagnostics/',base).href);
   await page.waitForFunction(()=>document.querySelectorAll('#groups .input-group').length>0,{timeout:15000});
   const diagnosticGroups=await page.locator('#groups .input-group').count();

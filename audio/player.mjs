@@ -1,5 +1,6 @@
 import {matchesAuditedWav, waveformFinding, waveformReport} from './waveform-integrity.mjs?v=__TTS_BENCH_SITE_VERSION__';
 import {recordingUrl} from './links.mjs?v=__TTS_BENCH_SITE_VERSION__';
+import {listeningCatalog} from './catalog.mjs?v=__TTS_BENCH_SITE_VERSION__';
 
 const siteVersion = '__TTS_BENCH_SITE_VERSION__';
 
@@ -27,12 +28,7 @@ try {
   const response = await fetch(`../assets/data.json?v=${siteVersion}`);
   if (!response.ok) throw new Error('Published audio data unavailable');
   const catalog = await response.json();
-  const models = [...catalog.models, ...Object.values(catalog.byLanguage ?? {}).flatMap(group => group.models)];
-  const entries = models.flatMap(model => model.audio);
-  const byPath = new Map(entries.map(entry => [entry.clip.path, entry]));
-  const selectedEntries = [...new Map(models.flatMap(model => ['cpu', 'webgpu']
-    .map(backend => model.playbackAudio[backend]).filter(Boolean)
-    .map(entry => [entry.clip.path, entry]))).values()];
+  const {models, entries, selectedEntries} = listeningCatalog(catalog);
   const selectedPaths = new Set(selectedEntries.map(entry => entry.clip.path));
   const diagnosticEntries = entries.filter(entry => matchesAuditedWav(entry.full.sha256));
   const diagnosticPaths = new Set(diagnosticEntries.map(entry => entry.clip.path));

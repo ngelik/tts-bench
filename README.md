@@ -3,9 +3,9 @@
 [![Validate benchmark submissions](https://github.com/ngelik/tts-bench/actions/workflows/validate.yml/badge.svg)](https://github.com/ngelik/tts-bench/actions/workflows/validate.yml)
 
 Repeatable, local text-to-speech benchmarks in **Google Chrome**: CPU/WASM,
-and WebGPU. Select a model, run a fixed
-20,000-character English article, then contribute baseline results or request a
-new model evaluation through a pull request.
+and WebGPU. Select a model and a registered article language, then contribute
+baseline results or request an evaluation through a pull request. English is the
+default. Anyone can [contribute a translated article](docs/MULTILINGUAL.md).
 
 All inference happens in the browser. A local Node process serves static assets
 and controls Chrome; it never performs speech synthesis. Results are not uploaded
@@ -848,6 +848,12 @@ Give your agent this instruction:
 > running natively as arm64, follow the baseline result workflow. Otherwise,
 > prepare an evaluation-request PR containing the model link, without running it.
 > I authorize publishing the reviewed source, results or request to my fork.
+
+For a multilingual evaluation, give the agent the model and the language:
+
+> Use $browser-tts-benchmark to test Supertonic 3 in French on CPU and WebGPU. Use the registered French article if available. If it needs a translation, prepare it from the English article and open a fixture PR first.
+
+Contributors on any machine can add an article edition. List available editions with `npm run fixtures -- list`. The [language contributor guide](docs/MULTILINGUAL.md) covers translation, registration, a target-language smoke test and result publication.
 
 Replace MODEL with a catalog ID or Hugging Face model URL. Follow the
 [contribution routes](#contribute-a-new-model-for-evaluation) below. For measured
