@@ -117,7 +117,7 @@ try {
     card.append(heading, meta);
     if (entry.playbackNotice) {
       const notice = document.createElement('p');
-      notice.className = 'audio-meta';
+      notice.className = 'playback-notice';
       notice.textContent = entry.playbackNotice;
       audio.setAttribute('controlslist', 'nodownload');
       card.append(notice);
