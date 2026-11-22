@@ -3279,6 +3279,64 @@
       }
     },
     {
+      "resultId": "2026-11-22t09-55-34-149z-vocina-it-cpu-warm-f8480ae7",
+      "model": "vocina-it",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "I1 (Femminile)",
+      "language": "it",
+      "attribution": "Synthetic Italian speech from OfficinePixel Vocina v1.0 in the I1 (Femminile) preset, designed with Qwen3-TTS VoiceDesign. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0; Wiktionary pronunciation lexicon CC BY-SA 4.0",
+      "sourceUrls": [
+        "https://github.com/OfficinePixel/vocina/tree/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",
+        "https://github.com/OfficinePixel/vocina/releases/tag/v1.0",
+        "https://www.officinepixel.com/vocina/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t09-55-34-149z-vocina-it-cpu-warm-f8480ae7--vocina-it--cpu.wav",
+        "sha256": "d83a883f109a36109d8ebd5d1d7af4a7d358b621146982c46c1ed5112f7b15bd",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "cff86c349580d439b2ff7166f99521d140025f864efb9c3084bc1de767f26680",
+        "bytes": 69722860
+      }
+    },
+    {
+      "resultId": "2026-11-22t10-00-16-545z-vocina-it-webgpu-warm-360c5624",
+      "model": "vocina-it",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "I1 (Femminile)",
+      "language": "it",
+      "attribution": "Synthetic Italian speech from OfficinePixel Vocina v1.0 in the I1 (Femminile) preset, designed with Qwen3-TTS VoiceDesign. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0; Wiktionary pronunciation lexicon CC BY-SA 4.0",
+      "sourceUrls": [
+        "https://github.com/OfficinePixel/vocina/tree/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",
+        "https://github.com/OfficinePixel/vocina/releases/tag/v1.0",
+        "https://www.officinepixel.com/vocina/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t10-00-16-545z-vocina-it-webgpu-warm-360c5624--vocina-it--webgpu.wav",
+        "sha256": "c74f1d5cbb346a39e7f9edb50f623e67c13ebdb3ebed0a85d484d2b7d2fe6a69",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "09b048716e0b7885a22ea082ac90d871584b5e62b356c6be630fd32bbd855436",
+        "bytes": 69721324
+      }
+    },
+    {
       "resultId": "2026-11-10t12-29-29-399z-woof-webgpu-cached-14969663",
       "model": "woof",
       "backend": "webgpu",
