@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t20-01-26-246z-tiny-voca-gr-webgpu-warm-00f2f8e6",
+  "createdAt": "2026-11-22T20:03:11.615Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "el-article-v1",
+    "language": "el",
+    "sha256": "dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9",
+    "characters": 23928,
+    "unicodeCodePoints": 23928,
+    "utf8Bytes": 43376,
+    "chunks": 109,
+    "source": {
+      "type": "translation",
+      "description": "Complete monotonic Modern Greek translation of the English benchmark article by GPT-6 Luna. Codex independently compared all 27 source paragraphs and edited character details, directions, terminology and Greek phrasing. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "979a76f1d0346fe72a04389a0a70fc64be992963",
+    "dirty": false,
+    "manifestSha256": "f63c4c40b8aa52e16ccf553f5c402b7c9c4377444609f056b2c1f8831af7c0a9"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-gr:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-gr-model-onnx",
+      "sha256": "66076bccad4520afb275c4ec2d25a696f580d3ebcb827faeeb5990df11733c9f",
+      "bytes": 21359657
+    },
+    {
+      "id": "tiny-voca-gr-model-json",
+      "sha256": "19eee2d4a7974e165cc4d8e2eb0de522259ccaaeb4b0e7082db585d8a18c3607",
+      "bytes": 1064
+    },
+    {
+      "id": "tiny-voca-gr-espeak-quiet.mjs",
+      "sha256": "1f00a07670c3e2f4eebd3fca9578aff4f1fe41149d131e3fc338cb4e9db84246",
+      "bytes": 68105
+    },
+    {
+      "id": "tiny-voca-gr-espeak-quiet.wasm",
+      "sha256": "6eff9e5aeae447db0cf6ee160952c3a605d0ceea05eb54a002910a1c80507e16",
+      "bytes": 354352
+    },
+    {
+      "id": "tiny-voca-gr-espeak-quiet.data",
+      "sha256": "c05a169ccb338340bb1529c68891ec3721e1bb227387c5bbb71d1689f423b9d8",
+      "bytes": 888013
+    },
+    {
+      "id": "tiny-voca-gr-license-model",
+      "sha256": "54e0fc86e50704b9097d7f8d361e73e0711b7efba47d03ee6cae0e3c75cd46b6",
+      "bytes": 711
+    },
+    {
+      "id": "tiny-voca-gr-license-code",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-gr-notice-upstream",
+      "sha256": "ed2e9e8772e6e46b658a4f23e60cb697ceff0cbe50e231519e2674f6bf9d662a",
+      "bytes": 1182
+    },
+    {
+      "id": "tiny-voca-gr-license-espeak-ng",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-gr",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "el"
+        ],
+        "scope": "Pinned tiny-voca-gr release only. Two fixed synthesis profiles (M and F) at 24 kHz; M index 0 is the benchmark default. The FP32 ONNX graph is a local export of the released PyTorch checkpoint.",
+        "sources": [
+          "https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554",
+          "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+          "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+          "https://huggingface.co/datasets/aangelakis/STOMA/tree/fcb947d49abd2736701d8ce3786136812bac85fa"
+        ],
+        "notes": "Modern Greek only. Native frontend verification covers 109 spans and 335 utterances, with a maximum of 179 tokens and 28 <unk> instances. The Greek inventory can lose sounds from mixed-script names and initials. M is the benchmark voice and F is available for smoke diagnostics."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M",
+      "precision": "FP32 ONNX export of the released PyTorch checkpoint",
+      "settings": {
+        "modelId": "ComputationalLinguisticsPlatform/tiny-voca-gr",
+        "modelRevision": "927ea15cf4edcb8695b75328c9c90c5c53928554",
+        "sourceId": "n4ze3m/tiny-voca",
+        "sourceRevision": "62e2adef158bc997042cc6234f541f1e0e4cd55d",
+        "fixtureId": "el-article-v1",
+        "fixtureSha256": "dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9",
+        "language": "el",
+        "locale": "el",
+        "voice": "M",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released PyTorch checkpoint",
+        "frontend": "eSpeak NG 1.51 Greek (el), tiny-voca-gr Greek normalization and symbol inventory",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "espeakNg": "1.51",
+          "espeakNgRevision": "2e9a5fccbb0095e87b2769e9249ea1f821918ecd"
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "waveform": "FP32 ONNX export of the released checkpoint. Plain PCM concatenation and one 0.99 peak cap per source span. The graph generates waveform noise internally.",
+        "unknownPhonePolicy": "The Greek inventory maps unsupported eSpeak phones to <unk>. The fixture audit retains these phones. Standalone English is unsupported."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2277,
+        "description": "Observed 2277 WebGPU compute dispatches from the pinned FP32 graph. WASM remains available for unsupported operators."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 23825.22500014305,
+          "samples": 42964992,
+          "sampleRate": 24000,
+          "pcmSha256": "b514d2ce76b0341ee8587176ae4e776a797baf15fe4e1716f614909c4f661f94",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 129.4650001525879,
+            "firstSourceChunkCompletedMs": 297.83000016212463,
+            "audioSeconds": 1790.208,
+            "realTimeFactor": 0.013308635086058743,
+            "minSamplesPerChunk": 230656,
+            "maxSamplesPerChunk": 473856
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 23559,
+          "samples": 42964992,
+          "sampleRate": 24000,
+          "pcmSha256": "987db0af2e2032dca94b0862fe049b0684bad370858e384065262224d9cc9bf3",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 73.65000009536743,
+            "firstSourceChunkCompletedMs": 225.14000010490417,
+            "audioSeconds": 1790.208,
+            "realTimeFactor": 0.013159923316173315,
+            "minSamplesPerChunk": 230656,
+            "maxSamplesPerChunk": 473856
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 23564.605000019073,
+          "samples": 42964992,
+          "sampleRate": 24000,
+          "pcmSha256": "19f92fdb430aa5203644bde8fed4a3332e55ca3c4b7927998acc2f2aaf7ef3f2",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 73.83000016212463,
+            "firstSourceChunkCompletedMs": 230.7150001525879,
+            "audioSeconds": 1790.208,
+            "realTimeFactor": 0.013163054237283641,
+            "minSamplesPerChunk": 230656,
+            "maxSamplesPerChunk": 473856
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 23575.319999933243,
+          "samples": 42964992,
+          "sampleRate": 24000,
+          "pcmSha256": "c7f247364dc160750c2bc9f144678b52981efa35f6de07d99bb4f5f8212bbb9e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 72.83500003814697,
+            "firstSourceChunkCompletedMs": 224.52999997138977,
+            "audioSeconds": 1790.208,
+            "realTimeFactor": 0.013169039575252285,
+            "minSamplesPerChunk": 230656,
+            "maxSamplesPerChunk": 473856
+          },
+          "audio": {
+            "sha256": "95f3ed7c25b35632ef72c0ce038e59b0e9dd971220a2ba41dffcf8f5e9fd359b",
+            "bytes": 85930028
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T19-55-13-455Z-b55f7a1b46ba; cell 2/4; source 979a76f1d0346fe72a04389a0a70fc64be992963; fixture el-article-v1 (el, 23928 JavaScript characters, 109 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Modern Greek Tiny Voca official FP32 ONNX export from the exact release checkpoint, M voice index zero, neutral speed and pitch. Pinned Greek eSpeak NG 1.51 and released Greek phones/stress inventory. ORT Web 1.31.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations."
+  ]
+}
