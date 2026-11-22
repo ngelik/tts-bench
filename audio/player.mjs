@@ -114,7 +114,15 @@ try {
     audio.addEventListener('play', () => sampleList.querySelectorAll('audio').forEach(other => {
       if (other !== audio) other.pause();
     }));
-    card.append(heading, meta, audio, evidenceDetails(entry));
+    card.append(heading, meta);
+    if (entry.playbackNotice) {
+      const notice = document.createElement('p');
+      notice.className = 'playback-notice';
+      notice.textContent = entry.playbackNotice;
+      audio.setAttribute('controlslist', 'nodownload');
+      card.append(notice);
+    }
+    card.append(audio, evidenceDetails(entry));
     if (diagnosticPaths.has(entry.clip.path)) {
       const note = document.createElement('p');
       note.className = 'diagnostic-note';

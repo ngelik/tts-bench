@@ -7,7 +7,18 @@ import {verifySource} from './provenance.mjs';
 import {fixtureLanguage} from './fixture-language.mjs';
 export function verifyAudioLanguage(entry,result){if(entry.language!==fixtureLanguage(result))throw new Error('Audio language does not match scored fixture');}
 const sourceCache=new Map();
-export function verifyAudioAttribution(a){const m=getModel(a.model);if(a.modelTerms!==m.license.model||a.attribution!==(attribution[a.model]??m.displayName)||JSON.stringify(a.sourceUrls)!==JSON.stringify(m.support.sources))throw new Error('Audio attribution differs from verified model catalog');}
+const playbackNotices = {'tiny-voca-ja-tsukuyomi-chan': 'Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited.'};
+export function verifyAudioAttribution(entry) {
+  const model = getModel(entry.model);
+  const notice = playbackNotices[entry.model];
+  if (entry.playbackNotice !== notice || (notice && entry.full?.url != null)) {
+    throw new Error('Audio playback terms differ from verified model catalog');
+  }
+  if (entry.modelTerms !== model.license.model || entry.attribution !== (attribution[entry.model] ?? model.displayName) ||
+      JSON.stringify(entry.sourceUrls) !== JSON.stringify(model.support.sources)) {
+    throw new Error('Audio attribution differs from verified model catalog');
+  }
+}
 export const MAX_CLIP_BYTES=3000000; // 30 seconds of mono PCM16 at up to 48 kHz.
 const BASE='https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/';
 export function wavInfo(b){
@@ -45,13 +56,16 @@ attribution['vocina-it']='Synthetic Italian speech from OfficinePixel Vocina v1.
 attribution['zerre-tts']='Generated Turkish speech from erkinemreta1 Zerre TTS tr-v1 INT8 in the released SES-A voice. The Apache-2.0 model credits the tiny-voca architecture. Benchmark evaluation sample.';
 attribution['clarvia-tts-tiny']='AI-generated Turkish speech from Wite Clarvia TTS Tiny FP32 in the released synthetic female_1 voice. Apache-2.0 model and clarvia-phonemizer. Benchmark evaluation sample.';
 attribution['korean-tts']='AI-generated benchmark narration from ooodev Korean TTS v2, built on tiny-voca. Korean uses the KSS voice and English uses the synthetic F2 voice. The shared checkpoint inherits CC BY-NC-SA 4.0 conditions from the Korean Single Speaker Speech Dataset. Noncommercial benchmark evaluation.';
+attribution['tiny-voca-ja-tsukuyomi-chan']='AI-generated, non-official benchmark narration from Ayousanz Tiny Voca Japanese P1. Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
+ const playbackNotice = playbackNotices[model];
+ if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');
  const d=await readResult(resolve(result),{publication:true});verifySource(d,process.cwd(),sourceCache);const c=d.cells.find(c=>c.model===model&&c.backendRequested===backend&&c.status==='measured');if(!c)throw new Error('No measured source cell');
  const b=await readFile(wav),digest=sha256(b),w=wavInfo(b);const t=c.trials.find(t=>t.audio?.sha256===digest&&t.audio.bytes===b.length);if(!t||t.samples!==w.samples||t.sampleRate!==w.sampleRate)throw new Error('Full audio does not match a scored receipt');
  const m=getModel(model),language=fixtureLanguage(d),clip=makeClip(b),key=`${d.id}--${model}--${backend}`,path=`audio/samples/${key}.wav`;if(key.length>230)throw new Error('Audio asset name too long');
  const data=await manifest();if(data.entries.some(a=>a.resultId===d.id&&a.model===model&&a.backend===backend))throw new Error('Audio already registered; do not overwrite');
  await mkdir(dirname(path),{recursive:true});await writeFile(path,clip,{flag:'wx'});
- data.entries.push({resultId:d.id,model,backend,trialIndex:t.index,voice:c.voice,language,attribution:attribution[model]??m.displayName,modelTerms:m.license.model,sourceUrls:m.support.sources,clip:{path,sha256:sha256(clip),bytes:clip.length,startSample:0,...wavInfo(clip)},full:{url:clipOnly?null:BASE+key+'-full.wav',sha256:digest,bytes:b.length}});
+ data.entries.push({resultId:d.id,model,backend,trialIndex:t.index,voice:c.voice,language,attribution:attribution[model]??m.displayName,modelTerms:m.license.model,...(playbackNotice?{playbackNotice}:{}),sourceUrls:m.support.sources,clip:{path,sha256:sha256(clip),bytes:clip.length,startSample:0,...wavInfo(clip)},full:{url:clipOnly?null:BASE+key+'-full.wav',sha256:digest,bytes:b.length}});
  data.entries.sort((a,b)=>(a.model+'/'+a.backend+'/'+a.resultId).localeCompare(b.model+'/'+b.backend+'/'+b.resultId));await writeFile('audio/manifest.json',JSON.stringify(data,null,2)+'\n');return data.entries.find(a=>a.clip.path===path);
 }
 export async function checkAudio(){

@@ -78,6 +78,7 @@ source URLs are retained in `manifest.json` and displayed by the player. The
 recordings are provided for non-commercial benchmark evaluation; this is not a
 commercial-use clearance or a grant of rights in upstream voices.
 
+- Tiny Voca Japanese P1 by Ayousanz: AI-generated, non-official narration. Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited. See the [Tsukuyomi-chan Corpus terms](https://tyc.rei-yumesaki.net/material/corpus/#terms3).
 - Phonon: Gradium; Pocket TTS and Mimi lineage by Kyutai. Pinned weights Apache-2.0.
 - Paradee: Sahil Mahendrakar; Kokoro-82M teacher by hexgrad. Pinned model Apache-2.0.
 - Leokani: Milliwatt Labs; Kokoro-generated synthetic training speech. CC BY-NC 4.0 model terms; synthetic outputs retain the model's watermark.

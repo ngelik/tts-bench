@@ -2,7 +2,7 @@
 // currently displayed fixture editions. This module does not select scores.
 const identity = entry => JSON.stringify([
   entry.resultId, entry.model, entry.backend, entry.trialIndex, entry.voice,
-  entry.language, entry.attribution, entry.modelTerms, entry.sourceUrls,
+  entry.language, entry.attribution, entry.modelTerms, entry.playbackNotice, entry.sourceUrls,
   entry.clip?.path, entry.clip?.sha256, entry.clip?.bytes, entry.clip?.startSample,
   entry.clip?.sampleRate, entry.clip?.samples, entry.clip?.seconds,
   entry.full?.url, entry.full?.sha256, entry.full?.bytes,
