@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "it-article-v1",
+  "file": "it-article-v1.txt",
+  "sha256": "9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a",
+  "utf8Bytes": 23786,
+  "unicodeCodePoints": 23584,
+  "javascriptStringLength": 23584,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 107,
+  "chunkCharacters": {
+    "min": 209,
+    "max": 226
+  },
+  "fixtureId": "it-article-v1",
+  "language": "it",
+  "source": {
+    "type": "translation",
+    "description": "GPT-6 Luna produced an AI-assisted Standard Italian translation of the complete English benchmark fixture, preserving paragraph order and story details. Independently reviewed by AI for completeness and fidelity; no human or pronunciation review has been performed.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "GPT-6 Luna (AI-assisted translation)",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}
