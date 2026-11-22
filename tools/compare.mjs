@@ -3,6 +3,7 @@ import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateResult, sha256 } from './results.mjs';
 import { renderReport } from './report.mjs';
+import { backendInvariantSettings } from './result-selection.mjs';
 
 const canonical = value => Array.isArray(value) ? value.map(canonical) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(key => [key, canonical(value[key])])) : value;
 const stable = value => JSON.stringify(canonical(value));
@@ -27,8 +28,7 @@ export function buildComparison(inputs) {
       ensure(!seen.has(key), 'Duplicate model/backend; do not silently pool independent runs');
       seen.add(key);
       if (cell.status === 'measured') {
-        const { executionProviders, ...settings } = cell.settings;
-        const signature = stable({ voice: cell.voice, precision: cell.precision, settings });
+        const signature = stable({ voice: cell.voice, precision: cell.precision, settings: backendInvariantSettings(cell.settings) });
         const previous = settingsByModel.get(cell.model);
         ensure(!previous || signature === previous, 'Voice, precision or non-backend settings differ for ' + cell.model);
         settingsByModel.set(cell.model, signature);

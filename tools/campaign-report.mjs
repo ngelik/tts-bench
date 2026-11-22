@@ -7,6 +7,7 @@ import { getAssetLock } from '../lib/catalog.mjs';
 import { MAX_RESOURCE_RECEIPT_BYTES, validateResult, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
 import { loadWarmSelections, selectedCellFor } from './warm-selection.mjs';
+import { backendInvariantSettings } from './result-selection.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BACKENDS = ['cpu', 'webgpu'];
@@ -159,8 +160,7 @@ export function validateCampaignInputs(entries, manifest = getAssetLock().models
       modelEntries.set(cell.model, modelRows);
 
       if (cell.status === 'measured') {
-        const { executionProviders, ...nonBackendSettings } = cell.settings;
-        const signature = stable({ voice: cell.voice, precision: cell.precision, settings: nonBackendSettings });
+        const signature = stable({ voice: cell.voice, precision: cell.precision, settings: backendInvariantSettings(cell.settings) });
         const prior = settingsByModel.get(cell.model);
         if (prior) ensure(prior === signature, `Voice, precision or non-backend settings differ across protocols for ${cell.model}`);
         else settingsByModel.set(cell.model, signature);
@@ -267,9 +267,12 @@ function markdownReport(prepared, reportDir) {
   const links = (model, backend, scenario) => resultLink(reportDir, cell(model, backend, scenario));
   const gpuAvailability = model => model.manifest.backends.includes('webgpu') ? null : 'Unsupported (not declared in manifest)';
 
+  const providerNote = [...byKey.values()].some(({ cell }) => Object.hasOwn(cell.settings, 'waveformExecutionProviders'))
+    ? '`executionProviders` or `waveformExecutionProviders` identify the selected runtime providers.'
+    : '`executionProviders` identifies the requested runtime providers.';
   let md = `# Browser TTS campaign overview\n\n`;
   md += `**Cohort:** native headed-Chrome results from source commit \`${base.source.gitCommit}\` (source fingerprint \`${base.source.manifestSha256}\`), on ${markdownText(base.environment.machineLabel)} · ${markdownText(base.environment.os)} · ${markdownText(base.environment.cpu)} · ${markdownText(base.environment.chromeVersion)} · GPU ${markdownText(gpuNames.join(', ') || 'not reported')}. Fixture: \`${base.fixture.id}\`, ${base.fixture.characters.toLocaleString('en-US')} characters / ${base.fixture.chunks} chunks, SHA-256 \`${base.fixture.sha256}\`.\n\n`;
-  md += `The included receipts share one source, exact environment and fixture; voice, precision and non-backend settings are checked per model. The recorded non-backend model settings match; \`executionProviders\` identifies the requested runtime providers. Scenarios remain separate and are never pooled. Model support and terms: [voice/language counts](../../docs/MODEL_SUPPORT.md) · [licensing and publication boundaries](../../docs/LICENSING.md).\n\n`;
+  md += `The included receipts share one source, exact environment and fixture; voice, precision and non-backend settings are checked per model. The recorded non-backend model settings match; ${providerNote} Scenarios remain separate and are never pooled. Model support and terms: [voice/language counts](../../docs/MODEL_SUPPORT.md) · [licensing and publication boundaries](../../docs/LICENSING.md).\n\n`;
   if ([...byKey.values()].some(row=>affectedTrials(row.cell).length)) {
     md+=`**Original Audio8 WebGPU waveform fault.** ${waveformFinding} The archived cached time and memory describe that execution. [Full waveform audit](${waveformReport}).\n\n`;
   }

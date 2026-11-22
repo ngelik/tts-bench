@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { assembleDashboardData } from '../tools/dashboard-data.mjs';
 import { referenceBlock, ramChart, ramReferenceBlock } from '../tools/reference.mjs';
-import { pairedWarm, preferredAttempts, sameCampaignRegistration } from '../tools/result-selection.mjs';
+import { backendInvariantSettings, pairedWarm, preferredAttempts, sameCampaignRegistration } from '../tools/result-selection.mjs';
 
 const oldId = '2026-11-14t15-39-16-252z-ming-3.0-tts-0.5b-gguf-webgpu-cached-680f3a63';
 const old = JSON.parse(await readFile(new URL(`../results/${oldId}/result.json`, import.meta.url)));
@@ -35,6 +35,15 @@ function attempt({version, order, scenario = 'warm', status = 'measured', backen
 }
 const view = results => assembleDashboardData({results, models}).models[0];
 const speedTable = results => referenceBlock(results, models).split('Each native warm score')[0];
+
+test('backend settings projection removes only the two waveform/backend selectors', () => {
+  assert.deepEqual(backendInvariantSettings({
+    executionProviders: ['webgpu', 'wasm'],
+    waveformExecutionProviders: ['webgpu', 'wasm'],
+    stressExecutionProviders: ['wasm'],
+    voice: 'M',
+  }), { stressExecutionProviders: ['wasm'], voice: 'M' });
+});
 
 for (const scenario of ['warm','cached']) {
   test(`${scenario} chooses the registered runtime before recency, including errors`, () => {
