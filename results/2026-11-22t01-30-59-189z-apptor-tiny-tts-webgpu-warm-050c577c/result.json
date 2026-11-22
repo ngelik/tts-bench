@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t01-30-59-189z-apptor-tiny-tts-webgpu-warm-050c577c",
+  "createdAt": "2026-11-22T01:40:25.235Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "de-article-v1",
+    "language": "de",
+    "sha256": "f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931",
+    "characters": 23885,
+    "unicodeCodePoints": 23885,
+    "utf8Bytes": 24366,
+    "chunks": 109,
+    "source": {
+      "type": "translation",
+      "description": "AI-assisted German translation of the complete English benchmark fixture; revised after automated evaluator review. No human or pronunciation review has been performed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "4786ead9110d21ee878e1fc4bee70d594cfe4a4d",
+    "dirty": false,
+    "manifestSha256": "9f85dbf04d2a660de81e6ffbe5aefcad4370cdec89fb6fee78e4f9bc4a11c5eb"
+  },
+  "assets": [
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:apptor-tiny-tts:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "apptor-de-tts-onnx",
+      "sha256": "594d7536b0138957167bd2a6c9e1ca0301f726e981cab14296799444abdb5e46",
+      "bytes": 21379442
+    },
+    {
+      "id": "apptor-de-tts-config",
+      "sha256": "50835666366dafb41e8d865deba76405e76523623df85cf24329e5e7fb9401c8",
+      "bytes": 943
+    },
+    {
+      "id": "apptor-de-g2p-onnx",
+      "sha256": "d981694e7a03030b2169be46b2094775dde4ec5a3e9406c92a3fc8f1ed8bbec3",
+      "bytes": 12364141
+    },
+    {
+      "id": "apptor-de-g2p-config",
+      "sha256": "82759d03b9ff4ae01112a470bb4b34960b3471187a3dd6060292c4fc232fd6d5",
+      "bytes": 3007
+    },
+    {
+      "id": "apptor-de-vocos-onnx",
+      "sha256": "417f2413163d666b23a89dd73b1829a34ac316fb524a02cc6a4120660a40e6eb",
+      "bytes": 16655451
+    },
+    {
+      "id": "apptor-de-frontend-data",
+      "sha256": "d02f049df4da463bff99b6dd0d626d8a792aaef380e97595c137b2a67cb10300",
+      "bytes": 3895
+    },
+    {
+      "id": "apptor-de-exceptions-data",
+      "sha256": "3c954207d913c749f9a970b5aed9310968ea96225782ed6e2c66c11df4bc0994",
+      "bytes": 20259
+    },
+    {
+      "id": "apptor-de-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "apptor-de-vocos-license",
+      "sha256": "8f36ba0c214d4f487ffd7ee0b8528da9b67b459bef2d115de9cd001316589f46",
+      "bytes": 1069
+    },
+    {
+      "id": "apptor-de-model-card",
+      "sha256": "580e88c51e95b7f62c7e947fff0f97f6fc571f3fe6dfc4c4dd26d912920ac086",
+      "bytes": 5708
+    }
+  ],
+  "cells": [
+    {
+      "model": "apptor-tiny-tts",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "de"
+        ],
+        "scope": "Pinned Standard German checkpoint with author-provided German G2P and Vocos second stage.",
+        "sources": [
+          "https://huggingface.co/apptor/apptor-tiny-tts/tree/0b6962273a1d6618f250cdbd621b56ba04b62cef",
+          "https://huggingface.co/apptor/apptor-tiny-tts/blob/0b6962273a1d6618f250cdbd621b56ba04b62cef/README.md",
+          "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web",
+          "https://github.com/gemelo-ai/vocos/tree/eb39abfc42c1dee4854d9b10d44dd7d4fd3b0e53"
+        ],
+        "notes": "The benchmark selects Standard German M2, speed 1.0, pitch shift 0 and range 1.0, with Vocos enabled. Austrian weights, accent input, and Austrian pronunciation data are not included."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M2",
+      "precision": "FP32 TTS / INT8 Vocos",
+      "settings": {
+        "language": "de",
+        "locale": "de-DE",
+        "voice": "M2",
+        "precision": "FP32 TTS / INT8 Vocos",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "gapMs": 120,
+        "threads": 1,
+        "vocos": true,
+        "gapPolicy": "120 ms between sentence/clause segments; fixed fixture chunk boundaries add no gap",
+        "frontend": "Pinned apptor Standard German browser G2P, German normalization and tokenization; Austrian conditioning disabled",
+        "runtimeRelease": "onnxruntime-web@1.23.2",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 3072 compute dispatches in the untimed probe. CPU-side German normalization and final PCM assembly; ONNX operators may fall back to WASM."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 148609.44000005722,
+          "samples": 31086400,
+          "sampleRate": 24000,
+          "pcmSha256": "c7e14dcaa47e8a4928e9bd1dee3d205049a923787643371e1ab3ebea57d17964",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 808.8949999809265,
+            "firstSourceChunkCompletedMs": 1692.5299999713898,
+            "audioSeconds": 1295.2666666666667,
+            "realTimeFactor": 0.11473269854345865,
+            "minSamplesPerChunk": 101040,
+            "maxSamplesPerChunk": 340080
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 135772.70000004768,
+          "samples": 31087936,
+          "sampleRate": 24000,
+          "pcmSha256": "46dc2fb32b3a99a9d50f42d72ded5077eaaf62f8332a6c2b9eb88aec7045acc4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 430.15499997138977,
+            "firstSourceChunkCompletedMs": 1262.5550000667572,
+            "audioSeconds": 1295.3306666666667,
+            "realTimeFactor": 0.10481701969539388,
+            "minSamplesPerChunk": 101040,
+            "maxSamplesPerChunk": 340560
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 136045.89499998093,
+          "samples": 31086944,
+          "sampleRate": 24000,
+          "pcmSha256": "8001d159e9bf1beb5ea08f6ffaae27527d4f0be4b2ed8aa2b167bfc7300efbf8",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 439.44000005722046,
+            "firstSourceChunkCompletedMs": 1269.5950000286102,
+            "audioSeconds": 1295.2893333333334,
+            "realTimeFactor": 0.10503127872587095,
+            "minSamplesPerChunk": 101040,
+            "maxSamplesPerChunk": 340320
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 136035.50499987602,
+          "samples": 31090416,
+          "sampleRate": 24000,
+          "pcmSha256": "a09f9c639b4482d70987ec45e3176a016253b6522c8c405423868a93d09d9f84",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 441.1799998283386,
+            "firstSourceChunkCompletedMs": 1283.1749999523163,
+            "audioSeconds": 1295.434,
+            "realTimeFactor": 0.1050115289546793,
+            "minSamplesPerChunk": 101040,
+            "maxSamplesPerChunk": 340560
+          },
+          "audio": {
+            "sha256": "e726fb5edaee4e7b52e588be976587695ef8e8281977efc883d920b8088d2f63",
+            "bytes": 62180876
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T01-18-02-082Z-097c7ce22cd1; cell 2/4; source 4786ead9110d21ee878e1fc4bee70d594cfe4a4d; fixture de-article-v1 (de, 23885 JavaScript characters, 109 spans); requested n=3; effective n=3; Standard German M2 at speed 1.0, 24 kHz, Vocos enabled. Full warm v2 scores precede separate cached RSS diagnostics. CPU and WebGPU are sequential."
+  ]
+}
