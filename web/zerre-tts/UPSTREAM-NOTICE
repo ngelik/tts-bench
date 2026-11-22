@@ -1,0 +1,26 @@
+zerre-tts
+=========
+
+This product includes software derived from tiny-voca
+(https://github.com/n4ze3m/tiny-voca), Copyright Muhammed Nazeem,
+licensed under the Apache License, Version 2.0.
+
+The model architecture, the training recipe and parts of the source tree in
+src/zerre/ (model.py, losses.py, data.py, train.py, export.py, align.py,
+annotate.py, prepare.py, evaluate.py, journal.py, inspect.py, refine.py) come
+from tiny-voca. They were modified for this project: the English phoneme front
+end was replaced by a language-pack layer, the token inventory and normalisation
+are new, and platform-specific code (file locking, executable discovery, paths)
+was made portable.
+
+The Turkish dataset, annotations, checkpoints and the language packs added here
+are original to this project.
+
+Third-party components used at runtime or during data preparation:
+
+* eSpeak NG (GPL-3.0) — external program used only to turn text into phonemes.
+  It is not linked into the model and is not distributed with these weights.
+* PyTorch (BSD-3-Clause), NumPy (BSD-3-Clause), soundfile (BSD-3-Clause),
+  filelock (Unlicense).
+* For alignment and evaluation, optionally: torchaudio, transformers (Apache-2.0)
+  and faster-whisper (MIT). Their weights are not part of the released model.

@@ -277,6 +277,14 @@ The pinned `v0.3.0` FP32 checkpoint supports Italian (`it`, `it-IT`) at 24 kHz. 
 
 The pinned official `frontend.js`, `numbers.js` and unmodified eSpeak NG 1.0.2 browser glue/WASM reproduce Italian number expansion, sentence splitting, token fitting, and token/stress inputs. The official route uses ONNX Runtime Web 1.20.1 with one-thread WASM. This profile additionally requests WebGPU with explicit WASM fallback and requires an untimed hardware-dispatch probe. Full-fixture smoke diagnostics check the 107-span token/stress digest; the official frontend maps `h` in span 30 and `d` plus combining dental mark in spans 57 and 79 to its unknown token. These symbols remain in the input. The model graph uses native unseeded `RandomNormalLike` noise, so PCM hashes may differ even when preprocessing and output dimensions match. No separate generated-audio rights or pronunciation review are established. [Pinned release](https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0) · [Pinned browser source](https://github.com/carbogninalberto/tiny-voca-it/tree/0c57fab284e58e0bad620f21790e631d5dec17f8) · [Adapter notice](../web/tiny-voca-it/NOTICE.md)
 
+<a id="zerre-tts"></a>
+
+### Zerre TTS ~4.5M INT8 (Turkish)
+
+The pinned Turkish-only checkpoint exposes two neutral labels: SES-A (`MK`, index 0) and SES-B (`NK`, index 1); the benchmark fixes SES-A. Upstream describes the model as approximately 4.5M parameters. The parameter catalog records a scoped 181,515 named FP32 weight/bias initializer lower bound from the selected quantized graph; it is not an exact full-model count. The checkpoint is 24 kHz with a 62-symbol inventory, a 25,344-entry Turkish lexicon, 512-token and 3,000-frame limits, and one unseeded `RandomNormalLike` node.
+
+The exact deployed Pages graph/config/lexicon/phonemizer are pinned at Zerre Git commit `cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4`; graph bytes also match HF snapshot `55753a04ae624998cba86f7c17625616e318124e`. The official worker uses single-thread CPU/WASM. Benchmark WebGPU is a separate explicit `webgpu,wasm` route on ORT Web 1.20.1 and requires an untimed hardware dispatch probe. Both routes retain the official whitespace collapse, `. ! ? …` sentence splitting, Turkish locale casing, 3–512-token acceptance, no inserted pauses and final 0.99 peak limiting. The tokenizer drops digits and splits apostrophe suffixes into separate words. Smoke-only frontend audit matches the 94-span, 307-plan canonical digest; 39 digit-bearing sentence pieces across 35 spans omit number tokens. The upstream demo UI applies separate playback equalization and 0.95 normalization. The benchmark measures the worker's output PCM. Native PCM is stochastic; CPU/GPU output may differ by one frame. English and Kurdish are unsupported. See [profile, limitations and oracle](ZERRE_TTS.md) and [adapter/source notice](../web/zerre-tts/NOTICE.md).
+
 <a id="vocina-it"></a>
 
 ### Vocina Italian v1.0 INT8
