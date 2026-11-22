@@ -277,6 +277,12 @@ The pinned `v0.3.0` FP32 checkpoint supports Italian (`it`, `it-IT`) at 24 kHz. 
 
 The pinned official `frontend.js`, `numbers.js` and unmodified eSpeak NG 1.0.2 browser glue/WASM reproduce Italian number expansion, sentence splitting, token fitting, and token/stress inputs. The official route uses ONNX Runtime Web 1.20.1 with one-thread WASM. This profile additionally requests WebGPU with explicit WASM fallback and requires an untimed hardware-dispatch probe. Full-fixture smoke diagnostics check the 107-span token/stress digest; the official frontend maps `h` in span 30 and `d` plus combining dental mark in spans 57 and 79 to its unknown token. These symbols remain in the input. The model graph uses native unseeded `RandomNormalLike` noise, so PCM hashes may differ even when preprocessing and output dimensions match. No separate generated-audio rights or pronunciation review are established. [Pinned release](https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0) · [Pinned browser source](https://github.com/carbogninalberto/tiny-voca-it/tree/0c57fab284e58e0bad620f21790e631d5dec17f8) · [Adapter notice](../web/tiny-voca-it/NOTICE.md)
 
+<a id="vocina-it"></a>
+
+### Vocina Italian v1.0 INT8
+
+The pinned Vocina v1.0 checkpoint offers two released Italian synthetic voices, I1 (Femminile) and I2 (Maschile); the benchmark selects I1. It uses the existing it-article-v1 fixture and the official Italian G2P, Wiktionary lexicon, fitting, pauses, and peak limiter. CPU uses the official ONNX Runtime Web 1.27.0 WASM bundle; WebGPU uses its same-version WebGPU bundle with the verified asyncify WASM and explicit WASM fallback. The adapter verifies the full-fixture token/stress/pause digest in smoke diagnostics. The graph's native RandomNormalLike makes PCM hashes stochastic. Publisher parameter count is approximate; the registered value is a scoped initializer lower bound. Model/source code is Apache-2.0, the lexicon remains CC BY-SA 4.0, and no separate generated-audio distribution grant was found. [Pinned source and v1.0 release](https://github.com/OfficinePixel/vocina/tree/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34) · [Profile and terms](models/vocina.md) · [Adapter notice](../web/vocina/NOTICE.md)
+
 <a id="apptor-tiny-tts"></a>
 
 ### Apptor Tiny TTS 4.5M (Standard German)

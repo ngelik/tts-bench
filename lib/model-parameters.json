@@ -186,5 +186,11 @@
     "parameterCountSource": "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/kale-tts-1-nano.fp32.onnx",
     "upstreamModelCard": "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md",
     "scope": "Sum the logical shapes of ONNX graph initializers ending in .weight or .weight_q. This lower bound excludes biases, folded or renamed matrices, constants and voice inputs. The model card reports approximately 7.5 million parameters for the full Nano speech graph."
+  },
+  "vocina-it": {
+    "parameterCount": 180555,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://github.com/OfficinePixel/vocina/blob/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/README.md",
+    "scope": "Count of explicitly named FP32 weight and bias initializers in the pinned Vocina INT8 graph. It is a scope-aware stored-initializer lower bound, not a verified trainable-parameter total. The graph scan finds 4,533,743 stored initializer values; upstream advertises approximately 4.5M."
   }
 }
