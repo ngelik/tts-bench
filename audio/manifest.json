@@ -2801,6 +2801,64 @@
       }
     },
     {
+      "resultId": "2026-11-22t17-31-57-568z-slyszeglosy-v1-cpu-warm-06032682",
+      "model": "slyszeglosy-v1",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F",
+      "language": "pl",
+      "attribution": "AI-generated Polish benchmark narration from Damian Trojnar’s Słyszegłosy V1 in its synthetic F voice. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from OmniVoice. The released weights are CC BY-NC 4.0. Noncommercial benchmark evaluation.",
+      "modelTerms": "Słyszę Głosy V1 weights and synthetic voice data: CC BY-NC 4.0 (noncommercial use only)",
+      "sourceUrls": [
+        "https://huggingface.co/Damaon/slyszeglosy/tree/23b63ff12db5f19260985031e64c2f45b89cc609",
+        "https://github.com/Damaon/slyszeglosy/tree/605a13f5d9994ad8c897dff3463ce1f339acfb5f",
+        "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t17-31-57-568z-slyszeglosy-v1-cpu-warm-06032682--slyszeglosy-v1--cpu.wav",
+        "sha256": "9c8f07a6432f3b454f523a461c89eaa9409f654d0dd751227b29a214b550dd7b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "f88a41f503f23e9399a80636f193b372f022413a4548bd7ca368608690646134",
+        "bytes": 64328236
+      }
+    },
+    {
+      "resultId": "2026-11-22t17-36-20-153z-slyszeglosy-v1-webgpu-warm-3baa8b76",
+      "model": "slyszeglosy-v1",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F",
+      "language": "pl",
+      "attribution": "AI-generated Polish benchmark narration from Damian Trojnar’s Słyszegłosy V1 in its synthetic F voice. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from OmniVoice. The released weights are CC BY-NC 4.0. Noncommercial benchmark evaluation.",
+      "modelTerms": "Słyszę Głosy V1 weights and synthetic voice data: CC BY-NC 4.0 (noncommercial use only)",
+      "sourceUrls": [
+        "https://huggingface.co/Damaon/slyszeglosy/tree/23b63ff12db5f19260985031e64c2f45b89cc609",
+        "https://github.com/Damaon/slyszeglosy/tree/605a13f5d9994ad8c897dff3463ce1f339acfb5f",
+        "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t17-36-20-153z-slyszeglosy-v1-webgpu-warm-3baa8b76--slyszeglosy-v1--webgpu.wav",
+        "sha256": "09f5ca1ea5d6552d18abe4ba3a29b0d65ba44d79752351779d230d90ec2a2133",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "04b93bcda88bad547fe853220e81f9594f2503c971e116a1a26e399a36b1fa67",
+        "bytes": 64328236
+      }
+    },
+    {
       "resultId": "2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e",
       "model": "sopro-v2-turbo",
       "backend": "cpu",
