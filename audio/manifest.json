@@ -3283,6 +3283,42 @@
       }
     },
     {
+      "resultId": "2026-11-22t15-03-37-242z-tiny-voca-ja-tsukuyomi-chan-cpu-warm-054d2623",
+      "model": "tiny-voca-ja-tsukuyomi-chan",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Tsukuyomi-chan (つくよみちゃん)",
+      "language": "ja",
+      "attribution": "AI-generated, non-official benchmark narration from Ayousanz Tiny Voca Japanese P1. Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited.",
+      "modelTerms": "Tsukuyomi-chan Corpus conditions incorporated by the pinned model release; model/output restrictions are separate from the Apache-2.0 source-code license",
+      "playbackNotice": "Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited.",
+      "sourceUrls": [
+        "https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan/tree/7ed75cc5f521cc6be4cb57689b2c038928259ae9",
+        "https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan/blob/7ed75cc5f521cc6be4cb57689b2c038928259ae9/README.md",
+        "https://github.com/ayutaz/tiny-voca/tree/66ee00d2c8cd61b34be1cde5880bac0e45b89fcf",
+        "https://tyc.rei-yumesaki.net/material/corpus/",
+        "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+        "https://pypi.org/project/SudachiPy/0.7.0/",
+        "https://pypi.org/project/sudachidict-core/20261015/",
+        "https://pyodide.org/en/stable/",
+        "https://onnxruntime.ai/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t15-03-37-242z-tiny-voca-ja-tsukuyomi-chan-cpu-warm-054d2623--tiny-voca-ja-tsukuyomi-chan--cpu.wav",
+        "sha256": "59a1ad1b29312e95a5087767c3e1737f72a687128491449a352531f4e395d5c0",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "7cf6891103bfb8cbc3145a510bf4d13b88f2cb3a18e935c2dc79aeed24ec3e5c",
+        "bytes": 63526956
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",

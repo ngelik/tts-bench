@@ -556,6 +556,13 @@ async function play(id, backend) {
   $('#player-title').textContent = `${model.name} · ${labels[backend]}`;
   $('#player-tag').textContent = `${sample.clip.seconds}-SECOND AUDIO EXAMPLE`;
   $('#player-caption').textContent = `${sample.voice} · ${sample.matchesSelectedWarm ? 'selected warm receipt' : `${sample.scenario} recording · separate receipt`}`;
+  $('#player-caption').classList.toggle('has-playback-notice', Boolean(sample.playbackNotice));
+  if (sample.playbackNotice) {
+    $('#player-caption').textContent += ' · ' + sample.playbackNotice;
+    audio.setAttribute('controlslist', 'nodownload');
+  } else {
+    audio.removeAttribute('controlslist');
+  }
   $('#player-full').hidden = !sample.full?.url;
   if (sample.full?.url) $('#player-full').href = sample.full.url;
   else $('#player-full').removeAttribute('href');

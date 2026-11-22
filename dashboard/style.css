@@ -886,6 +886,9 @@ audio {
   height:40px;
   max-width:100%
 }
+#player-caption.has-playback-notice {
+  font-size:12px;
+}
 .player-links {
   display:flex;
   flex-direction:column;
