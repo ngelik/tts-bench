@@ -8,6 +8,10 @@ const canonical = value => Array.isArray(value)
     : value;
 export const stable = value => JSON.stringify(canonical(value));
 
+export function backendInvariantSettings({ executionProviders, waveformExecutionProviders, ...settings }) {
+  return settings;
+}
+
 export const environmentKey = result => stable(ENVIRONMENT_COHORT_FIELDS.map(key => result.environment[key]));
 
 // Some upstream archives register their model card and checksums as model-support.
@@ -82,9 +86,8 @@ export function preferredAttempts(results, models, accept, { perEnvironment = fa
 }
 
 function sameSettings(a, b) {
-  const { executionProviders: ignoredA, ...settingsA } = a.settings;
-  const { executionProviders: ignoredB, ...settingsB } = b.settings;
-  return a.voice === b.voice && a.precision === b.precision && stable(settingsA) === stable(settingsB);
+  return a.voice === b.voice && a.precision === b.precision &&
+    stable(backendInvariantSettings(a.settings)) === stable(backendInvariantSettings(b.settings));
 }
 
 export function pairedWarm(cpu, webgpu, model) {

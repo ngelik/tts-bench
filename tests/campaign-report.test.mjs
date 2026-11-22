@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { validateResult } from '../tools/results.mjs';
 import { renderCampaignOverview, validateCampaignInputs } from '../tools/campaign-report.mjs';
+import { buildComparison } from '../tools/compare.mjs';
 import { loadCosyWarmSelection } from '../tools/cosy-warm-selection.mjs';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -163,6 +164,25 @@ test('settings differences on an unsupported cell do not invalidate its measured
   delete gpuSettings.executionProviders;
   assert.notDeepEqual(cpuSettings, gpuSettings);
   assert.doesNotThrow(() => validateCampaignInputs(rows));
+});
+
+test('campaign and comparison settings ignore waveform backend selectors but retain contextual stress providers', async () => {
+  const [cpuRow, gpuRow] = await supertonicWarmPair();
+  const cpu = structuredClone(cpuRow.data);
+  const gpu = structuredClone(gpuRow.data);
+  for (const [data, providers] of [[cpu, ['wasm']], [gpu, ['webgpu', 'wasm']]]) {
+    const cell = data.cells[0];
+    cell.settings.waveformExecutionProviders = providers;
+    cell.settings.stressExecutionProviders = ['wasm'];
+  }
+
+  const entries = [{ data: cpu }, { data: gpu }];
+  assert.doesNotThrow(() => validateCampaignInputs(entries));
+  assert.doesNotThrow(() => buildComparison([cpu, gpu]));
+
+  gpu.cells[0].settings.stressExecutionProviders = ['wasm', 'cpu'];
+  assert.throws(() => validateCampaignInputs(entries), /non-backend settings differ/);
+  assert.throws(() => buildComparison([cpu, gpu]), /non-backend settings differ/);
 });
 
 test('campaign overview deduplicates outcome reasons while keeping concise metric cells and every receipt link', async () => {
