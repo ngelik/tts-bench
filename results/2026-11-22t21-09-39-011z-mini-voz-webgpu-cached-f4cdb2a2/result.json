@@ -1,0 +1,652 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t21-09-39-011z-mini-voz-webgpu-cached-f4cdb2a2",
+  "createdAt": "2026-11-22T21:10:40.263Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "es-es-article-v1",
+    "language": "es-ES",
+    "sha256": "8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e",
+    "characters": 22965,
+    "unicodeCodePoints": 22965,
+    "utf8Bytes": 23591,
+    "chunks": 105,
+    "source": {
+      "type": "translation",
+      "description": "Complete Spanish (Spain) translation of the English benchmark article by GPT-6 Luna. Codex independently reviewed all 27 source paragraphs and refined terminology, timing descriptions, dialogue and wording. Decimal commas and local clock notation preserve the original values. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "34c829ee99d1ddd7ec45a1f4ea1793c610c6a36a",
+    "dirty": false,
+    "manifestSha256": "0b70e54f398bf4174fa42837cdc042eda31f3eca3f723cbd410b7b7f72c4c7d1"
+  },
+  "assets": [
+    {
+      "id": "mini-voz-model-onnx",
+      "sha256": "f5fd129e3c205e9802a320383d44c459c6ec9c2216e948ca2d065f26d4b38dc7",
+      "bytes": 21368119
+    },
+    {
+      "id": "mini-voz-model-metadata",
+      "sha256": "c3d77e9aeb430b8aef5011e1806f05a35b66c94ad3dd6c63543cfe0387fca521",
+      "bytes": 859
+    },
+    {
+      "id": "mini-voz-stock-frontend",
+      "sha256": "a63eeb9d79007bfe1c2c80a64176d48d5a1310122f9f563958b31bdbad8f9f75",
+      "bytes": 10728
+    },
+    {
+      "id": "mini-voz-espeak-module",
+      "sha256": "b6658ffb26502d6bb012bcf0c46f49a0bf8c62cc75d5624cb697cc71ad5fdb24",
+      "bytes": 805912
+    },
+    {
+      "id": "mini-voz-espeak-data",
+      "sha256": "d93f1abea6bb4c23279f6f0e15673639a2b536329d1458af9aa593de7a97cffd",
+      "bytes": 875996
+    },
+    {
+      "id": "mini-voz-upstream-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "mini-voz-citation",
+      "sha256": "a882ca07fac4a97e87468c5dfc59226e0e4b5a5109cfddc36ed598f92e527ce8",
+      "bytes": 613
+    },
+    {
+      "id": "mini-voz-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "mini-voz-ort-wasm-module",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "mini-voz-ort-wasm-threaded-module",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "mini-voz-ort-wasm-threaded",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "mini-voz-ort-webgpu-module",
+      "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+      "bytes": 333468
+    },
+    {
+      "id": "mini-voz-ort-webgpu-wasm-module",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "mini-voz-ort-webgpu-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    }
+  ],
+  "cells": [
+    {
+      "model": "mini-voz",
+      "support": {
+        "voiceCount": 4,
+        "bundledVoiceCount": 4,
+        "languageCount": 1,
+        "languages": [
+          "es-ES"
+        ],
+        "scope": "Pinned Mini Voz FP32 ONNX checkpoint and stock browser frontend at ad40085efb3fb13c905e4b4640855edf62471dd1. Four fixed synthetic profiles F1/F2/M1/M2 at 24 kHz; F1/index 0 is the default. The browser profile fixes Castilian es-ES with eSpeak set_voice(\"es\", \"es\").",
+        "sources": [
+          "https://github.com/ElMariones/mini-voz/tree/ad40085efb3fb13c905e4b4640855edf62471dd1",
+          "https://github.com/ElMariones/mini-voz/blob/ad40085efb3fb13c905e4b4640855edf62471dd1/CITATION.cff",
+          "https://github.com/n4ze3m/tiny-voca",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz",
+          "https://github.com/espeak-ng/espeak-ng"
+        ],
+        "notes": "The stock ESM frontend is retained byte-for-byte. The fixed fixture oracle covers all 105 spans/334 utterances, max 180 tokens and zero unknown phones. Only es-ES is in this browser profile; es-419 is not exposed and there is no genuine English voice. Single-thread WASM is fixed for both CPU and WebGPU (which may use WASM for unsupported operators). The original graph generates unseeded waveform noise; PCM hashes are not a repeatability guarantee. Model/code terms do not establish blanket generated-audio redistribution rights."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F1",
+      "precision": "FP32",
+      "settings": {
+        "modelId": "ElMariones/mini-voz",
+        "modelRevision": "ad40085efb3fb13c905e4b4640855edf62471dd1",
+        "sourceId": "ElMariones/mini-voz",
+        "sourceRevision": "ad40085efb3fb13c905e4b4640855edf62471dd1",
+        "fixtureId": "es-es-article-v1",
+        "fixtureSha256": "8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e",
+        "language": "es-ES",
+        "locale": "es-ES",
+        "voice": "F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released Mini Voz checkpoint",
+        "frontend": "Stock site/tts/frontend.js at ad40085efb3fb13c905e4b4640855edf62471dd1; eSpeak NG es/es",
+        "runtimeVersion": "1.20.1",
+        "runtimePackageIntegrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==",
+        "waveform": "Stock FP32 graph generates waveform noise internally; each utterance is capped at peak 0.99 independently, with no seed input.",
+        "unknownPhonePolicy": "Use the released Spanish inventory and eSpeak routing. Preserve unknown phones in the fixture audit; do not substitute another language.",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "runtimeNpmIntegrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA=="
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2487,
+        "description": "Observed 2487 WebGPU compute dispatches; WASM fallback remains available."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 53091.99000000954,
+          "samples": 35201024,
+          "sampleRate": 24000,
+          "pcmSha256": "393a95009bc2e1c08a279d76fb4d54428e530deff173aa4b915b65def5b3c95f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 419.789999961853,
+            "firstSourceChunkCompletedMs": 744.5900001525879,
+            "audioSeconds": 1466.7093333333332,
+            "realTimeFactor": 0.036198031057284835,
+            "minSamplesPerChunk": 79360,
+            "maxSamplesPerChunk": 412160,
+            "articleCallPeakRssBytes": 2051211264,
+            "generationMeanRssBytes": 1380984891,
+            "generationRssSampleCount": 105,
+            "loadMs": 584.5962079999999,
+            "controllerTrialElapsedMs": 58054.358125,
+            "downloadBytes": 57660,
+            "idealDownloadSecondsAt1Mbps": 0.46128
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795381783060.9448,
+            "finalPcmAtEpochMs": 1795381836152.935,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795381783611,
+                1187561472
+              ],
+              [
+                1795381784113,
+                1223540736
+              ],
+              [
+                1795381784615,
+                1242103808
+              ],
+              [
+                1795381785119,
+                1256603648
+              ],
+              [
+                1795381785617,
+                1261748224
+              ],
+              [
+                1795381786122,
+                1265418240
+              ],
+              [
+                1795381786622,
+                1267892224
+              ],
+              [
+                1795381787125,
+                1269383168
+              ],
+              [
+                1795381787623,
+                1270546432
+              ],
+              [
+                1795381788130,
+                1275789312
+              ],
+              [
+                1795381788625,
+                1283653632
+              ],
+              [
+                1795381789132,
+                1293402112
+              ],
+              [
+                1795381789629,
+                1296171008
+              ],
+              [
+                1795381790135,
+                1296564224
+              ],
+              [
+                1795381790634,
+                1297809408
+              ],
+              [
+                1795381791139,
+                1299972096
+              ],
+              [
+                1795381791640,
+                1300840448
+              ],
+              [
+                1795381792140,
+                1305509888
+              ],
+              [
+                1795381792643,
+                1311358976
+              ],
+              [
+                1795381793146,
+                1316995072
+              ],
+              [
+                1795381793648,
+                1321287680
+              ],
+              [
+                1795381794149,
+                1323220992
+              ],
+              [
+                1795381794652,
+                1324351488
+              ],
+              [
+                1795381795154,
+                1324564480
+              ],
+              [
+                1795381795650,
+                1325858816
+              ],
+              [
+                1795381796155,
+                1327644672
+              ],
+              [
+                1795381796652,
+                1329725440
+              ],
+              [
+                1795381797155,
+                1331265536
+              ],
+              [
+                1795381797660,
+                1333280768
+              ],
+              [
+                1795381798162,
+                1334231040
+              ],
+              [
+                1795381798664,
+                1335541760
+              ],
+              [
+                1795381799164,
+                1337999360
+              ],
+              [
+                1795381799665,
+                1339129856
+              ],
+              [
+                1795381800169,
+                1341341696
+              ],
+              [
+                1795381800669,
+                1346453504
+              ],
+              [
+                1795381801168,
+                1356070912
+              ],
+              [
+                1795381801675,
+                1357774848
+              ],
+              [
+                1795381802177,
+                1359200256
+              ],
+              [
+                1795381802676,
+                1360494592
+              ],
+              [
+                1795381803179,
+                1361608704
+              ],
+              [
+                1795381803680,
+                1364017152
+              ],
+              [
+                1795381804180,
+                1365868544
+              ],
+              [
+                1795381804677,
+                1366523904
+              ],
+              [
+                1795381805181,
+                1368375296
+              ],
+              [
+                1795381805681,
+                1369391104
+              ],
+              [
+                1795381806183,
+                1370980352
+              ],
+              [
+                1795381806687,
+                1372225536
+              ],
+              [
+                1795381807190,
+                1375158272
+              ],
+              [
+                1795381807692,
+                1376976896
+              ],
+              [
+                1795381808194,
+                1379614720
+              ],
+              [
+                1795381808698,
+                1379794944
+              ],
+              [
+                1795381809197,
+                1381236736
+              ],
+              [
+                1795381809699,
+                1383284736
+              ],
+              [
+                1795381810197,
+                1384415232
+              ],
+              [
+                1795381810699,
+                1385103360
+              ],
+              [
+                1795381811203,
+                1386496000
+              ],
+              [
+                1795381811705,
+                1387708416
+              ],
+              [
+                1795381812211,
+                1390051328
+              ],
+              [
+                1795381812704,
+                1394507776
+              ],
+              [
+                1795381813209,
+                1395556352
+              ],
+              [
+                1795381813707,
+                1396637696
+              ],
+              [
+                1795381814208,
+                1397506048
+              ],
+              [
+                1795381814710,
+                1399635968
+              ],
+              [
+                1795381815212,
+                1401880576
+              ],
+              [
+                1795381815716,
+                1403273216
+              ],
+              [
+                1795381816214,
+                1404977152
+              ],
+              [
+                1795381816712,
+                1406205952
+              ],
+              [
+                1795381817214,
+                1407598592
+              ],
+              [
+                1795381817728,
+                1408794624
+              ],
+              [
+                1795381818221,
+                1411645440
+              ],
+              [
+                1795381818726,
+                1413005312
+              ],
+              [
+                1795381819219,
+                1413677056
+              ],
+              [
+                1795381819724,
+                1416495104
+              ],
+              [
+                1795381820231,
+                1427095552
+              ],
+              [
+                1795381820725,
+                1439514624
+              ],
+              [
+                1795381821227,
+                1442185216
+              ],
+              [
+                1795381821726,
+                1443823616
+              ],
+              [
+                1795381822228,
+                1445101568
+              ],
+              [
+                1795381822735,
+                1447821312
+              ],
+              [
+                1795381823236,
+                1452113920
+              ],
+              [
+                1795381823733,
+                1452195840
+              ],
+              [
+                1795381824233,
+                1454555136
+              ],
+              [
+                1795381824737,
+                1456570368
+              ],
+              [
+                1795381825240,
+                1456930816
+              ],
+              [
+                1795381825740,
+                1458241536
+              ],
+              [
+                1795381826243,
+                1460305920
+              ],
+              [
+                1795381826745,
+                1461354496
+              ],
+              [
+                1795381827243,
+                1464057856
+              ],
+              [
+                1795381827743,
+                1464418304
+              ],
+              [
+                1795381828247,
+                1465221120
+              ],
+              [
+                1795381828745,
+                1466728448
+              ],
+              [
+                1795381829247,
+                1468547072
+              ],
+              [
+                1795381829753,
+                1470447616
+              ],
+              [
+                1795381830255,
+                1471709184
+              ],
+              [
+                1795381830756,
+                1473167360
+              ],
+              [
+                1795381831257,
+                1475117056
+              ],
+              [
+                1795381831751,
+                1476034560
+              ],
+              [
+                1795381832259,
+                1477771264
+              ],
+              [
+                1795381832754,
+                1478393856
+              ],
+              [
+                1795381833261,
+                1478737920
+              ],
+              [
+                1795381833760,
+                1480966144
+              ],
+              [
+                1795381834260,
+                1482457088
+              ],
+              [
+                1795381834762,
+                1485094912
+              ],
+              [
+                1795381835264,
+                1486094336
+              ],
+              [
+                1795381835768,
+                1488109568
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "36c6de4ac9f592c82d37a82d65f46f5b3008e2607539ed5ef03b162e5409d2e3",
+            "bytes": 70402092
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T20-59-43-857Z-2dd13c6dbcca; cell 4/4; source 34c829ee99d1ddd7ec45a1f4ea1793c610c6a36a; fixture es-es-article-v1 (es-ES, 22965 JavaScript characters, 105 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Mini Voz released stock FP32 graph, default Castilian Spanish F1 voice index zero, neutral speed and pitch and per-utterance peak cap 0.99. Exact released Castilian normalization, eSpeak NG frontend and data. ORT Web 1.20.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
