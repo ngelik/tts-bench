@@ -548,3 +548,19 @@ unsupported operators. The graph generates waveform noise without a seed input.
 [Profile and reproduction](MINI_VOZ.md) · [Retained notices](../web/mini-voz/NOTICE.md).
 
 [Pinned Mini Voz source](https://github.com/ElMariones/mini-voz/tree/ad40085efb3fb13c905e4b4640855edf62471dd1) · [Base tiny-voca source](https://github.com/n4ze3m/tiny-voca).
+
+<a id="tiny-voca-es"></a>
+
+## Tiny Voca Spanish 4.5M FP32 (F2)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`es-ES`).
+
+The profile uses the released FP32 checkpoint with default F2 and alternate M2
+voices. It produces 24 kHz mono audio using eSpeak NG 1.52.0 and ONNX Runtime
+Web 1.22.0. CPU uses one WASM thread. WebGPU requires hardware dispatch and can
+use WASM for unsupported operators. The smoke audit checks the exact token and
+stress output across all 105 spans. The retained English frontend in the
+upstream source requires a separate English checkpoint.
+[Profile and reproduction](TINY_VOCA_ES.md) · [Retained notices](../web/tiny-voca-es/NOTICE.md).
+
+[Pinned Spanish checkpoint](https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84) · [Pinned browser source](https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec).

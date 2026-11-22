@@ -237,5 +237,12 @@
     "parameterCountSource": "https://huggingface.co/egnch/tiny-voca-ru/blob/2723b0e71fea216001bd4f6caf0866eb06879339/README.md",
     "upstreamModelCard": "https://huggingface.co/egnch/tiny-voca-ru/blob/2723b0e71fea216001bd4f6caf0866eb06879339/README.md",
     "scope": "The publisher reports exactly 4,534,411 parameters for the pinned Russian model, including its waveform generator."
+  },
+  "tiny-voca-es": {
+    "parameterCount": 4534411,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/marcosmaceo/tiny-voca-es/blob/9898eaef9b245d7a5240156eed919ee1bd2a9b84/README.md",
+    "upstreamModelCard": "https://huggingface.co/marcosmaceo/tiny-voca-es/blob/9898eaef9b245d7a5240156eed919ee1bd2a9b84/README.md",
+    "scope": "The pinned Spanish model card reports 4,534,411 parameters for the released model, including its waveform generator."
   }
 }
