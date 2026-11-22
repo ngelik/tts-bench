@@ -70,6 +70,9 @@ test('registered fixtures match their UTF-8, Unicode, language, source and span 
   assert.equal(requiredFixtureForModel('ua-serhiy-0p58m'), 'uk-article-v1');
   assert.equal(defaultFixtureForModel('phonon'), 'english-20k-v1');
   assert.equal(requiredFixtureForModel('phonon'), null);
+  assert.equal(defaultFixtureForModel('mini-voz'), 'es-es-article-v1');
+  assert.equal(requiredFixtureForModel('mini-voz'), 'es-es-article-v1');
+  assert.deepEqual(frontendLanguagesForModel('mini-voz'), ['es-ES']);
 
   for (const fixture of fixtures) {
     assert.equal(canonicalLanguageTag(fixture.language), fixture.language, 'registered fixture language is canonical');

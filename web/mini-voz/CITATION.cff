@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "mini-voz is a Spanish adaptation of tiny-voca. If you use it, please cite the original work below."
+title: "mini-voz: a small Spanish text-to-speech model"
+type: software
+authors:
+  - name: "mini-voz contributors"
+license: Apache-2.0
+url: "https://github.com/ElMariones/mini-voz"
+references:
+  - type: software
+    title: "tiny-voca: a 4.5M-parameter two-voice English text-to-speech model"
+    authors:
+      - given-names: Muhammed
+        family-names: Nazeem
+        orcid: "https://orcid.org/0009-0002-9991-0217"
+    year: 2026
+    url: "https://huggingface.co/n4ze3m/tiny-voca"

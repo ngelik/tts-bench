@@ -12577,6 +12577,163 @@
       },
       "sourceId": "n4ze3m/tiny-voca",
       "espeakRevision": "2e9a5fccbb0095e87b2769e9249ea1f821918ecd"
+    },
+    "mini-voz": {
+      "displayName": "Mini Voz 4.5M FP32 (F1)",
+      "modelRevision": "ad40085efb3fb13c905e4b4640855edf62471dd1",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "integrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==",
+        "files": []
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "license": {
+        "model": "Apache-2.0; upstream license and citation are retained.",
+        "inferenceSource": "Mini Voz Spanish adaptation of tiny-voca by Muhammed Nazeem; Apache-2.0 attribution is retained.",
+        "frontend": "Apache-2.0 stock Mini Voz browser frontend at the pinned source revision.",
+        "phonemizer": "GPL-3.0 bundled eSpeak NG browser frontend; exact upstream COPYING is retained.",
+        "runtime": "ONNX Runtime Web 1.20.1 declares MIT; package integrity and module banners are recorded. The verified npm tarball contains no standalone third-party notice file.",
+        "requiresAcceptance": false
+      },
+      "support": {
+        "voiceCount": 4,
+        "bundledVoiceCount": 4,
+        "languageCount": 1,
+        "languages": [
+          "es-ES"
+        ],
+        "scope": "Pinned Mini Voz FP32 ONNX checkpoint and stock browser frontend at ad40085efb3fb13c905e4b4640855edf62471dd1. Four fixed synthetic profiles F1/F2/M1/M2 at 24 kHz; F1/index 0 is the default. The browser profile fixes Castilian es-ES with eSpeak set_voice(\"es\", \"es\").",
+        "sources": [
+          "https://github.com/ElMariones/mini-voz/tree/ad40085efb3fb13c905e4b4640855edf62471dd1",
+          "https://github.com/ElMariones/mini-voz/blob/ad40085efb3fb13c905e4b4640855edf62471dd1/CITATION.cff",
+          "https://github.com/n4ze3m/tiny-voca",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz",
+          "https://github.com/espeak-ng/espeak-ng"
+        ],
+        "notes": "The stock ESM frontend is retained byte-for-byte. The fixed fixture oracle covers all 105 spans/334 utterances, max 180 tokens and zero unknown phones. Only es-ES is in this browser profile; es-419 is not exposed and there is no genuine English voice. Single-thread WASM is fixed for both CPU and WebGPU (which may use WASM for unsupported operators). The original graph generates unseeded waveform noise; PCM hashes are not a repeatability guarantee. Model/code terms do not establish blanket generated-audio redistribution rights."
+      },
+      "assets": [
+        {
+          "id": "mini-voz-model-onnx",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/models/mini-voz.onnx",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/models/mini-voz.onnx",
+          "bytes": 21368119,
+          "sha256": "f5fd129e3c205e9802a320383d44c459c6ec9c2216e948ca2d065f26d4b38dc7",
+          "kind": "model-weights"
+        },
+        {
+          "id": "mini-voz-model-metadata",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/models/mini-voz.json",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/models/mini-voz.json",
+          "bytes": 859,
+          "sha256": "c3d77e9aeb430b8aef5011e1806f05a35b66c94ad3dd6c63543cfe0387fca521",
+          "kind": "model-config"
+        },
+        {
+          "id": "mini-voz-stock-frontend",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/tts/frontend.js",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/tts/frontend.js",
+          "sourcePath": "web/mini-voz/frontend.js",
+          "bytes": 10728,
+          "sha256": "a63eeb9d79007bfe1c2c80a64176d48d5a1310122f9f563958b31bdbad8f9f75",
+          "kind": "frontend"
+        },
+        {
+          "id": "mini-voz-espeak-module",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/vendor/espeak-ng.js",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/vendor/espeak-ng.js",
+          "bytes": 805912,
+          "sha256": "b6658ffb26502d6bb012bcf0c46f49a0bf8c62cc75d5624cb697cc71ad5fdb24",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-espeak-data",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/vendor/espeak-ng.data",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/vendor/espeak-ng.data",
+          "bytes": 875996,
+          "sha256": "d93f1abea6bb4c23279f6f0e15673639a2b536329d1458af9aa593de7a97cffd",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-upstream-license",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/LICENSE",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/LICENSE",
+          "sourcePath": "web/mini-voz/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "mini-voz-citation",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/CITATION.cff",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/CITATION.cff",
+          "sourcePath": "web/mini-voz/CITATION.cff",
+          "bytes": 613,
+          "sha256": "a882ca07fac4a97e87468c5dfc59226e0e4b5a5109cfddc36ed598f92e527ce8",
+          "kind": "provenance"
+        },
+        {
+          "id": "mini-voz-espeak-copying",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/vendor/COPYING",
+          "url": "https://raw.githubusercontent.com/ElMariones/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/site/vendor/COPYING",
+          "sourcePath": "web/mini-voz/LICENSE-ESPEAK-NG.txt",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "mini-voz-ort-wasm-module",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/runtime/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-ort-wasm-threaded-module",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/runtime/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-ort-wasm-threaded",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/runtime/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-ort-webgpu-module",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/runtime/ort.webgpu.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.mjs",
+          "bytes": 333468,
+          "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-ort-webgpu-wasm-module",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/runtime/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "mini-voz-ort-webgpu-wasm",
+          "target": "models/mini-voz/ad40085efb3fb13c905e4b4640855edf62471dd1/runtime/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        }
+      ]
     }
   }
 }

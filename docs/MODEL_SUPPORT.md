@@ -531,3 +531,20 @@ The pinned Greek release contains two fixed synthesis profiles trained on record
 Native frontend verification covers all 109 spans and 335 utterances, with a maximum of 179 tokens and 28 preserved `<unk>` instances. eSpeak may switch pronunciation rules for Latin fragments, and the checkpoint still uses the Greek phone inventory. Standalone English is unsupported. See [adapter profile and limitations](TINY_VOCA_GR.md) and [license notices](../web/tiny-voca-gr/NOTICE.md).
 
 [Model and Greek source](https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554) · [Base tiny-voca source](https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d) · [eSpeak NG 1.51 source](https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd).
+
+<a id="mini-voz"></a>
+
+## Mini Voz 4.5M FP32 (F1)
+
+Supported voices: **4**. Bundled voices: **4**. Supported languages: **1** (`es-ES`).
+
+The browser profile pins Mini Voz and its stock Spanish frontend at
+`ad40085efb3fb13c905e4b4640855edf62471dd1`. It uses the complete Spanish (Spain)
+fixture, Castilian eSpeak NG, 24 kHz output and the default F1 voice. F2, M1 and
+M2 are fixed alternate voices. The frontend oracle verifies 334 utterances
+across 105 spans, with a maximum of 180 tokens and zero unknown phones. CPU uses
+single-thread WASM. WebGPU requires hardware dispatch and can use WASM for
+unsupported operators. The graph generates waveform noise without a seed input.
+[Profile and reproduction](MINI_VOZ.md) · [Retained notices](../web/mini-voz/NOTICE.md).
+
+[Pinned Mini Voz source](https://github.com/ElMariones/mini-voz/tree/ad40085efb3fb13c905e4b4640855edf62471dd1) · [Base tiny-voca source](https://github.com/n4ze3m/tiny-voca).

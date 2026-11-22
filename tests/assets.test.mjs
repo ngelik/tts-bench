@@ -9,12 +9,13 @@ import { LINNET_WEBGPU_RUNTIME } from '../web/linnet/runtime-policy.mjs';
 import { SANO_HEART_NANO_F32, SANO_KOKOPOP_PROFILES } from '../web/adapters/sano-kokopop-config.mjs';
 import { TINY_VOCA_RU } from '../web/adapters/tiny-voca-ru-profile.mjs';
 import { TINY_VOCA_GR } from '../web/adapters/tiny-voca-gr-profile.mjs';
+import { MINI_VOZ } from '../web/adapters/mini-voz-profile.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz"]);
   const korean = getAssetLock().models['korean-tts'];
   assert.equal(korean.modelRevision, 'c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c');
   assert.deepEqual(korean.backends, ['cpu', 'webgpu']);
@@ -22,6 +23,15 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(korean.assets.filter(asset => asset.kind === 'model-weights').length, 1);
   assert.equal(korean.assets.filter(asset => asset.kind === 'runtime').length, 15);
   assert.equal(korean.runtime.files.length, 0);
+  const miniVoz = getAssetLock().models['mini-voz'];
+  assert.equal(miniVoz.modelRevision, MINI_VOZ.modelRevision);
+  assert.deepEqual(miniVoz.backends, ['cpu', 'webgpu']);
+  assert.deepEqual(miniVoz.support.languages, ['es-ES']);
+  assert.equal(miniVoz.support.voiceCount, 4);
+  assert.equal(miniVoz.assets.filter(asset => asset.kind === 'model-weights').length, 1);
+  assert.equal(miniVoz.assets.filter(asset => asset.kind === 'runtime').length, 8);
+  assert.equal(miniVoz.assets.find(asset => asset.id === 'mini-voz-stock-frontend').sourcePath,
+    'web/mini-voz/frontend.js');
   assert.deepEqual(korean.support.languages, ['ko', 'en']);
   const clarvia = getAssetLock().models['clarvia-tts-tiny'];
   assert.equal(clarvia.modelRevision, '51023684a0a39742455c838e9d1d8714d3ae7289');
