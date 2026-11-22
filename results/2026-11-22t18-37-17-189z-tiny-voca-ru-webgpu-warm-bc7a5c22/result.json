@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t18-37-17-189z-tiny-voca-ru-webgpu-warm-bc7a5c22",
+  "createdAt": "2026-11-22T18:41:06.604Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple / metal-3",
+    "headless": false
+  },
+  "fixture": {
+    "id": "ru-article-v1",
+    "language": "ru",
+    "sha256": "14bd6d91b7738d8f3e275885d235540a362f5bf956294e3dfb779e0f3e5abf2f",
+    "characters": 20732,
+    "unicodeCodePoints": 20732,
+    "utf8Bytes": 37692,
+    "chunks": 95,
+    "source": {
+      "type": "translation",
+      "description": "Complete Standard Russian translation of the English benchmark article by GPT-6 Luna. Codex independently reviewed all 27 source paragraphs and edited chronology, directions, measurements, dialogue and Russian wording. AI-assisted editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "b61a139d470464f8bbbd0e9088242122f0a21d80",
+    "dirty": false,
+    "manifestSha256": "dc2672e02441aae8ccaa43eb98b95c06ccb729492267c314a05197193c6c1b81"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-ru-config-json",
+      "sha256": "44e2187b591dd669f48c2dad564fa6c311814551488b6030b11a6ddd5b11ede2",
+      "bytes": 994
+    },
+    {
+      "id": "tiny-voca-ru-model-onnx",
+      "sha256": "71038073a97394273bb4879f8a44431d64f15d563af018f07aed3a9ea52b1cf4",
+      "bytes": 21374821
+    },
+    {
+      "id": "tiny-voca-ru-phonemizer-zip",
+      "sha256": "e20b1b97e8847e9a7f8ef2b15d3b90a95a4c2ac401c7f3f43225831837872b21",
+      "bytes": 1600074
+    },
+    {
+      "id": "tiny-voca-ru-accent-onnx",
+      "sha256": "4e393144e45626f6f1062a0784ef06f921b97321a8e7b87ac2a09a892286500a",
+      "bytes": 803402
+    },
+    {
+      "id": "tiny-voca-ru-omograph-onnx",
+      "sha256": "420bb1c83a5c3b5de01692fc7f73be333c6ffb181c30fe32b42294ebaa205b7d",
+      "bytes": 10517401
+    },
+    {
+      "id": "tiny-voca-ru-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "tiny-voca-ru-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "tiny-voca-ru-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "tiny-voca-ru-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "tiny-voca-ru-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "tiny-voca-ru-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "tiny-voca-ru-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ru",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "ru"
+        ],
+        "scope": "One pinned 24 kHz FP32 Russian waveform graph bundles synthetic F and M voices. The benchmark profile selects publisher-default M (index 1), Russian only, at unity speed and neutral pitch controls. The contextual OOV and homograph frontend uses separate single-thread WASM graphs.",
+        "sources": [
+          "https://huggingface.co/egnch/tiny-voca-ru/tree/2723b0e71fea216001bd4f6caf0866eb06879339",
+          "https://github.com/yilbegan/tiny-voca-ru/tree/aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784",
+          "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/tree/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e",
+          "https://huggingface.co/datasets/egnch/tiny-voca-ru-dataset/blob/641a71953589e7faceab6022b55f599e03578043/LICENSE.md",
+          "https://github.com/Den4ikAI/ruaccent"
+        ],
+        "notes": "Both synthetic voices are bundled; only M index 1 is evaluated in ru-article-v1. WebGPU is used only by the waveform graph with explicit WASM fallback; OOV accent and contextual homograph resolution are single-thread WASM."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M",
+      "precision": "FP32",
+      "settings": {
+        "modelId": "egnch/tiny-voca-ru",
+        "modelRevision": "2723b0e71fea216001bd4f6caf0866eb06879339",
+        "sourceId": "yilbegan/tiny-voca-ru",
+        "sourceRevision": "aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784",
+        "spaceId": "egnch/tiny-voca-ru-demo",
+        "spaceRevision": "bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e",
+        "fixtureId": "ru-article-v1",
+        "fixtureSha256": "14bd6d91b7738d8f3e275885d235540a362f5bf956294e3dfb779e0f3e5abf2f",
+        "language": "ru",
+        "locale": "ru",
+        "voice": "M",
+        "voiceIndex": 1,
+        "precision": "FP32",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "frontend": "Pinned tiny-voca-ru full contextual route: Pyodide lexical stress + first-seen OOV accent.onnx + contextual INT8 omograph.onnx; sentence and token-fit order follows the pinned Space.",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4"
+        },
+        "waveformExecutionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "stressExecutionProviders": [
+          "wasm"
+        ],
+        "stressThreads": 1
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2520,
+        "description": "Waveform provider order is WebGPU then WASM; OOV accent and contextual homograph graphs use single-thread WASM. 2520 dispatches observed in the untimed waveform probe."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 55026.69000005722,
+          "samples": 32524288,
+          "sampleRate": 24000,
+          "pcmSha256": "073cda3d82846c537af787d47282cba52b5bd74c05577d44b9820f7d08e11d9d",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 95,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 750.5099999904633,
+            "firstSourceChunkCompletedMs": 1164.9500000476837,
+            "audioSeconds": 1355.1786666666667,
+            "realTimeFactor": 0.04060474928771302,
+            "minSamplesPerChunk": 111872,
+            "maxSamplesPerChunk": 424960
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 53874.57000017166,
+          "samples": 32524288,
+          "sampleRate": 24000,
+          "pcmSha256": "c277dbea15deb419b9c2ee0f9378e3ac0d380fc8a3eb8a8d3e7fabdb28428b30",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 95,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 163.7150001525879,
+            "firstSourceChunkCompletedMs": 557.7200000286102,
+            "audioSeconds": 1355.1786666666667,
+            "realTimeFactor": 0.039754588325011754,
+            "minSamplesPerChunk": 111872,
+            "maxSamplesPerChunk": 424960
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 53860.38499999046,
+          "samples": 32524288,
+          "sampleRate": 24000,
+          "pcmSha256": "f2e08bc0515c712bd4343c1307e980f6d7f89be00a006f624d241ddb23028f5e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 95,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 166.12000012397766,
+            "firstSourceChunkCompletedMs": 558.9400000572205,
+            "audioSeconds": 1355.1786666666667,
+            "realTimeFactor": 0.03974412107037581,
+            "minSamplesPerChunk": 111872,
+            "maxSamplesPerChunk": 424960
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 53884.25999999046,
+          "samples": 32524288,
+          "sampleRate": 24000,
+          "pcmSha256": "60907000c73a424aa1bf916581bc24524917b6951f10cdb18277d37ef3e7bde1",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 95,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 171.4800000190735,
+            "firstSourceChunkCompletedMs": 566.8100001811981,
+            "audioSeconds": 1355.1786666666667,
+            "realTimeFactor": 0.03976173867356515,
+            "minSamplesPerChunk": 111872,
+            "maxSamplesPerChunk": 424960
+          },
+          "audio": {
+            "sha256": "012a53182fd0d9eef7e9370ef744617b8d29cc8833a4a107e6bf14ad96fe2458",
+            "bytes": 65048620
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T18-32-31-735Z-e82ce2829935; cell 2/4; source b61a139d470464f8bbbd0e9088242122f0a21d80; fixture ru-article-v1 (ru, 20732 JavaScript characters, 95 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Tiny Voca Russian stock FP32 waveform ONNX, official browser default M voice index one, neutral speed and pitch. Pinned full Russian contextual stress path in Pyodide 0.26.4 with original OOV and contextual stress graphs on single-thread WASM. ORT Web 1.20.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS measurements."
+  ]
+}

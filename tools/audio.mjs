@@ -59,6 +59,7 @@ attribution['korean-tts']='AI-generated benchmark narration from ooodev Korean T
 attribution['tiny-voca-ja-tsukuyomi-chan']='AI-generated, non-official benchmark narration from Ayousanz Tiny Voca Japanese P1. Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited.';
 attribution['tiny-voca-ja-v3']='AI-generated Japanese or English benchmark narration in the synthetic F2 voice from Satoshi Fujimoto’s Tiny Voca JA v3. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from Qwen3-TTS. Pinned model and recipe Apache-2.0; frontend components retain their own licenses. Benchmark evaluation sample.';
 attribution['slyszeglosy-v1']='AI-generated Polish benchmark narration from Damian Trojnar’s Słyszegłosy V1 in its synthetic F voice. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from OmniVoice. The released weights are CC BY-NC 4.0. Noncommercial benchmark evaluation.';
+attribution['tiny-voca-ru']='AI-generated Russian benchmark narration from Evgeniy Chetvertkov’s Tiny Voca Russian in its synthetic M voice. Based on Muhammed Nazeem’s Tiny Voca, with Qwen3-TTS VoiceDesign training speech. Model Apache-2.0, stress assets from ruaccent under MIT, and training dataset CC BY 4.0. Benchmark evaluation sample.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');
