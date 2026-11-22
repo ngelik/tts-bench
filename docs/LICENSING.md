@@ -327,3 +327,14 @@ and separate V2 model are not registered. The adapter preserves exact upstream
 Polish text normalization, segmentation and fit policy. No blanket output or
 recording redistribution rights are inferred. See the
 [Słyszę Głosy source and change notice](../web/slyszeglosy-v1/NOTICE.md).
+
+### Tiny Voca Russian
+
+The pinned `egnch/tiny-voca-ru` model card declares Apache-2.0 for the model and
+code. The browser Space bundles a Russian stress dictionary plus OOV accent and
+contextual homograph assets derived from `ruaccent` under MIT. The synthetic
+voices are described upstream as non-imitations of real people. The adapter
+retains the upstream Apache `LICENSE`/`NOTICE` and ruaccent MIT notice beside
+the port. The profile selects synthetic voice M (index 1); it does not publish
+recordings. See [the pinned profile and sources](TINY_VOCA_RU.md) and
+[adapter notices](../web/tiny-voca-ru/NOTICE.md).

@@ -12221,6 +12221,174 @@
         ],
         "notes": "CPU/WASM only. The original graph pair fails WebGPU provider assignment at /Cast_9 under ONNX Runtime Web 1.31.1 and preserves a float64 CPU phase; no alternate graph is used. Display the upstream voice credit and generated-audio restrictions wherever output is presented. The model conditions forbid specified harmful uses and secondary use that enables others to reuse the voice as an audio asset or synthesis model; they are not replaced by the source-code license. Warm and cached three-span CPU smokes passed, with 153,916,767 bytes transferred during cached initialization. Offline initialization is unsupported in the current runner/cache path: the pinned SudachiDict-core wheel was unavailable after the browser profile reopened offline."
       }
+    },
+    "tiny-voca-ru": {
+      "displayName": "Tiny Voca Russian M",
+      "modelRevision": "2723b0e71fea216001bd4f6caf0866eb06879339",
+      "sourceRevision": "aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784",
+      "spaceRevision": "bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT; bundled runtime notices apply",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-ru-config-json",
+          "target": "models/tiny-voca-ru/2723b0e71fea216001bd4f6caf0866eb06879339/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/config.json",
+          "url": "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/resolve/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/config.json",
+          "bytes": 994,
+          "sha256": "44e2187b591dd669f48c2dad564fa6c311814551488b6030b11a6ddd5b11ede2",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-ru-model-onnx",
+          "target": "models/tiny-voca-ru/2723b0e71fea216001bd4f6caf0866eb06879339/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/model.onnx",
+          "url": "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/resolve/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/model.onnx",
+          "bytes": 21374821,
+          "sha256": "71038073a97394273bb4879f8a44431d64f15d563af018f07aed3a9ea52b1cf4",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-ru-phonemizer-zip",
+          "target": "models/tiny-voca-ru/2723b0e71fea216001bd4f6caf0866eb06879339/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/phonemizer.zip",
+          "url": "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/resolve/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/phonemizer.zip",
+          "bytes": 1600074,
+          "sha256": "e20b1b97e8847e9a7f8ef2b15d3b90a95a4c2ac401c7f3f43225831837872b21",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-ru-accent-onnx",
+          "target": "models/tiny-voca-ru/2723b0e71fea216001bd4f6caf0866eb06879339/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/accent.onnx",
+          "url": "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/resolve/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/accent.onnx",
+          "bytes": 803402,
+          "sha256": "4e393144e45626f6f1062a0784ef06f921b97321a8e7b87ac2a09a892286500a",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-ru-omograph-onnx",
+          "target": "models/tiny-voca-ru/2723b0e71fea216001bd4f6caf0866eb06879339/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/omograph.onnx",
+          "url": "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/resolve/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e/assets/omograph.onnx",
+          "bytes": 10517401,
+          "sha256": "420bb1c83a5c3b5de01692fc7f73be333c6ffb181c30fe32b42294ebaa205b7d",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-ru-pyodide-pyodide-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+          "bytes": 14761,
+          "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-pyodide-pyodide-asm-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+          "bytes": 1229099,
+          "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-pyodide-pyodide-asm-wasm",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+          "bytes": 10088051,
+          "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-pyodide-python_stdlib-zip",
+          "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+          "bytes": 2341872,
+          "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-pyodide-pyodide-lock-json",
+          "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+          "bytes": 106335,
+          "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-ort-ort-wasm-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.wasm.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+          "bytes": 49026,
+          "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-ort-ort-webgpu-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.webgpu.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.js",
+          "bytes": 333594,
+          "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-jsep-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ru-ort-ort-wasm-simd-threaded-jsep-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0 (pinned model card); bundled ruaccent-derived stress data and stress models: MIT",
+        "requiresAcceptance": false,
+        "runtime": "Apache-2.0 browser/source port; MIT ruaccent-derived data/models; MIT ONNX Runtime Web; MPL-2.0 Pyodide. See docs/TINY_VOCA_RU.md and web/tiny-voca-ru/NOTICE.md."
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "ru"
+        ],
+        "scope": "One pinned 24 kHz FP32 Russian waveform graph bundles synthetic F and M voices. The benchmark profile selects publisher-default M (index 1), Russian only, at unity speed and neutral pitch controls. The contextual OOV and homograph frontend uses separate single-thread WASM graphs.",
+        "sources": [
+          "https://huggingface.co/egnch/tiny-voca-ru/tree/2723b0e71fea216001bd4f6caf0866eb06879339",
+          "https://github.com/yilbegan/tiny-voca-ru/tree/aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784",
+          "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/tree/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e",
+          "https://huggingface.co/datasets/egnch/tiny-voca-ru-dataset/blob/641a71953589e7faceab6022b55f599e03578043/LICENSE.md",
+          "https://github.com/Den4ikAI/ruaccent"
+        ],
+        "notes": "Both synthetic voices are bundled; only M index 1 is evaluated in ru-article-v1. WebGPU is used only by the waveform graph with explicit WASM fallback; OOV accent and contextual homograph resolution are single-thread WASM."
+      }
     }
   }
 }

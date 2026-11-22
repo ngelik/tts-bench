@@ -504,3 +504,18 @@ Supported voices: **2** bundled in the pinned graph (F and M); benchmarked: **1*
 The pinned V1 ONNX graph is FP32 at model revision `23b63ff12db5f19260985031e64c2f45b89cc609`; the publisher reports 4,533,451 parameters including waveform generation. The adapter keeps the upstream Polish `text.py` and `wymowa` source byte-for-byte, runs it in classic-worker Pyodide 0.26.4, and uses ONNX Runtime Web 1.20.1 with explicit WASM or hardware WebGPU plus WASM fallback. WebGPU is accepted only after an actual compute dispatch is observed. The fixture frontend oracle covers 98 spans, 324 utterances, 233 maximum tokens, zero unknown phones, and token/stress digest `fde1d51a074ed33d0c8fba076150d4045549bb9e45bc0bf9dc656e82cceb9bf1`.
 
 [Model card and weights](https://huggingface.co/Damaon/slyszeglosy/tree/23b63ff12db5f19260985031e64c2f45b89cc609) · [Pinned source](https://github.com/Damaon/slyszeglosy/tree/605a13f5d9994ad8c897dff3463ce1f339acfb5f) · [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/legalcode) · [Adapter source/terms](../web/slyszeglosy-v1/NOTICE.md).
+
+<a id="tiny-voca-ru"></a>
+
+## Tiny Voca Russian M
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`ru`).
+
+The pinned Russian FP32 graph bundles synthetic F and M voices; this profile
+selects the Space default, M (index 1). It uses 24 kHz output and the full
+contextual Russian stress route: Pyodide phonemization, first-seen OOV accent
+inference, then contextual homograph resolution. The waveform uses explicit
+WASM or WebGPU with WASM fallback; both stress graphs stay single-thread WASM.
+The all-span oracle is attached to smoke initialization settings only.
+
+[Model card](https://huggingface.co/egnch/tiny-voca-ru/tree/2723b0e71fea216001bd4f6caf0866eb06879339) · [Browser source](https://github.com/yilbegan/tiny-voca-ru/tree/aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784) · [Space](https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/tree/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e) · [Profile notes](TINY_VOCA_RU.md) · [Notices](../web/tiny-voca-ru/NOTICE.md).

@@ -7,12 +7,13 @@ import { listModels } from '../lib/assets.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { LINNET_WEBGPU_RUNTIME } from '../web/linnet/runtime-policy.mjs';
 import { SANO_HEART_NANO_F32, SANO_KOKOPOP_PROFILES } from '../web/adapters/sano-kokopop-config.mjs';
+import { TINY_VOCA_RU } from '../web/adapters/tiny-voca-ru-profile.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru"]);
   const korean = getAssetLock().models['korean-tts'];
   assert.equal(korean.modelRevision, 'c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c');
   assert.deepEqual(korean.backends, ['cpu', 'webgpu']);
@@ -287,4 +288,27 @@ test('Inflect Mini browser-port registration binds its exact upstream license an
   assert.match(model.support.notes, /failed the recorded strict native waveform gate/);
   assert.match(model.support.notes, /only the duration graph uses WebGPU with WASM fallback/);
   assert.match(model.support.notes, /all-graph WebGPU control clipped output/);
+});
+
+
+test('Tiny Voca Russian keeps the exact model, voice, fixture, and parameter pins', async () => {
+  const lock = getAssetLock().models['tiny-voca-ru'];
+  assert.equal(TINY_VOCA_RU.modelRevision, '2723b0e71fea216001bd4f6caf0866eb06879339');
+  assert.equal(TINY_VOCA_RU.modelRevision.length, 40);
+  assert.equal(lock.modelRevision, TINY_VOCA_RU.modelRevision);
+  assert.equal(lock.sourceRevision, 'aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784');
+  assert.equal(lock.spaceRevision, 'bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e');
+  assert.deepEqual(lock.backends, ['cpu', 'webgpu']);
+  assert.deepEqual(lock.support.languages, ['ru']);
+  assert.equal(TINY_VOCA_RU.defaultVoice, 'M');
+  assert.equal(TINY_VOCA_RU.defaultVoiceIndex, 1);
+  assert.equal(TINY_VOCA_RU.sampleRate, 24000);
+  assert.equal(TINY_VOCA_RU.fixtureOracle['ru-article-v1'].spans, 95);
+  assert.equal(TINY_VOCA_RU.fixtureOracle['ru-article-v1'].tokenStressSha256,
+    'dd87fc357784ef2b74dbb70ab6c884746fccd55fffc4908db2838b6185b449f9');
+  const parameters = JSON.parse(await readFile(resolve(root, 'lib/model-parameters.json'), 'utf8'))['tiny-voca-ru'];
+  assert.equal(parameters.parameterCount, 4534411);
+  assert.equal(parameters.countKind, 'exact');
+  assert.match(parameters.parameterCountSource, /egnch\/tiny-voca-ru\/blob\/2723b0e71fea216001bd4f6caf0866eb06879339\/README\.md$/);
+  assert.match(parameters.scope, /publisher reports exactly 4,534,411 parameters.*waveform generator/i);
 });
