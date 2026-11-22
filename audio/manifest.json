@@ -3393,6 +3393,70 @@
       }
     },
     {
+      "resultId": "2026-11-22t11-01-58-328z-zerre-tts-cpu-warm-215ee888",
+      "model": "zerre-tts",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "SES-A",
+      "language": "tr",
+      "attribution": "Generated Turkish speech from erkinemreta1 Zerre TTS tr-v1 INT8 in the released SES-A voice. The Apache-2.0 model credits the tiny-voca architecture. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://github.com/erkinemreta1/zerre-tts/tree/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4",
+        "https://huggingface.co/erkint/zerre-tts/tree/55753a04ae624998cba86f7c17625616e318124e",
+        "https://github.com/n4ze3m/tiny-voca#community",
+        "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/docs/data_sources.md",
+        "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/LICENSE",
+        "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t11-01-58-328z-zerre-tts-cpu-warm-215ee888--zerre-tts--cpu.wav",
+        "sha256": "5f7e410fbe16f0012382cdf99341cc362dfec6c542f965b3a32aac00ec1c47a5",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "387a7f798330631a554c4d0613a27c16d3ba7119e8943e0f1c3d4af0ed0458fb",
+        "bytes": 71675436
+      }
+    },
+    {
+      "resultId": "2026-11-22t11-07-11-650z-zerre-tts-webgpu-warm-a2baf431",
+      "model": "zerre-tts",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "SES-A",
+      "language": "tr",
+      "attribution": "Generated Turkish speech from erkinemreta1 Zerre TTS tr-v1 INT8 in the released SES-A voice. The Apache-2.0 model credits the tiny-voca architecture. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://github.com/erkinemreta1/zerre-tts/tree/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4",
+        "https://huggingface.co/erkint/zerre-tts/tree/55753a04ae624998cba86f7c17625616e318124e",
+        "https://github.com/n4ze3m/tiny-voca#community",
+        "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/docs/data_sources.md",
+        "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/LICENSE",
+        "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t11-07-11-650z-zerre-tts-webgpu-warm-a2baf431--zerre-tts--webgpu.wav",
+        "sha256": "3b0a22ee09cef792ccb60c48cc3c958422be07de7181c3b603b36b67760af9eb",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "04da9770fabba6ce6ef748f6b6615f8b2601010b9109b066938a7dbe5c489e85",
+        "bytes": 71699500
+      }
+    },
+    {
       "resultId": "2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700",
       "model": "zonos3-mini",
       "backend": "cpu",

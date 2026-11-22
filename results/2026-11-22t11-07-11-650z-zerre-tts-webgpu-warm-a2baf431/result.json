@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t11-07-11-650z-zerre-tts-webgpu-warm-a2baf431",
+  "createdAt": "2026-11-22T11:14:02.157Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "tr-article-v1",
+    "language": "tr",
+    "sha256": "95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3",
+    "characters": 20679,
+    "unicodeCodePoints": 20679,
+    "utf8Bytes": 22864,
+    "chunks": 94,
+    "source": {
+      "type": "translation",
+      "description": "Complete Standard Turkish translation of the English benchmark fixture by GPT-6 Luna, with independent AI review of all 27 paragraphs and minor evaluator edits for source fidelity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "fe8f66909ca808473dac4ceb56dc36e23ec44943",
+    "dirty": false,
+    "manifestSha256": "cc1ae31090eb3f186129cddf7c79852ec9d6e5f668eee5e02423173f3495a09c"
+  },
+  "assets": [
+    {
+      "id": "zerre-tts-browser-metadata",
+      "sha256": "6676fda5a30fa4a3aefe6b7a453bec8ae92d2128be0646706ac262b267ca9ec9",
+      "bytes": 893
+    },
+    {
+      "id": "zerre-tts-int8-onnx",
+      "sha256": "4c3d0d989a0376675f27645e4a6116bbff0dd8cd12208185c8069b6f7330115e",
+      "bytes": 8549070
+    },
+    {
+      "id": "zerre-tts-turkish-lexicon",
+      "sha256": "31ea64f92811e555885f4d80dba01444db078ef45963f3cf67e86ffffeb64e8f",
+      "bytes": 1174675
+    },
+    {
+      "id": "zerre-tts-turkish-phonemizer",
+      "sha256": "5428b2272d85a436384a8a23425a9b7fff804df57fc7459bf832874151626b2e",
+      "bytes": 2774
+    },
+    {
+      "id": "zerre-ort-wasm-module",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "zerre-ort-webgpu-module",
+      "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+      "bytes": 333468
+    },
+    {
+      "id": "zerre-ort-wasm-threaded-module",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "zerre-ort-wasm-threaded",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "zerre-ort-wasm-jsep-module",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "zerre-ort-wasm-jsep",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "zerre-upstream-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "zerre-upstream-notice",
+      "sha256": "9e4a5ec12e3e7563d836a3f02e5fd5be1dabdbb57ee692b37970c310e3a110ba",
+      "bytes": 1272
+    },
+    {
+      "id": "zerre-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "zerre-tts",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "tr"
+        ],
+        "scope": "Pinned Turkish-only checkpoint and browser demo at the listed revisions. The released neutral labels are SES-A/MK (index 0, default) and SES-B/NK (index 1); this benchmark fixes SES-A. Labels do not establish speaker identity.",
+        "sources": [
+          "https://github.com/erkinemreta1/zerre-tts/tree/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4",
+          "https://huggingface.co/erkint/zerre-tts/tree/55753a04ae624998cba86f7c17625616e318124e",
+          "https://github.com/n4ze3m/tiny-voca#community",
+          "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/docs/data_sources.md",
+          "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/LICENSE",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+        ],
+        "notes": "Official browser uses Turkish locale casing and a 25,344-entry lexicon with rule fallback. It drops digit runs and splits apostrophe suffixes into separate word tokens; 39 digit-bearing sentence pieces across 35 canonical spans are affected. The browser is CPU/WASM; benchmark WebGPU is a separately qualified explicit WebGPU+WASM path. No English or Kurdish synthesis is supported. Native RandomNormalLike noise is unseeded; provider output lengths may differ by one frame. Model license does not independently verify training recording rights or grant blanket output rights."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "SES-A",
+      "precision": "INT8",
+      "settings": {
+        "language": "tr",
+        "locale": "tr-TR",
+        "publicVoiceId": "SES-A",
+        "voiceId": "MK",
+        "voiceIndex": 0,
+        "modelRevision": "55753a04ae624998cba86f7c17625616e318124e",
+        "browserSourceRevision": "cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4",
+        "graphSha256": "4c3d0d989a0376675f27645e4a6116bbff0dd8cd12208185c8069b6f7330115e",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "threads": 1,
+        "frontend": "Official Zerre browser phonemizer and 25,344-entry eSpeak lexicon at cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4; no numeric expansion",
+        "runtimeRelease": "onnxruntime-web@1.20.1",
+        "textBehavior": "Whitespace collapses; sentence boundaries follow . ! ? …; tokenization retains letters and [.,!?;:—…], so digit runs are dropped and apostrophe suffixes become a separate word.",
+        "waveform": "Unseeded RandomNormalLike noise makes repeated native PCM hashes differ; a one-frame backend output-length difference is possible.",
+        "fixtureId": "tr-article-v1",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 2847 WebGPU compute dispatches during an untimed synthesis probe; unsupported operations may use explicit WASM fallback."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 99841.54999995232,
+          "samples": 35849728,
+          "sampleRate": 24000,
+          "pcmSha256": "be816a5cc06282a0d7fce29ae4372687b1c39859f2181cd562367864f4ea9969",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 369.539999961853,
+            "firstSourceChunkCompletedMs": 1196.460000038147,
+            "audioSeconds": 1493.7386666666666,
+            "realTimeFactor": 0.0668400385073732,
+            "minSamplesPerChunk": 333312,
+            "maxSamplesPerChunk": 458496
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 100709.21000003815,
+          "samples": 35849728,
+          "sampleRate": 24000,
+          "pcmSha256": "75ceb67eb5fa95fb23767bfbfb609d23419d21ce0d82c4d8e4f80e5aaf61a9f0",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 307.37999987602234,
+            "firstSourceChunkCompletedMs": 1072.960000038147,
+            "audioSeconds": 1493.7386666666666,
+            "realTimeFactor": 0.06742090316559488,
+            "minSamplesPerChunk": 333312,
+            "maxSamplesPerChunk": 458496
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 100596.34499979019,
+          "samples": 35849728,
+          "sampleRate": 24000,
+          "pcmSha256": "85af12d441076074fed5d8924f087bb306c5c3c63579e7f1e0a4865a747e4f52",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 298.96999979019165,
+            "firstSourceChunkCompletedMs": 1057.8149998188019,
+            "audioSeconds": 1493.7386666666666,
+            "realTimeFactor": 0.06734534443315622,
+            "minSamplesPerChunk": 333312,
+            "maxSamplesPerChunk": 458496
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 99427.61999988556,
+          "samples": 35849728,
+          "sampleRate": 24000,
+          "pcmSha256": "99e04d45fb0e859835e6e52fb0130f4b7ec8c0a2388a5e04f32026a3bd5aae90",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 313.25499987602234,
+            "firstSourceChunkCompletedMs": 1057.5750000476837,
+            "audioSeconds": 1493.7386666666666,
+            "realTimeFactor": 0.06656292845505699,
+            "minSamplesPerChunk": 333312,
+            "maxSamplesPerChunk": 458496
+          },
+          "audio": {
+            "sha256": "04da9770fabba6ce6ef748f6b6615f8b2601010b9109b066938a7dbe5c489e85",
+            "bytes": 71699500
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T11-01-57-730Z-c06a9abd8cf1; cell 2/4; source fe8f66909ca808473dac4ceb56dc36e23ec44943; fixture tr-article-v1 (tr, 20679 JavaScript characters, 94 spans); requested n=3; effective n=3; Headed Google Chrome in disposable profiles, sequential. Zerre tr-v1 dynamic-MatMul INT8, default SES-A (index 0) at neutral settings, official Turkish browser lexicon and phonemizer, and ORT Web 1.20.1. The official tokenizer omits digit runs. Dedicated cached resource cells do not contribute to the warm time score. Native stochastic inference preserved. Record AC, Chrome version, host load and thermal observations."
+  ]
+}
