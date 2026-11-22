@@ -10078,6 +10078,192 @@
           "https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json"
         ]
       }
+    },
+    "apptor-tiny-tts-at": {
+      "displayName": "Apptor Tiny TTS 4.5M (Austrian German)",
+      "modelRevision": "e28eb444250b4d06162e6ba8e5090c4284345913",
+      "browserSourceRevision": "e28eb444250b4d06162e6ba8e5090c4284345913",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.23.2",
+        "license": "MIT; bundled third-party notices apply",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.wasm.min.mjs",
+            "bytes": 49856,
+            "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort.webgpu.min.mjs",
+            "bytes": 66261,
+            "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.mjs",
+            "bytes": 20321,
+            "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.wasm",
+            "bytes": 11905541,
+            "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 51913,
+            "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web/1.23.2/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 25499390,
+            "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.23.2/LICENSE",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.23.2/ThirdPartyNotices.txt",
+            "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/ThirdPartyNotices.txt",
+            "bytes": 326866,
+            "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+            "package": "onnxruntime-web",
+            "version": "1.23.2",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "apptor-at-tts-onnx",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/apptor-tiny-tts-at.onnx",
+          "url": "https://huggingface.co/apptor/apptor-tiny-tts-at/resolve/e28eb444250b4d06162e6ba8e5090c4284345913/web/models/apptor-tiny-tts-at2.onnx",
+          "kind": "model-weights",
+          "bytes": 21382102,
+          "sha256": "a478c9827965aceadd03d812a74ecdaed856296fc2a577e1e1625e339299d568"
+        },
+        {
+          "id": "apptor-at-tts-config",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/apptor-tiny-tts-at.json",
+          "sourcePath": "web/apptor-at/tts-config.json",
+          "kind": "model-config",
+          "bytes": 987,
+          "sha256": "d5f41153ab87dfc8ecf151294b168cda82e7179739cb7c95d2e5d4bf39c02f12"
+        },
+        {
+          "id": "apptor-at-g2p-onnx",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/apptor-g2p-de.onnx",
+          "url": "https://huggingface.co/apptor/apptor-tiny-tts-at/resolve/e28eb444250b4d06162e6ba8e5090c4284345913/web/models/apptor-g2p-de.onnx",
+          "kind": "model-support",
+          "bytes": 12364141,
+          "sha256": "d981694e7a03030b2169be46b2094775dde4ec5a3e9406c92a3fc8f1ed8bbec3"
+        },
+        {
+          "id": "apptor-at-g2p-config",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/apptor-g2p-de.json",
+          "sourcePath": "web/apptor-at/g2p-config.json",
+          "kind": "model-support",
+          "bytes": 3007,
+          "sha256": "82759d03b9ff4ae01112a470bb4b34960b3471187a3dd6060292c4fc232fd6d5"
+        },
+        {
+          "id": "apptor-at-vocos-onnx",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/apptor-vocos-de.int8.onnx",
+          "url": "https://huggingface.co/apptor/apptor-tiny-tts-at/resolve/e28eb444250b4d06162e6ba8e5090c4284345913/web/models/apptor-vocos-de.int8.onnx",
+          "kind": "model-weights",
+          "bytes": 16655451,
+          "sha256": "417f2413163d666b23a89dd73b1829a34ac316fb524a02cc6a4120660a40e6eb"
+        },
+        {
+          "id": "apptor-at-frontend-data",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/frontend-de.json",
+          "sourcePath": "web/apptor-at/frontend-de.json",
+          "kind": "model-support",
+          "bytes": 3895,
+          "sha256": "d02f049df4da463bff99b6dd0d626d8a792aaef380e97595c137b2a67cb10300"
+        },
+        {
+          "id": "apptor-at-exceptions-data",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/exceptions-de.json",
+          "sourcePath": "web/apptor-at/exceptions-de.json",
+          "kind": "model-support",
+          "bytes": 20259,
+          "sha256": "3c954207d913c749f9a970b5aed9310968ea96225782ed6e2c66c11df4bc0994"
+        },
+        {
+          "id": "apptor-at-pronunciation-data",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/austrian-de.json",
+          "sourcePath": "web/apptor-at/austrian-de.json",
+          "kind": "model-support",
+          "bytes": 1020,
+          "sha256": "8a05f0ec8a9f317e842a1e8402f37d5743385f3a6d7a6f69c1e05b07f4c1b40d"
+        },
+        {
+          "id": "apptor-at-model-license",
+          "target": "licenses/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/LICENSE",
+          "sourcePath": "web/apptor-at/LICENSE",
+          "kind": "license",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "id": "apptor-at-vocos-license",
+          "target": "licenses/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/VOCOS-LICENSE",
+          "sourcePath": "web/apptor-at/VOCOS-LICENSE",
+          "kind": "license",
+          "bytes": 1069,
+          "sha256": "8f36ba0c214d4f487ffd7ee0b8528da9b67b459bef2d115de9cd001316589f46"
+        },
+        {
+          "id": "apptor-at-model-card",
+          "target": "models/apptor-tiny-tts-at/e28eb444250b4d06162e6ba8e5090c4284345913/README.md",
+          "sourcePath": "web/apptor-at/model-README.md",
+          "kind": "provenance",
+          "url": "https://huggingface.co/apptor/apptor-tiny-tts-at/resolve/e28eb444250b4d06162e6ba8e5090c4284345913/README.md",
+          "bytes": 7161,
+          "sha256": "2e25bb04d8a1a23767880db1feb83a9a744ed92a953a5366df625adcde9979f7"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "g2p": "Apache-2.0",
+        "vocos": "MIT",
+        "runtime": "ONNX Runtime Web MIT with bundled third-party notices",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "de-AT"
+        ],
+        "scope": "Pinned Austrian Standard German checkpoint, synthetic M2 speaker, Austrian phonetic rules and accent conditioning.",
+        "sources": [
+          "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913",
+          "https://huggingface.co/apptor/apptor-tiny-tts-at/blob/e28eb444250b4d06162e6ba8e5090c4284345913/README.md",
+          "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web",
+          "https://github.com/gemelo-ai/vocos/tree/eb39abfc42c1dee4854d9b10d44dd7d4fd3b0e53"
+        ],
+        "notes": "The model card/demo expose two synthetic speakers (F2, M2); internal label AT is the Austrian accent style, not a third public speaker. Benchmark settings use M2 at internal index 1, speed 1.0, pitch shift 0, pitch range 1.0, accent 1.0, 24 kHz and INT8 Vocos. Austrian pronunciation readings are enabled at accent >= 0.5. The upstream card describes an early-preview mild/inconsistent Austrian Standard German accent, not a dialect; output rights are not inferred from the model license."
+      }
     }
   }
 }

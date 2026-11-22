@@ -12,7 +12,7 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at"]);
   const apptor = getAssetLock().models['apptor-tiny-tts'];
   assert.equal(apptor.modelRevision, '0b6962273a1d6618f250cdbd621b56ba04b62cef');
   assert.equal(apptor.browserSourceRevision, 'e28eb444250b4d06162e6ba8e5090c4284345913');
@@ -20,6 +20,17 @@ test('catalog entries match the pinned browser backends', () => {
   assert.deepEqual(apptor.support.languages, ['de']);
   assert.deepEqual(apptor.assets.filter(asset => asset.kind === 'model-weights').map(asset => asset.bytes), [21379442, 16655451]);
   assert.ok(!apptor.assets.some(asset => asset.target.includes('-at')));
+  const apptorAt = getAssetLock().models['apptor-tiny-tts-at'];
+  assert.equal(apptorAt.modelRevision, 'e28eb444250b4d06162e6ba8e5090c4284345913');
+  assert.equal(apptorAt.support.voiceCount, 2);
+  assert.equal(apptorAt.support.bundledVoiceCount, 2);
+  assert.deepEqual(apptorAt.support.languages, ['de-AT']);
+  assert.deepEqual(apptorAt.backends, ['cpu', 'webgpu']);
+  assert.deepEqual(apptorAt.assets.filter(asset => asset.kind === 'model-weights').map(asset => asset.sha256), [
+    'a478c9827965aceadd03d812a74ecdaed856296fc2a577e1e1625e339299d568',
+    '417f2413163d666b23a89dd73b1829a34ac316fb524a02cc6a4120660a40e6eb',
+  ]);
+  assert.ok(apptorAt.assets.some(asset => asset.id === 'apptor-at-pronunciation-data'));
   assert.deepEqual(models.find(m => m.id === 'ming-3.0-tts-0.5b-fusor-mix-cpu').backends,['cpu']);
   for (const [id, backend, bytes] of [
     ['kale-tts-1-nano-int8', 'cpu', 14767138],
