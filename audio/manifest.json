@@ -2,6 +2,66 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "resultId": "2026-11-22t23-02-41-155z-alpa-es-cpu-warm-574587f7",
+      "model": "alpa-es",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "female",
+      "language": "es-AR",
+      "attribution": "AI-generated Rioplatense Spanish benchmark narration in Alpa-es’s fixed female voice. Alpa-es by Francisco Carlos Erra adapts Alpa by 77ethers and tiny-voca by Muhammed Nazeem. The model card credits the OpenSLR 61 Argentinian Spanish corpus by Guevara-Rukoz et al. (CC BY-SA 4.0). Model and code are released under Apache-2.0.",
+      "modelTerms": "Apache-2.0 release for code and weights; checkpoint was trained from OpenSLR 61 CC-BY-SA-4.0 speech data. The model card asks users to check how share-alike applies to the weights.",
+      "sourceUrls": [
+        "https://huggingface.co/FranciscoCarlosErra/alpa-es/tree/de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+        "https://github.com/n4ze3m/tiny-voca/tree/28e0722",
+        "https://www.openslr.org/61/",
+        "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t23-02-41-155z-alpa-es-cpu-warm-574587f7--alpa-es--cpu.wav",
+        "sha256": "b6434245ace5094cab52e9ae5fd2dc34b53b1445554f84a9bf91efe3402997f0",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "5e293f7ecca2efff337d612b35297e0f83eddb88fd6a92e1d962d35c6a8a0156",
+        "bytes": 68000812
+      }
+    },
+    {
+      "resultId": "2026-11-22t23-09-13-541z-alpa-es-webgpu-warm-8e4418d0",
+      "model": "alpa-es",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "female",
+      "language": "es-AR",
+      "attribution": "AI-generated Rioplatense Spanish benchmark narration in Alpa-es’s fixed female voice. Alpa-es by Francisco Carlos Erra adapts Alpa by 77ethers and tiny-voca by Muhammed Nazeem. The model card credits the OpenSLR 61 Argentinian Spanish corpus by Guevara-Rukoz et al. (CC BY-SA 4.0). Model and code are released under Apache-2.0.",
+      "modelTerms": "Apache-2.0 release for code and weights; checkpoint was trained from OpenSLR 61 CC-BY-SA-4.0 speech data. The model card asks users to check how share-alike applies to the weights.",
+      "sourceUrls": [
+        "https://huggingface.co/FranciscoCarlosErra/alpa-es/tree/de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+        "https://github.com/n4ze3m/tiny-voca/tree/28e0722",
+        "https://www.openslr.org/61/",
+        "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t23-09-13-541z-alpa-es-webgpu-warm-8e4418d0--alpa-es--webgpu.wav",
+        "sha256": "ba98363a6caee22ac16dd174d74f9f2a01027cd8b319ae2b740903fe2d2ea955",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "a8851301d3c01723de68e5c2a3ae6a9eb207d6d1536de5c3e79a9a288289dfb1",
+        "bytes": 68000812
+      }
+    },
+    {
       "resultId": "2026-11-22t05-39-38-969z-apptor-tiny-tts-at-cpu-warm-106ec536",
       "model": "apptor-tiny-tts-at",
       "backend": "cpu",
