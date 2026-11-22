@@ -1,0 +1,553 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t16-44-02-855z-tiny-voca-ja-v3-webgpu-cached-8a2c7435",
+  "createdAt": "2026-11-22T16:44:42.968Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "9bda87dfd44d718d753075bcf7ba223915936b5c",
+    "dirty": false,
+    "manifestSha256": "b51d162146253c6f709e90ff625cf2e74180bb45eebd482d16c03c2f69bcea17"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-ja-v3:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-ja-v3-model",
+      "sha256": "0ecb7542360d78e90a1571e9784c7b6474fbfde8cf43d8bbed12d54bfdb280c7",
+      "bytes": 21392532
+    },
+    {
+      "id": "tiny-voca-ja-v3-metadata",
+      "sha256": "5f7db2c04c56b27bf37a562dcd4c86c0016f666663618ba19ee99fd024eada03",
+      "bytes": 1115
+    },
+    {
+      "id": "tiny-voca-ja-v3-config",
+      "sha256": "90a0b2a7cef2a341c999af3643a0404f3df00d7a558ce1da4488f0b804cb8271",
+      "bytes": 2705
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyopenjtalk-wheel",
+      "sha256": "4da69e49c0b459728b41a7947a3ead7f98e2d5e7a44561080900ceaae967172b",
+      "bytes": 24975112
+    },
+    {
+      "id": "tiny-voca-ja-v3-sudachipy-wheel",
+      "sha256": "ad3ea354f3714b76d9773bb49e1c6e7a4dcfbf0fbf628090bc03c9420cc2cd34",
+      "bytes": 978966
+    },
+    {
+      "id": "tiny-voca-ja-v3-sudachidict-wheel",
+      "sha256": "6d7774b518e64c88a0578975d569590b3dae3b3c834f166486aa611879ee9d98",
+      "bytes": 76937301
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-pyodide-mjs",
+      "sha256": "1bb8cc14f9405aaa7cd4e00c12edd0a8539de9cc026618d6ee5a9663f367dc70",
+      "bytes": 17758
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-pyodide-asm-mjs",
+      "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972",
+      "bytes": 1250259
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-pyodide-asm-wasm",
+      "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329",
+      "bytes": 9597892
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-pyodide-lock-json",
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+      "bytes": 119077
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-python-stdlib-zip",
+      "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28",
+      "bytes": 2545550
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-numpy-2-4-6-cp314-cp314-pyemscripten-2026-0-wasm32-whl",
+      "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+      "bytes": 2960568
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-pydantic-2-12-5-py3-none-any-whl",
+      "sha256": "04854875001e07a8a74d87b7c80296cba168773d8c9804e232d695f82484d7d7",
+      "bytes": 463578
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-pydantic-core-2-41-5-cp314-cp314-pyemscripten-2026-0-wasm32-whl",
+      "sha256": "54703fa42a0d4d574283cfb8f08050ba7820c9a42b0a21bc1286407d9a9e54da",
+      "bytes": 1310164
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-annotated-types-0-7-0-py3-none-any-whl",
+      "sha256": "6541523b4b16c1953d2fc9b82fb86c540eea9f78fca329ab371ed13a8b0faa51",
+      "bytes": 11963
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-typing-extensions-4-15-0-py3-none-any-whl",
+      "sha256": "4fec68770a05408e668a4fa53d6bf4f0f684b9dacf820c7c5d6e97d3ad225e29",
+      "bytes": 44613
+    },
+    {
+      "id": "tiny-voca-ja-v3-pyodide-typing-inspection-0-4-2-py3-none-any-whl",
+      "sha256": "deb989630985f7a7296b90357a947a804a7612cecbb6439d6e71128e01f61051",
+      "bytes": 14610
+    },
+    {
+      "id": "tiny-voca-ja-v3-espeak-espeak-quiet-mjs",
+      "sha256": "2475988eb34dd79a9f00bc60e677fc0f2d6bdc90f1228d56eddcb8769f28a915",
+      "bytes": 66571
+    },
+    {
+      "id": "tiny-voca-ja-v3-espeak-espeak-quiet-wasm",
+      "sha256": "22cee9c9300ad99ba4fa01beeb3d5162863fd06d19bde9306960eb50d7974f7d",
+      "bytes": 351766
+    },
+    {
+      "id": "tiny-voca-ja-v3-espeak-espeak-quiet-data",
+      "sha256": "66c36c462cf1693ab179baaea74a2d4330cbc8dd72eed20696b12e734fa702dd",
+      "bytes": 827621
+    },
+    {
+      "id": "tiny-voca-ja-v3-apache-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ja-v3-profile-notice",
+      "sha256": "869843838dc5c2ae0f6edd68a80265d2e7f12b722cf84f9617950a3f0fb425bf",
+      "bytes": 2293
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-openjtalk-txt",
+      "sha256": "14f380a0db8dce139fdcfb731d21e993a31a00b68907515d1c54a5f356241343",
+      "bytes": 2808
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-openjtalk-dictionary-txt",
+      "sha256": "f4eca42ebd930e2c6e57fca58319d989bebcd1510cb7714b149c50f5425135ea",
+      "bytes": 5865
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-naist-dictionary-txt",
+      "sha256": "f4eca42ebd930e2c6e57fca58319d989bebcd1510cb7714b149c50f5425135ea",
+      "bytes": 5865
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-hts-engine-txt",
+      "sha256": "c918ac835f633b9c23465589cdc28e689acfe801b0c3e624b46fa32cc9d6dfa9",
+      "bytes": 3096
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-mecab-txt",
+      "sha256": "05e94c185a3e31f0c658f7011132be952b6d1a4d588b682f92da380e0a290650",
+      "bytes": 4411
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-pyopenjtalk-mit-txt",
+      "sha256": "c38083a4d51c1ea86e08b3303a984d0c23718c5ac214058af705814d30f4bb5b",
+      "bytes": 1177
+    },
+    {
+      "id": "tiny-voca-ja-v3-license-espeak-ng-gpl-3-0-txt",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ja-v3",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 2,
+        "languages": [
+          "ja",
+          "en"
+        ],
+        "scope": "Pinned v3 FP32 ONNX graph, step 134000, 24 kHz, selected F2 voice index 0; the original waveform graph stores exactly 4,538,827 FP32 initializer scalar values. Japanese uses pyopenjtalk-plus 0.4.1.post10 g2p_prosody with the package default Nani prediction fallback and unaltered bundled OpenJTalk dictionary; English uses the pinned upstream tokenizer/parser and eSpeak NG 1.52.0 en-us callback. The public oj-en-1 fingerprint is disclosed; the profile implements public frontend sources and does not reproduce unavailable training annotation scripts.",
+        "sources": [
+          "https://huggingface.co/gachimoto/tiny-voca-ja/tree/9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+          "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md",
+          "https://github.com/gachimoto-code/tiny-voca-ja/tree/49632c552d54a13664c1beb96904bef0154fbfc3",
+          "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+          "https://pypi.org/project/SudachiPy/0.7.0/",
+          "https://pypi.org/project/sudachidict-core/20261015/",
+          "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+          "https://pyodide.org/en/stable/",
+          "https://onnxruntime.ai/"
+        ],
+        "notes": "The graph bundles F2 and M2; this profile selects F2. The Japanese fixture oracle preserves its single unk at source span 5. CPU/WASM and WebGPU/WASM are supported only with pinned ORT 1.31.1 assets and observed GPU dispatch during untimed synthesis. English and Japanese benchmark fixtures are independent input datasets."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F2 (Japanese and American English)",
+      "precision": "FP32 original ONNX graph",
+      "settings": {
+        "language": "en",
+        "voice": "F2",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "frontend": "pyopenjtalk-plus 0.4.1.post10 (ja) / eSpeak NG 1.52.0 en-us (en); bca0b6c0ff471d257a723e3d903d115f3e79780bdba2685905c7eb20373a60ff",
+        "runtimeRelease": "Pyodide 314.0.8; ONNX Runtime Web 1.31.1",
+        "waveform": "Original FP32 graph; graph output length must equal duration frames × 256; one peak cap is applied to the complete source span; no seed input.",
+        "optionalNaniPredictor": "ONNX Runtime was unavailable in the native parity environment and is not included in this browser profile; pyopenjtalk-plus g2p_prosody uses its package fallback (including for 何).",
+        "releasedFingerprintDisclosure": "The public fingerprint identifies released annotation components; this browser profile implements the public frontend source and does not reproduce unavailable training annotation scripts.",
+        "fixtureId": "english-20k-v1",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 2310 WebGPU compute dispatches during untimed original graph synthesis; unsupported operators may run through WASM."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 28542.079999923706,
+          "samples": 34700544,
+          "sampleRate": 24000,
+          "pcmSha256": "36f786492452fe70c3d6953ff816fbf8b826875722fefadf021b260dc3132216",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 435.8199999332428,
+            "firstSourceChunkCompletedMs": 435.87999987602234,
+            "audioSeconds": 1445.856,
+            "realTimeFactor": 0.019740610406516076,
+            "minSamplesPerChunk": 290048,
+            "maxSamplesPerChunk": 477952,
+            "articleCallPeakRssBytes": 2699968512,
+            "generationMeanRssBytes": 2089180306,
+            "generationRssSampleCount": 56,
+            "loadMs": 2264.576666,
+            "controllerTrialElapsedMs": 35204.287916999994,
+            "downloadBytes": 46986,
+            "idealDownloadSecondsAt1Mbps": 0.375888
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795365850100.9849,
+            "finalPcmAtEpochMs": 1795365878643.065,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795365850684,
+                1842642944
+              ],
+              [
+                1795365851151,
+                1894744064
+              ],
+              [
+                1795365851648,
+                1840463872
+              ],
+              [
+                1795365852148,
+                1839988736
+              ],
+              [
+                1795365852651,
+                1851162624
+              ],
+              [
+                1795365853153,
+                1876312064
+              ],
+              [
+                1795365853655,
+                1981104128
+              ],
+              [
+                1795365854154,
+                1966620672
+              ],
+              [
+                1795365854657,
+                1974779904
+              ],
+              [
+                1795365855159,
+                1976664064
+              ],
+              [
+                1795365855659,
+                1981153280
+              ],
+              [
+                1795365856162,
+                2034483200
+              ],
+              [
+                1795365856666,
+                2041069568
+              ],
+              [
+                1795365857166,
+                2045935616
+              ],
+              [
+                1795365857665,
+                2044346368
+              ],
+              [
+                1795365858165,
+                2048458752
+              ],
+              [
+                1795365858667,
+                2054356992
+              ],
+              [
+                1795365859170,
+                2055766016
+              ],
+              [
+                1795365859673,
+                2063925248
+              ],
+              [
+                1795365860174,
+                2075803648
+              ],
+              [
+                1795365860677,
+                2070282240
+              ],
+              [
+                1795365861179,
+                2080915456
+              ],
+              [
+                1795365861680,
+                2086748160
+              ],
+              [
+                1795365862180,
+                2076868608
+              ],
+              [
+                1795365862682,
+                2080571392
+              ],
+              [
+                1795365863183,
+                2083209216
+              ],
+              [
+                1795365863684,
+                2101968896
+              ],
+              [
+                1795365864186,
+                2110881792
+              ],
+              [
+                1795365864687,
+                2114502656
+              ],
+              [
+                1795365865189,
+                2116976640
+              ],
+              [
+                1795365865691,
+                2126217216
+              ],
+              [
+                1795365866193,
+                2139373568
+              ],
+              [
+                1795365866692,
+                2144976896
+              ],
+              [
+                1795365867193,
+                2146746368
+              ],
+              [
+                1795365867697,
+                2149924864
+              ],
+              [
+                1795365868196,
+                2153398272
+              ],
+              [
+                1795365868700,
+                2154790912
+              ],
+              [
+                1795365869199,
+                2160214016
+              ],
+              [
+                1795365869701,
+                2163015680
+              ],
+              [
+                1795365870202,
+                2166538240
+              ],
+              [
+                1795365870707,
+                2170404864
+              ],
+              [
+                1795365871207,
+                2171109376
+              ],
+              [
+                1795365871712,
+                2174550016
+              ],
+              [
+                1795365872211,
+                2177712128
+              ],
+              [
+                1795365872713,
+                2182316032
+              ],
+              [
+                1795365873215,
+                2184134656
+              ],
+              [
+                1795365873719,
+                2188296192
+              ],
+              [
+                1795365874218,
+                2187755520
+              ],
+              [
+                1795365874720,
+                2191245312
+              ],
+              [
+                1795365875223,
+                2194161664
+              ],
+              [
+                1795365875726,
+                2198175744
+              ],
+              [
+                1795365876230,
+                2204794880
+              ],
+              [
+                1795365876731,
+                2203287552
+              ],
+              [
+                1795365877231,
+                2204876800
+              ],
+              [
+                1795365877734,
+                2212593664
+              ],
+              [
+                1795365878238,
+                2230779904
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "6232d8ad39bfe997e15b147b2d369ef25d6670ba7d882fc9729769e4f7d16d7a",
+            "bytes": 69401132
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T16-35-30-773Z-12ac7b790491; cell 4/4; source 9bda87dfd44d718d753075bcf7ba223915936b5c; fixture english-20k-v1 (en, 20000 JavaScript characters, 93 spans); requested n=1; effective n=1; Headed Google Chrome with serial disposable profiles on Apple M1 Pro. Exact Gachimoto tiny-voca-ja v3 FP32 ONNX, F2 index 0 with neutral speed and pitch. Pinned eSpeak NG 1.52.0 en-us quiet CLI IPA trace with released Python token/stress projection. ORT Web 1.31.1 single-thread CPU/WASM or independently verified hardware WebGPU+WASM. Dedicated cached resource samples are independent of warm timing.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

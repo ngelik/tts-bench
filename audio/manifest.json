@@ -3319,6 +3319,146 @@
       }
     },
     {
+      "resultId": "2026-11-22t16-16-42-975z-tiny-voca-ja-v3-cpu-warm-c733bdcf",
+      "model": "tiny-voca-ja-v3",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2 (Japanese and American English)",
+      "language": "ja",
+      "attribution": "AI-generated Japanese or English benchmark narration in the synthetic F2 voice from Satoshi Fujimoto’s Tiny Voca JA v3. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from Qwen3-TTS. Pinned model and recipe Apache-2.0; frontend components retain their own licenses. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/gachimoto/tiny-voca-ja/tree/9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+        "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md",
+        "https://github.com/gachimoto-code/tiny-voca-ja/tree/49632c552d54a13664c1beb96904bef0154fbfc3",
+        "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+        "https://pypi.org/project/SudachiPy/0.7.0/",
+        "https://pypi.org/project/sudachidict-core/20261015/",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+        "https://pyodide.org/en/stable/",
+        "https://onnxruntime.ai/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t16-16-42-975z-tiny-voca-ja-v3-cpu-warm-c733bdcf--tiny-voca-ja-v3--cpu.wav",
+        "sha256": "5b7355230e1e075d05f71ecd748efc2a373423ebdc39e113087e94711fb6735a",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "fe25b2d9696c41c4b6aacb65e31f2f0d1dc6face7e209ed3526f152999000715",
+        "bytes": 72502316
+      }
+    },
+    {
+      "resultId": "2026-11-22t16-35-31-457z-tiny-voca-ja-v3-cpu-warm-b71fc77a",
+      "model": "tiny-voca-ja-v3",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2 (Japanese and American English)",
+      "language": "en",
+      "attribution": "AI-generated Japanese or English benchmark narration in the synthetic F2 voice from Satoshi Fujimoto’s Tiny Voca JA v3. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from Qwen3-TTS. Pinned model and recipe Apache-2.0; frontend components retain their own licenses. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/gachimoto/tiny-voca-ja/tree/9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+        "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md",
+        "https://github.com/gachimoto-code/tiny-voca-ja/tree/49632c552d54a13664c1beb96904bef0154fbfc3",
+        "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+        "https://pypi.org/project/SudachiPy/0.7.0/",
+        "https://pypi.org/project/sudachidict-core/20261015/",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+        "https://pyodide.org/en/stable/",
+        "https://onnxruntime.ai/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t16-35-31-457z-tiny-voca-ja-v3-cpu-warm-b71fc77a--tiny-voca-ja-v3--cpu.wav",
+        "sha256": "017c76533173d39a97b505cf182dba7205b60edfe188eeb12fc1daef919f5dd1",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "bfbd37fc27b1b9b9601dbef2eafceb228aaf58adb837e7fbbfbd9abcdd799516",
+        "bytes": 69401132
+      }
+    },
+    {
+      "resultId": "2026-11-22t16-22-11-279z-tiny-voca-ja-v3-webgpu-warm-f806d007",
+      "model": "tiny-voca-ja-v3",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2 (Japanese and American English)",
+      "language": "ja",
+      "attribution": "AI-generated Japanese or English benchmark narration in the synthetic F2 voice from Satoshi Fujimoto’s Tiny Voca JA v3. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from Qwen3-TTS. Pinned model and recipe Apache-2.0; frontend components retain their own licenses. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/gachimoto/tiny-voca-ja/tree/9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+        "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md",
+        "https://github.com/gachimoto-code/tiny-voca-ja/tree/49632c552d54a13664c1beb96904bef0154fbfc3",
+        "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+        "https://pypi.org/project/SudachiPy/0.7.0/",
+        "https://pypi.org/project/sudachidict-core/20261015/",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+        "https://pyodide.org/en/stable/",
+        "https://onnxruntime.ai/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t16-22-11-279z-tiny-voca-ja-v3-webgpu-warm-f806d007--tiny-voca-ja-v3--webgpu.wav",
+        "sha256": "2391e9ccef05c49603ac8512eda089b3421e8d9e4fbf9e81e6765896a08d6535",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "e259854e85c3fd306883351d6491061d28988f4015e984a4d0d26faf070d8b8b",
+        "bytes": 72502316
+      }
+    },
+    {
+      "resultId": "2026-11-22t16-40-36-069z-tiny-voca-ja-v3-webgpu-warm-cd78835b",
+      "model": "tiny-voca-ja-v3",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2 (Japanese and American English)",
+      "language": "en",
+      "attribution": "AI-generated Japanese or English benchmark narration in the synthetic F2 voice from Satoshi Fujimoto’s Tiny Voca JA v3. Based on Muhammed Nazeem’s Tiny Voca, with synthetic training speech from Qwen3-TTS. Pinned model and recipe Apache-2.0; frontend components retain their own licenses. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/gachimoto/tiny-voca-ja/tree/9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+        "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md",
+        "https://github.com/gachimoto-code/tiny-voca-ja/tree/49632c552d54a13664c1beb96904bef0154fbfc3",
+        "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+        "https://pypi.org/project/SudachiPy/0.7.0/",
+        "https://pypi.org/project/sudachidict-core/20261015/",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+        "https://pyodide.org/en/stable/",
+        "https://onnxruntime.ai/"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t16-40-36-069z-tiny-voca-ja-v3-webgpu-warm-cd78835b--tiny-voca-ja-v3--webgpu.wav",
+        "sha256": "f9dad764967e429dc6a5991f53c28c1c21397b978ae59680ea8f7a794845cdb5",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "55adf59bec5fbc50e0e654ddfe56d9a444050d9fa84a69cd08686ef727ba32fa",
+        "bytes": 69401132
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",
