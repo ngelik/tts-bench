@@ -10616,6 +10616,151 @@
         "notes": "The pinned ONNX graph is the official FP32 release. The official worker uses one-thread WASM; this benchmark adds WebGPU with explicit WASM fallback and untimed hardware dispatch proof. The graph contains native unseeded RandomNormalLike noise, so PCM digests are not a waveform identity guarantee. Apache-2.0 model/code terms do not establish a separate generated-audio license."
       }
     },
+    "zerre-tts": {
+      "displayName": "Zerre TTS ~4.5M INT8 (Turkish, SES-A)",
+      "modelRevision": "55753a04ae624998cba86f7c17625616e318124e",
+      "browserSourceRevision": "cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT; upstream v1.20.1 third-party notices apply",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "zerre-tts-browser-metadata",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/model.json",
+          "url": "https://raw.githubusercontent.com/erkinemreta1/zerre-tts/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/web/public/model.json",
+          "bytes": 893,
+          "sha256": "6676fda5a30fa4a3aefe6b7a453bec8ae92d2128be0646706ac262b267ca9ec9",
+          "kind": "model-config"
+        },
+        {
+          "id": "zerre-tts-int8-onnx",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/model.onnx",
+          "url": "https://raw.githubusercontent.com/erkinemreta1/zerre-tts/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/web/public/model.onnx",
+          "bytes": 8549070,
+          "sha256": "4c3d0d989a0376675f27645e4a6116bbff0dd8cd12208185c8069b6f7330115e",
+          "kind": "model-weights"
+        },
+        {
+          "id": "zerre-tts-turkish-lexicon",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/lexicon-tr.json",
+          "url": "https://raw.githubusercontent.com/erkinemreta1/zerre-tts/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/web/public/lexicon-tr.json",
+          "bytes": 1174675,
+          "sha256": "31ea64f92811e555885f4d80dba01444db078ef45963f3cf67e86ffffeb64e8f",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-tts-turkish-phonemizer",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/phonemize-tr.js",
+          "url": "https://raw.githubusercontent.com/erkinemreta1/zerre-tts/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/web/public/phonemize-tr.js",
+          "bytes": 2774,
+          "sha256": "5428b2272d85a436384a8a23425a9b7fff804df57fc7459bf832874151626b2e",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-ort-wasm-module",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/runtime/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-ort-webgpu-module",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/runtime/ort.webgpu.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.mjs",
+          "bytes": 333468,
+          "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-ort-wasm-threaded-module",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/runtime/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-ort-wasm-threaded",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/runtime/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-ort-wasm-jsep-module",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/runtime/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-ort-wasm-jsep",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/runtime/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        },
+        {
+          "id": "zerre-upstream-license",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/licenses/LICENSE",
+          "sourcePath": "web/zerre-tts/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "zerre-upstream-notice",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/licenses/NOTICE",
+          "sourcePath": "web/zerre-tts/UPSTREAM-NOTICE",
+          "bytes": 1272,
+          "sha256": "9e4a5ec12e3e7563d836a3f02e5fd5be1dabdbb57ee692b37970c310e3a110ba",
+          "kind": "license"
+        },
+        {
+          "id": "zerre-ort-license",
+          "target": "models/zerre-tts/55753a04ae624998cba86f7c17625616e318124e/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/licenses/onnxruntime-web-LICENSE.txt",
+          "sourcePath": "web/tiny-voca-it/notices-onnxruntime-web-LICENSE.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "trainingData": "Two audiobook corpora are labeled MIT by their uploaders; the publisher says copyright/personality rights were not independently verified.",
+        "runtime": "ONNX Runtime Web MIT; upstream v1.20.1 third-party notices apply",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "tr"
+        ],
+        "scope": "Pinned Turkish-only checkpoint and browser demo at the listed revisions. The released neutral labels are SES-A/MK (index 0, default) and SES-B/NK (index 1); this benchmark fixes SES-A. Labels do not establish speaker identity.",
+        "sources": [
+          "https://github.com/erkinemreta1/zerre-tts/tree/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4",
+          "https://huggingface.co/erkint/zerre-tts/tree/55753a04ae624998cba86f7c17625616e318124e",
+          "https://github.com/n4ze3m/tiny-voca#community",
+          "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/docs/data_sources.md",
+          "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/LICENSE",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+        ],
+        "notes": "Official browser uses Turkish locale casing and a 25,344-entry lexicon with rule fallback. It drops digit runs and splits apostrophe suffixes into separate word tokens; 39 digit-bearing sentence pieces across 35 canonical spans are affected. The browser is CPU/WASM; benchmark WebGPU is a separately qualified explicit WebGPU+WASM path. No English or Kurdish synthesis is supported. Native RandomNormalLike noise is unseeded; provider output lengths may differ by one frame. Model license does not independently verify training recording rights or grant blanket output rights."
+      }
+    },
     "vocina-it": {
       "displayName": "Vocina Italian v1.0 INT8",
       "modelRevision": "8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",

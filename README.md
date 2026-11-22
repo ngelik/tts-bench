@@ -445,6 +445,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Kale TTS 1 Nano 7.5M (FP32 WebGPU) | 10 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#kale-tts-1-nano-fp32) |
 | Apptor Tiny TTS 4.5M (Austrian German) | 2 | 2 | 1 (de-AT) | [Details](docs/MODEL_SUPPORT.md#apptor-tiny-tts-at) |
 | Tiny Voca Italian 6.77M (Lorenzo) | 2 | 2 | 1 (it) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-it) |
+| Zerre TTS ~4.5M INT8 (Turkish, SES-A) | 2 | 2 | 1 (tr) | [Details](docs/MODEL_SUPPORT.md#zerre-tts) |
 | Vocina Italian v1.0 INT8 | 2 | 2 | 1 (it) | [Details](docs/MODEL_SUPPORT.md#vocina-it) |
 
 ### Controlled native comparisons

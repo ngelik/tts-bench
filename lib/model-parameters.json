@@ -74,6 +74,12 @@
     "parameterCountSource": "https://github.com/carbogninalberto/tiny-voca-it/blob/0c57fab284e58e0bad620f21790e631d5dec17f8/models/tiny-voca-it-preview-fp32.onnx",
     "scope": "Count of explicitly named FP32 .weight and .bias initializers in the pinned v0.3.0 FP32 ONNX graph. This is a scoped initializer lower bound; the scan does not prove which tensors are trainable. The graph contains 6,767,245 FP32 initializer values in total, including constants and buffers, so that total is not reported as a trainable parameter count."
   },
+  "zerre-tts": {
+    "parameterCount": 181515,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://github.com/erkinemreta1/zerre-tts/blob/cf3cdfaaa54a9e8ec541081bb5c2e97c3d563db4/web/public/model.onnx",
+    "scope": "Count of explicitly named FP32 weight and bias initializer values in the pinned int8 graph. Quantized matrix initializer values are not included in this count; it is a scoped lower bound, not the full model parameter total. The upstream card estimates approximately 4.5M parameters."
+  },
   "sopro-v2-turbo": {
     "parameterCount": 121574193,
     "countKind": "lower-bound",
