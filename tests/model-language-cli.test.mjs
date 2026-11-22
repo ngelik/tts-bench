@@ -19,4 +19,6 @@ test('model discovery filters by executable browser language, preserving locale 
   const german = modelsFor('de');
   assert.ok(german.some(model => model.id === 'apptor-tiny-tts' && model.frontendLanguages.includes('de')));
   assert.ok(!modelsFor('en').some(model => model.id === 'apptor-tiny-tts'));
+  assert.ok(german.some(model => model.id === 'tiny-voca-de-en' && model.frontendLanguages.includes('de')));
+  assert.ok(modelsFor('en').some(model => model.id === 'tiny-voca-de-en' && model.frontendLanguages.includes('en')));
 });
