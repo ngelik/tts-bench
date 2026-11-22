@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836",
+  "createdAt": "2026-11-22T08:42:14.461Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "it-article-v1",
+    "language": "it",
+    "sha256": "9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a",
+    "characters": 23584,
+    "unicodeCodePoints": 23584,
+    "utf8Bytes": 23786,
+    "chunks": 107,
+    "source": {
+      "type": "translation",
+      "description": "GPT-6 Luna produced an AI-assisted Standard Italian translation of the complete English benchmark fixture, preserving paragraph order and story details. Independently reviewed by AI for completeness and fidelity; no human or pronunciation review has been performed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "2f1f236b34a3baf9c5a442e87468809a38b335d0",
+    "dirty": false,
+    "manifestSha256": "a863b9d34877285e9507d35959a2b8f30c7b38bdd502b9269ed181ab02531e80"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-it-metadata",
+      "sha256": "11a0f19a683240a802d1206c2954d74526ba3d2328f6a5f3420a1ab2f5550d73",
+      "bytes": 3724
+    },
+    {
+      "id": "tiny-voca-it-fp32-onnx",
+      "sha256": "6b24645e827aa4ed10af33ed6cb3937acde94c2dfd7075b1634999c4d9752964",
+      "bytes": 27982441
+    },
+    {
+      "id": "tiny-voca-it-official-frontend",
+      "sha256": "dd19204dd322ad912f8b5699a7a8309bfcc5282c4dad1f887ee1e435804ac03c",
+      "bytes": 6489
+    },
+    {
+      "id": "tiny-voca-it-official-numbers",
+      "sha256": "a699e108bbbf6d90878479aa1b2bb7734c16e8655b64b9f228ca873b942c0782",
+      "bytes": 4826
+    },
+    {
+      "id": "tiny-voca-it-espeak-ng-js",
+      "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+      "bytes": 178386
+    },
+    {
+      "id": "tiny-voca-it-espeak-ng-wasm",
+      "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+      "bytes": 18485010
+    },
+    {
+      "id": "tiny-voca-it-ort-wasm-module",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "tiny-voca-it-ort-webgpu-module",
+      "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+      "bytes": 333468
+    },
+    {
+      "id": "tiny-voca-it-ort-wasm-threaded-module",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-it-ort-wasm-threaded",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-it-ort-wasm-jsep-module",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-voca-it-ort-wasm-jsep",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "tiny-voca-it-espeak-license",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    {
+      "id": "tiny-voca-it-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-it",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "it"
+        ],
+        "scope": "Pinned v0.3.0 FP32 checkpoint; the released web profile exposes Lorenzo (EM4) and Chiara (EF4), and this benchmark fixes Lorenzo/EM4. The model JSON has 14 indexed embedding slots; that is not the released product voice count.",
+        "sources": [
+          "https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0",
+          "https://github.com/carbogninalberto/tiny-voca-it/tree/280f40c307acf04138a5227b6cf9b1544e5886b4",
+          "https://github.com/carbogninalberto/tiny-voca-it/blob/0c57fab284e58e0bad620f21790e631d5dec17f8/worker.js",
+          "https://github.com/carbogninalberto/tiny-voca-it/blob/280f40c307acf04138a5227b6cf9b1544e5886b4/LICENSE",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt",
+          "https://www.npmjs.com/package/espeak-ng",
+          "https://github.com/espeak-ng/espeak-ng"
+        ],
+        "notes": "The pinned ONNX graph is the official FP32 release. The official worker uses one-thread WASM; this benchmark adds WebGPU with explicit WASM fallback and untimed hardware dispatch proof. The graph contains native unseeded RandomNormalLike noise, so PCM digests are not a waveform identity guarantee. Apache-2.0 model/code terms do not establish a separate generated-audio license."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Lorenzo (EM4)",
+      "precision": "FP32",
+      "settings": {
+        "language": "it",
+        "locale": "it-IT",
+        "voiceId": "EM4",
+        "voiceIndex": 12,
+        "speed": 1,
+        "emotion": "neutral",
+        "emotionIndex": 0,
+        "intensity": 0,
+        "pitch": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "threads": 1,
+        "frontend": "Official tiny-voca-it frontend.js + numbers.js at 0c57fab284e58e0bad620f21790e631d5dec17f8; eSpeak NG 1.0.2 Italian voice",
+        "runtimeRelease": "onnxruntime-web@1.20.1",
+        "waveform": "Native ONNX RandomNormalLike noise is unseeded; PCM hashes are not a repeatability oracle.",
+        "fixtureId": "it-article-v1",
+        "executionProviders": [
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "ONNX Runtime Web 1.20.1 with the official single-thread SIMD WASM route; CPU frontend preprocessing."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 160623.02499985695,
+          "samples": 38929552,
+          "sampleRate": 24000,
+          "pcmSha256": "fa4cdf787c8baef35d6f45b6de456dd47f604302bb5dc6076f2c4cefd2df8b28",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 401.9649999141693,
+            "firstSourceChunkCompletedMs": 1605.8899998664856,
+            "audioSeconds": 1622.0646666666667,
+            "realTimeFactor": 0.09902381101114563,
+            "minSamplesPerChunk": 317920,
+            "maxSamplesPerChunk": 454224
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 160324.06500005722,
+          "samples": 38929552,
+          "sampleRate": 24000,
+          "pcmSha256": "23082b044fa68033f9af625ba5ca738440774b1391cc7dc8a383f44c6b49c19c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 363.69000005722046,
+            "firstSourceChunkCompletedMs": 1526.3100001811981,
+            "audioSeconds": 1622.0646666666667,
+            "realTimeFactor": 0.09883950269968103,
+            "minSamplesPerChunk": 317920,
+            "maxSamplesPerChunk": 454224
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 160301.83500003815,
+          "samples": 38929552,
+          "sampleRate": 24000,
+          "pcmSha256": "f131d0d316a63f0ba836aa75f052d12e26fd425bcc66cf0307a1a73e252a16a0",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 363.2649998664856,
+            "firstSourceChunkCompletedMs": 1528.3399999141693,
+            "audioSeconds": 1622.0646666666667,
+            "realTimeFactor": 0.0988257979439608,
+            "minSamplesPerChunk": 317920,
+            "maxSamplesPerChunk": 454224
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 160647.43499994278,
+          "samples": 38929552,
+          "sampleRate": 24000,
+          "pcmSha256": "5c4988d2f67ed4865ec4ed7e297937c2ae33e232e7693a597246a630bab1b6d2",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 360.0899999141693,
+            "firstSourceChunkCompletedMs": 1528.414999961853,
+            "audioSeconds": 1622.0646666666667,
+            "realTimeFactor": 0.09903885973305386,
+            "minSamplesPerChunk": 317920,
+            "maxSamplesPerChunk": 454224
+          },
+          "audio": {
+            "sha256": "3bd7557e4e24ae224e87da983e42e0cae2560ecffbfe409d5edb00be958c2108",
+            "bytes": 77859148
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T08-31-20-944Z-9fe9e052a990; cell 1/4; source 2f1f236b34a3baf9c5a442e87468809a38b335d0; fixture it-article-v1 (it, 23584 JavaScript characters, 107 spans); requested n=3; effective n=3; Headed Google Chrome in disposable profiles, sequential. Fixed Italian Lorenzo EM4 v0.3.0 FP32 and ORT Web 1.20.1. AC, Chrome version, background load and thermal observations are recorded at launch and completion. Dedicated cached memory cells are separate from warm measurement."
+  ]
+}

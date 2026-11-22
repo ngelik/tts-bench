@@ -132,6 +132,14 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | SanoTTS Robot MCU INT8 (English, US) | E9 | 0.68 | [28.06 s (n=5)](results/2026-11-19t14-27-42-754z-sano-robot-mcu-cpu-warm-e90bd1a8/summary.md) | [unsupported](results/2026-11-19t13-50-07-505z-sano-robot-mcu-webgpu-warm-a9d88eaf/summary.md) | Native; independent attempts |
 | SanoTTS Trellis experimental FP32 (English, US) | E9 | 3.98 | [132.56 s (n=5)](results/2026-11-19t14-30-39-998z-sano-trellis-cpu-warm-e51e98cc/summary.md) | [unsupported](results/2026-11-19t16-13-20-544z-sano-trellis-webgpu-warm-0d8cc66d/summary.md) | Native; independent attempts |
 
+### Italian (it) — it-article-v1
+
+23584 characters / 107 spans · fixture SHA-256 `9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Tiny Voca Italian 6.77M (Lorenzo) | E13 | 27.98 | [160.32 s (n=3)](results/2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836/summary.md) | [135.55 s (n=3)](results/2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226/summary.md) | Native; matched configuration |
+
 ### Ukrainian (uk) — uk-article-v1
 
 19980 characters / 92 spans · fixture SHA-256 `542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
@@ -352,7 +360,13 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Tiny Voca DE/EN 4.6M (Voca64) | 21.49 | [1094.16](results/2026-11-22t07-06-16-939z-tiny-voca-de-en-cpu-cached-6982d19e/summary.md) | [1437.48](results/2026-11-22t07-07-40-234z-tiny-voca-de-en-webgpu-cached-78525d07/summary.md) |
 
-**RAM 29** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
+**RAM 29** · Italian (it) · fixture `it-article-v1` · 23584 characters / 107 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2f1f236b`](https://github.com/ngelik/tts-bench/commit/2f1f236b34a3baf9c5a442e87468809a38b335d0).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Tiny Voca Italian 6.77M (Lorenzo) | 27.98 | [1386.86](results/2026-11-22t08-51-36-536z-tiny-voca-it-cpu-cached-a3d6a522/summary.md) | [1315.70](results/2026-11-22t08-54-27-327z-tiny-voca-it-webgpu-cached-bbcd5e49/summary.md) |
+
+**RAM 30** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
@@ -363,6 +377,8 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 ![Average Chrome RAM during generation — Austrian German](docs/reference-memory-de-AT.svg)
 
 ![Average Chrome RAM during generation — German](docs/reference-memory-de.svg)
+
+![Average Chrome RAM during generation — Italian](docs/reference-memory-it.svg)
 
 ![Average Chrome RAM during generation — Ukrainian](docs/reference-memory-uk.svg)
 
@@ -590,6 +606,10 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![tiny-voca-english — campaign metrics](reports/tiny-voca-english/overview.svg)
 
+[tiny-voca-it-it — all-metrics table and source receipts](reports/tiny-voca-it-it/overview.md)
+
+![tiny-voca-it-it — campaign metrics](reports/tiny-voca-it-it/overview.svg)
+
 [ua-serhiy-uk-cpu — all-metrics table and source receipts](reports/ua-serhiy-uk-cpu/overview.md)
 
 ![ua-serhiy-uk-cpu — campaign metrics](reports/ua-serhiy-uk-cpu/overview.svg)
@@ -722,6 +742,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Tiny Voca DE/EN 4.6M (Voca64) | cpu | en | [Receipt](results/2026-11-22t07-18-39-233z-tiny-voca-de-en-cpu-warm-f0321520/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t07-18-39-233z-tiny-voca-de-en-cpu-warm-f0321520--tiny-voca-de-en--cpu.wav) | Not published |
 | Tiny Voca DE/EN 4.6M (Voca64) | webgpu | de | [Receipt](results/2026-11-22t07-04-33-937z-tiny-voca-de-en-webgpu-warm-18d91567/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t07-04-33-937z-tiny-voca-de-en-webgpu-warm-18d91567--tiny-voca-de-en--webgpu.wav) | Not published |
 | Tiny Voca DE/EN 4.6M (Voca64) | webgpu | en | [Receipt](results/2026-11-22t07-22-17-062z-tiny-voca-de-en-webgpu-warm-94bbf192/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t07-22-17-062z-tiny-voca-de-en-webgpu-warm-94bbf192--tiny-voca-de-en--webgpu.wav) | Not published |
+| Tiny Voca Italian 6.77M (Lorenzo) | cpu | it | [Receipt](results/2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836--tiny-voca-it--cpu.wav) | Not published |
+| Tiny Voca Italian 6.77M (Lorenzo) | webgpu | it | [Receipt](results/2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226--tiny-voca-it--webgpu.wav) | Not published |
 | Tiny Voca 4.5M | cpu | en | [Receipt](results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu-full.wav) |
 | Tiny Voca 4.5M | cpu | en | [Receipt](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu-full.wav) |
 | Tiny Voca 4.5M | webgpu | en | [Receipt](results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec--tiny-voca--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec--tiny-voca--webgpu-full.wav) |
@@ -935,6 +957,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 193 · 2026-11-22 | tiny-voca-de-en/webgpu | en / english-20k-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t07-22-17-062z-tiny-voca-de-en-webgpu-warm-94bbf192/summary.md) | [SVG](results/2026-11-22t07-22-17-062z-tiny-voca-de-en-webgpu-warm-94bbf192/chart.svg) |
 | 194 · 2026-11-22 | tiny-voca-de-en/cpu | en / english-20k-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t07-23-37-629z-tiny-voca-de-en-cpu-cached-13c87a78/summary.md) | [SVG](results/2026-11-22t07-23-37-629z-tiny-voca-de-en-cpu-cached-13c87a78/chart.svg) |
 | 195 · 2026-11-22 | tiny-voca-de-en/webgpu | en / english-20k-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t07-24-38-536z-tiny-voca-de-en-webgpu-cached-7e83045b/summary.md) | [SVG](results/2026-11-22t07-24-38-536z-tiny-voca-de-en-webgpu-cached-7e83045b/chart.svg) |
+| 196 · 2026-11-22 | tiny-voca-it/cpu | it / it-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836/summary.md) | [SVG](results/2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836/chart.svg) |
+| 197 · 2026-11-22 | tiny-voca-it/webgpu | it / it-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226/summary.md) | [SVG](results/2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226/chart.svg) |
+| 198 · 2026-11-22 | tiny-voca-it/cpu | it / it-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t08-51-36-536z-tiny-voca-it-cpu-cached-a3d6a522/summary.md) | [SVG](results/2026-11-22t08-51-36-536z-tiny-voca-it-cpu-cached-a3d6a522/chart.svg) |
+| 199 · 2026-11-22 | tiny-voca-it/webgpu | it / it-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t08-54-27-327z-tiny-voca-it-webgpu-cached-bbcd5e49/summary.md) | [SVG](results/2026-11-22t08-54-27-327z-tiny-voca-it-webgpu-cached-bbcd5e49/chart.svg) |
 
 </details>
 
