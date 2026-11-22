@@ -3,6 +3,7 @@ import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
 import { createTinyVocaDeEnAdapter } from './adapters/tiny-voca-de-en.mjs';
 import { createTinyVocaItAdapter } from './adapters/tiny-voca-it.mjs';
 import { createTinyVocaJaTsukuyomiChanAdapter } from './adapters/tiny-voca-ja-tsukuyomi-chan.mjs';
+import { createTinyVocaJaV3Adapter } from './adapters/tiny-voca-ja-v3.mjs';
 import { createKoreanTtsAdapter } from './adapters/korean-tts.mjs';
 import { createClarviaTtsTinyAdapter } from './adapters/clarvia-tts-tiny.mjs';
 import { createZerreTtsAdapter } from './adapters/zerre-tts.mjs';
@@ -54,6 +55,7 @@ const FACTORIES = {
   'tiny-voca-de-en': createTinyVocaDeEnAdapter,
   'tiny-voca-it': createTinyVocaItAdapter,
   'tiny-voca-ja-tsukuyomi-chan': createTinyVocaJaTsukuyomiChanAdapter,
+  'tiny-voca-ja-v3': createTinyVocaJaV3Adapter,
   'korean-tts': createKoreanTtsAdapter,
   'clarvia-tts-tiny': createClarviaTtsTinyAdapter,
   'zerre-tts': createZerreTtsAdapter,
@@ -243,6 +245,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       auditTexts: (smoke && ((model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'tiny-voca-it' && fixtureId === 'it-article-v1') ||
         (model === 'tiny-voca-ja-tsukuyomi-chan' && fixtureId === 'ja-article-v1') ||
+        (model === 'tiny-voca-ja-v3' && ['ja-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'clarvia-tts-tiny' && fixtureId === 'tr-article-v1') ||
         (model === 'zerre-tts' && fixtureId === 'tr-article-v1') ||
         (model === 'vocina-it' && fixtureId === 'it-article-v1') ||

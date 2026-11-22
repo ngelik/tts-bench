@@ -217,5 +217,11 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan/blob/7ed75cc5f521cc6be4cb57689b2c038928259ae9/models/onnx/model.onnx",
     "scope": "Exact count of stored FP32 scalar values in the original waveform graph across 2,330 top-level nodes. The separate duration graph shares model.weights.bin and is not counted again."
+  },
+  "tiny-voca-ja-v3": {
+    "parameterCount": 4538827,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/onnx/model.onnx",
+    "scope": "Exact number of stored FP32 initializer scalar values in the original v3 waveform graph. The separate benchmark profile selects F2 (voice index 0); the graph bundles F2 and M2."
   }
 }

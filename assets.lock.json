@@ -11444,6 +11444,351 @@
         }
       ]
     },
+    "tiny-voca-ja-v3": {
+      "displayName": "Tiny Voca Japanese v3 F2 4.54M FP32",
+      "modelRevision": "9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+      "browserSourceRevision": "49632c552d54a13664c1beb96904bef0154fbfc3",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "ONNX Runtime Web MIT with bundled third-party notices",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-ja-v3-model",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/model.onnx",
+          "url": "https://huggingface.co/gachimoto/tiny-voca-ja/resolve/9b2305c81b9ca92ef8347eba473ea096c86f55c4/onnx/model.onnx",
+          "bytes": 21392532,
+          "sha256": "0ecb7542360d78e90a1571e9784c7b6474fbfde8cf43d8bbed12d54bfdb280c7",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-ja-v3-metadata",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/model.json",
+          "url": "https://huggingface.co/gachimoto/tiny-voca-ja/resolve/9b2305c81b9ca92ef8347eba473ea096c86f55c4/onnx/model.json",
+          "bytes": 1115,
+          "sha256": "5f7db2c04c56b27bf37a562dcd4c86c0016f666663618ba19ee99fd024eada03",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-ja-v3-config",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/config.json",
+          "url": "https://huggingface.co/gachimoto/tiny-voca-ja/resolve/9b2305c81b9ca92ef8347eba473ea096c86f55c4/config.json",
+          "bytes": 2705,
+          "sha256": "90a0b2a7cef2a341c999af3643a0404f3df00d7a558ce1da4488f0b804cb8271",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyopenjtalk-wheel",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/pyopenjtalk_plus-0.4.1.post10-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "bytes": 24975112,
+          "sha256": "4da69e49c0b459728b41a7947a3ead7f98e2d5e7a44561080900ceaae967172b",
+          "kind": "generated-frontend",
+          "generated": {
+            "artifactPath": "models/tiny-voca-ja-tsukuyomi-chan/7ed75cc5f521cc6be4cb57689b2c038928259ae9/66ee00d2c8cd61b34be1cde5880bac0e45b89fcf/pyopenjtalk_plus-0.4.1.post10-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+            "build": "Run `bash tools/build-tiny-voca-ja-wheels.sh`, verify the wheel digests, copy these files into the locked v3 target as documented in docs/TINY_VOCA_JA_V3.md, then run assets fetch and verify."
+          }
+        },
+        {
+          "id": "tiny-voca-ja-v3-sudachipy-wheel",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/sudachipy-0.7.0-cp310-abi3-pyemscripten_2026_0_wasm32.whl",
+          "bytes": 978966,
+          "sha256": "ad3ea354f3714b76d9773bb49e1c6e7a4dcfbf0fbf628090bc03c9420cc2cd34",
+          "kind": "generated-frontend",
+          "generated": {
+            "artifactPath": "models/tiny-voca-ja-tsukuyomi-chan/7ed75cc5f521cc6be4cb57689b2c038928259ae9/66ee00d2c8cd61b34be1cde5880bac0e45b89fcf/sudachipy-0.7.0-cp310-abi3-pyemscripten_2026_0_wasm32.whl",
+            "build": "Run `bash tools/build-tiny-voca-ja-wheels.sh`, verify the wheel digests, copy these files into the locked v3 target as documented in docs/TINY_VOCA_JA_V3.md, then run assets fetch and verify."
+          }
+        },
+        {
+          "id": "tiny-voca-ja-v3-sudachidict-wheel",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/sudachidict_core-20261015-py3-none-any.whl",
+          "bytes": 76937301,
+          "sha256": "6d7774b518e64c88a0578975d569590b3dae3b3c834f166486aa611879ee9d98",
+          "kind": "frontend",
+          "url": "https://files.pythonhosted.org/packages/3d/6a/9dddc36e33ff7f86e394315a77b90d0f41bfd161e011d77a8397662d53e0/sudachidict_core-20261015-py3-none-any.whl"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-pyodide-mjs",
+          "target": "runtimes/pyodide/314.0.8/pyodide.mjs",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.mjs",
+          "bytes": 17758,
+          "sha256": "1bb8cc14f9405aaa7cd4e00c12edd0a8539de9cc026618d6ee5a9663f367dc70",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-pyodide-asm-mjs",
+          "target": "runtimes/pyodide/314.0.8/pyodide.asm.mjs",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.asm.mjs",
+          "bytes": 1250259,
+          "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-pyodide-asm-wasm",
+          "target": "runtimes/pyodide/314.0.8/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.asm.wasm",
+          "bytes": 9597892,
+          "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-pyodide-lock-json",
+          "target": "runtimes/pyodide/314.0.8/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide-lock.json",
+          "bytes": 119077,
+          "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-python-stdlib-zip",
+          "target": "runtimes/pyodide/314.0.8/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/python_stdlib.zip",
+          "bytes": 2545550,
+          "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-numpy-2-4-6-cp314-cp314-pyemscripten-2026-0-wasm32-whl",
+          "target": "runtimes/pyodide/314.0.8/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "bytes": 2960568,
+          "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+          "kind": "runtime-package"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-pydantic-2-12-5-py3-none-any-whl",
+          "target": "runtimes/pyodide/314.0.8/pydantic-2.12.5-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pydantic-2.12.5-py3-none-any.whl",
+          "bytes": 463578,
+          "sha256": "04854875001e07a8a74d87b7c80296cba168773d8c9804e232d695f82484d7d7",
+          "kind": "runtime-package"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-pydantic-core-2-41-5-cp314-cp314-pyemscripten-2026-0-wasm32-whl",
+          "target": "runtimes/pyodide/314.0.8/pydantic_core-2.41.5-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pydantic_core-2.41.5-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+          "bytes": 1310164,
+          "sha256": "54703fa42a0d4d574283cfb8f08050ba7820c9a42b0a21bc1286407d9a9e54da",
+          "kind": "runtime-package"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-annotated-types-0-7-0-py3-none-any-whl",
+          "target": "runtimes/pyodide/314.0.8/annotated_types-0.7.0-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/annotated_types-0.7.0-py3-none-any.whl",
+          "bytes": 11963,
+          "sha256": "6541523b4b16c1953d2fc9b82fb86c540eea9f78fca329ab371ed13a8b0faa51",
+          "kind": "runtime-package"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-typing-extensions-4-15-0-py3-none-any-whl",
+          "target": "runtimes/pyodide/314.0.8/typing_extensions-4.15.0-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/typing_extensions-4.15.0-py3-none-any.whl",
+          "bytes": 44613,
+          "sha256": "4fec68770a05408e668a4fa53d6bf4f0f684b9dacf820c7c5d6e97d3ad225e29",
+          "kind": "runtime-package"
+        },
+        {
+          "id": "tiny-voca-ja-v3-pyodide-typing-inspection-0-4-2-py3-none-any-whl",
+          "target": "runtimes/pyodide/314.0.8/typing_inspection-0.4.2-py3-none-any.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v314.0.8/full/typing_inspection-0.4.2-py3-none-any.whl",
+          "bytes": 14610,
+          "sha256": "deb989630985f7a7296b90357a947a804a7612cecbb6439d6e71128e01f61051",
+          "kind": "runtime-package"
+        },
+        {
+          "id": "tiny-voca-ja-v3-espeak-espeak-quiet-mjs",
+          "target": "runtimes/espeak-ng/tiny-voca-ja-1.52.0/espeak-quiet.mjs",
+          "bytes": 66571,
+          "sha256": "2475988eb34dd79a9f00bc60e677fc0f2d6bdc90f1228d56eddcb8769f28a915",
+          "kind": "generated-frontend",
+          "generated": {
+            "artifactPath": "runtimes/espeak-ng/tiny-voca-ja-1.52.0/espeak-quiet.mjs",
+            "build": "Run `bash tools/tiny-voca-ja-v3-espeak/build.sh`; the script writes this exact hash-pinned file at its target in .cache/public. Then run assets fetch and verify."
+          }
+        },
+        {
+          "id": "tiny-voca-ja-v3-espeak-espeak-quiet-wasm",
+          "target": "runtimes/espeak-ng/tiny-voca-ja-1.52.0/espeak-quiet.wasm",
+          "bytes": 351766,
+          "sha256": "22cee9c9300ad99ba4fa01beeb3d5162863fd06d19bde9306960eb50d7974f7d",
+          "kind": "generated-frontend",
+          "generated": {
+            "artifactPath": "runtimes/espeak-ng/tiny-voca-ja-1.52.0/espeak-quiet.wasm",
+            "build": "Run `bash tools/tiny-voca-ja-v3-espeak/build.sh`; the script writes this exact hash-pinned file at its target in .cache/public. Then run assets fetch and verify."
+          }
+        },
+        {
+          "id": "tiny-voca-ja-v3-espeak-espeak-quiet-data",
+          "target": "runtimes/espeak-ng/tiny-voca-ja-1.52.0/espeak-quiet.data",
+          "bytes": 827621,
+          "sha256": "66c36c462cf1693ab179baaea74a2d4330cbc8dd72eed20696b12e734fa702dd",
+          "kind": "generated-frontend",
+          "generated": {
+            "artifactPath": "runtimes/espeak-ng/tiny-voca-ja-1.52.0/espeak-quiet.data",
+            "build": "Run `bash tools/tiny-voca-ja-v3-espeak/build.sh`; the script writes this exact hash-pinned file at its target in .cache/public. Then run assets fetch and verify."
+          }
+        },
+        {
+          "id": "tiny-voca-ja-v3-apache-license",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE.txt",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-profile-notice",
+          "sourcePath": "web/tiny-voca-ja-v3/NOTICE.md",
+          "target": "models/tiny-voca-ja-v3/9b2305c81b9ca92ef8347eba473ea096c86f55c4/49632c552d54a13664c1beb96904bef0154fbfc3/NOTICE.md",
+          "bytes": 2293,
+          "sha256": "869843838dc5c2ae0f6edd68a80265d2e7f12b722cf84f9617950a3f0fb425bf",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-openjtalk-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-OPENJTALK.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-OPENJTALK.txt",
+          "bytes": 2808,
+          "sha256": "14f380a0db8dce139fdcfb731d21e993a31a00b68907515d1c54a5f356241343",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-openjtalk-dictionary-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-OPENJTALK-DICTIONARY.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-OPENJTALK-DICTIONARY.txt",
+          "bytes": 5865,
+          "sha256": "f4eca42ebd930e2c6e57fca58319d989bebcd1510cb7714b149c50f5425135ea",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-naist-dictionary-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-NAIST-DICTIONARY.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-NAIST-DICTIONARY.txt",
+          "bytes": 5865,
+          "sha256": "f4eca42ebd930e2c6e57fca58319d989bebcd1510cb7714b149c50f5425135ea",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-hts-engine-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-HTS-ENGINE.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-HTS-ENGINE.txt",
+          "bytes": 3096,
+          "sha256": "c918ac835f633b9c23465589cdc28e689acfe801b0c3e624b46fa32cc9d6dfa9",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-mecab-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-MECAB.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-MECAB.txt",
+          "bytes": 4411,
+          "sha256": "05e94c185a3e31f0c658f7011132be952b6d1a4d588b682f92da380e0a290650",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-pyopenjtalk-mit-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-PYOPENJTALK-MIT.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-PYOPENJTALK-MIT.txt",
+          "bytes": 1177,
+          "sha256": "c38083a4d51c1ea86e08b3303a984d0c23718c5ac214058af705814d30f4bb5b",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ja-v3-license-espeak-ng-gpl-3-0-txt",
+          "sourcePath": "web/tiny-voca-ja-v3/LICENSE-ESPEAK-NG-GPL-3.0.txt",
+          "target": "licenses/tiny-voca-ja-v3/LICENSE-ESPEAK-NG-GPL-3.0.txt",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "trainingData": "Public checkpoint; training annotations are not redistributed; unavailable annotation scripts are not claimed as reproduced.",
+        "runtime": "ONNX Runtime Web MIT with third-party notices; Pyodide MPL-2.0; pyopenjtalk-plus MIT with Open JTalk, MeCab, NAIST dictionary and HTS notices; SudachiPy/SudachiDict-core Apache-2.0; eSpeak NG GPL-3.0-or-later.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 2,
+        "languages": [
+          "ja",
+          "en"
+        ],
+        "scope": "Pinned v3 FP32 ONNX graph, step 134000, 24 kHz, selected F2 voice index 0; the original waveform graph stores exactly 4,538,827 FP32 initializer scalar values. Japanese uses pyopenjtalk-plus 0.4.1.post10 g2p_prosody with the package default Nani prediction fallback and unaltered bundled OpenJTalk dictionary; English uses the pinned upstream tokenizer/parser and eSpeak NG 1.52.0 en-us callback. The public oj-en-1 fingerprint is disclosed; the profile implements public frontend sources and does not reproduce unavailable training annotation scripts.",
+        "sources": [
+          "https://huggingface.co/gachimoto/tiny-voca-ja/tree/9b2305c81b9ca92ef8347eba473ea096c86f55c4",
+          "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md",
+          "https://github.com/gachimoto-code/tiny-voca-ja/tree/49632c552d54a13664c1beb96904bef0154fbfc3",
+          "https://pypi.org/project/pyopenjtalk-plus/0.4.1.post10/",
+          "https://pypi.org/project/SudachiPy/0.7.0/",
+          "https://pypi.org/project/sudachidict-core/20261015/",
+          "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+          "https://pyodide.org/en/stable/",
+          "https://onnxruntime.ai/"
+        ],
+        "notes": "The graph bundles F2 and M2; this profile selects F2. The Japanese fixture oracle preserves its single unk at source span 5. CPU/WASM and WebGPU/WASM are supported only with pinned ORT 1.31.1 assets and observed GPU dispatch during untimed synthesis. English and Japanese benchmark fixtures are independent input datasets."
+      }
+    },
     "tiny-voca-ja-tsukuyomi-chan": {
       "displayName": "Tiny Voca Japanese Tsukuyomi-chan P1 4.59M FP32",
       "modelRevision": "7ed75cc5f521cc6be4cb57689b2c038928259ae9",
