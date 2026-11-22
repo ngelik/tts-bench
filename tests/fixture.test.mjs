@@ -114,10 +114,12 @@ test('registered fixtures match their UTF-8, Unicode, language, source and span 
 test('frontend language profiles are exact BCP-47 tags and default legacy models to English', () => {
   assert.deepEqual(frontendLanguagesForModel('phonon'), ['en']);
   assert.deepEqual(frontendLanguagesForModel('ua-serhiy-0p58m'), ['uk']);
+  assert.deepEqual(frontendLanguagesForModel('tiny-voca-gr'), ['el']);
   assert.ok(frontendLanguagesForModel('supertonic-3').includes('uk'));
   assert.equal(canonicalLanguageTag('zh-hant-tw'), 'zh-Hant-TW');
   assert.equal(canonicalLanguageTag('ZH-hant-tw'), null, 'fixture/schema subset requires a canonical lowercase primary language');
   assert.doesNotThrow(() => assertFixtureLanguageForModel('ua-serhiy-0p58m', 'uk-article-v1'));
+  assert.doesNotThrow(() => assertFixtureLanguageForModel('tiny-voca-gr', 'el-article-v1'));
   assert.doesNotThrow(() => assertFixtureLanguageForModel('supertonic-3', 'uk-article-v1'));
   assert.throws(() => assertFixtureLanguageForModel('phonon', 'uk-article-v1'), /frontend profile \[en\].*fixture language uk/);
 

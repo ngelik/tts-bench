@@ -338,3 +338,9 @@ retains the upstream Apache `LICENSE`/`NOTICE` and ruaccent MIT notice beside
 the port. The profile selects synthetic voice M (index 1); it does not publish
 recordings. See [the pinned profile and sources](TINY_VOCA_RU.md) and
 [adapter notices](../web/tiny-voca-ru/NOTICE.md).
+
+### Tiny Voca Greek
+
+The Greek model and inference source are pinned to `927ea15cf4edcb8695b75328c9c90c5c53928554`. Base Tiny Voca source is pinned to `62e2adef158bc997042cc6234f541f1e0e4cd55d`. CC BY 4.0 covers the released weights and upstream sample WAVs. Apache-2.0 covers the inference source. The benchmark uses a local FP32 ONNX export of the PyTorch checkpoint. The model card asks users to credit Konstantinos Perifanos, link the model page, cite STOMA and indicate modifications. STOMA is CC BY 4.0, with separate original terms for third-party material such as the CGL Text Bank.
+
+The Greek phonemizer is built from eSpeak NG 1.51 at `2e9a5fccbb0095e87b2769e9249ea1f821918ecd` under GPL-3.0-or-later. ONNX Runtime Web 1.31.1 is MIT with bundled third-party notices. The asset lock pins each generated file and the associated license texts. See [profile and scope](TINY_VOCA_GR.md) and [notices](../web/tiny-voca-gr/NOTICE.md).
