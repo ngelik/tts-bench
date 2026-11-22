@@ -169,12 +169,24 @@ export function validateResult(d, { publication = false } = {}) {
   check(text(p.timingBoundary,1000) && int(p.warmupRuns,0,100) && int(p.repetitions,1,100), 'Invalid protocol counts/boundary');
   check(typeof p.smoke === 'boolean' && (p.networkMbps === null || finite(p.networkMbps) && p.networkMbps > 0), 'Invalid smoke/network setting');
   if (publication) check(!p.smoke, 'Smoke results cannot be published as benchmark scores');
+  if (p.id === 'browser-tts-warm-v2') {
+    check(d.origin === 'native' && p.scenario === 'warm' && !p.smoke, 'Warm v2 is only valid for full native warm results');
+    check(p.warmupRuns === 1, 'Warm v2 requires exactly one excluded full-article warm-up');
+    check(p.networkMbps === null, 'Warm v2 requires networkMbps to be null');
+  }
   if (d.origin==='native' && p.scenario==='warm' && !p.smoke) {
     const singleAllowed = p.repetitions === 1 && p.warmupRuns === 1 &&
       Array.isArray(d.cells) && d.cells.length > 0 &&
       d.cells.every(cell => minimumWarmRepetitions(cell?.model) === 1);
-    check(p.warmupRuns >= 1 && (p.repetitions >= 5 || singleAllowed),
-      'Full warm results require an excluded full warm-up and at least five scored repetitions, or one scored repetition for an eligible model');
+    if (p.id === 'browser-tts-warm-v2') {
+      const standardAllowed = p.repetitions === 3 && Array.isArray(d.cells) && d.cells.length > 0 &&
+        d.cells.every(cell => minimumWarmRepetitions(cell?.model) !== 1);
+      check(standardAllowed || singleAllowed,
+        'Warm v2 requires exactly three scored repetitions, or one scored repetition for an eligible model');
+    } else {
+      check(p.warmupRuns >= 1 && (p.repetitions >= 5 || singleAllowed),
+        'Full warm results require an excluded full warm-up and at least five scored repetitions, or one scored repetition for an eligible model');
+    }
   }
   const e=d.environment;
   keys(e,['machineLabel','os','arch','cpu','logicalCores','ramBytes','chromeVersion','gpu','headless'],'environment');

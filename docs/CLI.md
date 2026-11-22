@@ -94,6 +94,14 @@ For a one-score model, a valid explicit warm count such as `--repetitions 5`
 resolves to one. Hand-authored campaign plans follow the same rule. Inspect the
 effective counts with `node tools/run-campaign.mjs --plan PLAN --dry-run`.
 The receipt records the applied count and the WAV comes from the last scored article.
+The default remains `browser-tts-warm-v1`. To opt in to `browser-tts-warm-v2`,
+add `--warm-protocol v2 --repetitions 3` to a full warm command. Standard models
+use exactly three scored articles; eligible single-observation models resolve
+the requested three to one and record that adjustment. V2 rejects any other
+explicit repetition count, smoke runs, non-warm scenarios, and `--resources`.
+Campaign cells select v2 with `"warmProtocol": "v2"` and
+`"repetitions": 3`; dry-run output shows the protocol ID and effective count.
+V1 and v2 receipts remain separate for comparisons and paired backend ratios.
 Default per-article timeout is 120 minutes; `--timeout-minutes N` accepts up to 1,440 (24 hours) for slow models. Campaign plans can set `timeoutMinutes` per cell. The timeout applies to each full article independently.
 PiVo WebGPU can take several hours for the complete warm sequence.
 

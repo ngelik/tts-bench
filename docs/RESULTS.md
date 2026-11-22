@@ -34,6 +34,14 @@ All timings are positive finite numbers. Medians and min–max ranges are calcul
 from recorded trials, never entered by hand. Only `measured` cells receive scores;
 an `error` may retain partial trial evidence, and `unsupported` has no scores.
 
+Native `browser-tts-warm-v1` receipts keep the legacy five-score minimum (or the
+existing eligible one-score exception). Native `browser-tts-warm-v2` receipts
+require exactly one excluded warm-up and three scored articles, except for those
+same eligible one-observation models. V2 is full warm-only and cannot be used for
+smoke, cached resource measurements, or historical imports. Protocol IDs are part
+of comparison and paired CPU/WebGPU eligibility, so v1 and v2 evidence stays
+separate. Historical v1 receipts and their original trial counts remain valid.
+
 Optional trial `memory` preserves the sampled Chrome process-tree RSS and browser
 generation boundaries for resource diagnostics. Its numeric mean/count metrics
 must reconcile with the raw in-window observations; see [memory methodology](MEMORY.md).

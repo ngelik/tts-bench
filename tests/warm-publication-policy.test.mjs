@@ -85,6 +85,51 @@ test('publication validates one full article for an eligible model and preserves
   assert.throws(() => validateResult(twoWarmups, {publication:true}), /warm-up/);
 });
 
+test('native warm v2 requires exactly three scored rounds or an existing single-round exception', async () => {
+  const original=await load(audioId);
+  const v2=structuredClone(original);
+  v2.protocol.id='browser-tts-warm-v2';
+  v2.cells[0].model='tiny-voca';
+  v2.protocol.repetitions=3;
+  v2.cells[0].trials=v2.cells[0].trials.slice(0,3);
+  assert.doesNotThrow(()=>validateResult(v2,{publication:true}));
+
+  const largeThree=structuredClone(original);
+  largeThree.protocol.id='browser-tts-warm-v2';
+  largeThree.protocol.repetitions=3;
+  largeThree.cells[0].trials=largeThree.cells[0].trials.slice(0,3);
+  assert.throws(()=>validateResult(largeThree,{publication:true}),/warm v2.*three|scored repetitions/i,
+    'eligible greater-than-one-billion models must retain their one-score exception under v2');
+
+  for(const repetitions of [1,2,4,5]) {
+    const invalid=structuredClone(original);
+    invalid.protocol.id='browser-tts-warm-v2';
+    invalid.protocol.repetitions=repetitions;
+    invalid.cells[0].model='tiny-voca';
+    invalid.cells[0].trials=original.cells[0].trials.slice(0,repetitions);
+    assert.throws(()=>validateResult(invalid,{publication:true}),/warm v2.*three|scored repetitions/i);
+  }
+  const v1three=structuredClone(v2);
+  v1three.protocol.id='browser-tts-warm-v1';
+  assert.throws(()=>validateResult(v1three,{publication:true}),/at least five scored repetitions/);
+  const twoWarmups=structuredClone(v2);
+  twoWarmups.protocol.warmupRuns=2;
+  assert.throws(()=>validateResult(twoWarmups,{publication:true}),/exactly one excluded/);
+  const cachedV2=structuredClone(v2);
+  cachedV2.protocol.scenario='cached';
+  assert.throws(()=>validateResult(cachedV2,{publication:true}),/only valid for full native warm/);
+  const bandwidthV2=structuredClone(v2);
+  bandwidthV2.protocol.networkMbps=1;
+  assert.throws(()=>validateResult(bandwidthV2,{publication:true}),/warm v2.*networkMbps/i);
+
+  const eligibleOriginal=await load('2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e');
+  const eligible=structuredClone(eligibleOriginal);
+  eligible.protocol.id='browser-tts-warm-v2';
+  eligible.protocol.repetitions=1;
+  eligible.cells[0].trials=eligible.cells[0].trials.slice(0,1);
+  assert.doesNotThrow(()=>validateResult(eligible,{publication:true}));
+});
+
 test('campaign tables and charts show observed counts per model and preserve timing protocol checks', async t => {
   const one=oneScoredArticle(await load(audioId));
   const five=await load(omniId);
@@ -109,4 +154,16 @@ test('unequal native CPU and GPU sample counts do not qualify for a paired speed
   const cpu=structuredClone(five.cells[0]);
   cpu.backendRequested='cpu';cpu.backendEffective='cpu';cpu.settings.executionProviders=['cpu'];
   assert.equal(pairedWarm({result:five,cell:cpu},{result:one,cell:one.cells[0]},getAssetLock().models[cpu.model]),false);
+
+  const legacySingle=structuredClone(five);
+  legacySingle.protocol.repetitions=1;
+  legacySingle.cells[0].trials=legacySingle.cells[0].trials.slice(0,1);
+  const eligibleCpu=structuredClone(legacySingle.cells[0]);
+  eligibleCpu.backendRequested='cpu';eligibleCpu.backendEffective='cpu';eligibleCpu.settings.executionProviders=['wasm'];
+  const v2Single=structuredClone(legacySingle);
+  v2Single.protocol.id='browser-tts-warm-v2';
+  const gpu=structuredClone(v2Single.cells[0]);
+  gpu.backendRequested='webgpu';gpu.backendEffective='webgpu+wasm';gpu.settings.executionProviders=['webgpu','wasm'];
+  assert.equal(pairedWarm({result:legacySingle,cell:eligibleCpu},{result:v2Single,cell:gpu},getAssetLock().models[cpu.model]),false,
+    'a one-observation v1 CPU run cannot pair with a v2 WebGPU run even when counts match');
 });

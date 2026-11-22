@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { getModelParameters } from '../lib/model-parameters.mjs';
 import {
@@ -9,6 +10,7 @@ import {
   minimumWarmRepetitions,
   repetitionAdjustmentNotice,
   receiptRepetitionEvidence,
+  resolveProtocolId,
   resolveRepetitionPlan,
   requiresSingleWarmRepetition,
   SINGLE_REPETITION_WARM_MODEL,
@@ -112,4 +114,60 @@ test('result validation accepts one current CosyVoice3 trial and five historical
   const historicalMoreThanFive = structuredClone(original);
   historicalMoreThanFive.protocol.repetitions = 6;
   assert.doesNotThrow(() => validateResult(historicalMoreThanFive, { publication: true }));
+});
+
+test('warm v2 requests three articles and keeps eligible single-observation policies', () => {
+  assert.equal(resolveProtocolId({ scenario: 'warm', warmProtocol: 'v2' }), 'browser-tts-warm-v2');
+  assert.equal(resolveProtocolId({ scenario: 'warm' }), 'browser-tts-warm-v1');
+  assert.equal(resolveProtocolId({ scenario: 'cached', resources: true }), 'browser-tts-cached-v1-resources');
+  assert.deepEqual(resolveRepetitionPlan({ modelId: 'tiny-voca', scenario: 'warm', warmProtocol: 'v2' }), {
+    requestedRepetitions: 3, effectiveRepetitions: 3, adjustment: null,
+  });
+  assert.deepEqual(resolveRepetitionPlan({ modelId: 'ming-3.0-tts-0.5b-gguf', scenario: 'warm', warmProtocol: 'v2', requested: '3' }), {
+    requestedRepetitions: 3, effectiveRepetitions: 1,
+    adjustment: 'Requested --repetitions 3; effective model policy ran 1 repetition.',
+  });
+  assert.deepEqual(resolveRepetitionPlan({ modelId: cosy, scenario: 'warm', warmProtocol: 'v2', requested: '3' }), {
+    requestedRepetitions: 3, effectiveRepetitions: 1,
+    adjustment: 'Requested --repetitions 3; effective model policy ran 1 repetition.',
+  });
+  assert.equal(resolveRepetitionPlan({ modelId: 'parameter-count-not-registered', scenario: 'warm', warmProtocol: 'v2' }).effectiveRepetitions, 3);
+  for (const requested of ['1', '2', '4', '5']) {
+    assert.throws(() => resolveRepetitionPlan({ modelId: 'tiny-voca', scenario: 'warm', warmProtocol: 'v2', requested }), /warm v2.*three/i);
+  }
+  assert.throws(() => resolveRepetitionPlan({ modelId: 'tiny-voca', scenario: 'cached', warmProtocol: 'v2' }), /warm.*only/i);
+  assert.throws(() => resolveRepetitionPlan({ modelId: 'tiny-voca', scenario: 'warm', smoke: true, warmProtocol: 'v2' }), /smoke/i);
+  assert.throws(() => resolveRepetitionPlan({ modelId: 'tiny-voca', scenario: 'warm', resources: true, warmProtocol: 'v2' }), /resources/i);
+  const v2Cell = { model: 'tiny-voca', backend: 'cpu', scenario: 'warm', repetitions: 3, warmProtocol: 'v2' };
+  assert.doesNotThrow(() => validateCampaignCell(v2Cell));
+  assert.equal(effectiveCampaignCell(v2Cell).repetitions, 3);
+  assert.equal(effectiveCampaignCell({ ...v2Cell, model: cosy }).repetitions, 1);
+  assert.throws(() => validateCampaignCell({ ...v2Cell, repetitions: 4 }), /warm v2.*three/i);
+  assert.throws(() => validateCampaignCell({ ...v2Cell, scenario: 'cached' }), /warm scenario/i);
+  assert.throws(() => validateCampaignCell({ ...v2Cell, resources: true }), /resources/i);
+});
+
+test('CLI rejects invalid v2 combinations before creating a run or reaching Chrome', async () => {
+  const { readdir } = await import('node:fs/promises');
+  const runsDirectory = new URL('../runs', import.meta.url);
+  const snapshotRuns = async () => {
+    try { return { exists: true, entries: (await readdir(runsDirectory)).sort() }; }
+    catch (error) { if (error.code === 'ENOENT') return { exists: false, entries: null }; throw error; }
+  };
+  const before = await snapshotRuns();
+  const invalidArgs = [
+    [['--scenario', 'warm', '--repetitions', '4'], /warm v2.*three/i],
+    [['--scenario', 'cached'], /warm.*only/i],
+    [['--scenario', 'warm', '--smoke'], /smoke/i],
+    [['--scenario', 'warm', '--resources'], /resources/i],
+  ];
+  for (const [args, expected] of invalidArgs) {
+    const run = spawnSync(process.execPath, ['bin/bench.mjs', 'run', '--model', 'tiny-voca', '--backend', 'cpu',
+      '--fixture', 'english-20k-v1', ...args, '--warm-protocol', 'v2', '--chrome', '/bin/false'], {
+      cwd: new URL('..', import.meta.url), encoding: 'utf8', timeout: 10_000,
+    });
+    assert.notEqual(run.status, 0);
+    assert.match(run.stderr, expected);
+  }
+  assert.deepEqual(await snapshotRuns(), before);
 });
