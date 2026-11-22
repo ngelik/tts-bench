@@ -3031,6 +3031,72 @@
       }
     },
     {
+      "resultId": "2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836",
+      "model": "tiny-voca-it",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Lorenzo (EM4)",
+      "language": "it",
+      "attribution": "Synthetic Italian speech from carbogninalberto/tiny-voca-it v0.3.0 in the Lorenzo (EM4) preset, a Qwen3-TTS VoiceDesign voice. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0",
+        "https://github.com/carbogninalberto/tiny-voca-it/tree/280f40c307acf04138a5227b6cf9b1544e5886b4",
+        "https://github.com/carbogninalberto/tiny-voca-it/blob/0c57fab284e58e0bad620f21790e631d5dec17f8/worker.js",
+        "https://github.com/carbogninalberto/tiny-voca-it/blob/280f40c307acf04138a5227b6cf9b1544e5886b4/LICENSE",
+        "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt",
+        "https://www.npmjs.com/package/espeak-ng",
+        "https://github.com/espeak-ng/espeak-ng"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836--tiny-voca-it--cpu.wav",
+        "sha256": "cb3888404a47ff35a760239a2afbdb413ba69d64f1710bf5e03fdca20a2069bb",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "3bd7557e4e24ae224e87da983e42e0cae2560ecffbfe409d5edb00be958c2108",
+        "bytes": 77859148
+      }
+    },
+    {
+      "resultId": "2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226",
+      "model": "tiny-voca-it",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "Lorenzo (EM4)",
+      "language": "it",
+      "attribution": "Synthetic Italian speech from carbogninalberto/tiny-voca-it v0.3.0 in the Lorenzo (EM4) preset, a Qwen3-TTS VoiceDesign voice. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0",
+        "https://github.com/carbogninalberto/tiny-voca-it/tree/280f40c307acf04138a5227b6cf9b1544e5886b4",
+        "https://github.com/carbogninalberto/tiny-voca-it/blob/0c57fab284e58e0bad620f21790e631d5dec17f8/worker.js",
+        "https://github.com/carbogninalberto/tiny-voca-it/blob/280f40c307acf04138a5227b6cf9b1544e5886b4/LICENSE",
+        "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt",
+        "https://www.npmjs.com/package/espeak-ng",
+        "https://github.com/espeak-ng/espeak-ng"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t08-42-15-104z-tiny-voca-it-webgpu-warm-344ea226--tiny-voca-it--webgpu.wav",
+        "sha256": "4e534dba2b212f954b59fb9da257d756acaa68e40be61e332f0c218117b53228",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d503d27af03abd0c9eaf8689d5a1ed2f0ec2508f031b8579600cca94bee8667f",
+        "bytes": 77859148
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",
