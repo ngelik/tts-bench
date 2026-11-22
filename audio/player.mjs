@@ -76,7 +76,7 @@ try {
     details.append(summary);
     const evidence = document.createElement('div');
     evidence.className = 'evidence-links';
-    evidence.append(link('Full article WAV', entry.full.url));
+    if (entry.full?.url) evidence.append(link('Full article WAV', entry.full.url));
     evidence.append(link('Run receipt', entry.reportUrl ?? `${repo}results/${encodeURIComponent(entry.resultId)}/summary.md`));
     evidence.append(link('Link to this clip', recordingUrl(entry, `${location.origin}${location.pathname}`)));
     if (matchesAuditedWav(entry.full.sha256)) evidence.append(link('Waveform audit', waveformReport));
@@ -90,7 +90,8 @@ try {
   }
 
   function recordingCard(entry) {
-    if (!/^audio\/samples\/[a-z0-9._-]+\.wav$/.test(entry.clip.path) || !entry.full.url.startsWith('https://github.com/ngelik/tts-bench/releases/download/')) {
+    if (!/^audio\/samples\/[a-z0-9._-]+\.wav$/.test(entry.clip.path) ||
+        (entry.full?.url != null && !entry.full.url.startsWith('https://github.com/ngelik/tts-bench/releases/download/'))) {
       throw new Error('Unexpected recording URL');
     }
     const card = document.createElement('article');
