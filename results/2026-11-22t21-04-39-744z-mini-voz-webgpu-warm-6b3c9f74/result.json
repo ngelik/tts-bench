@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t21-04-39-744z-mini-voz-webgpu-warm-6b3c9f74",
+  "createdAt": "2026-11-22T21:08:18.581Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "es-es-article-v1",
+    "language": "es-ES",
+    "sha256": "8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e",
+    "characters": 22965,
+    "unicodeCodePoints": 22965,
+    "utf8Bytes": 23591,
+    "chunks": 105,
+    "source": {
+      "type": "translation",
+      "description": "Complete Spanish (Spain) translation of the English benchmark article by GPT-6 Luna. Codex independently reviewed all 27 source paragraphs and refined terminology, timing descriptions, dialogue and wording. Decimal commas and local clock notation preserve the original values. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "34c829ee99d1ddd7ec45a1f4ea1793c610c6a36a",
+    "dirty": false,
+    "manifestSha256": "0b70e54f398bf4174fa42837cdc042eda31f3eca3f723cbd410b7b7f72c4c7d1"
+  },
+  "assets": [
+    {
+      "id": "mini-voz-model-onnx",
+      "sha256": "f5fd129e3c205e9802a320383d44c459c6ec9c2216e948ca2d065f26d4b38dc7",
+      "bytes": 21368119
+    },
+    {
+      "id": "mini-voz-model-metadata",
+      "sha256": "c3d77e9aeb430b8aef5011e1806f05a35b66c94ad3dd6c63543cfe0387fca521",
+      "bytes": 859
+    },
+    {
+      "id": "mini-voz-stock-frontend",
+      "sha256": "a63eeb9d79007bfe1c2c80a64176d48d5a1310122f9f563958b31bdbad8f9f75",
+      "bytes": 10728
+    },
+    {
+      "id": "mini-voz-espeak-module",
+      "sha256": "b6658ffb26502d6bb012bcf0c46f49a0bf8c62cc75d5624cb697cc71ad5fdb24",
+      "bytes": 805912
+    },
+    {
+      "id": "mini-voz-espeak-data",
+      "sha256": "d93f1abea6bb4c23279f6f0e15673639a2b536329d1458af9aa593de7a97cffd",
+      "bytes": 875996
+    },
+    {
+      "id": "mini-voz-upstream-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "mini-voz-citation",
+      "sha256": "a882ca07fac4a97e87468c5dfc59226e0e4b5a5109cfddc36ed598f92e527ce8",
+      "bytes": 613
+    },
+    {
+      "id": "mini-voz-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "mini-voz-ort-wasm-module",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "mini-voz-ort-wasm-threaded-module",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "mini-voz-ort-wasm-threaded",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "mini-voz-ort-webgpu-module",
+      "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+      "bytes": 333468
+    },
+    {
+      "id": "mini-voz-ort-webgpu-wasm-module",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "mini-voz-ort-webgpu-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    }
+  ],
+  "cells": [
+    {
+      "model": "mini-voz",
+      "support": {
+        "voiceCount": 4,
+        "bundledVoiceCount": 4,
+        "languageCount": 1,
+        "languages": [
+          "es-ES"
+        ],
+        "scope": "Pinned Mini Voz FP32 ONNX checkpoint and stock browser frontend at ad40085efb3fb13c905e4b4640855edf62471dd1. Four fixed synthetic profiles F1/F2/M1/M2 at 24 kHz; F1/index 0 is the default. The browser profile fixes Castilian es-ES with eSpeak set_voice(\"es\", \"es\").",
+        "sources": [
+          "https://github.com/ElMariones/mini-voz/tree/ad40085efb3fb13c905e4b4640855edf62471dd1",
+          "https://github.com/ElMariones/mini-voz/blob/ad40085efb3fb13c905e4b4640855edf62471dd1/CITATION.cff",
+          "https://github.com/n4ze3m/tiny-voca",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz",
+          "https://github.com/espeak-ng/espeak-ng"
+        ],
+        "notes": "The stock ESM frontend is retained byte-for-byte. The fixed fixture oracle covers all 105 spans/334 utterances, max 180 tokens and zero unknown phones. Only es-ES is in this browser profile; es-419 is not exposed and there is no genuine English voice. Single-thread WASM is fixed for both CPU and WebGPU (which may use WASM for unsupported operators). The original graph generates unseeded waveform noise; PCM hashes are not a repeatability guarantee. Model/code terms do not establish blanket generated-audio redistribution rights."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F1",
+      "precision": "FP32",
+      "settings": {
+        "modelId": "ElMariones/mini-voz",
+        "modelRevision": "ad40085efb3fb13c905e4b4640855edf62471dd1",
+        "sourceId": "ElMariones/mini-voz",
+        "sourceRevision": "ad40085efb3fb13c905e4b4640855edf62471dd1",
+        "fixtureId": "es-es-article-v1",
+        "fixtureSha256": "8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e",
+        "language": "es-ES",
+        "locale": "es-ES",
+        "voice": "F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released Mini Voz checkpoint",
+        "frontend": "Stock site/tts/frontend.js at ad40085efb3fb13c905e4b4640855edf62471dd1; eSpeak NG es/es",
+        "runtimeVersion": "1.20.1",
+        "runtimePackageIntegrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==",
+        "waveform": "Stock FP32 graph generates waveform noise internally; each utterance is capped at peak 0.99 independently, with no seed input.",
+        "unknownPhonePolicy": "Use the released Spanish inventory and eSpeak routing. Preserve unknown phones in the fixture audit; do not substitute another language.",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "runtimeNpmIntegrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA=="
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2487,
+        "description": "Observed 2487 WebGPU compute dispatches; WASM fallback remains available."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 53006.36500000954,
+          "samples": 35201024,
+          "sampleRate": 24000,
+          "pcmSha256": "b6f9a85a4a8003d94d81656e96f2502cedfa8367630116761669878ff9f4763b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 379.59500002861023,
+            "firstSourceChunkCompletedMs": 703.3050000667572,
+            "audioSeconds": 1466.7093333333332,
+            "realTimeFactor": 0.03613965207376436,
+            "minSamplesPerChunk": 79360,
+            "maxSamplesPerChunk": 412160
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 52443.86500000954,
+          "samples": 35201024,
+          "sampleRate": 24000,
+          "pcmSha256": "03241f6fbb3d54446a93d34f837d058619c73a9f12812dfee8e0271aed4062a3",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 160.34500002861023,
+            "firstSourceChunkCompletedMs": 475.335000038147,
+            "audioSeconds": 1466.7093333333332,
+            "realTimeFactor": 0.03575614050319187,
+            "minSamplesPerChunk": 79360,
+            "maxSamplesPerChunk": 412160
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 52327.174999952316,
+          "samples": 35201024,
+          "sampleRate": 24000,
+          "pcmSha256": "fe55a832778aa83ab3cdbc9f3cf69cd37b1319ebccb151e1073a5731e030f926",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 159.49499988555908,
+            "firstSourceChunkCompletedMs": 471.7699999809265,
+            "audioSeconds": 1466.7093333333332,
+            "realTimeFactor": 0.035676581453961555,
+            "minSamplesPerChunk": 79360,
+            "maxSamplesPerChunk": 412160
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 52329.06999993324,
+          "samples": 35201024,
+          "sampleRate": 24000,
+          "pcmSha256": "c2f885bb7cd93e06d22187c98fd3bfa73332ba1a763b9b8d174b4c237cefe576",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 171.62999987602234,
+            "firstSourceChunkCompletedMs": 485.14999985694885,
+            "audioSeconds": 1466.7093333333332,
+            "realTimeFactor": 0.035677873461817416,
+            "minSamplesPerChunk": 79360,
+            "maxSamplesPerChunk": 412160
+          },
+          "audio": {
+            "sha256": "491da7dc00127dc2dea35321283807e20e269846a77a1f2e68427081be729251",
+            "bytes": 70402092
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T20-59-43-857Z-2dd13c6dbcca; cell 2/4; source 34c829ee99d1ddd7ec45a1f4ea1793c610c6a36a; fixture es-es-article-v1 (es-ES, 22965 JavaScript characters, 105 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Mini Voz released stock FP32 graph, default Castilian Spanish F1 voice index zero, neutral speed and pitch and per-utterance peak cap 0.99. Exact released Castilian normalization, eSpeak NG frontend and data. ORT Web 1.20.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations."
+  ]
+}
