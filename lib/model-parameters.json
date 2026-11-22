@@ -198,5 +198,11 @@
     "countKind": "lower-bound",
     "parameterCountSource": "https://github.com/OfficinePixel/vocina/blob/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/README.md",
     "scope": "Count of explicitly named FP32 weight and bias initializers in the pinned Vocina INT8 graph. It is a scope-aware stored-initializer lower bound, not a verified trainable-parameter total. The graph scan finds 4,533,743 stored initializer values; upstream advertises approximately 4.5M."
+  },
+  "clarvia-tts-tiny": {
+    "parameterCount": 4536907,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+    "scope": "The pinned model card reports total trained parameters including the waveform generator."
   }
 }

@@ -10892,6 +10892,309 @@
         ],
         "notes": "Benchmarks I1 (Femminile, index 0) only. I2 (Maschile, index 1) is also released. The publisher estimates approximately 4.5M parameters; the local graph scan reports a 180,555 explicitly named FP32 weight/bias initializer lower bound and 4,533,743 stored initializer values, not an exact trainable count. Voice/output redistribution terms were not separately stated."
       }
+    },
+    "clarvia-tts-tiny": {
+      "displayName": "Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1)",
+      "modelRevision": "51023684a0a39742455c838e9d1d8714d3ae7289",
+      "browserSourceRevision": "bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT; upstream v1.20.1 third-party notices apply",
+        "files": []
+      },
+      "license": {
+        "model": "Apache-2.0",
+        "requiresAcceptance": false,
+        "runtime": "Apache-2.0 Clarvia phonemizer; MPL-2.0 Pyodide; PSF CPython 3.14.2; MIT ONNX Runtime Web"
+      },
+      "support": {
+        "voiceCount": 10,
+        "bundledVoiceCount": 10,
+        "languageCount": 1,
+        "languages": [
+          "tr"
+        ],
+        "scope": "Pinned Turkish FP32 checkpoint with ten bundled synthetic voices; the browser profile fixes female_1.",
+        "sources": [
+          "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+          "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+          "https://huggingface.co/wite-tech/clarvia-phonemizer/tree/bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+          "https://www.npmjs.com/package/pyodide/v/314.0.8",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+        ],
+        "notes": "Only female_1 is benchmarked. The model card describes a synthetic training set; dataset summaries are publisher claims and have not been independently audited. The publisher requests AI-audio disclosure and prohibits impersonation. Model/code licensing is not a separate blanket grant to redistribute generated recordings."
+      },
+      "assets": [
+        {
+          "id": "clarvia-tts-tiny-LICENSE",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license",
+          "sourcePath": "web/clarvia-tts-tiny/notices-apache-2.0.txt"
+        },
+        {
+          "id": "clarvia-tts-tiny-README-md",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+          "url": "https://huggingface.co/wite-tech/clarvia-tts-tiny/resolve/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+          "bytes": 8020,
+          "sha256": "6d40d3d62d2c7095848e0879cdbb05c71d63f0a5228482f6d2ed4230c1c7090b",
+          "kind": "provenance"
+        },
+        {
+          "id": "clarvia-tts-tiny-config-json",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+          "url": "https://huggingface.co/wite-tech/clarvia-tts-tiny/resolve/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+          "bytes": 1873,
+          "sha256": "e84e28b96a5b7907dcf6601f28d45b41c21c9e58ac0ad3f36a29c17a82d3bf2e",
+          "kind": "model-config"
+        },
+        {
+          "id": "clarvia-tts-tiny-onnx-model-onnx",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/onnx/model.onnx",
+          "url": "https://huggingface.co/wite-tech/clarvia-tts-tiny/resolve/51023684a0a39742455c838e9d1d8714d3ae7289/onnx/model.onnx",
+          "bytes": 21378871,
+          "sha256": "2b832f9fa46ed9782b2fe32b8c83c5389315ed3cd8c285242dcc61a7c39dd49c",
+          "kind": "model-weights"
+        },
+        {
+          "id": "clarvia-tts-tiny-speak-py",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/speak.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-tts-tiny/resolve/51023684a0a39742455c838e9d1d8714d3ae7289/speak.py",
+          "bytes": 3833,
+          "sha256": "e0b0ef3ec15c5e07979249bf7f7fb49b4dc188cf6a6e79bfb62e045d16e40642",
+          "kind": "model-support"
+        },
+        {
+          "id": "clarvia-phonemizer-LICENSE",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/LICENSE",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "clarvia-phonemizer-README-md",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/README.md",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/README.md",
+          "bytes": 6892,
+          "sha256": "d050f38b962c17e134d13cd221afca1297f55f5b725bd294b64a5f1b7736b3b4",
+          "kind": "provenance"
+        },
+        {
+          "id": "clarvia-phonemizer-pyproject-toml",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/pyproject.toml",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/pyproject.toml",
+          "bytes": 560,
+          "sha256": "d95e2397f00f3cf00a4cb99055184f2fa2f0e7a4edda346e89dfe0c6180828e1",
+          "kind": "model-support"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-__init__-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/__init__.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/__init__.py",
+          "bytes": 2389,
+          "sha256": "0f98cc8063eca39786a419fcb181b52f0429dfae7ffbcaf34b5c68a2a4543890",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-__main__-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/__main__.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/__main__.py",
+          "bytes": 303,
+          "sha256": "ab195accd19bfd023009be847f730549af7890a7c87fe07664d09cdda3fba558",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-engine-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/engine.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/engine.py",
+          "bytes": 5973,
+          "sha256": "d6291d558b7cdcbc3411fe9434dbece44f4e286c2e0e8e89faf898a788920366",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-g2p-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/g2p.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/g2p.py",
+          "bytes": 5602,
+          "sha256": "0becf612008b17d2036da1c0aaad6bd003bdacc8376d65d4cee32ee22fd3fd18",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-rules-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/rules.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/rules.py",
+          "bytes": 34478,
+          "sha256": "6b464ac9a28d913d815b6191cf5553b45da046a661402d4621b0d379827eca80",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-stress-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/stress.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/stress.py",
+          "bytes": 3776,
+          "sha256": "04820b9973bab5a15ffc6a502721ecea84eebcf6c1736e956e628f3f13cd295b",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-symbols-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/symbols.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/symbols.py",
+          "bytes": 3294,
+          "sha256": "6432c2c0296a150079e71133b9f0461190e8489baa4662ba95a4ce4756ed658e",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-tables-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/tables.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/tables.py",
+          "bytes": 1533,
+          "sha256": "f43e12e211d612316f4847309efb34b51e48b06c8582cd735ace6e1c472554a7",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-turkish-py",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/turkish.py",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/turkish.py",
+          "bytes": 7840,
+          "sha256": "2896fcbb27d413c14e85aa2aaaea0529eb16792ced27d632f0d98e516cb749d8",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-data-exceptions-txt",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/data/exceptions.txt",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/data/exceptions.txt",
+          "bytes": 2489,
+          "sha256": "fc7692b80abc8e611f372bca2c1ccdd620ebbd0d7a77b0054f1f2586c6f1378b",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-data-function_words-txt",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/data/function_words.txt",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/data/function_words.txt",
+          "bytes": 258,
+          "sha256": "51d9f34fdbee2480e55433c7c165086c39af30c3c85e40105bea0699efeb9b76",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-phonemizer-clarvia_phonemizer-data-places-txt",
+          "target": "models/clarvia-phonemizer/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/data/places.txt",
+          "url": "https://huggingface.co/wite-tech/clarvia-phonemizer/resolve/bf1b1aab40e24ca3f6700980427c386f4f171f6f/clarvia_phonemizer/data/places.txt",
+          "bytes": 1358,
+          "sha256": "9560132be4996b1f72dd11934571fa85bb541de5a3d2dcefc442ed4e23facca4",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-pyodide-pyodide-mjs",
+          "target": "runtimes/pyodide/314.0.8/pyodide.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/pyodide@314.0.8/pyodide.mjs",
+          "bytes": 17758,
+          "sha256": "1bb8cc14f9405aaa7cd4e00c12edd0a8539de9cc026618d6ee5a9663f367dc70",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-pyodide-pyodide-asm-mjs",
+          "target": "runtimes/pyodide/314.0.8/pyodide.asm.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/pyodide@314.0.8/pyodide.asm.mjs",
+          "bytes": 1250259,
+          "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-pyodide-pyodide-asm-wasm",
+          "target": "runtimes/pyodide/314.0.8/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/pyodide@314.0.8/pyodide.asm.wasm",
+          "bytes": 9597892,
+          "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-pyodide-python_stdlib-zip",
+          "target": "runtimes/pyodide/314.0.8/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/npm/pyodide@314.0.8/python_stdlib.zip",
+          "bytes": 2545550,
+          "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-pyodide-pyodide-lock-json",
+          "target": "runtimes/pyodide/314.0.8/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/npm/pyodide@314.0.8/pyodide-lock.json",
+          "bytes": 119077,
+          "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-pyodide-license",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/licenses/PYODIDE-MPL-2.0.txt",
+          "sourcePath": "web/clarvia-tts-tiny/notices-pyodide-LICENSE.txt",
+          "bytes": 16725,
+          "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+          "kind": "license"
+        },
+        {
+          "id": "clarvia-ort-ort-wasm-min-mjs",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/runtime/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-ort-ort-webgpu-min-mjs",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/runtime/ort.webgpu.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.mjs",
+          "bytes": 333468,
+          "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-ort-ort-wasm-simd-threaded-mjs",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/runtime/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-ort-ort-wasm-simd-threaded-wasm",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/runtime/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-ort-ort-wasm-simd-threaded-jsep-mjs",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/runtime/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-ort-ort-wasm-simd-threaded-jsep-wasm",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/runtime/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        },
+        {
+          "id": "clarvia-ort-license",
+          "target": "models/clarvia-tts-tiny/51023684a0a39742455c838e9d1d8714d3ae7289/licenses/ONNX-RUNTIME-MIT.txt",
+          "sourcePath": "web/tiny-voca-it/notices-onnxruntime-web-LICENSE.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ]
     }
   }
 }
