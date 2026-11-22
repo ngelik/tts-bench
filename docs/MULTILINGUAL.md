@@ -22,7 +22,7 @@ npm run fixtures -- list
 npm run fixtures -- check --id uk-article-v1
 ```
 
-Choose the fixture by its versioned ID. The language tab describes the **article spoken in the benchmark**. A model’s supported-language list describes its wider capabilities. Results in a tab come from actual receipts for that edition.
+Choose the fixture by its versioned ID. The dashboard’s **Benchmark language** picker selects the language of the article spoken in the benchmark. A model’s supported-language list describes its wider capabilities. The dashboard shows results from actual receipts for the selected edition.
 
 ## Add a translation
 
@@ -45,7 +45,7 @@ The command registers the language in `fixtures/registry.json` and generates thr
 
 Use a language tag such as `fr`, `pt-BR` or `zh-Hant` that represents the actual text and the speech profile you want to test. For a changed article or segmentation, give it a new fixture ID such as `fr-article-v2`. Keep earlier editions so receipts and recordings remain reproducible.
 
-Open a **fixture PR** with the registry change and the three generated files. Include the target language, fixture ID, translation credit, review status, license and check command. A fixture-only PR is ready for review before any measurements exist. The dashboard discovers language tabs from the registry. A new language shows an empty results tab until a qualifying run is published. When revising an existing language, its measured edition stays visible until the newer one has qualifying evidence. Earlier recordings remain available in the listening room.
+Open a **fixture PR** with the registry change and the three generated files. Include the target language, fixture ID, translation credit, review status, license and check command. A fixture-only PR is ready for review before any measurements exist. The dashboard discovers benchmark languages from the registry. A new language appears under **Awaiting results** in the picker until a qualifying run is published. When revising an existing language, its measured edition stays visible until the newer one has qualifying evidence. Earlier recordings remain available in the listening room.
 
 ## Connect a model and run in Chrome
 

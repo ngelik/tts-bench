@@ -35,6 +35,13 @@ const expectedResultModels = resultModels(expected.models);
 const ukResultModels = resultModels(ukData?.models ?? []);
 const campaignResultModels = resultModels(campaignModels);
 const resultCountLabel = count => `${count} result${count === 1 ? '' : 's'}`;
+async function selectLanguage(page, id) {
+  if (!await page.locator('#language-picker').evaluate(dialog => dialog.open)) await page.locator('#language-picker-trigger').click();
+  await page.locator(`#language-${id}`).click();
+}
+async function expectLanguage(page, id) {
+  assert.equal(await page.locator(`#language-${id}`).getAttribute('aria-current'), 'page');
+}
 assert.ok(campaignResultModels.length > 0, 'The dashboard campaign subset includes eligible results');
 const currentWaveformFault = model => ['cpu','webgpu'].some(backend => {
   const warm = model.warm[backend], memory = model.memory[backend];
@@ -125,10 +132,12 @@ try {
   assert.ok(candidateLayout.firstResultRowTop < 650, `First result row should remain near the top; observed y=${candidateLayout.firstResultRowTop}`);
   assert.equal(await page.locator('#model-count').innerText(), String(expectedResultModels.length));
   assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(expected.models, 'cpu').length + expectedGeneration(expected.models, 'webgpu').length));
-  assert.equal(await page.locator('#language-en').getAttribute('aria-selected'), 'true');
-  assert.equal(await page.locator('[data-language-count="en"]').innerText(), String(expectedResultModels.length));
+  await expectLanguage(page, 'en');
+  await page.locator('#language-picker-trigger').click();
+  assert.equal(await page.locator('#language-en .language-option-count').textContent(), `${expectedResultModels.length} ${expectedResultModels.length === 1 ? 'model' : 'models'}`);
   assert.ok(typeof ukData?.fixture?.id === 'string' && ukData.fixture.language === 'uk', 'The built dashboard data contains the active registered Ukrainian fixture edition');
-  assert.equal(await page.locator('[data-language-count="uk"]').innerText(), String(ukResultModels.length));
+  assert.equal(await page.locator('#language-uk .language-option-count').textContent(), ukResultModels.length ? `${ukResultModels.length} ${ukResultModels.length === 1 ? 'model' : 'models'}` : 'Awaiting results');
+  await page.keyboard.press('Escape');
   const ukPlayback = ukResultModels.flatMap(model => ['cpu','webgpu'].map(backend => ({model,backend,sample:model.playbackAudio?.[backend]})))
     .find(entry => entry.sample?.language === 'uk' && !matchesAuditedWav(entry.sample.full.sha256));
   for (const model of expected.models.filter(model => !hasEligibleResult(model))) {
@@ -187,10 +196,10 @@ try {
       assert.deepEqual(await panel.locator('.bar-row [data-detail]').evaluateAll(buttons => buttons.map(button => button.dataset.detail)), rankedIds(eligible, value, metric === 'coverage' ? -1 : 1));
     }
   };
-  await page.locator('#language-uk').click();
+  await selectLanguage(page, 'uk');
   await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, ukResultModels.length);
-  assert.equal(await page.locator('#language-uk').getAttribute('aria-selected'), 'true');
-  assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), 'language-uk');
+  await expectLanguage(page, 'uk');
+  assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), 'results-title');
   assert.equal(await page.locator('#fixture-language').innerText(), `${ukData.fixture.characters.toLocaleString('en-US')} Ukrainian characters`);
   assert.equal(await page.locator('#model-count').innerText(), String(ukResultModels.length));
   assert.equal(await page.locator('#model-count-label').innerText(), ukResultModels.length === 1 ? 'configuration' : 'configurations');
@@ -230,27 +239,33 @@ try {
     ukDetailUrl.searchParams.set('lang','uk');
     ukDetailUrl.searchParams.set('model',ukPlayback.model.id);
     await page.goto(ukDetailUrl.href);
-    await page.waitForFunction(() => document.querySelector('dialog')?.open);
+    await page.waitForFunction(() => document.querySelector('#details')?.open);
     assert.equal(await page.locator('#detail-title').innerText(),ukPlayback.model.name,'A language-scoped Ukrainian model deep link opens the right details');
     assert.equal(new URL(page.url()).searchParams.get('lang'),'uk');
     await page.locator('#close-details').click();
   } else {
     assert.equal(await page.locator('#no-results h3').innerText(), 'No published Ukrainian results yet.');
-    assert.equal(await page.locator('#language-uk').getAttribute('aria-selected'), 'true', 'The empty Ukrainian fixture remains a selectable language tab');
+    await expectLanguage(page, 'uk');
   }
   for (const [language, group] of Object.entries(expected.byLanguage ?? {})) {
     if (language === 'uk') continue;
     const models = resultModels(group.models ?? []);
     const displayName = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
-    const tabLabel = expected.languages?.find(entry => entry.id === language)?.label ?? displayName;
+    const tabLabel = language === 'ku-Arab-IQ'
+      ? 'Kurdish Behdînî (Arabic script)'
+      : expected.languages?.find(entry => entry.id === language)?.label ?? displayName;
     const tab = page.locator(`#language-${language}`);
     assert.equal(await tab.count(), 1, `A registered ${language} edition has a language tab`);
-    assert.ok((await tab.innerText()).includes(tabLabel), `${language} tab uses a human-readable language name`);
-    await tab.click();
+    assert.ok((await tab.textContent()).includes(tabLabel), `${language} picker link uses a human-readable language name`);
+    if (language === 'ku-Arab-IQ') {
+      assert.equal(await tab.locator('.language-option-english').textContent(), 'Kurdish Behdînî (Arabic script)');
+    }
+    await selectLanguage(page, language);
     await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, models.length);
-    assert.equal(await tab.getAttribute('aria-selected'), 'true');
-    assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), `language-${language}`);
-    assert.equal(await page.locator('[data-language-count="' + language + '"]').innerText(), String(models.length));
+    await expectLanguage(page, language);
+    assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), 'results-title');
+    const pickerName = await tab.locator('.language-option-native, .language-option-english').first().textContent();
+    assert.equal(await page.locator('#current-language').textContent(), pickerName);
     assert.equal(await page.locator('#model-count').innerText(), String(models.length));
     assert.equal(await page.locator('#score-count').innerText(), String(expectedGeneration(group.models, 'cpu').length + expectedGeneration(group.models, 'webgpu').length));
     if (group.fixture?.characters) {
@@ -274,9 +289,9 @@ try {
       assert.equal(await page.locator('#no-results').isVisible(), true, `${language} remains usable before it has published results`);
     }
   }
-  await page.locator('#language-en').click();
+  await selectLanguage(page, 'en');
   await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, expectedResultModels.length);
-  assert.equal(await page.locator('#language-en').getAttribute('aria-selected'), 'true');
+  await expectLanguage(page, 'en');
   await assertDefaultOrder();
   for (const model of expectedResultModels) {
     for (const [backend, label] of [['cpu', 'CPU'], ['webgpu', 'GPU']]) {
@@ -516,12 +531,12 @@ try {
   await page.locator('#search').fill('KOKORO');
   assert.equal(await page.locator('#model-rows tr').count(), 1);
   await page.locator('.model-name').click();
-  assert.equal(await page.locator('dialog').evaluate(d => d.open), true);
+  assert.equal(await page.locator('#details').evaluate(d => d.open), true);
   assert.match(await page.locator('#detail-content').innerText(), /Sampled generation peak/);
   assert.ok((await page.locator('#detail-content').innerText()).includes(number(expected.models.find(m=>m.id==='kokoro-82m').memory.webgpu.peakMB)));
   await page.screenshot({path:`${review}/details.png`});
   await page.keyboard.press('Escape');
-  assert.equal(await page.locator('dialog').evaluate(d => d.open), false);
+  assert.equal(await page.locator('#details').evaluate(d => d.open), false);
   assert.equal(await page.locator('.model-name').evaluate(b => b === document.activeElement), true);
   await page.locator('#search').fill('no model matches this');
   assert.equal(await page.locator('#no-results').isVisible(), true);
@@ -658,10 +673,10 @@ try {
   await page.evaluate(() => scrollTo(0, 0));
   await page.screenshot({path:`${review}/mobile-viewport.png`});
   await page.locator('.model-name').first().click();
-  assert.equal(await page.locator('dialog').evaluate(d => d.scrollWidth <= d.clientWidth), true);
+  assert.equal(await page.locator('#details').evaluate(d => d.scrollWidth <= d.clientWidth), true);
   await page.locator('#close-details').click();
   await page.goto(new URL('?model=piper-en-gb-southern-english-female-low', base).href);
-  await page.waitForFunction(() => document.querySelector('dialog').open);
+  await page.waitForFunction(() => document.querySelector('#details').open);
   assert.match(await page.locator('#detail-title').innerText(), /Piper/);
   await page.locator('#close-details').click();
   // Shareable family views must preserve the requested filter, chart and units.
@@ -762,7 +777,7 @@ try {
     await syntheticPage.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
     assert.ok((await syntheticPage.locator('#no-results p').innerText()).includes('No eligible published measurements'));
     await syntheticPage.goto(new URL('?model=synthetic-no-eligible-result',base).href);
-    await syntheticPage.waitForFunction(() => document.querySelector('dialog')?.open);
+    await syntheticPage.waitForFunction(() => document.querySelector('#details')?.open);
     assert.equal(await syntheticPage.locator('#detail-title').innerText(), 'Synthetic no-result configuration', 'A direct model link still exposes its evidence details');
   } finally {await syntheticPage.close();}
 

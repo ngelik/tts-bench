@@ -126,6 +126,7 @@ const server=createServer(async(req,res)=>{
   try {
     const url=new URL(req.url,'http://127.0.0.1');
     requestLog.push({phase,path:url.pathname,search:url.search,method:req.method});
+    if (url.pathname==='/favicon.ico') return reply(res,204,'','image/x-icon');
     if (url.pathname==='/__cache_seed__/') return reply(res,200,seedHtml,'text/html; charset=utf-8',{'cache-control':'no-store'});
     const unversioned=!url.searchParams.has('v');
     if (unversioned && url.pathname==='/assets/app.mjs') return reply(res,200,legacyApp,'text/javascript; charset=utf-8',{'cache-control':'public, max-age=86400, immutable'});
@@ -211,30 +212,60 @@ async function verifyPlayback(page) {
   await page.locator('#close-player').click();
   return playback;
 }
+async function openLanguagePicker(page,label) {
+  const picker=page.locator('#language-picker');
+  assert.equal(await picker.isVisible(),false,`${label} language picker starts hidden when closed`);
+  await page.locator('#language-picker-trigger').click();
+  assert.equal(await picker.isVisible(),true,`${label} language picker is visible after opening`);
+}
+async function selectLanguage(page,id,label) {
+  const picker=page.locator('#language-picker');
+  if (!await picker.isVisible()) await openLanguagePicker(page,label);
+  const link=page.locator(`#language-${id}`);
+  assert.equal(await link.isVisible(),true,`${label} ${id} link is visible in the picker`);
+  await link.click();
+  assert.equal(await picker.isVisible(),false,`${label} language picker is hidden after selecting ${id}`);
+}
 async function verifyLanguageRows(page,label) {
   const rows=[];
   for (const {id,group} of languageGroups) {
     const ids=eligibleIds(group);
     const tab=page.locator(`#language-${id}`);
-    assert.equal(await tab.count(),1,`${label} visit exposes the registered ${id} language tab`);
-    assert.equal(await page.locator(`[data-language-count="${id}"]`).innerText(),String(ids.length),`${label} tab count matches ${id} eligible rows`);
-    if (id!=='en') await tab.click();
+    await openLanguagePicker(page,label);
+    assert.equal(await tab.count(),1,`${label} visit exposes the registered ${id} picker link`);
+    const countLabel=ids.length ? `${ids.length} ${ids.length===1?'model':'models'}` : 'Awaiting results';
+    assert.equal(await tab.locator('.language-option-count').textContent(),countLabel,`${label} picker count matches ${id} eligible rows`);
+    if (id==='en') {
+      await page.keyboard.press('Escape');
+      assert.equal(await page.locator('#language-picker').isVisible(),false,`${label} language picker hides after Escape`);
+    } else await selectLanguage(page,id,label);
     await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,ids.length,{timeout:20000});
-    assert.equal(await tab.getAttribute('aria-selected'),'true',`${label} ${id} tab is selected`);
+    assert.equal(await tab.getAttribute('aria-current'),'page',`${label} ${id} locale link is current`);
     assert.equal(await page.locator('#model-count').innerText(),String(ids.length),`${label} model count reflects ${id} results`);
     const scoreCount=group.models.reduce((sum,model)=>sum+['cpu','webgpu'].filter(backend=>model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform).length,0);
     assert.equal(await page.locator('#score-count').innerText(),String(scoreCount),`${label} score count reflects ${id} warm results`);
     const visibleIds=(await page.locator('#model-rows tr').evaluateAll(items=>items.map(row=>row.dataset.model))).sort();
-    assert.deepEqual(visibleIds,ids,`${label} language tab reads the correct ${id} result models`);
+    assert.deepEqual(visibleIds,ids,`${label} language picker selects the correct ${id} result models`);
     if (group.fixture?.characters) {
       const languageName=new Intl.DisplayNames(['en'],{type:'language'}).of(id);
       assert.equal(await page.locator('#fixture-language').innerText(),`${group.fixture.characters.toLocaleString('en-US')} ${languageName} characters`,`${label} fixture descriptor matches ${id}`);
     }
-    const playback=id!=='en'&&ids.length ? await verifyPlayback(page) : null;
+    const selectedHealthySample=group.models.some(model=>ids.includes(model.id)&&['cpu','webgpu'].some(backend=>{
+      const sample=model.playbackAudio?.[backend];
+      return sample&&!matchesAuditedWav(sample.full?.sha256);
+    }));
+    let playback=null;
+    if (id!=='en') {
+      const controls=page.locator('#model-rows [data-play]');
+      if (selectedHealthySample) {
+        assert.ok(await controls.count()>0,`${label} ${id} exposes playback for a healthy selected sample`);
+        playback=await verifyPlayback(page);
+      } else assert.equal(await controls.count(),0,`${label} ${id} has no inline playback without a healthy selected sample`);
+    }
     if (id!=='en'&&!ids.length) assert.equal(await page.locator('#no-results').isVisible(),true,`${label} empty ${id} results show the empty-language state`);
     rows.push({language:id,rows:ids.length,playback});
   }
-  if (languageGroups.some(({id})=>id!=='en')) await page.locator('#language-en').click();
+  if (languageGroups.some(({id})=>id!=='en')) await selectLanguage(page,'en',label);
   await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,expectedIds.length,{timeout:20000});
   return rows;
 }
@@ -311,7 +342,7 @@ try {
   const cleanContext=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   const cleanPage=await cleanContext.newPage();
   cleanPage.on('pageerror',error=>errors.push(`clean: ${error}`));
-  cleanPage.on('console',message=>{if(message.type()==='error')errors.push(`clean: ${message.text()}`);});
+  cleanPage.on('console',message=>{if(message.type()==='error')errors.push(`clean: ${message.text()} (${JSON.stringify(message.location())})`);});
   phase='clean-dashboard';
   const cleanDashboard=await verifyDashboard(cleanPage,'Clean');
   const cleanBackground=await cleanPage.evaluate(()=>getComputedStyle(document.body).backgroundColor);
