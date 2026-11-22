@@ -18,8 +18,10 @@ Open the printed loopback URL. Filter by model/backend and play clips in Chrome.
 This serves static local files only; it performs no synthesis and sends no text
 or audio to an external service. Playback does not enter timing measurements.
 The clips can also be opened directly from `audio/samples/` after cloning.
-Full article WAV files are attached to this repository's `benchmark-audio-v1`
-GitHub release and linked beside each clip.
+When a full article WAV has been published, it is attached to this repository's
+`benchmark-audio-v1` GitHub release and linked beside the clip. Clip-only entries
+retain the source WAV digest and byte count in the manifest, while the full WAV
+remains local and has no public URL.
 
 ## Publishing the listening page
 
@@ -28,10 +30,10 @@ manifest and approved clips in the ignored `.cache/listening-site/` directory.
 The Pages workflow deploys this directory after changes reach `main` through a
 reviewed PR. No model weights, browser profiles or raw runs enter the site.
 Include authorized clips, the manifest and the regenerated README with the result
-publication. Full recordings remain release assets. After deployment, play each
-authorized example from its dashboard row and confirm the clip, receipt and full
-recording links. To add an example to an existing result, use the original scored
-WAV and the published receipt.
+publication. Upload and link a full recording only when that release is authorized.
+After deployment, play each example from its dashboard row and verify the clip
+and receipt links, plus any authorized full recording link. To add an example to
+an existing result, use the original scored WAV and the published receipt.
 
 ## Provenance and reproduction
 
@@ -48,17 +50,25 @@ language list. See [exact translated fixtures and comparability](../docs/MULTILI
 
 ```sh
 npm run audio -- add --result results/RUN/result.json --wav /path/to/full.wav --model MODEL --backend cpu
+npm run audio -- add --result results/RUN/result.json --wav /path/to/full.wav --model MODEL --backend cpu --clip-only
 npm run audio -- check
 npm run reference
 ```
 
+Use `--clip-only` when only the 30-second dashboard clip is authorized. The
+manifest still records the complete scored WAV's SHA-256 and byte count to bind
+the clip to its trial. With this flag, `full.url` is `null` and the full WAV stays
+local. Use the default release-backed command when the full-WAV upload has been
+separately authorized.
+
 Audio publication requires authorization and review of the source terms. The tool
-prepares files only; it does not upload automatically. Upload the exact full WAV
-to the manifest's uniquely named release asset, never overwrite a different file
-under that name, and verify its download digest. Include the clip, manifest and
-updated Reference results in the result PR. Model weights and runtimes remain
-excluded from Git. CI verifies clip integrity and its declared receipt binding;
-it does not download every large release WAV or certify perceptual quality.
+prepares files only; it does not upload automatically. For a separately authorized
+full-WAV release, upload the exact file to the manifest's uniquely named release
+asset, never overwrite a different file under that name, and verify its download
+digest. Include the clip, manifest and updated Reference results in the result PR.
+Model weights, runtimes and full article WAVs remain excluded from Git. CI verifies
+clip integrity and its declared receipt binding; it does not download every large
+release WAV or certify perceptual quality.
 
 ## Attribution and terms
 

@@ -244,17 +244,20 @@ reports`. See `docs/RESULTS.md` for the four report artifacts. Refresh
 section, and include it in the result PR. Keep partial campaigns visibly incomplete;
 never infer a missing score from another scenario.
 
-When audio publication is authorized, use `npm run audio -- add --result
-results/RUN_ID/result.json --wav PATH --model MODEL --backend BACKEND`, then
-`npm run audio -- check`. Read `audio/README.md`, retain source attribution and
-model/output terms, and upload the exact full WAV to the uniquely named repository
-release asset from the manifest. Verify the uploaded digest. Commit only the
-verified small clip and manifest to Git, refresh `npm run reference`, and include
-them in the publication commit. Run `npm run listen:build` to verify the
-listening site bundle. Wait for the matching Pages deployment, then filter the
+When a 30-second dashboard clip is authorized, use `npm run audio -- add --result
+results/RUN_ID/result.json --wav PATH --model MODEL --backend BACKEND --clip-only`,
+then `npm run audio -- check`. This binds the clip to the complete scored WAV's
+SHA-256 and size. The full WAV stays local and `full.url` is null. Read
+`audio/README.md` and retain source attribution and model/output terms. Use the
+default release-backed command only when publication of the full WAV is separately
+authorized. Upload that exact WAV to the manifest's unique release asset and
+verify its digest. Commit only the verified small clip and manifest to Git, refresh
+`npm run reference`, and include them in the publication commit. Run
+`npm run listen:build` to verify the listening site bundle. Wait for the matching Pages deployment, then filter the
 live dashboard to the published model and language. Play the voice example
 from each intended model/backend result row. Confirm playback advances, opens
-the manifest's exact clip, and links to the matching receipt and full WAV.
+the manifest's exact clip, and links to the matching receipt. Verify the full
+WAV link if the recording was published.
 Also check the README Listen deep link opens that clip in the listening room.
 Report any pending score or playback separately. Never substitute a demo,
 regenerate audio outside the scored run, silently normalize the recording, or

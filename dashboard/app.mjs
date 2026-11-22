@@ -520,7 +520,7 @@ function openDetails(id) {
       ? `<a href="./audio/?sample=${encodeURIComponent(sample.clip.path.split('/').at(-1))}">Open diagnostic recording ↗</a>`
       : `<button class="listen-button" data-play="${escape(model.id)}" data-backend="${sample.backend}">▶ ${labels[sample.backend]} · ${fmt(sample.clip.seconds, 0)} seconds</button>`;
     const relation = sample.matchesSelectedWarm ? ' · matches the selected warm receipt' : sample.matchesSelectedMemory ? ' · matches the selected memory receipt' : ' · example from a separate receipt';
-    return `<li>${playAction}<p>${escape(sample.voice)} · ${escape(sample.language)} · ${escape(sample.scenario)} recording${relation}${diagnostic ? ' · waveform flagged; diagnostic playback only' : ''}</p><p>${escape(sample.attribution ?? '')}</p><p>Model terms: ${escape(sample.modelTerms ?? model.license.model)}</p><a href="${escape(sample.full.url)}">Full WAV ↗</a><a href="${escape(sample.reportUrl)}">Recording receipt ↗</a></li>`;
+    return `<li>${playAction}<p>${escape(sample.voice)} · ${escape(sample.language)} · ${escape(sample.scenario)} recording${relation}${diagnostic ? ' · waveform flagged; diagnostic playback only' : ''}</p><p>${escape(sample.attribution ?? '')}</p><p>Model terms: ${escape(sample.modelTerms ?? model.license.model)}</p>${sample.full?.url ? `<a href="${escape(sample.full.url)}">Full WAV ↗</a>` : ''}<a href="${escape(sample.reportUrl)}">Recording receipt ↗</a></li>`;
   }).join('') || '<li>No published recording.</li>';
   $('#detail-content').innerHTML = `<h2 id="detail-title">${escape(model.name)}</h2>
     <p class="detail-subtitle">Model capabilities and published browser measurements</p>
@@ -556,7 +556,11 @@ async function play(id, backend) {
   $('#player-title').textContent = `${model.name} · ${labels[backend]}`;
   $('#player-tag').textContent = `${sample.clip.seconds}-SECOND AUDIO EXAMPLE`;
   $('#player-caption').textContent = `${sample.voice} · ${sample.matchesSelectedWarm ? 'selected warm receipt' : `${sample.scenario} recording · separate receipt`}`;
-  $('#player-full').href = sample.full.url; $('#player-receipt').href = sample.reportUrl;
+  $('#player-full').hidden = !sample.full?.url;
+  if (sample.full?.url) $('#player-full').href = sample.full.url;
+  else $('#player-full').removeAttribute('href');
+  $('#player-error').textContent = sample.full?.url ? 'Playback failed. Try opening the full WAV.' : 'Playback failed.';
+  $('#player-receipt').href = sample.reportUrl;
   $('#player-details').dataset.detail = model.id;
   try { await audio.play(); } catch { if (request === playRequest) $('#player-error').hidden = false; }
   if (request === playRequest) updatePlaybackButtons();

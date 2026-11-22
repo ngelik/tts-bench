@@ -6,9 +6,16 @@ import {listeningCatalog} from '../audio/catalog.mjs';
 import {siteVersion} from '../lib/site-cache.mjs';
 
 const manifest = JSON.parse(await readFile(new URL('../audio/manifest.json',import.meta.url),'utf8'));
-const older = manifest.entries[0];
-const newer = manifest.entries.find(entry=>entry.model===older.model && entry.backend===older.backend && entry.clip.path!==older.clip.path);
-assert.ok(newer,'Regression uses two genuine published recordings of the same model/backend');
+const recordingPairs = new Map();
+for (const entry of manifest.entries) {
+  const key=`${entry.model}/${entry.backend}`;
+  const entries=recordingPairs.get(key)??[];
+  entries.push(entry);
+  recordingPairs.set(key,entries);
+}
+const pair=[...recordingPairs.values()].find(entries=>entries.length>1&&entries[0].clip.path!==entries[1].clip.path);
+assert.ok(pair,'Regression uses two genuine published recordings of the same model/backend');
+const [older,newer]=pair;
 const selected = {...newer,matchesSelectedMemory:true};
 const activeModel = {id:newer.model,name:'Current displayed model',audio:[selected],playbackAudio:{[newer.backend]:selected}};
 const current = {models:[activeModel],byLanguage:{},recordings:[older,newer]};

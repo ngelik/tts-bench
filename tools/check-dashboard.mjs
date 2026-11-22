@@ -140,6 +140,10 @@ try {
   await page.keyboard.press('Escape');
   const ukPlayback = ukResultModels.flatMap(model => ['cpu','webgpu'].map(backend => ({model,backend,sample:model.playbackAudio?.[backend]})))
     .find(entry => entry.sample?.language === 'uk' && !matchesAuditedWav(entry.sample.full.sha256));
+  const deData = expected.byLanguage?.de;
+  const deModel = deData?.models?.find(model => model.id === 'apptor-tiny-tts');
+  const deClipOnly = deModel?.playbackAudio?.cpu;
+  assert.ok(deData?.fixture?.id && deModel && deClipOnly && deClipOnly.full?.url == null, 'The Standard German M2 CPU clip is published without a full WAV URL');
   for (const model of expected.models.filter(model => !hasEligibleResult(model))) {
     assert.equal(await page.locator(`tr[data-model="${model.id}"]`).count(), 0, `${model.id} remains registered without an eligible result row`);
   }
@@ -538,6 +542,28 @@ try {
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('#details').evaluate(d => d.open), false);
   assert.equal(await page.locator('.model-name').evaluate(b => b === document.activeElement), true);
+  await page.locator('#search').fill('');
+  await selectLanguage(page, 'de');
+  await page.waitForFunction(() => document.querySelector('#language-de')?.getAttribute('aria-current') === 'page');
+  await page.locator(`#model-rows tr[data-model="${deModel.id}"] [data-play="${deModel.id}"][data-backend="cpu"]`).click();
+  await page.waitForFunction(() => {const audio=document.querySelector('#sample-audio');return audio.currentTime > .15 && !audio.paused;});
+  const fullLink = page.locator('#player-full');
+  assert.equal(await fullLink.isHidden(), true, 'Clip-only playback hides the full WAV link');
+  assert.equal(await fullLink.getAttribute('href'), null, 'Clip-only playback removes any previous full WAV URL');
+  await page.locator('#player-details').click();
+  assert.equal(await page.locator('#details').evaluate(dialog => dialog.open), true);
+  assert.equal(await page.locator('.recording-list a').filter({hasText:'Full WAV'}).count(), 0, 'Clip-only detail panel omits the unpublished full WAV link');
+  await page.locator('#close-details').click();
+  await page.locator('#close-player').click();
+  await selectLanguage(page, 'en');
+  const englishRelease = expected.models.flatMap(model => ['cpu','webgpu'].map(backend => ({model,backend,sample:model.playbackAudio?.[backend]})))
+    .find(entry => entry.sample?.full?.url && !matchesAuditedWav(entry.sample.full.sha256));
+  assert.ok(englishRelease, 'A release-backed English sample is available for the reverse playback switch');
+  await page.locator(`#model-rows tr[data-model="${englishRelease.model.id}"] [data-play="${englishRelease.model.id}"][data-backend="${englishRelease.backend}"]`).click();
+  await page.waitForFunction(() => {const audio=document.querySelector('#sample-audio');return audio.currentTime > .15 && !audio.paused;});
+  assert.equal(await fullLink.isVisible(), true, 'Release-backed playback restores the full WAV link');
+  assert.equal(await fullLink.getAttribute('href'), englishRelease.sample.full.url, 'Release-backed playback points to the selected receipt asset');
+  await page.locator('#close-player').click();
   await page.locator('#search').fill('no model matches this');
   assert.equal(await page.locator('#no-results').isVisible(), true);
   await page.locator('#clear-filters').click();

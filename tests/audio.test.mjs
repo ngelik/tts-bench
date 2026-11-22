@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {wavInfo,makeClip,MAX_CLIP_BYTES} from '../tools/audio.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {wavInfo,makeClip,MAX_CLIP_BYTES,verifyFullAudioReference} from '../tools/audio.mjs';
 function wave(seconds=31,rate=8000){const b=Buffer.alloc(44+rate*seconds*2);b.write('RIFF');b.writeUInt32LE(b.length-8,4);b.write('WAVEfmt ',8);b.writeUInt32LE(16,16);b.writeUInt16LE(1,20);b.writeUInt16LE(1,22);b.writeUInt32LE(rate,24);b.writeUInt32LE(rate*2,28);b.writeUInt16LE(2,32);b.writeUInt16LE(16,34);b.write('data',36);b.writeUInt32LE(b.length-44,40);for(let i=44;i<b.length;i+=2)b.writeInt16LE((i%100)-50,i);return b;}
 test('listening excerpt preserves exact initial PCM and caps duration at 30 seconds',()=>{const source=wave(),clip=makeClip(source);assert.equal(wavInfo(clip).seconds,30);assert.deepEqual(clip.subarray(44),source.subarray(44,44+8000*30*2));assert.equal(wavInfo(source).seconds,31);assert.equal(wavInfo(makeClip(wave(2))).seconds,2);});
 test('malformed or non-PCM16 recording is never accepted as a listening sample',()=>{for(const change of [b=>b.writeUInt16LE(3,20),b=>b.writeUInt32LE(1,40),b=>b.writeUInt32LE(123,4),b=>b.writeUInt16LE(2,22)]){const b=wave();change(b);assert.throws(()=>wavInfo(b));}});
@@ -19,4 +19,14 @@ test('recording language binds to the actual fixture with legacy English compati
  assert.throws(()=>verifyAudioLanguage({language:'en'},{fixture:{id:'unregistered-text'}}),/explicit language/);
  assert.throws(()=>verifyAudioLanguage({language:'uk'},{fixture:{id:'unregistered-text',language:'uk'}}),/unknown fixture/);
  assert.throws(()=>verifyAudioLanguage({language:'uk'},{fixture:{id:'english-20k-v1',language:'uk'}}),/mismatch/);
+});
+
+test('clip-only full audio metadata keeps the scored source digest without publishing a full URL',()=>{
+ const key='run-id--apptor-tiny-tts--cpu',full={sha256:'a'.repeat(64),bytes:62179244,url:null};
+ assert.doesNotThrow(()=>verifyFullAudioReference(full,key));
+ assert.doesNotThrow(()=>verifyFullAudioReference({sha256:full.sha256,bytes:full.bytes},key));
+ assert.doesNotThrow(()=>verifyFullAudioReference({...full,url:`https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/${key}-full.wav`},key));
+ assert.throws(()=>verifyFullAudioReference({...full,url:'https://example.com/full.wav'},key),/Unexpected/);
+ assert.throws(()=>verifyFullAudioReference({...full,sha256:'bad'},key),/digest or size/);
+ assert.throws(()=>verifyFullAudioReference({...full,bytes:0},key),/digest or size/);
 });

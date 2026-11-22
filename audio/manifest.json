@@ -2,6 +2,66 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "resultId": "2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d",
+      "model": "apptor-tiny-tts",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "de",
+      "attribution": "Apptor Tiny TTS Standard German M2; synthetic voice. Tiny-voca architecture and training recipe; speech training data generated with Qwen3-TTS and Common Voice German text lineage. Apache-2.0 checkpoint; MIT Vocos. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/apptor/apptor-tiny-tts/tree/0b6962273a1d6618f250cdbd621b56ba04b62cef",
+        "https://huggingface.co/apptor/apptor-tiny-tts/blob/0b6962273a1d6618f250cdbd621b56ba04b62cef/README.md",
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web",
+        "https://github.com/gemelo-ai/vocos/tree/eb39abfc42c1dee4854d9b10d44dd7d4fd3b0e53"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d--apptor-tiny-tts--cpu.wav",
+        "sha256": "ad2c98176125c5a161e16b79ead5e959525f75d5aad588476fd46f2c4d70fc39",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "64575f12fb762f593e45666b82653d9777fbeb562a378080b3b400ae94714783",
+        "bytes": 62179244
+      }
+    },
+    {
+      "resultId": "2026-11-22t01-30-59-189z-apptor-tiny-tts-webgpu-warm-050c577c",
+      "model": "apptor-tiny-tts",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "de",
+      "attribution": "Apptor Tiny TTS Standard German M2; synthetic voice. Tiny-voca architecture and training recipe; speech training data generated with Qwen3-TTS and Common Voice German text lineage. Apache-2.0 checkpoint; MIT Vocos. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/apptor/apptor-tiny-tts/tree/0b6962273a1d6618f250cdbd621b56ba04b62cef",
+        "https://huggingface.co/apptor/apptor-tiny-tts/blob/0b6962273a1d6618f250cdbd621b56ba04b62cef/README.md",
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web",
+        "https://github.com/gemelo-ai/vocos/tree/eb39abfc42c1dee4854d9b10d44dd7d4fd3b0e53"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t01-30-59-189z-apptor-tiny-tts-webgpu-warm-050c577c--apptor-tiny-tts--webgpu.wav",
+        "sha256": "5f8f3b4cb59b8e349dd1c8022540efcd95291009b460813ebb2f77239d6616ae",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "e726fb5edaee4e7b52e588be976587695ef8e8281977efc883d920b8088d2f63",
+        "bytes": 62180876
+      }
+    },
+    {
       "resultId": "2026-11-15t00-00-04-032z-audio8-realistic-0.6b-int4-cpu-cached-b259df93",
       "model": "audio8-realistic-0.6b-int4",
       "backend": "cpu",

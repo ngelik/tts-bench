@@ -9,8 +9,19 @@ test('each README Listen link opens its exact hosted recording while retaining f
  const block=referenceBlock([base],getAssetLock().models,[],entries);
  const urls=[...block.matchAll(/\[▶ Listen\]\(([^)]+)\)/g)].map(m=>new URL(m[1]));
  assert.equal(urls.length,entries.length);
- entries.forEach((entry,i)=>{assert.equal(urls[i].origin,'https://ngelik.github.io');assert.equal(urls[i].pathname,'/tts-bench/audio/');assert.equal(urls[i].searchParams.get('sample'),entry.clip.path.split('/').at(-1));assert.ok(block.includes(entry.full.url));});
+ entries.forEach((entry,i)=>{assert.equal(urls[i].origin,'https://ngelik.github.io');assert.equal(urls[i].pathname,'/tts-bench/audio/');assert.equal(urls[i].searchParams.get('sample'),entry.clip.path.split('/').at(-1));if(entry.full?.url)assert.ok(block.includes(entry.full.url));else assert.ok(block.includes('Not published'));});
  assert.ok(block.includes('Open the listening room'));
+});
+
+test('clip-only README rows retain the receipt-bound clip and omit unpublished full URLs',async()=>{
+ const {entries}=JSON.parse(await readFile(new URL('../audio/manifest.json',import.meta.url)));
+ const clipOnly=entries.map((entry,index)=>index===0?{...entry,full:{...entry.full,url:null}}:entry);
+ const block=referenceBlock([base],getAssetLock().models,[],clipOnly);
+ assert.ok(block.includes('Not published'));
+ assert.ok(!block.includes('href="null"'));
+ assert.ok(!block.includes('[Download / listen](null)'));
+ const releaseBacked=clipOnly.find(entry=>entry.full.url);
+ assert.ok(releaseBacked && block.includes(releaseBacked.full.url));
 });
 
 test('reference section exposes the reviewed CosyVoice3 selection report and its raw error receipt',async()=>{
