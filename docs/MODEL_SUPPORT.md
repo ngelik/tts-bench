@@ -1,6 +1,22 @@
 # Voice and language support
 
-Counts describe the pinned checkpoint and explicitly identified compatible catalog, not the coverage of this English benchmark. Every run tests one selected voice. Voice accents/locales do not count as additional languages. Unknown values must be null, not guessed.
+Counts describe the pinned checkpoint and explicitly identified compatible catalog, not the coverage of a particular benchmark fixture. Every run tests one selected voice. Voice accents/locales do not count as additional languages. Unknown values must be null, not guessed.
+
+<a id="clarvia-tts-tiny"></a>
+
+### Clarvia TTS Tiny 4.54M FP32
+
+Supported voices: **10**. Bundled voices: **10**. Supported languages: **1** (tr).
+
+Pinned Turkish FP32 checkpoint with ten bundled synthetic voices. The browser
+profile fixes `female_1`; only Turkish is supported by the paired checkpoint and
+phonemizer. The model card's training-data summaries are publisher claims, not an
+independent dataset audit.
+
+[Pinned model card](https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md),
+[pinned config](https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/config.json),
+[pinned Turkish phonemizer](https://huggingface.co/wite-tech/clarvia-phonemizer/tree/bf1b1aab40e24ca3f6700980427c386f4f171f6f),
+[browser profile and notices](../web/clarvia-tts-tiny/NOTICE.md).
 
 <a id="paradee"></a>
 
