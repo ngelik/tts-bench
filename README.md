@@ -561,6 +561,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Voca Japanese v3 F2 4.54M FP32 | 2 | 2 | 2 (ja, en) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ja-v3) |
 | Tiny Voca Japanese Tsukuyomi-chan P1 4.59M FP32 | 1 | 1 | 1 (ja) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ja-tsukuyomi-chan) |
 | Tiny Voca Russian M | 2 | 2 | 1 (ru) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ru) |
+| Tiny Voca Greek M (FP32) | 2 | 2 | 1 (el) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-gr) |
 
 ### Controlled native comparisons
 

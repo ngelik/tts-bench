@@ -1,0 +1,14 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The Greek model weights in inference.pt and the sample WAV files in this
+repository are licensed under CC BY 4.0:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Please credit Konstantinos, "tiny-voca-gr", with a link to
+https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr, and cite the STOMA corpus as
+described in README.md. Indicate if you modify or fine-tune the model.
+
+This license does not cover the inference source code in src/tiny_voca_gr/,
+which is provided under Apache-2.0 (see LICENSE-CODE). It does not relicense
+STOMA source recordings, annotations, or third-party transcripts, none of
+which are included here.

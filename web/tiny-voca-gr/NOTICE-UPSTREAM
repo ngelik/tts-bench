@@ -1,0 +1,23 @@
+Greek tiny-voca checkpoint and inference adapter
+
+The released Greek model weights and sample WAVs are CC BY 4.0. The inference
+adapter source code in src/tiny_voca_gr/ is Apache-2.0. See LICENSE and
+LICENSE-CODE, respectively.
+
+The model architecture and upstream implementation are based on tiny-voca by
+Muhammed Nazeem: https://github.com/n4ze3m/tiny-voca (Apache-2.0). The Greek
+checkpoint was trained from scratch and does not contain the upstream English
+checkpoint.
+
+Training recordings and author-created annotations came from STOMA by Michail
+Raptakis, Yannis Pantazis, and Alexandros Angelakis:
+https://huggingface.co/datasets/aangelakis/STOMA (CC BY 4.0).
+The dataset maintainers requested citation of their work and advised that their
+paper has been submitted to Language Resources and Evaluation (Springer) and is
+under revision. The dataset and its transcripts are not distributed here.
+
+The STOMA dataset license does not cover third-party textual material, including
+the CGL Text Bank. Such material retains the terms of its original source.
+
+eSpeak NG is a separate GPL-3.0-or-later program used by the Greek phoneme
+frontend. It is not bundled in this repository.

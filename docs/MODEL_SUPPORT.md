@@ -519,3 +519,15 @@ WASM or WebGPU with WASM fallback; both stress graphs stay single-thread WASM.
 The all-span oracle is attached to smoke initialization settings only.
 
 [Model card](https://huggingface.co/egnch/tiny-voca-ru/tree/2723b0e71fea216001bd4f6caf0866eb06879339) · [Browser source](https://github.com/yilbegan/tiny-voca-ru/tree/aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784) · [Space](https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/tree/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e) · [Profile notes](TINY_VOCA_RU.md) · [Notices](../web/tiny-voca-ru/NOTICE.md).
+
+<a id="tiny-voca-gr"></a>
+
+## Tiny Voca Greek M (FP32)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`el`).
+
+The pinned Greek release contains two fixed synthesis profiles trained on recorded STOMA speech. The benchmark uses M (index 0), and F (index 1) is available for smoke diagnostics. The browser uses an FP32 ONNX export of the released PyTorch checkpoint with Greek eSpeak NG 1.51, 24 kHz output and upstream model limits of 512 tokens and 3,000 frames. ONNX Runtime runs in single-thread WASM or hardware WebGPU with WASM available for unsupported operators.
+
+Native frontend verification covers all 109 spans and 335 utterances, with a maximum of 179 tokens and 28 preserved `<unk>` instances. eSpeak may switch pronunciation rules for Latin fragments, and the checkpoint still uses the Greek phone inventory. Standalone English is unsupported. See [adapter profile and limitations](TINY_VOCA_GR.md) and [license notices](../web/tiny-voca-gr/NOTICE.md).
+
+[Model and Greek source](https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554) · [Base tiny-voca source](https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d) · [eSpeak NG 1.51 source](https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd).

@@ -12389,6 +12389,194 @@
         ],
         "notes": "Both synthetic voices are bundled; only M index 1 is evaluated in ru-article-v1. WebGPU is used only by the waveform graph with explicit WASM fallback; OOV accent and contextual homograph resolution are single-thread WASM."
       }
+    },
+    "tiny-voca-gr": {
+      "displayName": "Tiny Voca Greek M (FP32)",
+      "modelRevision": "927ea15cf4edcb8695b75328c9c90c5c53928554",
+      "sourceRevision": "62e2adef158bc997042cc6234f541f1e0e4cd55d",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "MIT with bundled third-party notices",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "kind": "runtime"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "kind": "license"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-gr-model-onnx",
+          "target": "models/tiny-voca-gr/927ea15cf4edcb8695b75328c9c90c5c53928554/62e2adef158bc997042cc6234f541f1e0e4cd55d/model.onnx",
+          "bytes": 21359657,
+          "sha256": "66076bccad4520afb275c4ec2d25a696f580d3ebcb827faeeb5990df11733c9f",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "model.onnx",
+            "build": "Build/import with `bash tools/tiny-voca-gr/build.sh .cache/tiny-voca-gr-assets`; the builder verifies pinned model, core source, eSpeak and output SHA-256 values. See web/tiny-voca-gr/NOTICE.md."
+          }
+        },
+        {
+          "id": "tiny-voca-gr-model-json",
+          "target": "models/tiny-voca-gr/927ea15cf4edcb8695b75328c9c90c5c53928554/62e2adef158bc997042cc6234f541f1e0e4cd55d/model.json",
+          "bytes": 1064,
+          "sha256": "19eee2d4a7974e165cc4d8e2eb0de522259ccaaeb4b0e7082db585d8a18c3607",
+          "kind": "model-config",
+          "generated": {
+            "artifactPath": "model.json",
+            "build": "Build/import with `bash tools/tiny-voca-gr/build.sh .cache/tiny-voca-gr-assets`; the builder verifies pinned model, core source, eSpeak and output SHA-256 values. See web/tiny-voca-gr/NOTICE.md."
+          }
+        },
+        {
+          "id": "tiny-voca-gr-espeak-quiet.mjs",
+          "target": "runtimes/espeak-ng/tiny-voca-gr-1.51/espeak-quiet.mjs",
+          "bytes": 68105,
+          "sha256": "1f00a07670c3e2f4eebd3fca9578aff4f1fe41149d131e3fc338cb4e9db84246",
+          "kind": "runtime",
+          "generated": {
+            "artifactPath": "espeak-quiet.mjs",
+            "build": "Build/import with `bash tools/tiny-voca-gr/build.sh .cache/tiny-voca-gr-assets`; the builder verifies pinned model, core source, eSpeak and output SHA-256 values. See web/tiny-voca-gr/NOTICE.md."
+          }
+        },
+        {
+          "id": "tiny-voca-gr-espeak-quiet.wasm",
+          "target": "runtimes/espeak-ng/tiny-voca-gr-1.51/espeak-quiet.wasm",
+          "bytes": 354352,
+          "sha256": "6eff9e5aeae447db0cf6ee160952c3a605d0ceea05eb54a002910a1c80507e16",
+          "kind": "runtime",
+          "generated": {
+            "artifactPath": "espeak-quiet.wasm",
+            "build": "Build/import with `bash tools/tiny-voca-gr/build.sh .cache/tiny-voca-gr-assets`; the builder verifies pinned model, core source, eSpeak and output SHA-256 values. See web/tiny-voca-gr/NOTICE.md."
+          }
+        },
+        {
+          "id": "tiny-voca-gr-espeak-quiet.data",
+          "target": "runtimes/espeak-ng/tiny-voca-gr-1.51/espeak-quiet.data",
+          "bytes": 888013,
+          "sha256": "c05a169ccb338340bb1529c68891ec3721e1bb227387c5bbb71d1689f423b9d8",
+          "kind": "runtime",
+          "generated": {
+            "artifactPath": "espeak-quiet.data",
+            "build": "Build/import with `bash tools/tiny-voca-gr/build.sh .cache/tiny-voca-gr-assets`; the builder verifies pinned model, core source, eSpeak and output SHA-256 values. See web/tiny-voca-gr/NOTICE.md."
+          }
+        },
+        {
+          "id": "tiny-voca-gr-license-model",
+          "target": "licenses/tiny-voca-gr/LICENSE-MODEL",
+          "sourcePath": "web/tiny-voca-gr/LICENSE-MODEL",
+          "bytes": 711,
+          "sha256": "54e0fc86e50704b9097d7f8d361e73e0711b7efba47d03ee6cae0e3c75cd46b6",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-gr-license-code",
+          "target": "licenses/tiny-voca-gr/LICENSE-CODE",
+          "sourcePath": "web/tiny-voca-gr/LICENSE-CODE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-gr-notice-upstream",
+          "target": "licenses/tiny-voca-gr/NOTICE-UPSTREAM",
+          "sourcePath": "web/tiny-voca-gr/NOTICE-UPSTREAM",
+          "bytes": 1182,
+          "sha256": "ed2e9e8772e6e46b658a4f23e60cb697ceff0cbe50e231519e2674f6bf9d662a",
+          "kind": "provenance"
+        },
+        {
+          "id": "tiny-voca-gr-license-espeak-ng",
+          "target": "licenses/tiny-voca-gr/LICENSE-ESPEAK-NG",
+          "sourcePath": "web/tiny-voca-gr/LICENSE-ESPEAK-NG",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "CC BY 4.0 for the released checkpoint and upstream sample WAVs. Credit Konstantinos Perifanos and cite STOMA.",
+        "inferenceSource": "Apache-2.0 Greek port and tiny-voca source; notices retained.",
+        "frontend": "GPL-3.0-or-later eSpeak NG 1.51 Greek code/data.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 with third-party notices.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "el"
+        ],
+        "scope": "Pinned tiny-voca-gr release only. Two fixed synthesis profiles (M and F) at 24 kHz; M index 0 is the benchmark default. The FP32 ONNX graph is a local export of the released PyTorch checkpoint.",
+        "sources": [
+          "https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554",
+          "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+          "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+          "https://huggingface.co/datasets/aangelakis/STOMA/tree/fcb947d49abd2736701d8ce3786136812bac85fa"
+        ],
+        "notes": "Modern Greek only. Native frontend verification covers 109 spans and 335 utterances, with a maximum of 179 tokens and 28 <unk> instances. The Greek inventory can lose sounds from mixed-script names and initials. M is the benchmark voice and F is available for smoke diagnostics."
+      },
+      "sourceId": "n4ze3m/tiny-voca",
+      "espeakRevision": "2e9a5fccbb0095e87b2769e9249ea1f821918ecd"
     }
   }
 }
