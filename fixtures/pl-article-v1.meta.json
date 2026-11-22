@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "pl-article-v1",
+  "file": "pl-article-v1.txt",
+  "sha256": "09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d",
+  "utf8Bytes": 22887,
+  "unicodeCodePoints": 21375,
+  "javascriptStringLength": 21375,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 98,
+  "chunkCharacters": {
+    "min": 40,
+    "max": 225
+  },
+  "fixtureId": "pl-article-v1",
+  "language": "pl",
+  "source": {
+    "type": "translation",
+    "description": "Complete Standard Polish translation of the English benchmark article by GPT-6 Luna. Codex independently reviewed all 27 source paragraphs and edited chronology, directions, measurements, dialogue and Polish wording. AI-assisted editorial review.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "OpenAI GPT-6 Luna, independently reviewed and edited by Codex",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}

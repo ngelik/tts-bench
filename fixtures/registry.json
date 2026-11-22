@@ -158,6 +158,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "pl-article-v1",
+      "smokeId": "pl-article-smoke-v1",
+      "language": "pl",
+      "articleFile": "pl-article-v1.txt",
+      "chunksFile": "pl-article-v1.chunks.json",
+      "metadataFile": "pl-article-v1.meta.json",
+      "sha256": "09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d",
+      "characters": 21375,
+      "unicodeCodePoints": 21375,
+      "utf8Bytes": 22887,
+      "chunks": 98,
+      "source": {
+        "type": "translation",
+        "description": "Complete Standard Polish translation of the English benchmark article by GPT-6 Luna. Codex independently reviewed all 27 source paragraphs and edited chronology, directions, measurements, dialogue and Polish wording. AI-assisted editorial review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
