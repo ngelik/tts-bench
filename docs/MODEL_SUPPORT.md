@@ -455,3 +455,25 @@ Both pinned browser profiles select the first official voice, Kenzie (`s057b`), 
 Supported voices: **3** (KSS, F2, M2), all present in one pinned graph. Languages: **2** (ko, en). The benchmark registers KSS index 0 with `ko-loan` for `ko-article-v1` and Dizione F2 index 1 with `own` for `english-20k-v1`. M2 is not evaluated; mode `ko` remains reserved. Mixed Korean text with embedded English follows the Korean loanword route.
 
 The graph is the publisher's step-160000 FP32 export, pinned at source revision `c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c`; the published v2 report records 4,550,347 parameters including the waveform generator. Korean and English routes use the same exact local Pyodide frontend and graph, with ONNX Runtime Web 1.20.1 on single-thread WASM or verified hardware WebGPU. [Pinned source report](https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md) · [KSS corpus](https://huggingface.co/datasets/Bingsu/KSS_Dataset) · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
+
+<a id="tiny-voca-ja-tsukuyomi-chan"></a>
+
+## Tiny Voca Japanese Tsukuyomi-chan P1
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (ja).
+The profile selects the released synthetic `tsukuyomi` voice (index 0) and the
+`ja-article-v1` fixture. The original FP32 waveform graph contains 4,589,131
+stored parameter values; the separate duration graph's shared external tensor is
+not counted twice. The adapter retains the published float64 phase and supports
+the original CPU/WASM graph pair only. Its pyopenjtalk/Sudachi frontend pins the
+Japanese phone, accent and phrase-boundary inputs and audits the complete
+fixture against 280 native frontend plans. Warm and cached three-span Chrome CPU
+smokes passed; the cached smoke transferred 153,916,767 bytes from the local
+asset server. Offline initialization is unsupported in the current runner/cache
+path because the verified SudachiDict-core wheel was unavailable after the
+profile reopened offline. Credit **Tsukuyomi-chan Corpus (CV Rei Yumesaki)**
+with any presented sample. The corpus terms reserve secondary use rights in
+reusable audio material; this code/model entry does not grant general output
+redistribution rights.
+
+[Pinned model card](https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan/blob/7ed75cc5f521cc6be4cb57689b2c038928259ae9/README.md) · [Pinned inference source](https://github.com/ayutaz/tiny-voca/tree/66ee00d2c8cd61b34be1cde5880bac0e45b89fcf) · [Profile and terms](TINY_VOCA_JA_TSUKUYOMI_CHAN.md).

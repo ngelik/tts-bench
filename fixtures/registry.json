@@ -168,7 +168,8 @@
     "vocina-it": "it-article-v1",
     "zerre-tts": "tr-article-v1",
     "clarvia-tts-tiny": "tr-article-v1",
-    "korean-tts": "ko-article-v1"
+    "korean-tts": "ko-article-v1",
+    "tiny-voca-ja-tsukuyomi-chan": "ja-article-v1"
   },
   "modelRequiredFixtures": {
     "ua-serhiy-0p58m": "uk-article-v1",
@@ -177,7 +178,8 @@
     "tiny-voca-it": "it-article-v1",
     "vocina-it": "it-article-v1",
     "zerre-tts": "tr-article-v1",
-    "clarvia-tts-tiny": "tr-article-v1"
+    "clarvia-tts-tiny": "tr-article-v1",
+    "tiny-voca-ja-tsukuyomi-chan": "ja-article-v1"
   },
   "modelFrontendLanguages": {
     "ua-serhiy-0p58m": [
@@ -211,6 +213,9 @@
     ],
     "korean-tts": [
       "ko", "en"
+    ],
+    "tiny-voca-ja-tsukuyomi-chan": [
+      "ja"
     ]
   }
 }

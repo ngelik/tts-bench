@@ -495,6 +495,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Zerre TTS ~4.5M INT8 (Turkish, SES-A) | 2 | 2 | 1 (tr) | [Details](docs/MODEL_SUPPORT.md#zerre-tts) |
 | Vocina Italian v1.0 INT8 | 2 | 2 | 1 (it) | [Details](docs/MODEL_SUPPORT.md#vocina-it) |
 | Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | 10 | 10 | 1 (tr) | [Details](docs/MODEL_SUPPORT.md#clarvia-tts-tiny) |
+| Tiny Voca Japanese Tsukuyomi-chan P1 4.59M FP32 | 1 | 1 | 1 (ja) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ja-tsukuyomi-chan) |
 
 ### Controlled native comparisons
 

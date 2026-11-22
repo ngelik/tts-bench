@@ -1,0 +1,23 @@
+--- a/sudachi/src/plugin/loader.rs
++++ b/sudachi/src/plugin/loader.rs
+@@ -71,7 +71,8 @@
+     target_os = "ios",
+     target_os = "tvos",
+     target_os = "watchos",
+-    target_os = "visionos"
++    target_os = "visionos",
++    target_os = "emscripten"
+ ))]
+ // Apple embedded platforms do not support dynamic library loading (DSO plugins)
+ // due to platform security restrictions. Returning None here
+--- a/sudachi/src/util/fxhash.rs
++++ b/sudachi/src/util/fxhash.rs
+@@ -58,5 +58,7 @@
+ #[cfg(target_pointer_width = "64")]
+ const SEED: usize = SEED64 as usize;
+-
++#[cfg(target_pointer_width = "32")]
++const SEED: usize = SEED32 as usize;
++
+ trait HashWord {
+     fn hash_word(&mut self, _: Self);
