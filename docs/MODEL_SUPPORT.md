@@ -269,6 +269,12 @@ The pinned checkpoint has two built-in American English voices, F2 and M2, and s
 
 The pinned Standard German checkpoint provides F2 and M2 at 24 kHz. The upstream 4.5M figure refers to the acoustic checkpoint. The browser pipeline also runs the German G2P graph and the author's INT8 Vocos ONNX second stage. The benchmark fixes M2, speed 1.0, neutral pitch controls, and the pinned neutral browser frontend and exception data. A separate probe measures GPU dispatch during the combined speech and vocoder stages after text preparation. WebGPU may use WASM fallback. [Pinned model card and assets](https://huggingface.co/apptor/apptor-tiny-tts/tree/0b6962273a1d6618f250cdbd621b56ba04b62cef) · [Pinned browser source](https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web) · [Frontend and license notice](../web/apptor-de/NOTICE.md)
 
+<a id="apptor-tiny-tts-at"></a>
+
+### Apptor Tiny TTS 4.5M (Austrian German)
+
+The pinned Austrian Standard German checkpoint exposes the synthetic F2 and M2 speakers; this profile selects M2 at internal index 1. The internal `AT` label is the accent conditioning style, not another public speaker. Inference fixes accent 1.0, speed 1.0, pitch shift 0, pitch range 1.0, 24 kHz, one WASM thread and the author's INT8 Vocos second stage. Austrian dictionary readings activate at accent values of at least 0.5. The upstream card calls this an early preview with a mild/inconsistent Austrian accent, not dialect. The diagnostic frontend audit compares the full 109-span token/stress digest with the pinned upstream 1.20.1 browser oracle; WebGPU smoke separately verifies actual compute dispatch and may use WASM fallback. [Pinned Austrian model card and assets](https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913) · [Frontend and attribution notice](../web/apptor-at/NOTICE.md)
+
 <a id="sopro-v2-turbo"></a>
 
 ### Sopro v2 Turbo

@@ -387,6 +387,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Serhiy 0.58M (Ukrainian) | 1 | 1 | 1 (uk) | [Details](docs/MODEL_SUPPORT.md#ua-serhiy-0p58m) |
 | Kale TTS 1 Nano 7.5M (INT8 CPU) | 10 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#kale-tts-1-nano-int8) |
 | Kale TTS 1 Nano 7.5M (FP32 WebGPU) | 10 | 1 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#kale-tts-1-nano-fp32) |
+| Apptor Tiny TTS 4.5M (Austrian German) | 2 | 2 | 1 (de-AT) | [Details](docs/MODEL_SUPPORT.md#apptor-tiny-tts-at) |
 
 ### Controlled native comparisons
 

@@ -82,11 +82,13 @@
   ],
   "modelDefaults": {
     "ua-serhiy-0p58m": "uk-article-v1",
-    "apptor-tiny-tts": "de-article-v1"
+    "apptor-tiny-tts": "de-article-v1",
+    "apptor-tiny-tts-at": "de-at-article-v1"
   },
   "modelRequiredFixtures": {
     "ua-serhiy-0p58m": "uk-article-v1",
-    "apptor-tiny-tts": "de-article-v1"
+    "apptor-tiny-tts": "de-article-v1",
+    "apptor-tiny-tts-at": "de-at-article-v1"
   },
   "modelFrontendLanguages": {
     "ua-serhiy-0p58m": [
@@ -99,6 +101,9 @@
     ],
     "apptor-tiny-tts": [
       "de"
+    ],
+    "apptor-tiny-tts-at": [
+      "de-AT"
     ]
   }
 }
