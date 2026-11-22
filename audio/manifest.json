@@ -2911,6 +2911,126 @@
       }
     },
     {
+      "resultId": "2026-11-22t06-59-31-757z-tiny-voca-de-en-cpu-warm-9cd2b0be",
+      "model": "tiny-voca-de-en",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "fresh-de-f00",
+      "language": "de",
+      "attribution": "Synthetic speech generated with Fraunhofer IEM Tiny Voca DE/EN Voca64. The German and English presets are fictional voices trained with synthetic Qwen3-TTS supervision. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/tree/57fe34dfc061e6cc58e27d186bf7ba16d82d2def",
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/tree/a8ee94178a6f9b703e89e113a3354549d1bdc38d",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/blob/a8ee94178a6f9b703e89e113a3354549d1bdc38d/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t06-59-31-757z-tiny-voca-de-en-cpu-warm-9cd2b0be--tiny-voca-de-en--cpu.wav",
+        "sha256": "f564f200bc098ba92bc47d8c61b033e090f5a284543ca0ee9910c4fe8bba4720",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "0d4185a9e5166a96a15cffb729a6abf0cdcce4e6736a185d2c2ea2cfb489657f",
+        "bytes": 74574892
+      }
+    },
+    {
+      "resultId": "2026-11-22t07-18-39-233z-tiny-voca-de-en-cpu-warm-f0321520",
+      "model": "tiny-voca-de-en",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "fresh-en-f00",
+      "language": "en",
+      "attribution": "Synthetic speech generated with Fraunhofer IEM Tiny Voca DE/EN Voca64. The German and English presets are fictional voices trained with synthetic Qwen3-TTS supervision. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/tree/57fe34dfc061e6cc58e27d186bf7ba16d82d2def",
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/tree/a8ee94178a6f9b703e89e113a3354549d1bdc38d",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/blob/a8ee94178a6f9b703e89e113a3354549d1bdc38d/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t07-18-39-233z-tiny-voca-de-en-cpu-warm-f0321520--tiny-voca-de-en--cpu.wav",
+        "sha256": "8378a822040bec688f8e2ba3c84a605ca987d2921f006ee95336631bdea360b9",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "87caa0659816d93e5f32c20a88897858c7244b4574357f6bb67ff9a48b1c099d",
+        "bytes": 54462508
+      }
+    },
+    {
+      "resultId": "2026-11-22t07-04-33-937z-tiny-voca-de-en-webgpu-warm-18d91567",
+      "model": "tiny-voca-de-en",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "fresh-de-f00",
+      "language": "de",
+      "attribution": "Synthetic speech generated with Fraunhofer IEM Tiny Voca DE/EN Voca64. The German and English presets are fictional voices trained with synthetic Qwen3-TTS supervision. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/tree/57fe34dfc061e6cc58e27d186bf7ba16d82d2def",
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/tree/a8ee94178a6f9b703e89e113a3354549d1bdc38d",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/blob/a8ee94178a6f9b703e89e113a3354549d1bdc38d/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t07-04-33-937z-tiny-voca-de-en-webgpu-warm-18d91567--tiny-voca-de-en--webgpu.wav",
+        "sha256": "595d91de260b3917cfdf06a654cb97d9426dd6d32d57e239d849eef0ed58549b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "9352e19f26911ddf2c1d51be053511d309b80f79bb050057815d53e0a9ba7c94",
+        "bytes": 74574892
+      }
+    },
+    {
+      "resultId": "2026-11-22t07-22-17-062z-tiny-voca-de-en-webgpu-warm-94bbf192",
+      "model": "tiny-voca-de-en",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "fresh-en-f00",
+      "language": "en",
+      "attribution": "Synthetic speech generated with Fraunhofer IEM Tiny Voca DE/EN Voca64. The German and English presets are fictional voices trained with synthetic Qwen3-TTS supervision. Apache-2.0 model. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/tree/57fe34dfc061e6cc58e27d186bf7ba16d82d2def",
+        "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/tree/a8ee94178a6f9b703e89e113a3354549d1bdc38d",
+        "https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/blob/a8ee94178a6f9b703e89e113a3354549d1bdc38d/THIRD_PARTY_NOTICES.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t07-22-17-062z-tiny-voca-de-en-webgpu-warm-94bbf192--tiny-voca-de-en--webgpu.wav",
+        "sha256": "2db8d8ff235f4a0b0f4646ffde63b7ea492f5bb0b4b9a5a60b1e8f5bba2506cc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "ee71d8360f37e0a73a7f11534d1633be4d8aa6e5aeb1d464121bcc0d5c1e9af1",
+        "bytes": 54462508
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",
