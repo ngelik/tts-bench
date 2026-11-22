@@ -206,6 +206,10 @@ production phonemization is not enabled, while its pinned worker exposes an
 English route; the benchmark records that conflict and requires parity checks.
 [Pinned model terms](https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md) · [Browser and component notices](../web/voca64/NOTICE.md)
 
+### Tiny Voca Italian
+
+The pinned model code and FP32 weights declare Apache-2.0. The CML-TTS Italian training data declares CC BY 4.0. The released voices are synthetic, designed with Qwen3-TTS; upstream asks users to label generated audio synthetic. No separate voice-output or blanket generated-audio redistribution grant was found. The browser uses eSpeak NG 1.0.2 under GPL-3.0-or-later; the bundled browser glue and WASM are unmodified and its license is included under `web/tiny-voca-it/`. ONNX Runtime Web 1.20.1 is MIT; its license text is included, and [upstream third-party notices](https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt) apply. The pinned Italian frontend/number-expansion source is Apache-2.0. [Pinned release and terms](https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0) · [Pinned license](https://github.com/carbogninalberto/tiny-voca-it/blob/280f40c307acf04138a5227b6cf9b1544e5886b4/LICENSE) · [CML-TTS dataset card](https://github.com/carbogninalberto/tiny-voca-it/blob/280f40c307acf04138a5227b6cf9b1544e5886b4/README.md) · [Runtime and frontend notice](../web/tiny-voca-it/NOTICE.md)
+
 ## Sopro v2 Turbo
 
 Sopro's code and model weights are Apache-2.0. ONNX Runtime Web is MIT and has bundled third-party notices. The fixed reference is the benchmark’s own published Tiny Voca synthetic F2 audio, generated from the benchmark article, and credited with the output. [Model terms](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Runtime, prompt and modifications](../web/sopro/NOTICE.md)

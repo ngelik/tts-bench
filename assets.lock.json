@@ -10461,6 +10461,160 @@
         ],
         "notes": "The model card/demo expose two synthetic speakers (F2, M2); internal label AT is the Austrian accent style, not a third public speaker. Benchmark settings use M2 at internal index 1, speed 1.0, pitch shift 0, pitch range 1.0, accent 1.0, 24 kHz and INT8 Vocos. Austrian pronunciation readings are enabled at accent >= 0.5. The upstream card describes an early-preview mild/inconsistent Austrian Standard German accent, not a dialect; output rights are not inferred from the model license."
       }
+    },
+    "tiny-voca-it": {
+      "displayName": "Tiny Voca Italian 6.77M (Lorenzo)",
+      "modelRevision": "280f40c307acf04138a5227b6cf9b1544e5886b4",
+      "browserSourceRevision": "0c57fab284e58e0bad620f21790e631d5dec17f8",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT; retain bundled third-party notices",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-it-metadata",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/tiny-voca-it-preview-fp32.json",
+          "url": "https://raw.githubusercontent.com/carbogninalberto/tiny-voca-it/0c57fab284e58e0bad620f21790e631d5dec17f8/models/tiny-voca-it-preview-fp32.json",
+          "bytes": 3724,
+          "sha256": "11a0f19a683240a802d1206c2954d74526ba3d2328f6a5f3420a1ab2f5550d73",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-it-fp32-onnx",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/tiny-voca-it-preview-fp32.onnx",
+          "url": "https://raw.githubusercontent.com/carbogninalberto/tiny-voca-it/0c57fab284e58e0bad620f21790e631d5dec17f8/models/tiny-voca-it-preview-fp32.onnx",
+          "bytes": 27982441,
+          "sha256": "6b24645e827aa4ed10af33ed6cb3937acde94c2dfd7075b1634999c4d9752964",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-it-official-frontend",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/frontend.js",
+          "url": "https://raw.githubusercontent.com/carbogninalberto/tiny-voca-it/0c57fab284e58e0bad620f21790e631d5dec17f8/frontend.js",
+          "bytes": 6489,
+          "sha256": "dd19204dd322ad912f8b5699a7a8309bfcc5282c4dad1f887ee1e435804ac03c",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-official-numbers",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/numbers.js",
+          "url": "https://raw.githubusercontent.com/carbogninalberto/tiny-voca-it/0c57fab284e58e0bad620f21790e631d5dec17f8/numbers.js",
+          "bytes": 4826,
+          "sha256": "a699e108bbbf6d90878479aa1b2bb7734c16e8655b64b9f228ca873b942c0782",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-espeak-ng-js",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/espeak-ng.js",
+          "url": "https://raw.githubusercontent.com/carbogninalberto/tiny-voca-it/0c57fab284e58e0bad620f21790e631d5dec17f8/espeak-ng/espeak-ng.js",
+          "bytes": 178386,
+          "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-espeak-ng-wasm",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/espeak-ng.wasm",
+          "url": "https://raw.githubusercontent.com/carbogninalberto/tiny-voca-it/0c57fab284e58e0bad620f21790e631d5dec17f8/espeak-ng/espeak-ng.wasm",
+          "bytes": 18485010,
+          "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-ort-wasm-module",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/runtime/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-ort-webgpu-module",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/runtime/ort.webgpu.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.mjs",
+          "bytes": 333468,
+          "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-ort-wasm-threaded-module",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/runtime/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-ort-wasm-threaded",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/runtime/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-ort-wasm-jsep-module",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/runtime/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-ort-wasm-jsep",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/runtime/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-it-espeak-license",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/licenses/espeak-ng-LICENSE.txt",
+          "sourcePath": "web/tiny-voca-it/notices-espeak-ng-LICENSE.txt",
+          "bytes": 35149,
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-it-ort-license",
+          "target": "models/tiny-voca-it/280f40c307acf04138a5227b6cf9b1544e5886b4/0c57fab284e58e0bad620f21790e631d5dec17f8/licenses/onnxruntime-web-LICENSE.txt",
+          "sourcePath": "web/tiny-voca-it/notices-onnxruntime-web-LICENSE.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "trainingData": "CML-TTS Italian CC BY 4.0; synthetic voice design uses Qwen3-TTS",
+        "runtime": "ONNX Runtime Web MIT with upstream third-party notices; eSpeak NG GPL-3.0-or-later; official frontend Apache-2.0",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "it"
+        ],
+        "scope": "Pinned v0.3.0 FP32 checkpoint; the released web profile exposes Lorenzo (EM4) and Chiara (EF4), and this benchmark fixes Lorenzo/EM4. The model JSON has 14 indexed embedding slots; that is not the released product voice count.",
+        "sources": [
+          "https://github.com/carbogninalberto/tiny-voca-it/releases/tag/v0.3.0",
+          "https://github.com/carbogninalberto/tiny-voca-it/tree/280f40c307acf04138a5227b6cf9b1544e5886b4",
+          "https://github.com/carbogninalberto/tiny-voca-it/blob/0c57fab284e58e0bad620f21790e631d5dec17f8/worker.js",
+          "https://github.com/carbogninalberto/tiny-voca-it/blob/280f40c307acf04138a5227b6cf9b1544e5886b4/LICENSE",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt",
+          "https://www.npmjs.com/package/espeak-ng",
+          "https://github.com/espeak-ng/espeak-ng"
+        ],
+        "notes": "The pinned ONNX graph is the official FP32 release. The official worker uses one-thread WASM; this benchmark adds WebGPU with explicit WASM fallback and untimed hardware dispatch proof. The graph contains native unseeded RandomNormalLike noise, so PCM digests are not a waveform identity guarantee. Apache-2.0 model/code terms do not establish a separate generated-audio license."
+      }
     }
   }
 }
