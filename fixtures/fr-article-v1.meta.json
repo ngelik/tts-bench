@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "fr-article-v1",
+  "file": "fr-article-v1.txt",
+  "sha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+  "utf8Bytes": 25038,
+  "unicodeCodePoints": 23757,
+  "javascriptStringLength": 23757,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 108,
+  "chunkCharacters": {
+    "min": 180,
+    "max": 226
+  },
+  "fixtureId": "fr-article-v1",
+  "language": "fr",
+  "source": {
+    "type": "translation",
+    "description": "Complete standard French translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 paragraphs, edited regional vocabulary, clarified evening times and bell directions, preserved original measurements, and checked dialogue, identifiers and numeric values. AI editorial review.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "GPT-6 Luna with Codex editorial review",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}
