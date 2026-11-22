@@ -33,37 +33,118 @@ const supportCodes = model => [...new Set((Array.isArray(model.support?.language
 const languageNames = new Intl.DisplayNames(['en'], {type:'language'});
 const languageLabel = code => { try { return languageNames.of(code) || code; } catch { return code; } };
 const languageIdPattern = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
+const foldSearch = value => String(value ?? '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('en');
+const behtini = 'Kurdish Behdînî (Arabic script)';
 function languageGroup(id = state.language) {
   return id === 'en' ? state.data : state.data?.byLanguage?.[id];
 }
+function languageDetails(id, registryLabel = '') {
+  const isBehdini = id === 'ku-Arab-IQ';
+  const englishName = isBehdini ? behtini : languageLabel(id);
+  let nativeName = null;
+  if (!isBehdini) {
+    nativeName = englishName;
+    try { nativeName = new Intl.DisplayNames([id], {type:'language'}).of(id) || englishName; } catch {}
+  }
+  if (registryLabel && !isBehdini && nativeName === id) nativeName = registryLabel;
+  if (nativeName) nativeName = Array.from(nativeName).map((part,index)=>index===0?part.toLocaleUpperCase(id):part).join('');
+  const subtags = id.split('-').slice(1);
+  const script = subtags.find(part => /^[A-Za-z]{4}$/.test(part));
+  const region = subtags.find(part => /^(?:[A-Za-z]{2}|\d{3})$/.test(part));
+  let scriptName = '', regionName = '';
+  try { if (script) scriptName = new Intl.DisplayNames(['en'], {type:'script'}).of(script) || script; } catch {}
+  try { if (region) regionName = new Intl.DisplayNames(['en'], {type:'region'}).of(region) || region; } catch {}
+  const meta = isBehdini ? '' : [scriptName && `${scriptName} script`, regionName].filter(Boolean).join(' · ');
+  const aliases = isBehdini ? [behtini, 'Behdînî', 'Bahdini', id] : [];
+  return {englishName, nativeName, meta, aliases};
+}
 function registeredLanguages() {
-  const records = new Map([['en', {id:'en',label:'English'}]]);
+  const records = new Map([['en', {id:'en', ...languageDetails('en')}]]);
   for (const entry of Array.isArray(state.data?.languages) ? state.data.languages : []) {
     if (!entry || typeof entry.id !== 'string' || !languageIdPattern.test(entry.id) || records.has(entry.id)) continue;
     if (!Object.hasOwn(state.data?.byLanguage ?? {}, entry.id) || !Array.isArray(languageGroup(entry.id)?.models)) continue;
-    let label = typeof entry.label === 'string' ? entry.label.trim() : '';
-    if (!label || label.length > 80) {
-      try { label = new Intl.DisplayNames([entry.id], {type:'language'}).of(entry.id); label = label[0].toLocaleUpperCase(entry.id) + label.slice(1); }
-      catch { label = languageLabel(entry.id); }
-    }
-    records.set(entry.id, {id:entry.id,label});
+    let registryLabel = typeof entry.label === 'string' ? entry.label.trim() : '';
+    if (registryLabel.length > 80) registryLabel = '';
+    const details = languageDetails(entry.id, registryLabel);
+    records.set(entry.id, {id:entry.id, ...details});
   }
-  return [...records.values()];
+  return [...records.values()].map(record => ({...record, count:languageGroup(record.id)?.models?.filter(hasEligibleResult).length ?? 0}))
+    .sort((a,b) => Number(b.count > 0) - Number(a.count > 0) || a.englishName.localeCompare(b.englishName, 'en') || a.id.localeCompare(b.id));
 }
 function normalizeLanguage(id) {
   return registeredLanguages().some(entry=>entry.id===id) ? id : 'en';
 }
-function buildLanguageTabs() {
-  const tabs = $('.language-tabs'); tabs.replaceChildren();
-  for (const {id,label} of registeredLanguages()) {
-    const button = document.createElement('button');
-    button.id = `language-${id}`; button.type = 'button'; button.role = 'tab';
-    button.dataset.language = id; button.lang = id; button.tabIndex = -1;
-    button.setAttribute('aria-selected','false'); button.setAttribute('aria-controls','results');
-    button.append(document.createTextNode(`${label} `));
-    const count = document.createElement('span'); count.dataset.languageCount = id;
-    count.setAttribute('aria-hidden','true'); count.textContent = '—';
-    button.append(count); tabs.append(button);
+function stateUrl(language = state.language, {removeModel = false} = {}) {
+  const url = new URL(location.href);
+  const values = {lang:language === 'en' ? '' : language, q:$('#search').value,
+    view:state.view === 'table' ? '' : state.view, metric:state.metric === 'generation' ? '' : state.metric,
+    sort:state.sort === 'cpu' ? '' : state.sort, direction:state.direction === 1 ? '' : 'desc',
+    license:$('#license').value === 'all' ? '' : $('#license').value};
+  url.searchParams.delete('cohort');
+  if (removeModel) url.searchParams.delete('model');
+  for (const id of capabilityFilters) values[filterParams[id]] = $(`#${id}`).value === 'all' ? '' : $(`#${id}`).value;
+  const targetModels = language === 'en' ? state.data?.models ?? [] : state.data?.byLanguage?.[language]?.models ?? [];
+  if (values.supports && values.supports !== 'unlisted' && !targetModels.some(model=>supportCodes(model).includes(values.supports))) values.supports = '';
+  if (values.license && !targetModels.some(model=>model.license?.model === values.license)) values.license = '';
+  for (const [key, value] of Object.entries(values)) {
+    if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
+  }
+  return url;
+}
+function languageHref(language) {
+  const url = stateUrl(language, {removeModel:true});
+  return url.pathname + url.search + url.hash;
+}
+function buildLanguagePicker() {
+  const measured = $('#measured-languages'), pending = $('#pending-languages');
+  measured.replaceChildren(); pending.replaceChildren();
+  for (const language of registeredLanguages()) {
+    const li = document.createElement('li'), link = document.createElement('a');
+    link.id = `language-${language.id}`; link.href = languageHref(language.id); link.dataset.language = language.id;
+    link.className = 'language-option';
+    if (language.id === state.language) link.setAttribute('aria-current','page');
+    const names = document.createElement('span'); names.className = 'language-option-names';
+    if (language.nativeName) {
+      const native = document.createElement('span'); native.className = 'language-option-native';
+      const nativeBdi = document.createElement('bdi'); nativeBdi.lang = language.id; nativeBdi.dir = 'auto'; nativeBdi.textContent = language.nativeName;
+      native.append(nativeBdi); names.append(native);
+    }
+    if (!language.nativeName || language.englishName !== language.nativeName) {
+      const english = document.createElement('span'); english.className = 'language-option-english';
+      english.textContent = language.englishName; names.append(english);
+    }
+    if (language.meta) { const meta = document.createElement('span'); meta.className = 'language-option-meta'; meta.textContent = language.meta; names.append(meta); }
+    const tag = document.createElement('span'); tag.className = 'language-option-tag'; tag.textContent = language.id;
+    names.append(tag);
+    const count = document.createElement('span'); count.className = 'language-option-count'; count.dataset.languageCount = language.id;
+    count.textContent = language.count > 0 ? `${language.count} ${language.count === 1 ? 'model' : 'models'}` : 'Awaiting results';
+    link.append(names, count);
+    link.dataset.search = foldSearch([language.id, language.englishName, language.nativeName, language.meta, ...language.aliases].join(' '));
+    li.append(link); (language.count > 0 ? measured : pending).append(li);
+  }
+}
+function filterLanguagePicker() {
+  const query = foldSearch($('#language-search').value.trim());
+  let visible = 0;
+  for (const link of $$('#language-options [data-language]')) {
+    const show = !query || link.dataset.search.includes(query);
+    link.closest('li').hidden = !show; if (show) visible++;
+  }
+  for (const group of $$('.language-option-group')) group.hidden = !group.querySelector('li:not([hidden])');
+  $('#language-no-match').hidden = visible > 0;
+}
+function renderLanguageChoice() {
+  const selected = registeredLanguages().find(entry => entry.id === state.language) ?? registeredLanguages()[0];
+  const current = $('#current-language'); current.replaceChildren();
+  if (selected.nativeName) {
+    const native = document.createElement('bdi'); native.lang = selected.id; native.dir = 'auto'; native.textContent = selected.nativeName; current.append(native);
+  } else current.textContent = selected.englishName;
+  $('#language-picker-trigger').removeAttribute('lang');
+  $('#language-picker-trigger').setAttribute('aria-label', `Benchmark language: ${selected.englishName}. Choose a benchmark language`);
+  for (const link of $$('#language-options [data-language]')) {
+    if (link.dataset.language === state.language) link.setAttribute('aria-current','page');
+    else link.removeAttribute('aria-current');
+    link.href = languageHref(link.dataset.language);
   }
 }
 function fixtureLink() {
@@ -115,17 +196,8 @@ function modelLink(id) {
   if (state.language !== 'en') url.searchParams.set('lang', state.language); else url.searchParams.delete('lang');
   return url.pathname + url.search + url.hash;
 }
-function syncUrl({ push = false } = {}) {
-  const url = new URL(location.href);
-  const values = { lang: state.language === 'en' ? '' : state.language, q: $('#search').value,
-    view: state.view === 'table' ? '' : state.view, metric: state.metric === 'generation' ? '' : state.metric,
-    sort: state.sort === 'cpu' ? '' : state.sort, direction: state.direction === 1 ? '' : 'desc',
-    license: $('#license').value === 'all' ? '' : $('#license').value };
-  url.searchParams.delete('cohort');
-  for (const id of capabilityFilters) values[filterParams[id]] = $(`#${id}`).value === 'all' ? '' : $(`#${id}`).value;
-  for (const [key, value] of Object.entries(values)) {
-    if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
-  }
+function syncUrl({ push = false, removeModel = false } = {}) {
+  const url = stateUrl(state.language, {removeModel});
   history[push ? 'pushState' : 'replaceState'](null, '', url);
 }
 function rebuildLanguageFilters({ license = 'all', supportedLanguage = 'all' } = {}) {
@@ -157,12 +229,17 @@ function stopPlayback({ restoreFocus = false } = {}) {
 }
 function setLanguage(language, { push = true } = {}) {
   language = normalizeLanguage(language);
-  if (language === state.language) return;
+  if (language === state.language) { if ($('#language-picker').open) $('#language-picker').close(); $('#language-picker-trigger').focus(); return; }
   const filters = { license: $('#license').value, supportedLanguage: $('#supported-language').value };
   if (push) syncUrl();
   stopPlayback(); dialog.close(); state.language = language;
-  rebuildLanguageFilters(filters); render();
-  if (push) syncUrl({ push: true });
+  rebuildLanguageFilters(filters); render(); renderLanguageChoice();
+  if (push) syncUrl({ push: true, removeModel: true });
+  const selected = registeredLanguages().find(entry => entry.id === state.language);
+  const count = languageGroup()?.models?.filter(hasEligibleResult).length ?? 0;
+  $('#language-announcement').textContent = `Benchmark language changed to ${selected?.englishName ?? language}. ${count} ${count === 1 ? 'model' : 'models'} have eligible results.`;
+  if ($('#language-picker').open) $('#language-picker').close();
+  $('#language-picker-trigger').focus();
 }
 function restoreLocation() {
   const url = new URL(location.href), params = url.searchParams;
@@ -183,6 +260,7 @@ function restoreLocation() {
     select.value = [...select.options].some(option=>option.value===value) ? value : 'all';
   }
   render();
+  renderLanguageChoice();
   if (params.get('model')) openDetails(params.get('model'));
 }
 let theme;
@@ -198,6 +276,7 @@ setTheme(theme);
 $('#theme-toggle').addEventListener('click', () => setTheme(theme === 'dark' ? 'light' : 'dark'));
 const audio = $('#sample-audio');
 const dialog = $('#details');
+const languageDialog = $('#language-picker');
 const filterDetails = $('#filter-details');
 const mobileFilterViewport = matchMedia('(max-width:700px)');
 const syncFilterDetails = () => { filterDetails.open = !mobileFilterViewport.matches; };
@@ -374,13 +453,7 @@ function renderCharts(models) {
 function render() {
   if (!state.data) return;
   const models = visibleModels();
-  $$('[data-language]').forEach(button => {
-    const selected = button.dataset.language === state.language;
-    button.setAttribute('aria-selected', String(selected)); button.tabIndex = selected ? 0 : -1;
-    const dataset = languageGroup(button.dataset.language)?.models ?? [];
-    button.querySelector('[data-language-count]').textContent = dataset.filter(hasEligibleResult).length;
-  });
-  $('#results').setAttribute('aria-labelledby', `language-${state.language}`);
+  renderLanguageChoice();
   $('#fixture-language').textContent = fixtureDescription();
   $('#method-fixture').textContent = fixtureDescription();
   const fixtureUrl = fixtureLink(), fixtureAnchor = $('#fixture-link');
@@ -494,8 +567,11 @@ $('#close-player').addEventListener('click', () => stopPlayback({restoreFocus: t
 $('#close-details').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
 document.addEventListener('click', event => {
-  const language = event.target.closest('[data-language]');
-  if (language) { setLanguage(language.dataset.language); return; }
+  const language = event.target.closest('a[data-language]');
+  if (language) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault(); setLanguage(language.dataset.language); return;
+  }
   const clearModelScopeButton = event.target.closest('[data-clear-model-scope]');
   if (clearModelScopeButton) { clearModelScope(); render(); syncUrl(); return; }
   const detail = event.target.closest('[data-detail]'); if (detail) openDetails(detail.dataset.detail);
@@ -510,17 +586,28 @@ for (const id of capabilityFilters) $(`#${id}`).addEventListener('change',()=>{ 
 $('#sort-select').addEventListener('change', () => {state.sort = $('#sort-select').value; state.direction = 1; render(); syncUrl();});
 $('#reset').addEventListener('click', reset);
 $('#clear-filters').addEventListener('click', clearNoResults);
-$('.language-tabs').addEventListener('keydown', event => {
-  const tabs = $$('[data-language]'), index = tabs.indexOf(event.target);
-  if (index < 0 || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-  event.preventDefault();
-  const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-  tabs[next].focus(); setLanguage(tabs[next].dataset.language);
+$('#language-picker-trigger').addEventListener('click', () => {
+  if (languageDialog.open) return;
+  renderLanguageChoice(); $('#language-search').value = ''; filterLanguagePicker(); languageDialog.showModal();
+  if (matchMedia('(pointer: fine)').matches) $('#language-search').focus();
+  else $('#close-language-picker').focus();
+});
+$('#close-language-picker').addEventListener('click', () => languageDialog.close());
+$('#language-search').addEventListener('input', filterLanguagePicker);
+$('#language-search').addEventListener('keydown', event => {
+  if (event.key === 'Escape' && languageDialog.open) { event.preventDefault(); languageDialog.close(); }
+});
+languageDialog.addEventListener('close', () => $('#language-picker-trigger').focus());
+languageDialog.addEventListener('click', event => {
+  if (event.target === languageDialog) {
+    const box = languageDialog.getBoundingClientRect();
+    if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) languageDialog.close();
+  }
 });
 window.addEventListener('popstate', () => { if (state.data) restoreLocation(); });
 try {
   const response = await fetch(`./assets/data.json?v=${siteVersion}`); if (!response.ok) throw new Error(`Data HTTP ${response.status}`);
   state.data = await response.json();
   if (state.data.schemaVersion !== 1 || !Array.isArray(state.data.models)) throw new Error('Unsupported dashboard data');
-  buildLanguageTabs(); restoreLocation();
+  buildLanguagePicker(); restoreLocation();
 } catch (error) { $('#load-error').hidden = false; $('#table-view').hidden = true; $('#updated').textContent = 'Results unavailable'; console.error('Dashboard failed:', error); }
