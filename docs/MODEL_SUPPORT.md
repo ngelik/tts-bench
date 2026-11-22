@@ -263,6 +263,12 @@ The base cookbook lists 117 named voices. Fusor's pinned WASM runtime enumerates
 
 The pinned checkpoint has two built-in American English voices, F2 and M2, and supports one language. The benchmark uses F2 (speaker ID 0). [Model card](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md) · [Export configuration](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json)
 
+<a id="apptor-tiny-tts"></a>
+
+### Apptor Tiny TTS 4.5M (Standard German)
+
+The pinned Standard German checkpoint provides F2 and M2 at 24 kHz. The upstream 4.5M figure refers to the acoustic checkpoint. The browser pipeline also runs the German G2P graph and the author's INT8 Vocos ONNX second stage. The benchmark fixes M2, speed 1.0, neutral pitch controls, and the pinned neutral browser frontend and exception data. A separate probe measures GPU dispatch during the combined speech and vocoder stages after text preparation. WebGPU may use WASM fallback. [Pinned model card and assets](https://huggingface.co/apptor/apptor-tiny-tts/tree/0b6962273a1d6618f250cdbd621b56ba04b62cef) · [Pinned browser source](https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web) · [Frontend and license notice](../web/apptor-de/NOTICE.md)
+
 <a id="sopro-v2-turbo"></a>
 
 ### Sopro v2 Turbo

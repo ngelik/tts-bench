@@ -61,10 +61,12 @@
     }
   ],
   "modelDefaults": {
-    "ua-serhiy-0p58m": "uk-article-v1"
+    "ua-serhiy-0p58m": "uk-article-v1",
+    "apptor-tiny-tts": "de-article-v1"
   },
   "modelRequiredFixtures": {
-    "ua-serhiy-0p58m": "uk-article-v1"
+    "ua-serhiy-0p58m": "uk-article-v1",
+    "apptor-tiny-tts": "de-article-v1"
   },
   "modelFrontendLanguages": {
     "ua-serhiy-0p58m": [
@@ -74,6 +76,9 @@
       "en", "ko", "ja", "ar", "bg", "cs", "da", "de", "el", "es", "et", "fi",
       "fr", "hi", "hr", "hu", "id", "it", "lt", "lv", "nl", "pl", "pt",
       "ro", "ru", "sk", "sl", "sv", "tr", "uk", "vi"
+    ],
+    "apptor-tiny-tts": [
+      "de"
     ]
   }
 }

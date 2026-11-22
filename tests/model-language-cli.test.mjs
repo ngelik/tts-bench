@@ -16,4 +16,7 @@ test('model discovery filters by executable browser language, preserving locale 
   assert.ok(!french.some(model => model.id === 'ua-serhiy-0p58m'));
   assert.ok(modelsFor('uk').some(model => model.id === 'ua-serhiy-0p58m'));
   assert.ok(!modelsFor('fr-CA').some(model => model.id === 'supertonic-3'));
+  const german = modelsFor('de');
+  assert.ok(german.some(model => model.id === 'apptor-tiny-tts' && model.frontendLanguages.includes('de')));
+  assert.ok(!modelsFor('en').some(model => model.id === 'apptor-tiny-tts'));
 });
