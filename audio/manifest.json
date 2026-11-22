@@ -2,6 +2,66 @@
   "schemaVersion": 1,
   "entries": [
     {
+      "resultId": "2026-11-22t05-39-38-969z-apptor-tiny-tts-at-cpu-warm-106ec536",
+      "model": "apptor-tiny-tts-at",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "de-AT",
+      "attribution": "Apptor Tiny TTS Austrian Standard German M2 with accent set to 1.0. Synthetic voice derived from Qwen3-TTS, with accent conditioning trained on Common Voice Austrian German recordings. The checkpoint uses the Tiny Voca architecture and Apache-2.0 terms. Vocos is MIT. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913",
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/blob/e28eb444250b4d06162e6ba8e5090c4284345913/README.md",
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web",
+        "https://github.com/gemelo-ai/vocos/tree/eb39abfc42c1dee4854d9b10d44dd7d4fd3b0e53"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t05-39-38-969z-apptor-tiny-tts-at-cpu-warm-106ec536--apptor-tiny-tts-at--cpu.wav",
+        "sha256": "c296e02ff1287a148876e248343cc82b61e64c2152d5936043718ca4d55d110c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "3cd2621e3ce3b8f93bd95c508c5c7fab769916b1eb27591d9bf6f15700bc2ce1",
+        "bytes": 69768524
+      }
+    },
+    {
+      "resultId": "2026-11-22t05-54-50-412z-apptor-tiny-tts-at-webgpu-warm-6c488d22",
+      "model": "apptor-tiny-tts-at",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "de-AT",
+      "attribution": "Apptor Tiny TTS Austrian Standard German M2 with accent set to 1.0. Synthetic voice derived from Qwen3-TTS, with accent conditioning trained on Common Voice Austrian German recordings. The checkpoint uses the Tiny Voca architecture and Apache-2.0 terms. Vocos is MIT. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913",
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/blob/e28eb444250b4d06162e6ba8e5090c4284345913/README.md",
+        "https://huggingface.co/apptor/apptor-tiny-tts-at/tree/e28eb444250b4d06162e6ba8e5090c4284345913/web",
+        "https://github.com/gemelo-ai/vocos/tree/eb39abfc42c1dee4854d9b10d44dd7d4fd3b0e53"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t05-54-50-412z-apptor-tiny-tts-at-webgpu-warm-6c488d22--apptor-tiny-tts-at--webgpu.wav",
+        "sha256": "b75a3f3af807d0378d88cd5e11619a6f2e5adf191f52096718cf2c0c36155822",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "c2feea03d103190920faae4410b4a54d96e25504e58b572e4caa9d1dc11ba080",
+        "bytes": 69765164
+      }
+    },
+    {
       "resultId": "2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d",
       "model": "apptor-tiny-tts",
       "backend": "cpu",
