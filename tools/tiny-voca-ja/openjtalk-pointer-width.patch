@@ -1,0 +1,18 @@
+--- a/pyopenjtalk/openjtalk.pyx
++++ b/pyopenjtalk/openjtalk.pyx
+@@ -1718,11 +1718,11 @@
+                 expanded_features.append(mecab_feature)
+         new_size = len(expanded_features)
+         byte_morphs = [m.encode("utf-8") + b"\x00" for m in expanded_features]
+-        int_morphs = np.zeros(len(byte_morphs), dtype=np.uint64)
++        int_morphs = np.zeros(len(byte_morphs), dtype=np.uintp)
+         for i in range(new_size):
+-            int_morphs[i] = <uint64_t>(<char *>byte_morphs[i])
+-
+-        cdef uint64_t[:] cint_morphs = int_morphs
++            int_morphs[i] = <uintptr_t>(<char *>byte_morphs[i])
++
++        cdef uintptr_t[:] cint_morphs = int_morphs
+         cdef char** new_mecab_morphs = <char**>&cint_morphs[0]
+         try:
+             with nogil:
