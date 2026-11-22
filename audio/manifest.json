@@ -3337,6 +3337,68 @@
       }
     },
     {
+      "resultId": "2026-11-22t21-54-12-758z-tiny-voca-es-cpu-warm-b0e974be",
+      "model": "tiny-voca-es",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "es-ES",
+      "attribution": "AI-generated Castilian Spanish benchmark narration in tiny-voca-es’s synthetic F2 voice. Marcos (marcosmaceo) adapted Muhammed Nazeem’s tiny-voca and trained the Castilian voices on synthetic Qwen3-TTS VoiceDesign speech. Apache-2.0 weights and code.",
+      "modelTerms": "Apache-2.0 for pinned Spanish code and checkpoint; dataset is separate and not bundled.",
+      "sourceUrls": [
+        "https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84",
+        "https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz",
+        "https://huggingface.co/datasets/marcosmaceo/tiny-voca-es"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t21-54-12-758z-tiny-voca-es-cpu-warm-b0e974be--tiny-voca-es--cpu.wav",
+        "sha256": "dc2ef0eac4c96f7fb6ba1049090dc0183c439128bcd352aebb8109009cd5e790",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "7b1ad51925a45511742c1261863b56eed8f1ff04fb0dd579fcf9f75a31c1c57f",
+        "bytes": 78250540
+      }
+    },
+    {
+      "resultId": "2026-11-22t22-00-15-331z-tiny-voca-es-webgpu-warm-4e0436e6",
+      "model": "tiny-voca-es",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "es-ES",
+      "attribution": "AI-generated Castilian Spanish benchmark narration in tiny-voca-es’s synthetic F2 voice. Marcos (marcosmaceo) adapted Muhammed Nazeem’s tiny-voca and trained the Castilian voices on synthetic Qwen3-TTS VoiceDesign speech. Apache-2.0 weights and code.",
+      "modelTerms": "Apache-2.0 for pinned Spanish code and checkpoint; dataset is separate and not bundled.",
+      "sourceUrls": [
+        "https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84",
+        "https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz",
+        "https://huggingface.co/datasets/marcosmaceo/tiny-voca-es"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t22-00-15-331z-tiny-voca-es-webgpu-warm-4e0436e6--tiny-voca-es--webgpu.wav",
+        "sha256": "7c7b35dc6ddcc3644ea515249d955cb92a6fc1000aa86c35a26a29fe429f1fe4",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "7853516db08ae73d455ea061f35109564c67117a7f913b010a02832ffec3bfaa",
+        "bytes": 78250540
+      }
+    },
+    {
       "resultId": "2026-11-22t19-55-14-092z-tiny-voca-gr-cpu-warm-ed6d78b7",
       "model": "tiny-voca-gr",
       "backend": "cpu",

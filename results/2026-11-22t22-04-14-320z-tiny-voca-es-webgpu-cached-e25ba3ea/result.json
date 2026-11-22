@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t22-04-14-320z-tiny-voca-es-webgpu-cached-e25ba3ea",
+  "createdAt": "2026-11-22T22:04:55.898Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "es-es-article-v1",
+    "language": "es-ES",
+    "sha256": "8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e",
+    "characters": 22965,
+    "unicodeCodePoints": 22965,
+    "utf8Bytes": 23591,
+    "chunks": 105,
+    "source": {
+      "type": "translation",
+      "description": "Complete Spanish (Spain) translation of the English benchmark article by GPT-6 Luna. Codex independently reviewed all 27 source paragraphs and refined terminology, timing descriptions, dialogue and wording. Decimal commas and local clock notation preserve the original values. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "fafe7d9cbe032012ed7702f683d721a6c6b7c46c",
+    "dirty": false,
+    "manifestSha256": "22a759d79dc95bc9932abb540f46a370f171904c88049db6142b34547d847498"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-es-onnx",
+      "sha256": "b4a9ca3becb9c7e6138c96ca8f7dceae760ccccf9305fbea9a6990667ff23a6c",
+      "bytes": 21383998
+    },
+    {
+      "id": "tiny-voca-es-json",
+      "sha256": "bec46d85ccf80f746f7052c8532c9e74d04c00763831620c47f5442b52afc05f",
+      "bytes": 920
+    },
+    {
+      "id": "tiny-voca-es-frontend",
+      "sha256": "ba9b1ff1608e096d91c8ad2eee39e70a00559f629c29a945a4d01989c4b34c0a",
+      "bytes": 14776
+    },
+    {
+      "id": "tiny-voca-es-sentences",
+      "sha256": "2786f1d142d145ccd3cf62c3c6756a75f1a0010bd7ecffa8a08af65e05324776",
+      "bytes": 3037
+    },
+    {
+      "id": "tiny-voca-es-espeak-js",
+      "sha256": "55649396d1c62b9b3104b9bec9276bb7d7b9fa3fafc268bf2970380a3170e129",
+      "bytes": 4317
+    },
+    {
+      "id": "tiny-voca-es-espeak-core-mjs",
+      "sha256": "1ae24e0310d577f31416f3113c8b3c6846a13c1f7587e08f7085dfb8ae8d7260",
+      "bytes": 64453
+    },
+    {
+      "id": "tiny-voca-es-espeak-core-wasm",
+      "sha256": "388303d255bd1191ed2c0b606f0ed673c051eccfb6e37c2b8d29941d3f65bfda",
+      "bytes": 361806
+    },
+    {
+      "id": "tiny-voca-es-espeak-data-pack",
+      "sha256": "0b7a4de9ff9b50b4d68aa7c555f0f45b55ae084b3e59018825d4fb4a039e6842",
+      "bytes": 797905
+    },
+    {
+      "id": "tiny-voca-es-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-es-model-citation",
+      "sha256": "c7c8b556a126f5815d39d302631d5566480e3165a81b925723815588fbc82cde",
+      "bytes": 357
+    },
+    {
+      "id": "tiny-voca-es-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "tiny-voca-es-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "1cbcba8f2c769c1eecbab66a1b1e55ef11704515bf4306373e3db3c37cf6dcd8",
+      "bytes": 44677
+    },
+    {
+      "id": "tiny-voca-es-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "b45970d0632383a057c27ca5b660b216f8e00c17cf8db9f6207b5e4abc839368",
+      "bytes": 21872216
+    },
+    {
+      "id": "tiny-voca-es-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "30dd851d9c00622940500f71ddd2ff8820c5cb65270816080175b958705385a8",
+      "bytes": 20856
+    },
+    {
+      "id": "tiny-voca-es-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "71aef04959c5c1b6de461b6538e2058e306610034a85aad2742d0c7fd4533fe4",
+      "bytes": 11210254
+    },
+    {
+      "id": "tiny-voca-es-ort-ort-wasm-min-mjs",
+      "sha256": "6ef726f355b791129f7ddf3f62e7877a16b9b777abe87004b8ab306e6b9cf265",
+      "bytes": 48259
+    },
+    {
+      "id": "tiny-voca-es-ort-ort-webgpu-min-mjs",
+      "sha256": "e131e81c9324807e1e6f9103e8f8e936112827dcc9993cde9407a333b1f07ae0",
+      "bytes": 357582
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-es",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "es-ES"
+        ],
+        "scope": "Pinned marcosmaceo/tiny-voca-es Spanish checkpoint only. Two fixed synthetic Castilian voices, F2 and M2, at 24 kHz mono; benchmark default is F2/index 0. This browser profile exposes es-ES only. The upstream native English development route requires a separate English checkpoint and is not a voice in these Spanish weights.",
+        "sources": [
+          "https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84",
+          "https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec",
+          "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz",
+          "https://huggingface.co/datasets/marcosmaceo/tiny-voca-es"
+        ],
+        "notes": "The checkpoint contains 4,534,411 publisher-reported parameters. The full es-es-article-v1 native/browser frontend audit matches exactly: 105 spans, 334 utterances, maximum 180 tokens, zero unknown phones; audit is smoke-only. es-AR/es-CU are unvalidated rule-based transforms and are not exposed. The graph has no seed input and generates waveform noise internally. English requires a separate upstream English checkpoint. Model/code terms do not grant blanket rights to generated recordings."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F2",
+      "precision": "FP32 ONNX export of the released Spanish checkpoint",
+      "settings": {
+        "modelId": "marcosmaceo/tiny-voca-es",
+        "modelRevision": "9898eaef9b245d7a5240156eed919ee1bd2a9b84",
+        "sourceId": "stdevMac/tiny-voca",
+        "sourceRevision": "a4bf2bd979fc40b1bd7e34e13c0164db627d14ec",
+        "fixtureId": "es-es-article-v1",
+        "fixtureSha256": "8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e",
+        "language": "es-ES",
+        "locale": "es-ES",
+        "voice": "F2",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released Spanish checkpoint",
+        "frontend": "Stock site/frontend.js and site/sentences.js at a4bf2bd979fc40b1bd7e34e13c0164db627d14ec; eSpeak NG 1.52.0 voice es",
+        "frontendFingerprint": "54572700c27c1563f4a58567cd3ec1b8b26e14b77ec670bf912b612b9e7623fa",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.22.0",
+          "espeakNg": "1.52.0"
+        },
+        "runtimePackageIntegrity": "sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "noiseAbove": [
+          2,
+          33
+        ],
+        "waveform": "Released Spanish FP32 ONNX graph; unseeded waveform noise. Concatenate source-span pieces without inserted audio, then apply one whole-span peak cap at 0.99.",
+        "unknownPhonePolicy": "Keep the released 61-symbol frontend output and preserve any <unk> tokens; smoke audit records the exact fixture oracle."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2646,
+        "description": "Observed 2646 WebGPU compute dispatches from the pinned graph; WASM fallback remains available."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 33458.4399998188,
+          "samples": 39125248,
+          "sampleRate": 24000,
+          "pcmSha256": "9b73bc175b1450314e4f67117b6748c3c2793c13e83b27808a97b81df9ceae30",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 170.9599997997284,
+            "firstSourceChunkCompletedMs": 438.4799997806549,
+            "audioSeconds": 1630.2186666666666,
+            "realTimeFactor": 0.02052389699857369,
+            "minSamplesPerChunk": 89344,
+            "maxSamplesPerChunk": 478976,
+            "articleCallPeakRssBytes": 2173796352,
+            "generationMeanRssBytes": 1682823975,
+            "generationRssSampleCount": 66,
+            "loadMs": 588.6297500000001,
+            "controllerTrialElapsedMs": 38860.804417,
+            "downloadBytes": 57783,
+            "idealDownloadSecondsAt1Mbps": 0.462264
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795385057917.615,
+            "finalPcmAtEpochMs": 1795385091376.055,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795385058468,
+                1476476928
+              ],
+              [
+                1795385058968,
+                1483980800
+              ],
+              [
+                1795385059465,
+                1494876160
+              ],
+              [
+                1795385059965,
+                1538342912
+              ],
+              [
+                1795385060466,
+                1545043968
+              ],
+              [
+                1795385060971,
+                1548713984
+              ],
+              [
+                1795385061475,
+                1558511616
+              ],
+              [
+                1795385061975,
+                1564426240
+              ],
+              [
+                1795385062473,
+                1574092800
+              ],
+              [
+                1795385062977,
+                1578467328
+              ],
+              [
+                1795385063476,
+                1580040192
+              ],
+              [
+                1795385063980,
+                1582940160
+              ],
+              [
+                1795385064483,
+                1589854208
+              ],
+              [
+                1795385064982,
+                1592672256
+              ],
+              [
+                1795385065483,
+                1593901056
+              ],
+              [
+                1795385065987,
+                1597341696
+              ],
+              [
+                1795385066489,
+                1600618496
+              ],
+              [
+                1795385066989,
+                1602076672
+              ],
+              [
+                1795385067488,
+                1615069184
+              ],
+              [
+                1795385067989,
+                1607696384
+              ],
+              [
+                1795385068493,
+                1610366976
+              ],
+              [
+                1795385068997,
+                1625178112
+              ],
+              [
+                1795385069495,
+                1667842048
+              ],
+              [
+                1795385069999,
+                1679605760
+              ],
+              [
+                1795385070501,
+                1675362304
+              ],
+              [
+                1795385071006,
+                1679015936
+              ],
+              [
+                1795385071506,
+                1680211968
+              ],
+              [
+                1795385072006,
+                1685766144
+              ],
+              [
+                1795385072506,
+                1687142400
+              ],
+              [
+                1795385073016,
+                1690157056
+              ],
+              [
+                1795385073510,
+                1694449664
+              ],
+              [
+                1795385074010,
+                1696022528
+              ],
+              [
+                1795385074514,
+                1698709504
+              ],
+              [
+                1795385075016,
+                1700282368
+              ],
+              [
+                1795385075518,
+                1703444480
+              ],
+              [
+                1795385076020,
+                1707278336
+              ],
+              [
+                1795385076522,
+                1715978240
+              ],
+              [
+                1795385077022,
+                1713078272
+              ],
+              [
+                1795385077522,
+                1714438144
+              ],
+              [
+                1795385078029,
+                1718697984
+              ],
+              [
+                1795385078530,
+                1721483264
+              ],
+              [
+                1795385079031,
+                1723039744
+              ],
+              [
+                1795385079536,
+                1726169088
+              ],
+              [
+                1795385080035,
+                1728544768
+              ],
+              [
+                1795385080539,
+                1731493888
+              ],
+              [
+                1795385081034,
+                1733820416
+              ],
+              [
+                1795385081535,
+                1736376320
+              ],
+              [
+                1795385082036,
+                1737457664
+              ],
+              [
+                1795385082537,
+                1740226560
+              ],
+              [
+                1795385083040,
+                1746223104
+              ],
+              [
+                1795385083538,
+                1766719488
+              ],
+              [
+                1795385084041,
+                1769521152
+              ],
+              [
+                1795385084544,
+                1770717184
+              ],
+              [
+                1795385085044,
+                1778024448
+              ],
+              [
+                1795385085544,
+                1779548160
+              ],
+              [
+                1795385086053,
+                1782595584
+              ],
+              [
+                1795385086553,
+                1785577472
+              ],
+              [
+                1795385087050,
+                1791754240
+              ],
+              [
+                1795385087554,
+                1795211264
+              ],
+              [
+                1795385088056,
+                1798012928
+              ],
+              [
+                1795385088562,
+                1798553600
+              ],
+              [
+                1795385089055,
+                1801011200
+              ],
+              [
+                1795385089559,
+                1815904256
+              ],
+              [
+                1795385090062,
+                1810546688
+              ],
+              [
+                1795385090562,
+                1812905984
+              ],
+              [
+                1795385091064,
+                1816772608
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "3b5a36f4ac292899b6d82098f0ff01d4ae5f36d35ff0810d88d70011c0dfa5c9",
+            "bytes": 78250540
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T21-54-12-125Z-f0ea96f38f62; cell 4/4; source fafe7d9cbe032012ed7702f683d721a6c6b7c46c; fixture es-es-article-v1 (es-ES, 22965 JavaScript characters, 105 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. tiny-voca-es released FP32 graph, default Castilian Spanish F2 voice index zero, neutral speed and pitch and completed-span peak cap 0.99. Exact released Castilian normalization, sentence segmentation and eSpeak NG 1.52.0. ORT Web 1.22.0 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
