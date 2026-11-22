@@ -34,6 +34,16 @@ export function voiceIndex(language) {
   return language === 'de' ? 0 : 32;
 }
 
+export function resolveFixtureLanguage(fixtureId, language) {
+  // The canonical English fixture's legacy receipt intentionally has no
+  // `language` field. Resolve only that exact fixture ID when it is absent.
+  const resolved = language === undefined && fixtureId === 'english-20k-v1' ? 'en' : language;
+  if (!Object.hasOwn(fixtureOracle, fixtureId) || resolved !== fixtureOracle[fixtureId].language) {
+    throw new Error('Tiny Voca DE/EN requires the fixed English or German fixture route');
+  }
+  return resolved;
+}
+
 export function validatePlan(plan) {
   if (!Array.isArray(plan?.ids) || !Array.isArray(plan?.stress) || plan.ids.length !== plan.stress.length || !plan.ids.length) {
     throw new Error('Official Voca64 frontend returned an invalid token/stress plan');
