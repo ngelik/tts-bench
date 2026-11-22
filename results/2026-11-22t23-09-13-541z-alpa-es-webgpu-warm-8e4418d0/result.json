@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t23-09-13-541z-alpa-es-webgpu-warm-8e4418d0",
+  "createdAt": "2026-11-22T23:10:24.011Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "es-ar-article-v1",
+    "language": "es-AR",
+    "sha256": "cfcf5a8095bab6894cc93faad6d3a01f2bfbf731144f54a66b61309fb507bcb4",
+    "characters": 22749,
+    "unicodeCodePoints": 22749,
+    "utf8Bytes": 23339,
+    "chunks": 104,
+    "source": {
+      "type": "translation",
+      "description": "Complete Rioplatense Spanish translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 source paragraphs and checked the bell directions, evening times, objects, dialogue and numeric values. The text uses Argentine vocabulary and voseo, and preserves digit-form values while localizing decimal punctuation. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "bef91023f0a625c03eecc7d0dcf1391f012d535a",
+    "dirty": false,
+    "manifestSha256": "18b2f17278739bde9b750ad1d7bfbe033ac5f27b6df3cdb53180c1789945541a"
+  },
+  "assets": [
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:alpa-es:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "alpa-es-source-alpa-es-pt",
+      "sha256": "1cd61eb8ab67406233d982fc291e42225d7b0e7e98ef8e304ba834630c6ac0a0",
+      "bytes": 18175621
+    },
+    {
+      "id": "alpa-es-source-readme-md",
+      "sha256": "c3c9e7a4ba7a52db843a0374a2a71fa7a656a4065d94774c106b2e5999ba8545",
+      "bytes": 4617
+    },
+    {
+      "id": "alpa-es-source-third-party-notices-md",
+      "sha256": "453fb323622991baac741dff62543f1526895c5da8becc6dff30d911f6203af6",
+      "bytes": 1522
+    },
+    {
+      "id": "alpa-es-source-alpa-init-py",
+      "sha256": "687861b5be5f016db072e086860c02d7746b5a01bae00cbf3d2a69e9873768ee",
+      "bytes": 74
+    },
+    {
+      "id": "alpa-es-source-alpa-config-py",
+      "sha256": "327db6394ddada7edb56f0cb9f98408da6af27ab322a4d05e403c23a22cf29d2",
+      "bytes": 3801
+    },
+    {
+      "id": "alpa-es-source-alpa-export-py",
+      "sha256": "556f93eca77c37cd829f30cb7b02dacb3f8cb02fe95af770b3f05d82f72dbfbf",
+      "bytes": 19348
+    },
+    {
+      "id": "alpa-es-source-alpa-infer-py",
+      "sha256": "c0799597558a5fb3c42cd40e7f6a1a35063fc68c0ec0c3f705bc31318aa31685",
+      "bytes": 3940
+    },
+    {
+      "id": "alpa-es-source-alpa-model-py",
+      "sha256": "6f920edcc89c964b7349c86cdf9671710cef487739fe1ed700db18eebaf51f07",
+      "bytes": 32724
+    },
+    {
+      "id": "alpa-es-source-alpa-text-py",
+      "sha256": "16957f0ba5e2b8ed9fcbc364b2d8b0d85f5df554ea52cb0cc9467488a84fdc95",
+      "bytes": 7270
+    },
+    {
+      "id": "alpa-es-browser-onnx",
+      "sha256": "f1eb7b920c06b5857e250401bbcf9ac6b88fa3337979d795c88743e7b320bb90",
+      "bytes": 22533274
+    },
+    {
+      "id": "alpa-es-browser-metadata",
+      "sha256": "65dbae4d37a341bf468b799731ebc3593b532d79e285966f3ecf3823b0367bb8",
+      "bytes": 820
+    },
+    {
+      "id": "alpa-es-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "alpa-es-notices",
+      "sha256": "453fb323622991baac741dff62543f1526895c5da8becc6dff30d911f6203af6",
+      "bytes": 1522
+    }
+  ],
+  "cells": [
+    {
+      "model": "alpa-es",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "es-AR"
+        ],
+        "scope": "Pinned FranciscoCarlosErra/alpa-es checkpoint only. Two fixed voices (female and male) trained from recorded OpenSLR 61 speech; the browser profile selects female/index 0. This profile exposes Rioplatense Spanish (es-AR) only. The released frontend retains native unknown digit groups; it does not spell them out.",
+        "sources": [
+          "https://huggingface.co/FranciscoCarlosErra/alpa-es/tree/de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+          "https://github.com/n4ze3m/tiny-voca/tree/28e0722",
+          "https://www.openslr.org/61/",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "The pinned checkpoint contains exactly 4,529,035 parameters as counted from its loaded state. All 104 registered es-ar-article-v1 source spans pass the native letter/stress frontend audit; max 218 tokens, 63 unknown digit groups across 34 spans. Smoke-only audit; no pronunciation or listening review is claimed. The graph has no seed input and generates unseeded noise/breath internally; audio is retained as raw Float32 PCM."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "female",
+      "precision": "FP32 ONNX export of the released Alpa Spanish checkpoint",
+      "settings": {
+        "modelId": "FranciscoCarlosErra/alpa-es",
+        "modelRevision": "de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+        "sourceId": "FranciscoCarlosErra/alpa-es",
+        "sourceRevision": "de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+        "fixtureId": "es-ar-article-v1",
+        "fixtureSha256": "cfcf5a8095bab6894cc93faad6d3a01f2bfbf731144f54a66b61309fb507bcb4",
+        "language": "es-AR",
+        "locale": "es-AR",
+        "voice": "female",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "step": 3000,
+        "precision": "FP32 ONNX export of the released Alpa Spanish checkpoint",
+        "frontend": "Released alpa/text.py Rioplatense Spanish frontend, exact JavaScript port",
+        "frontendFingerprint": "5f311162496ea79058767317096a7e513a5798985be491986e13f99ecbd403cb",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "waveform": "Raw Float32 PCM from the pinned ONNX graph; default Polish corrections; graph-internal unseeded noise and breath retained; no peak normalization or cross-span joining in the adapter.",
+        "polish": {
+          "pitch_smooth": 3,
+          "consonant_limit": 1000,
+          "open_limit": 4500,
+          "sharpen": 1.6,
+          "sharpen_from": 8,
+          "sharpen_to": 40,
+          "noise_cap": -15,
+          "treble": 4
+        },
+        "numericInput": "No number expansion. Within each piece, all non-letter characters are concatenated into an unknown group and recorded; when letters remain, those characters are removed before mapping (A-17 maps from A). A numeric-only piece emits <unk>."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 843,
+        "description": "Observed 843 WebGPU compute dispatches from the pinned Alpa FP32 graph. WASM remains available for unsupported operators."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 15372.390000104904,
+          "samples": 34000384,
+          "sampleRate": 24000,
+          "pcmSha256": "200973bec641936241532f05fc881453f404d29e49173e0dc5559e96c1317df9",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 104,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 214.15499997138977,
+            "firstSourceChunkCompletedMs": 214.27500009536743,
+            "audioSeconds": 1416.6826666666666,
+            "realTimeFactor": 0.010850976271400869,
+            "minSamplesPerChunk": 157184,
+            "maxSamplesPerChunk": 353536
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 15299.52999997139,
+          "samples": 34000384,
+          "sampleRate": 24000,
+          "pcmSha256": "768c3ab725ca44e8d3af82a5c417b774a63a034b9137827df2434985a1f76851",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 104,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 154.5849997997284,
+            "firstSourceChunkCompletedMs": 154.66999983787537,
+            "audioSeconds": 1416.6826666666666,
+            "realTimeFactor": 0.010799546263927883,
+            "minSamplesPerChunk": 157184,
+            "maxSamplesPerChunk": 353536
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 15216.384999990463,
+          "samples": 34000384,
+          "sampleRate": 24000,
+          "pcmSha256": "4025c1c55b1c02770aa96ffdc64c5f01e93cc8e55338f6df3c65580ad671d1eb",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 104,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 146.7099997997284,
+            "firstSourceChunkCompletedMs": 146.7699999809265,
+            "audioSeconds": 1416.6826666666666,
+            "realTimeFactor": 0.010740856338556976,
+            "minSamplesPerChunk": 157184,
+            "maxSamplesPerChunk": 353536
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 15249.400000095367,
+          "samples": 34000384,
+          "sampleRate": 24000,
+          "pcmSha256": "0313356918010f2b43bc1e059f26be5e7f36b80d774a6ebb82f1d0f937787fdc",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 104,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 147.15000009536743,
+            "firstSourceChunkCompletedMs": 147.22500014305115,
+            "audioSeconds": 1416.6826666666666,
+            "realTimeFactor": 0.01076416078131026,
+            "minSamplesPerChunk": 157184,
+            "maxSamplesPerChunk": 353536
+          },
+          "audio": {
+            "sha256": "a8851301d3c01723de68e5c2a3ae6a9eb207d6d1536de5c3e79a9a288289dfb1",
+            "bytes": 68000812
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T23-02-40-563Z-443485f185ac; cell 2/4; source bef91023f0a625c03eecc7d0dcf1391f012d535a; fixture es-ar-article-v1 (es-AR, 22749 JavaScript characters, 104 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Exact approved Alpa-es Polish FP32 ONNX export, female index zero at neutral speed and pitch. Released Rioplatense letter and vowel weight frontend, one model utterance per fixed span. ORT Web 1.31.1 CPU/WASM single thread or verified Apple hardware WebGPU+WASM. Separate cached process-tree RSS."
+  ]
+}
