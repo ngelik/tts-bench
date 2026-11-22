@@ -42,6 +42,7 @@ attribution['apptor-tiny-tts-at']='Apptor Tiny TTS Austrian Standard German M2 w
 attribution['tiny-voca-de-en']='Synthetic speech generated with Fraunhofer IEM Tiny Voca DE/EN Voca64. The German and English presets are fictional voices trained with synthetic Qwen3-TTS supervision. Apache-2.0 model. Benchmark evaluation sample.';
 attribution['tiny-voca-it']='Synthetic Italian speech from carbogninalberto/tiny-voca-it v0.3.0 in the Lorenzo (EM4) preset, a Qwen3-TTS VoiceDesign voice. Apache-2.0 model. Benchmark evaluation sample.';
 attribution['vocina-it']='Synthetic Italian speech from OfficinePixel Vocina v1.0 in the I1 (Femminile) preset, designed with Qwen3-TTS VoiceDesign. Apache-2.0 model. Benchmark evaluation sample.';
+attribution['zerre-tts']='Generated Turkish speech from erkinemreta1 Zerre TTS tr-v1 INT8 in the released SES-A voice. The Apache-2.0 model credits the tiny-voca architecture. Benchmark evaluation sample.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const d=await readResult(resolve(result),{publication:true});verifySource(d,process.cwd(),sourceCache);const c=d.cells.find(c=>c.model===model&&c.backendRequested===backend&&c.status==='measured');if(!c)throw new Error('No measured source cell');
  const b=await readFile(wav),digest=sha256(b),w=wavInfo(b);const t=c.trials.find(t=>t.audio?.sha256===digest&&t.audio.bytes===b.length);if(!t||t.samples!==w.samples||t.sampleRate!==w.sampleRate)throw new Error('Full audio does not match a scored receipt');
