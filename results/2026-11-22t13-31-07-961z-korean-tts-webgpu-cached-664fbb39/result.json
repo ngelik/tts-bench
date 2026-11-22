@@ -1,0 +1,821 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t13-31-07-961z-korean-tts-webgpu-cached-664fbb39",
+  "createdAt": "2026-11-22T13:32:30.985Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple / metal-3",
+    "headless": false
+  },
+  "fixture": {
+    "id": "ko-article-v1",
+    "language": "ko",
+    "sha256": "05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528",
+    "characters": 10196,
+    "unicodeCodePoints": 10196,
+    "utf8Bytes": 24274,
+    "chunks": 47,
+    "source": {
+      "type": "translation",
+      "description": "Complete Standard Korean translation of the English benchmark fixture by GPT-6 Luna, with independent AI review of all 27 paragraphs and small evaluator edits for source fidelity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "fff67d3bc4d836adcb1e87671d8a91c18c7f886c",
+    "dirty": false,
+    "manifestSha256": "5280ea70688662b25320d0350fc28d1bfc262e08d7d818fd52c9e16805765c46"
+  },
+  "assets": [
+    {
+      "id": "korean-tts-config-json",
+      "sha256": "fc39dfd1b434f289383dbf0208a22120f214b822065813dfc67b7e52a1f1bcd5",
+      "bytes": 1663
+    },
+    {
+      "id": "korean-tts-model-onnx",
+      "sha256": "ad39049485cf43359e8b4c24d18e01eab510907befda4311e4929b00cb74a5ad",
+      "bytes": 21438737
+    },
+    {
+      "id": "korean-tts-pyfront-zip",
+      "sha256": "d794b4bbfa6c49bc3a79bedd90c906a0523856796366dd43f8acd65404d0121d",
+      "bytes": 53158
+    },
+    {
+      "id": "korean-tts-dizione-zip",
+      "sha256": "b7ee20306c944620b3f571220e56b07c61bee1004a13f726ef5c45abc21375e3",
+      "bytes": 61388
+    },
+    {
+      "id": "korean-tts-mecab-dict-json",
+      "sha256": "989c6fa778b787fd3e92be700518806ca34304acb3ff4a21e970818f35de23e1",
+      "bytes": 948560
+    },
+    {
+      "id": "korean-tts-phonemizer-align-json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "korean-tts-phonemizer-cmudict-zip",
+      "sha256": "d07cca47fd72ad32ea9d8ad1219f85301eeaf4568f8b6b73747506a71fb5afd6",
+      "bytes": 896069
+    },
+    {
+      "id": "korean-tts-phonemizer-g2p-json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "korean-tts-phonemizer-g2p-npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "korean-tts-phonemizer-homographs-json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "korean-tts-phonemizer-lexicon-tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "korean-tts-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "korean-tts-pyodide-nltk-3-8-1-py3-none-any-whl",
+      "sha256": "569d99a4a10f8497e646e0e61d3c81550a726b419bf8e0da8e1e90603439e3b7",
+      "bytes": 4739451
+    },
+    {
+      "id": "korean-tts-pyodide-numpy-1-26-4-cp312-cp312-pyodide_2024_0_wasm32-whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "korean-tts-pyodide-regex-2024-4-16-cp312-cp312-pyodide_2024_0_wasm32-whl",
+      "sha256": "a7fc7d2a10de187ae4309b5280d372b24824ff64d43712dd1372a47e7113cfed",
+      "bytes": 894030
+    },
+    {
+      "id": "korean-tts-pyodide-sqlite3-1-0-0-zip",
+      "sha256": "e05c4defc15eac256607c87c3533af267fc072f3a1749a4f6b8bfe074e1be7f6",
+      "bytes": 1454039
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "korean-tts-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    }
+  ],
+  "cells": [
+    {
+      "model": "korean-tts",
+      "support": {
+        "voiceCount": 3,
+        "bundledVoiceCount": 3,
+        "languageCount": 2,
+        "languages": [
+          "ko",
+          "en"
+        ],
+        "scope": "One pinned bilingual FP32 graph. KSS index 0 is evaluated for the Korean ko-loan frontend; Dizione F2 index 1 is evaluated for English own mode. M2 remains an upstream alternate voice.",
+        "sources": [
+          "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+          "https://huggingface.co/datasets/Bingsu/KSS_Dataset",
+          "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+          "https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+          "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca"
+        ],
+        "notes": "Only KSS/ko-article-v1 and F2/english-20k-v1 are benchmark profiles. Mixed Korean with embedded English uses the Korean loanword route. The KSS weight terms apply to both voices; noncommercial acceptance is required."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "KSS",
+      "precision": "FP32",
+      "settings": {
+        "modelId": "korean-tts",
+        "modelRevision": "c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c",
+        "graphSha256": "ad39049485cf43359e8b4c24d18e01eab510907befda4311e4929b00cb74a5ad",
+        "fixtureId": "ko-article-v1",
+        "language": "ko",
+        "locale": "ko",
+        "voice": "KSS",
+        "voiceIndex": 0,
+        "frontendMode": "ko-loan",
+        "frontendFingerprint": "3f002758c5a0b3dc5c1789d8b178112d617f3e4dc0598afb97ad385d13156c2a",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "threads": 1,
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4",
+          "python": "3.12.1",
+          "numpy": "1.26.4",
+          "nltk": "3.8.1"
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 5880,
+        "description": "Observed 5880 WebGPU dispatches in the untimed synthesis probe; unsupported operators may fall back to single-thread WASM."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 66476.9399998188,
+          "samples": 38381312,
+          "sampleRate": 24000,
+          "pcmSha256": "c3d791a0a9abe5c8fc17f705ad9a30e06e7fcb096012f90df000b6de2cf8660f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 47,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 295.8949999809265,
+            "firstSourceChunkCompletedMs": 1572.4699997901917,
+            "audioSeconds": 1599.2213333333334,
+            "realTimeFactor": 0.04156831741436174,
+            "minSamplesPerChunk": 293888,
+            "maxSamplesPerChunk": 902912,
+            "articleCallPeakRssBytes": 2290794496,
+            "generationMeanRssBytes": 1560075171,
+            "generationRssSampleCount": 132,
+            "loadMs": 3829.499915999999,
+            "controllerTrialElapsedMs": 75114.59420800001,
+            "downloadBytes": 42190,
+            "idealDownloadSecondsAt1Mbps": 0.33752
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795354279808.2952,
+            "finalPcmAtEpochMs": 1795354346285.235,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795354280356,
+                1344126976
+              ],
+              [
+                1795354280855,
+                1337638912
+              ],
+              [
+                1795354281356,
+                1339277312
+              ],
+              [
+                1795354281860,
+                1355431936
+              ],
+              [
+                1795354282360,
+                1361428480
+              ],
+              [
+                1795354282863,
+                1368440832
+              ],
+              [
+                1795354283361,
+                1372946432
+              ],
+              [
+                1795354283866,
+                1424637952
+              ],
+              [
+                1795354284363,
+                1428439040
+              ],
+              [
+                1795354284867,
+                1456029696
+              ],
+              [
+                1795354285370,
+                1462026240
+              ],
+              [
+                1795354285870,
+                1471627264
+              ],
+              [
+                1795354286370,
+                1475461120
+              ],
+              [
+                1795354286872,
+                1482883072
+              ],
+              [
+                1795354287375,
+                1487994880
+              ],
+              [
+                1795354287875,
+                1490059264
+              ],
+              [
+                1795354288378,
+                1491550208
+              ],
+              [
+                1795354288878,
+                1492451328
+              ],
+              [
+                1795354289377,
+                1494401024
+              ],
+              [
+                1795354289883,
+                1498841088
+              ],
+              [
+                1795354290384,
+                1570537472
+              ],
+              [
+                1795354290882,
+                1599979520
+              ],
+              [
+                1795354291388,
+                1600913408
+              ],
+              [
+                1795354291888,
+                1603649536
+              ],
+              [
+                1795354292392,
+                1614807040
+              ],
+              [
+                1795354292894,
+                1613398016
+              ],
+              [
+                1795354293398,
+                1617264640
+              ],
+              [
+                1795354293893,
+                1616101376
+              ],
+              [
+                1795354294395,
+                1617788928
+              ],
+              [
+                1795354294900,
+                1566539776
+              ],
+              [
+                1795354295400,
+                1565573120
+              ],
+              [
+                1795354295904,
+                1567719424
+              ],
+              [
+                1795354296402,
+                1567948800
+              ],
+              [
+                1795354296905,
+                1569046528
+              ],
+              [
+                1795354297408,
+                1567719424
+              ],
+              [
+                1795354297910,
+                1568866304
+              ],
+              [
+                1795354298412,
+                1569685504
+              ],
+              [
+                1795354298912,
+                1570766848
+              ],
+              [
+                1795354299417,
+                1573240832
+              ],
+              [
+                1795354299917,
+                1630978048
+              ],
+              [
+                1795354300419,
+                1629519872
+              ],
+              [
+                1795354300918,
+                1628766208
+              ],
+              [
+                1795354301422,
+                1630175232
+              ],
+              [
+                1795354301923,
+                1634189312
+              ],
+              [
+                1795354302426,
+                1635352576
+              ],
+              [
+                1795354302923,
+                1634959360
+              ],
+              [
+                1795354303429,
+                1647362048
+              ],
+              [
+                1795354303930,
+                1638367232
+              ],
+              [
+                1795354304431,
+                1568079872
+              ],
+              [
+                1795354304934,
+                1569210368
+              ],
+              [
+                1795354305435,
+                1569800192
+              ],
+              [
+                1795354305937,
+                1574551552
+              ],
+              [
+                1795354306449,
+                1582661632
+              ],
+              [
+                1795354306940,
+                1580417024
+              ],
+              [
+                1795354307439,
+                1587953664
+              ],
+              [
+                1795354307943,
+                1590394880
+              ],
+              [
+                1795354308447,
+                1593704448
+              ],
+              [
+                1795354308942,
+                1597194240
+              ],
+              [
+                1795354309444,
+                1597538304
+              ],
+              [
+                1795354309947,
+                1606795264
+              ],
+              [
+                1795354310447,
+                1608138752
+              ],
+              [
+                1795354310948,
+                1609891840
+              ],
+              [
+                1795354311457,
+                1611202560
+              ],
+              [
+                1795354311955,
+                1618886656
+              ],
+              [
+                1795354312454,
+                1619230720
+              ],
+              [
+                1795354312957,
+                1619345408
+              ],
+              [
+                1795354313460,
+                1570684928
+              ],
+              [
+                1795354313965,
+                1523253248
+              ],
+              [
+                1795354314463,
+                1526136832
+              ],
+              [
+                1795354314968,
+                1525891072
+              ],
+              [
+                1795354315472,
+                1528086528
+              ],
+              [
+                1795354315969,
+                1529315328
+              ],
+              [
+                1795354316473,
+                1516355584
+              ],
+              [
+                1795354316974,
+                1518862336
+              ],
+              [
+                1795354317472,
+                1520287744
+              ],
+              [
+                1795354317973,
+                1526628352
+              ],
+              [
+                1795354318474,
+                1530068992
+              ],
+              [
+                1795354318979,
+                1531510784
+              ],
+              [
+                1795354319481,
+                1534066688
+              ],
+              [
+                1795354319980,
+                1532411904
+              ],
+              [
+                1795354320482,
+                1535524864
+              ],
+              [
+                1795354320983,
+                1536262144
+              ],
+              [
+                1795354321485,
+                1539211264
+              ],
+              [
+                1795354321984,
+                1541718016
+              ],
+              [
+                1795354322491,
+                1550548992
+              ],
+              [
+                1795354322989,
+                1553252352
+              ],
+              [
+                1795354323490,
+                1566195712
+              ],
+              [
+                1795354323993,
+                1567948800
+              ],
+              [
+                1795354324492,
+                1568194560
+              ],
+              [
+                1795354324993,
+                1569177600
+              ],
+              [
+                1795354325497,
+                1571389440
+              ],
+              [
+                1795354325996,
+                1575452672
+              ],
+              [
+                1795354326500,
+                1574895616
+              ],
+              [
+                1795354327002,
+                1583808512
+              ],
+              [
+                1795354327500,
+                1579958272
+              ],
+              [
+                1795354327999,
+                1577992192
+              ],
+              [
+                1795354328506,
+                1580597248
+              ],
+              [
+                1795354329009,
+                1582104576
+              ],
+              [
+                1795354329505,
+                1582284800
+              ],
+              [
+                1795354330006,
+                1584037888
+              ],
+              [
+                1795354330512,
+                1588396032
+              ],
+              [
+                1795354331012,
+                1591164928
+              ],
+              [
+                1795354331513,
+                1597833216
+              ],
+              [
+                1795354332013,
+                1592524800
+              ],
+              [
+                1795354332517,
+                1594540032
+              ],
+              [
+                1795354333014,
+                1595326464
+              ],
+              [
+                1795354333516,
+                1597915136
+              ],
+              [
+                1795354334021,
+                1598717952
+              ],
+              [
+                1795354334518,
+                1599324160
+              ],
+              [
+                1795354335021,
+                1600667648
+              ],
+              [
+                1795354335523,
+                1607237632
+              ],
+              [
+                1795354336022,
+                1608335360
+              ],
+              [
+                1795354336523,
+                1614282752
+              ],
+              [
+                1795354337023,
+                1615953920
+              ],
+              [
+                1795354337524,
+                1608122368
+              ],
+              [
+                1795354338033,
+                1611972608
+              ],
+              [
+                1795354338529,
+                1613283328
+              ],
+              [
+                1795354339034,
+                1616510976
+              ],
+              [
+                1795354339530,
+                1615740928
+              ],
+              [
+                1795354340035,
+                1620393984
+              ],
+              [
+                1795354340540,
+                1634582528
+              ],
+              [
+                1795354341037,
+                1619132416
+              ],
+              [
+                1795354341536,
+                1620721664
+              ],
+              [
+                1795354342047,
+                1620656128
+              ],
+              [
+                1795354342542,
+                1604108288
+              ],
+              [
+                1795354343043,
+                1592705024
+              ],
+              [
+                1795354343547,
+                1533788160
+              ],
+              [
+                1795354344047,
+                1538965504
+              ],
+              [
+                1795354344561,
+                1535524864
+              ],
+              [
+                1795354345051,
+                1537081344
+              ],
+              [
+                1795354345550,
+                1538129920
+              ],
+              [
+                1795354346052,
+                1540259840
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "9515b5a196e6f73965fdd40c39007695ca319dc6c7bcb57570dc21a3c61a4ca6",
+            "bytes": 76762668
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T13-18-39-899Z-4f4bdc0d928b; cell 4/4; source fff67d3bc4d836adcb1e87671d8a91c18c7f886c; fixture ko-article-v1 (ko, 10196 JavaScript characters, 47 spans); requested n=1; effective n=1; Headed Google Chrome in sequential disposable profiles. The released korean-tts v2 step-160000 FP32 browser graph, KSS, voice index 0, ko-loan mode. The official Pyodide 0.26.4 frontend and ORT Web 1.20.1, retaining upstream stochastic inference. Dedicated cached resource samples are independent of warm timing.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
