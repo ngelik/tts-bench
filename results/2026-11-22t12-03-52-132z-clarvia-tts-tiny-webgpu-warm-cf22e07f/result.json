@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f",
+  "createdAt": "2026-11-22T12:07:04.500Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro / 16 GiB",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "tr-article-v1",
+    "language": "tr",
+    "sha256": "95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3",
+    "characters": 20679,
+    "unicodeCodePoints": 20679,
+    "utf8Bytes": 22864,
+    "chunks": 94,
+    "source": {
+      "type": "translation",
+      "description": "Complete Standard Turkish translation of the English benchmark fixture by GPT-6 Luna, with independent AI review of all 27 paragraphs and minor evaluator edits for source fidelity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "2c2716b5482c5bcbe094fa7a11a0c30ce0fca318",
+    "dirty": false,
+    "manifestSha256": "fa827a4ce44b1ca7d97842298d5c5346999a5634ed6a46804830e947cb79f1fb"
+  },
+  "assets": [
+    {
+      "id": "clarvia-tts-tiny-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "clarvia-tts-tiny-README-md",
+      "sha256": "6d40d3d62d2c7095848e0879cdbb05c71d63f0a5228482f6d2ed4230c1c7090b",
+      "bytes": 8020
+    },
+    {
+      "id": "clarvia-tts-tiny-config-json",
+      "sha256": "e84e28b96a5b7907dcf6601f28d45b41c21c9e58ac0ad3f36a29c17a82d3bf2e",
+      "bytes": 1873
+    },
+    {
+      "id": "clarvia-tts-tiny-onnx-model-onnx",
+      "sha256": "2b832f9fa46ed9782b2fe32b8c83c5389315ed3cd8c285242dcc61a7c39dd49c",
+      "bytes": 21378871
+    },
+    {
+      "id": "clarvia-tts-tiny-speak-py",
+      "sha256": "e0b0ef3ec15c5e07979249bf7f7fb49b4dc188cf6a6e79bfb62e045d16e40642",
+      "bytes": 3833
+    },
+    {
+      "id": "clarvia-phonemizer-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "clarvia-phonemizer-README-md",
+      "sha256": "d050f38b962c17e134d13cd221afca1297f55f5b725bd294b64a5f1b7736b3b4",
+      "bytes": 6892
+    },
+    {
+      "id": "clarvia-phonemizer-pyproject-toml",
+      "sha256": "d95e2397f00f3cf00a4cb99055184f2fa2f0e7a4edda346e89dfe0c6180828e1",
+      "bytes": 560
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-__init__-py",
+      "sha256": "0f98cc8063eca39786a419fcb181b52f0429dfae7ffbcaf34b5c68a2a4543890",
+      "bytes": 2389
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-__main__-py",
+      "sha256": "ab195accd19bfd023009be847f730549af7890a7c87fe07664d09cdda3fba558",
+      "bytes": 303
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-engine-py",
+      "sha256": "d6291d558b7cdcbc3411fe9434dbece44f4e286c2e0e8e89faf898a788920366",
+      "bytes": 5973
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-g2p-py",
+      "sha256": "0becf612008b17d2036da1c0aaad6bd003bdacc8376d65d4cee32ee22fd3fd18",
+      "bytes": 5602
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-rules-py",
+      "sha256": "6b464ac9a28d913d815b6191cf5553b45da046a661402d4621b0d379827eca80",
+      "bytes": 34478
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-stress-py",
+      "sha256": "04820b9973bab5a15ffc6a502721ecea84eebcf6c1736e956e628f3f13cd295b",
+      "bytes": 3776
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-symbols-py",
+      "sha256": "6432c2c0296a150079e71133b9f0461190e8489baa4662ba95a4ce4756ed658e",
+      "bytes": 3294
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-tables-py",
+      "sha256": "f43e12e211d612316f4847309efb34b51e48b06c8582cd735ace6e1c472554a7",
+      "bytes": 1533
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-turkish-py",
+      "sha256": "2896fcbb27d413c14e85aa2aaaea0529eb16792ced27d632f0d98e516cb749d8",
+      "bytes": 7840
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-data-exceptions-txt",
+      "sha256": "fc7692b80abc8e611f372bca2c1ccdd620ebbd0d7a77b0054f1f2586c6f1378b",
+      "bytes": 2489
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-data-function_words-txt",
+      "sha256": "51d9f34fdbee2480e55433c7c165086c39af30c3c85e40105bea0699efeb9b76",
+      "bytes": 258
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-data-places-txt",
+      "sha256": "9560132be4996b1f72dd11934571fa85bb541de5a3d2dcefc442ed4e23facca4",
+      "bytes": 1358
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-mjs",
+      "sha256": "1bb8cc14f9405aaa7cd4e00c12edd0a8539de9cc026618d6ee5a9663f367dc70",
+      "bytes": 17758
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-asm-mjs",
+      "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972",
+      "bytes": 1250259
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-asm-wasm",
+      "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329",
+      "bytes": 9597892
+    },
+    {
+      "id": "clarvia-pyodide-python_stdlib-zip",
+      "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28",
+      "bytes": 2545550
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-lock-json",
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+      "bytes": 119077
+    },
+    {
+      "id": "clarvia-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-min-mjs",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "clarvia-ort-ort-webgpu-min-mjs",
+      "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+      "bytes": 333468
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "clarvia-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "clarvia-tts-tiny",
+      "support": {
+        "voiceCount": 10,
+        "bundledVoiceCount": 10,
+        "languageCount": 1,
+        "languages": [
+          "tr"
+        ],
+        "scope": "Pinned Turkish FP32 checkpoint with ten bundled synthetic voices; the browser profile fixes female_1.",
+        "sources": [
+          "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+          "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+          "https://huggingface.co/wite-tech/clarvia-phonemizer/tree/bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+          "https://www.npmjs.com/package/pyodide/v/314.0.8",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+        ],
+        "notes": "Only female_1 is benchmarked. The model card describes a synthetic training set; dataset summaries are publisher claims and have not been independently audited. The publisher requests AI-audio disclosure and prohibits impersonation. Model/code licensing is not a separate blanket grant to redistribute generated recordings."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "female_1 (synthetic)",
+      "precision": "FP32",
+      "settings": {
+        "language": "tr",
+        "locale": "tr-TR",
+        "voiceId": "female_1",
+        "voiceIndex": 2,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "threads": 1,
+        "frontend": "Clarvia phonemizer 0.1.0 at bf1b1aab40e24ca3f6700980427c386f4f171f6f; upstream sentence and 500-token fitting policy",
+        "runtimeRelease": "onnxruntime-web@1.20.1; Pyodide 314.0.8 / CPython 3.14.2",
+        "waveform": "Unseeded ONNX noise; peak is reduced to 0.99 only when exceeded.",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "modelRevision": "51023684a0a39742455c838e9d1d8714d3ae7289",
+        "frontendRevision": "bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+        "frontendFingerprint": "c2b27d282efbd492c5bf9a7df640e909ba913d744e4e2115896a8fefd98fdb68",
+        "graphSha256": "2b832f9fa46ed9782b2fe32b8c83c5389315ed3cd8c285242dcc61a7c39dd49c",
+        "fixtureId": "tr-article-v1",
+        "pyodideVersion": "314.0.8",
+        "pythonVersion": "3.14.2 (main, Nov 13 2026, 20:18:53) [Clang 23.0.0git (https:/github.com/llvm/llvm-project e5927fecf8a6ce89e1a4eac5b8"
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 2487 WebGPU compute dispatches during an untimed probe; unsupported operators may use explicit WASM fallback."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 45542.97499990463,
+          "samples": 31236864,
+          "sampleRate": 24000,
+          "pcmSha256": "84d018bb1a914f1b5648df645d6eaf49fb8312fe2f7b87a3f6d513b87ccf2f76",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 224.24499988555908,
+            "firstSourceChunkCompletedMs": 602.7549998760223,
+            "audioSeconds": 1301.536,
+            "realTimeFactor": 0.034991713636737386,
+            "minSamplesPerChunk": 291072,
+            "maxSamplesPerChunk": 404736
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 45363.58999991417,
+          "samples": 31236864,
+          "sampleRate": 24000,
+          "pcmSha256": "973b81784b328935384958bf2e609ff087af5e47db77448a92542b6f413291c4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 151.51500010490417,
+            "firstSourceChunkCompletedMs": 496.7850000858307,
+            "audioSeconds": 1301.536,
+            "realTimeFactor": 0.034853888021471685,
+            "minSamplesPerChunk": 291072,
+            "maxSamplesPerChunk": 404736
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 45249.10500001907,
+          "samples": 31236864,
+          "sampleRate": 24000,
+          "pcmSha256": "fab9ba8bc0bb15a551dbedbc95720587a1bbb75361dead5f035980d3b67058f4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 147.46000003814697,
+            "firstSourceChunkCompletedMs": 510.6099998950958,
+            "audioSeconds": 1301.536,
+            "realTimeFactor": 0.03476592656677885,
+            "minSamplesPerChunk": 291072,
+            "maxSamplesPerChunk": 404736
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 45245.330000162125,
+          "samples": 31236864,
+          "sampleRate": 24000,
+          "pcmSha256": "795bb558ce5c7d3946e58698c986eb7e6f2837696997898333ebe638d9f803bd",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 141.88000011444092,
+            "firstSourceChunkCompletedMs": 486.4150002002716,
+            "audioSeconds": 1301.536,
+            "realTimeFactor": 0.03476302614769174,
+            "minSamplesPerChunk": 291072,
+            "maxSamplesPerChunk": 404736
+          },
+          "audio": {
+            "sha256": "86d5e16850c4b5558a436545d831fcc01b6e9a365ae31d4cd57a5e18533ce8bc",
+            "bytes": 62473772
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T11-59-32-168Z-5e0a0a65feae; cell 2/4; source 2c2716b5482c5bcbe094fa7a11a0c30ce0fca318; fixture tr-article-v1 (tr, 20679 JavaScript characters, 94 spans); requested n=3; effective n=3; Headed Google Chrome in disposable profiles, sequential. Clarvia TTS Tiny FP32, default female_1 (index 2) at neutral settings, official Clarvia phonemizer and upstream sentence planner in Pyodide 314.0.8 with CPython 3.14.2, and ORT Web 1.20.1. Dedicated cached resource cells do not contribute to the warm time score. Native stochastic inference preserved. Record AC, Chrome version, host load and thermal observations."
+  ]
+}

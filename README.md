@@ -149,6 +149,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
 | Zerre TTS ~4.5M INT8 (Turkish, SES-A) | E13 | 8.55 | [75.49 s (n=3)](results/2026-11-22t11-01-58-328z-zerre-tts-cpu-warm-215ee888/summary.md) | [100.60 s (n=3)](results/2026-11-22t11-07-11-650z-zerre-tts-webgpu-warm-a2baf431/summary.md) | Native; matched configuration |
+| Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | E15 | 21.38 | [61.77 s (n=3)](results/2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530/summary.md) | [45.25 s (n=3)](results/2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f/summary.md) | Native; matched configuration |
 
 ### Ukrainian (uk) — uk-article-v1
 
@@ -388,7 +389,13 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Zerre TTS ~4.5M INT8 (Turkish, SES-A) | 8.55 | [1322.87](results/2026-11-22t11-14-02-780z-zerre-tts-cpu-cached-4c204eed/summary.md) | [1221.60](results/2026-11-22t11-15-27-394z-zerre-tts-webgpu-cached-2baa29d6/summary.md) |
 
-**RAM 32** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
+**RAM 32** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · Apple M1 Pro / 16 GiB · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2c2716b5`](https://github.com/ngelik/tts-bench/commit/2c2716b5482c5bcbe094fa7a11a0c30ce0fca318).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | 21.38 | [1096.66](results/2026-11-22t12-07-05-151z-clarvia-tts-tiny-cpu-cached-0255b0f5/summary.md) | [1067.00](results/2026-11-22t12-08-18-105z-clarvia-tts-tiny-webgpu-cached-d6879c29/summary.md) |
+
+**RAM 33** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
@@ -528,6 +535,10 @@ Each report states its selected scenarios and keeps their measurement boundaries
 [audio8-codec-repair — all-metrics table and source receipts](reports/audio8-codec-repair/overview.md)
 
 ![audio8-codec-repair — campaign metrics](reports/audio8-codec-repair/overview.svg)
+
+[clarvia-tts-tiny-tr — all-metrics table and source receipts](reports/clarvia-tts-tiny-tr/overview.md)
+
+![clarvia-tts-tiny-tr — campaign metrics](reports/clarvia-tts-tiny-tr/overview.svg)
 
 [erogol-sopro — all-metrics table and source receipts](reports/erogol-sopro/overview.md)
 
@@ -680,6 +691,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Audio8 TTS Realistic 0.6B INT4 | webgpu | en | [Receipt](results/2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694--audio8-realistic-0.6b-int4--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-14t17-07-22-490z-audio8-realistic-0.6b-int4-webgpu-cached-5ffbf694--audio8-realistic-0.6b-int4--webgpu-full.wav) |
 | Audio8 TTS Realistic 0.6B INT4 | webgpu | en | [Receipt](results/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718--audio8-realistic-0.6b-int4--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-16t15-01-49-165z-audio8-realistic-0.6b-int4-webgpu-cached-d5ca5718--audio8-realistic-0.6b-int4--webgpu-full.wav) |
 | Audio8 TTS Realistic 0.6B INT4 | webgpu | en | [Receipt](results/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c--audio8-realistic-0.6b-int4--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-16t21-11-13-259z-audio8-realistic-0.6b-int4-webgpu-warm-ad53a67c--audio8-realistic-0.6b-int4--webgpu-full.wav) |
+| Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | cpu | tr | [Receipt](results/2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530--clarvia-tts-tiny--cpu.wav) | Not published |
+| Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | webgpu | tr | [Receipt](results/2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f--clarvia-tts-tiny--webgpu.wav) | Not published |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | cpu | en | [Receipt](results/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4--fun-cosyvoice3-0.5b-2512--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4--fun-cosyvoice3-0.5b-2512--cpu-full.wav) |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | webgpu | en | [Receipt](results/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4--fun-cosyvoice3-0.5b-2512--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-14t15-12-11-363z-fun-cosyvoice3-0.5b-2512-webgpu-cached-168c91d4--fun-cosyvoice3-0.5b-2512--webgpu-full.wav) |
 | Fun-CosyVoice3 0.5B (Q8/Q4 ONNX) | webgpu | en | [Receipt](results/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6--fun-cosyvoice3-0.5b-2512--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t10-50-20-682z-fun-cosyvoice3-0.5b-2512-webgpu-warm-fb791de6--fun-cosyvoice3-0.5b-2512--webgpu-full.wav) |
@@ -1008,6 +1021,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 205 · 2026-11-22 | zerre-tts/webgpu | tr / tr-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t11-07-11-650z-zerre-tts-webgpu-warm-a2baf431/summary.md) | [SVG](results/2026-11-22t11-07-11-650z-zerre-tts-webgpu-warm-a2baf431/chart.svg) |
 | 206 · 2026-11-22 | zerre-tts/cpu | tr / tr-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t11-14-02-780z-zerre-tts-cpu-cached-4c204eed/summary.md) | [SVG](results/2026-11-22t11-14-02-780z-zerre-tts-cpu-cached-4c204eed/chart.svg) |
 | 207 · 2026-11-22 | zerre-tts/webgpu | tr / tr-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t11-15-27-394z-zerre-tts-webgpu-cached-2baa29d6/summary.md) | [SVG](results/2026-11-22t11-15-27-394z-zerre-tts-webgpu-cached-2baa29d6/chart.svg) |
+| 208 · 2026-11-22 | clarvia-tts-tiny/cpu | tr / tr-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530/summary.md) | [SVG](results/2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530/chart.svg) |
+| 209 · 2026-11-22 | clarvia-tts-tiny/webgpu | tr / tr-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f/summary.md) | [SVG](results/2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f/chart.svg) |
+| 210 · 2026-11-22 | clarvia-tts-tiny/cpu | tr / tr-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t12-07-05-151z-clarvia-tts-tiny-cpu-cached-0255b0f5/summary.md) | [SVG](results/2026-11-22t12-07-05-151z-clarvia-tts-tiny-cpu-cached-0255b0f5/chart.svg) |
+| 211 · 2026-11-22 | clarvia-tts-tiny/webgpu | tr / tr-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t12-08-18-105z-clarvia-tts-tiny-webgpu-cached-d6879c29/summary.md) | [SVG](results/2026-11-22t12-08-18-105z-clarvia-tts-tiny-webgpu-cached-d6879c29/chart.svg) |
 
 </details>
 

@@ -262,6 +262,68 @@
       }
     },
     {
+      "resultId": "2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530",
+      "model": "clarvia-tts-tiny",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "female_1 (synthetic)",
+      "language": "tr",
+      "attribution": "AI-generated Turkish speech from Wite Clarvia TTS Tiny FP32 in the released synthetic female_1 voice. Apache-2.0 model and clarvia-phonemizer. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+        "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+        "https://huggingface.co/wite-tech/clarvia-phonemizer/tree/bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+        "https://www.npmjs.com/package/pyodide/v/314.0.8",
+        "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530--clarvia-tts-tiny--cpu.wav",
+        "sha256": "1170b6f04e1002360879eeac4d727efbe800b726298b31a6661cb5191926ceec",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "14a165f1267e01d5dbf06a25015938ad641647b0ec0e8346567c3dfaf0d9d723",
+        "bytes": 62473772
+      }
+    },
+    {
+      "resultId": "2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f",
+      "model": "clarvia-tts-tiny",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "female_1 (synthetic)",
+      "language": "tr",
+      "attribution": "AI-generated Turkish speech from Wite Clarvia TTS Tiny FP32 in the released synthetic female_1 voice. Apache-2.0 model and clarvia-phonemizer. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+        "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+        "https://huggingface.co/wite-tech/clarvia-phonemizer/tree/bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+        "https://www.npmjs.com/package/pyodide/v/314.0.8",
+        "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t12-03-52-132z-clarvia-tts-tiny-webgpu-warm-cf22e07f--clarvia-tts-tiny--webgpu.wav",
+        "sha256": "f1432e981f9e2344e15b4be2426be6df2def823b990348ea95f96e1925af96a8",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "86d5e16850c4b5558a436545d831fcc01b6e9a365ae31d4cd57a5e18533ce8bc",
+        "bytes": 62473772
+      }
+    },
+    {
       "resultId": "2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4",
       "model": "fun-cosyvoice3-0.5b-2512",
       "backend": "cpu",

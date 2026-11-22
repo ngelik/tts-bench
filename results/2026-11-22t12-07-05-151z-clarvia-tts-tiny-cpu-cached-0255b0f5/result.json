@@ -1,0 +1,811 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t12-07-05-151z-clarvia-tts-tiny-cpu-cached-0255b0f5",
+  "createdAt": "2026-11-22T12:08:17.406Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro / 16 GiB",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "tr-article-v1",
+    "language": "tr",
+    "sha256": "95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3",
+    "characters": 20679,
+    "unicodeCodePoints": 20679,
+    "utf8Bytes": 22864,
+    "chunks": 94,
+    "source": {
+      "type": "translation",
+      "description": "Complete Standard Turkish translation of the English benchmark fixture by GPT-6 Luna, with independent AI review of all 27 paragraphs and minor evaluator edits for source fidelity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "2c2716b5482c5bcbe094fa7a11a0c30ce0fca318",
+    "dirty": false,
+    "manifestSha256": "fa827a4ce44b1ca7d97842298d5c5346999a5634ed6a46804830e947cb79f1fb"
+  },
+  "assets": [
+    {
+      "id": "clarvia-tts-tiny-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "clarvia-tts-tiny-README-md",
+      "sha256": "6d40d3d62d2c7095848e0879cdbb05c71d63f0a5228482f6d2ed4230c1c7090b",
+      "bytes": 8020
+    },
+    {
+      "id": "clarvia-tts-tiny-config-json",
+      "sha256": "e84e28b96a5b7907dcf6601f28d45b41c21c9e58ac0ad3f36a29c17a82d3bf2e",
+      "bytes": 1873
+    },
+    {
+      "id": "clarvia-tts-tiny-onnx-model-onnx",
+      "sha256": "2b832f9fa46ed9782b2fe32b8c83c5389315ed3cd8c285242dcc61a7c39dd49c",
+      "bytes": 21378871
+    },
+    {
+      "id": "clarvia-tts-tiny-speak-py",
+      "sha256": "e0b0ef3ec15c5e07979249bf7f7fb49b4dc188cf6a6e79bfb62e045d16e40642",
+      "bytes": 3833
+    },
+    {
+      "id": "clarvia-phonemizer-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "clarvia-phonemizer-README-md",
+      "sha256": "d050f38b962c17e134d13cd221afca1297f55f5b725bd294b64a5f1b7736b3b4",
+      "bytes": 6892
+    },
+    {
+      "id": "clarvia-phonemizer-pyproject-toml",
+      "sha256": "d95e2397f00f3cf00a4cb99055184f2fa2f0e7a4edda346e89dfe0c6180828e1",
+      "bytes": 560
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-__init__-py",
+      "sha256": "0f98cc8063eca39786a419fcb181b52f0429dfae7ffbcaf34b5c68a2a4543890",
+      "bytes": 2389
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-__main__-py",
+      "sha256": "ab195accd19bfd023009be847f730549af7890a7c87fe07664d09cdda3fba558",
+      "bytes": 303
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-engine-py",
+      "sha256": "d6291d558b7cdcbc3411fe9434dbece44f4e286c2e0e8e89faf898a788920366",
+      "bytes": 5973
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-g2p-py",
+      "sha256": "0becf612008b17d2036da1c0aaad6bd003bdacc8376d65d4cee32ee22fd3fd18",
+      "bytes": 5602
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-rules-py",
+      "sha256": "6b464ac9a28d913d815b6191cf5553b45da046a661402d4621b0d379827eca80",
+      "bytes": 34478
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-stress-py",
+      "sha256": "04820b9973bab5a15ffc6a502721ecea84eebcf6c1736e956e628f3f13cd295b",
+      "bytes": 3776
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-symbols-py",
+      "sha256": "6432c2c0296a150079e71133b9f0461190e8489baa4662ba95a4ce4756ed658e",
+      "bytes": 3294
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-tables-py",
+      "sha256": "f43e12e211d612316f4847309efb34b51e48b06c8582cd735ace6e1c472554a7",
+      "bytes": 1533
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-turkish-py",
+      "sha256": "2896fcbb27d413c14e85aa2aaaea0529eb16792ced27d632f0d98e516cb749d8",
+      "bytes": 7840
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-data-exceptions-txt",
+      "sha256": "fc7692b80abc8e611f372bca2c1ccdd620ebbd0d7a77b0054f1f2586c6f1378b",
+      "bytes": 2489
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-data-function_words-txt",
+      "sha256": "51d9f34fdbee2480e55433c7c165086c39af30c3c85e40105bea0699efeb9b76",
+      "bytes": 258
+    },
+    {
+      "id": "clarvia-phonemizer-clarvia_phonemizer-data-places-txt",
+      "sha256": "9560132be4996b1f72dd11934571fa85bb541de5a3d2dcefc442ed4e23facca4",
+      "bytes": 1358
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-mjs",
+      "sha256": "1bb8cc14f9405aaa7cd4e00c12edd0a8539de9cc026618d6ee5a9663f367dc70",
+      "bytes": 17758
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-asm-mjs",
+      "sha256": "22514b8be6980e28a02c8b1d6387ce8dfe666fc4edf8d547cff5dce29ff4d972",
+      "bytes": 1250259
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-asm-wasm",
+      "sha256": "e14d49ceca9b4a0e274ea918f3a898de2d3880b6e5573a6cfe1a2267ecc70329",
+      "bytes": 9597892
+    },
+    {
+      "id": "clarvia-pyodide-python_stdlib-zip",
+      "sha256": "2bd3394a145bfbbe5bbc9d9d6ab9136abbb986c6fef6c142b3a2962227aa5c28",
+      "bytes": 2545550
+    },
+    {
+      "id": "clarvia-pyodide-pyodide-lock-json",
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+      "bytes": 119077
+    },
+    {
+      "id": "clarvia-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-min-mjs",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "clarvia-ort-ort-webgpu-min-mjs",
+      "sha256": "e1a0817ac08d5a6ade7f229754c2aecd444bff0bd22c259ca148a04b9f9e9f65",
+      "bytes": 333468
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "clarvia-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "clarvia-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "clarvia-tts-tiny",
+      "support": {
+        "voiceCount": 10,
+        "bundledVoiceCount": 10,
+        "languageCount": 1,
+        "languages": [
+          "tr"
+        ],
+        "scope": "Pinned Turkish FP32 checkpoint with ten bundled synthetic voices; the browser profile fixes female_1.",
+        "sources": [
+          "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md",
+          "https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/config.json",
+          "https://huggingface.co/wite-tech/clarvia-phonemizer/tree/bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+          "https://www.npmjs.com/package/pyodide/v/314.0.8",
+          "https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt"
+        ],
+        "notes": "Only female_1 is benchmarked. The model card describes a synthetic training set; dataset summaries are publisher claims and have not been independently audited. The publisher requests AI-audio disclosure and prohibits impersonation. Model/code licensing is not a separate blanket grant to redistribute generated recordings."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "female_1 (synthetic)",
+      "precision": "FP32",
+      "settings": {
+        "language": "tr",
+        "locale": "tr-TR",
+        "voiceId": "female_1",
+        "voiceIndex": 2,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "threads": 1,
+        "frontend": "Clarvia phonemizer 0.1.0 at bf1b1aab40e24ca3f6700980427c386f4f171f6f; upstream sentence and 500-token fitting policy",
+        "runtimeRelease": "onnxruntime-web@1.20.1; Pyodide 314.0.8 / CPython 3.14.2",
+        "waveform": "Unseeded ONNX noise; peak is reduced to 0.99 only when exceeded.",
+        "executionProviders": [
+          "wasm"
+        ],
+        "modelRevision": "51023684a0a39742455c838e9d1d8714d3ae7289",
+        "frontendRevision": "bf1b1aab40e24ca3f6700980427c386f4f171f6f",
+        "frontendFingerprint": "c2b27d282efbd492c5bf9a7df640e909ba913d744e4e2115896a8fefd98fdb68",
+        "graphSha256": "2b832f9fa46ed9782b2fe32b8c83c5389315ed3cd8c285242dcc61a7c39dd49c",
+        "fixtureId": "tr-article-v1",
+        "pyodideVersion": "314.0.8",
+        "pythonVersion": "3.14.2 (main, Nov 13 2026, 20:18:53) [Clang 23.0.0git (https:/github.com/llvm/llvm-project e5927fecf8a6ce89e1a4eac5b8"
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "ONNX Runtime Web 1.20.1 uses the explicit single-thread SIMD WASM route; Turkish phonemization runs locally in Pyodide."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 62163.78999996185,
+          "samples": 31236864,
+          "sampleRate": 24000,
+          "pcmSha256": "bfbb1c645e174f630fbc94cdba02c765bae7e502bfb866ac9b0b5db74e6355ac",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 94,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 199.22499990463257,
+            "firstSourceChunkCompletedMs": 715.875,
+            "audioSeconds": 1301.536,
+            "realTimeFactor": 0.047761867516505,
+            "minSamplesPerChunk": 291072,
+            "maxSamplesPerChunk": 404736,
+            "articleCallPeakRssBytes": 1644576768,
+            "generationMeanRssBytes": 1096656247,
+            "generationRssSampleCount": 123,
+            "loadMs": 1729.4019579999995,
+            "controllerTrialElapsedMs": 67918.076541,
+            "downloadBytes": 48249,
+            "idealDownloadSecondsAt1Mbps": 0.385992
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795349231426.315,
+            "finalPcmAtEpochMs": 1795349293590.105,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795349231961,
+                1613266944
+              ],
+              [
+                1795349232465,
+                1622507520
+              ],
+              [
+                1795349232965,
+                1621966848
+              ],
+              [
+                1795349233469,
+                1623801856
+              ],
+              [
+                1795349233969,
+                1630617600
+              ],
+              [
+                1795349234470,
+                1633681408
+              ],
+              [
+                1795349234973,
+                1636220928
+              ],
+              [
+                1795349235475,
+                1638629376
+              ],
+              [
+                1795349235976,
+                1638711296
+              ],
+              [
+                1795349236477,
+                1640366080
+              ],
+              [
+                1795349236981,
+                1643085824
+              ],
+              [
+                1795349237490,
+                1644576768
+              ],
+              [
+                1795349237992,
+                1454342144
+              ],
+              [
+                1795349238504,
+                1397587968
+              ],
+              [
+                1795349238991,
+                1325072384
+              ],
+              [
+                1795349239491,
+                1317257216
+              ],
+              [
+                1795349240005,
+                1195556864
+              ],
+              [
+                1795349240496,
+                1194360832
+              ],
+              [
+                1795349240994,
+                1147469824
+              ],
+              [
+                1795349241497,
+                1148862464
+              ],
+              [
+                1795349241998,
+                1142095872
+              ],
+              [
+                1795349242503,
+                1138442240
+              ],
+              [
+                1795349243003,
+                1136361472
+              ],
+              [
+                1795349243504,
+                1116700672
+              ],
+              [
+                1795349244005,
+                1116700672
+              ],
+              [
+                1795349244508,
+                1111605248
+              ],
+              [
+                1795349245009,
+                1105395712
+              ],
+              [
+                1795349245512,
+                1105395712
+              ],
+              [
+                1795349246015,
+                1107034112
+              ],
+              [
+                1795349246516,
+                1109147648
+              ],
+              [
+                1795349247018,
+                1110802432
+              ],
+              [
+                1795349247521,
+                1112408064
+              ],
+              [
+                1795349248023,
+                1105969152
+              ],
+              [
+                1795349248524,
+                1107329024
+              ],
+              [
+                1795349249026,
+                1104691200
+              ],
+              [
+                1795349249527,
+                1106067456
+              ],
+              [
+                1795349250031,
+                1111441408
+              ],
+              [
+                1795349250532,
+                1111441408
+              ],
+              [
+                1795349251033,
+                1108983808
+              ],
+              [
+                1795349251537,
+                1108983808
+              ],
+              [
+                1795349252039,
+                1111392256
+              ],
+              [
+                1795349252540,
+                1112653824
+              ],
+              [
+                1795349253042,
+                1114456064
+              ],
+              [
+                1795349253545,
+                1110900736
+              ],
+              [
+                1795349254046,
+                1109884928
+              ],
+              [
+                1795349254550,
+                1112014848
+              ],
+              [
+                1795349255051,
+                1106149376
+              ],
+              [
+                1795349255553,
+                1106444288
+              ],
+              [
+                1795349256142,
+                1025556480
+              ],
+              [
+                1795349256593,
+                1021181952
+              ],
+              [
+                1795349257097,
+                1010728960
+              ],
+              [
+                1795349257595,
+                997900288
+              ],
+              [
+                1795349258100,
+                998359040
+              ],
+              [
+                1795349258602,
+                982269952
+              ],
+              [
+                1795349259104,
+                961413120
+              ],
+              [
+                1795349259604,
+                956317696
+              ],
+              [
+                1795349260108,
+                963133440
+              ],
+              [
+                1795349260609,
+                956628992
+              ],
+              [
+                1795349261110,
+                951992320
+              ],
+              [
+                1795349261611,
+                952090624
+              ],
+              [
+                1795349262113,
+                953483264
+              ],
+              [
+                1795349262615,
+                953532416
+              ],
+              [
+                1795349263117,
+                952287232
+              ],
+              [
+                1795349263622,
+                958955520
+              ],
+              [
+                1795349264125,
+                958447616
+              ],
+              [
+                1795349264624,
+                957366272
+              ],
+              [
+                1795349265126,
+                958873600
+              ],
+              [
+                1795349265627,
+                960577536
+              ],
+              [
+                1795349266130,
+                961118208
+              ],
+              [
+                1795349266636,
+                962560000
+              ],
+              [
+                1795349267133,
+                961527808
+              ],
+              [
+                1795349267635,
+                963264512
+              ],
+              [
+                1795349268136,
+                965099520
+              ],
+              [
+                1795349268639,
+                965492736
+              ],
+              [
+                1795349269142,
+                966983680
+              ],
+              [
+                1795349269641,
+                968409088
+              ],
+              [
+                1795349270143,
+                970948608
+              ],
+              [
+                1795349270647,
+                970522624
+              ],
+              [
+                1795349271150,
+                970883072
+              ],
+              [
+                1795349271649,
+                972210176
+              ],
+              [
+                1795349272154,
+                973946880
+              ],
+              [
+                1795349272654,
+                975667200
+              ],
+              [
+                1795349273155,
+                977174528
+              ],
+              [
+                1795349273657,
+                977813504
+              ],
+              [
+                1795349274159,
+                979156992
+              ],
+              [
+                1795349274663,
+                980860928
+              ],
+              [
+                1795349275164,
+                983760896
+              ],
+              [
+                1795349275666,
+                983793664
+              ],
+              [
+                1795349276169,
+                985219072
+              ],
+              [
+                1795349276669,
+                987381760
+              ],
+              [
+                1795349277171,
+                988774400
+              ],
+              [
+                1795349277675,
+                990658560
+              ],
+              [
+                1795349278174,
+                990691328
+              ],
+              [
+                1795349278676,
+                992215040
+              ],
+              [
+                1795349279178,
+                994181120
+              ],
+              [
+                1795349279680,
+                995540992
+              ],
+              [
+                1795349280183,
+                996327424
+              ],
+              [
+                1795349280687,
+                998064128
+              ],
+              [
+                1795349281189,
+                999505920
+              ],
+              [
+                1795349281691,
+                1001816064
+              ],
+              [
+                1795349282192,
+                1004044288
+              ],
+              [
+                1795349282695,
+                1004175360
+              ],
+              [
+                1795349283197,
+                1005633536
+              ],
+              [
+                1795349283701,
+                1007697920
+              ],
+              [
+                1795349284202,
+                1009025024
+              ],
+              [
+                1795349284706,
+                1010728960
+              ],
+              [
+                1795349285206,
+                1012334592
+              ],
+              [
+                1795349285707,
+                1013710848
+              ],
+              [
+                1795349286210,
+                1015070720
+              ],
+              [
+                1795349286713,
+                1018445824
+              ],
+              [
+                1795349287215,
+                1018527744
+              ],
+              [
+                1795349287716,
+                1019838464
+              ],
+              [
+                1795349288218,
+                1021460480
+              ],
+              [
+                1795349288719,
+                1022984192
+              ],
+              [
+                1795349289224,
+                1023606784
+              ],
+              [
+                1795349289726,
+                990281728
+              ],
+              [
+                1795349290226,
+                993214464
+              ],
+              [
+                1795349290732,
+                997900288
+              ],
+              [
+                1795349291230,
+                999440384
+              ],
+              [
+                1795349291731,
+                1002274816
+              ],
+              [
+                1795349292239,
+                1002274816
+              ],
+              [
+                1795349292737,
+                999374848
+              ],
+              [
+                1795349293241,
+                985169920
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "a8f85994e0c2ac9f991c853783d3ed8934e74e57807af2637fe6b5f28298a64c",
+            "bytes": 62473772
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T11-59-32-168Z-5e0a0a65feae; cell 3/4; source 2c2716b5482c5bcbe094fa7a11a0c30ce0fca318; fixture tr-article-v1 (tr, 20679 JavaScript characters, 94 spans); requested n=1; effective n=1; Headed Google Chrome in disposable profiles, sequential. Clarvia TTS Tiny FP32, default female_1 (index 2) at neutral settings, official Clarvia phonemizer and upstream sentence planner in Pyodide 314.0.8 with CPython 3.14.2, and ORT Web 1.20.1. Dedicated cached resource cells do not contribute to the warm time score. Native stochastic inference preserved. Record AC, Chrome version, host load and thermal observations.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
