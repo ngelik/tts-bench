@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "de-article-v1",
+  "file": "de-article-v1.txt",
+  "sha256": "f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931",
+  "utf8Bytes": 24366,
+  "unicodeCodePoints": 23885,
+  "javascriptStringLength": 23885,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 109,
+  "chunkCharacters": {
+    "min": 85,
+    "max": 226
+  },
+  "fixtureId": "de-article-v1",
+  "language": "de",
+  "source": {
+    "type": "translation",
+    "description": "AI-assisted German translation of the complete English benchmark fixture; revised after automated evaluator review. No human or pronunciation review has been performed.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "AI-assisted German translation prepared with OpenAI Codex (GPT-6) for Browser TTS Benchmark, 2026; automated evaluator review; no human or pronunciation review",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}
