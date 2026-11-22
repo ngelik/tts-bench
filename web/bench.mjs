@@ -1,5 +1,6 @@
 import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
+import { createApptorDeAdapter } from './adapters/apptor-de.mjs';
 import { createLinnetAdapter } from './adapters/linnet.mjs';
 import { createMingAdapter } from './adapters/ming.mjs';
 import { createMingGgufAdapter } from './adapters/audio-cpp-gguf.mjs';
@@ -42,6 +43,7 @@ const state = { fixture: null, fixtureId: null, chunks: null, engine: null, mode
 const FACTORIES = {
   'sopro-v2-turbo': createSoproAdapter,
   'tiny-voca': createTinyVocaAdapter,
+  'apptor-tiny-tts': createApptorDeAdapter,
   'linnet-en-35m': createLinnetAdapter,
   'ming-3.0-tts-0.5b-fusor-mix-cpu': createMingAdapter,
   'ming-3.0-tts-0.5b-gguf': createMingGgufAdapter,
@@ -222,6 +224,8 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       fixtureId,
       language: loaded.fixture.language,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
+      auditTexts: model === 'apptor-tiny-tts' && smoke && fixtureId === 'de-article-v1'
+        ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : [],
     });
     if (result.status === 'unsupported') {
       await dispose();
