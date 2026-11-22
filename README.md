@@ -497,6 +497,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Ming 3.0 TTS 0.5B (Fusor mixed quantization / CPU) | 117 | 7 | 7 | [Details](docs/MODEL_SUPPORT.md#ming-3.0-tts-0.5b-fusor-mix-cpu) |
 | Tiny Voca 4.5M | 2 | 2 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#tiny-voca) |
 | Korean TTS (KSS / Dizione F2) | 3 | 3 | 2 (ko, en) | [Details](docs/MODEL_SUPPORT.md#korean-tts) |
+| Słyszę Głosy V1 (Polish F) | 2 | 2 | 1 (pl) | [Details](docs/MODEL_SUPPORT.md#slyszeglosy-v1) |
 | Tiny Voca DE/EN 4.6M (Voca64) | 64 | 64 | 2 (de, en) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-de-en) |
 | Apptor Tiny TTS 4.5M (Standard German) | 2 | 2 | 1 (de) | [Details](docs/MODEL_SUPPORT.md#apptor-tiny-tts) |
 | Sopro v2 Turbo | Unknown | 0 | 4 (en, pt, fr, de) | [Details](docs/MODEL_SUPPORT.md#sopro-v2-turbo) |

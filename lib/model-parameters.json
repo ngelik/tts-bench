@@ -223,5 +223,12 @@
     "countKind": "exact",
     "parameterCountSource": "https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/onnx/model.onnx",
     "scope": "Exact number of stored FP32 initializer scalar values in the original v3 waveform graph. The separate benchmark profile selects F2 (voice index 0); the graph bundles F2 and M2."
+  },
+  "slyszeglosy-v1": {
+    "parameterCount": 4533451,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/Damaon/slyszeglosy/blob/23b63ff12db5f19260985031e64c2f45b89cc609/README.md",
+    "upstreamModelCard": "https://huggingface.co/Damaon/slyszeglosy/blob/23b63ff12db5f19260985031e64c2f45b89cc609/README.md",
+    "scope": "Publisher-reported parameter count for the pinned V1 model, including its waveform generator."
   }
 }

@@ -5391,6 +5391,203 @@
         "notes": "Only KSS/ko-article-v1 and F2/english-20k-v1 are benchmark profiles. Mixed Korean with embedded English uses the Korean loanword route. The KSS weight terms apply to both voices; noncommercial acceptance is required."
       }
     },
+    "slyszeglosy-v1": {
+          "displayName": "Słyszę Głosy V1 (Polish F)",
+          "modelRevision": "23b63ff12db5f19260985031e64c2f45b89cc609",
+          "browserSourceRevision": "605a13f5d9994ad8c897dff3463ce1f339acfb5f",
+          "runtime": {
+                "package": "onnxruntime-web",
+                "version": "1.20.1",
+                "license": "MIT; bundled runtime notices apply",
+                "files": []
+          },
+          "assets": [
+                {
+                      "id": "slyszeglosy-v1-model-metadata",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/onnx/model.json",
+                      "url": "https://huggingface.co/Damaon/slyszeglosy/resolve/23b63ff12db5f19260985031e64c2f45b89cc609/onnx/model.json",
+                      "bytes": 842,
+                      "sha256": "3f3045599d04e88c15378bff375d6525187c2f8e500f25ab244e54b7329c748c",
+                      "kind": "model-config"
+                },
+                {
+                      "id": "slyszeglosy-v1-model-onnx",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/onnx/model.onnx",
+                      "url": "https://huggingface.co/Damaon/slyszeglosy/resolve/23b63ff12db5f19260985031e64c2f45b89cc609/onnx/model.onnx",
+                      "bytes": 21365047,
+                      "sha256": "6d2a81bcc47589f9235452011979f641395749015a3903aaadff4558784ab087",
+                      "kind": "model-weights"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-tiny_voca-text-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/slyszeglosy_text.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/tiny_voca/text.py",
+                      "bytes": 4554,
+                      "sha256": "7011f134be7419c893b13c7e0040361ecb782bcd4fb84b7735625eeb5940f386",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-wymowa-__init__-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/wymowa/__init__.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/wymowa/__init__.py",
+                      "bytes": 2367,
+                      "sha256": "f001a46fe315f68aa8481487affede58eb99bc03998facaf9c0cf94ac0c96237",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-wymowa-g2p-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/wymowa/g2p.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/wymowa/g2p.py",
+                      "bytes": 11719,
+                      "sha256": "c19f9de250b9f45cc3a81c1d0686f340a7047dfc9fceeb37b634309f349f3105",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-wymowa-lexicon-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/wymowa/lexicon.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/wymowa/lexicon.py",
+                      "bytes": 4255,
+                      "sha256": "a8fe062690e5f2d093b529938f8526d58d1eee4e700115c0fba2f22ab27b7ad5",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-wymowa-normalize-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/wymowa/normalize.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/wymowa/normalize.py",
+                      "bytes": 23708,
+                      "sha256": "d392f472101af647d8e47b0b39848dde4f2a678ecb179e76c32cb7850f00ceb5",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-wymowa-numbers-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/wymowa/numbers.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/wymowa/numbers.py",
+                      "bytes": 6647,
+                      "sha256": "3bbcd4b3c36bca570cce5f639f942a6500a9c60d86d790e88d215f0f2e1f4aa4",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-src-wymowa-symbols-py",
+                      "target": "models/slyszeglosy-v1/23b63ff12db5f19260985031e64c2f45b89cc609/assets/frontend/wymowa/symbols.py",
+                      "url": "https://raw.githubusercontent.com/Damaon/slyszeglosy/605a13f5d9994ad8c897dff3463ce1f339acfb5f/src/wymowa/symbols.py",
+                      "bytes": 1937,
+                      "sha256": "e5607cbdc5b4406ac84273d42327429fab630cbee695313127486bc34bfa0416",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "slyszeglosy-v1-pyodide-pyodide-js",
+                      "target": "runtimes/pyodide/0.26.4/pyodide.js",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+                      "bytes": 14761,
+                      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-pyodide-pyodide-asm-js",
+                      "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+                      "bytes": 1229099,
+                      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-pyodide-pyodide-asm-wasm",
+                      "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+                      "bytes": 10088051,
+                      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-pyodide-python_stdlib-zip",
+                      "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+                      "bytes": 2341872,
+                      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-pyodide-pyodide-lock-json",
+                      "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+                      "bytes": 106335,
+                      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-ort-ort-wasm-min-js",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort.wasm.min.js",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+                      "bytes": 49026,
+                      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-ort-ort-webgpu-min-js",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort.webgpu.min.js",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.js",
+                      "bytes": 333594,
+                      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-ort-ort-wasm-simd-threaded-mjs",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.mjs",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+                      "bytes": 24618,
+                      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-ort-ort-wasm-simd-threaded-wasm",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.wasm",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+                      "bytes": 11246032,
+                      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-ort-ort-wasm-simd-threaded-jsep-mjs",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.mjs",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+                      "bytes": 46839,
+                      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "slyszeglosy-v1-ort-ort-wasm-simd-threaded-jsep-wasm",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.wasm",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+                      "bytes": 21663894,
+                      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+                      "kind": "runtime"
+                }
+          ],
+          "license": {
+                "model": "Słyszę Głosy V1 weights and synthetic voice data: CC BY-NC 4.0 (noncommercial use only)",
+                "requiresAcceptance": true,
+                "runtime": "Apache-2.0 upstream source; MIT ONNX Runtime Web; MPL-2.0 Pyodide; PSF Python. See docs/LICENSING.md and web/slyszeglosy-v1/NOTICE.md."
+          },
+          "backends": [
+                "cpu",
+                "webgpu"
+          ],
+          "support": {
+                "voiceCount": 2,
+                "bundledVoiceCount": 2,
+                "languageCount": 1,
+                "languages": [
+                      "pl"
+                ],
+                "scope": "One pinned V1 graph bundles synthetic F and M Polish voices. The adapter evaluates F index 0 only; the separate V2 model is outside this profile.",
+                "sources": [
+                      "https://huggingface.co/Damaon/slyszeglosy/tree/23b63ff12db5f19260985031e64c2f45b89cc609",
+                      "https://github.com/Damaon/slyszeglosy/tree/605a13f5d9994ad8c897dff3463ce1f339acfb5f",
+                      "https://creativecommons.org/licenses/by-nc/4.0/legalcode"
+                ],
+                "notes": "Only F index 0, Polish, pl-article-v1 is registered. M remains bundled but unevaluated. V2 is explicitly outside this V1 entry. Model and synthetic voice data require noncommercial license acknowledgment."
+          }
+    },
     "tiny-voca-de-en": {
       "displayName": "Tiny Voca DE/EN 4.6M (Voca64)",
       "modelRevision": "57fe34dfc061e6cc58e27d186bf7ba16d82d2def",
