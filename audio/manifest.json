@@ -3517,6 +3517,68 @@
       }
     },
     {
+      "resultId": "2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147",
+      "model": "tiny-voca-ru",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M",
+      "language": "ru",
+      "attribution": "AI-generated Russian benchmark narration from Evgeniy Chetvertkov’s Tiny Voca Russian in its synthetic M voice. Based on Muhammed Nazeem’s Tiny Voca, with Qwen3-TTS VoiceDesign training speech. Model Apache-2.0, stress assets from ruaccent under MIT, and training dataset CC BY 4.0. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 (pinned model card); bundled ruaccent-derived stress data and stress models: MIT",
+      "sourceUrls": [
+        "https://huggingface.co/egnch/tiny-voca-ru/tree/2723b0e71fea216001bd4f6caf0866eb06879339",
+        "https://github.com/yilbegan/tiny-voca-ru/tree/aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784",
+        "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/tree/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e",
+        "https://huggingface.co/datasets/egnch/tiny-voca-ru-dataset/blob/641a71953589e7faceab6022b55f599e03578043/LICENSE.md",
+        "https://github.com/Den4ikAI/ruaccent"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147--tiny-voca-ru--cpu.wav",
+        "sha256": "6a3bf21da1da186476c7d803ee1e54bb9f941f08ba7ffe342592535669cc0f3f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d83f740d1b3528884fdd8ac7f5084a161cffaec151afadef557e4e83a794ca0f",
+        "bytes": 65048620
+      }
+    },
+    {
+      "resultId": "2026-11-22t18-37-17-189z-tiny-voca-ru-webgpu-warm-bc7a5c22",
+      "model": "tiny-voca-ru",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "M",
+      "language": "ru",
+      "attribution": "AI-generated Russian benchmark narration from Evgeniy Chetvertkov’s Tiny Voca Russian in its synthetic M voice. Based on Muhammed Nazeem’s Tiny Voca, with Qwen3-TTS VoiceDesign training speech. Model Apache-2.0, stress assets from ruaccent under MIT, and training dataset CC BY 4.0. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 (pinned model card); bundled ruaccent-derived stress data and stress models: MIT",
+      "sourceUrls": [
+        "https://huggingface.co/egnch/tiny-voca-ru/tree/2723b0e71fea216001bd4f6caf0866eb06879339",
+        "https://github.com/yilbegan/tiny-voca-ru/tree/aa7086b3b6522f5a5d8cadb11cc5c8b3fde98784",
+        "https://huggingface.co/spaces/egnch/tiny-voca-ru-demo/tree/bf78c265c4cd02a7853d1bcf1d8bcc1fa72aa69e",
+        "https://huggingface.co/datasets/egnch/tiny-voca-ru-dataset/blob/641a71953589e7faceab6022b55f599e03578043/LICENSE.md",
+        "https://github.com/Den4ikAI/ruaccent"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t18-37-17-189z-tiny-voca-ru-webgpu-warm-bc7a5c22--tiny-voca-ru--webgpu.wav",
+        "sha256": "0fa1cad5721fc33cd0bf88d7289792f223137a6aa099d08cb10cf6b841dea254",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "012a53182fd0d9eef7e9370ef744617b8d29cc8833a4a107e6bf14ad96fe2458",
+        "bytes": 65048620
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",
