@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t09-55-34-149z-vocina-it-cpu-warm-f8480ae7",
+  "createdAt": "2026-11-22T10:00:15.918Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "Apple M1 Pro / 16 GiB",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "it-article-v1",
+    "language": "it",
+    "sha256": "9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a",
+    "characters": 23584,
+    "unicodeCodePoints": 23584,
+    "utf8Bytes": 23786,
+    "chunks": 107,
+    "source": {
+      "type": "translation",
+      "description": "GPT-6 Luna produced an AI-assisted Standard Italian translation of the complete English benchmark fixture, preserving paragraph order and story details. Independently reviewed by AI for completeness and fidelity; no human or pronunciation review has been performed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "adeea4ac056330319f95e078066ba06501f0c7db",
+    "dirty": false,
+    "manifestSha256": "81fe21e6f9f745e57565fd97b812ed3a652868f27bf75643d153beabd534c602"
+  },
+  "assets": [
+    {
+      "id": "vocina-int8-weights",
+      "sha256": "a899c64c380fd3ca6460b13b8162da0d9931c25326567c1e87e140a2aa1b743d",
+      "bytes": 8536789
+    },
+    {
+      "id": "vocina-int8-config",
+      "sha256": "2f07dbe350d2fdc891126d4847fe251e7ab48d04c3d87836123030d5a3e1a3f8",
+      "bytes": 926
+    },
+    {
+      "id": "vocina-g2p-it",
+      "sha256": "9a0a5bdd9feddd45d1ed32db2cad2a431a7b3f70b0f5a33bd45d24e934b4c825",
+      "bytes": 22989
+    },
+    {
+      "id": "vocina-data",
+      "sha256": "a55faf08a98001f62db30780f593a2bd00cb9acf4cb6fb73a9bd06a4723d0ced",
+      "bytes": 31675
+    },
+    {
+      "id": "vocina-wiktionary-lexicon",
+      "sha256": "2ac11cdd7d6ad2b001d1719e504f80807cb0b517ab506154744111257d987f39",
+      "bytes": 517343
+    },
+    {
+      "id": "vocina-ort-wasm-bundle",
+      "sha256": "1db5e1c5cd2b860eed85e6eeff23e2aaa7cffcc407f67093bcc888f631b94ba9",
+      "bytes": 72799
+    },
+    {
+      "id": "vocina-ort-wasm",
+      "sha256": "d1ab1b94b16a65b29d710d0b587b29e7bed336827577623913479b8afe8113e6",
+      "bytes": 13479978
+    },
+    {
+      "id": "vocina-ort-webgpu-bundle",
+      "sha256": "3a18c7f261e05d44a15b2eef18a28e5f53c044d5d140bcea6066baf1f09c8b53",
+      "bytes": 113035
+    },
+    {
+      "id": "vocina-ort-webgpu-wasm",
+      "sha256": "7e83cd6cee77e478bc96a7e91b198144fb5e4126287daf1f9b54bb195ebcd55a",
+      "bytes": 24254953
+    },
+    {
+      "id": "vocina-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "vocina-notice",
+      "sha256": "2c3a05a6d628550a27875dad22463ceedfab25e547cd3740d40dc7c195565520",
+      "bytes": 1609
+    },
+    {
+      "id": "vocina-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "vocina-it",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "it"
+        ],
+        "scope": "Pinned Vocina v1.0 INT8 checkpoint and its two released Italian preset voices",
+        "sources": [
+          "https://github.com/OfficinePixel/vocina/tree/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",
+          "https://github.com/OfficinePixel/vocina/releases/tag/v1.0",
+          "https://www.officinepixel.com/vocina/"
+        ],
+        "notes": "Benchmarks I1 (Femminile, index 0) only. I2 (Maschile, index 1) is also released. The publisher estimates approximately 4.5M parameters; the local graph scan reports a 180,555 explicitly named FP32 weight/bias initializer lower bound and 4,533,743 stored initializer values, not an exact trainable count. Voice/output redistribution terms were not separately stated."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "I1 (Femminile)",
+      "precision": "INT8",
+      "settings": {
+        "language": "it",
+        "locale": "it-IT",
+        "voiceId": "I1",
+        "voiceIndex": 0,
+        "voiceLabel": "I1 (Femminile)",
+        "speed": 1,
+        "pitch": 0,
+        "pitchRange": 1,
+        "variants": [],
+        "precision": "dynamic-MatMul INT8",
+        "sampleRate": 24000,
+        "threads": 1,
+        "modelRevision": "8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",
+        "graphSha256": "a899c64c380fd3ca6460b13b8162da0d9931c25326567c1e87e140a2aa1b743d",
+        "frontend": "Vocina official g2p_it and tinyvoca_web algorithm at 8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34; Italian Wiktionary lexicon",
+        "runtimeRelease": "onnxruntime-web@1.27.0",
+        "algorithm": "g2p.frasi; official adatta token fitting (max 200); official per-piece pauses including final pause per source span; global 0.99 peak limiter.",
+        "integrationChanges": "Dedicated benchmark worker; zero-delay UI-yield between pieces omitted because no UI is rendered in the worker.",
+        "stochasticity": "The graph uses native RandomNormalLike; PCM hashes may differ across runs and are not a repeatability oracle.",
+        "fixtureId": "it-article-v1",
+        "executionProviders": [
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "ONNX Runtime Web 1.27.0 bundled CPU/WASM entrypoint, verified local WASM binary and one WASM thread; Italian G2P runs in the dedicated worker."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 68304.97000002861,
+          "samples": 34861408,
+          "sampleRate": 24000,
+          "pcmSha256": "f6b25f7c1d42f84b3afbbb8ce45cd12902b51a2603add848e7e2faae58e14b17",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 205.32500004768372,
+            "firstSourceChunkCompletedMs": 723.1949999332428,
+            "audioSeconds": 1452.5586666666666,
+            "realTimeFactor": 0.047023897600483804,
+            "minSamplesPerChunk": 292672,
+            "maxSamplesPerChunk": 396896
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 68059.04499983788,
+          "samples": 34861408,
+          "sampleRate": 24000,
+          "pcmSha256": "a7e557ddde6d310a0de26583619a3b8414260c61d340c1d1a0053b49f83f9769",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 153.31499981880188,
+            "firstSourceChunkCompletedMs": 652.7299997806549,
+            "audioSeconds": 1452.5586666666666,
+            "realTimeFactor": 0.04685459290674975,
+            "minSamplesPerChunk": 292672,
+            "maxSamplesPerChunk": 396896
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 68124.53999996185,
+          "samples": 34861408,
+          "sampleRate": 24000,
+          "pcmSha256": "2ac66ee4772f4ff4710fe2ab00fee7a835c9b2d46b96b11f1bc8e072de01fda6",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 153,
+            "firstSourceChunkCompletedMs": 652.7999999523163,
+            "audioSeconds": 1452.5586666666666,
+            "realTimeFactor": 0.04689968230769924,
+            "minSamplesPerChunk": 292672,
+            "maxSamplesPerChunk": 396896
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 68097.67499995232,
+          "samples": 34861408,
+          "sampleRate": 24000,
+          "pcmSha256": "87775443b9bd8a3db3556dbf773a01d66ce3214af4c5746a0241428002ce5f94",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 107,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 153.00999999046326,
+            "firstSourceChunkCompletedMs": 650.7799999713898,
+            "audioSeconds": 1452.5586666666666,
+            "realTimeFactor": 0.04688118735763214,
+            "minSamplesPerChunk": 292672,
+            "maxSamplesPerChunk": 396896
+          },
+          "audio": {
+            "sha256": "cff86c349580d439b2ff7166f99521d140025f864efb9c3084bc1de767f26680",
+            "bytes": 69722860
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T09-55-33-549Z-28db6049187f; cell 1/4; source adeea4ac056330319f95e078066ba06501f0c7db; fixture it-article-v1 (it, 23584 JavaScript characters, 107 spans); requested n=3; effective n=3; Headed Google Chrome in disposable profiles, sequential. Vocina v1.0 dynamic-MatMul INT8, default I1 (Femminile) at neutral settings, official G2P with empty variants, and ORT Web 1.27.0. Dedicated cached resource cells do not contribute to the warm time score. Native stochastic inference preserved. Record AC, Chrome version, host load and thermal observations."
+  ]
+}
