@@ -1,5 +1,6 @@
 import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
+import { createTinyVocaDeEnAdapter } from './adapters/tiny-voca-de-en.mjs';
 import { createApptorDeAdapter } from './adapters/apptor-de.mjs';
 import { createApptorAtAdapter } from './adapters/apptor-at.mjs';
 import { createLinnetAdapter } from './adapters/linnet.mjs';
@@ -44,6 +45,7 @@ const state = { fixture: null, fixtureId: null, chunks: null, engine: null, mode
 const FACTORIES = {
   'sopro-v2-turbo': createSoproAdapter,
   'tiny-voca': createTinyVocaAdapter,
+  'tiny-voca-de-en': createTinyVocaDeEnAdapter,
   'apptor-tiny-tts': createApptorDeAdapter,
   'apptor-tiny-tts-at': createApptorAtAdapter,
   'linnet-en-35m': createLinnetAdapter,
@@ -178,7 +180,7 @@ async function selectedFixture(smoke = false, fixtureId = 'english-20k-v1') {
   const smokeBytes = new TextEncoder().encode(text);
   const spec = (await getFixtureRegistry()).fixtures.find(entry => entry.id === fixtureId);
   const fixture = spec.id === 'english-20k-v1'
-    ? { id: spec.smokeId, sha256: await sha256(smokeBytes), characters: text.length, chunks: selected.length }
+    ? { id: spec.smokeId, language: spec.language, sha256: await sha256(smokeBytes), characters: text.length, chunks: selected.length }
     : { id: spec.smokeId, language: full.fixture.language, sha256: await sha256(smokeBytes), characters: text.length,
       unicodeCodePoints: Array.from(text).length, utf8Bytes: smokeBytes.length, chunks: selected.length, source: spec.source };
   return {
@@ -226,8 +228,9 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       fixtureId,
       language: loaded.fixture.language,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
-      auditTexts: smoke && ((model === 'apptor-tiny-tts' && fixtureId === 'de-article-v1') ||
-        (model === 'apptor-tiny-tts-at' && fixtureId === 'de-at-article-v1'))
+      auditTexts: (smoke && ((model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
+        (model === 'apptor-tiny-tts' && fixtureId === 'de-article-v1') ||
+        (model === 'apptor-tiny-tts-at' && fixtureId === 'de-at-article-v1')))
         ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : [],
     });
     if (result.status === 'unsupported') {

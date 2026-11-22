@@ -194,6 +194,18 @@ The inclusionAI model and Fusor runtime carry MIT licenses. The original usage d
 
 The code and model weights are Apache-2.0. The training dataset is CC BY 4.0. The benchmark uses the released F2 synthetic voice. The pinned Dizione source archive includes its Apache-2.0 license. The model assets include separate CMUdict and homograph-data notices. ONNX Runtime Web is MIT. The Pyodide distribution uses MPL-2.0, CPython uses its PSF license, and the NumPy wheel includes its BSD and bundled component notices. [Model and dataset terms](https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/README.md#license) · [Dizione license](https://github.com/n4ze3m/dizione/blob/f8629fe989f3d0db5f440f9b3c6f0154f2e6110f/LICENSE) · [Runtime configuration and source](../web/tiny-voca/NOTICE.md)
 
+### Tiny Voca DE/EN (Voca64)
+
+The pinned model code and weights declare Apache-2.0; its training data card
+declares CC BY 4.0. The German MFA dictionary requires CC BY 4.0 attribution.
+The browser frontend also carries Phony MIT, nrmlz Apache-2.0, QuickJS MIT,
+Dizione and separate CMUdict/homograph-data notices. ONNX Runtime Web is MIT
+with bundled third-party notices. Model terms do not grant a separate license
+for generated audio. The official Space's frontend notice says English
+production phonemization is not enabled, while its pinned worker exposes an
+English route; the benchmark records that conflict and requires parity checks.
+[Pinned model terms](https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md) · [Browser and component notices](../web/voca64/NOTICE.md)
+
 ## Sopro v2 Turbo
 
 Sopro's code and model weights are Apache-2.0. ONNX Runtime Web is MIT and has bundled third-party notices. The fixed reference is the benchmark’s own published Tiny Voca synthetic F2 audio, generated from the benchmark article, and credited with the output. [Model terms](https://huggingface.co/samuel-vitorino/sopro-v2-turbo/blob/c12d0dc7c4a33b3cb6ea3d11ceb70bc60c7c6312/README.md) · [Runtime, prompt and modifications](../web/sopro/NOTICE.md)

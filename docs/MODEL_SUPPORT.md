@@ -263,6 +263,12 @@ The base cookbook lists 117 named voices. Fusor's pinned WASM runtime enumerates
 
 The pinned checkpoint has two built-in American English voices, F2 and M2, and supports one language. The benchmark uses F2 (speaker ID 0). [Model card](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/README.md) · [Export configuration](https://huggingface.co/n4ze3m/tiny-voca/blob/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d/config.json)
 
+<a id="tiny-voca-de-en"></a>
+
+### Tiny Voca DE/EN 4.6M (Voca64)
+
+The pinned Voca64 checkpoint supports German and English with 32 synthetic voices per language. The benchmark fixes `fresh-de-f00` for `de-article-v1` and `fresh-en-f00` for `english-20k-v1`. Its official static browser bundle performs local Phony/nrmlz text preparation and single-thread ONNX Runtime WebAssembly synthesis at 24 kHz; the benchmark also runs the pinned plan and wave graphs through WebGPU with WASM fallback and verified hardware dispatch. Full-fixture token/stress digests match the official worker in headed smoke diagnostics. The Space frontend notice conflicts with its worker about English production enablement, so that source inconsistency remains disclosed. The checkpoint has 4,563,403 parameters; model terms do not establish a standalone output license. [Pinned checkpoint](https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/tree/57fe34dfc061e6cc58e27d186bf7ba16d82d2def) · [Pinned browser Space](https://huggingface.co/spaces/Fraunhofer-IEM/designed-voices-tts/tree/a8ee94178a6f9b703e89e113a3354549d1bdc38d) · [Configuration and attributions](../web/voca64/NOTICE.md)
+
 <a id="apptor-tiny-tts"></a>
 
 ### Apptor Tiny TTS 4.5M (Standard German)
