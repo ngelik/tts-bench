@@ -1,5 +1,5 @@
 import { fetchModelAsset } from '../cache-model-asset.mjs';
-import { assetDigests, browserSourceRevision, fixtureOracle, hop, maxFrames, modelRevision, sampleRate, validatePlan, voiceIndex, voices } from '../voca64/profile.mjs';
+import { assetDigests, browserSourceRevision, fixtureOracle, hop, maxFrames, modelRevision, resolveFixtureLanguage, sampleRate, validatePlan, voiceIndex, voices } from '../voca64/profile.mjs';
 import { dispatchProbe, hardwareGpu } from './gpu-probe.mjs';
 
 const root = `/models/tiny-voca-de-en/${modelRevision}/${browserSourceRevision}/`;
@@ -144,15 +144,14 @@ async function generate(chunk, onFirst) {
   return { parts, sampleRate, completedChunkId: chunk.id };
 }
 
-async function initialize({ backend, probe, probeText, fixtureId, language, auditTexts = [] }) {
+async function initialize({ backend, probe, probeText, fixtureId, language: fixtureLanguage, auditTexts = [] }) {
   if (!['cpu', 'webgpu'].includes(backend)) throw new Error('Tiny Voca DE/EN supports CPU or WebGPU');
   const gpuMode = backend === 'webgpu';
   if (gpuMode) {
     gpuName = await hardwareGpu();
     if (!gpuName) return { ...info, status: 'unsupported', backendEffective: 'none', reason: 'Hardware WebGPU is unavailable', capability: { gpuDispatchVerified: false, description: 'No hardware WebGPU adapter was available.' } };
   }
-  const expectedFixture = fixtureOracle[fixtureId];
-  if (!expectedFixture || expectedFixture.language !== language) throw new Error('Tiny Voca DE/EN requires the fixed English or German fixture route');
+  const language = resolveFixtureLanguage(fixtureId, fixtureLanguage);
   activeLanguage = language;
   const [configBytes, planBytes, waveBytes, noiseBytes, tailsBytes] = await Promise.all([
     asset('assets/voca64/config.json'), asset('assets/voca64/plan.onnx'), asset('assets/voca64/wave.onnx'),
@@ -182,7 +181,7 @@ async function initialize({ backend, probe, probeText, fixtureId, language, audi
   const hook = gpuMode && probe ? dispatchProbe() : null;
   try {
     if (probe) {
-      const probeResult = await generate({ id: 'probe', language, text: probeText || (language === 'de' ? 'Ein kurzer Sprachtest.' : 'A short speech test.') });
+      const probeResult = await generate({ id: 'probe', text: probeText || (language === 'de' ? 'Ein kurzer Sprachtest.' : 'A short speech test.') });
       if (!probeResult.parts.length) throw new Error('Tiny Voca DE/EN capability probe returned no PCM');
     }
   } finally {

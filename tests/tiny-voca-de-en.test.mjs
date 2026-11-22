@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { getAssetLock } from '../lib/catalog.mjs';
 import { getModelParameters } from '../lib/model-parameters.mjs';
-import { browserSourceRevision, fixtureOracle, modelRevision, validatePlan, voiceIndex, voices } from '../web/voca64/profile.mjs';
+import { browserSourceRevision, fixtureOracle, modelRevision, resolveFixtureLanguage, validatePlan, voiceIndex, voices } from '../web/voca64/profile.mjs';
 
 test('Voca64 profile pins both fixture routes, voices, source and official full-fixture frontend digests', () => {
   const model = getAssetLock().models['tiny-voca-de-en'];
@@ -32,4 +32,14 @@ test('Voca64 planner preserves punctuation-only official pieces while validating
   assert.throws(() => validatePlan({ ids: [1, 88, 2], stress: [0, 0, 0] }), /phoneme ABI/);
   assert.throws(() => validatePlan({ ids: [1, 20], stress: [0] }), /invalid token\/stress/);
   assert.throws(() => voiceIndex('fr'), /does not support/);
+});
+
+test('only the canonical legacy English fixture resolves an absent language; explicit mismatches and unknown routes fail', () => {
+  assert.equal(resolveFixtureLanguage('english-20k-v1', undefined), 'en');
+  assert.equal(resolveFixtureLanguage('english-20k-v1', 'en'), 'en');
+  assert.equal(resolveFixtureLanguage('de-article-v1', 'de'), 'de');
+  assert.throws(() => resolveFixtureLanguage('english-20k-v1', 'de'), /fixed English or German fixture route/);
+  assert.throws(() => resolveFixtureLanguage('de-article-v1', undefined), /fixed English or German fixture route/);
+  assert.throws(() => resolveFixtureLanguage('unknown-fixture', undefined), /fixed English or German fixture route/);
+  assert.throws(() => resolveFixtureLanguage('__proto__', undefined), /fixed English or German fixture route/);
 });
