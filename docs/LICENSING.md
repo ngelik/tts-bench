@@ -293,3 +293,25 @@ KaleComputer releases the weights, synthetic presets, and browser frontend under
 ### Clarvia TTS Tiny
 
 The pinned Turkish model and `clarvia-phonemizer` source declare Apache-2.0. Pyodide 314.0.8 is MPL-2.0 and embeds CPython 3.14.2 (PSF terms); ONNX Runtime Web 1.20.1 is MIT with upstream third-party notices. The selected `female_1` voice is described as synthetic. The model card's data summaries are publisher claims, not an independent dataset audit. It requests disclosure of generated speech and prohibits impersonation. Code/model licensing does not establish separate blanket rights to publish recordings. [Pinned model terms](https://huggingface.co/wite-tech/clarvia-tts-tiny/blob/51023684a0a39742455c838e9d1d8714d3ae7289/README.md) · [Browser profile and notices](../web/clarvia-tts-tiny/NOTICE.md) · [ONNX Runtime third-party notices](https://github.com/microsoft/onnxruntime/blob/v1.20.1/ThirdPartyNotices.txt).
+
+## Korean TTS (KSS and Dizione F2)
+
+The single pinned step-160000 FP32 graph contains KSS, F2, and M2 voices. The
+published KSS terms identify CC BY-NC-SA 4.0 for the KSS corpus and state that
+the Korean voice and shared model weights inherit its noncommercial condition.
+That condition applies to F2 English as well because both voices are in the
+same graph. Asset retrieval therefore requires `--accept-license`; that flag is
+an acknowledgment for local noncommercial research use, not a commercial grant.
+No blanket license for generated recordings is inferred.
+
+The benchmark selects KSS index 0 with the `ko-loan` frontend for Korean and
+Dizione F2 index 1 with `own` mode for English. M2 is retained in the source
+graph but is not a benchmark profile. Code and runtime terms remain separate:
+Tiny Voca/Dizione source is Apache-2.0, ONNX Runtime Web is MIT, Pyodide is
+MPL-2.0, Python uses PSF terms, and NumPy uses BSD terms. NLTK and its
+transitive package data retain their own notices. The asset lock pins the exact
+model/frontend inputs and the six ORT runtime files; local staged copies remain
+ignored. [Pinned final report](https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md) ·
+[KSS corpus card](https://huggingface.co/datasets/Bingsu/KSS_Dataset) ·
+[CC BY-NC-SA 4.0 terms](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) ·
+[Dizione F2 source](https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d).

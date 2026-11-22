@@ -1,4 +1,11 @@
 {
+  "korean-tts": {
+    "parameterCount": 4550347,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+    "upstreamModelCard": "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca",
+    "scope": "Publisher-reported exact parameter total for the pinned step-160000 FP32 ONNX graph, including waveform generator."
+  },
   "lfm3-audio-2b-gguf": {
     "parameterCount": 1466456064,
     "countKind": "lower-bound",

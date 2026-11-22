@@ -1,5 +1,5 @@
 // Original worker bridge. Third-party frontend sources retain their own licenses.
-export function createRpcAdapter(workerUrl, label, fixedOptions = {}, hooks = {}) {
+export function createRpcAdapter(workerUrl, label, fixedOptions = {}, hooks = {}, workerOptions = { type: 'module' }) {
   let worker = null;
   let serial = 0;
   let failed = false;
@@ -31,7 +31,7 @@ export function createRpcAdapter(workerUrl, label, fixedOptions = {}, hooks = {}
   }
   return {
     async initialize(options) {
-      worker = new Worker(workerUrl, { type: 'module' });
+      worker = new Worker(workerUrl, workerOptions);
       worker.onmessage = ({ data }) => {
         try { if (hooks.onMessage?.(data) === true) return; }
         catch (error) { fail(error); return; }
@@ -61,6 +61,9 @@ export function createRpcAdapter(workerUrl, label, fixedOptions = {}, hooks = {}
       const response = await request('generate', { chunk }, first);
       if (response.parts.some(part => part.length > 0)) first();
       return response;
+    },
+    async diagnostic(options) {
+      return request('diagnostic', { options: { ...options, ...fixedOptions } });
     },
     async dispose() {
       if (!worker) return;

@@ -2,6 +2,7 @@ import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
 import { createTinyVocaDeEnAdapter } from './adapters/tiny-voca-de-en.mjs';
 import { createTinyVocaItAdapter } from './adapters/tiny-voca-it.mjs';
+import { createKoreanTtsAdapter } from './adapters/korean-tts.mjs';
 import { createClarviaTtsTinyAdapter } from './adapters/clarvia-tts-tiny.mjs';
 import { createZerreTtsAdapter } from './adapters/zerre-tts.mjs';
 import { createVocinaAdapter } from './adapters/vocina.mjs';
@@ -51,6 +52,7 @@ const FACTORIES = {
   'tiny-voca': createTinyVocaAdapter,
   'tiny-voca-de-en': createTinyVocaDeEnAdapter,
   'tiny-voca-it': createTinyVocaItAdapter,
+  'korean-tts': createKoreanTtsAdapter,
   'clarvia-tts-tiny': createClarviaTtsTinyAdapter,
   'zerre-tts': createZerreTtsAdapter,
   'vocina-it': createVocinaAdapter,
@@ -242,7 +244,8 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
         (model === 'zerre-tts' && fixtureId === 'tr-article-v1') ||
         (model === 'vocina-it' && fixtureId === 'it-article-v1') ||
         (model === 'apptor-tiny-tts' && fixtureId === 'de-article-v1') ||
-        (model === 'apptor-tiny-tts-at' && fixtureId === 'de-at-article-v1')))
+        (model === 'apptor-tiny-tts-at' && fixtureId === 'de-at-article-v1') ||
+        (model === 'korean-tts' && ['ko-article-v1', 'english-20k-v1'].includes(fixtureId))))
         ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : [],
     });
     if (result.status === 'unsupported') {

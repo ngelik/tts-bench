@@ -447,3 +447,11 @@ Supported voices: **10**. Bundled voices: **1** (Kenzie). Supported languages: *
 Both pinned browser profiles select the first official voice, Kenzie (`s057b`), with American English pronunciation. The publisher also includes British English presets in the full catalog. The benchmark stages Kenzie's style table, decoder controls, and American English frontend.
 
 [Pinned model card](https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/README.md) · [Voice catalog](https://huggingface.co/KaleComputer/kale-tts-1-nano/blob/b6ce1887268c3667994fc3b0b2c82887c069915c/voices.json).
+
+<a id="korean-tts"></a>
+
+## Korean TTS (KSS and Dizione F2)
+
+Supported voices: **3** (KSS, F2, M2), all present in one pinned graph. Languages: **2** (ko, en). The benchmark registers KSS index 0 with `ko-loan` for `ko-article-v1` and Dizione F2 index 1 with `own` for `english-20k-v1`. M2 is not evaluated; mode `ko` remains reserved. Mixed Korean text with embedded English follows the Korean loanword route.
+
+The graph is the publisher's step-160000 FP32 export, pinned at source revision `c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c`; the published v2 report records 4,550,347 parameters including the waveform generator. Korean and English routes use the same exact local Pyodide frontend and graph, with ONNX Runtime Web 1.20.1 on single-thread WASM or verified hardware WebGPU. [Pinned source report](https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md) · [KSS corpus](https://huggingface.co/datasets/Bingsu/KSS_Dataset) · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
