@@ -271,7 +271,8 @@ function unsupported(reason) {
 async function initialize({ backend, probe, probeText, fixtureId, language, auditTexts = [] }) {
   if (!['cpu', 'webgpu'].includes(backend)) throw new Error('Tiny Voca Japanese v3 supports CPU/WASM or WebGPU/WASM.');
   const languageForFixture = fixtureId === 'ja-article-v1' ? 'ja' : fixtureId === 'english-20k-v1' ? 'en' : null;
-  if (!languageForFixture || language !== languageForFixture) throw new Error('Tiny Voca Japanese v3 requires ja-article-v1 or english-20k-v1 with matching language routing.');
+  const routedLanguage = fixtureId === 'english-20k-v1' && language === undefined ? 'en' : language;
+  if (!languageForFixture || routedLanguage !== languageForFixture) throw new Error('Tiny Voca Japanese v3 requires ja-article-v1 or english-20k-v1 with matching language routing.');
   activeLanguage = languageForFixture;
   const gpuMode = backend === 'webgpu';
   if (gpuMode) {
