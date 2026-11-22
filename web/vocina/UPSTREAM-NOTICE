@@ -1,0 +1,27 @@
+Vocina
+Una voce sintetica italiana che gira nel browser.
+
+Vocina è derivato da tiny-voca di n4ze3m, https://github.com/n4ze3m/tiny-voca,
+Copyright n4ze3m, rilasciato con licenza Apache License 2.0 (vedi LICENSE).
+
+Modifiche rispetto a tiny-voca (commit 7241dfb):
+- inventario di 49 simboli per l'italiano (e/o aperte e chiuse, ɲ, ʎ, ts, dz, doppie come
+  due fonemi uguali) al posto di quello inglese, più 8 simboli riservati in coda dai modelli
+  della tappa 3;
+- un convertitore testo→fonemi italiano scritto da noi (g2p_it.js, con i dati in dati.json),
+  al posto del fonetizzatore inglese «dizione» e di eSpeak NG;
+- voci nuove, disegnate a parole con Qwen3-TTS (Apache 2.0) e non clonate da persone reali;
+- dati di addestramento nuovi: frasi di Common Voice italiano (CC0) e frasi scritte da noi,
+  lette dalle voci qui sopra;
+- pesi del modello addestrati da zero su questi dati (non derivano dai pesi inglesi);
+- pagina web e lettore nuovi (app.js, tinyvoca_web.js).
+
+Componenti di terze parti inclusi:
+- lessico_wikizionario.json: pronunce dal Wiktionary inglese (https://en.wiktionary.org),
+  contributori del Wiktionary, licenza CC BY-SA 4.0
+  (https://creativecommons.org/licenses/by-sa/4.0/), estratte con kaikki.org / wiktextract
+  (https://kaikki.org, Tatu Ylonen, «Wiktextract», LREC 2022) e WikiPron
+  (https://github.com/CUNY-CL/wikipron), e convertite nella grafia del nostro lessico. Il file
+  resta sotto CC BY-SA 4.0; il resto di Vocina è sotto Apache 2.0.
+- ONNX Runtime Web (cartella ort/), Copyright (c) Microsoft Corporation, licenza MIT
+  (vedi LICENSE-onnxruntime-web).

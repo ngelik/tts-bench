@@ -1,0 +1,11 @@
+# Vocina Italian v1.0 adapter notice
+
+The model and upstream source are pinned to [OfficinePixel/vocina commit 8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34](https://github.com/OfficinePixel/vocina/tree/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34), released as [v1.0](https://github.com/OfficinePixel/vocina/releases/tag/v1.0). The selected dynamic-MatMul INT8 graph is the official vocina-int8.onnx release asset. Its size and SHA-256, configuration, G2P files, lexicon and ONNX Runtime Web 1.27.0 bundles are pinned in assets.lock.json.
+
+Vocina derives from n4ze3m/tiny-voca (Apache-2.0), but its Italian G2P and weights are new. The upstream repository licenses its model and source under Apache-2.0. The lessico_wikizionario.json pronunciation data comes from Wiktionary contributors (CC BY-SA 4.0), extracted through kaikki.org / wiktextract and WikiPron; that file retains CC BY-SA terms. Common Voice Italian text is CC0 and the project also uses self-written sentences. The released I1 and I2 voices are synthetic Qwen3-TTS VoiceDesign voices, not clones of real people. ONNX Runtime Web is MIT.
+
+The benchmark selects I1 (Femminile, index 0), Italian, 24 kHz, speed 1, pitch shift 0, pitch range 1, and no optional pronunciation variants. It uses the official g2p.frasi, token fitting, per-piece pauses and 0.99 output peak limiter. vocina-browser.mjs is a narrow adaptation of upstream tinyvoca_web.js: it imports the pinned local G2P module, exposes the official token/stress/pause plan for diagnostics, passes through the explicit CPU or WebGPU+WASM provider selection, and omits the official zero-delay UI-yield between pieces because the benchmark worker has no UI to keep responsive. It copies PCM and disposes per-piece ORT tensors; worker termination releases the official wrapper's session because its public API has no dispose method.
+
+The CPU and WebGPU entry bundles are the npm 1.27.0 browser bundles. The verified WASM binary is passed through wasmBinary; wasmPaths is not set, avoiding an additional unpinned module-loader request.
+
+The upstream [license](LICENSE) and [attribution notice](UPSTREAM-NOTICE) accompany the adapted source. Benchmark recordings credit Vocina and the selected synthetic preset.

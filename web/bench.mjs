@@ -2,6 +2,7 @@ import { createSoproAdapter } from './adapters/sopro.mjs';
 import { createTinyVocaAdapter } from './adapters/tiny-voca.mjs';
 import { createTinyVocaDeEnAdapter } from './adapters/tiny-voca-de-en.mjs';
 import { createTinyVocaItAdapter } from './adapters/tiny-voca-it.mjs';
+import { createVocinaAdapter } from './adapters/vocina.mjs';
 import { createApptorDeAdapter } from './adapters/apptor-de.mjs';
 import { createApptorAtAdapter } from './adapters/apptor-at.mjs';
 import { createLinnetAdapter } from './adapters/linnet.mjs';
@@ -48,6 +49,7 @@ const FACTORIES = {
   'tiny-voca': createTinyVocaAdapter,
   'tiny-voca-de-en': createTinyVocaDeEnAdapter,
   'tiny-voca-it': createTinyVocaItAdapter,
+  'vocina-it': createVocinaAdapter,
   'apptor-tiny-tts': createApptorDeAdapter,
   'apptor-tiny-tts-at': createApptorAtAdapter,
   'linnet-en-35m': createLinnetAdapter,
@@ -232,6 +234,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
       auditTexts: (smoke && ((model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'tiny-voca-it' && fixtureId === 'it-article-v1') ||
+        (model === 'vocina-it' && fixtureId === 'it-article-v1') ||
         (model === 'apptor-tiny-tts' && fixtureId === 'de-article-v1') ||
         (model === 'apptor-tiny-tts-at' && fixtureId === 'de-at-article-v1')))
         ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : [],

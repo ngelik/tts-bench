@@ -10615,6 +10615,138 @@
         ],
         "notes": "The pinned ONNX graph is the official FP32 release. The official worker uses one-thread WASM; this benchmark adds WebGPU with explicit WASM fallback and untimed hardware dispatch proof. The graph contains native unseeded RandomNormalLike noise, so PCM digests are not a waveform identity guarantee. Apache-2.0 model/code terms do not establish a separate generated-audio license."
       }
+    },
+    "vocina-it": {
+      "displayName": "Vocina Italian v1.0 INT8",
+      "modelRevision": "8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.27.0",
+        "license": "MIT; bundled runtime components are provided in the pinned browser bundles",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "vocina-int8-weights",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/vocina-int8.onnx",
+          "url": "https://github.com/OfficinePixel/vocina/releases/download/v1.0/vocina-int8.onnx",
+          "bytes": 8536789,
+          "sha256": "a899c64c380fd3ca6460b13b8162da0d9931c25326567c1e87e140a2aa1b743d",
+          "kind": "model-weights"
+        },
+        {
+          "id": "vocina-int8-config",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/vocina-int8.json",
+          "url": "https://github.com/OfficinePixel/vocina/releases/download/v1.0/vocina-int8.json",
+          "bytes": 926,
+          "sha256": "2f07dbe350d2fdc891126d4847fe251e7ab48d04c3d87836123030d5a3e1a3f8",
+          "kind": "config"
+        },
+        {
+          "id": "vocina-g2p-it",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/g2p_it.js",
+          "url": "https://raw.githubusercontent.com/OfficinePixel/vocina/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/g2p_it/g2p_it.js",
+          "bytes": 22989,
+          "sha256": "9a0a5bdd9feddd45d1ed32db2cad2a431a7b3f70b0f5a33bd45d24e934b4c825",
+          "kind": "frontend"
+        },
+        {
+          "id": "vocina-data",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/dati.json",
+          "url": "https://raw.githubusercontent.com/OfficinePixel/vocina/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/g2p_it/dati.json",
+          "bytes": 31675,
+          "sha256": "a55faf08a98001f62db30780f593a2bd00cb9acf4cb6fb73a9bd06a4723d0ced",
+          "kind": "frontend-data"
+        },
+        {
+          "id": "vocina-wiktionary-lexicon",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/lessico_wikizionario.json",
+          "url": "https://raw.githubusercontent.com/OfficinePixel/vocina/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/g2p_it/lessico_wikizionario.json",
+          "bytes": 517343,
+          "sha256": "2ac11cdd7d6ad2b001d1719e504f80807cb0b517ab506154744111257d987f39",
+          "kind": "lexicon"
+        },
+        {
+          "id": "vocina-ort-wasm-bundle",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/runtime/ort.wasm.bundle.min.mjs",
+          "url": "https://unpkg.com/onnxruntime-web@1.27.0/dist/ort.wasm.bundle.min.mjs",
+          "bytes": 72799,
+          "sha256": "1db5e1c5cd2b860eed85e6eeff23e2aaa7cffcc407f67093bcc888f631b94ba9",
+          "kind": "runtime"
+        },
+        {
+          "id": "vocina-ort-wasm",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/runtime/ort-wasm-simd-threaded.wasm",
+          "url": "https://unpkg.com/onnxruntime-web@1.27.0/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 13479978,
+          "sha256": "d1ab1b94b16a65b29d710d0b587b29e7bed336827577623913479b8afe8113e6",
+          "kind": "runtime"
+        },
+        {
+          "id": "vocina-ort-webgpu-bundle",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/runtime/ort.webgpu.bundle.min.mjs",
+          "url": "https://unpkg.com/onnxruntime-web@1.27.0/dist/ort.webgpu.bundle.min.mjs",
+          "bytes": 113035,
+          "sha256": "3a18c7f261e05d44a15b2eef18a28e5f53c044d5d140bcea6066baf1f09c8b53",
+          "kind": "runtime"
+        },
+        {
+          "id": "vocina-ort-webgpu-wasm",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/runtime/ort-wasm-simd-threaded.asyncify.wasm",
+          "url": "https://unpkg.com/onnxruntime-web@1.27.0/dist/ort-wasm-simd-threaded.asyncify.wasm",
+          "bytes": 24254953,
+          "sha256": "7e83cd6cee77e478bc96a7e91b198144fb5e4126287daf1f9b54bb195ebcd55a",
+          "kind": "runtime"
+        },
+        {
+          "id": "vocina-license",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/LICENSE",
+          "url": "https://raw.githubusercontent.com/OfficinePixel/vocina/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "vocina-notice",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/NOTICE",
+          "url": "https://raw.githubusercontent.com/OfficinePixel/vocina/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/NOTICE",
+          "bytes": 1609,
+          "sha256": "2c3a05a6d628550a27875dad22463ceedfab25e547cd3740d40dc7c195565520",
+          "kind": "provenance"
+        },
+        {
+          "id": "vocina-ort-license",
+          "target": "models/vocina-it/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/LICENSE-onnxruntime-web",
+          "url": "https://raw.githubusercontent.com/OfficinePixel/vocina/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34/web/vocina/LICENSE-onnxruntime-web",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0; Wiktionary pronunciation lexicon CC BY-SA 4.0",
+        "runtime": "MIT (ONNX Runtime Web 1.27.0)",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "it"
+        ],
+        "scope": "Pinned Vocina v1.0 INT8 checkpoint and its two released Italian preset voices",
+        "sources": [
+          "https://github.com/OfficinePixel/vocina/tree/8dd17b31b0b6e40ce132105f5d0ea9eb7da98f34",
+          "https://github.com/OfficinePixel/vocina/releases/tag/v1.0",
+          "https://www.officinepixel.com/vocina/"
+        ],
+        "notes": "Benchmarks I1 (Femminile, index 0) only. I2 (Maschile, index 1) is also released. The publisher estimates approximately 4.5M parameters; the local graph scan reports a 180,555 explicitly named FP32 weight/bias initializer lower bound and 4,533,743 stored initializer values, not an exact trainable count. Voice/output redistribution terms were not separately stated."
+      }
     }
   }
 }
