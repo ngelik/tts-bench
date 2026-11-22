@@ -477,3 +477,20 @@ reusable audio material; this code/model entry does not grant general output
 redistribution rights.
 
 [Pinned model card](https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan/blob/7ed75cc5f521cc6be4cb57689b2c038928259ae9/README.md) · [Pinned inference source](https://github.com/ayutaz/tiny-voca/tree/66ee00d2c8cd61b34be1cde5880bac0e45b89fcf) · [Profile and terms](TINY_VOCA_JA_TSUKUYOMI_CHAN.md).
+
+<a id="tiny-voca-ja-v3"></a>
+
+## Gachimoto Tiny Voca Japanese v3
+
+Supported voices: **2** (F2, M2), both bundled. Supported benchmark languages:
+**2** (ja, en). Both fixture routes select synthetic F2, index 0, with the
+original 24 kHz step-134000 FP32 ONNX graph. The published graph contains
+4,538,827 FP32 parameters and runs on CPU/WASM or verified hardware
+WebGPU+WASM under ONNX Runtime Web 1.31.1.
+
+The Japanese route uses the published OpenJTalk prosody mapping with the
+pinned pyopenjtalk-plus and Sudachi packages. The English route uses eSpeak NG
+1.52.0 `en-us` with the published English token and stress projection.
+The benchmark runs the standalone Japanese and English article fixtures
+independently. The Japanese fixture retains one unknown emitted by the
+original frontend for an en dash. [Pinned model and voice credits](https://huggingface.co/gachimoto/tiny-voca-ja/blob/9b2305c81b9ca92ef8347eba473ea096c86f55c4/README.md) · [Profile and reproduction](TINY_VOCA_JA_V3.md).
