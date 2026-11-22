@@ -209,10 +209,10 @@ test('Ukrainian model defaults to its required fixture and records exact Unicode
   });
 });
 
-test('campaign runner accepts a third registered language and records its exact fixture identity', async t => {
+test('campaign runner accepts a registered non-default fixture and records its exact identity', async t => {
   const frenchFixture = {
-    id:'fr-article-v1', smokeId:'fr-article-smoke-v1', language:'fr', articleFile:'fr-article-v1.txt',
-    chunksFile:'fr-article-v1.chunks.json', metadataFile:'fr-article-v1.meta.json', sha256:'f'.repeat(64),
+    id:'test-fr-article-v1', smokeId:'test-fr-article-smoke-v1', language:'fr', articleFile:'test-fr-article-v1.txt',
+    chunksFile:'test-fr-article-v1.chunks.json', metadataFile:'test-fr-article-v1.meta.json', sha256:'f'.repeat(64),
     characters:1200, unicodeCodePoints:1200, utf8Bytes:1320, chunks:7,
     source:{type:'translation', description:'Private campaign test fixture.', sourceFixtureId:'english-20k-v1',
       sourceSha256:'4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b', sourceLanguage:'en'},
