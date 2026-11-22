@@ -68,6 +68,12 @@
     "parameterCountSource": "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md",
     "scope": "The pinned Voca64 model card reports the exact total trained parameter count, including the waveform generator."
   },
+  "tiny-voca-it": {
+    "parameterCount": 446157,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://github.com/carbogninalberto/tiny-voca-it/blob/0c57fab284e58e0bad620f21790e631d5dec17f8/models/tiny-voca-it-preview-fp32.onnx",
+    "scope": "Count of explicitly named FP32 .weight and .bias initializers in the pinned v0.3.0 FP32 ONNX graph. This is a scoped initializer lower bound; the scan does not prove which tensors are trainable. The graph contains 6,767,245 FP32 initializer values in total, including constants and buffers, so that total is not reported as a trainable parameter count."
+  },
   "sopro-v2-turbo": {
     "parameterCount": 121574193,
     "countKind": "lower-bound",
