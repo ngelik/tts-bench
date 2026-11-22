@@ -230,5 +230,12 @@
     "parameterCountSource": "https://huggingface.co/Damaon/slyszeglosy/blob/23b63ff12db5f19260985031e64c2f45b89cc609/README.md",
     "upstreamModelCard": "https://huggingface.co/Damaon/slyszeglosy/blob/23b63ff12db5f19260985031e64c2f45b89cc609/README.md",
     "scope": "Publisher-reported parameter count for the pinned V1 model, including its waveform generator."
+  },
+  "tiny-voca-ru": {
+    "parameterCount": 4534411,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/egnch/tiny-voca-ru/blob/2723b0e71fea216001bd4f6caf0866eb06879339/README.md",
+    "upstreamModelCard": "https://huggingface.co/egnch/tiny-voca-ru/blob/2723b0e71fea216001bd4f6caf0866eb06879339/README.md",
+    "scope": "The publisher reports exactly 4,534,411 parameters for the pinned Russian model, including its waveform generator."
   }
 }
