@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-22t13-18-40-602z-korean-tts-cpu-warm-bd3a1d82",
+  "createdAt": "2026-11-22T13:24:42.322Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "ko-article-v1",
+    "language": "ko",
+    "sha256": "05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528",
+    "characters": 10196,
+    "unicodeCodePoints": 10196,
+    "utf8Bytes": 24274,
+    "chunks": 47,
+    "source": {
+      "type": "translation",
+      "description": "Complete Standard Korean translation of the English benchmark fixture by GPT-6 Luna, with independent AI review of all 27 paragraphs and small evaluator edits for source fidelity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "fff67d3bc4d836adcb1e87671d8a91c18c7f886c",
+    "dirty": false,
+    "manifestSha256": "5280ea70688662b25320d0350fc28d1bfc262e08d7d818fd52c9e16805765c46"
+  },
+  "assets": [
+    {
+      "id": "korean-tts-config-json",
+      "sha256": "fc39dfd1b434f289383dbf0208a22120f214b822065813dfc67b7e52a1f1bcd5",
+      "bytes": 1663
+    },
+    {
+      "id": "korean-tts-model-onnx",
+      "sha256": "ad39049485cf43359e8b4c24d18e01eab510907befda4311e4929b00cb74a5ad",
+      "bytes": 21438737
+    },
+    {
+      "id": "korean-tts-pyfront-zip",
+      "sha256": "d794b4bbfa6c49bc3a79bedd90c906a0523856796366dd43f8acd65404d0121d",
+      "bytes": 53158
+    },
+    {
+      "id": "korean-tts-dizione-zip",
+      "sha256": "b7ee20306c944620b3f571220e56b07c61bee1004a13f726ef5c45abc21375e3",
+      "bytes": 61388
+    },
+    {
+      "id": "korean-tts-mecab-dict-json",
+      "sha256": "989c6fa778b787fd3e92be700518806ca34304acb3ff4a21e970818f35de23e1",
+      "bytes": 948560
+    },
+    {
+      "id": "korean-tts-phonemizer-align-json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "korean-tts-phonemizer-cmudict-zip",
+      "sha256": "d07cca47fd72ad32ea9d8ad1219f85301eeaf4568f8b6b73747506a71fb5afd6",
+      "bytes": 896069
+    },
+    {
+      "id": "korean-tts-phonemizer-g2p-json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "korean-tts-phonemizer-g2p-npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "korean-tts-phonemizer-homographs-json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "korean-tts-phonemizer-lexicon-tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "korean-tts-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "korean-tts-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "korean-tts-pyodide-nltk-3-8-1-py3-none-any-whl",
+      "sha256": "569d99a4a10f8497e646e0e61d3c81550a726b419bf8e0da8e1e90603439e3b7",
+      "bytes": 4739451
+    },
+    {
+      "id": "korean-tts-pyodide-numpy-1-26-4-cp312-cp312-pyodide_2024_0_wasm32-whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "korean-tts-pyodide-regex-2024-4-16-cp312-cp312-pyodide_2024_0_wasm32-whl",
+      "sha256": "a7fc7d2a10de187ae4309b5280d372b24824ff64d43712dd1372a47e7113cfed",
+      "bytes": 894030
+    },
+    {
+      "id": "korean-tts-pyodide-sqlite3-1-0-0-zip",
+      "sha256": "e05c4defc15eac256607c87c3533af267fc072f3a1749a4f6b8bfe074e1be7f6",
+      "bytes": 1454039
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "korean-tts-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "korean-tts-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    }
+  ],
+  "cells": [
+    {
+      "model": "korean-tts",
+      "support": {
+        "voiceCount": 3,
+        "bundledVoiceCount": 3,
+        "languageCount": 2,
+        "languages": [
+          "ko",
+          "en"
+        ],
+        "scope": "One pinned bilingual FP32 graph. KSS index 0 is evaluated for the Korean ko-loan frontend; Dizione F2 index 1 is evaluated for English own mode. M2 remains an upstream alternate voice.",
+        "sources": [
+          "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+          "https://huggingface.co/datasets/Bingsu/KSS_Dataset",
+          "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+          "https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+          "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca"
+        ],
+        "notes": "Only KSS/ko-article-v1 and F2/english-20k-v1 are benchmark profiles. Mixed Korean with embedded English uses the Korean loanword route. The KSS weight terms apply to both voices; noncommercial acceptance is required."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "KSS",
+      "precision": "FP32",
+      "settings": {
+        "modelId": "korean-tts",
+        "modelRevision": "c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c",
+        "graphSha256": "ad39049485cf43359e8b4c24d18e01eab510907befda4311e4929b00cb74a5ad",
+        "fixtureId": "ko-article-v1",
+        "language": "ko",
+        "locale": "ko",
+        "voice": "KSS",
+        "voiceIndex": 0,
+        "frontendMode": "ko-loan",
+        "frontendFingerprint": "3f002758c5a0b3dc5c1789d8b178112d617f3e4dc0598afb97ad385d13156c2a",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "threads": 1,
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4",
+          "python": "3.12.1",
+          "numpy": "1.26.4",
+          "nltk": "3.8.1"
+        },
+        "executionProviders": [
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Pinned ONNX Runtime Web 1.20.1 model inference on explicit single-thread WASM; Pyodide frontend runs locally on CPU."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 86206.36000013351,
+          "samples": 38381312,
+          "sampleRate": 24000,
+          "pcmSha256": "5ab9bda6935d9529c0c17db2a90e4cbd880333322a7d82712b95502896b045a2",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 47,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 258.6600000858307,
+            "firstSourceChunkCompletedMs": 1814.2250001430511,
+            "audioSeconds": 1599.2213333333334,
+            "realTimeFactor": 0.0539052088683994,
+            "minSamplesPerChunk": 293888,
+            "maxSamplesPerChunk": 902912
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 85996.33499979973,
+          "samples": 38381312,
+          "sampleRate": 24000,
+          "pcmSha256": "838a0e738d16362b96e9ce7c28c9da2a55fd05b010468d894f5886b94685d088",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 47,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 249.7849998474121,
+            "firstSourceChunkCompletedMs": 1788.539999961853,
+            "audioSeconds": 1599.2213333333334,
+            "realTimeFactor": 0.05377387932948184,
+            "minSamplesPerChunk": 293888,
+            "maxSamplesPerChunk": 902912
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 86002.95000004768,
+          "samples": 38381312,
+          "sampleRate": 24000,
+          "pcmSha256": "168af6270d13e8afaa9e375d48b0d7eeb6d46a534bec8de3f84eb19742798974",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 47,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 248.9800000190735,
+            "firstSourceChunkCompletedMs": 1788.8099999427795,
+            "audioSeconds": 1599.2213333333334,
+            "realTimeFactor": 0.05377801571767907,
+            "minSamplesPerChunk": 293888,
+            "maxSamplesPerChunk": 902912
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 85924.94000005722,
+          "samples": 38381312,
+          "sampleRate": 24000,
+          "pcmSha256": "b1f241418e5734631201a786fd7f931b85ce9d9eefb86f5795420ca6039c6e1b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 47,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 249.8050000667572,
+            "firstSourceChunkCompletedMs": 1791.1050000190735,
+            "audioSeconds": 1599.2213333333334,
+            "realTimeFactor": 0.053729235728090095,
+            "minSamplesPerChunk": 293888,
+            "maxSamplesPerChunk": 902912
+          },
+          "audio": {
+            "sha256": "28f2d49f1e8b17ce376e714bdb3c0740b64f95f586d47ba0149e22aba43c1426",
+            "bytes": 76762668
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-22T13-18-39-899Z-4f4bdc0d928b; cell 1/4; source fff67d3bc4d836adcb1e87671d8a91c18c7f886c; fixture ko-article-v1 (ko, 10196 JavaScript characters, 47 spans); requested n=3; effective n=3; Headed Google Chrome in sequential disposable profiles. The released korean-tts v2 step-160000 FP32 browser graph, KSS, voice index 0, ko-loan mode. The official Pyodide 0.26.4 frontend and ORT Web 1.20.1, retaining upstream stochastic inference. Dedicated cached resource samples are independent of warm timing."
+  ]
+}

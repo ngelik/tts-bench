@@ -919,6 +919,130 @@
       }
     },
     {
+      "resultId": "2026-11-22t13-18-40-602z-korean-tts-cpu-warm-bd3a1d82",
+      "model": "korean-tts",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "KSS",
+      "language": "ko",
+      "attribution": "AI-generated benchmark narration from ooodev Korean TTS v2, built on tiny-voca. Korean uses the KSS voice and English uses the synthetic F2 voice. The shared checkpoint inherits CC BY-NC-SA 4.0 conditions from the Korean Single Speaker Speech Dataset. Noncommercial benchmark evaluation.",
+      "modelTerms": "KSS-trained weights: CC BY-NC-SA 4.0 (noncommercial use only)",
+      "sourceUrls": [
+        "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+        "https://huggingface.co/datasets/Bingsu/KSS_Dataset",
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+        "https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+        "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t13-18-40-602z-korean-tts-cpu-warm-bd3a1d82--korean-tts--cpu.wav",
+        "sha256": "8f2b9d53b2acf00d049e6cbcf4ff68cee8afb67653f54bd0cfa97888207eff91",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "28f2d49f1e8b17ce376e714bdb3c0740b64f95f586d47ba0149e22aba43c1426",
+        "bytes": 76762668
+      }
+    },
+    {
+      "resultId": "2026-11-22t13-32-43-659z-korean-tts-cpu-warm-a7ba0fa1",
+      "model": "korean-tts",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "en",
+      "attribution": "AI-generated benchmark narration from ooodev Korean TTS v2, built on tiny-voca. Korean uses the KSS voice and English uses the synthetic F2 voice. The shared checkpoint inherits CC BY-NC-SA 4.0 conditions from the Korean Single Speaker Speech Dataset. Noncommercial benchmark evaluation.",
+      "modelTerms": "KSS-trained weights: CC BY-NC-SA 4.0 (noncommercial use only)",
+      "sourceUrls": [
+        "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+        "https://huggingface.co/datasets/Bingsu/KSS_Dataset",
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+        "https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+        "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t13-32-43-659z-korean-tts-cpu-warm-a7ba0fa1--korean-tts--cpu.wav",
+        "sha256": "fe43032c966fd41b3ed69f774ee27d95a086a1f4e8aa932538fab63d7696923b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "150c62410a27dc52830dd089d5409ecd2f622636289a380f5e369e2f79a8ebfc",
+        "bytes": 56746028
+      }
+    },
+    {
+      "resultId": "2026-11-22t13-24-42-985z-korean-tts-webgpu-warm-7ceb0e99",
+      "model": "korean-tts",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "KSS",
+      "language": "ko",
+      "attribution": "AI-generated benchmark narration from ooodev Korean TTS v2, built on tiny-voca. Korean uses the KSS voice and English uses the synthetic F2 voice. The shared checkpoint inherits CC BY-NC-SA 4.0 conditions from the Korean Single Speaker Speech Dataset. Noncommercial benchmark evaluation.",
+      "modelTerms": "KSS-trained weights: CC BY-NC-SA 4.0 (noncommercial use only)",
+      "sourceUrls": [
+        "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+        "https://huggingface.co/datasets/Bingsu/KSS_Dataset",
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+        "https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+        "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t13-24-42-985z-korean-tts-webgpu-warm-7ceb0e99--korean-tts--webgpu.wav",
+        "sha256": "13f101d80bb7a3d9591809429ac391362064ee31ffe4ce178b17b3d9dac25788",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d217a3f74ad2fff14e8fdbe6b26a302b8ee0605d9dff871f3d194e24a64a6321",
+        "bytes": 76762668
+      }
+    },
+    {
+      "resultId": "2026-11-22t13-36-48-173z-korean-tts-webgpu-warm-f7086089",
+      "model": "korean-tts",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "en",
+      "attribution": "AI-generated benchmark narration from ooodev Korean TTS v2, built on tiny-voca. Korean uses the KSS voice and English uses the synthetic F2 voice. The shared checkpoint inherits CC BY-NC-SA 4.0 conditions from the Korean Single Speaker Speech Dataset. Noncommercial benchmark evaluation.",
+      "modelTerms": "KSS-trained weights: CC BY-NC-SA 4.0 (noncommercial use only)",
+      "sourceUrls": [
+        "https://github.com/ooodev/korean-tts/blob/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/FINAL_REPORT_v2.md",
+        "https://huggingface.co/datasets/Bingsu/KSS_Dataset",
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode",
+        "https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d",
+        "https://github.com/ooodev/korean-tts/tree/c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c/tiny-voca"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t13-36-48-173z-korean-tts-webgpu-warm-f7086089--korean-tts--webgpu.wav",
+        "sha256": "b97dbbcf60ff7ae6d2ac75eeb7341a70baf15f08cffa65700f19b0b7027a96e0",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "b5a1de133eb0b713f1feb871ac0a96545328f27641d1932899fe1581ed80278b",
+        "bytes": 56746028
+      }
+    },
+    {
       "resultId": "2026-11-10t12-19-17-960z-leokani-4.5m-cpu-cached-31b8534b",
       "model": "leokani-4.5m",
       "backend": "cpu",
