@@ -1,0 +1,19 @@
+słyszę głosy
+Mały polski model syntezy mowy (TTS).
+
+Ten projekt powstał na bazie tiny-voca:
+  tiny-voca, Copyright 2026 Muhammed Nazeem
+  https://github.com/n4ze3m/tiny-voca
+  Apache License 2.0, commit 62e2adef158bc997042cc6234f541f1e0e4cd55d (plik UPSTREAM)
+
+Zmiany względem tiny-voca: polski front-end fonetyczny (src/wymowa, nowy
+moduł), polski słownik głosek, mapa etykiet alignera skalibrowana na
+polskich nagraniach, polskie skrypty korpusu, generacji i odsiewu,
+termostat GPU, polska ocena i demo. Architektura modelu i przepis treningu
+pochodzą z tiny-voca. Historia zmian jest w repozytorium git.
+
+Kod jest udostępniony na licencji Apache-2.0 (plik LICENSE).
+
+Wagi modelu, nagrania treningowe i głosy referencyjne (voices/) są na
+licencji CC BY-NC 4.0, bo wygenerował je OmniVoice (k2-fsa), którego wagi
+są udostępnione na licencji CC BY-NC.

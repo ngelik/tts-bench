@@ -317,3 +317,13 @@ ignored. [Pinned final report](https://github.com/ooodev/korean-tts/blob/c63fc0d
 [KSS corpus card](https://huggingface.co/datasets/Bingsu/KSS_Dataset) ·
 [CC BY-NC-SA 4.0 terms](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) ·
 [Dizione F2 source](https://huggingface.co/n4ze3m/tiny-voca/tree/a46fbe0c8514cb32f5e80be987e6c96ef0540f8d).
+
+## Słyszę Głosy V1
+
+The V1 graph weights and its synthetic voice data are CC BY-NC 4.0 and require
+local noncommercial license acknowledgment. The upstream Python/frontend code
+is Apache-2.0. The benchmark selects bundled synthetic voice F only; the M voice
+and separate V2 model are not registered. The adapter preserves exact upstream
+Polish text normalization, segmentation and fit policy. No blanket output or
+recording redistribution rights are inferred. See the
+[Słyszę Głosy source and change notice](../web/slyszeglosy-v1/NOTICE.md).
