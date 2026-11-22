@@ -12917,6 +12917,219 @@
           "kind": "runtime"
         }
       ]
+    },
+    "alpa-es": {
+      "displayName": "Alpa Spanish female (FP32)",
+      "modelRevision": "de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+      "sourceRevision": "de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+      "sourceId": "FranciscoCarlosErra/alpa-es",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "license": "MIT ONNX Runtime Web; existing pinned project runtime alias and bundled notices apply.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "kind": "runtime"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "kind": "runtime"
+          },
+          {
+            "path": "LICENSE",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "kind": "license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "kind": "license"
+          }
+        ]
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "license": {
+        "model": "Apache-2.0 release for code and weights; checkpoint was trained from OpenSLR 61 CC-BY-SA-4.0 speech data. The model card asks users to check how share-alike applies to the weights.",
+        "inferenceSource": "Apache-2.0 Alpa/tiny-voca adapted source; exact Apache license and third-party notices retained.",
+        "frontend": "Apache-2.0 Spanish frontend ported from the pinned alpa/text.py; source file and digest are pinned.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 via the existing verified project alias.",
+        "dataset": "OpenSLR 61 is CC-BY-SA-4.0; no recordings are bundled.",
+        "requiresAcceptance": false
+      },
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "es-AR"
+        ],
+        "scope": "Pinned FranciscoCarlosErra/alpa-es checkpoint only. Two fixed voices (female and male) trained from recorded OpenSLR 61 speech; the browser profile selects female/index 0. This profile exposes Rioplatense Spanish (es-AR) only. The released frontend retains native unknown digit groups; it does not spell them out.",
+        "sources": [
+          "https://huggingface.co/FranciscoCarlosErra/alpa-es/tree/de2bf894bdd9eb768ae03fc6b385176a0ff505d1",
+          "https://github.com/n4ze3m/tiny-voca/tree/28e0722",
+          "https://www.openslr.org/61/",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "The pinned checkpoint contains exactly 4,529,035 parameters as counted from its loaded state. All 104 registered es-ar-article-v1 source spans pass the native letter/stress frontend audit; max 218 tokens, 63 unknown digit groups across 34 spans. Smoke-only audit; no pronunciation or listening review is claimed. The graph has no seed input and generates unseeded noise/breath internally; audio is retained as raw Float32 PCM."
+      },
+      "parameterCount": 4529035,
+      "frontendFingerprint": "5f311162496ea79058767317096a7e513a5798985be491986e13f99ecbd403cb",
+      "assets": [
+        {
+          "id": "alpa-es-source-alpa-es-pt",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa-es.pt",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa-es.pt",
+          "bytes": 18175621,
+          "sha256": "1cd61eb8ab67406233d982fc291e42225d7b0e7e98ef8e304ba834630c6ac0a0",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-readme-md",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/README.md",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/README.md",
+          "bytes": 4617,
+          "sha256": "c3c9e7a4ba7a52db843a0374a2a71fa7a656a4065d94774c106b2e5999ba8545",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-third-party-notices-md",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/THIRD_PARTY_NOTICES.md",
+      "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/THIRD_PARTY_NOTICES.md",
+          "bytes": 1522,
+          "sha256": "453fb323622991baac741dff62543f1526895c5da8becc6dff30d911f6203af6",
+      "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-alpa-init-py",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa/__init__.py",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa/__init__.py",
+          "bytes": 74,
+          "sha256": "687861b5be5f016db072e086860c02d7746b5a01bae00cbf3d2a69e9873768ee",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-alpa-config-py",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa/config.py",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa/config.py",
+          "bytes": 3801,
+          "sha256": "327db6394ddada7edb56f0cb9f98408da6af27ab322a4d05e403c23a22cf29d2",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-alpa-export-py",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa/export.py",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa/export.py",
+          "bytes": 19348,
+          "sha256": "556f93eca77c37cd829f30cb7b02dacb3f8cb02fe95af770b3f05d82f72dbfbf",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-alpa-infer-py",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa/infer.py",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa/infer.py",
+          "bytes": 3940,
+          "sha256": "c0799597558a5fb3c42cd40e7f6a1a35063fc68c0ec0c3f705bc31318aa31685",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-alpa-model-py",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa/model.py",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa/model.py",
+          "bytes": 32724,
+          "sha256": "6f920edcc89c964b7349c86cdf9671710cef487739fe1ed700db18eebaf51f07",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-source-alpa-text-py",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/source/alpa/text.py",
+          "url": "https://huggingface.co/FranciscoCarlosErra/alpa-es/resolve/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa/text.py",
+          "bytes": 7270,
+          "sha256": "16957f0ba5e2b8ed9fcbc364b2d8b0d85f5df554ea52cb0cc9467488a84fdc95",
+          "kind": "provenance"
+        },
+        {
+          "id": "alpa-es-browser-onnx",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa-es.onnx",
+          "bytes": 22533274,
+          "sha256": "f1eb7b920c06b5857e250401bbcf9ac6b88fa3337979d795c88743e7b320bb90",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "alpa-es.onnx",
+            "build": "Run `node tools/build-alpa-es-browser.mjs --accept-license`; see docs/ALPA_ES.md."
+          }
+        },
+        {
+          "id": "alpa-es-browser-metadata",
+          "target": "models/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa-es.json",
+          "bytes": 820,
+          "sha256": "65dbae4d37a341bf468b799731ebc3593b532d79e285966f3ecf3823b0367bb8",
+          "kind": "model-config",
+          "generated": {
+            "artifactPath": "alpa-es.json",
+            "build": "Run `node tools/build-alpa-es-browser.mjs --accept-license`; see docs/ALPA_ES.md."
+          }
+        },
+        {
+          "id": "alpa-es-model-license",
+          "target": "licenses/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/LICENSE",
+          "sourcePath": "web/alpa-es/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "alpa-es-notices",
+          "target": "licenses/alpa-es/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/THIRD_PARTY_NOTICES.md",
+          "sourcePath": "web/alpa-es/THIRD_PARTY_NOTICES.md",
+          "bytes": 1522,
+          "sha256": "453fb323622991baac741dff62543f1526895c5da8becc6dff30d911f6203af6",
+          "kind": "license"
+        }
+      ]
     }
   }
 }

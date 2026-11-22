@@ -244,5 +244,12 @@
     "parameterCountSource": "https://huggingface.co/marcosmaceo/tiny-voca-es/blob/9898eaef9b245d7a5240156eed919ee1bd2a9b84/README.md",
     "upstreamModelCard": "https://huggingface.co/marcosmaceo/tiny-voca-es/blob/9898eaef9b245d7a5240156eed919ee1bd2a9b84/README.md",
     "scope": "The pinned Spanish model card reports 4,534,411 parameters for the released model, including its waveform generator."
+  },
+  "alpa-es": {
+    "parameterCount": 4529035,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/FranciscoCarlosErra/alpa-es/blob/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa-es.pt",
+    "upstreamModelCard": "https://huggingface.co/FranciscoCarlosErra/alpa-es/blob/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/README.md",
+    "scope": "Exact sum of loaded model parameter tensor elements from the pinned alpa-es.pt checkpoint. The reproducible builder records the count in its export evidence."
   }
 }

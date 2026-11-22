@@ -564,3 +564,14 @@ upstream source requires a separate English checkpoint.
 [Profile and reproduction](TINY_VOCA_ES.md) · [Retained notices](../web/tiny-voca-es/NOTICE.md).
 
 [Pinned Spanish checkpoint](https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84) · [Pinned browser source](https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec).
+
+<a id="alpa-es"></a>
+
+## Alpa Spanish 4.53M FP32 (female)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`es-AR`).
+
+The pinned checkpoint has fixed female and male voices trained from OpenSLR 61 recorded Argentinian Spanish speech. The benchmark selects female/index 0, 24 kHz mono, neutral speed and pitch, and the released default Polish settings. The exact JavaScript port of the released Rioplatense spelling frontend matches all 104 fixture spans; smoke-only parity records 63 native unknown digit groups and a maximum of 218 tokens. Numeric input is not expanded. CPU uses one-thread WASM. WebGPU requires real hardware dispatch and may use WASM for unsupported operators. The exported graph produces raw PCM with unseeded noise and breath.
+[Profile and reproduction](ALPA_ES.md) · [Retained license and notices](../web/alpa-es/NOTICE.md).
+
+[Pinned Alpa Spanish checkpoint](https://huggingface.co/FranciscoCarlosErra/alpa-es/tree/de2bf894bdd9eb768ae03fc6b385176a0ff505d1) · [Pinned base tiny-voca source](https://github.com/n4ze3m/tiny-voca/tree/28e0722) · [OpenSLR 61 corpus](https://www.openslr.org/61/).
