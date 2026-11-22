@@ -58,6 +58,15 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E10**: Apple M1 Pro 8-core / 16 GiB baseline · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E11**: MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0.
 - **E12**: MacBook Pro (Apple M1 Pro, 8 cores, 16 GiB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0.
+- **E13**: MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0.
+
+### German (de) — de-article-v1
+
+23885 characters / 109 spans · fixture SHA-256 `f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Apptor Tiny TTS 4.5M (Standard German) | E13 | 38.03 | [189.32 s (n=3)](results/2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d/summary.md) | [136.04 s (n=3)](results/2026-11-22t01-30-59-189z-apptor-tiny-tts-webgpu-warm-050c577c/summary.md) | Native; matched configuration |
 
 ### English (en) — english-20k-v1
 
@@ -308,13 +317,21 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | ZONOS3-Mini (Imogen) | 2081.59 | [1879.09](results/2026-11-20t14-37-16-739z-zonos3-mini-cpu-cached-4bf21700/summary.md) | — |
 
-**RAM 25** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
+**RAM 25** · German (de) · fixture `de-article-v1` · 23885 characters / 109 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`4786ead9`](https://github.com/ngelik/tts-bench/commit/4786ead9110d21ee878e1fc4bee70d594cfe4a4d).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Apptor Tiny TTS 4.5M (Standard German) | 38.03 | [1192.76](results/2026-11-22t01-40-25-874z-apptor-tiny-tts-cpu-cached-f7c1946a/summary.md) | [1760.56](results/2026-11-22t01-43-52-365z-apptor-tiny-tts-webgpu-cached-04dcbe0e/summary.md) |
+
+**RAM 26** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Serhiy 0.58M (Ukrainian) | 2.34 | [1085.64](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/summary.md) | [1964.76](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) |
 
 ![Average Chrome RAM during generation — English](docs/reference-memory.svg)
+
+![Average Chrome RAM during generation — German](docs/reference-memory-de.svg)
 
 ![Average Chrome RAM during generation — Ukrainian](docs/reference-memory-uk.svg)
 
@@ -422,6 +439,10 @@ Only compatible receipts enter these comparisons; source, settings, fixture and 
 ### Campaign overviews
 
 Each report states its selected scenarios and keeps their measurement boundaries separate.
+
+[apptor-tiny-tts-de — all-metrics table and source receipts](reports/apptor-tiny-tts-de/overview.md)
+
+![apptor-tiny-tts-de — campaign metrics](reports/apptor-tiny-tts-de/overview.svg)
 
 [audio8-codec-repair — all-metrics table and source receipts](reports/audio8-codec-repair/overview.md)
 
@@ -844,6 +865,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 177 · 2026-11-20 | ua-serhiy-0p58m/webgpu | uk / uk-article-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/summary.md) | [SVG](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/chart.svg) |
 | 178 · 2026-11-21 | kale-tts-1-nano-int8/cpu | en / english-20k-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8/summary.md) | [SVG](results/2026-11-21t00-53-06-603z-kale-tts-1-nano-int8-cpu-warm-1537bbc8/chart.svg) |
 | 179 · 2026-11-21 | kale-tts-1-nano-fp32/webgpu | en / english-20k-v1 | warm / browser-tts-warm-v1 | measured | [Report](results/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76/summary.md) | [SVG](results/2026-11-21t00-58-31-330z-kale-tts-1-nano-fp32-webgpu-warm-fa99fd76/chart.svg) |
+| 180 · 2026-11-22 | apptor-tiny-tts/cpu | de / de-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d/summary.md) | [SVG](results/2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d/chart.svg) |
+| 181 · 2026-11-22 | apptor-tiny-tts/webgpu | de / de-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-22t01-30-59-189z-apptor-tiny-tts-webgpu-warm-050c577c/summary.md) | [SVG](results/2026-11-22t01-30-59-189z-apptor-tiny-tts-webgpu-warm-050c577c/chart.svg) |
+| 182 · 2026-11-22 | apptor-tiny-tts/cpu | de / de-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t01-40-25-874z-apptor-tiny-tts-cpu-cached-f7c1946a/summary.md) | [SVG](results/2026-11-22t01-40-25-874z-apptor-tiny-tts-cpu-cached-f7c1946a/chart.svg) |
+| 183 · 2026-11-22 | apptor-tiny-tts/webgpu | de / de-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-22t01-43-52-365z-apptor-tiny-tts-webgpu-cached-04dcbe0e/summary.md) | [SVG](results/2026-11-22t01-43-52-365z-apptor-tiny-tts-webgpu-cached-04dcbe0e/chart.svg) |
 
 </details>
 
