@@ -3275,6 +3275,66 @@
       }
     },
     {
+      "resultId": "2026-11-22t19-55-14-092z-tiny-voca-gr-cpu-warm-ed6d78b7",
+      "model": "tiny-voca-gr",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M",
+      "language": "el",
+      "attribution": "AI-generated Modern Greek benchmark narration from Konstantinos Perifanos’s Tiny Voca Greek in the fixed M voice. Based on Muhammed Nazeem’s Tiny Voca and trained on STOMA by Michail Raptakis, Yannis Pantazis, and Alexandros Angelakis. CC BY 4.0 checkpoint. The benchmark used an FP32 ONNX conversion of the released weights.",
+      "modelTerms": "CC BY 4.0 for the released checkpoint and upstream sample WAVs. Credit Konstantinos Perifanos and cite STOMA.",
+      "sourceUrls": [
+        "https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554",
+        "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+        "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+        "https://huggingface.co/datasets/aangelakis/STOMA/tree/fcb947d49abd2736701d8ce3786136812bac85fa"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t19-55-14-092z-tiny-voca-gr-cpu-warm-ed6d78b7--tiny-voca-gr--cpu.wav",
+        "sha256": "4344e0c8552205705c614ff3c779afb54c894356d58b9c58e8f05cee54fe2171",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d2ec8fa7e29f57679abf07e4202e87f754b61bb6ccc734b6e010886b76bbc533",
+        "bytes": 85930028
+      }
+    },
+    {
+      "resultId": "2026-11-22t20-01-26-246z-tiny-voca-gr-webgpu-warm-00f2f8e6",
+      "model": "tiny-voca-gr",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "M",
+      "language": "el",
+      "attribution": "AI-generated Modern Greek benchmark narration from Konstantinos Perifanos’s Tiny Voca Greek in the fixed M voice. Based on Muhammed Nazeem’s Tiny Voca and trained on STOMA by Michail Raptakis, Yannis Pantazis, and Alexandros Angelakis. CC BY 4.0 checkpoint. The benchmark used an FP32 ONNX conversion of the released weights.",
+      "modelTerms": "CC BY 4.0 for the released checkpoint and upstream sample WAVs. Credit Konstantinos Perifanos and cite STOMA.",
+      "sourceUrls": [
+        "https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554",
+        "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+        "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+        "https://huggingface.co/datasets/aangelakis/STOMA/tree/fcb947d49abd2736701d8ce3786136812bac85fa"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-22t20-01-26-246z-tiny-voca-gr-webgpu-warm-00f2f8e6--tiny-voca-gr--webgpu.wav",
+        "sha256": "44ba0f592a2d41840fc6851aa76b22c43b641a1027dfe5bf8d0fe4972b9272e3",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "95f3ed7c25b35632ef72c0ce038e59b0e9dd971220a2ba41dffcf8f5e9fd359b",
+        "bytes": 85930028
+      }
+    },
+    {
       "resultId": "2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836",
       "model": "tiny-voca-it",
       "backend": "cpu",
