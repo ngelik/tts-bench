@@ -7,3 +7,5 @@ web/audio-cpp-gguf/ming-session-threadpool.patch whitespace=-blank-at-eol
 # Preserve upstream CATT source checksums, including trailing blank lines.
 /web/tiny-voca-arabic/catt_tashkeel/bw2ar.py whitespace=-blank-at-eof
 /web/tiny-voca-arabic/catt_tashkeel/tokenizer.py whitespace=-blank-at-eof
+# Preserve the publisher's exact Bengali pronunciation license bytes.
+/web/bengali-voice/google-language-resources-LICENSE.txt whitespace=-blank-at-eol,-blank-at-eof

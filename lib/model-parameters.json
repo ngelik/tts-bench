@@ -300,5 +300,12 @@
     "parameterCountSource": "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
     "upstreamModelCard": "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
     "scope": "Exact parameter count for the pinned FP32 acoustic checkpoint; separate INT8 RenikudPlus G2P graph is a frontend dependency and excluded from this speech-model count."
+  },
+  "bengali-voice": {
+    "parameterCount": 930224,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://huggingface.co/Hansda/bengali-voice-compact/blob/18c8afbee3a4cf230e175a5f618350ed2c9560ac/README.md",
+    "upstreamModelCard": "https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+    "scope": "Publisher-reported acoustic model parameter count only; the separately loaded trained G2P encoder and decoder are excluded, so this lower bound is not the total synthesis-path parameter count."
   }
 }

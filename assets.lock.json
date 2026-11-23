@@ -14862,6 +14862,158 @@
           "kind": "license"
         }
       ]
+    },
+    "bengali-voice": {
+      "displayName": "Hansda Bengali Voice Compact INT8 (Jahnavi)",
+      "modelRevision": "18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+      "browserSourceRevision": "f2977727b8baccb989f80b492ea8da00124ecba3",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.24.3",
+        "license": "MIT; retain bundled third-party notices",
+        "files": []
+      },
+      "assets": [
+        {
+          "id": "bengali-voice-frontend-js",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/web/frontend.js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/frontend.js",
+          "bytes": 3758,
+          "sha256": "87d0282594755b6f5e5ea9f348b878ab2363b776fbc0069ace277951a306ee64",
+          "kind": "runtime"
+        },
+        {
+          "id": "bengali-voice-weight-shuffle",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/web/weight-shuffle.js",
+          "url": "https://huggingface.co/Hansda/bengali-voice-compact/resolve/18c8afbee3a4cf230e175a5f618350ed2c9560ac/browser/weight-shuffle.js",
+          "bytes": 1167,
+          "sha256": "f6e7b0fdc95d4ee12308f1cd227c44f426fda071401d78b94596430b5f3d0e92",
+          "kind": "runtime"
+        },
+        {
+          "id": "bengali-voice-weights-js",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/web/weights.js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/weights.js",
+          "bytes": 1899,
+          "sha256": "702155516bc665b9bc6814d8a1d9eeffb66b924530c3c50e6d9b02136363cbd0",
+          "kind": "runtime"
+        },
+        {
+          "id": "bengali-voice-ort-wasm-module",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort.wasm.min.mjs",
+          "bytes": 49997,
+          "sha256": "d5a6d7bc8ee587648fb3742dde8c0094d17cbd3822a68bbec8ddfcd4f2adb88e",
+          "kind": "runtime"
+        },
+        {
+          "id": "bengali-voice-ort-wasm-threaded-module",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24274,
+          "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57",
+          "kind": "runtime"
+        },
+        {
+          "id": "bengali-voice-ort-wasm-threaded",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort-wasm-simd-threaded.wasm.gz",
+          "url": "https://tts.hansda.in/runtime/ort-wasm-simd-threaded.wasm.gz",
+          "bytes": 3140838,
+          "sha256": "ad64341b75d860bb282beba9d2a8511858bbe1cbf408b6b460e15aafcc2b4448",
+          "kind": "runtime"
+        },
+        {
+          "id": "bengali-voice-compact-weights",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/assets/bn-compact/model.weights.gz",
+          "url": "https://huggingface.co/Hansda/bengali-voice-compact/resolve/18c8afbee3a4cf230e175a5f618350ed2c9560ac/browser/model.weights.gz",
+          "bytes": 967060,
+          "sha256": "80d9a23f49c4814df652ec30fa5e4c96fb50676ab17a3f44fa95cf941dd77d70",
+          "kind": "model-weights"
+        },
+        {
+          "id": "bengali-voice-compact-graph",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/assets/bn-compact/voice.onnx.gz",
+          "url": "https://huggingface.co/Hansda/bengali-voice-compact/resolve/18c8afbee3a4cf230e175a5f618350ed2c9560ac/browser/voice.onnx.gz",
+          "bytes": 29291,
+          "sha256": "24602544ca1a10e0fb28aa3f794225109d5132325bec3ef9d95e39a312909c86",
+          "kind": "model-weights"
+        },
+        {
+          "id": "bengali-voice-frontend-data",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/assets/frontend.json.gz",
+          "url": "https://tts.hansda.in/assets/frontend.json.gz",
+          "bytes": 2244200,
+          "sha256": "89d906ec834eb4990120d780e7fc6e21d5fcc68e6cdbc42733830623d0a352ed",
+          "kind": "model-config"
+        },
+        {
+          "id": "bengali-voice-g2p-encoder",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/assets/g2p-encode.onnx.gz",
+          "url": "https://tts.hansda.in/assets/g2p-encode.onnx.gz",
+          "bytes": 660202,
+          "sha256": "250db4e0191cfae630a48d2b832f9f912c11a0e26c8c65e8b28ec30170e82f00",
+          "kind": "model-weights"
+        },
+        {
+          "id": "bengali-voice-g2p-decoder",
+          "target": "models/bengali-voice/18c8afbee3a4cf230e175a5f618350ed2c9560ac/f2977727b8baccb989f80b492ea8da00124ecba3/assets/g2p-decode.onnx.gz",
+          "url": "https://tts.hansda.in/assets/g2p-decode.onnx.gz",
+          "bytes": 1104016,
+          "sha256": "ce014c7c6e2f258b74edf8f773498f03fb0f7b0e66f4c2c78510a9ca747a2f12",
+          "kind": "model-weights"
+        },
+        {
+          "id": "bengali-voice-model-license",
+          "target": "licenses/bengali-voice/model-LICENSE.txt",
+          "sourcePath": "web/bengali-voice/model-LICENSE.txt",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "bengali-voice-google-license",
+          "target": "licenses/bengali-voice/google-language-resources-LICENSE.txt",
+          "sourcePath": "web/bengali-voice/google-language-resources-LICENSE.txt",
+          "bytes": 18652,
+          "sha256": "cce5d01fa4a83b794271bd2c28cffdf99afd43c803e6ddefddae39b591ea7448",
+          "kind": "license"
+        },
+        {
+          "id": "bengali-voice-ort-license",
+          "target": "licenses/bengali-voice/onnxruntime-web-LICENSE.txt",
+          "sourcePath": "web/bengali-voice/onnxruntime-web-LICENSE.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "trainingData": "Bengali Maya 2 Native Jahnavi 20h dataset CC BY 4.0; Common Voice Bengali prompts CC0 1.0; bundled Bengali Google lexicon CC BY 4.0",
+        "runtime": "Pinned publisher frontend Apache-2.0; ONNX Runtime Web MIT; bundled Google Bengali lexicon and transcription guide CC BY 4.0",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "bn"
+        ],
+        "scope": "Pinned Hansda/bengali-voice-compact INT8 checkpoint at voice index zero (Jahnavi). The same Bengali synthesis frontend accepts native Bengali and Roman Bengali input. The broader multilingual-browser-tts family and other checkpoints are outside this registration.",
+        "sources": [
+          "https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+          "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
+          "https://huggingface.co/datasets/Hansda/bengali-maya2-jahnavi-20h",
+          "https://github.com/google/language-resources/tree/a90601024f07ab7e96c911243324e0adeb16da96/bn",
+          "https://onnxruntime.ai/docs/get-started/with-javascript/web.html",
+          "https://tts.hansda.in/?lang=bn"
+        ],
+        "notes": "Tested Bengali-script fixture bn-article-v1 and ASCII Roman-input fixture bn-latn-article-v1 are separate editions. Report only one supported spoken language (bn); bn-Latn describes an input script, not a separate synthesized language. The benchmark fixes the deployed demo voice index zero and does not claim a generated-audio redistribution license."
+      }
     }
   }
 }

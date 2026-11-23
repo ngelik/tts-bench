@@ -60,6 +60,7 @@ import { createZonos3Adapter } from './adapters/zonos3.mjs';
 import { createSanoKokopopAdapter } from './adapters/sano-kokopop.mjs';
 import { SANO_KOKOPOP_PROFILES } from './adapters/sano-kokopop-config.mjs';
 import { createUaSerhiyAdapter } from './adapters/ua-serhiy.mjs';
+import { createBengaliVoiceAdapter } from './adapters/bengali-voice.mjs';
 
 const statusNode = document.querySelector('#status');
 const state = { fixture: null, fixtureId: null, chunks: null, engine: null, model: null, backend: null, smoke: false };
@@ -126,6 +127,7 @@ const FACTORIES = {
   'klein-tts-x1.5-pro': createKleinAdapter,
   'zonos3-mini': createZonos3Adapter,
   'ua-serhiy-0p58m': createUaSerhiyAdapter,
+  'bengali-voice': createBengaliVoiceAdapter,
   ...Object.fromEntries(Object.entries(SANO_KOKOPOP_PROFILES).map(([id, profile]) => [id, () => createSanoKokopopAdapter(profile)])),
 };
 export const diagnosticFactories = Object.freeze(FACTORIES);
@@ -269,6 +271,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       probe,
       fixtureId,
       language: loaded.fixture.language,
+      sourceSha256: smoke ? undefined : loaded.fixture.sha256,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
       control: smoke && model === 'tiny-voca-he',
       auditTexts: ((smoke && (

@@ -19,13 +19,14 @@ import { TINY_VOCA_AR_HALABI } from '../web/adapters/tiny-voca-ar-halabi-profile
 import { TINY_VOCA_AR } from '../web/adapters/tiny-voca-ar-profile.mjs';
 import { TINY_VOCA_ARABIC } from '../web/adapters/tiny-voca-arabic-profile.mjs';
 import { TINY_VOCA_HE } from '../web/adapters/tiny-voca-he-profile.mjs';
+import { BENGALI_VOICE_PROFILE } from '../web/adapters/bengali-voice-profile.mjs';
 import { defaultFixtureForModel, frontendLanguagesForModel, requiredFixtureForModel } from '../lib/benchmark-fixtures.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-voca-fr","alpa-es","tiny-voca-ptbr","tiny-voca-ptbr-kokoro","tiny-broca","tiny-voca-ar-halabi","tiny-voca-he","tiny-voca-arabic","tiny-voca-ar"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-voca-fr","alpa-es","tiny-voca-ptbr","tiny-voca-ptbr-kokoro","tiny-broca","tiny-voca-ar-halabi","tiny-voca-he","tiny-voca-arabic","tiny-voca-ar","bengali-voice"]);
   const korean = getAssetLock().models['korean-tts'];
   assert.equal(korean.modelRevision, 'c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c');
   assert.deepEqual(korean.backends, ['cpu', 'webgpu']);
@@ -245,6 +246,33 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(microV3.modelRevision, 'c1a7db6ef44c931623fc2028cb0409659b83156c');
   assert.deepEqual([microV3.support.voiceCount, microV3.support.bundledVoiceCount, microV3.support.languageCount], [6, 1, 1]);
   assert.equal(microV3.license.requiresAcceptance, false);
+});
+
+test('Bengali Voice pins its CPU route, deployed voice, and two input-script fixtures', async () => {
+  const model = getAssetLock().models['bengali-voice'];
+  assert.equal(model.modelRevision, BENGALI_VOICE_PROFILE.modelRevision);
+  assert.equal(model.browserSourceRevision, BENGALI_VOICE_PROFILE.browserSourceRevision);
+  assert.deepEqual(model.backends, ['cpu']);
+  assert.deepEqual(model.support.languages, ['bn']);
+  assert.deepEqual(model.support.voiceCount, 1);
+  assert.deepEqual(model.support.bundledVoiceCount, 1);
+  assert.equal(model.runtime.version, '1.24.3');
+  assert.equal(defaultFixtureForModel('bengali-voice'), 'bn-article-v1');
+  assert.deepEqual(frontendLanguagesForModel('bengali-voice'), ['bn', 'bn-Latn']);
+  assert.equal(requiredFixtureForModel('bengali-voice'), null);
+  for (const [fixtureId, fixture] of Object.entries(BENGALI_VOICE_PROFILE.fixtures)) {
+    const registered = JSON.parse(await readFile(resolve(root, 'fixtures/registry.json'), 'utf8')).fixtures.find(item => item.id === fixtureId);
+    assert.ok(registered, `Missing Bengali Voice fixture ${fixtureId}`);
+    assert.equal(registered.language, fixture.language);
+    assert.equal(registered.sha256, fixture.sourceSha256);
+    assert.equal(registered.chunks, fixture.spans);
+  }
+  for (const [name, [bytes, sha256]] of Object.entries(BENGALI_VOICE_PROFILE.assetDigests)) {
+    const asset = model.assets.find(item => item.target.endsWith('/' + name) || item.target.endsWith('/' + name.replace('.gz', '')));
+    assert.ok(asset, `Missing Bengali Voice asset ${name}`);
+    assert.equal(asset.bytes, bytes);
+    assert.equal(asset.sha256, sha256);
+  }
 });
 
 test('Haple Tiny Voca pt-BR Kokoro has independent checkpoint, eSpeak and runtime pins', () => {
