@@ -580,6 +580,25 @@ see the [profile and limits](TINY_VOCA_FR.md).
 
 [Pinned French checkpoint](https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4) · [Pinned browser source](https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34).
 
+<a id="tiny-voca-ptbr"></a>
+
+## Tiny Voca Brazilian Portuguese 4.5M FP32 (F_s4)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`pt-BR`).
+
+The pinned checkpoint bundles F_s4 and M_sm4; the benchmark default is F_s4,
+24 kHz mono. The adapter uses the stock Dizione-ptbr browser engine, tokenizer,
+MFA-derived lexicon and open-vowel table. Its full fixture frontend audit is
+101 spans, 310 utterances, a maximum of 225 tokens and zero unknown phones.
+CPU explicitly uses one-thread WASM. WebGPU explicitly requests the WebGPU
+provider, requires real dispatch in the separate probe, and may use ONNX
+Runtime's internal CPU/WASM kernels for operators without WebGPU support.
+Only the exact pt-BR checkpoint/profile is registered; European Portuguese is
+unsupported. See [profile and reproduction](TINY_VOCA_PTBR.md) and the
+[retained licenses and attribution](../web/tiny-voca-ptbr/NOTICE.md).
+
+[Pinned checkpoint](https://huggingface.co/semfence/tiny-voca-ptbr/tree/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f) · [Pinned browser Space](https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/tree/a456470df5589478e3fb3f1973457771f4c056bd).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)

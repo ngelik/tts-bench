@@ -13291,6 +13291,212 @@
           "kind": "license"
         }
       ]
+    },
+    "tiny-voca-ptbr": {
+          "displayName": "Tiny Voca Brazilian Portuguese F_s4 (FP32)",
+          "modelRevision": "f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",
+          "sourceId": "semfence/tiny-voca-ptbr-demo",
+          "sourceRevision": "a456470df5589478e3fb3f1973457771f4c056bd",
+          "parameterCount": 4533259,
+          "step": 104000,
+          "frontendFingerprint": "c8b278571f76e11e47cf66612f6d0470ca3a1b892c85d2091a4cf054c3367862",
+          "runtime": {
+                "package": "onnxruntime-web",
+                "version": "1.22.0",
+                "integrity": "sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==",
+                "license": "MIT; runtime package is URL-backed and hash-pinned in assets.",
+                "files": []
+          },
+          "license": {
+                "model": "CC BY 4.0 for the released checkpoint; credit SemFence (Gustavo Toledo).",
+                "inferenceSource": "Apache-2.0 SemFence tiny-voca-ptbr code with attribution to Muhammed Nazeem and the original tiny-voca project.",
+                "frontend": "Apache-2.0 pinned Dizione-ptbr browser source; derived MFA lexicon and open-vowel table retain CC BY 4.0 attribution.",
+                "runtime": "MIT ONNX Runtime Web 1.22.0; URL-backed npm distribution files are hash-pinned.",
+                "requiresAcceptance": false
+          },
+          "backends": [
+                "cpu",
+                "webgpu"
+          ],
+          "support": {
+                "voiceCount": 2,
+                "bundledVoiceCount": 2,
+                "languageCount": 1,
+                "languages": [
+                      "pt-BR"
+                ],
+                "scope": "Pinned semfence/tiny-voca-ptbr checkpoint only. Two fixed synthetic voices, F_s4 and M_sm4, at 24 kHz mono; benchmark default is F_s4/index 0. This browser profile exposes Brazilian Portuguese (pt-BR) only.",
+                "sources": [
+                      "https://huggingface.co/semfence/tiny-voca-ptbr/tree/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",
+                      "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/tree/a456470df5589478e3fb3f1973457771f4c056bd",
+                      "https://github.com/n4ze3m/tiny-voca",
+                      "https://github.com/SemFence/dizione-ptbr/tree/8fbb77e579fe684f3afd9cb2a801d0adce8c89cf",
+                      "https://github.com/MontrealCorpusTools/mfa-models/tree/dictionary-portuguese_brazil_mfa-v2.0.0a",
+                      "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+                ],
+                "notes": "The pinned checkpoint card reports 4,533,259 parameters including the waveform generator. Exact pt-br-article-v1 frontend audit: 101 spans, 310 utterances, maximum 225 tokens, zero <unk> phones; this is a diagnostic, not a score. Both original synthetic voices are included. The graph has no seed input and generates waveform noise internally. Generated recordings have no blanket redistribution grant from the code license."
+          },
+          "assets": [
+                {
+                      "id": "tiny-voca-ptbr-onnx",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/models/tiny-voca-ptbr.onnx",
+                      "url": "https://huggingface.co/semfence/tiny-voca-ptbr/resolve/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/onnx/model.onnx",
+                      "bytes": 21370200,
+                      "sha256": "0ac1ffc83e508973513182ed79d4626556e35bcffcccd99ee066dde6d2c77e5b",
+                      "kind": "model-weights"
+                },
+                {
+                      "id": "tiny-voca-ptbr-config",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/models/tiny-voca-ptbr.json",
+                      "url": "https://huggingface.co/semfence/tiny-voca-ptbr/resolve/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/onnx/model.json",
+                      "bytes": 846,
+                      "sha256": "0cef74c03aa5b4d705c8ea9810ec71b053da9b33a40925dbdf880ed471120060",
+                      "kind": "model-config"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-engine",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/dizione/engine.js",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/assets/dizione/engine.js",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/engine.js",
+                      "bytes": 7242,
+                      "sha256": "b76eb5d1c7283f96e16cb6054d7ef79baaa032e58a8c7abb18332cc781c5e705",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-g2p",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/dizione/g2p.js",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/assets/dizione/g2p.js",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/g2p.js",
+                      "bytes": 13067,
+                      "sha256": "71660c478ab43eb4252c2a598b66caf7616d4209c6bb7fb41618f400fde704fe",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-normalize",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/dizione/normalize.js",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/assets/dizione/normalize.js",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/normalize.js",
+                      "bytes": 7548,
+                      "sha256": "6caddbfd93aa8c1a233a05459341841ee6d4976401645d50fa01da96b3593838",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-symbols",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/dizione/symbols.js",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/assets/dizione/symbols.js",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/symbols.js",
+                      "bytes": 961,
+                      "sha256": "3afd111538fb23d7b3b621a693866bb18ae7ea65dfeeff9e503383582932fe74",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-tokens",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/tokens.js",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/tokens.js",
+                      "sourcePath": "web/tiny-voca-ptbr/tokens.js",
+                      "bytes": 1480,
+                      "sha256": "579413f013321a331b8dc6dfcb0da2bfdbdb343ce81a7b617872ed757819ac03",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-lexicon",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/dizione/data/lexicon.tsv",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/assets/dizione/data/lexicon.tsv",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/data/lexicon.tsv",
+                      "bytes": 931949,
+                      "sha256": "0bc25b54898d67c07a73567f4bff5438480a24256388b02c6fa8b7c4c8408e80",
+                      "kind": "lexicon"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dizione-open-table",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/site/dizione/data/open_table.json",
+                      "url": "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/resolve/a456470df5589478e3fb3f1973457771f4c056bd/assets/dizione/data/open_table.json",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/data/open_table.json",
+                      "bytes": 1609,
+                      "sha256": "a0e71c7d2f4e59c7affa1aebb5241c574f9c7ec0282e81326397a54da46bd9cb",
+                      "kind": "lexicon"
+                },
+                {
+                      "id": "tiny-voca-ptbr-license-code",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/LICENSE",
+                      "sourcePath": "web/tiny-voca-ptbr/LICENSE",
+                      "bytes": 11358,
+                      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-notice-code",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/NOTICE",
+                      "sourcePath": "web/tiny-voca-ptbr/NOTICE",
+                      "bytes": 1089,
+                      "sha256": "109a433d6e26916d40b64af4530d728a0feeae29530cc5a583f288c81c9891f0",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-license-model",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/LICENSE-MODEL",
+                      "sourcePath": "web/tiny-voca-ptbr/LICENSE-MODEL",
+                      "bytes": 18657,
+                      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-notice-model",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/NOTICE-MODEL",
+                      "sourcePath": "web/tiny-voca-ptbr/NOTICE-MODEL",
+                      "bytes": 484,
+                      "sha256": "649ab8215fe655f00f87ac46f1f67b0f3c315f97baf56a45b9e8af1642720c94",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-license-dizione",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/LICENSE-DIZIONE",
+                      "sourcePath": "web/tiny-voca-ptbr/LICENSE-DIZIONE",
+                      "bytes": 11358,
+                      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-notice-dizione",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/NOTICE-DIZIONE",
+                      "sourcePath": "web/tiny-voca-ptbr/NOTICE-DIZIONE",
+                      "bytes": 490,
+                      "sha256": "deb714a8b5cb980aac2b88415fc8e49b75d65bc89b3f3f58466872b59a2fd491",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-dictionary-license",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/legal/LICENSE.mfa-dictionary.md",
+                      "sourcePath": "web/tiny-voca-ptbr/assets/dizione/data/LICENSE.mfa-dictionary.md",
+                      "bytes": 1603,
+                      "sha256": "dc781911ac85edede519a742e56c104199f2b6027ce51b77304e61b1a3ad2517",
+                      "kind": "license"
+                },
+                {
+                      "id": "tiny-voca-ptbr-ort-webgpu",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/runtime/ort.webgpu.min.mjs",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.webgpu.min.mjs",
+                      "bytes": 357582,
+                      "sha256": "e131e81c9324807e1e6f9103e8f8e936112827dcc9993cde9407a333b1f07ae0",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ptbr-ort-jsep-js",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/runtime/ort-wasm-simd-threaded.jsep.mjs",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort-wasm-simd-threaded.jsep.mjs",
+                      "bytes": 44677,
+                      "sha256": "1cbcba8f2c769c1eecbab66a1b1e55ef11704515bf4306373e3db3c37cf6dcd8",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ptbr-ort-jsep-wasm",
+                      "target": "models/tiny-voca-ptbr/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/a456470df5589478e3fb3f1973457771f4c056bd/runtime/ort-wasm-simd-threaded.jsep.wasm",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort-wasm-simd-threaded.jsep.wasm",
+                      "bytes": 21872216,
+                      "sha256": "b45970d0632383a057c27ca5b660b216f8e00c17cf8db9f6207b5e4abc839368",
+                      "kind": "runtime"
+                }
+          ]
     }
   }
 }

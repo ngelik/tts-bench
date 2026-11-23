@@ -637,6 +637,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Voca Spanish F2 (FP32) | 2 | 2 | 1 (es-ES) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-es) |
 | Tiny Voca French FR_F1 (FP32) | 2 | 2 | 1 (fr) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-fr) |
 | Alpa Spanish female (FP32) | 2 | 2 | 1 (es-AR) | [Details](docs/MODEL_SUPPORT.md#alpa-es) |
+| Tiny Voca Brazilian Portuguese F_s4 (FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptbr) |
 
 ### Controlled native comparisons
 
