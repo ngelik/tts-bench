@@ -358,6 +358,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "bn-latn-article-v1",
+      "smokeId": "bn-latn-article-smoke-v1",
+      "language": "bn-Latn",
+      "articleFile": "bn-latn-article-v1.txt",
+      "chunksFile": "bn-latn-article-v1.chunks.json",
+      "metadataFile": "bn-latn-article-v1.meta.json",
+      "sha256": "0529bb676fc1a57c11be1a67fa5722e82d26155e1ac78fe192e3eb030a1d2322",
+      "characters": 22055,
+      "unicodeCodePoints": 22055,
+      "utf8Bytes": 22055,
+      "chunks": 101,
+      "source": {
+        "type": "translation",
+        "description": "Complete ASCII Romanized Bengali edition of all 27 paragraphs in bn-article-v1, which translates the canonical English article. Times, dates, archive references, and numbers remain spelled out. Spelling is informal with adjustments for key names and values. No native-speaker review is claimed. The stock frontend can map some Roman spellings to approximations.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
