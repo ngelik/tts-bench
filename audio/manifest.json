@@ -3463,6 +3463,70 @@
       }
     },
     {
+      "resultId": "2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25",
+      "model": "tiny-urdu",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "ur-Latn",
+      "attribution": "AI-generated Roman Urdu narration using Zafar205’s Apache-2.0 Tiny Urdu checkpoint and M2 voice. The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the CC BY-NC 4.0 UrduTTS dataset by M. Kaab Bin Shahid and Muhammed Izharuddin. Noncommercial benchmark evaluation.",
+      "modelTerms": "Apache-2.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/tree/4fe6566118972ea0d44b517f413191e0e30f5880",
+        "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/README.md",
+        "https://github.com/Zafar205/tiny-urdu/tree/5770756e05f33591eab29498a47f6644664beae7",
+        "https://github.com/Zafar205/tiny-urdu/blob/5770756e05f33591eab29498a47f6644664beae7/web/lib/urdu.ts",
+        "https://huggingface.co/datasets/kaab4321/UrduTTS/tree/f5c50b7aaabd4325bfe33617232203ad02e30f97",
+        "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25--tiny-urdu--cpu.wav",
+        "sha256": "6ad16e490266d52bc7cf77867edd0205fc87e6a1dfac4ea7f09e60d33090605f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "27c13b675a4d60e4506ed32c1ef10f4020f7a80a13f888a6a68a050c1e95f41c",
+        "bytes": 72534828
+      }
+    },
+    {
+      "resultId": "2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b",
+      "model": "tiny-urdu",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "ur-Latn",
+      "attribution": "AI-generated Roman Urdu narration using Zafar205’s Apache-2.0 Tiny Urdu checkpoint and M2 voice. The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the CC BY-NC 4.0 UrduTTS dataset by M. Kaab Bin Shahid and Muhammed Izharuddin. Noncommercial benchmark evaluation.",
+      "modelTerms": "Apache-2.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/tree/4fe6566118972ea0d44b517f413191e0e30f5880",
+        "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/README.md",
+        "https://github.com/Zafar205/tiny-urdu/tree/5770756e05f33591eab29498a47f6644664beae7",
+        "https://github.com/Zafar205/tiny-urdu/blob/5770756e05f33591eab29498a47f6644664beae7/web/lib/urdu.ts",
+        "https://huggingface.co/datasets/kaab4321/UrduTTS/tree/f5c50b7aaabd4325bfe33617232203ad02e30f97",
+        "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b--tiny-urdu--webgpu.wav",
+        "sha256": "43f970ec55573d086d496fb12a8995291ef03de8634a9a02326670520959de0b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "aa654d6c70f42a291b8f23b45eb87ac25eda03fff3b5ccc8b39f01835710797c",
+        "bytes": 72534828
+      }
+    },
+    {
       "resultId": "2026-11-23t05-22-26-884z-tiny-voca-ar-halabi-cpu-warm-f9178859",
       "model": "tiny-voca-ar-halabi",
       "backend": "cpu",
