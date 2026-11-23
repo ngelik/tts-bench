@@ -1,4 +1,5 @@
 import {matchesAuditedWav} from '../audio/waveform-integrity.mjs?v=__TTS_BENCH_SITE_VERSION__';
+import {HOSTED_ONLY_LANGUAGES} from './coverage.mjs?v=__TTS_BENCH_SITE_VERSION__';
 
 const siteVersion = '__TTS_BENCH_SITE_VERSION__';
 
@@ -36,9 +37,11 @@ const languageIdPattern = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
 // Match labels pasted with Latin accents, Hebrew marks, or Arabic marks and tatweel.
 const foldSearch = value => String(value ?? '').normalize('NFKD')
   .replace(/[\u0300-\u036f\u0591-\u05bd\u05bf\u05c1-\u05c2\u05c4-\u05c5\u05c7\u0640\u064b-\u0652\u0670]/gu, '').toLocaleLowerCase('en');
-const behtini = 'Kurdish Behdînî (Arabic script)';
 function languageGroup(id = state.language) {
   return id === 'en' ? state.data : state.data?.byLanguage?.[id];
+}
+function hostedOnlyCoverage(id = state.language) {
+  return HOSTED_ONLY_LANGUAGES[id] && !languageGroup(id)?.models?.some(hasEligibleResult) ? HOSTED_ONLY_LANGUAGES[id] : null;
 }
 function languageDetails(id, registryLabel = '') {
   if (id === 'bn-Latn') return {
@@ -53,14 +56,14 @@ function languageDetails(id, registryLabel = '') {
     meta: 'Latin script',
     aliases: ['Romanized Urdu', 'Romanised Urdu', 'Urdu (Latin)', 'اردو'],
   };
-  const isBehdini = id === 'ku-Arab-IQ';
-  const englishName = isBehdini ? behtini : languageLabel(id);
+  const hostedCoverage = HOSTED_ONLY_LANGUAGES[id];
+  const englishName = hostedCoverage?.label ?? languageLabel(id);
   let nativeName = null;
-  if (!isBehdini) {
+  if (!hostedCoverage) {
     nativeName = englishName;
     try { nativeName = new Intl.DisplayNames([id], {type:'language'}).of(id) || englishName; } catch {}
   }
-  if (registryLabel && !isBehdini && nativeName === id) nativeName = registryLabel;
+  if (registryLabel && !hostedCoverage && nativeName === id) nativeName = registryLabel;
   if (nativeName) nativeName = Array.from(nativeName).map((part,index)=>index===0?part.toLocaleUpperCase(id):part).join('');
   const subtags = id.split('-').slice(1);
   const script = subtags.find(part => /^[A-Za-z]{4}$/.test(part));
@@ -68,8 +71,8 @@ function languageDetails(id, registryLabel = '') {
   let scriptName = '', regionName = '';
   try { if (script) scriptName = new Intl.DisplayNames(['en'], {type:'script'}).of(script) || script; } catch {}
   try { if (region) regionName = new Intl.DisplayNames(['en'], {type:'region'}).of(region) || region; } catch {}
-  const meta = isBehdini ? '' : [scriptName && `${scriptName} script`, regionName].filter(Boolean).join(' · ');
-  const aliases = isBehdini ? [behtini, 'Behdînî', 'Bahdini', id] : id === 'bn' ? ['Bengali'] : [];
+  const meta = hostedCoverage ? '' : [scriptName && `${scriptName} script`, regionName].filter(Boolean).join(' · ');
+  const aliases = hostedCoverage ? hostedCoverage.aliases : id === 'bn' ? ['Bengali'] : [];
   return {englishName, nativeName, meta, aliases};
 }
 function registeredLanguages() {
@@ -81,6 +84,11 @@ function registeredLanguages() {
     if (registryLabel.length > 80) registryLabel = '';
     const details = languageDetails(entry.id, registryLabel);
     records.set(entry.id, {id:entry.id, ...details});
+  }
+  for (const [id, coverage] of Object.entries(HOSTED_ONLY_LANGUAGES)) {
+    const existing = records.get(id);
+    if (existing) records.set(id, {...existing, coverage});
+    else records.set(id, {id, ...languageDetails(id), coverage});
   }
   return [...records.values()].map(record => ({...record, count:languageGroup(record.id)?.models?.filter(hasEligibleResult).length ?? 0}))
     .sort((a,b) => Number(b.count > 0) - Number(a.count > 0) || a.englishName.localeCompare(b.englishName, 'en') || a.id.localeCompare(b.id));
@@ -131,7 +139,7 @@ function buildLanguagePicker() {
     const tag = document.createElement('span'); tag.className = 'language-option-tag'; tag.textContent = language.id;
     names.append(tag);
     const count = document.createElement('span'); count.className = 'language-option-count'; count.dataset.languageCount = language.id;
-    count.textContent = language.count > 0 ? `${language.count} ${language.count === 1 ? 'model' : 'models'}` : 'Awaiting results';
+    count.textContent = language.count > 0 ? `${language.count} ${language.count === 1 ? 'model' : 'models'}` : language.coverage ? language.coverage.status : 'Awaiting results';
     link.append(names, count);
     link.dataset.search = foldSearch([language.id, language.englishName, language.nativeName, language.meta, ...language.aliases].join(' '));
     li.append(link); (language.count > 0 ? measured : pending).append(li);
@@ -164,6 +172,7 @@ function renderLanguageChoice() {
 function fixtureLink() {
   const fixture = languageGroup()?.fixture, file = fixture?.articleFile;
   // The server supplies a registry basename, never an arbitrary URL or path.
+  if (hostedOnlyCoverage()) return null;
   if (fixture?.language !== state.language || typeof file !== 'string' || file.length > 255 || !/^[a-z0-9][a-z0-9._-]*\.txt$/i.test(file)) return null;
   return `${repo}/blob/main/fixtures/${encodeURIComponent(file)}`;
 }
@@ -194,6 +203,7 @@ function capabilitySummary(model) {
 }
 function fixtureDescription() {
   const group = languageGroup();
+  if (hostedOnlyCoverage()) return languageName();
   const characters = group?.fixture?.characters ?? (state.language === 'en' ? 20000 : null);
   return Number.isSafeInteger(characters) && characters > 0
     ? `${characters.toLocaleString('en-US')} ${languageName()} characters`
@@ -251,7 +261,8 @@ function setLanguage(language, { push = true } = {}) {
   if (push) syncUrl({ push: true, removeModel: true });
   const selected = registeredLanguages().find(entry => entry.id === state.language);
   const count = languageGroup()?.models?.filter(hasEligibleResult).length ?? 0;
-  $('#language-announcement').textContent = `Benchmark language changed to ${selected?.englishName ?? language}. ${count} ${count === 1 ? 'model' : 'models'} have eligible results.`;
+  const status = hostedOnlyCoverage() ? 'Hosted demo available. Local benchmark results are unavailable.' : `${count} ${count === 1 ? 'model' : 'models'} have eligible results.`;
+  $('#language-announcement').textContent = `Benchmark language changed to ${selected?.englishName ?? language}. ${status}`;
   if ($('#language-picker').open) $('#language-picker').close();
   $('#language-picker-trigger').focus();
 }
@@ -469,7 +480,8 @@ function render() {
   const models = visibleModels();
   renderLanguageChoice();
   $('#fixture-language').textContent = fixtureDescription();
-  $('#method-fixture').textContent = fixtureDescription();
+  $('#method-fixture').textContent = hostedOnlyCoverage() ? 'a local benchmark article fixture' : fixtureDescription();
+  $('#language-hint').hidden = Boolean(hostedOnlyCoverage());
   const fixtureUrl = fixtureLink(), fixtureAnchor = $('#fixture-link');
   fixtureAnchor.hidden = !fixtureUrl;
   if (fixtureUrl) fixtureAnchor.href = fixtureUrl; else fixtureAnchor.removeAttribute('href');
@@ -484,6 +496,7 @@ function render() {
   const latest = state.language === 'en' ? state.data.updatedAt : activeModels().flatMap(model => ['warm', 'memory'].flatMap(kind => ['cpu', 'webgpu'].map(backend => model[kind][backend]?.createdAt))).filter(Boolean).sort().at(-1);
   $('#updated').textContent = latest ? `Latest receipt ${latest.slice(0, 10)} UTC` : '';
   const emptyLanguage = activeModels().filter(hasEligibleResult).length === 0;
+  const hostedOnly = emptyLanguage ? hostedOnlyCoverage() : null;
   const scope = selectedModelScope();
   const denominator = scope === null ? activeModels().filter(hasEligibleResult).length : scope.models.length;
   const filtersApplied = Boolean($('#search').value.trim() || $('#license').value !== 'all' || state.modelIds !== null || capabilityFilters.some(id=>$(`#${id}`).value!=='all'));
@@ -494,10 +507,13 @@ function render() {
   $('.sort-field').hidden = state.view !== 'table';
   $('#no-results').hidden = models.length > 0;
   const unresolvedSelection = scope !== null && scope.models.length === 0;
-  $('#no-results h3').textContent = emptyLanguage ? `No published ${languageName()} results yet.` : unresolvedSelection ? 'No recognized configurations in this subset.' : 'No models match these filters.';
-  $('#no-results p').textContent = emptyLanguage ? 'Results will appear here when a benchmark in this language is published.' : unresolvedSelection
+  $('#no-results h3').textContent = hostedOnly ? 'Kurdish Behdînî Voice' : emptyLanguage ? `No published ${languageName()} results yet.` : unresolvedSelection ? 'No recognized configurations in this subset.' : 'No models match these filters.';
+  $('#no-results p').textContent = hostedOnly ? `The hosted demo offers ${hostedOnly.voiceCount} voices. Local benchmark results are unavailable.` : emptyLanguage ? 'Results will appear here when a benchmark in this language is published.' : unresolvedSelection
     ? `${scope.unknown.length ? `Unknown model IDs: ${scope.unknown.join(', ')}. ` : ''}${scope.excluded.length ? `No eligible published measurements for: ${scope.excluded.map(model => model.name).join(', ')}. ` : ''}${!scope.unknown.length && !scope.excluded.length ? 'No model IDs were selected. ' : ''}Clear the subset to see all configurations.`
     : 'Try a different name, size, language, voice count or license.';
+  const hostedLink = $('#hosted-only-demo-link');
+  hostedLink.hidden = !hostedOnly;
+  if (hostedOnly) hostedLink.href = hostedOnly.demoUrl; else hostedLink.removeAttribute('href');
   $('#clear-filters').hidden = emptyLanguage;
   $('#clear-filters').textContent = unresolvedSelection ? 'Clear subset and filters' : 'Clear filters';
   const scopeNote = 'Lower is faster · open a model for settings, source receipts and full support details.';

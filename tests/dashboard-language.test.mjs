@@ -59,7 +59,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   frenchWithoutAudio.name = 'Synthetic French result without published audio';
   frenchWithoutAudio.playbackAudio = {cpu:null,webgpu:null};
   frenchWithoutAudio.audio = [];
-  const previewTags = ['ar','bn','bn-Latn','de','de-AT','el','es-AR','es-ES','fr','he','hi','it','ja','ko','ku-Arab-IQ','ml','pl','pt-BR','ru','sa','sw','tr','ur-Latn','zh-Hans','zh-Hant'];
+  const previewTags = ['ar','bn','bn-Latn','de','de-AT','el','es-AR','es-ES','fr','he','hi','it','ja','ko','ml','pl','pt-BR','ru','sa','sw','tr','ur-Latn','zh-Hans','zh-Hant'];
   const previewLanguages = [{id:'en',label:'English'},{id:'uk',label:'Українська'},...previewTags.map(id=>({id}))];
   const previewByLanguage = Object.fromEntries(previewTags.map(id=>[id,{fixture:{id:`${id.toLowerCase()}-preview-v1`,language:id,characters:3000,articleFile:`${id.toLowerCase()}-preview-v1.txt`},models:[]} ]));
   previewByLanguage.uk = {fixture:{id:'uk-article-v1',characters:12345,language:'uk',articleFile:'uk-article-v1.txt'},models:[ukrainian]};
@@ -67,6 +67,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   let data = {...original, models: en, languages: previewLanguages, byLanguage: previewByLanguage};
   const files = new Map([
     ['/', ['dashboard/index.html','text/html']], ['/assets/app.mjs',['dashboard/app.mjs','text/javascript']],
+    ['/assets/coverage.mjs',['dashboard/coverage.mjs','text/javascript']],
     ['/assets/style.css',['dashboard/style.css','text/css']], ['/audio/waveform-integrity.mjs',['audio/waveform-integrity.mjs','text/javascript']],
   ]);
   const server = http.createServer(async (req, res) => {
@@ -101,7 +102,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await page.locator('#language-picker').evaluate(dialog=>dialog.open),false,'Enter selects a locale link');
   assert.equal(await page.locator('#language-picker-trigger').evaluate(button=>button===document.activeElement),true,'Selection restores focus to the picker button');
   await page.locator('#language-picker-trigger').focus(); await page.keyboard.press('Enter');
-  assert.equal(await page.locator('#language-options [data-language]').count(),27,'The isolated preview exercises at least 25 fixture editions');
+  assert.equal(await page.locator('#language-options [data-language]').count(),27,'The picker includes the directory entry alongside 26 benchmark editions');
   assert.equal(await page.locator('[data-language-group=measured] [data-language]').count(),3);
   assert.equal(await page.locator('[data-language-group=pending] [data-language]').count(),24);
   assert.ok((await page.locator('#language-ku-Arab-IQ').innerText()).includes('Kurdish Behdînî (Arabic script)'));
@@ -136,6 +137,9 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   await page.locator('#language-search').fill('');
   await page.locator('#language-search').fill('Bahdini');
   assert.equal(await page.locator('#language-ku-Arab-IQ').isVisible(),true,'Behdînî aliases are searchable');
+  assert.equal(await page.locator('#language-ku-Arab-IQ .language-option-count').textContent(),'Hosted demo');
+  await page.locator('#language-search').fill('Kurdish Badini');
+  assert.equal(await page.locator('#language-ku-Arab-IQ').isVisible(),true,'Expanded Kurdish/Badini alias is searchable');
   await page.locator('#language-search').fill('Bengali');
   assert.equal(await page.locator('#language-bn').isVisible(), true);
   assert.equal(await page.locator('#language-bn-Latn').isVisible(), true);
@@ -163,6 +167,14 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(new URL(page.url()).searchParams.get('lang'),'ku-Arab-IQ','The exact language-script-region tag is selected');
   assert.equal(await page.locator('#model-count').innerText(),'0','Unmeasured editions remain selectable and show no fabricated models');
   assert.equal(await page.locator('#current-language').textContent(),'Kurdish Behdînî (Arabic script)','The English-only Behdînî label also appears in the current-language heading');
+  assert.equal(await page.locator('#no-results h3').innerText(),'Kurdish Behdînî Voice');
+  assert.equal(await page.locator('#no-results p').first().innerText(),'The hosted demo offers 21 voices. Local benchmark results are unavailable.');
+  assert.match(await page.locator('#language-announcement').textContent(),/Hosted demo available\. Local benchmark results are unavailable\./);
+  assert.equal(await page.locator('#hosted-only-demo-link').getAttribute('href'),'https://behdinan.com/');
+  assert.equal(await page.locator('#fixture-link').getAttribute('href'),null,'Hosted coverage does not expose a placeholder article fixture');
+  assert.equal(await page.locator('#language-hint').isVisible(),false,'The article edition hint is hidden for the hosted-only entry');
+  assert.equal(await page.locator('#model-rows tr').count(),0,'Hosted directory coverage does not create a ranked model row');
+  assert.equal(await page.locator('#no-results [data-play]').count(),0,'Hosted directory coverage does not publish audio controls');
   await page.goBack();
   await page.waitForFunction(()=>document.querySelector('#current-language')?.textContent==='English');
   await selectLanguage(page,'fr');

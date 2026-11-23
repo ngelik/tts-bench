@@ -37,7 +37,7 @@ await cp('dashboard/index.html',resolve(out,'index.html'));
 await mkdir(resolve(out,'diagnostics/2026-11-multilingual'),{recursive:true});
 await cp('dashboard/diagnostics.html',resolve(out,'diagnostics/index.html'));
 await cp('diagnostics/2026-11-multilingual/observations.json',resolve(out,'diagnostics/2026-11-multilingual/observations.json'));
-for(const file of ['style.css','app.mjs','diagnostics.mjs','diagnostics.css'])await cp('dashboard/'+file,resolve(out,'assets',file));
+for(const file of ['style.css','app.mjs','coverage.mjs','diagnostics.mjs','diagnostics.css'])await cp('dashboard/'+file,resolve(out,'assets',file));
 await import('../diagnostics/2026-11-multilingual/stage-audio.mjs');
 await import('./stage-erogol-listening.mjs');
 await writeFile(resolve(out,'assets/data.json'),JSON.stringify(data)+'\n');
