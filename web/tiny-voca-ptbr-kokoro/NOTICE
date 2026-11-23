@@ -1,0 +1,18 @@
+tiny-voca-ptbr-kokoro
+Copyright 2026 Aleph Santos
+
+Licensed under the Apache License, Version 2.0 (see LICENSE). This covers the
+code and the model weights in model/.
+
+This product includes software from tiny-voca by Muhammed Nazeem
+(https://github.com/n4ze3m/tiny-voca), licensed under the Apache License 2.0.
+tiny_voca_ptbr/text.py and tiny_voca_ptbr/voice.py are modified copies of
+upstream files; their docstrings say what changed.
+
+The model weights were trained from random initialization on speech generated
+by Kokoro-82M (https://huggingface.co/hexgrad/Kokoro-82M, Apache License 2.0)
+with its voices pf_dora, af_heart and pm_santa. No Kokoro weights or voice
+files are included.
+
+Phonemes come from eSpeak NG (https://github.com/espeak-ng/espeak-ng,
+GPL-3.0-or-later), which is called as a separate program and is not included.

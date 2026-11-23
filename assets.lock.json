@@ -13497,6 +13497,211 @@
                       "kind": "runtime"
                 }
           ]
+    },
+    "tiny-voca-ptbr-kokoro": {
+          "displayName": "Tiny Voca Brazilian Portuguese F (Haple Kokoro, FP32)",
+          "modelRevision": "596401fc87f1635f73326872001e370d3aedab9b",
+          "sourceId": "Haple/tiny-voca-ptbr-kokoro",
+          "sourceRevision": "1e7ed993260ecdd91552762f7403c00632bf5dab",
+          "parameterCount": 4535755,
+          "step": 100000,
+          "frontendFingerprint": "8fcf234a3759b90b7f8b3c399c6632a22a6bb3d50ce290636b3ab80936d09dee",
+          "runtime": {
+                "package": "onnxruntime-web-pocket",
+                "version": "1.31.1",
+                "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+                "license": "MIT with retained license and third-party notices",
+                "files": [
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ort.wasm.min.mjs",
+                            "path": "dist/ort.wasm.min.mjs",
+                            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+                            "bytes": 53725,
+                            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ort.webgpu.min.mjs",
+                            "path": "dist/ort.webgpu.min.mjs",
+                            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+                            "bytes": 70742,
+                            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ort-wasm-simd-threaded.mjs",
+                            "path": "dist/ort-wasm-simd-threaded.mjs",
+                            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+                            "bytes": 24738,
+                            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ort-wasm-simd-threaded.wasm",
+                            "path": "dist/ort-wasm-simd-threaded.wasm",
+                            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+                            "bytes": 14848852,
+                            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ort-wasm-simd-threaded.asyncify.mjs",
+                            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+                            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+                            "bytes": 53457,
+                            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ort-wasm-simd-threaded.asyncify.wasm",
+                            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+                            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+                            "bytes": 28747738,
+                            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-LICENSE.txt",
+                            "path": "LICENSE.txt",
+                            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+                            "bytes": 1073,
+                            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1",
+                            "kind": "license",
+                            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt"
+                      },
+                      {
+                            "id": "tiny-voca-ptbr-kokoro-ort-ThirdPartyNotices.txt",
+                            "path": "ThirdPartyNotices.txt",
+                            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+                            "bytes": 338088,
+                            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+                            "package": "onnxruntime-web-pocket",
+                            "version": "1.31.1",
+                            "kind": "license",
+                            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt"
+                      }
+                ]
+          },
+          "license": {
+                "model": "Apache-2.0; Haple code and checkpoint. No generated-audio blanket redistribution grant is stated.",
+                "inferenceSource": "Apache-2.0 Tiny Voca port and upstream tiny-voca attribution; see adjacent LICENSE and NOTICE.",
+                "frontend": "Apache-2.0 Portuguese text normalizer and eSpeak front end.",
+                "espeak": "GPL-3.0-or-later eSpeak NG 1.51 WebAssembly runtime and data; separate notice and pinned source build.",
+                "teacher": "Kokoro-82M and teacher voices pf_dora, af_heart and pm_santa are Apache-2.0; no teacher weights or voice files bundled.",
+                "runtime": "MIT ONNX Runtime Web 1.31.1 with retained third-party notices.",
+                "requiresAcceptance": false
+          },
+          "backends": [
+                "cpu",
+                "webgpu"
+          ],
+          "support": {
+                "voiceCount": 2,
+                "bundledVoiceCount": 2,
+                "languageCount": 1,
+                "languages": [
+                      "pt-BR"
+                ],
+                "scope": "Pinned Haple/tiny-voca-ptbr-kokoro checkpoint only. Two fixed synthetic voices, F and M, at 24 kHz mono; benchmark default is F/index 0. This browser profile supports Brazilian Portuguese (pt-BR) only.",
+                "sources": [
+                      "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/tree/596401fc87f1635f73326872001e370d3aedab9b",
+                      "https://github.com/Haple/tiny-voca-ptbr-kokoro/tree/1e7ed993260ecdd91552762f7403c00632bf5dab",
+                      "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+                      "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+                ],
+                "notes": "Author-reported exact count is 4,535,755 parameters including the waveform generator. The immutable pt-br-article-v1 text/frontend audit matches 101 spans and 310 utterances, maximum 228 tokens, zero unknown tokens, and the native token/stress digest; this is diagnostic evidence, not a score. eSpeak NG 1.51 is part of the trained frontend ABI. English trace output is not a supported language. Generated recordings have no blanket redistribution grant."
+          },
+          "assets": [
+                {
+                      "id": "tiny-voca-ptbr-kokoro-onnx",
+                      "target": "models/tiny-voca-ptbr-kokoro/596401fc87f1635f73326872001e370d3aedab9b/1e7ed993260ecdd91552762f7403c00632bf5dab/models/tiny-voca-ptbr.onnx",
+                      "bytes": 21374289,
+                      "sha256": "f6819ce8cd6eebf5cee2f5a9911c017fe348373fcb1dd42fe56ef885561eecde",
+                      "kind": "model-weights",
+                      "url": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/resolve/596401fc87f1635f73326872001e370d3aedab9b/model/tiny-voca-ptbr.onnx"
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-config",
+                      "target": "models/tiny-voca-ptbr-kokoro/596401fc87f1635f73326872001e370d3aedab9b/1e7ed993260ecdd91552762f7403c00632bf5dab/models/tiny-voca-ptbr.json",
+                      "bytes": 954,
+                      "sha256": "1e495cbe1726f79dff37c2d9808d95d6251da1f10f26091d73f53cf78a68832b",
+                      "kind": "model-config",
+                      "url": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/resolve/596401fc87f1635f73326872001e370d3aedab9b/model/tiny-voca-ptbr.json"
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-voices",
+                      "target": "models/tiny-voca-ptbr-kokoro/596401fc87f1635f73326872001e370d3aedab9b/1e7ed993260ecdd91552762f7403c00632bf5dab/models/voices.json",
+                      "bytes": 115,
+                      "sha256": "8fe00642d7fd6b2afc0973db71a6d6fd86ca76894fa0ef1ffa2e1422aee74830",
+                      "kind": "model-support",
+                      "url": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/resolve/596401fc87f1635f73326872001e370d3aedab9b/model/voices.json"
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.mjs",
+                      "target": "runtimes/espeak-ng/tiny-voca-ptbr-kokoro-1.51/espeak-quiet.mjs",
+                      "bytes": 66914,
+                      "sha256": "af4d7a31d0c98f44c299ceae92c9c7ededcaf9f7f384d78b9cedc88b6cd48ef4",
+                      "kind": "runtime",
+                      "generated": {
+                            "artifactPath": "espeak-quiet.mjs",
+                            "build": "bash tools/tiny-voca-ptbr-kokoro-espeak/build.sh .cache/public/runtimes/espeak-ng/tiny-voca-ptbr-kokoro-1.51; pinned eSpeak NG source commit 2e9a5fccbb0095e87b2769e9249ea1f821918ecd (archive SHA-256 57aefafeff07f11a91b39cce4c96f4f9e88a13a26b3aeef22556fbf78cede684), eSpeak NG 1.51, Emscripten 5.0.3, autoconf 2.73, automake 1.18.1, libtool 2.5.4, quiet-trace.c, and the adjacent GPL-3.0-or-later COPYING notice. The output is imported from the build artifact directory after digest verification."
+                      }
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.wasm",
+                      "target": "runtimes/espeak-ng/tiny-voca-ptbr-kokoro-1.51/espeak-quiet.wasm",
+                      "bytes": 356841,
+                      "sha256": "99eb86f85bfc877052e30d8f42e0932e18beef1f8b3ef9b4b21db5ea55e098c3",
+                      "kind": "runtime",
+                      "generated": {
+                            "artifactPath": "espeak-quiet.wasm",
+                            "build": "bash tools/tiny-voca-ptbr-kokoro-espeak/build.sh .cache/public/runtimes/espeak-ng/tiny-voca-ptbr-kokoro-1.51; pinned eSpeak NG source commit 2e9a5fccbb0095e87b2769e9249ea1f821918ecd (archive SHA-256 57aefafeff07f11a91b39cce4c96f4f9e88a13a26b3aeef22556fbf78cede684), eSpeak NG 1.51, Emscripten 5.0.3, autoconf 2.73, automake 1.18.1, libtool 2.5.4, quiet-trace.c, and the adjacent GPL-3.0-or-later COPYING notice. The output is imported from the build artifact directory after digest verification."
+                      }
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.data",
+                      "target": "runtimes/espeak-ng/tiny-voca-ptbr-kokoro-1.51/espeak-quiet.data",
+                      "bytes": 883170,
+                      "sha256": "61c00cb091e058a66e96b2861eda93f99edf34ff07d03406a2fa7772e6170ec5",
+                      "kind": "runtime",
+                      "generated": {
+                            "artifactPath": "espeak-quiet.data",
+                            "build": "bash tools/tiny-voca-ptbr-kokoro-espeak/build.sh .cache/public/runtimes/espeak-ng/tiny-voca-ptbr-kokoro-1.51; pinned eSpeak NG source commit 2e9a5fccbb0095e87b2769e9249ea1f821918ecd (archive SHA-256 57aefafeff07f11a91b39cce4c96f4f9e88a13a26b3aeef22556fbf78cede684), eSpeak NG 1.51, Emscripten 5.0.3, autoconf 2.73, automake 1.18.1, libtool 2.5.4, quiet-trace.c, and the adjacent GPL-3.0-or-later COPYING notice. The output is imported from the build artifact directory after digest verification."
+                      }
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-apache-license",
+                      "target": "models/tiny-voca-ptbr-kokoro/596401fc87f1635f73326872001e370d3aedab9b/1e7ed993260ecdd91552762f7403c00632bf5dab/legal/LICENSE",
+                      "bytes": 11358,
+                      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+                      "kind": "license",
+                      "sourcePath": "web/tiny-voca-ptbr-kokoro/LICENSE"
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-apache-notice",
+                      "target": "models/tiny-voca-ptbr-kokoro/596401fc87f1635f73326872001e370d3aedab9b/1e7ed993260ecdd91552762f7403c00632bf5dab/legal/NOTICE",
+                      "bytes": 837,
+                      "sha256": "12bbcca6d90412485509b4c199e430872777ea8d0c2b9ea0356905ab8a42e929",
+                      "kind": "license",
+                      "sourcePath": "web/tiny-voca-ptbr-kokoro/NOTICE"
+                },
+                {
+                      "id": "tiny-voca-ptbr-kokoro-espeak-copying",
+                      "target": "licenses/espeak-ng/TINY-VOCA-PTBR-KOKORO-COPYING",
+                      "bytes": 35147,
+                      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+                      "kind": "license",
+                      "sourcePath": "web/licenses/ESPEAK-NG-COPYING-TINY-VOCA-PTBR-KOKORO.txt"
+                }
+          ]
     }
   }
 }

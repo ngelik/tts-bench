@@ -599,6 +599,24 @@ unsupported. See [profile and reproduction](TINY_VOCA_PTBR.md) and the
 
 [Pinned checkpoint](https://huggingface.co/semfence/tiny-voca-ptbr/tree/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f) · [Pinned browser Space](https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/tree/a456470df5589478e3fb3f1973457771f4c056bd).
 
+<a id="tiny-voca-ptbr-kokoro"></a>
+
+## Tiny Voca Brazilian Portuguese Kokoro 4.5M FP32 (F)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`pt-BR`).
+
+The independent Haple checkpoint bundles F and M; F/index 0 is the benchmark
+default. It uses the upstream Portuguese normalizer and eSpeak NG 1.51 with a
+68-symbol NFD frontend. The exact frontend audit matches the immutable fixture's
+101 spans and 310 utterances, maximum 228 tokens, zero unknown tokens, and
+token/stress digest. This is a frontend diagnostic, not a score. CPU uses
+single-thread WASM. WebGPU+WASM requires actual hardware dispatch in the
+separate probe. This profile supports pt-BR only; English traces are not an
+English support claim. See [profile and evidence](TINY_VOCA_PTBR_KOKORO.md) and
+[retained notices](../web/tiny-voca-ptbr-kokoro/NOTICE).
+
+[Pinned checkpoint](https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/tree/596401fc87f1635f73326872001e370d3aedab9b) · [Pinned source](https://github.com/Haple/tiny-voca-ptbr-kokoro/tree/1e7ed993260ecdd91552762f7403c00632bf5dab).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
