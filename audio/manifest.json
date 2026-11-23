@@ -4598,6 +4598,68 @@
       }
     },
     {
+      "resultId": "2026-11-23t15-38-32-106z-tui-voice-mini-ml-cpu-warm-02e159f8",
+      "model": "tui-voice-mini-ml",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "ml",
+      "attribution": "AI-generated Malayalam benchmark narration from Cyrax321’s Apache-2.0 Tui Voice Mini checkpoint, using the fixed F2 voice (AI4Bharat Rasa Malayalam Female). The model card credits AI4Bharat Rasa, by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra (CC BY 4.0), as training data and Muhammed Nazeem’s Tiny Voca architecture.",
+      "modelTerms": "Apache-2.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md",
+        "https://github.com/Cyrax321/tui-voice/tree/478761a10399c357e9ccc5380145906167e4d655",
+        "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5",
+        "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t15-38-32-106z-tui-voice-mini-ml-cpu-warm-02e159f8--tui-voice-mini-ml--cpu.wav",
+        "sha256": "c2a433edaf609126a230a65b5f51807e1a395e86ebbfe5ecaf4fdee4ec63bb0d",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d57ab50732e812b40087423e244a37907ee537a72df195eeeb9c749495aec344",
+        "bytes": 65912876
+      }
+    },
+    {
+      "resultId": "2026-11-23t15-44-39-263z-tui-voice-mini-ml-webgpu-warm-28be0755",
+      "model": "tui-voice-mini-ml",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "ml",
+      "attribution": "AI-generated Malayalam benchmark narration from Cyrax321’s Apache-2.0 Tui Voice Mini checkpoint, using the fixed F2 voice (AI4Bharat Rasa Malayalam Female). The model card credits AI4Bharat Rasa, by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra (CC BY 4.0), as training data and Muhammed Nazeem’s Tiny Voca architecture.",
+      "modelTerms": "Apache-2.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md",
+        "https://github.com/Cyrax321/tui-voice/tree/478761a10399c357e9ccc5380145906167e4d655",
+        "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5",
+        "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t15-44-39-263z-tui-voice-mini-ml-webgpu-warm-28be0755--tui-voice-mini-ml--webgpu.wav",
+        "sha256": "071ce3e0a9ea946c556f67cd52a51a0cef183974274d2272fdfa737c711c64cf",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "bd5e9fd5e0e50b859d56967449b4b5410e5560423c14d4f85fc6c58bc2c31f4e",
+        "bytes": 65912876
+      }
+    },
+    {
       "resultId": "2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285",
       "model": "ua-serhiy-0p58m",
       "backend": "cpu",
