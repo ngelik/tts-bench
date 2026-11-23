@@ -1,0 +1,834 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t03-25-43-217z-tiny-voca-ptbr-kokoro-cpu-cached-95ba9870",
+  "createdAt": "2026-11-23T03:27:04.185Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "pt-br-article-v1",
+    "language": "pt-BR",
+    "sha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+    "characters": 22164,
+    "unicodeCodePoints": 22164,
+    "utf8Bytes": 22793,
+    "chunks": 101,
+    "source": {
+      "type": "translation",
+      "description": "Complete Brazilian Portuguese translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 source paragraphs and edited for Brazilian usage and fidelity. The translation preserves original measurement units, values and identifiers, renders the implicit evening times in 24-hour notation, and preserves the bell directions and four-count pause. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "5576650cfde71cb70cea0f3bc8766c7094e767de",
+    "dirty": false,
+    "manifestSha256": "ed4fbf4774a1ab3ec4d06d3fe6c810fa031410ab287ced11290d9166b582f11d"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-onnx",
+      "sha256": "f6819ce8cd6eebf5cee2f5a9911c017fe348373fcb1dd42fe56ef885561eecde",
+      "bytes": 21374289
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-config",
+      "sha256": "1e495cbe1726f79dff37c2d9808d95d6251da1f10f26091d73f53cf78a68832b",
+      "bytes": 954
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-voices",
+      "sha256": "8fe00642d7fd6b2afc0973db71a6d6fd86ca76894fa0ef1ffa2e1422aee74830",
+      "bytes": 115
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.mjs",
+      "sha256": "af4d7a31d0c98f44c299ceae92c9c7ededcaf9f7f384d78b9cedc88b6cd48ef4",
+      "bytes": 66914
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.wasm",
+      "sha256": "99eb86f85bfc877052e30d8f42e0932e18beef1f8b3ef9b4b21db5ea55e098c3",
+      "bytes": 356841
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.data",
+      "sha256": "61c00cb091e058a66e96b2861eda93f99edf34ff07d03406a2fa7772e6170ec5",
+      "bytes": 883170
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-apache-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-apache-notice",
+      "sha256": "12bbcca6d90412485509b4c199e430872777ea8d0c2b9ea0356905ab8a42e929",
+      "bytes": 837
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ptbr-kokoro",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-BR"
+        ],
+        "scope": "Pinned Haple/tiny-voca-ptbr-kokoro checkpoint only. Two fixed synthetic voices, F and M, at 24 kHz mono; benchmark default is F/index 0. This browser profile supports Brazilian Portuguese (pt-BR) only.",
+        "sources": [
+          "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/tree/596401fc87f1635f73326872001e370d3aedab9b",
+          "https://github.com/Haple/tiny-voca-ptbr-kokoro/tree/1e7ed993260ecdd91552762f7403c00632bf5dab",
+          "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+        ],
+        "notes": "Author-reported exact count is 4,535,755 parameters including the waveform generator. The immutable pt-br-article-v1 text/frontend audit matches 101 spans and 310 utterances, maximum 228 tokens, zero unknown tokens, and the native token/stress digest; this is diagnostic evidence, not a score. eSpeak NG 1.51 is part of the trained frontend ABI. English trace output is not a supported language. Generated recordings have no blanket redistribution grant."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F",
+      "precision": "FP32 ONNX export of the released Brazilian Portuguese checkpoint",
+      "settings": {
+        "modelId": "Haple/tiny-voca-ptbr-kokoro",
+        "modelRevision": "596401fc87f1635f73326872001e370d3aedab9b",
+        "sourceId": "Haple/tiny-voca-ptbr-kokoro",
+        "sourceRevision": "1e7ed993260ecdd91552762f7403c00632bf5dab",
+        "parameterCount": 4535755,
+        "fixtureId": "pt-br-article-v1",
+        "fixtureSha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+        "language": "pt-BR",
+        "locale": "pt-BR",
+        "supportedLanguages": [
+          "pt-BR"
+        ],
+        "voice": "F",
+        "voiceIndex": 0,
+        "teacherVoice": "Kokoro pf_dora*0.7 + af_heart*0.3",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released Brazilian Portuguese checkpoint",
+        "frontend": "eSpeak NG pt-br 1.51; NFD 68-symbol ABI and pinned Portuguese normalizer",
+        "frontendFingerprint": "8fcf234a3759b90b7f8b3c399c6632a22a6bb3d50ce290636b3ab80936d09dee",
+        "trainedEspeakRelease": "1.51",
+        "espeakRuntimeVersion": "1.51",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "waveformExecutionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Released FP32 graph; utterance PCM concatenated in source order without inserted audio, then one whole-span peak cap at 0.99.",
+        "languageSupportNote": "This pinned checkpoint/frontend supports pt-BR only. English trace output is a pronunciation diagnostic, not a supported benchmark language."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit ONNX Runtime Web 1.31.1 single-thread WASM provider."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 72824.34999990463,
+          "samples": 34872576,
+          "sampleRate": 24000,
+          "pcmSha256": "13b4155830db7f497c519e7339df0cc42db4ab343bffae30aa4edd44c9e2fdf8",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 207.79999995231628,
+            "firstSourceChunkCompletedMs": 710.9349999427795,
+            "audioSeconds": 1453.024,
+            "realTimeFactor": 0.05011916527180875,
+            "minSamplesPerChunk": 282368,
+            "maxSamplesPerChunk": 440320,
+            "articleCallPeakRssBytes": 2013184000,
+            "generationMeanRssBytes": 1216174649,
+            "generationRssSampleCount": 144,
+            "loadMs": 752.8892089999999,
+            "controllerTrialElapsedMs": 77874.401666,
+            "downloadBytes": 59974,
+            "idealDownloadSecondsAt1Mbps": 0.479792
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795404347385.6448,
+            "finalPcmAtEpochMs": 1795404420209.9949,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795404347931,
+                1084391424
+              ],
+              [
+                1795404348432,
+                1094107136
+              ],
+              [
+                1795404348936,
+                1097531392
+              ],
+              [
+                1795404349438,
+                1112948736
+              ],
+              [
+                1795404349938,
+                1111506944
+              ],
+              [
+                1795404350439,
+                1119797248
+              ],
+              [
+                1795404350941,
+                1120616448
+              ],
+              [
+                1795404351444,
+                1123287040
+              ],
+              [
+                1795404351948,
+                1126875136
+              ],
+              [
+                1795404352449,
+                1128103936
+              ],
+              [
+                1795404352951,
+                1130856448
+              ],
+              [
+                1795404353454,
+                1133477888
+              ],
+              [
+                1795404353954,
+                1135755264
+              ],
+              [
+                1795404354457,
+                1137917952
+              ],
+              [
+                1795404354958,
+                1140178944
+              ],
+              [
+                1795404355460,
+                1142915072
+              ],
+              [
+                1795404355963,
+                1143881728
+              ],
+              [
+                1795404356464,
+                1146290176
+              ],
+              [
+                1795404356965,
+                1149927424
+              ],
+              [
+                1795404357468,
+                1150910464
+              ],
+              [
+                1795404357971,
+                1153187840
+              ],
+              [
+                1795404358470,
+                1134575616
+              ],
+              [
+                1795404358973,
+                1134608384
+              ],
+              [
+                1795404359477,
+                1135247360
+              ],
+              [
+                1795404359978,
+                1136672768
+              ],
+              [
+                1795404360481,
+                1136738304
+              ],
+              [
+                1795404360983,
+                1138098176
+              ],
+              [
+                1795404361485,
+                1142325248
+              ],
+              [
+                1795404361986,
+                1144651776
+              ],
+              [
+                1795404362488,
+                1144733696
+              ],
+              [
+                1795404362991,
+                1146208256
+              ],
+              [
+                1795404363492,
+                1163296768
+              ],
+              [
+                1795404363996,
+                1163296768
+              ],
+              [
+                1795404364496,
+                1167949824
+              ],
+              [
+                1795404364995,
+                1169293312
+              ],
+              [
+                1795404365497,
+                1169473536
+              ],
+              [
+                1795404366000,
+                1171619840
+              ],
+              [
+                1795404366502,
+                1171046400
+              ],
+              [
+                1795404367004,
+                1171079168
+              ],
+              [
+                1795404367507,
+                1172602880
+              ],
+              [
+                1795404368008,
+                1174028288
+              ],
+              [
+                1795404368510,
+                1175437312
+              ],
+              [
+                1795404369014,
+                1175502848
+              ],
+              [
+                1795404369516,
+                1189117952
+              ],
+              [
+                1795404370020,
+                1189117952
+              ],
+              [
+                1795404370519,
+                1193312256
+              ],
+              [
+                1795404371021,
+                1194917888
+              ],
+              [
+                1795404371524,
+                1196277760
+              ],
+              [
+                1795404372026,
+                1196277760
+              ],
+              [
+                1795404372529,
+                1198915584
+              ],
+              [
+                1795404373030,
+                1200340992
+              ],
+              [
+                1795404373532,
+                1201127424
+              ],
+              [
+                1795404374035,
+                1202667520
+              ],
+              [
+                1795404374539,
+                1200144384
+              ],
+              [
+                1795404375042,
+                1200144384
+              ],
+              [
+                1795404375543,
+                1201668096
+              ],
+              [
+                1795404376046,
+                1202913280
+              ],
+              [
+                1795404376547,
+                1204666368
+              ],
+              [
+                1795404377048,
+                1208467456
+              ],
+              [
+                1795404377553,
+                1209270272
+              ],
+              [
+                1795404378056,
+                1209450496
+              ],
+              [
+                1795404378558,
+                1210908672
+              ],
+              [
+                1795404379056,
+                1212268544
+              ],
+              [
+                1795404379557,
+                1212268544
+              ],
+              [
+                1795404380064,
+                1215987712
+              ],
+              [
+                1795404380563,
+                1217855488
+              ],
+              [
+                1795404381067,
+                1217855488
+              ],
+              [
+                1795404381567,
+                1221820416
+              ],
+              [
+                1795404382069,
+                1223196672
+              ],
+              [
+                1795404382570,
+                1223196672
+              ],
+              [
+                1795404383072,
+                1224540160
+              ],
+              [
+                1795404383572,
+                1223491584
+              ],
+              [
+                1795404384075,
+                1223491584
+              ],
+              [
+                1795404384578,
+                1224998912
+              ],
+              [
+                1795404385079,
+                1226375168
+              ],
+              [
+                1795404385581,
+                1227997184
+              ],
+              [
+                1795404386082,
+                1228062720
+              ],
+              [
+                1795404386583,
+                1230471168
+              ],
+              [
+                1795404387087,
+                1230471168
+              ],
+              [
+                1795404387588,
+                1232093184
+              ],
+              [
+                1795404388092,
+                1233420288
+              ],
+              [
+                1795404388592,
+                1235976192
+              ],
+              [
+                1795404389092,
+                1236008960
+              ],
+              [
+                1795404389595,
+                1237434368
+              ],
+              [
+                1795404390097,
+                1238958080
+              ],
+              [
+                1795404390601,
+                1238958080
+              ],
+              [
+                1795404391101,
+                1240416256
+              ],
+              [
+                1795404391603,
+                1242185728
+              ],
+              [
+                1795404392105,
+                1241022464
+              ],
+              [
+                1795404392607,
+                1241104384
+              ],
+              [
+                1795404393109,
+                1242628096
+              ],
+              [
+                1795404393611,
+                1243938816
+              ],
+              [
+                1795404394113,
+                1243955200
+              ],
+              [
+                1795404394615,
+                1245642752
+              ],
+              [
+                1795404395118,
+                1247379456
+              ],
+              [
+                1795404395621,
+                1247395840
+              ],
+              [
+                1795404396126,
+                1248788480
+              ],
+              [
+                1795404396623,
+                1250689024
+              ],
+              [
+                1795404397125,
+                1252114432
+              ],
+              [
+                1795404397627,
+                1252114432
+              ],
+              [
+                1795404398129,
+                1253703680
+              ],
+              [
+                1795404398632,
+                1256079360
+              ],
+              [
+                1795404399137,
+                1256079360
+              ],
+              [
+                1795404399637,
+                1257996288
+              ],
+              [
+                1795404400137,
+                1259372544
+              ],
+              [
+                1795404400639,
+                1261043712
+              ],
+              [
+                1795404401140,
+                1261076480
+              ],
+              [
+                1795404401643,
+                1262518272
+              ],
+              [
+                1795404402145,
+                1263943680
+              ],
+              [
+                1795404402647,
+                1263943680
+              ],
+              [
+                1795404403150,
+                1265451008
+              ],
+              [
+                1795404403652,
+                1268072448
+              ],
+              [
+                1795404404156,
+                1268072448
+              ],
+              [
+                1795404404657,
+                1269481472
+              ],
+              [
+                1795404405159,
+                1270906880
+              ],
+              [
+                1795404405661,
+                1272184832
+              ],
+              [
+                1795404406163,
+                1272332288
+              ],
+              [
+                1795404406663,
+                1274757120
+              ],
+              [
+                1795404407168,
+                1276297216
+              ],
+              [
+                1795404407669,
+                1276346368
+              ],
+              [
+                1795404408172,
+                1277886464
+              ],
+              [
+                1795404408675,
+                1281228800
+              ],
+              [
+                1795404409177,
+                1282686976
+              ],
+              [
+                1795404409680,
+                1283178496
+              ],
+              [
+                1795404410179,
+                1283637248
+              ],
+              [
+                1795404410681,
+                1285046272
+              ],
+              [
+                1795404411185,
+                1285046272
+              ],
+              [
+                1795404411685,
+                1286438912
+              ],
+              [
+                1795404412186,
+                1287913472
+              ],
+              [
+                1795404412690,
+                1289371648
+              ],
+              [
+                1795404413192,
+                1289420800
+              ],
+              [
+                1795404413694,
+                1290846208
+              ],
+              [
+                1795404414196,
+                1292402688
+              ],
+              [
+                1795404414699,
+                1292402688
+              ],
+              [
+                1795404415199,
+                1294024704
+              ],
+              [
+                1795404415701,
+                1295712256
+              ],
+              [
+                1795404416205,
+                1297170432
+              ],
+              [
+                1795404416708,
+                1297334272
+              ],
+              [
+                1795404417207,
+                1298825216
+              ],
+              [
+                1795404417710,
+                1300119552
+              ],
+              [
+                1795404418213,
+                1301610496
+              ],
+              [
+                1795404418716,
+                1301741568
+              ],
+              [
+                1795404419217,
+                1307328512
+              ],
+              [
+                1795404419718,
+                1308884992
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "3833e2b8b033eac466fd71de8993117a282d397d15d5b569a04a7996c0551ebd",
+            "bytes": 69745196
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T03-19-06-976Z-6b948d514829; cell 3/4; source 5576650cfde71cb70cea0f3bc8766c7094e767de; fixture pt-br-article-v1 (pt-BR, 22164 JavaScript characters, 101 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Haple tiny-voca-ptbr-kokoro released FP32 graph, F voice index zero, neutral controls, and completed-span peak cap 0.99. Pinned eSpeak NG 1.51 and original Brazilian Portuguese normalization and frontend. ORT Web 1.31.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
