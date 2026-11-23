@@ -667,6 +667,27 @@ reference voice.
 
 [Profile and provenance](TINY_VOCA_AR.md) · [License and notices](../web/tiny-voca-ar/NOTICE.md) · [Pinned checkpoint](https://huggingface.co/abdullah/tiny-voca-ar/tree/dcdf56c10c536d4df74576f036b512c0d212e17f) · [Publisher demo](https://tiny-voca-ar-site.pages.dev/).
 
+<a id="tiny-voca-arabic"></a>
+
+## Oddadmix Tiny Voca Arabic a000 (FP32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`ar`).
+
+The profile uses the publisher’s synthetic Modern Standard Arabic voice a000
+at index 0 and 24 kHz mono. CATT v2 re-diacritizes uncached phrases on CPU/WASM.
+The released Python rules run in Pyodide 0.26.4 with NumPy 1.26.4. The acoustic
+graph supports CPU/WASM and verified hardware WebGPU+WASM. The 21.364 MB
+speech checkpoint and 92.749 MB of CATT weights total 114.113 MB.
+
+The headed Chrome audit matched the fixed 129 spans and all 339 utterance
+plans with zero unknown IDs or words. It reproduced stock number expansion,
+sentence fitting, 120 ms inter-utterance silence, and a 0.99 peak cap on each
+completed span. The warm repetitions reuse the phrase cache populated by the
+excluded full article. The separate cached-resource trial uses a fresh
+worker and runs CATT for new phrases.
+
+[Profile and reproduction](TINY_VOCA_ARABIC.md) · [Notices](../web/tiny-voca-arabic/NOTICE.md) · [Pinned checkpoint](https://huggingface.co/oddadmix/tiny-voca-arabic/tree/e529f716965142f51835adc9e5661f224c3fa103).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)

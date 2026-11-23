@@ -14106,6 +14106,312 @@
                 }
           ]
     },
+    "tiny-voca-arabic": {
+      "displayName": "Tiny Voca Arabic CATT a000 (FP32)",
+      "modelRevision": "e529f716965142f51835adc9e5661f224c3fa103",
+      "sourceId": "oddadmix/tiny-voca-arabic",
+      "sourceRevision": "64e3e2ae08f7553c38f280a58f05b955a0c296f4",
+      "parameterCount": 4531723,
+      "frontendFingerprint": "8b5781d0348623398ce7ce16b5013e1ccea1ee8dd2d6e9f9f3db0398ab0d32c2",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT; Pyodide 0.26.4 is MPL-2.0, CPython 3.12 uses PSF terms, and NumPy 1.26.4 uses BSD-3-Clause.",
+        "files": []
+      },
+      "license": {
+        "model": "Apache-2.0 for pinned model and frontend. Training dataset is published as oddadmix/msa-duplex-assistant-tts; no independent audio or generated recording rights are inferred.",
+        "frontend": "Apache-2.0 Tiny Voca frontend; CATT v2 current release Apache-2.0 after explicit relicensing. CATT utils.py retains its BSD notice.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1; MPL-2.0 Pyodide 0.26.4; CPython PSF terms; NumPy BSD-3-Clause.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ar"
+        ],
+        "scope": "Experimental MSA profile with one synthetic a000 voice, 24 kHz mono, CATT v2 browser diacritization, and ar-article-v1. Latin-script text is stripped; no standalone English support.",
+        "sources": [
+          "https://huggingface.co/oddadmix/tiny-voca-arabic/tree/e529f716965142f51835adc9e5661f224c3fa103",
+          "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
+          "https://huggingface.co/spaces/oddadmix/tiny-voca-arabic/tree/64e3e2ae08f7553c38f280a58f05b955a0c296f4",
+          "https://huggingface.co/datasets/oddadmix/msa-duplex-assistant-tts/tree/ace6ef2243b47f5152fa95c5c5a6b1db56a05ca2",
+          "https://github.com/abjadai/catt/releases/tag/v2",
+          "https://github.com/abjadai/catt/commit/8d5330499feb85f6625e6af632141ed2ed6065fd"
+        ],
+        "notes": "Frontend audit: 129 spans, 339 utterances, max 194 tokens, zero unknown tokens/words; token/stress SHA-256 1f5bce0f95699c495b17ec67838ba5f3269bbd2fb631499ab40b26eebe8b3194. CATT runs CPU/WASM on both adapters; WebGPU capability applies only to the acoustic ONNX graph."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-arabic-config",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/config.json",
+          "url": "https://huggingface.co/oddadmix/tiny-voca-arabic/resolve/e529f716965142f51835adc9e5661f224c3fa103/onnx/model.json",
+          "bytes": 808,
+          "sha256": "c00789356049545702f7e42624b1bdef1b105c22c38832eaec364d4d5ea007cc",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-arabic-model-onnx",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/model.onnx",
+          "url": "https://huggingface.co/oddadmix/tiny-voca-arabic/resolve/e529f716965142f51835adc9e5661f224c3fa103/onnx/model.onnx",
+          "bytes": 21364044,
+          "sha256": "1eb04ad05ec96808eac3cb761ddb7fc0e17edb636deb3263ccb13d99f725ab8f",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-arabic-source-tiny_voca_ar-__init__.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/tiny_voca_ar/__init__.py",
+          "bytes": 86,
+          "sha256": "acb18e52d919afbf75df34d80ec768935b2a7c0e01265510f0679dc96ca2bef9",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/tiny_voca_ar/__init__.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-tiny_voca_ar-arabic_frontend.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/tiny_voca_ar/arabic_frontend.py",
+          "bytes": 14876,
+          "sha256": "b94b2938d6cc5f2eabe67d776a907d9297954d037e47fa38f5bf76ee1fb28428",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/arabic_frontend.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-tiny_voca_ar-numbers.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/tiny_voca_ar/numbers.py",
+          "bytes": 2876,
+          "sha256": "6ef9592da4332184f8223a7048cc821abdea4b851e1575a29a5bd277971d91fe",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/numbers.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-tiny_voca_ar-text.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/tiny_voca_ar/text.py",
+          "bytes": 5011,
+          "sha256": "04342306ffd01b1978a55c39e67fc0b44c635d9f4afbb406f346b29c9622a32c",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/text.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-catt_tashkeel-__init__.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt_tashkeel/__init__.py",
+          "bytes": 80,
+          "sha256": "798d70b292464e102df2a7527529c3ef64a67e1ee7506d6f051e87bcfb3e2d66",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/catt_tashkeel/__init__.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-catt_tashkeel-bw2ar.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt_tashkeel/bw2ar.py",
+          "bytes": 4480,
+          "sha256": "1064d0adec9cb0aea33a10ad944b8e7b8b558f17fef7c145da2a534efc6c6b66",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/catt_tashkeel/bw2ar.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-catt_tashkeel-tokenizer.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt_tashkeel/tokenizer.py",
+          "bytes": 8504,
+          "sha256": "6895f284e88971c366f72e1c34aee896659ad61e3b7737ae201ab7f25daab8cc",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/catt_tashkeel/tokenizer.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-catt_tashkeel-utils.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt_tashkeel/utils.py",
+          "bytes": 3505,
+          "sha256": "b3c02fdc7ba2853c4e75a6a405530765930fd6c90481197fbf49543d110751d3",
+          "kind": "frontend",
+          "url": "https://huggingface.co/spaces/oddadmix/tiny-voca-arabic/resolve/64e3e2ae08f7553c38f280a58f05b955a0c296f4/catt_tashkeel/utils.py"
+        },
+        {
+          "id": "tiny-voca-arabic-source-catt_bridge.py",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt_bridge.py",
+          "bytes": 2162,
+          "sha256": "3bfa2bcf3b803072b262d1d031a9431e8c3b7cf7d5e44306b6d4e966be77e4c1",
+          "kind": "frontend",
+          "sourcePath": "web/tiny-voca-arabic/catt_bridge.py"
+        },
+        {
+          "id": "tiny-voca-arabic-catt-encoder.onnx",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt/encoder.onnx",
+          "bytes": 40049261,
+          "sha256": "988a91ec817bc50a7857a9851a5edd80d6a4c2f594b7ba6fea615b4ebe336590",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "encoder.onnx",
+            "build": "python3 tools/tiny-voca-arabic/extract-catt.py .cache/public/models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt && npm run assets -- fetch --model tiny-voca-arabic && npm run assets -- verify --model tiny-voca-arabic"
+          }
+        },
+        {
+          "id": "tiny-voca-arabic-catt-decoder.onnx",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt/decoder.onnx",
+          "bytes": 52699358,
+          "sha256": "9ab419f6e48b25f81e08e64479fc1caa6921a88dbba9932a901fc64ce8cf1240",
+          "kind": "model-weights",
+          "generated": {
+            "artifactPath": "decoder.onnx",
+            "build": "python3 tools/tiny-voca-arabic/extract-catt.py .cache/public/models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/catt && npm run assets -- fetch --model tiny-voca-arabic && npm run assets -- verify --model tiny-voca-arabic"
+          }
+        },
+        {
+          "id": "tiny-voca-arabic-numpy-wheel",
+          "target": "models/tiny-voca-arabic/e529f716965142f51835adc9e5661f224c3fa103/64e3e2ae08f7553c38f280a58f05b955a0c296f4/assets/numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "bytes": 11959269,
+          "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-model-LICENSE",
+          "target": "licenses/tiny-voca-arabic/model-LICENSE.txt",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license",
+          "sourcePath": "web/tiny-voca-arabic/LICENSE"
+        },
+        {
+          "id": "tiny-voca-arabic-catt-LICENSE",
+          "target": "licenses/tiny-voca-arabic/catt-LICENSE.txt",
+          "bytes": 10774,
+          "sha256": "958c2bbc9350931476edb7d354dfca1e420333ff05bf3bfbc62bc047f6816b3d",
+          "kind": "license",
+          "sourcePath": "web/tiny-voca-arabic/catt/LICENSE"
+        },
+        {
+          "id": "tiny-voca-arabic-numpy-LICENSE",
+          "target": "licenses/tiny-voca-arabic/numpy-LICENSE.txt",
+          "bytes": 1543,
+          "sha256": "263223390c43a9d4a0841e0209265fd927a198f8e89c8eee809b7437d7e5e8c2",
+          "kind": "license",
+          "sourcePath": "web/tiny-voca-arabic/numpy-LICENSE.txt"
+        },
+        {
+          "id": "tiny-voca-arabic-notice",
+          "target": "licenses/tiny-voca-arabic/NOTICE.md",
+          "bytes": 2810,
+          "sha256": "07f2457fe78fb10599b7cac666989a544ecea067491b8f86fe8ae210d0adfad0",
+          "kind": "license",
+          "sourcePath": "web/tiny-voca-arabic/NOTICE.md"
+        },
+        {
+          "id": "tiny-voca-arabic-pyodide-pyodide-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+          "bytes": 14761,
+          "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-pyodide-pyodide-asm-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+          "bytes": 1229099,
+          "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-pyodide-pyodide-asm-wasm",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+          "bytes": 10088051,
+          "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-pyodide-python_stdlib-zip",
+          "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+          "bytes": 2341872,
+          "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-pyodide-pyodide-lock-json",
+          "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+          "bytes": 106335,
+          "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-ort-wasm-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.wasm.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+          "bytes": 49026,
+          "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-ort-webgpu-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.webgpu.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.js",
+          "bytes": 333594,
+          "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-jsep-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-jsep-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-arabic-pyodide-license",
+          "target": "licenses/tiny-voca/PYODIDE-MPL-2.0.txt",
+          "bytes": 16725,
+          "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/pyodide/pyodide/0.26.4/LICENSE"
+        },
+        {
+          "id": "tiny-voca-arabic-ort-license",
+          "target": "licenses/tiny-broca/onnxruntime-web-1.20.1-LICENSE.txt",
+          "sourcePath": "web/tiny-voca-fr/LICENSE-ONNXRUNTIME-WEB-1.20.1.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-arabic-cpython-license",
+          "target": "licenses/tiny-voca/CPYTHON-LICENSE.txt",
+          "bytes": 13936,
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.1/LICENSE"
+        }
+      ]
+    },
     "tiny-voca-ar": {
       "displayName": "Tiny Voca Arabic M2 (FP32)",
       "modelRevision": "dcdf56c10c536d4df74576f036b512c0d212e17f",

@@ -4,3 +4,6 @@ web/audio-cpp-gguf/ming-session-threadpool.patch whitespace=-blank-at-eol
 /web/inflect-mini-v3/LICENSE -text !eol whitespace=cr-at-eol
 /web/inflect-micro-v3/LICENSE.md -text !eol whitespace=cr-at-eol
 /web/inflect-micro-v3/LICENSES/Apache-2.0.txt -text !eol whitespace=cr-at-eol
+# Preserve upstream CATT source checksums, including trailing blank lines.
+/web/tiny-voca-arabic/catt_tashkeel/bw2ar.py whitespace=-blank-at-eof
+/web/tiny-voca-arabic/catt_tashkeel/tokenizer.py whitespace=-blank-at-eof
