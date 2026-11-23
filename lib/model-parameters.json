@@ -314,5 +314,12 @@
     "parameterCountSource": "https://huggingface.co/Hansda/bengali-voice-compact/blob/18c8afbee3a4cf230e175a5f618350ed2c9560ac/README.md",
     "upstreamModelCard": "https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac",
     "scope": "Publisher-reported acoustic model parameter count only; the separately loaded trained G2P encoder and decoder are excluded, so this lower bound is not the total synthesis-path parameter count."
+  },
+  "tiny-voca-hindi": {
+    "parameterCount": 9711883,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/tts_hi_q8_0.gguf",
+    "upstreamModelCard": "https://huggingface.co/RL10x/tiny-voca-hindi/tree/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+    "scope": "Exact count of the 205 tensor shapes parsed from the pinned GGUF v3 header; this is the checkpoint tensor element total, not a benchmark measurement."
   }
 }

@@ -711,6 +711,29 @@ first-three smoke oracle is 16 plans, maximum 107 tokens, digest
 [Profile and reproduction](TINY_VOCA_HE.md) · [Retained notices](../web/tiny-voca-he/NOTICE.md) ·
 [pinned model](https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519).
 
+<a id="tiny-voca-hindi"></a>
+
+## Tiny Voca Hindi Rasa Q8_0
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`hi`). Locale: `hi-IN`.
+
+This profile pins the 11.14 MB Q8_0 GGUF at release
+`b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe`. It uses the one Rasa-trained
+female voice, neutral style/index zero, and 24 kHz CPU/WASM synthesis. The
+checkpoint has eight styles, but no alternate style is selected for scoring.
+WebGPU is unsupported.
+
+The pinned publisher Hindi normalizer is used with `english: true`; English is
+not an independently supported route because unknown words can be dropped. The
+fixed Devanagari fixture audit covers 91 spans and 322 sentence plans, with no
+unknown tokens or skipped sentences. The browser C ABI does not expose a
+token-level audit. Benchmark clips credit RL10x, the AI4Bharat Rasa dataset,
+and the browser adaptation.
+
+[Profile and reproduction](TINY_VOCA_HI.md) ·
+[Pinned release](https://huggingface.co/RL10x/tiny-voca-hindi/tree/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe) ·
+[Release notice](https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/NOTICE).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
