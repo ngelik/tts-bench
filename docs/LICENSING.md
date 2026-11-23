@@ -391,3 +391,19 @@ The runtime uses NumPy 1.26.4 under BSD-3-Clause, Pyodide 0.26.4 under MPL-2.0,
 CPython 3.12 under PSF terms and ONNX Runtime Web 1.20.1 under MIT. The publisher
 asks that generated speech be identified to listeners.
 [Profile](TINY_VOCA_ARABIC.md) · [Release notice](../web/tiny-voca-arabic/NOTICE.md) · [Abjad AI license update](https://github.com/abjadai/catt/blob/8d5330499feb85f6625e6af632141ed2ed6065fd/README.md#license-change-cc-by-nc-to-apache-20)
+
+### Bengali Voice Compact (Jahnavi)
+
+The pinned compact checkpoint and browser frontend declare Apache-2.0. The
+profile selects only the deployed Jahnavi voice at index zero. The trained
+Bengali Maya 2 Native Jahnavi dataset is released under CC BY 4.0 and uses
+public-domain Common Voice Bengali prompts. The bundled generated Bengali
+frontend/G2P assets incorporate Google's Bengali lexicon and transcription
+guide under CC BY 4.0; preserve their attribution and retained license. ONNX
+Runtime Web 1.24.3 is MIT. The browser model and runtime assets remain in the
+ignored cache; benchmark code does not relicense the checkpoint or generated
+recordings. No blanket generated-audio redistribution grant is inferred.
+[Profile and sources](BENGALI_VOICE.md) · [Retained notices](../web/bengali-voice/NOTICE.md) ·
+[Pinned model](https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac) ·
+[Pinned browser source](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3) ·
+[Dataset terms](https://huggingface.co/datasets/Hansda/bengali-maya2-jahnavi-20h)

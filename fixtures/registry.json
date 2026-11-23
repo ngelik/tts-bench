@@ -404,7 +404,8 @@
     "tiny-voca-ar-halabi": "ar-article-v1",
     "tiny-voca-ar": "ar-article-v1",
     "tiny-voca-arabic": "ar-article-v1",
-    "tiny-voca-he": "he-article-v1"
+    "tiny-voca-he": "he-article-v1",
+    "bengali-voice": "bn-article-v1"
   },
   "modelRequiredFixtures": {
     "ua-serhiy-0p58m": "uk-article-v1",
@@ -541,6 +542,10 @@
     ],
     "tiny-voca-he": [
       "he"
+    ],
+    "bengali-voice": [
+      "bn",
+      "bn-Latn"
     ]
   }
 }

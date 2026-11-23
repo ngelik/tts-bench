@@ -721,3 +721,20 @@ The pinned checkpoint has fixed female and male voices trained from OpenSLR 61 r
 [Profile and reproduction](ALPA_ES.md) · [Retained license and notices](../web/alpa-es/NOTICE.md).
 
 [Pinned Alpa Spanish checkpoint](https://huggingface.co/FranciscoCarlosErra/alpa-es/tree/de2bf894bdd9eb768ae03fc6b385176a0ff505d1) · [Pinned base tiny-voca source](https://github.com/n4ze3m/tiny-voca/tree/28e0722) · [OpenSLR 61 corpus](https://www.openslr.org/61/).
+
+<a id="bengali-voice"></a>
+
+## Hansda Bengali Voice Compact INT8 (Jahnavi)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`bn`).
+
+The profile pins the compact INT8 Bengali checkpoint and the deployed Jahnavi
+voice at index zero. The same frontend accepts Bengali script and Roman
+Bengali input; `bn-Latn` is a fixture/input-script route, not a second spoken
+language. The benchmark uses the exact publisher Bengali frontend and G2P
+fallback with ONNX Runtime Web 1.24.3 single-thread WASM. WebGPU is unsupported
+because tested runtime/graph controls did not return valid PCM. The model card
+reports 930,224 acoustic parameters; this lower bound excludes the G2P encoder
+and decoder. See [profile and reproduction](BENGALI_VOICE.md), [adapter notice](../web/bengali-voice/NOTICE.md),
+[pinned model](https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac),
+and [browser source](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3).
