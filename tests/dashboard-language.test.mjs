@@ -146,6 +146,14 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await romanBengali.locator('.language-option-english').textContent(), 'Romanized Bengali');
   assert.equal(await romanBengali.locator('bdi').getAttribute('lang'), 'bn-Latn');
   assert.equal(await romanBengali.locator('bdi').textContent(), 'Bangla (Roman horofe)');
+  await page.locator('#language-search').fill('Romanised Urdu');
+  const romanUrdu = page.locator('#language-ur-Latn');
+  assert.equal(await romanUrdu.isVisible(), true);
+  assert.equal(await romanUrdu.locator('.language-option-english').textContent(), 'Roman Urdu');
+  assert.match(await romanUrdu.innerText(), /Latin script/);
+  assert.equal(await romanUrdu.locator('.language-option-native').count(), 0);
+  await page.locator('#language-search').fill('اردو');
+  assert.equal(await romanUrdu.isVisible(), true);
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('#language-picker').isVisible(),false);
   assert.equal(await page.locator('#language-picker-trigger').evaluate(el=>el===document.activeElement),true,'Escape restores focus to the picker button');
