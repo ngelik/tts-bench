@@ -13,7 +13,7 @@ test('installed packages and repository-built runtime bytes match every pin with
  for(const model of Object.values(lock.models))for(const file of model.runtime.files){
   if(file.generated){
    assert.ok(file.generated.artifactPath,`${file.target} has a generated artifact path`);
-   assert.match(file.generated.build,/tools\/(?:build-sano-kokopop-webgpu\.sh|tiny-swara-espeak\/build\.sh)/,`${file.target} documents its generation provenance`);
+   assert.match(file.generated.build,/tools\/(?:build-sano-kokopop-webgpu\.sh|tiny-swara-espeak\/build\.sh|tiny-voca-hindi\/build\.sh)/,`${file.target} documents its generation provenance`);
    checked.add('generated/'+file.target+'/'+file.sha256);
    continue;
   }

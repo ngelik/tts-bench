@@ -1,0 +1,14 @@
+Tiny Voca Hindi
+
+tiny_voca/ is a modified copy of tiny-voca (https://github.com/n4ze3m/tiny-voca, commit of 2026-11-15),
+Copyright Muhammed Nazeem, licensed under the Apache License 2.0 (see LICENSE).
+
+Changes for Hindi (2026-11): a Devanagari phonemizer (text.py), Rasa speaking styles in place of the two voices
+(config.py), a soft pitch limiter at inference, a ~10M configuration. The text normaliser (hindi_text/), the C++
+engine (cpp/) and the web page (web/) were written for this project.
+
+The model weights in models/ were trained on the Rasa dataset by AI4Bharat
+(https://huggingface.co/datasets/ai4bharat/Rasa), licensed under CC BY 4.0; the weights are released under CC BY 4.0.
+
+cpp/third_party/httplib.h is cpp-httplib (https://github.com/yhirose/cpp-httplib), MIT License.
+The C++ engine builds against ggml (https://github.com/ggml-org/ggml), MIT License, downloaded by CMake.

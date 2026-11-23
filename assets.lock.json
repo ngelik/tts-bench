@@ -15200,6 +15200,114 @@
         ],
         "notes": "Tested Bengali-script fixture bn-article-v1 and ASCII Roman-input fixture bn-latn-article-v1 are separate editions. Report only one supported spoken language (bn); bn-Latn describes an input script, not a separate synthesized language. The benchmark fixes the deployed demo voice index zero and does not claim a generated-audio redistribution license."
       }
+    },
+    "tiny-voca-hindi": {
+      "displayName": "Tiny Voca Hindi Rasa Q8_0",
+      "modelRevision": "b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+      "sourceId": "RL10x/tiny-voca-hindi",
+      "sourceRevision": "b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+      "parameterCount": 9711883,
+      "frontendFingerprint": "8b24b24979289f5868b814becf80167b353ff3b412685558d3b19f99ca3a6af0",
+      "runtime": {
+        "package": "ggml-wasm",
+        "version": "0.29.0",
+        "license": "MIT ggml v0.29.0; the RL10x Tiny Voca Hindi C++ engine is Apache-2.0.",
+        "files": [
+          {
+            "id": "tiny-voca-hindi-ggml-engine-mjs",
+            "path": "benchmark-hindi.mjs",
+            "target": "runtimes/tiny-voca-hindi/ggml-0.29.0/benchmark-hindi.mjs",
+            "bytes": 60273,
+            "sha256": "05109d8eb42710f9ea39c81800c9cad48c049c86d59cb7c68aa85e7f25b411b5",
+            "kind": "runtime",
+            "generated": {
+              "artifactPath": "runtimes/tiny-voca-hindi/ggml-0.29.0/benchmark-hindi.mjs",
+              "build": "bash tools/tiny-voca-hindi/build.sh from RL10x/tiny-voca-hindi and ggml v0.29.0 at the pinned revisions; then run node bin/bench.mjs assets verify --model tiny-voca-hindi."
+            }
+          },
+          {
+            "id": "tiny-voca-hindi-ggml-engine-wasm",
+            "path": "benchmark-hindi.wasm",
+            "target": "runtimes/tiny-voca-hindi/ggml-0.29.0/benchmark-hindi.wasm",
+            "bytes": 1077517,
+            "sha256": "e53e68baeda877603bded3973ec7caa1398eb45f12c094e948e1622146fc1110",
+            "kind": "runtime",
+            "generated": {
+              "artifactPath": "runtimes/tiny-voca-hindi/ggml-0.29.0/benchmark-hindi.wasm",
+              "build": "bash tools/tiny-voca-hindi/build.sh from RL10x/tiny-voca-hindi and ggml v0.29.0 at the pinned revisions; then run node bin/bench.mjs assets verify --model tiny-voca-hindi."
+            }
+          }
+        ]
+      },
+      "license": {
+        "model": "CC BY 4.0 for the released checkpoint weights. The publisher credits the CC BY 4.0 AI4Bharat Rasa dataset.",
+        "frontend": "Apache-2.0 publisher frontend and Hindi normalizer; retain the pinned upstream LICENSE and NOTICE.",
+        "runtime": "MIT ggml v0.29.0; Apache-2.0 publisher C++ engine; WebAssembly artifacts are locally built from pinned source.",
+        "trainingData": "AI4Bharat Rasa under CC BY 4.0.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "hi"
+        ],
+        "scope": "Pinned RL10x/tiny-voca-hindi Q8_0 GGUF at the exact release revision. Hindi (hi-IN), one Rasa-trained female voice, 24 kHz, and hi-article-v1 only. The benchmark fixes the neutral style/index zero; the eight style IDs are neutral, conv, happy, sad, anger, fear, surprise, and disgust. CPU/WASM only; WebGPU is unsupported.",
+        "sources": [
+          "https://huggingface.co/RL10x/tiny-voca-hindi/tree/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+          "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/README.md",
+          "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/NOTICE",
+          "https://huggingface.co/datasets/ai4bharat/Rasa",
+          "https://github.com/ggml-org/ggml/tree/57e2c2ca2a7cae756b1c4dfafa0cdfef9051d234"
+        ],
+        "notes": "The checkpoint contains 205 GGUF v3 tensors and 9,711,883 tensor elements. Independent fixture frontend coverage: hi-article-v1 has 91 spans, 322 sentence plans, maximum 170 tokens, zero unknown tokens and zero skipped sentences (403 nasal tokens). The browser adapter imports the pinned hindi_norm.js with english:true and changes danda to period before synthesis. English controls are not an eligible route: the released normalizer respells only some words and unknown English words can be dropped. Use the Devanagari fixture. The benchmark audio credits RL10x, the AI4Bharat Rasa dataset, and the browser adaptation."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-hindi-q8-0-gguf",
+          "target": "models/tiny-voca-hindi/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/tts_hi_q8_0.gguf",
+          "url": "https://huggingface.co/RL10x/tiny-voca-hindi/resolve/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/tts_hi_q8_0.gguf",
+          "bytes": 11141472,
+          "sha256": "649259b3bc566e978c7b37c4cb3ce5744b2dadfb9dbeaa61697096250e3fda39",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-hindi-normalizer",
+          "target": "models/tiny-voca-hindi/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/web/hindi_norm.js",
+          "url": "https://huggingface.co/RL10x/tiny-voca-hindi/resolve/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/web/hindi_norm.js",
+          "bytes": 107957,
+          "sha256": "8b24b24979289f5868b814becf80167b353ff3b412685558d3b19f99ca3a6af0",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-hindi-license",
+          "target": "licenses/tiny-voca-hindi/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/LICENSE",
+          "url": "https://huggingface.co/RL10x/tiny-voca-hindi/resolve/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-hindi-notice",
+          "target": "licenses/tiny-voca-hindi/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/NOTICE",
+          "url": "https://huggingface.co/RL10x/tiny-voca-hindi/resolve/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/NOTICE",
+          "bytes": 892,
+          "sha256": "2dd3641f8569e95a243f4edbc62024d90f9240d286dc9af04e2f0b0905b415cb",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-hindi-model-card",
+          "target": "models/tiny-voca-hindi/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/README.md",
+          "url": "https://huggingface.co/RL10x/tiny-voca-hindi/resolve/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/README.md",
+          "bytes": 10252,
+          "sha256": "a40bd2bfde99de7ce1668bfdd96b0271c33e15b7b48b1d3f003099f2c3866f70",
+          "kind": "provenance"
+        }
+      ]
     }
   }
 }
