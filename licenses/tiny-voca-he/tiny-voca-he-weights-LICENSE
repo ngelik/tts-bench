@@ -1,0 +1,19 @@
+tiny-voca-he he-v3 model weights
+(inference.pt, tiny-voca-he.onnx, tiny-voca-he.json)
+
+Copyright 2026 Idan Buzaglo
+
+These weights are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+Full legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Attribution. When you share or deploy these weights, or audio or models made
+from them, credit both:
+  - tiny-voca-he by Idan Buzaglo, https://github.com/buzagloidan/tiny-voca-he
+  - ivrit.ai, whose crowd-recital dataset the training audio was derived from,
+    https://www.ivrit.ai
+
+The training audio is ivrit.ai crowd-recital speech (ivrit.ai License v2),
+converted into a single target voice with kNN-VC. The code that produces and
+runs these weights is licensed separately under Apache-2.0 (see ../../LICENSE).

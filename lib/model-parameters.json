@@ -293,5 +293,12 @@
     "parameterCountSource": "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
     "upstreamModelCard": "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
     "scope": "Publisher-reported exact count for the selected FP32 speech checkpoint; CATT v2 diacritizer is a separately licensed frontend component, not included in the speech-model parameter count."
+  },
+  "tiny-voca-he": {
+    "parameterCount": 4531147,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
+    "upstreamModelCard": "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
+    "scope": "Exact parameter count for the pinned FP32 acoustic checkpoint; separate INT8 RenikudPlus G2P graph is a frontend dependency and excluded from this speech-model count."
   }
 }

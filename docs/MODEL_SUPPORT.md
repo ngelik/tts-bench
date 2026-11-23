@@ -688,6 +688,29 @@ worker and runs CATT for new phrases.
 
 [Profile and reproduction](TINY_VOCA_ARABIC.md) · [Notices](../web/tiny-voca-arabic/NOTICE.md) · [Pinned checkpoint](https://huggingface.co/oddadmix/tiny-voca-arabic/tree/e529f716965142f51835adc9e5661f224c3fa103).
 
+<a id="tiny-voca-he"></a>
+
+## Tiny Voca Hebrew AH FP32
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`he`).
+
+The pinned profile selects the male AH voice at 24 kHz mono. The exact
+FP32 acoustic checkpoint has 4,531,147 parameters and is 21,361,734 bytes. Its
+separate INT8 RenikudPlus G2P graph is 311,605,741 bytes; together the two model
+weights are 332,967,475 bytes. The acoustic parameter count excludes G2P. The
+stock Hebrew text frontend uses the 140-token planner limit. RenikudPlus runs
+CPU/WASM in both backend configurations; WebGPU applies to acoustic inference
+only.
+
+The exact source audit covers 71 spans and 320 plans, maximum 140 tokens, zero
+unknowns, digest
+`4bd0027e1c7429bca336b5dc7c79ea789fe996f7bf79ac37e0dfd6972a8db3d7`. The
+first-three smoke oracle is 16 plans, maximum 107 tokens, digest
+`78412e106e2a9df78c8669beed49f169b5c08ec55a34727d87b6695c162fd1f2`.
+
+[Profile and reproduction](TINY_VOCA_HE.md) · [Retained notices](../web/tiny-voca-he/NOTICE.md) ·
+[pinned model](https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
