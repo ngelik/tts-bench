@@ -33,7 +33,9 @@ const supportCodes = model => [...new Set((Array.isArray(model.support?.language
 const languageNames = new Intl.DisplayNames(['en'], {type:'language'});
 const languageLabel = code => { try { return languageNames.of(code) || code; } catch { return code; } };
 const languageIdPattern = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
-const foldSearch = value => String(value ?? '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('en');
+// Match labels pasted with Latin accents, Arabic vowel marks or tatweel.
+const foldSearch = value => String(value ?? '').normalize('NFKD')
+  .replace(/[\u0300-\u036f\u0640\u064b-\u0652\u0670]/gu, '').toLocaleLowerCase('en');
 const behtini = 'Kurdish Behdînî (Arabic script)';
 function languageGroup(id = state.language) {
   return id === 'en' ? state.data : state.data?.byLanguage?.[id];
