@@ -4023,6 +4023,37 @@
       }
     },
     {
+      "resultId": "2026-11-23t14-21-32-913z-tiny-voca-hindi-cpu-warm-2557ee89",
+      "model": "tiny-voca-hindi",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Rasa female",
+      "language": "hi",
+      "attribution": "AI-generated Hindi benchmark narration using RL10x’s CC BY 4.0 Tiny Voca Hindi Q8_0 checkpoint, its single Rasa-trained female voice, and neutral style. The publisher credits AI4Bharat’s Rasa dataset (CC BY 4.0) and Muhammed Nazeem’s Tiny Voca architecture. Synthesis uses this project’s browser adaptation of RL10x’s Apache-2.0 engine.",
+      "modelTerms": "CC BY 4.0 for the released checkpoint weights. The publisher credits the CC BY 4.0 AI4Bharat Rasa dataset.",
+      "sourceUrls": [
+        "https://huggingface.co/RL10x/tiny-voca-hindi/tree/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+        "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/README.md",
+        "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/NOTICE",
+        "https://huggingface.co/datasets/ai4bharat/Rasa",
+        "https://github.com/ggml-org/ggml/tree/57e2c2ca2a7cae756b1c4dfafa0cdfef9051d234"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t14-21-32-913z-tiny-voca-hindi-cpu-warm-2557ee89--tiny-voca-hindi--cpu.wav",
+        "sha256": "a8887c3fe788a857ec7fe4b47a32681e96a80312935feb1e0d1c7d2e2198f847",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "afd2a141f64209ade9f4031662af7aad64d46010f1b98290a5a6145eb5d17be5",
+        "bytes": 79839276
+      }
+    },
+    {
       "resultId": "2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836",
       "model": "tiny-voca-it",
       "backend": "cpu",
