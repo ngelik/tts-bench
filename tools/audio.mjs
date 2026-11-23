@@ -78,6 +78,9 @@ attribution['tiny-swara']='AI-generated Bengali narration using Xeven7’s Apach
 attribution['tui-voice-mini-ml']='AI-generated Malayalam benchmark narration from Cyrax321’s Apache-2.0 Tui Voice Mini checkpoint, using the fixed F2 voice (AI4Bharat Rasa Malayalam Female). The model card credits AI4Bharat Rasa, by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra (CC BY 4.0), as training data and Muhammed Nazeem’s Tiny Voca architecture.';
 attribution['tiny-urdu'] = 'AI-generated Roman Urdu narration using Zafar205’s Apache-2.0 Tiny Urdu checkpoint and M2 voice. ' +
   'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the CC BY-NC 4.0 UrduTTS dataset by M. Kaab Bin Shahid and Muhammed Izharuddin. Noncommercial benchmark evaluation.';
+attribution['tiny-voca-swahili'] = 'AI-generated Kiswahili narration using adoamesh’s Tiny Voca Kiswahili 55k checkpoint and WAXAL speaker 1. ' +
+  'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the WAXAL Swahili TTS dataset from Google Research, Makerere University and Loud and Clear. ' +
+  'This excerpt is shared under CC BY-SA 4.0.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');

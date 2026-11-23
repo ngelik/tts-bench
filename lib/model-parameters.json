@@ -335,5 +335,12 @@
     "parameterCountSource": "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/model.onnx",
     "upstreamModelCard": "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/README.md",
     "scope": "Exact sum of logical scalar values in all initializer tensor shapes in the pinned FP32 ONNX graph. It includes graph constants and is not asserted as a trainable-only count; the publisher rounds the model to 4.5 million parameters. This is far below the one-billion single-repetition threshold."
+  },
+  "tiny-voca-swahili": {
+    "parameterCount": 4539211,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/swahili.onnx",
+    "upstreamModelCard": "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+    "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
   }
 }
