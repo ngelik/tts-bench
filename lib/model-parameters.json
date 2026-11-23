@@ -356,5 +356,12 @@
     "parameterCountSource": "https://huggingface.co/77ethers/alpa/blob/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/onnx/alpa-v0.2.onnx",
     "upstreamModelCard": "https://huggingface.co/77ethers/alpa/blob/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/README.md",
     "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
+  },
+  "fiato": {
+    "parameterCount": 4537867,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/onnx/model.onnx",
+    "upstreamModelCard": "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/README.md",
+    "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
   }
 }
