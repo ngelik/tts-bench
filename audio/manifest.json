@@ -3045,6 +3045,64 @@
       }
     },
     {
+      "resultId": "2026-11-23t17-43-44-593z-sobbie-tts-cpu-warm-2e30d714",
+      "model": "sobbie-tts",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F",
+      "language": "en",
+      "attribution": "AI-generated English narration using Ashish Patnaik’s Apache-2.0 SobbieTTS checkpoint and voice F. The publisher credits Muhammed Nazeem’s Tiny Voca architecture and Dizione phonemizer.",
+      "modelTerms": "Apache-2.0 per the pinned model card and README.",
+      "sourceUrls": [
+        "https://huggingface.co/PatnaikAshish/SobbieTTS/tree/6b6132c6d34b5fc163d8f5553580678a60532ac3",
+        "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+        "https://github.com/n4ze3m/dizione/tree/8cd889e4de7be6bd1dd2e6891344a0729fa14dd4"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t17-43-44-593z-sobbie-tts-cpu-warm-2e30d714--sobbie-tts--cpu.wav",
+        "sha256": "1a749c7351edb5206aea46dab56a970817ddbcc6c02158f6304539ac39859b1b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "287775540742e2018dd9a13873d056ce394abedf0bafd131943c34f925698171",
+        "bytes": 58834476
+      }
+    },
+    {
+      "resultId": "2026-11-23t17-47-58-036z-sobbie-tts-webgpu-warm-1150b096",
+      "model": "sobbie-tts",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F",
+      "language": "en",
+      "attribution": "AI-generated English narration using Ashish Patnaik’s Apache-2.0 SobbieTTS checkpoint and voice F. The publisher credits Muhammed Nazeem’s Tiny Voca architecture and Dizione phonemizer.",
+      "modelTerms": "Apache-2.0 per the pinned model card and README.",
+      "sourceUrls": [
+        "https://huggingface.co/PatnaikAshish/SobbieTTS/tree/6b6132c6d34b5fc163d8f5553580678a60532ac3",
+        "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+        "https://github.com/n4ze3m/dizione/tree/8cd889e4de7be6bd1dd2e6891344a0729fa14dd4"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t17-47-58-036z-sobbie-tts-webgpu-warm-1150b096--sobbie-tts--webgpu.wav",
+        "sha256": "e6739d5ce918b5de765d0fc621ea8e6500af81cc5d4834facce32a0a91160e8d",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "a92bb8acebb7d9074cfc5ffd54c3b258157e2258ee6cb99e6e133f81141c6439",
+        "bytes": 58834476
+      }
+    },
+    {
       "resultId": "2026-11-18t08-39-21-266z-sopro-v2-turbo-cpu-cached-371daf7e",
       "model": "sopro-v2-turbo",
       "backend": "cpu",
