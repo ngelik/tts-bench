@@ -258,5 +258,12 @@
     "parameterCountSource": "https://huggingface.co/semfence/tiny-voca-ptbr/blob/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/README.md",
     "upstreamModelCard": "https://huggingface.co/semfence/tiny-voca-ptbr/blob/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/README.md",
     "scope": "The pinned model card reports 4,533,259 parameters for the released Brazilian Portuguese model, including its waveform generator."
+  },
+  "tiny-voca-ptbr-kokoro": {
+    "parameterCount": 4535755,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/blob/596401fc87f1635f73326872001e370d3aedab9b/README.md",
+    "upstreamModelCard": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/blob/596401fc87f1635f73326872001e370d3aedab9b/README.md",
+    "scope": "Author-reported exact parameter total for the pinned FP32 ONNX checkpoint, including the waveform generator."
   }
 }
