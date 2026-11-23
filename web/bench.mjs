@@ -17,6 +17,7 @@ import { createTinyBrocaAdapter } from './adapters/tiny-broca.mjs';
 import { createTinyVocaArHalabiAdapter } from './adapters/tiny-voca-ar-halabi.mjs';
 import { createTinyVocaArAdapter } from './adapters/tiny-voca-ar.mjs';
 import { createTinyVocaArabicAdapter } from './adapters/tiny-voca-arabic.mjs';
+import { createTinyVocaHeAdapter } from './adapters/tiny-voca-he.mjs';
 import { createAlpaEsAdapter } from './adapters/alpa-es.mjs';
 import { createClarviaTtsTinyAdapter } from './adapters/clarvia-tts-tiny.mjs';
 import { createZerreTtsAdapter } from './adapters/zerre-tts.mjs';
@@ -82,6 +83,7 @@ const FACTORIES = {
   'tiny-voca-ar-halabi': createTinyVocaArHalabiAdapter,
   'tiny-voca-ar': createTinyVocaArAdapter,
   'tiny-voca-arabic': createTinyVocaArabicAdapter,
+  'tiny-voca-he': createTinyVocaHeAdapter,
   'alpa-es': createAlpaEsAdapter,
   'clarvia-tts-tiny': createClarviaTtsTinyAdapter,
   'zerre-tts': createZerreTtsAdapter,
@@ -268,6 +270,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       fixtureId,
       language: loaded.fixture.language,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
+      control: smoke && model === 'tiny-voca-he',
       auditTexts: ((smoke && (
         (model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'tiny-voca-it' && fixtureId === 'it-article-v1') ||
@@ -291,9 +294,10 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
         (model === 'tiny-voca-ar-halabi' && fixtureId === 'ar-article-v1') ||
         (model === 'tiny-voca-ar' && fixtureId === 'ar-article-v1') ||
         (model === 'tiny-voca-arabic' && fixtureId === 'ar-article-v1') ||
+        (model === 'tiny-voca-he' && fixtureId === 'he-article-v1') ||
         (model === 'alpa-es' && fixtureId === 'es-ar-article-v1')
       )))
-        ? (model === 'tiny-voca-arabic'
+        ? (model === 'tiny-voca-arabic' || model === 'tiny-voca-he'
           ? (await loadFixture(fixtureId)).chunks.slice(0, 3)
           : (await loadFixture(fixtureId)).chunks).map(({ id, text }) => ({ id, text })) : [],
     });
@@ -446,5 +450,9 @@ export async function dispose() {
   if (engine) await engine.dispose();
 }
 
-window.bench = { fixture, initialize, generate, dispose };
+export async function diagnostic(options) {
+  if (!state.engine?.diagnostic) throw new Error('The active adapter does not expose diagnostics.');
+  return state.engine.diagnostic(options);
+}
+window.bench = { fixture, initialize, generate, diagnostic, dispose };
 setStatus('Ready. All page code and assets are served from the local benchmark checkout.');

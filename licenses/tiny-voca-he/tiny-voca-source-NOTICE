@@ -1,0 +1,28 @@
+tiny-voca-he
+Copyright 2026 Idan Buzaglo
+
+This product is a modified version of tiny-voca
+(https://github.com/n4ze3m/tiny-voca), Copyright Muhammed Nazeem,
+licensed under the Apache License, Version 2.0.
+
+Main changes from tiny-voca:
+- Hebrew text front end: RenikudPlus G2P (default) or phonikud, a Hebrew
+  phoneme inventory with stress marks, Hebrew number reading and sentence
+  splitting.
+- One voice ("AH") instead of two English voices.
+- Forced alignment settings for Hebrew, a parallel data preparation script and
+  the recital-v3 data recipe (ivrit.ai crowd-recital, voice-converted with
+  kNN-VC).
+- RunPod training scripts, ONNX export metadata for the Hebrew front end, and a
+  Hebrew browser demo.
+
+Third-party components used at run time or in the data recipe:
+- RenikudPlus (https://github.com/maxmelichov/RenikudPlus), Apache-2.0.
+- kNN-VC (https://github.com/bshall/knn-vc), MIT.
+- ONNX Runtime Web (https://onnxruntime.ai), MIT.
+- wav2vec2 phoneme recogniser facebook/wav2vec2-lv-60-espeak-cv-ft
+  (forced alignment), Apache-2.0.
+
+The released he-v3 weights (models/he-v3) were trained on audio derived from
+ivrit.ai's crowd-recital dataset (https://huggingface.co/datasets/ivrit-ai/crowd-recital),
+used under the ivrit.ai License v2. Credit: ivrit.ai. See models/he-v3/LICENSE.
