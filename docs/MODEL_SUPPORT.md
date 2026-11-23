@@ -648,6 +648,25 @@ completed source span, and checks hardware WebGPU dispatch with WASM fallback.
 
 [Profile and reproduction](TINY_VOCA_AR_HALABI.md) · [Adapter notices](../web/tiny-voca-ar-halabi/NOTICE.md) · [Release source](https://github.com/BenkadourKhaled/tiny-voca/tree/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb) · [Arabic Speech Corpus citation](https://en.arabicspeechcorpus.com/).
 
+<a id="tiny-voca-ar"></a>
+
+## Tiny Voca Arabic M2 (FP32)
+
+Supported voices **1** · Bundled trained voices **1** · Language `ar`
+
+The profile selects trained M2 at index 1. The ONNX checkpoint also contains
+an untrained F2 slot. The adapter reads fully vowel-marked Modern Standard
+Arabic using the exact Python frontend from the pinned 0.2.0 wheel in
+Pyodide 0.26.4. The browser matched all 340 utterance plans in the 129-span
+Arabic fixture, with a maximum of 189 tokens and zero unknown IDs or words.
+
+The worker retains the demo’s sentence, fit and peak-cap behavior. WebGPU
+uses the pinned JSEP runtime with WASM fallback and requires observed hardware
+dispatch. The publisher reports unresolved clearance for client use of the
+reference voice.
+
+[Profile and provenance](TINY_VOCA_AR.md) · [License and notices](../web/tiny-voca-ar/NOTICE.md) · [Pinned checkpoint](https://huggingface.co/abdullah/tiny-voca-ar/tree/dcdf56c10c536d4df74576f036b512c0d212e17f) · [Publisher demo](https://tiny-voca-ar-site.pages.dev/).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
