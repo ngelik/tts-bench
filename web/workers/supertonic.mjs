@@ -2,7 +2,7 @@ import { observeComputeDispatches, requestHardwareWebGpuAdapter } from '../piper
 import { trimWaveToDuration } from '../supertonic/audio.mjs';
 import { beginTensorScope, configureOrt, releaseOrt } from '../supertonic/ort-runtime.mjs';
 import { loadTextToSpeech, loadVoiceStyle } from '../supertonic/helper.mjs';
-import { describeSupertonicFrontend, resolveSupertonicLanguage } from '../supertonic/language.mjs';
+import { describeSupertonicFrontend, resolveSupertonicFixtureLanguage } from '../supertonic/language.mjs';
 import {
   EXECUTION_PROVIDERS,
   FRONTEND_DESCRIPTION,
@@ -27,6 +27,7 @@ let voiceStyle = null;
 let activeExecutionProviders = [];
 let restoreFetch = null;
 let activeLanguage = LANGUAGE;
+let activeFixtureLanguage = LANGUAGE;
 
 function baseInfo() {
   return {
@@ -35,7 +36,8 @@ function baseInfo() {
     settings: {
       executionProviders: [...activeExecutionProviders],
       threads: WASM_THREADS,
-      language: activeLanguage,
+      language: activeFixtureLanguage,
+      ...(activeFixtureLanguage !== activeLanguage ? { modelLanguage: activeLanguage } : {}),
       voiceStyle: VOICE,
       totalSteps: TOTAL_STEP,
       speed: SPEED,
@@ -89,7 +91,9 @@ async function synthesize(text) {
 }
 
 async function initialize({ backend, probe, probeText, language } = {}) {
-  activeLanguage = resolveSupertonicLanguage(language, LANGUAGE);
+  const route = resolveSupertonicFixtureLanguage(language, LANGUAGE);
+  activeLanguage = route.modelLanguage;
+  activeFixtureLanguage = route.language;
   activeExecutionProviders = EXECUTION_PROVIDERS[backend] ? [...EXECUTION_PROVIDERS[backend]] : [];
   if (!activeExecutionProviders.length) return unsupported('Unsupported Supertonic backend.');
 
@@ -186,6 +190,7 @@ async function dispose() {
   ortModule = null;
   activeExecutionProviders = [];
   activeLanguage = LANGUAGE;
+  activeFixtureLanguage = LANGUAGE;
   if (currentRuntime) await releaseOrt();
 }
 

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { describeSupertonicFrontend, resolveSupertonicLanguage } from '../web/supertonic/language.mjs';
+import { describeSupertonicFrontend, resolveSupertonicFixtureLanguage, resolveSupertonicLanguage } from '../web/supertonic/language.mjs';
 import { UnicodeProcessor } from '../web/supertonic/helper.mjs';
 import { FRONTEND_DESCRIPTION } from '../web/supertonic/settings.mjs';
 
@@ -23,4 +23,17 @@ test('official Unicode processor applies the resolved French language tag', () =
   const language = resolveSupertonicLanguage('fr');
   const processor = new UnicodeProcessor([]);
   assert.match(processor.preprocessText('Bonjour, tout le monde', language), /^<fr>Bonjour, tout le monde\.<\/fr>$/);
+});
+
+test('Supertonic keeps the regional fixture tag and submits the supported model tag', () => {
+  const processor = new UnicodeProcessor([]);
+  for (const [tag, modelLanguage] of [['es-ES', 'es'], ['pt-BR', 'pt']]) {
+    const route = resolveSupertonicFixtureLanguage(tag.toLowerCase());
+    assert.deepEqual(route, { language: tag, modelLanguage });
+    const text = processor.preprocessText('Hola.', route.modelLanguage);
+    assert.equal(text, `<${modelLanguage}>Hola.</${modelLanguage}>`);
+  }
+  assert.deepEqual(resolveSupertonicFixtureLanguage(), { language: 'en', modelLanguage: 'en' });
+  assert.throws(() => resolveSupertonicFixtureLanguage('pt-PT'), /does not support fixture language/);
+  assert.throws(() => resolveSupertonicFixtureLanguage('es-AR'), /does not support fixture language/);
 });
