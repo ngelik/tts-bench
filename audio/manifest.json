@@ -3821,6 +3821,70 @@
       }
     },
     {
+      "resultId": "2026-11-23t02-09-13-281z-tiny-voca-ptbr-cpu-warm-9ed2786e",
+      "model": "tiny-voca-ptbr",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F_s4",
+      "language": "pt-BR",
+      "attribution": "AI-generated Brazilian Portuguese benchmark narration in the synthetic F_s4 voice with tiny-voca-ptbr by SemFence (Gustavo Toledo), CC BY 4.0. Based on Muhammed Nazeem’s tiny-voca. The frontend uses SemFence Dizione and an adapted Brazilian Portuguese MFA dictionary by Michael McAuliffe and Morgan Sonderegger, CC BY 4.0.",
+      "modelTerms": "CC BY 4.0 for the released checkpoint; credit SemFence (Gustavo Toledo).",
+      "sourceUrls": [
+        "https://huggingface.co/semfence/tiny-voca-ptbr/tree/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",
+        "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/tree/a456470df5589478e3fb3f1973457771f4c056bd",
+        "https://github.com/n4ze3m/tiny-voca",
+        "https://github.com/SemFence/dizione-ptbr/tree/8fbb77e579fe684f3afd9cb2a801d0adce8c89cf",
+        "https://github.com/MontrealCorpusTools/mfa-models/tree/dictionary-portuguese_brazil_mfa-v2.0.0a",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t02-09-13-281z-tiny-voca-ptbr-cpu-warm-9ed2786e--tiny-voca-ptbr--cpu.wav",
+        "sha256": "18f5c8911c30bf7102c9ba879eedc5ec95d15b4a300229bb24e9164c199a1b88",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "64c2374c316e8f540a6c61e0ae4ead6f2f5598792f1574da812fa0ad057b5270",
+        "bytes": 84890668
+      }
+    },
+    {
+      "resultId": "2026-11-23t02-15-37-064z-tiny-voca-ptbr-webgpu-warm-31911807",
+      "model": "tiny-voca-ptbr",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F_s4",
+      "language": "pt-BR",
+      "attribution": "AI-generated Brazilian Portuguese benchmark narration in the synthetic F_s4 voice with tiny-voca-ptbr by SemFence (Gustavo Toledo), CC BY 4.0. Based on Muhammed Nazeem’s tiny-voca. The frontend uses SemFence Dizione and an adapted Brazilian Portuguese MFA dictionary by Michael McAuliffe and Morgan Sonderegger, CC BY 4.0.",
+      "modelTerms": "CC BY 4.0 for the released checkpoint; credit SemFence (Gustavo Toledo).",
+      "sourceUrls": [
+        "https://huggingface.co/semfence/tiny-voca-ptbr/tree/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",
+        "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/tree/a456470df5589478e3fb3f1973457771f4c056bd",
+        "https://github.com/n4ze3m/tiny-voca",
+        "https://github.com/SemFence/dizione-ptbr/tree/8fbb77e579fe684f3afd9cb2a801d0adce8c89cf",
+        "https://github.com/MontrealCorpusTools/mfa-models/tree/dictionary-portuguese_brazil_mfa-v2.0.0a",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t02-15-37-064z-tiny-voca-ptbr-webgpu-warm-31911807--tiny-voca-ptbr--webgpu.wav",
+        "sha256": "c086e4e8747135540a8957a8c5a8386d3c084b062d11aaaf7666ff94b227c1fa",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "c0803d11e19fcee60270241656f110ea0e4ed1cd62b09158fb7bbde6f69c95a0",
+        "bytes": 84891180
+      }
+    },
+    {
       "resultId": "2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147",
       "model": "tiny-voca-ru",
       "backend": "cpu",
