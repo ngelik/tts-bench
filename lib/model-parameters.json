@@ -265,5 +265,12 @@
     "parameterCountSource": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/blob/596401fc87f1635f73326872001e370d3aedab9b/README.md",
     "upstreamModelCard": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/blob/596401fc87f1635f73326872001e370d3aedab9b/README.md",
     "scope": "Author-reported exact parameter total for the pinned FP32 ONNX checkpoint, including the waveform generator."
+  },
+  "tiny-broca": {
+    "parameterCount": 4533835,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/brenorb/tiny-broca/blob/0ea879d8f532ad0c6e7308017b45105a74f81a95/README.md",
+    "upstreamModelCard": "https://huggingface.co/brenorb/tiny-broca/blob/0ea879d8f532ad0c6e7308017b45105a74f81a95/README.md",
+    "scope": "Publisher-reported exact parameter count for the pinned FP32 checkpoint, including its waveform generator."
   }
 }

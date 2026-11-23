@@ -13703,5 +13703,194 @@
                 }
           ]
     }
+  ,
+    "tiny-broca":     {
+      "displayName": "Tiny Broca Brazilian Portuguese F1 (FP32)",
+      "modelRevision": "0ea879d8f532ad0c6e7308017b45105a74f81a95",
+      "sourceId": "brenorb/tiny-broca",
+      "sourceRevision": "56d68b9fd3375c52030b3de053a26bfcc6e823c2",
+      "parameterCount": 4533835,
+      "frontendFingerprint": "87e0dcc95e144113252a020e1d39b61678cbfc29923f6e4a443dc2ff39b69a41",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT; package distribution files are hash-pinned.",
+        "files": []
+      },
+      "license": {
+        "model": "Apache-2.0 (pinned model card); generated audio has no blanket redistribution grant.",
+        "frontend": "Apache-2.0 upstream tiny-broca text.py.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1; MPL-2.0 Pyodide 0.26.4.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-BR"
+        ],
+        "scope": "Pinned brenorb/tiny-broca checkpoint only. Two fixed synthetic voices F1 and M1 at 24 kHz mono; benchmark default F1/index 0. This browser profile supports Brazilian Portuguese (pt-BR) only.",
+        "sources": [
+          "https://huggingface.co/brenorb/tiny-broca/tree/0ea879d8f532ad0c6e7308017b45105a74f81a95",
+          "https://github.com/brenorb/tiny-broca/tree/56d68b9fd3375c52030b3de053a26bfcc6e823c2",
+          "https://huggingface.co/spaces/brenorb/tiny-broca-demo/tree/56d68b9fd3375c52030b3de053a26bfcc6e823c2",
+          "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz"
+        ],
+        "notes": "Exact pt-br-article-v1 frontend audit: 101 spans, 294 utterances, maximum 262 tokens, seven <unk> tokens. The pinned upstream frontend leaves digits in 18h, 21h, 16h and 1º unnormalized; these four spans are disclosed and preserved. English is unsupported. Model card reports 9,384 sentences / 16,434 clips / 17.3 hours of accepted synthetic training audio; no training recordings or upstream sample WAVs are bundled."
+      },
+      "assets": [
+        {
+          "id": "tiny-broca-config",
+          "target": "models/tiny-broca/0ea879d8f532ad0c6e7308017b45105a74f81a95/56d68b9fd3375c52030b3de053a26bfcc6e823c2/assets/config.json",
+          "url": "https://huggingface.co/brenorb/tiny-broca/resolve/0ea879d8f532ad0c6e7308017b45105a74f81a95/config.json",
+          "bytes": 2087,
+          "sha256": "8d19979f8d93c40ba3c12824880048f657efb7a303b070c7fd3ad6233f3f45bc",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-broca-onnx",
+          "target": "models/tiny-broca/0ea879d8f532ad0c6e7308017b45105a74f81a95/56d68b9fd3375c52030b3de053a26bfcc6e823c2/assets/model.onnx",
+          "url": "https://huggingface.co/brenorb/tiny-broca/resolve/0ea879d8f532ad0c6e7308017b45105a74f81a95/onnx/model.onnx",
+          "bytes": 21372510,
+          "sha256": "2e3b7a57884047b933eb35782d9456afd3e04311009828b775c94f28270dd616",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-broca-text",
+          "target": "models/tiny-broca/0ea879d8f532ad0c6e7308017b45105a74f81a95/56d68b9fd3375c52030b3de053a26bfcc6e823c2/assets/text.py",
+          "url": "https://huggingface.co/brenorb/tiny-broca/resolve/0ea879d8f532ad0c6e7308017b45105a74f81a95/text.py",
+          "bytes": 17357,
+          "sha256": "b5b80d8515a33eff7daa0d0e8a548c2760499b0e832a5e655917099fe2460ca3",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-broca-license",
+          "target": "licenses/tiny-broca/0ea879d8f532ad0c6e7308017b45105a74f81a95/LICENSE",
+          "url": "https://raw.githubusercontent.com/brenorb/tiny-broca/56d68b9fd3375c52030b3de053a26bfcc6e823c2/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license",
+          "sourcePath": "web/tiny-broca/LICENSE"
+        },
+        {
+          "id": "tiny-broca-pyodide-pyodide-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+          "bytes": 14761,
+          "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-pyodide-pyodide-asm-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+          "bytes": 1229099,
+          "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-pyodide-pyodide-asm-wasm",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+          "bytes": 10088051,
+          "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-pyodide-python_stdlib-zip",
+          "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+          "bytes": 2341872,
+          "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-pyodide-pyodide-lock-json",
+          "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+          "bytes": 106335,
+          "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-ort-ort-wasm-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.wasm.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+          "bytes": 49026,
+          "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-ort-ort-webgpu-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.webgpu.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.js",
+          "bytes": 333594,
+          "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-ort-ort-wasm-simd-threaded-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-ort-ort-wasm-simd-threaded-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-ort-ort-wasm-simd-threaded-jsep-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-ort-ort-wasm-simd-threaded-jsep-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-broca-pyodide-license",
+          "target": "licenses/tiny-voca/PYODIDE-MPL-2.0.txt",
+          "bytes": 16725,
+          "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/pyodide/pyodide/0.26.4/LICENSE"
+        },
+        {
+          "id": "tiny-broca-cpython-license",
+          "target": "licenses/tiny-voca/CPYTHON-LICENSE.txt",
+          "bytes": 13936,
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.1/LICENSE"
+        },
+        {
+          "id": "tiny-broca-ort-license",
+          "target": "licenses/tiny-broca/onnxruntime-web-1.20.1-LICENSE.txt",
+          "sourcePath": "web/tiny-voca-fr/LICENSE-ONNXRUNTIME-WEB-1.20.1.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ]
+    }
   }
 }

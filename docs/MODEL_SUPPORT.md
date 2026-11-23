@@ -617,6 +617,21 @@ English support claim. See [profile and evidence](TINY_VOCA_PTBR_KOKORO.md) and
 
 [Pinned checkpoint](https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/tree/596401fc87f1635f73326872001e370d3aedab9b) · [Pinned source](https://github.com/Haple/tiny-voca-ptbr-kokoro/tree/1e7ed993260ecdd91552762f7403c00632bf5dab).
 
+<a id="tiny-broca"></a>
+
+## Tiny Broca Brazilian Portuguese (F1)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`pt-BR`).
+
+The pinned checkpoint bundles F1/index 0 and M1/index 1 at 24 kHz. The benchmark
+uses F1 and the upstream letter-and-stress frontend in Pyodide 0.26.4. The
+registered article produces 294 utterances across 101 spans. Seven digit tokens
+remain unknown in three standalone hour values and one ordinal. Both backends
+keep the released frontend output. The WebGPU probe verifies compute dispatch
+on hardware, with WASM available for unsupported operators.
+
+[Profile and reproduction](TINY_BROCA.md) · [Pinned checkpoint](https://huggingface.co/brenorb/tiny-broca/tree/0ea879d8f532ad0c6e7308017b45105a74f81a95).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
