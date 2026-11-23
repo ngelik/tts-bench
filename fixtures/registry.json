@@ -398,6 +398,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "ml-article-v1",
+      "smokeId": "ml-article-smoke-v1",
+      "language": "ml",
+      "articleFile": "ml-article-v1.txt",
+      "chunksFile": "ml-article-v1.chunks.json",
+      "metadataFile": "ml-article-v1.meta.json",
+      "sha256": "ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd",
+      "characters": 23011,
+      "unicodeCodePoints": 23011,
+      "utf8Bytes": 63731,
+      "chunks": 105,
+      "source": {
+        "type": "translation",
+        "description": "Independent Malayalam translation of all 27 paragraphs of the canonical English benchmark article. Names, identifiers, UI labels, numbers and units are represented as spoken Malayalam. Evaluated with the documented Malayalam frontend. No native-speaker review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
