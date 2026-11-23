@@ -15652,6 +15652,176 @@
           }
         }
       ]
+    },
+    "tiny-voca-swahili": {
+      "displayName": "Tiny Voca Kiswahili",
+      "modelRevision": "408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+      "sourceId": "adoamesh/tiny-voca-swahili",
+      "sourceRevision": "408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+      "parameterCount": 4539211,
+      "frontendFingerprint": "2ff4070f1d41d8350c24a78008db321d263a82c1f3e5aef2c1ca55a41e624500",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "license": "MIT ONNX Runtime Web 1.31.1 with retained license and third-party notices.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-swahili-dist-ort-wasm-min-mjs"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-swahili-dist-ort-webgpu-min-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-swahili-dist-ort-wasm-simd-threaded-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-swahili-dist-ort-wasm-simd-threaded-wasm"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-swahili-dist-ort-wasm-simd-threaded-asyncify-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-swahili-dist-ort-wasm-simd-threaded-asyncify-wasm"
+          },
+          {
+            "path": "LICENSE.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "id": "tiny-voca-swahili-license-txt"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "id": "tiny-voca-swahili-thirdpartynotices-txt"
+          }
+        ]
+      },
+      "license": {
+        "model": "CC-BY-SA-4.0 per the pinned model card, inherited from WAXAL speech data.",
+        "trainingData": "google/WaxalNLP public snapshot 5f4d8ca24f2b9d168b2ee545f1febaaff4b40580, subset swa_tts, CC-BY-SA-4.0.",
+        "frontend": "Benchmark-owned JS port. The publisher states its custom Swahili frontend/verbalizer are not included in the upstream tiny-voca repository.",
+        "inferenceSource": "Original benchmark adapter under the repository MIT license.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 with retained third-party notices.",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 7,
+        "bundledVoiceCount": 7,
+        "languageCount": 1,
+        "languages": [
+          "sw"
+        ],
+        "scope": "Pinned tiny-voca Kiswahili 55k FP32 checkpoint; sw text, WAXAL speaker ID 1 at graph voice index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+          "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/README.md",
+          "https://huggingface.co/datasets/google/WaxalNLP/tree/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580",
+          "https://github.com/n4ze3m/tiny-voca"
+        ],
+        "notes": "The benchmark implements the publisher’s documented Kiswahili letter-to-phone rules independently. All four published sentence token and stress vectors match exactly. Pronunciation outside those examples is approximate. The fixture audit covers 109 spans and 341 sentence calls, up to 212 tokens per call, with zero unknown IDs and full non-whitespace input coverage. Clips are shared under CC BY-SA 4.0."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-swahili-swahili-onnx",
+          "target": "models/tiny-voca-swahili/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/swahili.onnx",
+          "url": "https://huggingface.co/adoamesh/tiny-voca-swahili/resolve/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/swahili.onnx",
+          "bytes": 21394052,
+          "sha256": "e65a03efa18e291550bd3718b9c54a742974d81728e48c65ba78e1e721404739",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-swahili-metadata-json",
+          "target": "models/tiny-voca-swahili/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/metadata.json",
+          "url": "https://huggingface.co/adoamesh/tiny-voca-swahili/resolve/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/metadata.json",
+          "bytes": 1816,
+          "sha256": "1bedce84f6d6ce326d184b178271f18afc803dbc0d42ae1772ab2ccaf62f8623",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-swahili-symbols-json",
+          "target": "models/tiny-voca-swahili/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/symbols.json",
+          "url": "https://huggingface.co/adoamesh/tiny-voca-swahili/resolve/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/symbols.json",
+          "bytes": 3068,
+          "sha256": "06d440a0bfbb53d11d5b33bff3d3bbbad85b28c48c2fa6734d9e4dbd35922553",
+          "kind": "model-metadata"
+        },
+        {
+          "id": "tiny-voca-swahili-cases-json",
+          "target": "models/tiny-voca-swahili/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/cases.json",
+          "url": "https://huggingface.co/adoamesh/tiny-voca-swahili/resolve/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/cases.json",
+          "bytes": 1426,
+          "sha256": "97c9a74480285c00862160cc425b29baee1aad04374d6a0aa479a7787decaebb",
+          "kind": "model-metadata"
+        },
+        {
+          "id": "tiny-voca-swahili-config-json",
+          "target": "models/tiny-voca-swahili/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/config.json",
+          "url": "https://huggingface.co/adoamesh/tiny-voca-swahili/resolve/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/config.json",
+          "bytes": 105,
+          "sha256": "ed6097ceaca58fa40809d1b00f5cb3485eb33c0c1e935262ed43cb21d3b145eb",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-swahili-license",
+          "target": "models/tiny-voca-swahili/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/LICENSE",
+          "url": "https://huggingface.co/adoamesh/tiny-voca-swahili/resolve/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/LICENSE",
+          "bytes": 572,
+          "sha256": "7847e439f2ab643921f6f95ad633532f4a40bd221ba60bfbfb2df35197d0b5b2",
+          "kind": "license"
+        }
+      ]
     }
   }
 }

@@ -887,3 +887,13 @@ this is not an independent English route. UrduTTS is [CC BY-NC 4.0](https://hugg
 [UrduTTS dataset and attribution](https://huggingface.co/datasets/kaab4321/UrduTTS) ·
 [Pinned frontend repository](https://github.com/Zafar205/tiny-urdu/tree/5770756e05f33591eab29498a47f6644664beae7) ·
 [ONNX Runtime Web 1.31.1](https://github.com/microsoft/onnxruntime/tree/v1.31.1).
+
+### Tiny Voca Kiswahili
+
+The benchmark uses adoamesh’s 55,000-step FP32 ONNX release with WAXAL speaker ID 1 at index 0. The graph bundles seven speaker IDs (1–6 and 8). Both browser routes use 24 kHz mono PCM, speed 1, pitch shift 0 and pitch range 1. The 21,394,052-byte graph contains 4,539,211 logical scalars across 184 FP32 initializers.
+
+The publisher describes a deterministic Kiswahili letter-to-phone frontend and distributes four reference sentences with token and stress arrays. The benchmark implements those documented rules independently, matches all four arrays exactly, and applies the Kiswahili phoneme inventory to the full fixed article. Pronunciation outside those four examples is an approximation, including the explicit pronunciation of City in a place name. The route handles the Kiswahili fixture only.
+
+The article has 109 fixed spans. The browser frontend divides them into sentences and concatenates the raw PCM in source order at each span boundary. Each graph call checks the token budget, the 3,000-frame limit and the exact correspondence between the duration head and the audio samples. Headed Chrome runs ONNX Runtime Web 1.31.1 with one WASM thread and graph optimization set to all. Apple WebGPU uses the same graph with WASM operator fallback and an untimed hardware dispatch probe. The release’s pretokenized reference cases produced identical sample counts on the two browser routes.
+
+[Model and reference inputs](https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b) · [WAXAL dataset and license](https://huggingface.co/datasets/google/WaxalNLP/blob/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580/README.md).
