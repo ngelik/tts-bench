@@ -1,0 +1,41 @@
+# 2026-11-23t15-38-32-106z-tui-voice-mini-ml-cpu-warm-02e159f8
+
+MacBook Pro (Apple M1 Pro, 16 GB) · Apple M1 Pro · Google Chrome 157.0.8103.79
+
+Protocol: **browser-tts-warm-v2**, scenario **warm**. Native harness run.
+
+First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.
+
+| Model | Requested backend | Status | Median | Min–max | Runs |
+|---|---|---|---:|---:|---:|
+| tui-voice-mini-ml | cpu | measured | 89.10 s | 89.07–89.12 s | 3 |
+
+Additional metrics (median of available observations; scopes are distinct):
+
+| Model | Backend | Metric | Median | Unit | n |
+|---|---|---|---:|---|---:|
+| tui-voice-mini-ml | cpu | First completed source chunk | 928.890 | ms | 3 |
+| tui-voice-mini-ml | cpu | First PCM block | 928.840 | ms | 3 |
+| tui-voice-mini-ml | cpu | Generated audio | 1373.184 | s | 3 |
+| tui-voice-mini-ml | cpu | Generation / audio duration | 0.065 | ratio | 3 |
+
+Model support (catalog capability, not coverage of this run):
+
+| Model | Supported voices | Bundled voices | Languages | Tested voice |
+|---|---:|---:|---|---|
+| tui-voice-mini-ml | 1 | 1 | 1 (ml) | F2 |
+
+Pinned Cyrax321/tui-voice-mini-ml checkpoint with F2, the speaker with Malayalam metadata. 24 kHz mono.. The publisher reports 4,537,291 parameters. The pinned config declares a Dizione fingerprint, while the qualified benchmark route uses the documented eSpeak NG 1.51 ml frontend and published 76-slot phone plan; these are reported separately. Independent fixture smoke audit: 105 spans, 461 source clauses, maximum 232 tokens, 53 phones, 914 published merge emissions, no unplanned phones, no unknown tokens, and normalized/token-ID/combined digests pinned in the adapter profile. Parent qualification observed matching native traces and finite nonzero FP32 PCM on CPU/WASM and hardware WebGPU+WASM; this is qualification evidence, not a timing score. No native-speaker review or recording release is claimed. Sources: [1](https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md), [2](https://github.com/Cyrax321/tui-voice/tree/478761a10399c357e9ccc5380145906167e4d655), [3](https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5), [4](https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd), [5](https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz).
+
+
+![Generation chart](chart.svg)
+
+- **tui-voice-mini-ml / cpu**: Explicit ONNX Runtime Web 1.31.1 single-thread WASM provider.
+
+Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.
+
+Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.
+
+Campaign 2026-11-23T15-38-31-411Z-b9fab7be12e7; cell 1/4; source 0c5a1a00e43aaa0976a98425a3f82f5fe0a4c4ce; fixture ml-article-v1 (ml, 23011 JavaScript characters, 105 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power and sequential disposable profiles. Pinned v0.1-preview FP32 browser ONNX and Malayalam F2/index zero, one source span per ONNX call, eSpeak NG 1.51 Malayalam and the published 76-slot mapping, zero stress, 24 kHz, speed 1, pitch shift 0.15, pitch range 0.85, no inserted gaps. ONNX Runtime Web 1.31.1 on both routes, one WASM thread or Apple hardware WebGPU plus WASM asyncify and synchronized CPU PCM readback. Released graph contains stochastic noise.
+
+Different protocols, fixtures, settings or machines must not be pooled into a speedup ranking. This report does not rate speech quality.

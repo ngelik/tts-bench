@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t15-44-39-263z-tui-voice-mini-ml-webgpu-warm-28be0755",
+  "createdAt": "2026-11-23T15:46:18.857Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "ml-article-v1",
+    "language": "ml",
+    "sha256": "ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd",
+    "characters": 23011,
+    "unicodeCodePoints": 23011,
+    "utf8Bytes": 63731,
+    "chunks": 105,
+    "source": {
+      "type": "translation",
+      "description": "Independent Malayalam translation of all 27 paragraphs of the canonical English benchmark article. Names, identifiers, UI labels, numbers and units are represented as spoken Malayalam. Evaluated with the documented Malayalam frontend. No native-speaker review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "0c5a1a00e43aaa0976a98425a3f82f5fe0a4c4ce",
+    "dirty": false,
+    "manifestSha256": "25329cb4bdd131e4b353389379960c83b96adc2d2ea41243f0677120aed631b4"
+  },
+  "assets": [
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tui-voice-mini-ml:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tui-voice-mini-ml-onnx",
+      "sha256": "3fddc5a894eb1dd501921c6342cbbf350d56bbd08a55bf9e2a5a7ac614f355b5",
+      "bytes": 21386372
+    },
+    {
+      "id": "tui-voice-mini-ml-config",
+      "sha256": "d7f53c54b50b810cfe539e77b4ee5ef9b5e638888943f6f99259c68b359e8ab9",
+      "bytes": 2493
+    },
+    {
+      "id": "tui-voice-mini-ml-vocab-plan",
+      "sha256": "9d196209759785e7b6f904091601bbd1442ae8985163bbb266c4bd7379e3e302",
+      "bytes": 4033
+    },
+    {
+      "id": "tui-voice-mini-ml-espeak-espeak-quiet-mjs",
+      "sha256": "784dceafa3f515d205da1f7008a32c362c5925cff2fd27f26a1e2a623ffdc543",
+      "bytes": 66841
+    },
+    {
+      "id": "tui-voice-mini-ml-espeak-espeak-quiet-wasm",
+      "sha256": "aafb158a5697dc8462d9a2d74d2eee1fe744593f3ffc89b05ffdca951cfa940b",
+      "bytes": 356838
+    },
+    {
+      "id": "tui-voice-mini-ml-espeak-espeak-quiet-data",
+      "sha256": "f82517b18b0bf0a7395b65ee0eaa09a5b0f6c1c2b145666b4431105a29eea811",
+      "bytes": 907551
+    },
+    {
+      "id": "tui-voice-mini-ml-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "tui-voice-mini-ml",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ml"
+        ],
+        "scope": "Pinned Cyrax321/tui-voice-mini-ml checkpoint with F2, the speaker with Malayalam metadata. 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md",
+          "https://github.com/Cyrax321/tui-voice/tree/478761a10399c357e9ccc5380145906167e4d655",
+          "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5",
+          "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+        ],
+        "notes": "The publisher reports 4,537,291 parameters. The pinned config declares a Dizione fingerprint, while the qualified benchmark route uses the documented eSpeak NG 1.51 ml frontend and published 76-slot phone plan; these are reported separately. Independent fixture smoke audit: 105 spans, 461 source clauses, maximum 232 tokens, 53 phones, 914 published merge emissions, no unplanned phones, no unknown tokens, and normalized/token-ID/combined digests pinned in the adapter profile. Parent qualification observed matching native traces and finite nonzero FP32 PCM on CPU/WASM and hardware WebGPU+WASM; this is qualification evidence, not a timing score. No native-speaker review or recording release is claimed."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F2",
+      "precision": "FP32 ONNX export of the pinned Malayalam checkpoint",
+      "settings": {
+        "modelId": "Cyrax321/tui-voice-mini-ml",
+        "modelRevision": "9c2fee75373d81bbd62fbe2d683b1bad3c4415ea",
+        "sourceId": "Cyrax321/tui-voice",
+        "sourceRevision": "478761a10399c357e9ccc5380145906167e4d655",
+        "parameterCount": 4537291,
+        "fixtureId": "ml-article-v1",
+        "fixtureSha256": "ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd",
+        "language": "ml",
+        "locale": "ml",
+        "supportedLanguages": [
+          "ml"
+        ],
+        "voice": "F2",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0.15,
+        "pitchRange": 0.85,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the pinned Malayalam checkpoint",
+        "frontend": "Independent Malayalam NFC/punctuation frontend; eSpeak NG 1.51 ml IPA; pinned 76-slot map",
+        "frontendFingerprint": "0bf9eedb0246e654df39c1150e547209d19d7ccc42e55ebd82a52ef187091929",
+        "configFrontendName": "dizione",
+        "configFrontendFingerprint": "c729f235e10daa1a08ce7711169c1cb93fb552b3c24eecb16527513d7b69d4da",
+        "frontendCompatibilityNote": "Config records a Dizione fingerprint. This benchmark selects the separately documented eSpeak ml frontend and pinned phone map; see the model support notes for scope.",
+        "documentedEspeakCompatibility": "1.51",
+        "espeakRuntimeVersion": "1.51",
+        "modelAssets": {
+          "onnx/tui-voice-mini-ml.onnx": {
+            "bytes": 21386372,
+            "sha256": "3fddc5a894eb1dd501921c6342cbbf350d56bbd08a55bf9e2a5a7ac614f355b5"
+          },
+          "config.json": {
+            "bytes": 2493,
+            "sha256": "d7f53c54b50b810cfe539e77b4ee5ef9b5e638888943f6f99259c68b359e8ab9"
+          },
+          "vocab_plan.json": {
+            "bytes": 4033,
+            "sha256": "9d196209759785e7b6f904091601bbd1442ae8985163bbb266c4bd7379e3e302"
+          }
+        },
+        "espeakAssets": {
+          "espeak-quiet.mjs": {
+            "bytes": 66841,
+            "sha256": "784dceafa3f515d205da1f7008a32c362c5925cff2fd27f26a1e2a623ffdc543"
+          },
+          "espeak-quiet.wasm": {
+            "bytes": 356838,
+            "sha256": "aafb158a5697dc8462d9a2d74d2eee1fe744593f3ffc89b05ffdca951cfa940b"
+          },
+          "espeak-quiet.data": {
+            "bytes": 907551,
+            "sha256": "f82517b18b0bf0a7395b65ee0eaa09a5b0f6c1c2b145666b4431105a29eea811"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "waveform": "One fixed source span per FP32 graph call; raw graph PCM returned in source order without inserted gaps or amplitude normalization."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 770,
+        "description": "Observed 770 WebGPU compute dispatches during the mandatory untimed graph probe. ONNX Runtime Web may use WASM for unsupported operators."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 22824.44500017166,
+          "samples": 32956416,
+          "sampleRate": 24000,
+          "pcmSha256": "862beb6e6d0c7fae342ee07744732df85fa74cd0df119651bb17cb08a0c8855f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 347.27500009536743,
+            "firstSourceChunkCompletedMs": 347.34500002861023,
+            "audioSeconds": 1373.184,
+            "realTimeFactor": 0.016621548896704055,
+            "minSamplesPerChunk": 271104,
+            "maxSamplesPerChunk": 348672
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 22373.41000008583,
+          "samples": 32956416,
+          "sampleRate": 24000,
+          "pcmSha256": "b526206713aff569fcb286da257108d076173dbf9b9550aeb6291769fbf1dafd",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 227.58500003814697,
+            "firstSourceChunkCompletedMs": 227.6450002193451,
+            "audioSeconds": 1373.184,
+            "realTimeFactor": 0.0162930896369939,
+            "minSamplesPerChunk": 271104,
+            "maxSamplesPerChunk": 348672
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 22338.16000008583,
+          "samples": 32956416,
+          "sampleRate": 24000,
+          "pcmSha256": "285583643703d0f913d689de4528b7bf181f03694c013ecec227cba5520dbda1",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 225.65499997138977,
+            "firstSourceChunkCompletedMs": 225.7149999141693,
+            "audioSeconds": 1373.184,
+            "realTimeFactor": 0.016267419369935733,
+            "minSamplesPerChunk": 271104,
+            "maxSamplesPerChunk": 348672
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 22209.240000009537,
+          "samples": 32956416,
+          "sampleRate": 24000,
+          "pcmSha256": "f9a00ce510d981480d7a7569b438e789928f3fdab78bf252e4b7fd21b4076129",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 222.5199999809265,
+            "firstSourceChunkCompletedMs": 222.58000016212463,
+            "audioSeconds": 1373.184,
+            "realTimeFactor": 0.016173535374727304,
+            "minSamplesPerChunk": 271104,
+            "maxSamplesPerChunk": 348672
+          },
+          "audio": {
+            "sha256": "bd5e9fd5e0e50b859d56967449b4b5410e5560423c14d4f85fc6c58bc2c31f4e",
+            "bytes": 65912876
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T15-38-31-411Z-b9fab7be12e7; cell 2/4; source 0c5a1a00e43aaa0976a98425a3f82f5fe0a4c4ce; fixture ml-article-v1 (ml, 23011 JavaScript characters, 105 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power and sequential disposable profiles. Pinned v0.1-preview FP32 browser ONNX and Malayalam F2/index zero, one source span per ONNX call, eSpeak NG 1.51 Malayalam and the published 76-slot mapping, zero stress, 24 kHz, speed 1, pitch shift 0.15, pitch range 0.85, no inserted gaps. ONNX Runtime Web 1.31.1 on both routes, one WASM thread or Apple hardware WebGPU plus WASM asyncify and synchronized CPU PCM readback. Released graph contains stochastic noise."
+  ]
+}
