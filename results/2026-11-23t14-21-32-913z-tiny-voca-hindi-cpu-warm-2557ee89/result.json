@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t14-21-32-913z-tiny-voca-hindi-cpu-warm-2557ee89",
+  "createdAt": "2026-11-23T14:42:39.878Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "hi-article-v1",
+    "language": "hi",
+    "sha256": "c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128",
+    "characters": 19885,
+    "unicodeCodePoints": 19885,
+    "utf8Bytes": 51169,
+    "chunks": 91,
+    "source": {
+      "type": "translation",
+      "description": "Hindi translation of all 27 paragraphs of the canonical English benchmark article, checked against the source and the released Tiny Voca Hindi frontend. Identifiers, labels and numbers are spelled as they are spoken in Devanagari. No native-speaker review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "a66c124f6c100b246510469c4a6af0fb302c13d3",
+    "dirty": false,
+    "manifestSha256": "6af9fd6b68f7c31786ba8037cdfefd95ec405d667899bd21c2b8834de821af92"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-hindi:ggml-wasm:benchmark-hindi.mjs",
+      "sha256": "05109d8eb42710f9ea39c81800c9cad48c049c86d59cb7c68aa85e7f25b411b5",
+      "bytes": 60273
+    },
+    {
+      "id": "runtime:tiny-voca-hindi:ggml-wasm:benchmark-hindi.wasm",
+      "sha256": "e53e68baeda877603bded3973ec7caa1398eb45f12c094e948e1622146fc1110",
+      "bytes": 1077517
+    },
+    {
+      "id": "tiny-voca-hindi-q8-0-gguf",
+      "sha256": "649259b3bc566e978c7b37c4cb3ce5744b2dadfb9dbeaa61697096250e3fda39",
+      "bytes": 11141472
+    },
+    {
+      "id": "tiny-voca-hindi-normalizer",
+      "sha256": "8b24b24979289f5868b814becf80167b353ff3b412685558d3b19f99ca3a6af0",
+      "bytes": 107957
+    },
+    {
+      "id": "tiny-voca-hindi-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-hindi-notice",
+      "sha256": "2dd3641f8569e95a243f4edbc62024d90f9240d286dc9af04e2f0b0905b415cb",
+      "bytes": 892
+    },
+    {
+      "id": "tiny-voca-hindi-model-card",
+      "sha256": "a40bd2bfde99de7ce1668bfdd96b0271c33e15b7b48b1d3f003099f2c3866f70",
+      "bytes": 10252
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-hindi",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "hi"
+        ],
+        "scope": "Pinned RL10x/tiny-voca-hindi Q8_0 GGUF at the exact release revision. Hindi (hi-IN), one Rasa-trained female voice, 24 kHz, and hi-article-v1 only. The benchmark fixes the neutral style/index zero; the eight style IDs are neutral, conv, happy, sad, anger, fear, surprise, and disgust. CPU/WASM only; WebGPU is unsupported.",
+        "sources": [
+          "https://huggingface.co/RL10x/tiny-voca-hindi/tree/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+          "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/README.md",
+          "https://huggingface.co/RL10x/tiny-voca-hindi/blob/b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe/NOTICE",
+          "https://huggingface.co/datasets/ai4bharat/Rasa",
+          "https://github.com/ggml-org/ggml/tree/57e2c2ca2a7cae756b1c4dfafa0cdfef9051d234"
+        ],
+        "notes": "The checkpoint contains 205 GGUF v3 tensors and 9,711,883 tensor elements. Independent fixture frontend coverage: hi-article-v1 has 91 spans, 322 sentence plans, maximum 170 tokens, zero unknown tokens and zero skipped sentences (403 nasal tokens). The browser adapter imports the pinned hindi_norm.js with english:true and changes danda to period before synthesis. English controls are not an eligible route: the released normalizer respells only some words and unknown English words can be dropped. Use the Devanagari fixture. The benchmark audio credits RL10x, the AI4Bharat Rasa dataset, and the browser adaptation."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Rasa female",
+      "precision": "Q8_0 GGUF",
+      "settings": {
+        "modelId": "RL10x/tiny-voca-hindi",
+        "modelRevision": "b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+        "sourceRevision": "b76940f5edbc9c4ca2c7c8cf29f20897ff3339fe",
+        "fixtureId": "hi-article-v1",
+        "fixtureSha256": "c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128",
+        "language": "hi",
+        "locale": "hi-IN",
+        "supportedLanguages": [
+          "hi"
+        ],
+        "voice": "Rasa female",
+        "voiceIndex": 0,
+        "style": "neutral",
+        "styleIndex": 0,
+        "availableStyles": [
+          "neutral",
+          "conv",
+          "happy",
+          "sad",
+          "anger",
+          "fear",
+          "surprise",
+          "disgust"
+        ],
+        "speed": 1,
+        "pitchLimiter": 1.6,
+        "seed": "zero per source span, increment by sentence ordinal",
+        "threads": 1,
+        "sampleRate": 24000,
+        "parameterCount": 9711883,
+        "precision": "Q8_0 GGUF",
+        "frontend": "Pinned publisher web/hindi_norm.js normalizeHi(text, { english: true }), followed by the publisher period normalization and Devanagari C++ G2P.",
+        "frontendSha256": "8b24b24979289f5868b814becf80167b353ff3b412685558d3b19f99ca3a6af0",
+        "engine": "ggml v0.29.0 Emscripten/WebAssembly; one CPU thread",
+        "engineRevision": "57e2c2ca2a7cae756b1c4dfafa0cdfef9051d234",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "normalization": "normalizeHi(text, { english: true }).replace(/।/g, \".\")",
+        "fixtureFrontendCoverage": {
+          "spans": 91,
+          "sentencePlans": 322,
+          "maximumTokens": 170,
+          "unknownTokens": 0,
+          "skippedSentences": 0,
+          "nasalTokens": 403
+        },
+        "waveform": "Stock Tiny Voca Hindi source-filter output; one complete source span per model call; no inserted sentence gap; upstream 0.99 peak limit."
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "CPU/WASM only; no GPU provider is available in the pinned runtime."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 314906.9400000572,
+          "samples": 39919616,
+          "sampleRate": 24000,
+          "pcmSha256": "8eab5efa6ab9ba5b42eb8f12b493cb3c5d390bb88ef6f41f70c40dc9993cc04f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 4064.170000076294,
+            "firstSourceChunkCompletedMs": 4065.6449999809265,
+            "audioSeconds": 1663.3173333333334,
+            "realTimeFactor": 0.18932463077804587,
+            "minSamplesPerChunk": 268032,
+            "maxSamplesPerChunk": 482304
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 314831.7200000286,
+          "samples": 39919616,
+          "sampleRate": 24000,
+          "pcmSha256": "8eab5efa6ab9ba5b42eb8f12b493cb3c5d390bb88ef6f41f70c40dc9993cc04f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 3597.9400000572205,
+            "firstSourceChunkCompletedMs": 3598.0499999523163,
+            "audioSeconds": 1663.3173333333334,
+            "realTimeFactor": 0.18927940789812922,
+            "minSamplesPerChunk": 268032,
+            "maxSamplesPerChunk": 482304
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 314636.7650001049,
+          "samples": 39919616,
+          "sampleRate": 24000,
+          "pcmSha256": "8eab5efa6ab9ba5b42eb8f12b493cb3c5d390bb88ef6f41f70c40dc9993cc04f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 3608.6849999427795,
+            "firstSourceChunkCompletedMs": 3608.7350001335144,
+            "audioSeconds": 1663.3173333333334,
+            "realTimeFactor": 0.18916219935588852,
+            "minSamplesPerChunk": 268032,
+            "maxSamplesPerChunk": 482304
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 314550.40000009537,
+          "samples": 39919616,
+          "sampleRate": 24000,
+          "pcmSha256": "8eab5efa6ab9ba5b42eb8f12b493cb3c5d390bb88ef6f41f70c40dc9993cc04f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 3610.7599999904633,
+            "firstSourceChunkCompletedMs": 3610.880000114441,
+            "audioSeconds": 1663.3173333333334,
+            "realTimeFactor": 0.18911027601072836,
+            "minSamplesPerChunk": 268032,
+            "maxSamplesPerChunk": 482304
+          },
+          "audio": {
+            "sha256": "afd2a141f64209ade9f4031662af7aad64d46010f1b98290a5a6145eb5d17be5",
+            "bytes": 79839276
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T14-21-32-258Z-947f9e201b72; cell 1/2; source a66c124f6c100b246510469c4a6af0fb302c13d3; fixture hi-article-v1 (hi, 19885 JavaScript characters, 91 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power with sequential disposable profiles. Exact RL10x Tiny Voca Hindi Q8_0 GGUF with the neutral style at index zero, speed 1, default pitch limiter 1.6, seed 0 per span and 24 kHz. The released Hindi normalizer and Devanagari C++ frontend run live within each measured span. The publisher model uses ggml 0.29.0 compiled for SIMD WebAssembly and one CPU thread, with original sentence splitting, ordinal seed increments, no gaps and a single 0.99 peak ceiling per span."
+  ]
+}
