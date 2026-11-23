@@ -342,5 +342,12 @@
     "parameterCountSource": "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/swahili.onnx",
     "upstreamModelCard": "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
     "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
+  },
+  "sobbie-tts": {
+    "parameterCount": 4537291,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/onnx/model.onnx",
+    "upstreamModelCard": "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+    "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
   }
 }
