@@ -251,5 +251,12 @@
     "parameterCountSource": "https://huggingface.co/FranciscoCarlosErra/alpa-es/blob/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/alpa-es.pt",
     "upstreamModelCard": "https://huggingface.co/FranciscoCarlosErra/alpa-es/blob/de2bf894bdd9eb768ae03fc6b385176a0ff505d1/README.md",
     "scope": "Exact sum of loaded model parameter tensor elements from the pinned alpa-es.pt checkpoint. The reproducible builder records the count in its export evidence."
+  },
+  "tiny-voca-ptbr": {
+    "parameterCount": 4533259,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/semfence/tiny-voca-ptbr/blob/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/README.md",
+    "upstreamModelCard": "https://huggingface.co/semfence/tiny-voca-ptbr/blob/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f/README.md",
+    "scope": "The pinned model card reports 4,533,259 parameters for the released Brazilian Portuguese model, including its waveform generator."
   }
 }
