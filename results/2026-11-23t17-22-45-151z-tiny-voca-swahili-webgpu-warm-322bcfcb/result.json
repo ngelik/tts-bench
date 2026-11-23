@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t17-22-45-151z-tiny-voca-swahili-webgpu-warm-322bcfcb",
+  "createdAt": "2026-11-23T17:25:30.509Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "sw-article-v1",
+    "language": "sw",
+    "sha256": "7ad4f4839ffb808429c538e40b08e0e6c87655a150a1ceb0d52106cce9ecd4b1",
+    "characters": 23917,
+    "unicodeCodePoints": 23917,
+    "utf8Bytes": 24025,
+    "chunks": 109,
+    "source": {
+      "type": "translation",
+      "description": "Kiswahili translation of all 27 source paragraphs. Written with expanded spoken forms for clock times, dates, money, identifiers and units. Reviewed against the source by Codex and checked for benchmark span integrity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "ac0cebd561863f8bb27411b6d01453fe99c842a1",
+    "dirty": false,
+    "manifestSha256": "7e56d28b151732da38438c70b45540ae7882336e8866f68f4c0c4b480b613e56"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-swahili-swahili-onnx",
+      "sha256": "e65a03efa18e291550bd3718b9c54a742974d81728e48c65ba78e1e721404739",
+      "bytes": 21394052
+    },
+    {
+      "id": "tiny-voca-swahili-metadata-json",
+      "sha256": "1bedce84f6d6ce326d184b178271f18afc803dbc0d42ae1772ab2ccaf62f8623",
+      "bytes": 1816
+    },
+    {
+      "id": "tiny-voca-swahili-symbols-json",
+      "sha256": "06d440a0bfbb53d11d5b33bff3d3bbbad85b28c48c2fa6734d9e4dbd35922553",
+      "bytes": 3068
+    },
+    {
+      "id": "tiny-voca-swahili-cases-json",
+      "sha256": "97c9a74480285c00862160cc425b29baee1aad04374d6a0aa479a7787decaebb",
+      "bytes": 1426
+    },
+    {
+      "id": "tiny-voca-swahili-config-json",
+      "sha256": "ed6097ceaca58fa40809d1b00f5cb3485eb33c0c1e935262ed43cb21d3b145eb",
+      "bytes": 105
+    },
+    {
+      "id": "tiny-voca-swahili-license",
+      "sha256": "7847e439f2ab643921f6f95ad633532f4a40bd221ba60bfbfb2df35197d0b5b2",
+      "bytes": 572
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-swahili",
+      "support": {
+        "voiceCount": 7,
+        "bundledVoiceCount": 7,
+        "languageCount": 1,
+        "languages": [
+          "sw"
+        ],
+        "scope": "Pinned tiny-voca Kiswahili 55k FP32 checkpoint; sw text, WAXAL speaker ID 1 at graph voice index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+          "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/README.md",
+          "https://huggingface.co/datasets/google/WaxalNLP/tree/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580",
+          "https://github.com/n4ze3m/tiny-voca"
+        ],
+        "notes": "The benchmark implements the publisher’s documented Kiswahili letter-to-phone rules independently. All four published sentence token and stress vectors match exactly. Pronunciation outside those examples is approximate. The fixture audit covers 109 spans and 341 sentence calls, up to 212 tokens per call, with zero unknown IDs and full non-whitespace input coverage. Clips are shared under CC BY-SA 4.0."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "WAXAL speaker 1 (speaker ID 1)",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "adoamesh/tiny-voca-swahili",
+        "modelRevision": "408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+        "sourceId": "adoamesh/tiny-voca-swahili",
+        "sourceRevision": "408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+        "parameterCount": 4539211,
+        "fixtureId": "sw-article-v1",
+        "fixtureSha256": "7ad4f4839ffb808429c538e40b08e0e6c87655a150a1ceb0d52106cce9ecd4b1",
+        "language": "sw",
+        "locale": "sw",
+        "spokenLanguage": "sw",
+        "supportedLanguages": [
+          "sw"
+        ],
+        "voice": "WAXAL speaker 1 (speaker ID 1)",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Benchmark-owned JavaScript approximation of the documented swahili-rule G2P; pinned release custom frontend is unavailable.",
+        "frontendFingerprint": "2ff4070f1d41d8350c24a78008db321d263a82c1f3e5aef2c1ca55a41e624500",
+        "upstreamFrontendFingerprint": "d544985efcbde5d71ea0ce027f644b357497b4fcc79209b55cc624b9c67c99f3",
+        "modelAssets": {
+          "swahili.onnx": {
+            "bytes": 21394052,
+            "sha256": "e65a03efa18e291550bd3718b9c54a742974d81728e48c65ba78e1e721404739"
+          },
+          "metadata.json": {
+            "bytes": 1816,
+            "sha256": "1bedce84f6d6ce326d184b178271f18afc803dbc0d42ae1772ab2ccaf62f8623"
+          },
+          "symbols.json": {
+            "bytes": 3068,
+            "sha256": "06d440a0bfbb53d11d5b33bff3d3bbbad85b28c48c2fa6734d9e4dbd35922553"
+          },
+          "cases.json": {
+            "bytes": 1426,
+            "sha256": "97c9a74480285c00862160cc425b29baee1aad04374d6a0aa479a7787decaebb"
+          },
+          "config.json": {
+            "bytes": 105,
+            "sha256": "ed6097ceaca58fa40809d1b00f5cb3485eb33c0c1e935262ed43cb21d3b145eb"
+          },
+          "LICENSE": {
+            "bytes": 572,
+            "sha256": "7847e439f2ab643921f6f95ad633532f4a40bd221ba60bfbfb2df35197d0b5b2"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Raw 24 kHz PCM from individual sentence calls is joined directly in source order."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 770,
+        "description": "Observed 770 hardware WebGPU compute dispatches in an untimed probe; WASM remains an explicit fallback for unsupported graph operators."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 38741.88000011444,
+          "samples": 55707904,
+          "sampleRate": 24000,
+          "pcmSha256": "9bc0dc7b6dee5e91d81578943d72fad64e58cbc0b2af3e8830c5ff95b8cb9c80",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 298.664999961853,
+            "firstSourceChunkCompletedMs": 529.2449998855591,
+            "audioSeconds": 2321.1626666666666,
+            "realTimeFactor": 0.01669072166137765,
+            "minSamplesPerChunk": 420096,
+            "maxSamplesPerChunk": 587264
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 38078.920000076294,
+          "samples": 55707904,
+          "sampleRate": 24000,
+          "pcmSha256": "b83aa00f26bdca4f3b6c2945600e7523bd0f8c2fee46dcf6876de38dc4daa319",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 155.76500010490417,
+            "firstSourceChunkCompletedMs": 341.7350001335144,
+            "audioSeconds": 2321.1626666666666,
+            "realTimeFactor": 0.016405106176707547,
+            "minSamplesPerChunk": 420096,
+            "maxSamplesPerChunk": 587264
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 38030.88499999046,
+          "samples": 55707904,
+          "sampleRate": 24000,
+          "pcmSha256": "4de0004035ce2fd5c54a4c9095f7fa74a2d8298aaae34f065b0e08028e525dea",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 132.3950002193451,
+            "firstSourceChunkCompletedMs": 307.2550001144409,
+            "audioSeconds": 2321.1626666666666,
+            "realTimeFactor": 0.016384411806263096,
+            "minSamplesPerChunk": 420096,
+            "maxSamplesPerChunk": 587264
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 37925.25,
+          "samples": 55707904,
+          "sampleRate": 24000,
+          "pcmSha256": "9287a354b2e49ff57da8332e20483fcc4270b32b823388674026fbbd28723319",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 141.17999982833862,
+            "firstSourceChunkCompletedMs": 326.40499997138977,
+            "audioSeconds": 2321.1626666666666,
+            "realTimeFactor": 0.01633890228575105,
+            "minSamplesPerChunk": 420096,
+            "maxSamplesPerChunk": 587264
+          },
+          "audio": {
+            "sha256": "986788d3e5e96c3550d1dd4a5bd1a5b907e8626049b8ae189234fdd1e319f3aa",
+            "bytes": 111415852
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T17-14-17-113Z-1c1e820b74ff; cell 2/4; source ac0cebd561863f8bb27411b6d01453fe99c842a1; fixture sw-article-v1 (sw, 23917 JavaScript characters, 109 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro and AC power with sequential disposable profiles. Exact published Tiny Voca Kiswahili FP32 graph from revision 408b7b783b0c77ed66030521f8cec88f5c6d6e2b, speaker 1/index zero, speed 1, pitch shift zero, pitch range 1, 24 kHz. The benchmark-owned Swahili frontend matches the four publisher reference token and stress vectors. Source-order sentence audio uses the original untrimmed PCM and no inserted pauses. ONNX Runtime Web 1.31.1 on both routes, one WASM thread, CPU or verified Apple hardware WebGPU plus WASM asyncify, graph optimization all, synchronized CPU PCM readback."
+  ]
+}

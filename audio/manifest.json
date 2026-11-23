@@ -4546,6 +4546,66 @@
       }
     },
     {
+      "resultId": "2026-11-23t17-14-17-810z-tiny-voca-swahili-cpu-warm-5f0f319c",
+      "model": "tiny-voca-swahili",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "WAXAL speaker 1 (speaker ID 1)",
+      "language": "sw",
+      "attribution": "AI-generated Kiswahili narration using adoamesh’s Tiny Voca Kiswahili 55k checkpoint and WAXAL speaker 1. The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the WAXAL Swahili TTS dataset from Google Research, Makerere University and Loud and Clear. This excerpt is shared under CC BY-SA 4.0.",
+      "modelTerms": "CC-BY-SA-4.0 per the pinned model card, inherited from WAXAL speech data.",
+      "sourceUrls": [
+        "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+        "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/README.md",
+        "https://huggingface.co/datasets/google/WaxalNLP/tree/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580",
+        "https://github.com/n4ze3m/tiny-voca"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t17-14-17-810z-tiny-voca-swahili-cpu-warm-5f0f319c--tiny-voca-swahili--cpu.wav",
+        "sha256": "d3e73d38728e4f26b2d0636188fa1a077e4eeb0cee1946c0633f4c7014875e52",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "1bf9802c7c23782ca9e4021ad37778a9b3648579832ce240a066acf1cb5b383c",
+        "bytes": 111415852
+      }
+    },
+    {
+      "resultId": "2026-11-23t17-22-45-151z-tiny-voca-swahili-webgpu-warm-322bcfcb",
+      "model": "tiny-voca-swahili",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "WAXAL speaker 1 (speaker ID 1)",
+      "language": "sw",
+      "attribution": "AI-generated Kiswahili narration using adoamesh’s Tiny Voca Kiswahili 55k checkpoint and WAXAL speaker 1. The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the WAXAL Swahili TTS dataset from Google Research, Makerere University and Loud and Clear. This excerpt is shared under CC BY-SA 4.0.",
+      "modelTerms": "CC-BY-SA-4.0 per the pinned model card, inherited from WAXAL speech data.",
+      "sourceUrls": [
+        "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+        "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/README.md",
+        "https://huggingface.co/datasets/google/WaxalNLP/tree/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580",
+        "https://github.com/n4ze3m/tiny-voca"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t17-22-45-151z-tiny-voca-swahili-webgpu-warm-322bcfcb--tiny-voca-swahili--webgpu.wav",
+        "sha256": "cce11e57c83b910a7926ebebd149ce2a2cf5ba905fd6cee529af92f50fb34513",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "986788d3e5e96c3550d1dd4a5bd1a5b907e8626049b8ae189234fdd1e319f3aa",
+        "bytes": 111415852
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",

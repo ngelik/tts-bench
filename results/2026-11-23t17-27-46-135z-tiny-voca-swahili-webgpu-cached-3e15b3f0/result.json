@@ -1,0 +1,578 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t17-27-46-135z-tiny-voca-swahili-webgpu-cached-3e15b3f0",
+  "createdAt": "2026-11-23T17:28:36.761Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "sw-article-v1",
+    "language": "sw",
+    "sha256": "7ad4f4839ffb808429c538e40b08e0e6c87655a150a1ceb0d52106cce9ecd4b1",
+    "characters": 23917,
+    "unicodeCodePoints": 23917,
+    "utf8Bytes": 24025,
+    "chunks": 109,
+    "source": {
+      "type": "translation",
+      "description": "Kiswahili translation of all 27 source paragraphs. Written with expanded spoken forms for clock times, dates, money, identifiers and units. Reviewed against the source by Codex and checked for benchmark span integrity.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "ac0cebd561863f8bb27411b6d01453fe99c842a1",
+    "dirty": false,
+    "manifestSha256": "7e56d28b151732da38438c70b45540ae7882336e8866f68f4c0c4b480b613e56"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-swahili:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-swahili-swahili-onnx",
+      "sha256": "e65a03efa18e291550bd3718b9c54a742974d81728e48c65ba78e1e721404739",
+      "bytes": 21394052
+    },
+    {
+      "id": "tiny-voca-swahili-metadata-json",
+      "sha256": "1bedce84f6d6ce326d184b178271f18afc803dbc0d42ae1772ab2ccaf62f8623",
+      "bytes": 1816
+    },
+    {
+      "id": "tiny-voca-swahili-symbols-json",
+      "sha256": "06d440a0bfbb53d11d5b33bff3d3bbbad85b28c48c2fa6734d9e4dbd35922553",
+      "bytes": 3068
+    },
+    {
+      "id": "tiny-voca-swahili-cases-json",
+      "sha256": "97c9a74480285c00862160cc425b29baee1aad04374d6a0aa479a7787decaebb",
+      "bytes": 1426
+    },
+    {
+      "id": "tiny-voca-swahili-config-json",
+      "sha256": "ed6097ceaca58fa40809d1b00f5cb3485eb33c0c1e935262ed43cb21d3b145eb",
+      "bytes": 105
+    },
+    {
+      "id": "tiny-voca-swahili-license",
+      "sha256": "7847e439f2ab643921f6f95ad633532f4a40bd221ba60bfbfb2df35197d0b5b2",
+      "bytes": 572
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-swahili",
+      "support": {
+        "voiceCount": 7,
+        "bundledVoiceCount": 7,
+        "languageCount": 1,
+        "languages": [
+          "sw"
+        ],
+        "scope": "Pinned tiny-voca Kiswahili 55k FP32 checkpoint; sw text, WAXAL speaker ID 1 at graph voice index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+          "https://huggingface.co/adoamesh/tiny-voca-swahili/blob/408b7b783b0c77ed66030521f8cec88f5c6d6e2b/README.md",
+          "https://huggingface.co/datasets/google/WaxalNLP/tree/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580",
+          "https://github.com/n4ze3m/tiny-voca"
+        ],
+        "notes": "The benchmark implements the publisher’s documented Kiswahili letter-to-phone rules independently. All four published sentence token and stress vectors match exactly. Pronunciation outside those examples is approximate. The fixture audit covers 109 spans and 341 sentence calls, up to 212 tokens per call, with zero unknown IDs and full non-whitespace input coverage. Clips are shared under CC BY-SA 4.0."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "WAXAL speaker 1 (speaker ID 1)",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "adoamesh/tiny-voca-swahili",
+        "modelRevision": "408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+        "sourceId": "adoamesh/tiny-voca-swahili",
+        "sourceRevision": "408b7b783b0c77ed66030521f8cec88f5c6d6e2b",
+        "parameterCount": 4539211,
+        "fixtureId": "sw-article-v1",
+        "fixtureSha256": "7ad4f4839ffb808429c538e40b08e0e6c87655a150a1ceb0d52106cce9ecd4b1",
+        "language": "sw",
+        "locale": "sw",
+        "spokenLanguage": "sw",
+        "supportedLanguages": [
+          "sw"
+        ],
+        "voice": "WAXAL speaker 1 (speaker ID 1)",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Benchmark-owned JavaScript approximation of the documented swahili-rule G2P; pinned release custom frontend is unavailable.",
+        "frontendFingerprint": "2ff4070f1d41d8350c24a78008db321d263a82c1f3e5aef2c1ca55a41e624500",
+        "upstreamFrontendFingerprint": "d544985efcbde5d71ea0ce027f644b357497b4fcc79209b55cc624b9c67c99f3",
+        "modelAssets": {
+          "swahili.onnx": {
+            "bytes": 21394052,
+            "sha256": "e65a03efa18e291550bd3718b9c54a742974d81728e48c65ba78e1e721404739"
+          },
+          "metadata.json": {
+            "bytes": 1816,
+            "sha256": "1bedce84f6d6ce326d184b178271f18afc803dbc0d42ae1772ab2ccaf62f8623"
+          },
+          "symbols.json": {
+            "bytes": 3068,
+            "sha256": "06d440a0bfbb53d11d5b33bff3d3bbbad85b28c48c2fa6734d9e4dbd35922553"
+          },
+          "cases.json": {
+            "bytes": 1426,
+            "sha256": "97c9a74480285c00862160cc425b29baee1aad04374d6a0aa479a7787decaebb"
+          },
+          "config.json": {
+            "bytes": 105,
+            "sha256": "ed6097ceaca58fa40809d1b00f5cb3485eb33c0c1e935262ed43cb21d3b145eb"
+          },
+          "LICENSE": {
+            "bytes": 572,
+            "sha256": "7847e439f2ab643921f6f95ad633532f4a40bd221ba60bfbfb2df35197d0b5b2"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Raw 24 kHz PCM from individual sentence calls is joined directly in source order."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 770,
+        "description": "Observed 770 hardware WebGPU compute dispatches in an untimed probe; WASM remains an explicit fallback for unsupported graph operators."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 39180.25,
+          "samples": 55707904,
+          "sampleRate": 24000,
+          "pcmSha256": "83121808fe62afe951022230a82a8ff3712b811fd0a9dcbb0170f2dd3cbed38e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 109,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 289.7150001525879,
+            "firstSourceChunkCompletedMs": 494.0350000858307,
+            "audioSeconds": 2321.1626666666666,
+            "realTimeFactor": 0.01687957960148707,
+            "minSamplesPerChunk": 420096,
+            "maxSamplesPerChunk": 587264,
+            "articleCallPeakRssBytes": 2548678656,
+            "generationMeanRssBytes": 2314900401,
+            "generationRssSampleCount": 78,
+            "loadMs": 1048.1979579999997,
+            "controllerTrialElapsedMs": 47031.546166,
+            "downloadBytes": 71774,
+            "idealDownloadSecondsAt1Mbps": 0.574192
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795454870792.615,
+            "finalPcmAtEpochMs": 1795454909972.865,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795454871392,
+                1652441088
+              ],
+              [
+                1795454871857,
+                1906622464
+              ],
+              [
+                1795454872335,
+                1974386688
+              ],
+              [
+                1795454872851,
+                2241871872
+              ],
+              [
+                1795454873339,
+                2413232128
+              ],
+              [
+                1795454873847,
+                2388885504
+              ],
+              [
+                1795454874355,
+                2391457792
+              ],
+              [
+                1795454874845,
+                2404384768
+              ],
+              [
+                1795454875346,
+                2421882880
+              ],
+              [
+                1795454875847,
+                2432434176
+              ],
+              [
+                1795454876348,
+                2437038080
+              ],
+              [
+                1795454876854,
+                2447196160
+              ],
+              [
+                1795454877351,
+                2460237824
+              ],
+              [
+                1795454877856,
+                2471854080
+              ],
+              [
+                1795454878353,
+                2466742272
+              ],
+              [
+                1795454878856,
+                2476507136
+              ],
+              [
+                1795454879358,
+                2476589056
+              ],
+              [
+                1795454879859,
+                2489352192
+              ],
+              [
+                1795454880361,
+                2494185472
+              ],
+              [
+                1795454880861,
+                2496626688
+              ],
+              [
+                1795454881364,
+                2501296128
+              ],
+              [
+                1795454881868,
+                2503753728
+              ],
+              [
+                1795454882367,
+                2511110144
+              ],
+              [
+                1795454882871,
+                2512633856
+              ],
+              [
+                1795454883370,
+                2517417984
+              ],
+              [
+                1795454883874,
+                2523512832
+              ],
+              [
+                1795454884390,
+                2511650816
+              ],
+              [
+                1795454884877,
+                2452848640
+              ],
+              [
+                1795454885377,
+                2449932288
+              ],
+              [
+                1795454885880,
+                2446606336
+              ],
+              [
+                1795454886384,
+                2462269440
+              ],
+              [
+                1795454886887,
+                2479079424
+              ],
+              [
+                1795454887386,
+                2459320320
+              ],
+              [
+                1795454887889,
+                2463907840
+              ],
+              [
+                1795454888391,
+                2471772160
+              ],
+              [
+                1795454888890,
+                2488516608
+              ],
+              [
+                1795454889399,
+                2489810944
+              ],
+              [
+                1795454889895,
+                2490171392
+              ],
+              [
+                1795454890397,
+                2500444160
+              ],
+              [
+                1795454890897,
+                2501083136
+              ],
+              [
+                1795454891397,
+                2505687040
+              ],
+              [
+                1795454891898,
+                2511077376
+              ],
+              [
+                1795454892400,
+                2513600512
+              ],
+              [
+                1795454892904,
+                2514501632
+              ],
+              [
+                1795454893403,
+                2519236608
+              ],
+              [
+                1795454893908,
+                2521186304
+              ],
+              [
+                1795454894409,
+                2537684992
+              ],
+              [
+                1795454894907,
+                2528919552
+              ],
+              [
+                1795454895411,
+                2530246656
+              ],
+              [
+                1795454895913,
+                2534899712
+              ],
+              [
+                1795454896412,
+                2538258432
+              ],
+              [
+                1795454896914,
+                2539929600
+              ],
+              [
+                1795454897417,
+                2544713728
+              ],
+              [
+                1795454897935,
+                2548678656
+              ],
+              [
+                1795454898423,
+                2546237440
+              ],
+              [
+                1795454898919,
+                2485223424
+              ],
+              [
+                1795454899423,
+                2134982656
+              ],
+              [
+                1795454899923,
+                2112012288
+              ],
+              [
+                1795454900437,
+                1950253056
+              ],
+              [
+                1795454900925,
+                1933672448
+              ],
+              [
+                1795454901427,
+                1934770176
+              ],
+              [
+                1795454901928,
+                1937702912
+              ],
+              [
+                1795454902430,
+                1953251328
+              ],
+              [
+                1795454902933,
+                1952137216
+              ],
+              [
+                1795454903435,
+                1945223168
+              ],
+              [
+                1795454903932,
+                1953316864
+              ],
+              [
+                1795454904436,
+                1952858112
+              ],
+              [
+                1795454904940,
+                1960689664
+              ],
+              [
+                1795454905440,
+                1958756352
+              ],
+              [
+                1795454905943,
+                1962622976
+              ],
+              [
+                1795454906443,
+                1973747712
+              ],
+              [
+                1795454906943,
+                1968390144
+              ],
+              [
+                1795454907445,
+                1971027968
+              ],
+              [
+                1795454907948,
+                1976238080
+              ],
+              [
+                1795454908448,
+                1976418304
+              ],
+              [
+                1795454908951,
+                1982070784
+              ],
+              [
+                1795454909451,
+                1984364544
+              ],
+              [
+                1795454909954,
+                1986576384
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "e539e771de18de3b3b7860ecf18c81a526926183ce7382f862c8a93bbe072fc8",
+            "bytes": 111415852
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T17-14-17-113Z-1c1e820b74ff; cell 4/4; source ac0cebd561863f8bb27411b6d01453fe99c842a1; fixture sw-article-v1 (sw, 23917 JavaScript characters, 109 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro and AC power with sequential disposable profiles. Exact published Tiny Voca Kiswahili FP32 graph from revision 408b7b783b0c77ed66030521f8cec88f5c6d6e2b, speaker 1/index zero, speed 1, pitch shift zero, pitch range 1, 24 kHz. The benchmark-owned Swahili frontend matches the four publisher reference token and stress vectors. Source-order sentence audio uses the original untrimmed PCM and no inserted pauses. ONNX Runtime Web 1.31.1 on both routes, one WASM thread, CPU or verified Apple hardware WebGPU plus WASM asyncify, graph optimization all, synchronized CPU PCM readback.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
