@@ -478,6 +478,326 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "bg-article-v1",
+      "smokeId": "bg-article-smoke-v1",
+      "language": "bg",
+      "articleFile": "bg-article-v1.txt",
+      "chunksFile": "bg-article-v1.chunks.json",
+      "metadataFile": "bg-article-v1.meta.json",
+      "sha256": "9c52c5fa5d13dc399221faa8d3fa6b57754aa83d8727e7e64369069de137e8b5",
+      "characters": 20655,
+      "unicodeCodePoints": 20655,
+      "utf8Bytes": 36688,
+      "chunks": 94,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "cs-article-v1",
+      "smokeId": "cs-article-smoke-v1",
+      "language": "cs",
+      "articleFile": "cs-article-v1.txt",
+      "chunksFile": "cs-article-v1.chunks.json",
+      "metadataFile": "cs-article-v1.meta.json",
+      "sha256": "a2c49b6e2836315147c99bc0ff79cd1216823f434eae3de3992378b9a334408b",
+      "characters": 18724,
+      "unicodeCodePoints": 18724,
+      "utf8Bytes": 20626,
+      "chunks": 85,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "da-article-v1",
+      "smokeId": "da-article-smoke-v1",
+      "language": "da",
+      "articleFile": "da-article-v1.txt",
+      "chunksFile": "da-article-v1.chunks.json",
+      "metadataFile": "da-article-v1.meta.json",
+      "sha256": "ccef97fc659fea876f8a6af1bb36b3b4062779d3ecbd802beac5de7e22c9516c",
+      "characters": 20226,
+      "unicodeCodePoints": 20226,
+      "utf8Bytes": 20680,
+      "chunks": 92,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "et-article-v1",
+      "smokeId": "et-article-smoke-v1",
+      "language": "et",
+      "articleFile": "et-article-v1.txt",
+      "chunksFile": "et-article-v1.chunks.json",
+      "metadataFile": "et-article-v1.meta.json",
+      "sha256": "701a12483833f85cfdb23a4bbd7a7a498a4ea6017a839340a1de3ef8bc22093c",
+      "characters": 19156,
+      "unicodeCodePoints": 19156,
+      "utf8Bytes": 19772,
+      "chunks": 87,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "fi-article-v1",
+      "smokeId": "fi-article-smoke-v1",
+      "language": "fi",
+      "articleFile": "fi-article-v1.txt",
+      "chunksFile": "fi-article-v1.chunks.json",
+      "metadataFile": "fi-article-v1.meta.json",
+      "sha256": "bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38",
+      "characters": 20790,
+      "unicodeCodePoints": 20790,
+      "utf8Bytes": 21578,
+      "chunks": 95,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "hr-article-v1",
+      "smokeId": "hr-article-smoke-v1",
+      "language": "hr",
+      "articleFile": "hr-article-v1.txt",
+      "chunksFile": "hr-article-v1.chunks.json",
+      "metadataFile": "hr-article-v1.meta.json",
+      "sha256": "b059b5fe785462a3b5eec2767bb79d13e26581f24c9ace666ed0e1ee18c1638e",
+      "characters": 20119,
+      "unicodeCodePoints": 20119,
+      "utf8Bytes": 20530,
+      "chunks": 92,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "hu-article-v1",
+      "smokeId": "hu-article-smoke-v1",
+      "language": "hu",
+      "articleFile": "hu-article-v1.txt",
+      "chunksFile": "hu-article-v1.chunks.json",
+      "metadataFile": "hu-article-v1.meta.json",
+      "sha256": "f5eda9fa18468e6dc526638e68dd8dbe6d171d414b8d6184e799c9e3fa3c2659",
+      "characters": 21046,
+      "unicodeCodePoints": 21046,
+      "utf8Bytes": 23001,
+      "chunks": 96,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "id-article-v1",
+      "smokeId": "id-article-smoke-v1",
+      "language": "id",
+      "articleFile": "id-article-v1.txt",
+      "chunksFile": "id-article-v1.chunks.json",
+      "metadataFile": "id-article-v1.meta.json",
+      "sha256": "6b60b1842edb093754c1c7182d8f991b57864b230f7024d8d6ac9bfcc967422b",
+      "characters": 22169,
+      "unicodeCodePoints": 22169,
+      "utf8Bytes": 22173,
+      "chunks": 101,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "lt-article-v1",
+      "smokeId": "lt-article-smoke-v1",
+      "language": "lt",
+      "articleFile": "lt-article-v1.txt",
+      "chunksFile": "lt-article-v1.chunks.json",
+      "metadataFile": "lt-article-v1.meta.json",
+      "sha256": "a6e1a24d3fc85780c9ac32293ff7a38b48fc856bd6dae1beeb26e6d67036d8d9",
+      "characters": 19776,
+      "unicodeCodePoints": 19776,
+      "utf8Bytes": 21224,
+      "chunks": 90,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "lv-article-v1",
+      "smokeId": "lv-article-smoke-v1",
+      "language": "lv",
+      "articleFile": "lv-article-v1.txt",
+      "chunksFile": "lv-article-v1.chunks.json",
+      "metadataFile": "lv-article-v1.meta.json",
+      "sha256": "9d03266dc99a50c97d98c0a15ebf58e6037bf0840101c77c1010c469f3405413",
+      "characters": 20096,
+      "unicodeCodePoints": 20096,
+      "utf8Bytes": 21853,
+      "chunks": 92,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "nl-article-v1",
+      "smokeId": "nl-article-smoke-v1",
+      "language": "nl",
+      "articleFile": "nl-article-v1.txt",
+      "chunksFile": "nl-article-v1.chunks.json",
+      "metadataFile": "nl-article-v1.meta.json",
+      "sha256": "afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8",
+      "characters": 22195,
+      "unicodeCodePoints": 22195,
+      "utf8Bytes": 22361,
+      "chunks": 101,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "ro-article-v1",
+      "smokeId": "ro-article-smoke-v1",
+      "language": "ro",
+      "articleFile": "ro-article-v1.txt",
+      "chunksFile": "ro-article-v1.chunks.json",
+      "metadataFile": "ro-article-v1.meta.json",
+      "sha256": "96711b4f007a5888114869642febe944945ef3ec5b7c9360d5b283837f58b3e5",
+      "characters": 21543,
+      "unicodeCodePoints": 21543,
+      "utf8Bytes": 22777,
+      "chunks": 98,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "sk-article-v1",
+      "smokeId": "sk-article-smoke-v1",
+      "language": "sk",
+      "articleFile": "sk-article-v1.txt",
+      "chunksFile": "sk-article-v1.chunks.json",
+      "metadataFile": "sk-article-v1.meta.json",
+      "sha256": "e7b89e5bdbf48b728978a4520dd7454a15a000bccf97315f46fd3f75dc441752",
+      "characters": 19232,
+      "unicodeCodePoints": 19232,
+      "utf8Bytes": 20763,
+      "chunks": 88,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "sl-article-v1",
+      "smokeId": "sl-article-smoke-v1",
+      "language": "sl",
+      "articleFile": "sl-article-v1.txt",
+      "chunksFile": "sl-article-v1.chunks.json",
+      "metadataFile": "sl-article-v1.meta.json",
+      "sha256": "74382fd8e6398023b83d366830dab36a540e798e0bc94f56d1c0b65f79b107a2",
+      "characters": 20301,
+      "unicodeCodePoints": 20301,
+      "utf8Bytes": 20746,
+      "chunks": 93,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "sv-article-v1",
+      "smokeId": "sv-article-smoke-v1",
+      "language": "sv",
+      "articleFile": "sv-article-v1.txt",
+      "chunksFile": "sv-article-v1.chunks.json",
+      "metadataFile": "sv-article-v1.meta.json",
+      "sha256": "0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179",
+      "characters": 20264,
+      "unicodeCodePoints": 20264,
+      "utf8Bytes": 21063,
+      "chunks": 92,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
+    },
+    {
+      "id": "vi-article-v1",
+      "smokeId": "vi-article-smoke-v1",
+      "language": "vi",
+      "articleFile": "vi-article-v1.txt",
+      "chunksFile": "vi-article-v1.chunks.json",
+      "metadataFile": "vi-article-v1.meta.json",
+      "sha256": "0d0158555d5465e96ebe0ebdc9b1b01dfb1b80042fedee177971bb8a83842cd9",
+      "characters": 19900,
+      "unicodeCodePoints": 19900,
+      "utf8Bytes": 26526,
+      "chunks": 91,
+      "source": {
+        "type": "translation",
+        "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
