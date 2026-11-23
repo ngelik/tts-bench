@@ -47,6 +47,12 @@ function languageDetails(id, registryLabel = '') {
     meta: 'Latin script',
     aliases: ['Romanised Bengali', 'Bengali Latin', 'Bangla (Latin)', 'বাংলা'],
   };
+  if (id === 'ur-Latn') return {
+    englishName: 'Roman Urdu',
+    nativeName: null,
+    meta: 'Latin script',
+    aliases: ['Romanized Urdu', 'Romanised Urdu', 'Urdu (Latin)', 'اردو'],
+  };
   const isBehdini = id === 'ku-Arab-IQ';
   const englishName = isBehdini ? behtini : languageLabel(id);
   let nativeName = null;

@@ -258,6 +258,7 @@ try {
     const tabLabel = {
       'ku-Arab-IQ': 'Kurdish Behdînî (Arabic script)',
       'bn-Latn': 'Romanized Bengali',
+      'ur-Latn': 'Roman Urdu',
     }[language] ?? expected.languages?.find(entry => entry.id === language)?.label ?? displayName;
     const tab = page.locator(`#language-${language}`);
     assert.equal(await tab.count(), 1, `A registered ${language} edition has a language tab`);
