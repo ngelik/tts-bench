@@ -11,12 +11,13 @@ import { TINY_VOCA_RU } from '../web/adapters/tiny-voca-ru-profile.mjs';
 import { TINY_VOCA_GR } from '../web/adapters/tiny-voca-gr-profile.mjs';
 import { MINI_VOZ } from '../web/adapters/mini-voz-profile.mjs';
 import { TINY_VOCA_ES } from '../web/adapters/tiny-voca-es-profile.mjs';
+import { TINY_VOCA_FR } from '../web/adapters/tiny-voca-fr-profile.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz","tiny-voca-es","alpa-es"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-voca-fr","alpa-es"]);
   const korean = getAssetLock().models['korean-tts'];
   assert.equal(korean.modelRevision, 'c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c');
   assert.deepEqual(korean.backends, ['cpu', 'webgpu']);
@@ -48,6 +49,22 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(tinyVocaEs.assets.filter(asset => asset.kind === 'model-weights').length, 1);
   assert.equal(tinyVocaEs.assets.filter(asset => asset.target.includes('/runtime/')).length, 6);
   assert.ok(!tinyVocaEs.assets.some(asset => asset.target.includes('LICENSE-ONNXRUNTIME')));
+  const tinyVocaFr = getAssetLock().models['tiny-voca-fr'];
+  assert.equal(tinyVocaFr.modelRevision, TINY_VOCA_FR.modelRevision);
+  assert.equal(tinyVocaFr.sourceRevision, TINY_VOCA_FR.sourceRevision);
+  assert.deepEqual(tinyVocaFr.backends, ['cpu', 'webgpu']);
+  assert.deepEqual(tinyVocaFr.support.languages, ['fr']);
+  const frenchRoot = `models/tiny-voca-fr/${tinyVocaFr.modelRevision}/${tinyVocaFr.sourceRevision}/`;
+  const frenchAssets = new Map(tinyVocaFr.assets.map(asset => [asset.target, asset]));
+  for (const name of ['site/espeak-ng.js', 'site/espeak-ng.wasm', 'runtime/cpu/ort.wasm.min.mjs',
+    'runtime/cpu/ort-wasm-simd-threaded.mjs', 'runtime/cpu/ort-wasm-simd-threaded.wasm']) {
+    const asset = frenchAssets.get(frenchRoot + name);
+    assert.ok(asset?.url, `Missing URL-backed French asset: ${name}`);
+    assert.deepEqual([asset.bytes, asset.sha256], TINY_VOCA_FR.assets[name]);
+  }
+  assert.deepEqual(tinyVocaFr.runtime.files.map(asset => [asset.package, asset.version]), [
+    ['onnxruntime-web-pocket', '1.31.1'], ['onnxruntime-web-pocket', '1.31.1'], ['onnxruntime-web-pocket', '1.31.1'],
+  ]);
   assert.deepEqual(korean.support.languages, ['ko', 'en']);
   const clarvia = getAssetLock().models['clarvia-tts-tiny'];
   assert.equal(clarvia.modelRevision, '51023684a0a39742455c838e9d1d8714d3ae7289');

@@ -12918,6 +12918,167 @@
         }
       ]
     },
+    "tiny-voca-fr": {
+      "displayName": "Tiny Voca French FR_F1 (FP32)",
+      "modelRevision": "73f7700f514e70eef3b459aedcc49829d41945d4",
+      "sourceRevision": "4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+      "sourceId": "DanielSuncost/tiny-voca-fr",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "license": "MIT ONNX Runtime Web; WebGPU uses the already pinned 1.31.1 runtime alias and notices. CPU/WASM uses separately hash-pinned 1.20.1 files.",
+        "files": [
+          {
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "kind": "runtime"
+          },
+          {
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "kind": "runtime"
+          },
+          {
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "kind": "runtime"
+          }
+        ]
+      },
+      "backends": ["cpu", "webgpu"],
+      "license": {
+        "model": "Apache-2.0 for the French checkpoint and source.",
+        "frontend": "Apache-2.0; exact upstream frontend-fr.js bytes are retained.",
+        "phonemizer": "GPL-3.0-or-later eSpeak NG 1.0.2 browser package; JavaScript and WASM remain in the ignored local asset cache, with COPYING retained.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1 on CPU and existing 1.31.1 runtime assets on WebGPU; applicable third-party notices retained.",
+        "requiresAcceptance": false
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-fr-onnx",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/models/model.onnx",
+          "url": "https://huggingface.co/DanielSuncost/tiny-voca-fr/resolve/73f7700f514e70eef3b459aedcc49829d41945d4/onnx/model.onnx",
+          "bytes": 21368019,
+          "sha256": "698249cf63768ecd6011d9ddc4137ed16b4d2856a3bc3ba1ab7e1e4e153fc727",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-fr-json",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/models/model.json",
+          "url": "https://huggingface.co/DanielSuncost/tiny-voca-fr/resolve/73f7700f514e70eef3b459aedcc49829d41945d4/onnx/model.json",
+          "bytes": 818,
+          "sha256": "b36144a5aeefc07a1ed94d40d20f9bf8514d962236ffd3dee39f0be8a6d9c459",
+          "kind": "config"
+        },
+        {
+          "id": "tiny-voca-fr-ort-cpu-module",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/runtime/cpu/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fr-ort-cpu-threaded-module",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/runtime/cpu/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fr-ort-cpu-threaded-wasm",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/runtime/cpu/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fr-frontend",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/site/frontend-fr.js",
+          "url": "https://raw.githubusercontent.com/DanielSuncost/tiny-voca-fr/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/web/public/frontend-fr.js",
+          "bytes": 6951,
+          "sha256": "fb429d3e1fabc9dc1256427dbf8c9a0c597c1e61779bf5217134bfc2f860bf02",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-fr-espeak-js",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/site/espeak-ng.js",
+          "url": "https://cdn.jsdelivr.net/npm/espeak-ng@1.0.2/dist/espeak-ng.js",
+          "bytes": 178386,
+          "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fr-espeak-wasm",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34/site/espeak-ng.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/espeak-ng@1.0.2/dist/espeak-ng.wasm",
+          "bytes": 18485010,
+          "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fr-model-license",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/legal/LICENSE",
+          "sourcePath": "web/tiny-voca-fr/LICENSE-MODEL",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-fr-citation",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/legal/CITATION.cff",
+          "sourcePath": "web/tiny-voca-fr/CITATION.cff",
+          "bytes": 379,
+          "sha256": "f25bbe5eb62176107af457be2d70c2eb6f3788418f24ba3a9d6a51a7709b7e62",
+          "kind": "provenance"
+        },
+        {
+          "id": "tiny-voca-fr-espeak-copying",
+          "target": "models/tiny-voca-fr/73f7700f514e70eef3b459aedcc49829d41945d4/site/LICENSE-espeak-ng.txt",
+          "sourcePath": "web/tiny-voca-fr/LICENSE-ESPEAK-NG.txt",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-fr-ort-license-cpu",
+          "target": "licenses/tiny-voca-fr/onnxruntime-web-1.20.1-LICENSE.txt",
+          "sourcePath": "web/tiny-voca-fr/LICENSE-ONNXRUNTIME-WEB-1.20.1.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        }
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": ["fr"],
+        "scope": "Pinned French checkpoint and browser frontend only. FR_F1/index 0 is the benchmark default; FR_M1/index 1 is available as an alternate diagnostic voice.",
+        "sources": [
+          "https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4",
+          "https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+          "https://www.npmjs.com/package/espeak-ng/v/1.0.2",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "Diagnostic frontend audit matches all 108 fr-article-v1 spans: 318 utterances, maximum 183 tokens, zero unknown phones; audit is smoke-only. No parameter count is asserted because the model-card and inherited base-card values differ. The upstream demo is CPU-only; ORT 1.20.1 fails WebGPU on /Concat_6 due to a non-concat dimension mismatch, so the separately pinned existing ORT 1.31.1 WebGPU+WASM assets are used. No number rewriting: in 17 h 40, h is read as the letter name between 17 and 40. The upstream liaison limit in comment‿allez (missing [t]) is retained. The graph has no seed input and generates unseeded waveform noise. Model terms do not grant blanket rights to generated recordings."
+      }
+    },
     "alpa-es": {
       "displayName": "Alpa Spanish female (FP32)",
       "modelRevision": "de2bf894bdd9eb768ae03fc6b385176a0ff505d1",

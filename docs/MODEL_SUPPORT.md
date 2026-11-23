@@ -565,6 +565,21 @@ upstream source requires a separate English checkpoint.
 
 [Pinned Spanish checkpoint](https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84) · [Pinned browser source](https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec).
 
+<a id="tiny-voca-fr"></a>
+
+## Tiny Voca French (FP32)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`fr`).
+
+Pinned French checkpoint with synthetic voices FR_F1 and FR_M1; FR_F1/index 0
+is the benchmark default. CPU uses ONNX Runtime Web 1.20.1; WebGPU uses the
+existing pinned 1.31.1 WebGPU+WASM runtime because 1.20.1 fails on `/Concat_6`.
+The upstream browser demo is CPU-only. Frontend diagnostics match all 108
+registered fixture spans. French `17 h 40` and liaison behavior remain as released;
+see the [profile and limits](TINY_VOCA_FR.md).
+
+[Pinned French checkpoint](https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4) · [Pinned browser source](https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
