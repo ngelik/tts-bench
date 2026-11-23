@@ -322,6 +322,70 @@
       }
     },
     {
+      "resultId": "2026-11-23t12-22-44-499z-bengali-voice-cpu-warm-96cad45e",
+      "model": "bengali-voice",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Jahnavi (voice index zero)",
+      "language": "bn",
+      "attribution": "AI-generated Bengali narration using Tamal Hansda’s Apache-2.0 Bengali Voice compact model and the Jahnavi voice. The model is based on Muhammed Nazeem’s Tiny Voca and trained on the CC BY 4.0 Bengali Maya 2 Native Jahnavi dataset. Bengali pronunciation uses the Google Bengali language resources dictionary (CC BY 4.0) and the publisher’s trained phonemizer.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+        "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
+        "https://huggingface.co/datasets/Hansda/bengali-maya2-jahnavi-20h",
+        "https://github.com/google/language-resources/tree/a90601024f07ab7e96c911243324e0adeb16da96/bn",
+        "https://onnxruntime.ai/docs/get-started/with-javascript/web.html",
+        "https://tts.hansda.in/?lang=bn"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t12-22-44-499z-bengali-voice-cpu-warm-96cad45e--bengali-voice--cpu.wav",
+        "sha256": "35038ae3fda35cf36a29a493098addce9619482c23fd84e5308047c141ed664c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "3d075818b08566262ee6dd8fd347a51be767008f0a823554badef856a0ba41bd",
+        "bytes": 66299436
+      }
+    },
+    {
+      "resultId": "2026-11-23t12-30-20-932z-bengali-voice-cpu-warm-22000b7b",
+      "model": "bengali-voice",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Jahnavi (voice index zero)",
+      "language": "bn-Latn",
+      "attribution": "AI-generated Bengali narration using Tamal Hansda’s Apache-2.0 Bengali Voice compact model and the Jahnavi voice. The model is based on Muhammed Nazeem’s Tiny Voca and trained on the CC BY 4.0 Bengali Maya 2 Native Jahnavi dataset. Bengali pronunciation uses the Google Bengali language resources dictionary (CC BY 4.0) and the publisher’s trained phonemizer.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+        "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
+        "https://huggingface.co/datasets/Hansda/bengali-maya2-jahnavi-20h",
+        "https://github.com/google/language-resources/tree/a90601024f07ab7e96c911243324e0adeb16da96/bn",
+        "https://onnxruntime.ai/docs/get-started/with-javascript/web.html",
+        "https://tts.hansda.in/?lang=bn"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t12-30-20-932z-bengali-voice-cpu-warm-22000b7b--bengali-voice--cpu.wav",
+        "sha256": "e5949f264af584cf30dd252e658ab8746accc1f0e36f242dbad9aed4f6fa90d7",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d83999038ee46d48d0ec19879af6f09a66171105210f1310c57af43b0e4a27bd",
+        "bytes": 67389996
+      }
+    },
+    {
       "resultId": "2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530",
       "model": "clarvia-tts-tiny",
       "backend": "cpu",

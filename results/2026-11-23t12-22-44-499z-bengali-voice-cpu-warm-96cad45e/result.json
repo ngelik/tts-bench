@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t12-22-44-499z-bengali-voice-cpu-warm-96cad45e",
+  "createdAt": "2026-11-23T12:28:35.625Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "bn-article-v1",
+    "language": "bn",
+    "sha256": "6047a502a329ec3d83ece032feefbff353185b88c5a55f4ccfe838c677b64fe8",
+    "characters": 19455,
+    "unicodeCodePoints": 19455,
+    "utf8Bytes": 51639,
+    "chunks": 89,
+    "source": {
+      "type": "translation",
+      "description": "Complete Bengali-script translation of the 27 original paragraphs. Times, dates, currencies, units, and archive identifiers are written as spoken Bengali. No native-speaker review is claimed. The source spans preserve whole words.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "0919d332331f48b438dbb2c03bb46a7dbd0aaa27",
+    "dirty": false,
+    "manifestSha256": "9c04d0a6c61327cdc7d0bb231630c00f227533066b2e1fd3a26dd2439f05b252"
+  },
+  "assets": [
+    {
+      "id": "bengali-voice-frontend-js",
+      "sha256": "87d0282594755b6f5e5ea9f348b878ab2363b776fbc0069ace277951a306ee64",
+      "bytes": 3758
+    },
+    {
+      "id": "bengali-voice-weight-shuffle",
+      "sha256": "f6e7b0fdc95d4ee12308f1cd227c44f426fda071401d78b94596430b5f3d0e92",
+      "bytes": 1167
+    },
+    {
+      "id": "bengali-voice-weights-js",
+      "sha256": "702155516bc665b9bc6814d8a1d9eeffb66b924530c3c50e6d9b02136363cbd0",
+      "bytes": 1899
+    },
+    {
+      "id": "bengali-voice-ort-wasm-module",
+      "sha256": "d5a6d7bc8ee587648fb3742dde8c0094d17cbd3822a68bbec8ddfcd4f2adb88e",
+      "bytes": 49997
+    },
+    {
+      "id": "bengali-voice-ort-wasm-threaded-module",
+      "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57",
+      "bytes": 24274
+    },
+    {
+      "id": "bengali-voice-ort-wasm-threaded",
+      "sha256": "ad64341b75d860bb282beba9d2a8511858bbe1cbf408b6b460e15aafcc2b4448",
+      "bytes": 3140838
+    },
+    {
+      "id": "bengali-voice-compact-weights",
+      "sha256": "80d9a23f49c4814df652ec30fa5e4c96fb50676ab17a3f44fa95cf941dd77d70",
+      "bytes": 967060
+    },
+    {
+      "id": "bengali-voice-compact-graph",
+      "sha256": "24602544ca1a10e0fb28aa3f794225109d5132325bec3ef9d95e39a312909c86",
+      "bytes": 29291
+    },
+    {
+      "id": "bengali-voice-frontend-data",
+      "sha256": "89d906ec834eb4990120d780e7fc6e21d5fcc68e6cdbc42733830623d0a352ed",
+      "bytes": 2244200
+    },
+    {
+      "id": "bengali-voice-g2p-encoder",
+      "sha256": "250db4e0191cfae630a48d2b832f9f912c11a0e26c8c65e8b28ec30170e82f00",
+      "bytes": 660202
+    },
+    {
+      "id": "bengali-voice-g2p-decoder",
+      "sha256": "ce014c7c6e2f258b74edf8f773498f03fb0f7b0e66f4c2c78510a9ca747a2f12",
+      "bytes": 1104016
+    },
+    {
+      "id": "bengali-voice-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "bengali-voice-google-license",
+      "sha256": "cce5d01fa4a83b794271bd2c28cffdf99afd43c803e6ddefddae39b591ea7448",
+      "bytes": 18652
+    },
+    {
+      "id": "bengali-voice-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "bengali-voice",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "bn"
+        ],
+        "scope": "Pinned Hansda/bengali-voice-compact INT8 checkpoint at voice index zero (Jahnavi). The same Bengali synthesis frontend accepts native Bengali and Roman Bengali input. The broader multilingual-browser-tts family and other checkpoints are outside this registration.",
+        "sources": [
+          "https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+          "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
+          "https://huggingface.co/datasets/Hansda/bengali-maya2-jahnavi-20h",
+          "https://github.com/google/language-resources/tree/a90601024f07ab7e96c911243324e0adeb16da96/bn",
+          "https://onnxruntime.ai/docs/get-started/with-javascript/web.html",
+          "https://tts.hansda.in/?lang=bn"
+        ],
+        "notes": "Tested Bengali-script fixture bn-article-v1 and ASCII Roman-input fixture bn-latn-article-v1 are separate editions. Report only one supported spoken language (bn); bn-Latn describes an input script, not a separate synthesized language. The benchmark fixes the deployed demo voice index zero and does not claim a generated-audio redistribution license."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Jahnavi (voice index zero)",
+      "precision": "compact-int8 weights expanded to FP32 ONNX external data",
+      "settings": {
+        "modelId": "bengali-voice",
+        "modelRevision": "18c8afbee3a4cf230e175a5f618350ed2c9560ac",
+        "browserSourceRevision": "f2977727b8baccb989f80b492ea8da00124ecba3",
+        "language": "bn",
+        "synthesisLanguage": "bn",
+        "fixtureId": "bn-article-v1",
+        "fixtureSourceSha256": "6047a502a329ec3d83ece032feefbff353185b88c5a55f4ccfe838c677b64fe8",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "maxPhones": 125,
+        "wasmThreads": 1,
+        "runtimeVersion": "1.24.3",
+        "executionProviders": [
+          "wasm"
+        ],
+        "g2pExecutionProviders": [
+          "wasm"
+        ],
+        "frontend": "Pinned Bengali publisher frontend.js f2977727b8baccb989f80b492ea8da00124ecba3: finished(normalize(romanizeInput(text, frontend.roman))), Bengali phonemizer and trained G2P fallback.",
+        "runtimeRelease": "onnxruntime-web@1.24.3",
+        "output": "Publisher sentence/clause/word-halving plan; no inserted silence; concatenate complete source span and peak-limit to 0.99."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "ONNX Runtime Web 1.24.3 single-thread SIMD WASM CPU route; executionProviders=[wasm]."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 85692.39499998093,
+          "samples": 33149696,
+          "sampleRate": 24000,
+          "pcmSha256": "91a065ba0a27ef49f9be5eb340ee57af8967ece02fda57a24b83da18255c4652",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 89,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1119.5550000667572,
+            "firstSourceChunkCompletedMs": 1121.1600000858307,
+            "audioSeconds": 1381.2373333333333,
+            "realTimeFactor": 0.062040311923208656,
+            "minSamplesPerChunk": 218112,
+            "maxSamplesPerChunk": 407040
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 85330.99500012398,
+          "samples": 33149696,
+          "sampleRate": 24000,
+          "pcmSha256": "91006cf28c8492db2fbf3761ff6d926c84f72e25ff60917649a4475b069fe84f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 89,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 998.4500000476837,
+            "firstSourceChunkCompletedMs": 998.5099999904633,
+            "audioSeconds": 1381.2373333333333,
+            "realTimeFactor": 0.06177866246504872,
+            "minSamplesPerChunk": 218112,
+            "maxSamplesPerChunk": 407040
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 85199.75499987602,
+          "samples": 33149696,
+          "sampleRate": 24000,
+          "pcmSha256": "8b3d01a9139180d27a0ff976d7ce6eb80c97429b164e32841b137f1202000ad2",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 89,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1001.5550000667572,
+            "firstSourceChunkCompletedMs": 1001.625,
+            "audioSeconds": 1381.2373333333333,
+            "realTimeFactor": 0.06168364620891319,
+            "minSamplesPerChunk": 218112,
+            "maxSamplesPerChunk": 407040
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 85234.94000005722,
+          "samples": 33149696,
+          "sampleRate": 24000,
+          "pcmSha256": "e5bf7b44e728bc8391a7e3fb554a67cb29373639069b3e38ddfa1bfb944a4a21",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 89,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 997.2799999713898,
+            "firstSourceChunkCompletedMs": 997.335000038147,
+            "audioSeconds": 1381.2373333333333,
+            "realTimeFactor": 0.06170911974581527,
+            "minSamplesPerChunk": 218112,
+            "maxSamplesPerChunk": 407040
+          },
+          "audio": {
+            "sha256": "3d075818b08566262ee6dd8fd347a51be767008f0a823554badef856a0ba41bd",
+            "bytes": 66299436
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T12-22-43-872Z-a23d04fcaab4; cell 1/2; source 0919d332331f48b438dbb2c03bb46a7dbd0aaa27; fixture bn-article-v1 (bn, 19455 JavaScript characters, 89 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro with AC power and disposable sequential profiles. Bengali Voice compact-int8 with the Jahnavi voice at 24 kHz, default speed and pitch. Grouped INT8 storage is expanded to FP32 acoustic weights. ONNX Runtime Web 1.24.3 CPU/WASM, one thread, for both the acoustic graph and optional trained Bengali G2P. Uses the publisher frontend, phoneme limit, within-worker OOV cache and span-level waveform checks. Article input is in Bengali script. The unmodified graph was not qualified for hardware WebGPU."
+  ]
+}
