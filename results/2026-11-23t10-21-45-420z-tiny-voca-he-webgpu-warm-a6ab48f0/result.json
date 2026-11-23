@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t10-21-45-420z-tiny-voca-he-webgpu-warm-a6ab48f0",
+  "createdAt": "2026-11-23T10:51:26.789Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "he-article-v1",
+    "language": "he",
+    "sha256": "1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7",
+    "characters": 15513,
+    "unicodeCodePoints": 15513,
+    "utf8Bytes": 27819,
+    "chunks": 71,
+    "source": {
+      "type": "translation",
+      "description": "Complete translation of all 27 original paragraphs into Modern Hebrew, with proper names and spoken Hebrew forms for A-17 and E.W. The source spans preserve whole words and archive identifiers. Dates, money, units and times retain the original values. A minority of name occurrences carry a vowel mark. AI-assisted translation with independent editorial comparison against the complete English source.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "a1aee0484c7096728d9512c1203a9d26123f7247",
+    "dirty": false,
+    "manifestSha256": "b85768188afba1df91b0f91acc8456b5324793e97aff0f4e1e821fc6f7ac2e4a"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-he-config",
+      "sha256": "5d7972962b02f6907a272f798b35ca2752aed08367af50573983617f6f283eb9",
+      "bytes": 756
+    },
+    {
+      "id": "tiny-voca-he-acoustic-fp32",
+      "sha256": "9011edf6078fdfb9acbfc1c275f753d7f8f5fc4d741abe09007747af648f2647",
+      "bytes": 21361734
+    },
+    {
+      "id": "tiny-voca-he-renikud-int8-g2p",
+      "sha256": "0337468fad56eadf5ecc7becfdf21648a4d668de41de5bc27e860141b5afcadd",
+      "bytes": 311605741
+    },
+    {
+      "id": "tiny-voca-he-text-frontend",
+      "sha256": "7c5615702b19d13e5c5eaf734c3c5d63c5a39217dc608392aeafef8bbee95501",
+      "bytes": 10108
+    },
+    {
+      "id": "tiny-voca-he-stock-planner",
+      "sha256": "70631cafa0303596344b8ed3a8755d4a9c8941649fc6cf798aae779a79c9c294",
+      "bytes": 2248
+    },
+    {
+      "id": "tiny-voca-he-hebrew-bridge",
+      "sha256": "8aef7d0c75912b5b5205fd096b55b2136020e59fce1a8865948452b815572fd1",
+      "bytes": 2564
+    },
+    {
+      "id": "tiny-voca-he-renikud-wheel",
+      "sha256": "c5390ec31c2d5e4e25140f9205f6f3a5bb00f3a70454d7799fe35adef272fb42",
+      "bytes": 22510
+    },
+    {
+      "id": "tiny-voca-he-num2words-wheel",
+      "sha256": "e63bae884cc4aafce01ce4d5dc0e7fb747ede824b15820d20dacde7fdab432b9",
+      "bytes": 15006
+    },
+    {
+      "id": "tiny-voca-he-numpy-wheel",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "tiny-voca-he-weights-license",
+      "sha256": "ce820e2c136a6ca5c5189d2d2041eb38688f18389164c50e7ebcf971172b066f",
+      "bytes": 854
+    },
+    {
+      "id": "tiny-voca-he-source-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-he-source-notice",
+      "sha256": "63e5dbc43a9b5e7beedbce15e9f9a0a165a4c615234b72a7c84455a28a01eb00",
+      "bytes": 1298
+    },
+    {
+      "id": "tiny-voca-he-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "tiny-voca-he-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "tiny-voca-he-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "tiny-voca-he-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "tiny-voca-he-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "tiny-voca-he-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "tiny-voca-he-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "tiny-voca-he-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-he-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-he-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-voca-he-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "tiny-voca-he-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "tiny-voca-he-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "id": "tiny-voca-he-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-he",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "he"
+        ],
+        "scope": "The Modern Hebrew profile uses he-article-v1 and the released AH voice at 24 kHz mono. RenikudPlus runs on CPU/WASM in both configurations. WebGPU applies to acoustic inference.",
+        "sources": [
+          "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
+          "https://raw.githubusercontent.com/buzagloidan/tiny-voca-he/fdc9b3080984c94768239989391fbaddcf9b5519/models/he-v3/LICENSE",
+          "https://huggingface.co/notmax123/RenikudPlus/tree/679c56ca449d41873fb8ff7711ddf7563d28198f",
+          "https://pypi.org/project/renikud-plus/0.6.0/",
+          "https://pypi.org/project/hebrew-num2words/0.1.0/",
+          "https://github.com/maxmelichov/RenikudPlus/blob/93a82fad122207f9dc38105ceb5068e98d00f092/pyproject.toml"
+        ],
+        "notes": "FP32 acoustic graph: 21,361,734 bytes. INT8 RenikudPlus G2P graph: 311,605,741 bytes. Combined model weights: 332,967,475 bytes. Independent browser frontend audit: 71 spans, 320 utterances, max 140, zero unknowns; full token/stress SHA-256 4bd0027e1c7429bca336b5dc7c79ea789fe996f7bf79ac37e0dfd6972a8db3d7."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "AH",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "buzagloidan/tiny-voca-he",
+        "modelRevision": "fdc9b3080984c94768239989391fbaddcf9b5519",
+        "sourceRevision": "fdc9b3080984c94768239989391fbaddcf9b5519",
+        "fixtureId": "he-article-v1",
+        "fixtureSha256": "1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7",
+        "language": "he",
+        "locale": "he-IL",
+        "supportedLanguages": [
+          "he"
+        ],
+        "voice": "AH",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 140,
+        "maxFrames": 3000,
+        "step": 104000,
+        "parameterCount": 4531147,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned Tiny Voca text frontend, RenikudPlus default MAP G2P, Hebrew number expansion, and extracted stock sentence/shorter planner.",
+        "frontendFingerprint": "976311b70e17726c030a7f48842575a13f6666cfa05474073dc92d41cf4fa666",
+        "g2p": {
+          "modelId": "notmax123/RenikudPlus",
+          "modelRevision": "679c56ca449d41873fb8ff7711ddf7563d28198f",
+          "executionProviders": [
+            "wasm"
+          ],
+          "settings": "Released MAP defaults, niqqud strip, speaker and target 0, no lexicon or phrase cache."
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "g2pExecutionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4",
+          "numpy": "1.26.4",
+          "renikudPlus": "0.6.0",
+          "hebrewNum2Words": "0.1.0"
+        },
+        "waveform": "Stock Tiny Voca source-filter output with contiguous utterances and one 0.99 peak cap per source span."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 3360,
+        "description": "Observed 3360 hardware dispatches in the acoustic ONNX graph. RenikudPlus runs CPU/WASM."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 440756.46000003815,
+          "samples": 26897152,
+          "sampleRate": 24000,
+          "pcmSha256": "4291cd178fcc563c01a8b53fc00a569b2d97dcf50fb62a1f861f1a2517d158d9",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 71,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1381.0749998092651,
+            "firstSourceChunkCompletedMs": 5464.599999904633,
+            "audioSeconds": 1120.7146666666667,
+            "realTimeFactor": 0.3932816024537064,
+            "minSamplesPerChunk": 204288,
+            "maxSamplesPerChunk": 436992
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 440144.84999990463,
+          "samples": 26897152,
+          "sampleRate": 24000,
+          "pcmSha256": "8dfadce81759209e65e665e35567904a36a754239b5d4a2bbc8b810bf1f6b9b9",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 71,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1202.7999999523163,
+            "firstSourceChunkCompletedMs": 5244.099999904633,
+            "audioSeconds": 1120.7146666666667,
+            "realTimeFactor": 0.39273587032551666,
+            "minSamplesPerChunk": 204288,
+            "maxSamplesPerChunk": 436992
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 440058.41000008583,
+          "samples": 26897152,
+          "sampleRate": 24000,
+          "pcmSha256": "c4f93466339b5f74083a56013b50bbfb4285616d9ec4d5e0f7f9191e3fd99226",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 71,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1204.130000114441,
+            "firstSourceChunkCompletedMs": 5256.055000066757,
+            "audioSeconds": 1120.7146666666667,
+            "realTimeFactor": 0.39265874097012426,
+            "minSamplesPerChunk": 204288,
+            "maxSamplesPerChunk": 436992
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 440241.2999999523,
+          "samples": 26897152,
+          "sampleRate": 24000,
+          "pcmSha256": "27d49a0f833fd2c868d9202bec3a9b3f97acb7388bb6b386418dd2d3b4de96bf",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 71,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1207.0350000858307,
+            "firstSourceChunkCompletedMs": 5258.414999961853,
+            "audioSeconds": 1120.7146666666667,
+            "realTimeFactor": 0.3928219314817738,
+            "minSamplesPerChunk": 204288,
+            "maxSamplesPerChunk": 436992
+          },
+          "audio": {
+            "sha256": "0385126415233580a984e3bc5f2909c4de83887b8eac718392a3af95ff08e1e3",
+            "bytes": 53794348
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T09-51-56-767Z-ea71b6c236bd; cell 2/4; source a1aee0484c7096728d9512c1203a9d26123f7247; fixture he-article-v1 (he, 15513 JavaScript characters, 71 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro with AC power and disposable sequential profiles. Released tiny-voca-he he-v3 FP32 acoustic graph at step 104000 with AH/index zero, speed 1, neutral pitch, original sentence/140-token fit, and a completed-span peak cap. RenikudPlus INT8 ONNX G2P uses CPU/WASM on both paths with the stock 0.6.0 exact MAP decoder, niqqud strip, speaker and target zero and HebrewNum2Words 0.1.0 in Pyodide. Every source span includes live phonemization. The acoustic graph uses ONNX Runtime Web 1.20.1 CPU/WASM or hardware Apple WebGPU+WASM."
+  ]
+}
