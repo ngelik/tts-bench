@@ -15,12 +15,14 @@ import { TINY_VOCA_FR } from '../web/adapters/tiny-voca-fr-profile.mjs';
 import { TINY_VOCA_PTBR } from '../web/adapters/tiny-voca-ptbr-profile.mjs';
 import { TINY_VOCA_PTBR_KOKORO } from '../web/adapters/tiny-voca-ptbr-kokoro-profile.mjs';
 import { TINY_BROCA } from '../web/adapters/tiny-broca-profile.mjs';
+import { TINY_VOCA_AR_HALABI } from '../web/adapters/tiny-voca-ar-halabi-profile.mjs';
+import { defaultFixtureForModel, frontendLanguagesForModel, requiredFixtureForModel } from '../lib/benchmark-fixtures.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-voca-fr","alpa-es","tiny-voca-ptbr","tiny-voca-ptbr-kokoro","tiny-broca"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-voca-fr","alpa-es","tiny-voca-ptbr","tiny-voca-ptbr-kokoro","tiny-broca","tiny-voca-ar-halabi"]);
   const korean = getAssetLock().models['korean-tts'];
   assert.equal(korean.modelRevision, 'c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c');
   assert.deepEqual(korean.backends, ['cpu', 'webgpu']);
@@ -427,4 +429,32 @@ test('Tiny Broca has pinned model, frontend, runtimes, and fixture metadata', as
   assert.equal(model.assets.find(asset => asset.id === 'tiny-broca-onnx').sha256, TINY_BROCA.assets['assets/model.onnx'].sha256);
   assert.equal(model.assets.filter(asset => asset.kind === 'runtime').length, 11);
   assert.ok(model.assets.some(asset => asset.id === 'tiny-broca-ort-ort-wasm-simd-threaded-jsep-wasm'));
+});
+
+test('Tiny Voca Arabic Halabi profile binds only the reviewed Arabic fixture and pinned release assets', async () => {
+  const lock = JSON.parse(await readFile(resolve(root, 'assets.lock.json'), 'utf8'));
+  const model = lock.models['tiny-voca-ar-halabi'];
+  assert.equal(defaultFixtureForModel('tiny-voca-ar-halabi'), 'ar-article-v1');
+  assert.equal(requiredFixtureForModel('tiny-voca-ar-halabi'), 'ar-article-v1');
+  assert.deepEqual(frontendLanguagesForModel('tiny-voca-ar-halabi'), ['ar']);
+  assert.equal(model.modelRevision, '4601b2bdb44bc52ebf73e87d5082b49fa138c6fb');
+  assert.equal(model.sourceRevision, '4601b2bdb44bc52ebf73e87d5082b49fa138c6fb');
+  assert.equal(model.parameterCount, TINY_VOCA_AR_HALABI.parameterCount);
+  assert.deepEqual(model.backends, ['cpu', 'webgpu']);
+  assert.deepEqual(model.support.languages, ['ar']);
+  assert.equal(model.support.voiceCount, 1);
+  assert.equal(model.support.bundledVoiceCount, 1);
+  assert.equal(model.assets.filter(asset => asset.generated).length, 3);
+  assert.deepEqual(model.assets.filter(asset => asset.generated).map(asset => asset.generated.artifactPath).sort(),
+    ['ATTRIBUTION.md', 'config.json', 'model.onnx']);
+  assert.equal(new Set(model.assets.filter(asset => asset.generated).map(asset => asset.target.slice(0, asset.target.lastIndexOf('/')))).size, 1);
+  assert.equal(model.assets.find(asset => asset.kind === 'model-weights').sha256,
+    TINY_VOCA_AR_HALABI.assets['assets/model.onnx'].sha256);
+  assert.equal(model.assets.filter(asset => asset.kind === 'runtime').length, 11);
+  assert.equal(model.assets.filter(asset => asset.target.startsWith('runtimes/pyodide/')).length, 5);
+  assert.ok(model.assets.some(asset => asset.url?.includes('/src/tiny_voca/arabic_text.py')));
+  assert.equal(TINY_VOCA_AR_HALABI.fixtureOracle.utterances, 557);
+  assert.equal(TINY_VOCA_AR_HALABI.fixtureOracle.maximumTokens, 147);
+  assert.equal(TINY_VOCA_AR_HALABI.fixtureOracle.tokenStressSha256,
+    '8e6f250074d7930ba07fd5e552e57c5a54e8298e6f16c498d3524b5f41a7055e');
 });

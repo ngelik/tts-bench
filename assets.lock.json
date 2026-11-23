@@ -13891,6 +13891,220 @@
           "kind": "license"
         }
       ]
+    },
+    "tiny-voca-ar-halabi": {
+          "displayName": "Tiny Voca Arabic Halabi F2 (FP32)",
+          "modelRevision": "4601b2bdb44bc52ebf73e87d5082b49fa138c6fb",
+          "sourceId": "BenkadourKhaled/tiny-voca",
+          "sourceRevision": "4601b2bdb44bc52ebf73e87d5082b49fa138c6fb",
+          "parameterCount": 4532683,
+          "frontendFingerprint": "db4f0df92da8a498e795ff634ef2f30db5f406dc601625ab8a3e6c562aa3259d",
+          "runtime": {
+                "package": "onnxruntime-web",
+                "version": "1.20.1",
+                "license": "MIT; package distribution files are hash-pinned. Pyodide 0.26.4 files are also pinned.",
+                "files": []
+          },
+          "license": {
+                "model": "Apache-2.0 for code and weights. CC BY 4.0 applies to the Halabi corpus and derivatives; preserve the required citation and attribution asset. Generated audio has no blanket redistribution grant.",
+                "frontend": "Apache-2.0 upstream arabic_text.py; pure Python rules frontend, no eSpeak dependency.",
+                "runtime": "MIT ONNX Runtime Web 1.20.1; MPL-2.0 Pyodide 0.26.4 and CPython PSF terms.",
+                "requiresAcceptance": false
+          },
+          "backends": [
+                "cpu",
+                "webgpu"
+          ],
+          "support": {
+                "voiceCount": 1,
+                "bundledVoiceCount": 1,
+                "languageCount": 1,
+                "languages": [
+                      "ar"
+                ],
+                "scope": "Pinned Tiny Voca Arabic Halabi F2 release only. One fixed synthetic voice F2/index 0, 24 kHz. This browser profile supports fully vocalized Arabic (ar) on ar-article-v1 only; it does not claim English support. Accent is Damascene.",
+                "sources": [
+                      "https://github.com/BenkadourKhaled/tiny-voca/tree/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb",
+                      "https://github.com/BenkadourKhaled/tiny-voca/releases/tag/v0.1-ar-demo-kit",
+                      "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
+                      "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/docs/arabic-data.md",
+                      "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/docs/arabic-demo.md",
+                      "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+                      "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz"
+                ],
+                "notes": "Exact ar-article-v1 frontend audit: 129 spans, 557 utterances, maximum 147 tokens, zero unknown IDs or graphemes. Token/stress SHA-256 8e6f250074d7930ba07fd5e552e57c5a54e8298e6f16c498d3524b5f41a7055e. Full vocalization is required; there is no automatic browser diacritizer. Upstream reports 1,214 accepted utterances / 2.85 hours, a single studio voice, and flatter prosody than the reference. Upstream says no separate written consent accompanies the corpus and relies on the rights holder’s CC BY 4.0 publication; this is recorded as the publisher’s statement, not an independent rights determination."
+          },
+          "assets": [
+                {
+                      "id": "tiny-voca-ar-halabi-onnx",
+                      "target": "models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/model.onnx",
+                      "bytes": 21367894,
+                      "sha256": "121d285ce938dab1b3720f77ed02121d80f83ae2ec23d33ec13e095f321390d4",
+                      "kind": "model-weights",
+                      "generated": {
+                            "artifactPath": "model.onnx",
+                      "build": "python3 tools/tiny-voca-ar-halabi/extract-release.py .cache/public/models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/ && npm run assets -- fetch --model tiny-voca-ar-halabi && npm run assets -- verify --model tiny-voca-ar-halabi"
+                      }
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-config",
+                      "target": "models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/config.json",
+                      "bytes": 1201,
+                      "sha256": "12caf18f21cf114aec9a8ddf9802d49830278a3c058666eb514bb517a547e68d",
+                      "kind": "model-config",
+                      "generated": {
+                            "artifactPath": "config.json",
+                            "build": "python3 tools/tiny-voca-ar-halabi/extract-release.py .cache/public/models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/ && npm run assets -- fetch --model tiny-voca-ar-halabi && npm run assets -- verify --model tiny-voca-ar-halabi"
+                      }
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-attribution",
+                      "target": "models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/ATTRIBUTION.md",
+                      "bytes": 457,
+                      "sha256": "bab7bbb15b7cdcde2ae8f8beb161c1fdcff7329f7a1d2c284018d4d0614d33b5",
+                      "kind": "license",
+                      "generated": {
+                            "artifactPath": "ATTRIBUTION.md",
+                            "build": "python3 tools/tiny-voca-ar-halabi/extract-release.py .cache/public/models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/ && npm run assets -- fetch --model tiny-voca-ar-halabi && npm run assets -- verify --model tiny-voca-ar-halabi"
+                      }
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-arabic-text",
+                      "target": "models/tiny-voca-ar-halabi/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/assets/arabic_text.py",
+                      "url": "https://raw.githubusercontent.com/BenkadourKhaled/tiny-voca/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/src/tiny_voca/arabic_text.py",
+                      "bytes": 16009,
+                      "sha256": "1408ee5c46a257da355bb40687b400e0bc2c541cfbd7e64f0e4711553200887d",
+                      "kind": "frontend"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-license",
+                      "target": "licenses/tiny-voca-ar-halabi/LICENSE",
+                      "bytes": 11358,
+                      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+                      "kind": "license",
+                      "sourcePath": "web/tiny-voca-ar-halabi/LICENSE"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-notice-md",
+                      "target": "licenses/tiny-voca-ar-halabi/NOTICE.md",
+                      "bytes": 1375,
+                      "sha256": "1f3b2a3464c2d65917d47e99a60f9fbf4bf5872f6f8d617dd94a5353a9c9456a",
+                      "kind": "license",
+                      "sourcePath": "web/tiny-voca-ar-halabi/NOTICE.md"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-pyodide-pyodide-js",
+                      "target": "runtimes/pyodide/0.26.4/pyodide.js",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+                      "bytes": 14761,
+                      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-pyodide-pyodide-asm-js",
+                      "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+                      "bytes": 1229099,
+                      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-pyodide-pyodide-asm-wasm",
+                      "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+                      "bytes": 10088051,
+                      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-pyodide-python_stdlib-zip",
+                      "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+                      "bytes": 2341872,
+                      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-pyodide-pyodide-lock-json",
+                      "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+                      "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+                      "bytes": 106335,
+                      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-ort-wasm-min-js",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort.wasm.min.js",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+                      "bytes": 49026,
+                      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-ort-webgpu-min-js",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort.webgpu.min.js",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.js",
+                      "bytes": 333594,
+                      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-ort-wasm-simd-threaded-mjs",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.mjs",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+                      "bytes": 24618,
+                      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-ort-wasm-simd-threaded-wasm",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.wasm",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+                      "bytes": 11246032,
+                      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-ort-wasm-simd-threaded-jsep-mjs",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.mjs",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+                      "bytes": 46839,
+                      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-ort-wasm-simd-threaded-jsep-wasm",
+                      "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.wasm",
+                      "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+                      "bytes": 21663894,
+                      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+                      "kind": "runtime"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-pyodide-license",
+                      "target": "licenses/tiny-voca/PYODIDE-MPL-2.0.txt",
+                      "bytes": 16725,
+                      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+                      "kind": "license",
+                      "url": "https://raw.githubusercontent.com/pyodide/pyodide/0.26.4/LICENSE"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-cpython-license",
+                      "target": "licenses/tiny-voca/CPYTHON-LICENSE.txt",
+                      "bytes": 13936,
+                      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+                      "kind": "license",
+                      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.1/LICENSE"
+                },
+                {
+                      "id": "tiny-voca-ar-halabi-ort-license",
+                      "target": "licenses/tiny-broca/onnxruntime-web-1.20.1-LICENSE.txt",
+                      "sourcePath": "web/tiny-voca-fr/LICENSE-ONNXRUNTIME-WEB-1.20.1.txt",
+                      "bytes": 1073,
+                      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+                      "kind": "license"
+                }
+          ]
     }
   }
 }

@@ -632,6 +632,22 @@ on hardware, with WASM available for unsupported operators.
 
 [Profile and reproduction](TINY_BROCA.md) · [Pinned checkpoint](https://huggingface.co/brenorb/tiny-broca/tree/0ea879d8f532ad0c6e7308017b45105a74f81a95).
 
+<a id="tiny-voca-ar-halabi"></a>
+
+## Tiny Voca Arabic Halabi F2 (FP32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`ar`).
+
+The pinned release contains one 24 kHz synthetic F2 voice with a Damascene
+accent. It requires fully vocalized Arabic and uses the unchanged rules frontend
+in Pyodide 0.26.4. The 129-span `ar-article-v1` audit yields 557 utterances,
+maximum 147 tokens, zero unknown IDs/graphemes, and token/stress SHA-256
+`8e6f250074d7930ba07fd5e552e57c5a54e8298e6f16c498d3524b5f41a7055e`.
+The worker preserves Arabic sentence splitting, applies one 0.99 cap per
+completed source span, and checks hardware WebGPU dispatch with WASM fallback.
+
+[Profile and reproduction](TINY_VOCA_AR_HALABI.md) · [Adapter notices](../web/tiny-voca-ar-halabi/NOTICE.md) · [Release source](https://github.com/BenkadourKhaled/tiny-voca/tree/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb) · [Arabic Speech Corpus citation](https://en.arabicspeechcorpus.com/).
+
 <a id="alpa-es"></a>
 
 ## Alpa Spanish 4.53M FP32 (female)
