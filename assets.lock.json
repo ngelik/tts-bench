@@ -13890,6 +13890,196 @@
           ]
     }
   ,
+    "tui-voice-mini-ml": {
+      "displayName": "Tui Voice Mini Malayalam F2 (FP32)",
+      "modelRevision": "9c2fee75373d81bbd62fbe2d683b1bad3c4415ea",
+      "sourceId": "Cyrax321/tui-voice",
+      "sourceRevision": "478761a10399c357e9ccc5380145906167e4d655",
+      "parameterCount": 4537291,
+      "frontendFingerprint": "0bf9eedb0246e654df39c1150e547209d19d7ccc42e55ebd82a52ef187091929",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "license": "MIT with retained license and third-party notices",
+        "files": [
+          {
+            "id": "tui-voice-mini-ml-ort-ort-wasm-min-mjs",
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-ort-webgpu-min-mjs",
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-ort-wasm-simd-threaded-mjs",
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-ort-wasm-simd-threaded-wasm",
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-ort-wasm-simd-threaded-asyncify-mjs",
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-ort-wasm-simd-threaded-asyncify-wasm",
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-license",
+            "path": "LICENSE.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt"
+          },
+          {
+            "id": "tui-voice-mini-ml-ort-third-party-notices",
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt"
+          }
+        ]
+      },
+      "license": {
+        "model": "Apache-2.0 per the pinned Hugging Face model card.",
+        "trainingData": "The model card credits the CC BY 4.0 AI4Bharat Rasa dataset.",
+        "inferenceSource": "Independently authored benchmark adapter under the project MIT license.",
+        "frontend": "Repository-authored Malayalam text and phone adapter under the project MIT license.",
+        "espeak": "GPL-3.0-or-later eSpeak NG 1.51 WebAssembly runtime and Malayalam data; pinned build and COPYING retained.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 with retained third-party notices.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ml"
+        ],
+        "scope": "Pinned Cyrax321/tui-voice-mini-ml checkpoint with F2, the speaker with Malayalam metadata. 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md",
+          "https://github.com/Cyrax321/tui-voice/tree/478761a10399c357e9ccc5380145906167e4d655",
+          "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5",
+          "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+        ],
+        "notes": "The publisher reports 4,537,291 parameters. The pinned config declares a Dizione fingerprint, while the qualified benchmark route uses the documented eSpeak NG 1.51 ml frontend and published 76-slot phone plan; these are reported separately. Independent fixture smoke audit: 105 spans, 461 source clauses, maximum 232 tokens, 53 phones, 914 published merge emissions, no unplanned phones, no unknown tokens, and normalized/token-ID/combined digests pinned in the adapter profile. Parent qualification observed matching native traces and finite nonzero FP32 PCM on CPU/WASM and hardware WebGPU+WASM; this is qualification evidence, not a timing score. No native-speaker review or recording release is claimed."
+      },
+      "assets": [
+        {
+          "id": "tui-voice-mini-ml-onnx",
+          "target": "models/tui-voice-mini-ml/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/478761a10399c357e9ccc5380145906167e4d655/onnx/tui-voice-mini-ml.onnx",
+          "bytes": 21386372,
+          "sha256": "3fddc5a894eb1dd501921c6342cbbf350d56bbd08a55bf9e2a5a7ac614f355b5",
+          "kind": "model-weights",
+          "url": "https://huggingface.co/Cyrax321/tui-voice-mini-ml/resolve/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/onnx/tui-voice-mini-ml.onnx"
+        },
+        {
+          "id": "tui-voice-mini-ml-config",
+          "target": "models/tui-voice-mini-ml/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/478761a10399c357e9ccc5380145906167e4d655/config.json",
+          "bytes": 2493,
+          "sha256": "d7f53c54b50b810cfe539e77b4ee5ef9b5e638888943f6f99259c68b359e8ab9",
+          "kind": "model-config",
+          "url": "https://huggingface.co/Cyrax321/tui-voice-mini-ml/resolve/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/config.json"
+        },
+        {
+          "id": "tui-voice-mini-ml-vocab-plan",
+          "target": "models/tui-voice-mini-ml/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/478761a10399c357e9ccc5380145906167e4d655/vocab_plan.json",
+          "bytes": 4033,
+          "sha256": "9d196209759785e7b6f904091601bbd1442ae8985163bbb266c4bd7379e3e302",
+          "kind": "model-config",
+          "url": "https://huggingface.co/Cyrax321/tui-voice-mini-ml/resolve/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/vocab_plan.json"
+        },
+        {
+          "id": "tui-voice-mini-ml-espeak-espeak-quiet-mjs",
+          "target": "runtimes/espeak-ng/tui-voice-mini-ml-1.51/espeak-quiet.mjs",
+          "bytes": 66841,
+          "sha256": "784dceafa3f515d205da1f7008a32c362c5925cff2fd27f26a1e2a623ffdc543",
+          "kind": "runtime",
+          "generated": {
+            "artifactPath": "espeak-quiet.mjs",
+            "build": "bash tools/tiny-voca-ptbr-kokoro-espeak/build.sh '' tui-voice-mini-ml; pinned eSpeak NG source commit 2e9a5fccbb0095e87b2769e9249ea1f821918ecd (archive SHA-256 57aefafeff07f11a91b39cce4c96f4f9e88a13a26b3aeef22556fbf78cede684), eSpeak NG 1.51, Emscripten 5.0.3, autoconf 2.73, automake 1.18.1, libtool 2.5.4 and repository-owned quiet-trace binding; output imported from .cache/public/runtimes/espeak-ng/tui-voice-mini-ml-1.51 after digest verification."
+          }
+        },
+        {
+          "id": "tui-voice-mini-ml-espeak-espeak-quiet-wasm",
+          "target": "runtimes/espeak-ng/tui-voice-mini-ml-1.51/espeak-quiet.wasm",
+          "bytes": 356838,
+          "sha256": "aafb158a5697dc8462d9a2d74d2eee1fe744593f3ffc89b05ffdca951cfa940b",
+          "kind": "runtime",
+          "generated": {
+            "artifactPath": "espeak-quiet.wasm",
+            "build": "bash tools/tiny-voca-ptbr-kokoro-espeak/build.sh '' tui-voice-mini-ml; pinned eSpeak NG source commit 2e9a5fccbb0095e87b2769e9249ea1f821918ecd (archive SHA-256 57aefafeff07f11a91b39cce4c96f4f9e88a13a26b3aeef22556fbf78cede684), eSpeak NG 1.51, Emscripten 5.0.3, autoconf 2.73, automake 1.18.1, libtool 2.5.4 and repository-owned quiet-trace binding; output imported from .cache/public/runtimes/espeak-ng/tui-voice-mini-ml-1.51 after digest verification."
+          }
+        },
+        {
+          "id": "tui-voice-mini-ml-espeak-espeak-quiet-data",
+          "target": "runtimes/espeak-ng/tui-voice-mini-ml-1.51/espeak-quiet.data",
+          "bytes": 907551,
+          "sha256": "f82517b18b0bf0a7395b65ee0eaa09a5b0f6c1c2b145666b4431105a29eea811",
+          "kind": "runtime",
+          "generated": {
+            "artifactPath": "espeak-quiet.data",
+            "build": "bash tools/tiny-voca-ptbr-kokoro-espeak/build.sh '' tui-voice-mini-ml; pinned eSpeak NG source commit 2e9a5fccbb0095e87b2769e9249ea1f821918ecd (archive SHA-256 57aefafeff07f11a91b39cce4c96f4f9e88a13a26b3aeef22556fbf78cede684), eSpeak NG 1.51, Emscripten 5.0.3, autoconf 2.73, automake 1.18.1, libtool 2.5.4 and repository-owned quiet-trace binding; output imported from .cache/public/runtimes/espeak-ng/tui-voice-mini-ml-1.51 after digest verification."
+          }
+        },
+        {
+          "id": "tui-voice-mini-ml-espeak-copying",
+          "target": "licenses/espeak-ng/TUI-VOICE-MINI-ML-COPYING",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license",
+          "sourcePath": "web/licenses/ESPEAK-NG-COPYING-TINY-VOCA-PTBR-KOKORO.txt"
+        }
+      ]
+    }
+  ,
     "tiny-broca":     {
       "displayName": "Tiny Broca Brazilian Portuguese F1 (FP32)",
       "modelRevision": "0ea879d8f532ad0c6e7308017b45105a74f81a95",

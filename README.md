@@ -771,6 +771,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Alpa Spanish female (FP32) | 2 | 2 | 1 (es-AR) | [Details](docs/MODEL_SUPPORT.md#alpa-es) |
 | Tiny Voca Brazilian Portuguese F_s4 (FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptbr) |
 | Tiny Voca Brazilian Portuguese F (Haple Kokoro, FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptbr-kokoro) |
+| Tui Voice Mini Malayalam F2 (FP32) | 1 | 1 | 1 (ml) | [Details](docs/MODEL_SUPPORT.md#tui-voice-mini-ml) |
 | Tiny Broca Brazilian Portuguese F1 (FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-broca) |
 | Tiny Voca Arabic Halabi F2 (FP32) | 1 | 1 | 1 (ar) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ar-halabi) |
 | Tiny Voca Hebrew AH (FP32) | 1 | 1 | 1 (he) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-he) |

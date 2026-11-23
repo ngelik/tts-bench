@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef BENCH_ESPEAK_VOICE
+#define BENCH_ESPEAK_VOICE "pt-br"
+#endif
+
 static char *trace;
 
 static int discard_audio(short *wave, int size, espeak_EVENT *events) {
@@ -17,7 +21,7 @@ int bench_espeak_init(const char *data_parent) {
     const int rate = espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS, 0, data_parent, 0);
     if (rate <= 0) return -1;
     espeak_SetSynthCallback(discard_audio);
-    return espeak_SetVoiceByName("pt-br");
+    return espeak_SetVoiceByName(BENCH_ESPEAK_VOICE);
 }
 
 const char *bench_espeak_version(void) {

@@ -15,6 +15,7 @@ import { createTinySwaraAdapter } from './adapters/tiny-swara.mjs';
 import { createTinyVocaHindiAdapter } from './adapters/tiny-voca-hindi.mjs';
 import { createTinyVocaPtbrAdapter } from './adapters/tiny-voca-ptbr.mjs';
 import { createTinyVocaPtbrKokoroAdapter } from './adapters/tiny-voca-ptbr-kokoro.mjs';
+import { createTuiVoiceMiniMlAdapter } from './adapters/tui-voice-mini-ml.mjs';
 import { createTinyBrocaAdapter } from './adapters/tiny-broca.mjs';
 import { createTinyVocaArHalabiAdapter } from './adapters/tiny-voca-ar-halabi.mjs';
 import { createTinyVocaArAdapter } from './adapters/tiny-voca-ar.mjs';
@@ -84,6 +85,7 @@ const FACTORIES = {
   'tiny-voca-hindi': createTinyVocaHindiAdapter,
   'tiny-voca-ptbr': createTinyVocaPtbrAdapter,
   'tiny-voca-ptbr-kokoro': createTinyVocaPtbrKokoroAdapter,
+  'tui-voice-mini-ml': createTuiVoiceMiniMlAdapter,
   'tiny-broca': createTinyBrocaAdapter,
   'tiny-voca-ar-halabi': createTinyVocaArHalabiAdapter,
   'tiny-voca-ar': createTinyVocaArAdapter,
@@ -299,6 +301,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
         (model === 'tiny-voca-hindi' && fixtureId === 'hi-article-v1') ||
         (model === 'tiny-voca-ptbr' && fixtureId === 'pt-br-article-v1') ||
         (model === 'tiny-voca-ptbr-kokoro' && fixtureId === 'pt-br-article-v1') ||
+        (model === 'tui-voice-mini-ml' && fixtureId === 'ml-article-v1') ||
         (model === 'tiny-broca' && fixtureId === 'pt-br-article-v1') ||
         (model === 'tiny-voca-ar-halabi' && fixtureId === 'ar-article-v1') ||
         (model === 'tiny-voca-ar' && fixtureId === 'ar-article-v1') ||

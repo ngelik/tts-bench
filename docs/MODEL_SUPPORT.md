@@ -794,3 +794,29 @@ training data is CC BY 4.0; follow its terms for redistributed derived audio.
 [Pinned model card](https://huggingface.co/Xeven7/tiny-swara/tree/9432a340c46249c8acae4ff4b062d46b9cbd1991) ·
 [pinned eSpeak NG source](https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c) ·
 [ONNX Runtime Web 1.31.1](https://github.com/microsoft/onnxruntime/tree/v1.31.1).
+
+<a id="tui-voice-mini-ml"></a>
+
+## Tui Voice Mini Malayalam F2 (FP32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`ml`).
+
+This profile pins the 4,537,291-parameter checkpoint reported by the publisher
+and selects F2/index 0, the only voice with Malayalam speaker metadata. The
+21,386,372-byte FP32 ONNX graph is Apache-2.0. The model card separately credits
+the CC BY 4.0 AI4Bharat Rasa dataset. The benchmark supports
+`ml-article-v1`, 24 kHz mono, and only the F2 voice.
+
+The browser route uses eSpeak NG 1.51 `ml` IPA with the pinned phone map. The
+result settings also record the Dizione fingerprint declared in the config. The independent
+frontend oracle covers 105 spans/461 clauses, maximum 232 tokens, 53 emitted
+phones and 914 explicit merge emissions with no unknown phones or token IDs.
+CPU uses single-thread WASM. WebGPU uses hardware dispatch during its separate
+untimed probe and returns CPU-readable PCM; ONNX Runtime Web may execute
+unsupported operators through WASM. Reported timings come from the full scored
+article runs.
+
+[Profile and reproduction](TUI_VOICE_MINI_ML.md) ·
+[Retained notices](../web/tui-voice-mini-ml/NOTICE.md) ·
+[Pinned model card](https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md) ·
+[Rasa CC BY 4.0 dataset at pinned revision](https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5).
