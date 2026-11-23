@@ -1,0 +1,50 @@
+# 2026-11-23t00-18-24-402z-tiny-voca-fr-webgpu-cached-2d12d0c6
+
+MacBook Pro (Apple M1 Pro, 16 GB) · Apple M1 Pro · Google Chrome 157.0.8103.79
+
+Protocol: **browser-tts-cached-v1-resources**, scenario **cached**. Native harness run.
+
+First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.
+
+| Model | Requested backend | Status | Median | Min–max | Runs |
+|---|---|---|---:|---:|---:|
+| tiny-voca-fr | webgpu | measured | 32.96 s | 32.96–32.96 s | 1 |
+
+Additional metrics (median of available observations; scopes are distinct):
+
+| Model | Backend | Metric | Median | Unit | n |
+|---|---|---|---:|---|---:|
+| tiny-voca-fr | webgpu | First completed source chunk | 401.170 | ms | 1 |
+| tiny-voca-fr | webgpu | First PCM block | 171.410 | ms | 1 |
+| tiny-voca-fr | webgpu | Generated audio | 1411.147 | s | 1 |
+| tiny-voca-fr | webgpu | Generation / audio duration | 0.023 | ratio | 1 |
+| tiny-voca-fr | webgpu | Model initialization | 1042.363 | ms | 1 |
+| tiny-voca-fr | webgpu | Complete controller trial including setup/export | 38363.793 | ms | 1 |
+| tiny-voca-fr | webgpu | Transferred HTTP body data | 62009 | bytes | 1 |
+| tiny-voca-fr | webgpu | Ideal body transfer at 1 Mbps | 0.496 | s | 1 |
+| tiny-voca-fr | webgpu | Whole-call Chrome process-tree peak RSS | 2628911104 | bytes | 1 |
+| tiny-voca-fr | webgpu | Per-trial mean generation Chrome process-tree RSS | 1992409088 | bytes | 1 |
+| tiny-voca-fr | webgpu | In-window Chrome RSS observations | 65.000 | samples | 1 |
+
+Model support (catalog capability, not coverage of this run):
+
+| Model | Supported voices | Bundled voices | Languages | Tested voice |
+|---|---:|---:|---|---|
+| tiny-voca-fr | 2 | 2 | 1 (fr) | FR_F1 |
+
+Pinned French checkpoint and browser frontend only. FR\_F1/index 0 is the benchmark default; FR\_M1/index 1 is available as an alternate diagnostic voice.. Diagnostic frontend audit matches all 108 fr-article-v1 spans: 318 utterances, maximum 183 tokens, zero unknown phones; audit is smoke-only. No parameter count is asserted because the model-card and inherited base-card values differ. The upstream demo is CPU-only; ORT 1.20.1 fails WebGPU on /Concat\_6 due to a non-concat dimension mismatch, so the separately pinned existing ORT 1.31.1 WebGPU+WASM assets are used. No number rewriting: in 17 h 40, h is read as the letter name between 17 and 40. The upstream liaison limit in comment‿allez \(missing \[t\]\) is retained. The graph has no seed input and generates unseeded waveform noise. Model terms do not grant blanket rights to generated recordings. Sources: [1](https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4), [2](https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34), [3](https://www.npmjs.com/package/espeak-ng/v/1.0.2), [4](https://github.com/microsoft/onnxruntime/tree/v1.31.1).
+
+
+![Generation chart](chart.svg)
+
+- **tiny-voca-fr / webgpu**: Observed 1540 WebGPU compute dispatches from ONNX Runtime Web 1.31.1; WASM fallback remains available.
+
+Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.
+
+Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.
+
+Campaign 2026-11-23T00-08-28-561Z-b1ec1724f47e; cell 4/4; source 8c5c2147261d43b373c711334409f62857065e4d; fixture fr-article-v1 (fr, 23757 JavaScript characters, 108 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Released Tiny Voca French FP32 ONNX, FR_F1 index zero at neutral speed and pitch. Exact released eSpeak NG 1.0.2 browser frontend with fr-fr phonemes, sentence splitting, and peak limiting. Single-thread CPU/WASM on released ORT Web 1.20.1, or independently verified Apple hardware WebGPU+WASM on ORT Web 1.31.1. Separate cached process-tree RSS.
+
+RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM.
+
+Different protocols, fixtures, settings or machines must not be pooled into a speedup ranking. This report does not rate speech quality.

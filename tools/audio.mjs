@@ -64,6 +64,7 @@ attribution['tiny-voca-gr']='AI-generated Modern Greek benchmark narration from 
 attribution['mini-voz']='AI-generated Castilian Spanish benchmark narration in Mini Voz’s synthetic F1 voice. Mini Voz contributors adapted Muhammed Nazeem’s Tiny Voca and trained the released profiles on synthetic Qwen3-TTS speech. Apache-2.0 model and source. Benchmark evaluation sample.';
 attribution['tiny-voca-es']='AI-generated Castilian Spanish benchmark narration in tiny-voca-es’s synthetic F2 voice. Marcos (marcosmaceo) adapted Muhammed Nazeem’s tiny-voca and trained the Castilian voices on synthetic Qwen3-TTS VoiceDesign speech. Apache-2.0 weights and code.';
 attribution['alpa-es']='AI-generated Rioplatense Spanish benchmark narration in Alpa-es’s fixed female voice. Alpa-es by Francisco Carlos Erra adapts Alpa by 77ethers and tiny-voca by Muhammed Nazeem. The model card credits the OpenSLR 61 Argentinian Spanish corpus by Guevara-Rukoz et al. (CC BY-SA 4.0). Model and code are released under Apache-2.0.';
+attribution['tiny-voca-fr']='AI-generated Standard French benchmark narration in the synthetic FR_F1 voice from Daniel Suncost’s Tiny Voca French, adapted from Muhammed Nazeem’s Tiny Voca. The model and source are Apache-2.0. Training speech is synthetic and credits Qwen3-TTS and Common Voice text. Benchmark evaluation sample.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');

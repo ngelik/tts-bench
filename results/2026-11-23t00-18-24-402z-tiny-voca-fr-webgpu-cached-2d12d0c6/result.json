@@ -1,0 +1,509 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t00-18-24-402z-tiny-voca-fr-webgpu-cached-2d12d0c6",
+  "createdAt": "2026-11-23T00:19:06.355Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "fr-article-v1",
+    "language": "fr",
+    "sha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+    "characters": 23757,
+    "unicodeCodePoints": 23757,
+    "utf8Bytes": 25038,
+    "chunks": 108,
+    "source": {
+      "type": "translation",
+      "description": "Complete standard French translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 paragraphs, edited regional vocabulary, clarified evening times and bell directions, preserved original measurements, and checked dialogue, identifiers and numeric values. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "8c5c2147261d43b373c711334409f62857065e4d",
+    "dirty": false,
+    "manifestSha256": "20508c0ecd609f68ae8757d46c5615a1b32fc0f47caf35ad7de3173236d8f11d"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-fr:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-fr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-fr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "tiny-voca-fr-onnx",
+      "sha256": "698249cf63768ecd6011d9ddc4137ed16b4d2856a3bc3ba1ab7e1e4e153fc727",
+      "bytes": 21368019
+    },
+    {
+      "id": "tiny-voca-fr-json",
+      "sha256": "b36144a5aeefc07a1ed94d40d20f9bf8514d962236ffd3dee39f0be8a6d9c459",
+      "bytes": 818
+    },
+    {
+      "id": "tiny-voca-fr-ort-cpu-module",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "tiny-voca-fr-ort-cpu-threaded-module",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-fr-ort-cpu-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-fr-frontend",
+      "sha256": "fb429d3e1fabc9dc1256427dbf8c9a0c597c1e61779bf5217134bfc2f860bf02",
+      "bytes": 6951
+    },
+    {
+      "id": "tiny-voca-fr-espeak-js",
+      "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+      "bytes": 178386
+    },
+    {
+      "id": "tiny-voca-fr-espeak-wasm",
+      "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+      "bytes": 18485010
+    },
+    {
+      "id": "tiny-voca-fr-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-fr-citation",
+      "sha256": "f25bbe5eb62176107af457be2d70c2eb6f3788418f24ba3a9d6a51a7709b7e62",
+      "bytes": 379
+    },
+    {
+      "id": "tiny-voca-fr-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "tiny-voca-fr-ort-license-cpu",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-fr",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "fr"
+        ],
+        "scope": "Pinned French checkpoint and browser frontend only. FR_F1/index 0 is the benchmark default; FR_M1/index 1 is available as an alternate diagnostic voice.",
+        "sources": [
+          "https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4",
+          "https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+          "https://www.npmjs.com/package/espeak-ng/v/1.0.2",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "Diagnostic frontend audit matches all 108 fr-article-v1 spans: 318 utterances, maximum 183 tokens, zero unknown phones; audit is smoke-only. No parameter count is asserted because the model-card and inherited base-card values differ. The upstream demo is CPU-only; ORT 1.20.1 fails WebGPU on /Concat_6 due to a non-concat dimension mismatch, so the separately pinned existing ORT 1.31.1 WebGPU+WASM assets are used. No number rewriting: in 17 h 40, h is read as the letter name between 17 and 40. The upstream liaison limit in comment‿allez (missing [t]) is retained. The graph has no seed input and generates unseeded waveform noise. Model terms do not grant blanket rights to generated recordings."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "FR_F1",
+      "precision": "FP32 ONNX export of the released French checkpoint",
+      "settings": {
+        "modelId": "DanielSuncost/tiny-voca-fr",
+        "modelRevision": "73f7700f514e70eef3b459aedcc49829d41945d4",
+        "sourceId": "DanielSuncost/tiny-voca-fr",
+        "sourceRevision": "4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+        "fixtureId": "fr-article-v1",
+        "fixtureSha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+        "language": "fr",
+        "locale": "fr-FR",
+        "voice": "FR_F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 100000,
+        "precision": "FP32 ONNX export of the released French checkpoint",
+        "frontend": "Pinned French frontend-fr.js at DanielSuncost/tiny-voca-fr 4cc26ab23d934e3d33796eb06bf11f23f4c9ab34; eSpeak NG 1.0.2, voice fr-fr",
+        "frontendFingerprint": "d84e20a81cd2271bfcd11b61f485620ba75479ee8ac6497128b9cdb7b98f4249",
+        "runtimeVersion": "1.31.1",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "espeakNg": "1.0.2"
+        },
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "espeakPackageIntegrity": "sha512-Xe4YC7d/+O06zYpsqrJ3LpbETdL/IO8JrnAmWcQEMoRFmMLWU+2y2HnpEkOCnqZfb40MBDVyP4ppfusKdWbPcQ==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "waveformExecutionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Released French FP32 ONNX graph; unseeded waveform noise. Concatenate generated utterances for each source span, then apply one whole-span peak cap at 0.99.",
+        "numericInput": "No benchmark-specific number rewriting. The upstream browser eSpeak `fr-fr` frontend reads 17 h 40 with h as the letter name between 17 and 40; liaison limitations such as comment‿allez missing [t] remain as released.",
+        "runtimeCompatibility": "Upstream browser demo is CPU/WASM only. ONNX Runtime Web 1.20.1 fails WebGPU at /Concat_6 with a non-concat dimension mismatch; WebGPU uses the existing pinned ONNX Runtime Web 1.31.1 assets and retains WASM fallback."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 1540,
+        "description": "Observed 1540 WebGPU compute dispatches from ONNX Runtime Web 1.31.1; WASM fallback remains available."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 32961.19000005722,
+          "samples": 33867520,
+          "sampleRate": 24000,
+          "pcmSha256": "026b2e9e280918679a137bf8ee3a0d9de6ba02fb4341837ed9054bd0ee2ef4f6",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 171.4100000858307,
+            "firstSourceChunkCompletedMs": 401.17000007629395,
+            "audioSeconds": 1411.1466666666668,
+            "realTimeFactor": 0.02335773508073143,
+            "minSamplesPerChunk": 246528,
+            "maxSamplesPerChunk": 387840,
+            "articleCallPeakRssBytes": 2628911104,
+            "generationMeanRssBytes": 1992409088,
+            "generationRssSampleCount": 65,
+            "loadMs": 1042.3626250000007,
+            "controllerTrialElapsedMs": 38363.793333,
+            "downloadBytes": 62009,
+            "idealDownloadSecondsAt1Mbps": 0.496072
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795393109182.84,
+            "finalPcmAtEpochMs": 1795393142144.03,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795393109769,
+                1805828096
+              ],
+              [
+                1795393110235,
+                2097020928
+              ],
+              [
+                1795393110732,
+                1917370368
+              ],
+              [
+                1795393111236,
+                2060386304
+              ],
+              [
+                1795393111745,
+                1856733184
+              ],
+              [
+                1795393112237,
+                1931722752
+              ],
+              [
+                1795393112738,
+                1899495424
+              ],
+              [
+                1795393113241,
+                1981513728
+              ],
+              [
+                1795393113738,
+                1931771904
+              ],
+              [
+                1795393114244,
+                2031779840
+              ],
+              [
+                1795393114739,
+                1896562688
+              ],
+              [
+                1795393115247,
+                1960869888
+              ],
+              [
+                1795393115747,
+                1947598848
+              ],
+              [
+                1795393116247,
+                1970176000
+              ],
+              [
+                1795393116748,
+                1943207936
+              ],
+              [
+                1795393117248,
+                1940799488
+              ],
+              [
+                1795393117754,
+                2019475456
+              ],
+              [
+                1795393118253,
+                1945649152
+              ],
+              [
+                1795393118758,
+                2005368832
+              ],
+              [
+                1795393119254,
+                1971339264
+              ],
+              [
+                1795393119761,
+                1972944896
+              ],
+              [
+                1795393120260,
+                1993457664
+              ],
+              [
+                1795393120760,
+                1947926528
+              ],
+              [
+                1795393121263,
+                1969717248
+              ],
+              [
+                1795393121764,
+                1975615488
+              ],
+              [
+                1795393122272,
+                2129117184
+              ],
+              [
+                1795393122773,
+                2034073600
+              ],
+              [
+                1795393123270,
+                1961574400
+              ],
+              [
+                1795393123774,
+                2000617472
+              ],
+              [
+                1795393124273,
+                2022653952
+              ],
+              [
+                1795393124773,
+                1995800576
+              ],
+              [
+                1795393125278,
+                2033172480
+              ],
+              [
+                1795393125779,
+                2013790208
+              ],
+              [
+                1795393126279,
+                1946320896
+              ],
+              [
+                1795393126783,
+                1949892608
+              ],
+              [
+                1795393127286,
+                1951514624
+              ],
+              [
+                1795393127784,
+                1954332672
+              ],
+              [
+                1795393128290,
+                1977614336
+              ],
+              [
+                1795393128792,
+                1977942016
+              ],
+              [
+                1795393129293,
+                1962344448
+              ],
+              [
+                1795393129795,
+                2001715200
+              ],
+              [
+                1795393130299,
+                2062221312
+              ],
+              [
+                1795393130801,
+                2025766912
+              ],
+              [
+                1795393131303,
+                2029453312
+              ],
+              [
+                1795393131801,
+                1993048064
+              ],
+              [
+                1795393132303,
+                1975009280
+              ],
+              [
+                1795393132806,
+                2007367680
+              ],
+              [
+                1795393133306,
+                1991344128
+              ],
+              [
+                1795393133809,
+                1971716096
+              ],
+              [
+                1795393134309,
+                2009432064
+              ],
+              [
+                1795393134814,
+                2030174208
+              ],
+              [
+                1795393135313,
+                1995259904
+              ],
+              [
+                1795393135817,
+                2016870400
+              ],
+              [
+                1795393136320,
+                2058207232
+              ],
+              [
+                1795393136821,
+                2002468864
+              ],
+              [
+                1795393137326,
+                2080473088
+              ],
+              [
+                1795393137826,
+                2010087424
+              ],
+              [
+                1795393138326,
+                2041036800
+              ],
+              [
+                1795393138831,
+                2081521664
+              ],
+              [
+                1795393139330,
+                2006630400
+              ],
+              [
+                1795393139832,
+                2009710592
+              ],
+              [
+                1795393140335,
+                2070937600
+              ],
+              [
+                1795393140838,
+                2035007488
+              ],
+              [
+                1795393141340,
+                2095480832
+              ],
+              [
+                1795393141840,
+                2020556800
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "a947207c43e7ef8f84cefa178c71a9adf57b8dacec5988efc3858dfe3e4ff621",
+            "bytes": 67735084
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T00-08-28-561Z-b1ec1724f47e; cell 4/4; source 8c5c2147261d43b373c711334409f62857065e4d; fixture fr-article-v1 (fr, 23757 JavaScript characters, 108 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Released Tiny Voca French FP32 ONNX, FR_F1 index zero at neutral speed and pitch. Exact released eSpeak NG 1.0.2 browser frontend with fr-fr phonemes, sentence splitting, and peak limiting. Single-thread CPU/WASM on released ORT Web 1.20.1, or independently verified Apple hardware WebGPU+WASM on ORT Web 1.31.1. Separate cached process-tree RSS.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

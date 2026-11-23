@@ -3459,6 +3459,66 @@
       }
     },
     {
+      "resultId": "2026-11-23t00-08-29-212z-tiny-voca-fr-cpu-warm-f9f7e9b0",
+      "model": "tiny-voca-fr",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "FR_F1",
+      "language": "fr",
+      "attribution": "AI-generated Standard French benchmark narration in the synthetic FR_F1 voice from Daniel Suncost’s Tiny Voca French, adapted from Muhammed Nazeem’s Tiny Voca. The model and source are Apache-2.0. Training speech is synthetic and credits Qwen3-TTS and Common Voice text. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 for the French checkpoint and source.",
+      "sourceUrls": [
+        "https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4",
+        "https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+        "https://www.npmjs.com/package/espeak-ng/v/1.0.2",
+        "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t00-08-29-212z-tiny-voca-fr-cpu-warm-f9f7e9b0--tiny-voca-fr--cpu.wav",
+        "sha256": "4b687e8631caf295bc9cdc14f022c5afebc5c3959cf7e6c99978f95ddd6b3d89",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "9fadd6704b9477f9a92489936d802b678d9b0eb90eae37a84bb566c9b4cbb3fd",
+        "bytes": 67735084
+      }
+    },
+    {
+      "resultId": "2026-11-23t00-14-27-187z-tiny-voca-fr-webgpu-warm-19a53912",
+      "model": "tiny-voca-fr",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "FR_F1",
+      "language": "fr",
+      "attribution": "AI-generated Standard French benchmark narration in the synthetic FR_F1 voice from Daniel Suncost’s Tiny Voca French, adapted from Muhammed Nazeem’s Tiny Voca. The model and source are Apache-2.0. Training speech is synthetic and credits Qwen3-TTS and Common Voice text. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 for the French checkpoint and source.",
+      "sourceUrls": [
+        "https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4",
+        "https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+        "https://www.npmjs.com/package/espeak-ng/v/1.0.2",
+        "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t00-14-27-187z-tiny-voca-fr-webgpu-warm-19a53912--tiny-voca-fr--webgpu.wav",
+        "sha256": "e06b9f664f845de2e2d0fb87597fa7388b29dee9cae2116807d61f41386ded80",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "23789c534ef87562d0cb4936e178921a5a49732fd8616dd46dd45a41ab9cd3fc",
+        "bytes": 67735084
+      }
+    },
+    {
       "resultId": "2026-11-22t19-55-14-092z-tiny-voca-gr-cpu-warm-ed6d78b7",
       "model": "tiny-voca-gr",
       "backend": "cpu",

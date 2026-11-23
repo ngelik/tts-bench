@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t00-08-29-212z-tiny-voca-fr-cpu-warm-f9f7e9b0",
+  "createdAt": "2026-11-23T00:14:26.489Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "fr-article-v1",
+    "language": "fr",
+    "sha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+    "characters": 23757,
+    "unicodeCodePoints": 23757,
+    "utf8Bytes": 25038,
+    "chunks": 108,
+    "source": {
+      "type": "translation",
+      "description": "Complete standard French translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 paragraphs, edited regional vocabulary, clarified evening times and bell directions, preserved original measurements, and checked dialogue, identifiers and numeric values. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "8c5c2147261d43b373c711334409f62857065e4d",
+    "dirty": false,
+    "manifestSha256": "20508c0ecd609f68ae8757d46c5615a1b32fc0f47caf35ad7de3173236d8f11d"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-fr:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-fr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-fr:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "tiny-voca-fr-onnx",
+      "sha256": "698249cf63768ecd6011d9ddc4137ed16b4d2856a3bc3ba1ab7e1e4e153fc727",
+      "bytes": 21368019
+    },
+    {
+      "id": "tiny-voca-fr-json",
+      "sha256": "b36144a5aeefc07a1ed94d40d20f9bf8514d962236ffd3dee39f0be8a6d9c459",
+      "bytes": 818
+    },
+    {
+      "id": "tiny-voca-fr-ort-cpu-module",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "tiny-voca-fr-ort-cpu-threaded-module",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-fr-ort-cpu-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-fr-frontend",
+      "sha256": "fb429d3e1fabc9dc1256427dbf8c9a0c597c1e61779bf5217134bfc2f860bf02",
+      "bytes": 6951
+    },
+    {
+      "id": "tiny-voca-fr-espeak-js",
+      "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+      "bytes": 178386
+    },
+    {
+      "id": "tiny-voca-fr-espeak-wasm",
+      "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+      "bytes": 18485010
+    },
+    {
+      "id": "tiny-voca-fr-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-fr-citation",
+      "sha256": "f25bbe5eb62176107af457be2d70c2eb6f3788418f24ba3a9d6a51a7709b7e62",
+      "bytes": 379
+    },
+    {
+      "id": "tiny-voca-fr-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "tiny-voca-fr-ort-license-cpu",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-fr",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "fr"
+        ],
+        "scope": "Pinned French checkpoint and browser frontend only. FR_F1/index 0 is the benchmark default; FR_M1/index 1 is available as an alternate diagnostic voice.",
+        "sources": [
+          "https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4",
+          "https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+          "https://www.npmjs.com/package/espeak-ng/v/1.0.2",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "Diagnostic frontend audit matches all 108 fr-article-v1 spans: 318 utterances, maximum 183 tokens, zero unknown phones; audit is smoke-only. No parameter count is asserted because the model-card and inherited base-card values differ. The upstream demo is CPU-only; ORT 1.20.1 fails WebGPU on /Concat_6 due to a non-concat dimension mismatch, so the separately pinned existing ORT 1.31.1 WebGPU+WASM assets are used. No number rewriting: in 17 h 40, h is read as the letter name between 17 and 40. The upstream liaison limit in comment‿allez (missing [t]) is retained. The graph has no seed input and generates unseeded waveform noise. Model terms do not grant blanket rights to generated recordings."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "FR_F1",
+      "precision": "FP32 ONNX export of the released French checkpoint",
+      "settings": {
+        "modelId": "DanielSuncost/tiny-voca-fr",
+        "modelRevision": "73f7700f514e70eef3b459aedcc49829d41945d4",
+        "sourceId": "DanielSuncost/tiny-voca-fr",
+        "sourceRevision": "4cc26ab23d934e3d33796eb06bf11f23f4c9ab34",
+        "fixtureId": "fr-article-v1",
+        "fixtureSha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+        "language": "fr",
+        "locale": "fr-FR",
+        "voice": "FR_F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 100000,
+        "precision": "FP32 ONNX export of the released French checkpoint",
+        "frontend": "Pinned French frontend-fr.js at DanielSuncost/tiny-voca-fr 4cc26ab23d934e3d33796eb06bf11f23f4c9ab34; eSpeak NG 1.0.2, voice fr-fr",
+        "frontendFingerprint": "d84e20a81cd2271bfcd11b61f485620ba75479ee8ac6497128b9cdb7b98f4249",
+        "runtimeVersion": "1.20.1",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "espeakNg": "1.0.2"
+        },
+        "runtimePackageIntegrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==",
+        "espeakPackageIntegrity": "sha512-Xe4YC7d/+O06zYpsqrJ3LpbETdL/IO8JrnAmWcQEMoRFmMLWU+2y2HnpEkOCnqZfb40MBDVyP4ppfusKdWbPcQ==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "waveformExecutionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Released French FP32 ONNX graph; unseeded waveform noise. Concatenate generated utterances for each source span, then apply one whole-span peak cap at 0.99.",
+        "numericInput": "No benchmark-specific number rewriting. The upstream browser eSpeak `fr-fr` frontend reads 17 h 40 with h as the letter name between 17 and 40; liaison limitations such as comment‿allez missing [t] remain as released.",
+        "runtimeCompatibility": "Upstream browser demo is CPU/WASM only. ONNX Runtime Web 1.20.1 fails WebGPU at /Concat_6 with a non-concat dimension mismatch; WebGPU uses the existing pinned ONNX Runtime Web 1.31.1 assets and retains WASM fallback."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "ONNX Runtime Web 1.20.1 uses explicit single-thread WASM, matching the upstream CPU-only browser demo. French normalization and eSpeak NG G2P run locally."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 87393.97000002861,
+          "samples": 33867520,
+          "sampleRate": 24000,
+          "pcmSha256": "721c2fdee5d7fa067dec084fcca84c6edaf7d6701a1c71a6982225c89a587c6a",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 285.14999985694885,
+            "firstSourceChunkCompletedMs": 902.2799999713898,
+            "audioSeconds": 1411.1466666666668,
+            "realTimeFactor": 0.061931174175159164,
+            "minSamplesPerChunk": 246528,
+            "maxSamplesPerChunk": 387840
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 86945.80500006676,
+          "samples": 33867520,
+          "sampleRate": 24000,
+          "pcmSha256": "a525c0cd176408e3374047318a015a50a3e874ece8a818d49487036c95d7ce71",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 243.7850000858307,
+            "firstSourceChunkCompletedMs": 815.9100000858307,
+            "audioSeconds": 1411.1466666666668,
+            "realTimeFactor": 0.06161358493334032,
+            "minSamplesPerChunk": 246528,
+            "maxSamplesPerChunk": 387840
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 86916.36000013351,
+          "samples": 33867520,
+          "sampleRate": 24000,
+          "pcmSha256": "ef81dd307e24baeab5710f8ab992bedfc664064299163e0fb7cda5128e6a5917",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 244.49500012397766,
+            "firstSourceChunkCompletedMs": 818.9349999427795,
+            "audioSeconds": 1411.1466666666668,
+            "realTimeFactor": 0.061592718923712285,
+            "minSamplesPerChunk": 246528,
+            "maxSamplesPerChunk": 387840
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 86953.36500000954,
+          "samples": 33867520,
+          "sampleRate": 24000,
+          "pcmSha256": "378190c8b98f4f177ffb4bd8b08f045e03a5a77ff483ecf81999f1baadc2f45c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 244.24000000953674,
+            "firstSourceChunkCompletedMs": 815.7650001049042,
+            "audioSeconds": 1411.1466666666668,
+            "realTimeFactor": 0.06161894227862651,
+            "minSamplesPerChunk": 246528,
+            "maxSamplesPerChunk": 387840
+          },
+          "audio": {
+            "sha256": "9fadd6704b9477f9a92489936d802b678d9b0eb90eae37a84bb566c9b4cbb3fd",
+            "bytes": 67735084
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T00-08-28-561Z-b1ec1724f47e; cell 1/4; source 8c5c2147261d43b373c711334409f62857065e4d; fixture fr-article-v1 (fr, 23757 JavaScript characters, 108 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Released Tiny Voca French FP32 ONNX, FR_F1 index zero at neutral speed and pitch. Exact released eSpeak NG 1.0.2 browser frontend with fr-fr phonemes, sentence splitting, and peak limiting. Single-thread CPU/WASM on released ORT Web 1.20.1, or independently verified Apple hardware WebGPU+WASM on ORT Web 1.31.1. Separate cached process-tree RSS."
+  ]
+}
