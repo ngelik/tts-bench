@@ -255,9 +255,10 @@ try {
     if (language === 'uk') continue;
     const models = resultModels(group.models ?? []);
     const displayName = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
-    const tabLabel = language === 'ku-Arab-IQ'
-      ? 'Kurdish Behdînî (Arabic script)'
-      : expected.languages?.find(entry => entry.id === language)?.label ?? displayName;
+    const tabLabel = {
+      'ku-Arab-IQ': 'Kurdish Behdînî (Arabic script)',
+      'bn-Latn': 'Romanized Bengali',
+    }[language] ?? expected.languages?.find(entry => entry.id === language)?.label ?? displayName;
     const tab = page.locator(`#language-${language}`);
     assert.equal(await tab.count(), 1, `A registered ${language} edition has a language tab`);
     assert.ok((await tab.textContent()).includes(tabLabel), `${language} picker link uses a human-readable language name`);

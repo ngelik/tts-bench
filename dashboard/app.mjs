@@ -41,6 +41,12 @@ function languageGroup(id = state.language) {
   return id === 'en' ? state.data : state.data?.byLanguage?.[id];
 }
 function languageDetails(id, registryLabel = '') {
+  if (id === 'bn-Latn') return {
+    englishName: 'Romanized Bengali',
+    nativeName: 'Bangla (Roman horofe)',
+    meta: 'Latin script',
+    aliases: ['Romanised Bengali', 'Bengali Latin', 'Bangla (Latin)', 'বাংলা'],
+  };
   const isBehdini = id === 'ku-Arab-IQ';
   const englishName = isBehdini ? behtini : languageLabel(id);
   let nativeName = null;
@@ -57,7 +63,7 @@ function languageDetails(id, registryLabel = '') {
   try { if (script) scriptName = new Intl.DisplayNames(['en'], {type:'script'}).of(script) || script; } catch {}
   try { if (region) regionName = new Intl.DisplayNames(['en'], {type:'region'}).of(region) || region; } catch {}
   const meta = isBehdini ? '' : [scriptName && `${scriptName} script`, regionName].filter(Boolean).join(' · ');
-  const aliases = isBehdini ? [behtini, 'Behdînî', 'Bahdini', id] : [];
+  const aliases = isBehdini ? [behtini, 'Behdînî', 'Bahdini', id] : id === 'bn' ? ['Bengali'] : [];
   return {englishName, nativeName, meta, aliases};
 }
 function registeredLanguages() {
