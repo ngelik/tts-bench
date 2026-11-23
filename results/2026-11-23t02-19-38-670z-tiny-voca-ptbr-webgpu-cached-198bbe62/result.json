@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t02-19-38-670z-tiny-voca-ptbr-webgpu-cached-198bbe62",
+  "createdAt": "2026-11-23T02:20:19.754Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "pt-br-article-v1",
+    "language": "pt-BR",
+    "sha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+    "characters": 22164,
+    "unicodeCodePoints": 22164,
+    "utf8Bytes": 22793,
+    "chunks": 101,
+    "source": {
+      "type": "translation",
+      "description": "Complete Brazilian Portuguese translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 source paragraphs and edited for Brazilian usage and fidelity. The translation preserves original measurement units, values and identifiers, renders the implicit evening times in 24-hour notation, and preserves the bell directions and four-count pause. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "a1f52276803d69fde8e4d77456066d2ebd04da07",
+    "dirty": false,
+    "manifestSha256": "7b3b80f27947849134a6fc2a5eec7976c4b3453c74b47dcacde14c56252b6902"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-ptbr-onnx",
+      "sha256": "0ac1ffc83e508973513182ed79d4626556e35bcffcccd99ee066dde6d2c77e5b",
+      "bytes": 21370200
+    },
+    {
+      "id": "tiny-voca-ptbr-config",
+      "sha256": "0cef74c03aa5b4d705c8ea9810ec71b053da9b33a40925dbdf880ed471120060",
+      "bytes": 846
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-engine",
+      "sha256": "b76eb5d1c7283f96e16cb6054d7ef79baaa032e58a8c7abb18332cc781c5e705",
+      "bytes": 7242
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-g2p",
+      "sha256": "71660c478ab43eb4252c2a598b66caf7616d4209c6bb7fb41618f400fde704fe",
+      "bytes": 13067
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-normalize",
+      "sha256": "6caddbfd93aa8c1a233a05459341841ee6d4976401645d50fa01da96b3593838",
+      "bytes": 7548
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-symbols",
+      "sha256": "3afd111538fb23d7b3b621a693866bb18ae7ea65dfeeff9e503383582932fe74",
+      "bytes": 961
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-tokens",
+      "sha256": "579413f013321a331b8dc6dfcb0da2bfdbdb343ce81a7b617872ed757819ac03",
+      "bytes": 1480
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-lexicon",
+      "sha256": "0bc25b54898d67c07a73567f4bff5438480a24256388b02c6fa8b7c4c8408e80",
+      "bytes": 931949
+    },
+    {
+      "id": "tiny-voca-ptbr-dizione-open-table",
+      "sha256": "a0e71c7d2f4e59c7affa1aebb5241c574f9c7ec0282e81326397a54da46bd9cb",
+      "bytes": 1609
+    },
+    {
+      "id": "tiny-voca-ptbr-license-code",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ptbr-notice-code",
+      "sha256": "109a433d6e26916d40b64af4530d728a0feeae29530cc5a583f288c81c9891f0",
+      "bytes": 1089
+    },
+    {
+      "id": "tiny-voca-ptbr-license-model",
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "bytes": 18657
+    },
+    {
+      "id": "tiny-voca-ptbr-notice-model",
+      "sha256": "649ab8215fe655f00f87ac46f1f67b0f3c315f97baf56a45b9e8af1642720c94",
+      "bytes": 484
+    },
+    {
+      "id": "tiny-voca-ptbr-license-dizione",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ptbr-notice-dizione",
+      "sha256": "deb714a8b5cb980aac2b88415fc8e49b75d65bc89b3f3f58466872b59a2fd491",
+      "bytes": 490
+    },
+    {
+      "id": "tiny-voca-ptbr-dictionary-license",
+      "sha256": "dc781911ac85edede519a742e56c104199f2b6027ce51b77304e61b1a3ad2517",
+      "bytes": 1603
+    },
+    {
+      "id": "tiny-voca-ptbr-ort-webgpu",
+      "sha256": "e131e81c9324807e1e6f9103e8f8e936112827dcc9993cde9407a333b1f07ae0",
+      "bytes": 357582
+    },
+    {
+      "id": "tiny-voca-ptbr-ort-jsep-js",
+      "sha256": "1cbcba8f2c769c1eecbab66a1b1e55ef11704515bf4306373e3db3c37cf6dcd8",
+      "bytes": 44677
+    },
+    {
+      "id": "tiny-voca-ptbr-ort-jsep-wasm",
+      "sha256": "b45970d0632383a057c27ca5b660b216f8e00c17cf8db9f6207b5e4abc839368",
+      "bytes": 21872216
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ptbr",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-BR"
+        ],
+        "scope": "Pinned semfence/tiny-voca-ptbr checkpoint only. Two fixed synthetic voices, F_s4 and M_sm4, at 24 kHz mono; benchmark default is F_s4/index 0. This browser profile exposes Brazilian Portuguese (pt-BR) only.",
+        "sources": [
+          "https://huggingface.co/semfence/tiny-voca-ptbr/tree/f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",
+          "https://huggingface.co/spaces/semfence/tiny-voca-ptbr-demo/tree/a456470df5589478e3fb3f1973457771f4c056bd",
+          "https://github.com/n4ze3m/tiny-voca",
+          "https://github.com/SemFence/dizione-ptbr/tree/8fbb77e579fe684f3afd9cb2a801d0adce8c89cf",
+          "https://github.com/MontrealCorpusTools/mfa-models/tree/dictionary-portuguese_brazil_mfa-v2.0.0a",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+        ],
+        "notes": "The pinned checkpoint card reports 4,533,259 parameters including the waveform generator. Exact pt-br-article-v1 frontend audit: 101 spans, 310 utterances, maximum 225 tokens, zero <unk> phones; this is a diagnostic, not a score. Both original synthetic voices are included. The graph has no seed input and generates waveform noise internally. Generated recordings have no blanket redistribution grant from the code license."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F_s4",
+      "precision": "FP32 ONNX export of the released Brazilian Portuguese checkpoint",
+      "settings": {
+        "modelId": "semfence/tiny-voca-ptbr",
+        "modelRevision": "f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",
+        "sourceId": "semfence/tiny-voca-ptbr-demo",
+        "sourceRevision": "a456470df5589478e3fb3f1973457771f4c056bd",
+        "fixtureId": "pt-br-article-v1",
+        "fixtureSha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+        "language": "pt-BR",
+        "locale": "pt-BR",
+        "voice": "F_s4",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released Brazilian Portuguese checkpoint",
+        "frontend": "Pinned semfence/tiny-voca-ptbr-demo browser frontend, Space revision a456470df5589478e3fb3f1973457771f4c056bd; dizione-ptbr and MFA-derived lexicon",
+        "frontendFingerprint": "c8b278571f76e11e47cf66612f6d0470ca3a1b892c85d2091a4cf054c3367862",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.22.0"
+        },
+        "runtimePackageIntegrity": "sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==",
+        "executionProviders": [
+          "webgpu"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Released Brazilian Portuguese FP32 ONNX graph; source-span utterances concatenated without inserted audio, then one whole-span peak cap at 0.99.",
+        "unknownPhonePolicy": "Use the pinned Dizione lexicon/rule fallback and released 55-symbol vocabulary; preserve emitted <unk> tokens. Fixture smoke records the exact token/stress oracle."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 842,
+        "description": "Observed 842 WebGPU compute dispatches in an untimed inference probe; ONNX Runtime Web may use internal WASM CPU kernels for operators without a WebGPU implementation, but the session requests WebGPU only."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 32587.420000076294,
+          "samples": 42445568,
+          "sampleRate": 24000,
+          "pcmSha256": "a4b532c8100b4c7526c05f79ff4eb0f36ab9e7f3982a11051df021feec1eb93e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 185.25500011444092,
+            "firstSourceChunkCompletedMs": 441.36500000953674,
+            "audioSeconds": 1768.5653333333332,
+            "realTimeFactor": 0.018425906799075728,
+            "minSamplesPerChunk": 372736,
+            "maxSamplesPerChunk": 515584,
+            "articleCallPeakRssBytes": 2387918848,
+            "generationMeanRssBytes": 1541296896,
+            "generationRssSampleCount": 64,
+            "loadMs": 605.5132090000002,
+            "controllerTrialElapsedMs": 38493.785625000004,
+            "downloadBytes": 59824,
+            "idealDownloadSecondsAt1Mbps": 0.478592
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795400382068.97,
+            "finalPcmAtEpochMs": 1795400414656.39,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795400382622,
+                1492369408
+              ],
+              [
+                1795400383119,
+                1563721728
+              ],
+              [
+                1795400383625,
+                1549205504
+              ],
+              [
+                1795400384117,
+                1538146304
+              ],
+              [
+                1795400384626,
+                1545142272
+              ],
+              [
+                1795400385127,
+                1552941056
+              ],
+              [
+                1795400385624,
+                1566752768
+              ],
+              [
+                1795400386143,
+                1520746496
+              ],
+              [
+                1795400386639,
+                1454964736
+              ],
+              [
+                1795400387131,
+                1472299008
+              ],
+              [
+                1795400387629,
+                1485406208
+              ],
+              [
+                1795400388134,
+                1494827008
+              ],
+              [
+                1795400388643,
+                1491763200
+              ],
+              [
+                1795400389290,
+                1288093696
+              ],
+              [
+                1795400389644,
+                1273151488
+              ],
+              [
+                1795400390153,
+                1272987648
+              ],
+              [
+                1795400390651,
+                1276018688
+              ],
+              [
+                1795400391149,
+                1283260416
+              ],
+              [
+                1795400391647,
+                1289846784
+              ],
+              [
+                1795400392168,
+                1543962624
+              ],
+              [
+                1795400392652,
+                1491238912
+              ],
+              [
+                1795400393149,
+                1526611968
+              ],
+              [
+                1795400393654,
+                1489633280
+              ],
+              [
+                1795400394156,
+                1496432640
+              ],
+              [
+                1795400394658,
+                1504772096
+              ],
+              [
+                1795400395156,
+                1509261312
+              ],
+              [
+                1795400395659,
+                1520533504
+              ],
+              [
+                1795400396160,
+                1513979904
+              ],
+              [
+                1795400396663,
+                1540341760
+              ],
+              [
+                1795400397164,
+                1537097728
+              ],
+              [
+                1795400397668,
+                1549402112
+              ],
+              [
+                1795400398166,
+                1552056320
+              ],
+              [
+                1795400398666,
+                1552171008
+              ],
+              [
+                1795400399169,
+                1559920640
+              ],
+              [
+                1795400399671,
+                1559789568
+              ],
+              [
+                1795400400170,
+                1567047680
+              ],
+              [
+                1795400400667,
+                1569865728
+              ],
+              [
+                1795400401175,
+                1573273600
+              ],
+              [
+                1795400401678,
+                1575796736
+              ],
+              [
+                1795400402176,
+                1584463872
+              ],
+              [
+                1795400402680,
+                1588723712
+              ],
+              [
+                1795400403183,
+                1585528832
+              ],
+              [
+                1795400403686,
+                1598701568
+              ],
+              [
+                1795400404187,
+                1591394304
+              ],
+              [
+                1795400404684,
+                1594589184
+              ],
+              [
+                1795400405186,
+                1597079552
+              ],
+              [
+                1795400405689,
+                1600585728
+              ],
+              [
+                1795400406190,
+                1604894720
+              ],
+              [
+                1795400406689,
+                1606565888
+              ],
+              [
+                1795400407196,
+                1610940416
+              ],
+              [
+                1795400407695,
+                1612365824
+              ],
+              [
+                1795400408196,
+                1615659008
+              ],
+              [
+                1795400408699,
+                1620197376
+              ],
+              [
+                1795400409200,
+                1623195648
+              ],
+              [
+                1795400409703,
+                1633697792
+              ],
+              [
+                1795400410204,
+                1627996160
+              ],
+              [
+                1795400410704,
+                1630044160
+              ],
+              [
+                1795400411208,
+                1633320960
+              ],
+              [
+                1795400411709,
+                1647017984
+              ],
+              [
+                1795400412212,
+                1653276672
+              ],
+              [
+                1795400412710,
+                1652441088
+              ],
+              [
+                1795400413214,
+                1665974272
+              ],
+              [
+                1795400413716,
+                1658437632
+              ],
+              [
+                1795400414220,
+                1661075456
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "bc92804d623884d96406f5a853354f1301bf5182d8c4b75a8f8e2a0b49ea2fb0",
+            "bytes": 84891180
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T02-09-12-660Z-a9aceb978466; cell 4/4; source a1f52276803d69fde8e4d77456066d2ebd04da07; fixture pt-br-article-v1 (pt-BR, 22164 JavaScript characters, 101 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. tiny-voca-ptbr released FP32 graph, default Brazilian Portuguese F_s4 voice index zero, neutral speed and pitch and completed-span peak cap 0.99. Exact released Brazilian Portuguese Dizione JS normalization, tokenization, and sentence segmentation. ORT Web 1.22.0 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
