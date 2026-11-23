@@ -349,5 +349,12 @@
     "parameterCountSource": "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/onnx/model.onnx",
     "upstreamModelCard": "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
     "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
+  },
+  "alpa-sanskrit": {
+    "parameterCount": 4531723,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/77ethers/alpa/blob/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/onnx/alpa-v0.2.onnx",
+    "upstreamModelCard": "https://huggingface.co/77ethers/alpa/blob/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/README.md",
+    "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
   }
 }

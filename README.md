@@ -837,6 +837,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Urdu M2 (FP32) | 1 | 1 | 1 (ur) | [Details](docs/MODEL_SUPPORT.md#tiny-urdu) |
 | Tiny Voca Kiswahili | 7 | 7 | 1 (sw) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-swahili) |
 | SobbieTTS | 2 | 2 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sobbie-tts) |
+| Alpa (Sanskrit) | 2 | 2 | 1 (sa) | [Details](docs/MODEL_SUPPORT.md#alpa-sanskrit) |
 
 ### Controlled native comparisons
 

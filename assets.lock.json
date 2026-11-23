@@ -16119,6 +16119,157 @@
           "kind": "license"
         }
       ]
+    },
+    "alpa-sanskrit": {
+      "modelRevision": "b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+      "sourceId": "77ethers/alpa",
+      "sourceRevision": "b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+      "displayName": "Alpa (Sanskrit)",
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "license": {
+        "model": "Apache-2.0 per the pinned Alpa model release.",
+        "trainingData": "AI4Bharat Rasa, CC BY 4.0.",
+        "frontend": "Official Alpa browser frontend from the publisher’s demo, staged in the local asset cache.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 with retained third-party notices.",
+        "requiresAcceptance": true
+      },
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "sa"
+        ],
+        "scope": "Pinned Alpa v0.2 FP32 graph and official JavaScript Devanagari frontend. Benchmark voice female at index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/77ethers/alpa/tree/b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+          "https://alpa.blog/",
+          "https://alpa.blog/js/text.js?v=ab33b3eb",
+          "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5"
+        ],
+        "notes": "The published browser frontend processes Devanagari. The publisher’s ITRANS setting transliterates Roman Sanskrit. The fixed Sanskrit fixture produces 90 complete plans with up to 262 tokens and zero unknowns. Token IDs and syllable weights match the official Python implementation over all 90 source spans."
+      },
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "license": "MIT ONNX Runtime Web 1.31.1 with retained license and third-party notices.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "alpa-sanskrit-dist-ort-wasm-min-mjs"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "alpa-sanskrit-dist-ort-webgpu-min-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "alpa-sanskrit-dist-ort-wasm-simd-threaded-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "alpa-sanskrit-dist-ort-wasm-simd-threaded-wasm"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "alpa-sanskrit-dist-ort-wasm-simd-threaded-asyncify-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "alpa-sanskrit-dist-ort-wasm-simd-threaded-asyncify-wasm"
+          },
+          {
+            "path": "LICENSE.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "id": "alpa-sanskrit-license-txt"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "id": "alpa-sanskrit-thirdpartynotices-txt"
+          }
+        ]
+      },
+      "assets": [
+        {
+          "id": "alpa-sanskrit-onnx-v02",
+          "target": "models/alpa-sanskrit/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/onnx/alpa-v0.2.onnx",
+          "url": "https://huggingface.co/77ethers/alpa/resolve/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/onnx/alpa-v0.2.onnx",
+          "bytes": 22550089,
+          "sha256": "a4602849514fb0a08553b8728b6ca0e8595124c774d2355cd9568b261af69046",
+          "kind": "model-weights"
+        },
+        {
+          "id": "alpa-sanskrit-config-v02",
+          "target": "models/alpa-sanskrit/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/onnx/alpa-v0.2.json",
+          "url": "https://huggingface.co/77ethers/alpa/resolve/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/onnx/alpa-v0.2.json",
+          "bytes": 1391,
+          "sha256": "1bff70e5e03c6d6c5ec0df0bf9ca8dfb298cf6dfb27d8ffa2bfc04f3e3fb2c9f",
+          "kind": "model-config"
+        },
+        {
+          "id": "alpa-sanskrit-official-text-v2",
+          "target": "models/alpa-sanskrit/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/frontend/alpa-text.mjs",
+          "url": "https://alpa.blog/js/text.js?v=ab33b3eb",
+          "bytes": 14965,
+          "sha256": "e908e7794ebe602f8e5e283a4af753e6caf5f15121b520f60ecaed46ec03540e",
+          "kind": "model-support"
+        },
+        {
+          "id": "alpa-sanskrit-model-license",
+          "target": "models/alpa-sanskrit/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/LICENSES/Apache-2.0.txt",
+          "url": "https://huggingface.co/77ethers/alpa/resolve/b3973a79888b9c63b2fc6f56140c1699c0bd44d6/LICENSES/Apache-2.0.txt",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        }
+      ]
     }
   }
 }
