@@ -1,0 +1,498 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t16-34-15-251z-tiny-urdu-webgpu-cached-faf31c2f",
+  "createdAt": "2026-11-23T16:34:56.097Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "ur-latn-article-v1",
+    "language": "ur-Latn",
+    "sha256": "1efd405d195af01f6f72acbafb54cfdf25495382f5cc4fece31352d2fffd4c0b",
+    "characters": 22486,
+    "unicodeCodePoints": 22486,
+    "utf8Bytes": 22486,
+    "chunks": 103,
+    "source": {
+      "type": "translation",
+      "description": "Roman Urdu translation of all 27 canonical source paragraphs. Written in ASCII, with spoken expansion of amounts, times, identifiers, and units and publisher casing for retroflex sounds. Compared with the source and audited through the pinned stock frontend. No native-speaker review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "54408783d9ba80b002a90ebb8106bb03ba43176f",
+    "dirty": false,
+    "manifestSha256": "4ba74115fa7be74cc7b382b6742998853664485c4cad2904107f0e167e121f7f"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-urdu-model-onnx",
+      "sha256": "74c982058e772073b671ecd49f9eb3cdf3e7728be59efcf81a798b66a983d717",
+      "bytes": 21420254
+    },
+    {
+      "id": "tiny-urdu-model-json",
+      "sha256": "e45b75cf87f2bcaa3a58d93e6a54efca6f581916d760c39e4e1c653f43f2f08e",
+      "bytes": 1428
+    },
+    {
+      "id": "tiny-urdu-frontend",
+      "sha256": "f054aeba85685000a13af39dd40b4f4683ff9730b24c462270c98f84bd6369dc",
+      "bytes": 12843
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-urdu",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ur"
+        ],
+        "scope": "Pinned zafar205/tiny-urdu-tts-4.5-million-parameters checkpoint, Roman Urdu input (ur-Latn), Urdu speech, M2/index 1, 24 kHz mono FP32.",
+        "sources": [
+          "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/tree/4fe6566118972ea0d44b517f413191e0e30f5880",
+          "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/README.md",
+          "https://github.com/Zafar205/tiny-urdu/tree/5770756e05f33591eab29498a47f6644664beae7",
+          "https://github.com/Zafar205/tiny-urdu/blob/5770756e05f33591eab29498a47f6644664beae7/web/lib/urdu.ts",
+          "https://huggingface.co/datasets/kaab4321/UrduTTS/tree/f5c50b7aaabd4325bfe33617232203ad02e30f97",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "The model card reports 4.5 million parameters; the registered exact count is the 4,545,739 logical scalar values across pinned ONNX initializer tensor shapes, including any graph constants, and is not asserted as a trainable-only count. The stock frontend audit covers ur-latn-article-v1: 103 ordered spans, 319 utterances, maximum 177 tokens, zero unknown token IDs, zero nonzero stress values, digest ef4562f72d6725d8f5a9b2a50644e914bcdd1b768b2baaffb38e64e57e5f9161. Roman Urdu uses Urdu phonemizer rules; common English loanwords are read with those Urdu rules, not as an English route. Urdu-script input is unsupported. Independent headed Chrome qualification tested stock 1.17.3 CPU and matched 1.31.1 CPU/WebGPU settings; the registered adapter uses 1.31.1 on both backends."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M2",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "zafar205/tiny-urdu-tts-4.5-million-parameters",
+        "modelRevision": "4fe6566118972ea0d44b517f413191e0e30f5880",
+        "sourceId": "Zafar205/tiny-urdu",
+        "sourceRevision": "5770756e05f33591eab29498a47f6644664beae7",
+        "parameterCount": 4545739,
+        "fixtureId": "ur-latn-article-v1",
+        "fixtureSha256": "1efd405d195af01f6f72acbafb54cfdf25495382f5cc4fece31352d2fffd4c0b",
+        "language": "ur-Latn",
+        "locale": "ur-Latn",
+        "spokenLanguage": "ur",
+        "supportedLanguages": [
+          "ur-Latn"
+        ],
+        "voice": "M2",
+        "voiceIndex": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "plannerTokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 25000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "peak": 0.99,
+        "interUtteranceGapSamples": 3600,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned stock Roman Urdu Frontend from Zafar205/tiny-urdu; no English synthesis route.",
+        "frontendFingerprint": "64f5034f3c3f5df340b2bfe86aa130542435bb15cd2dc530d4c30a51d99c3166",
+        "modelAssets": {
+          "model.onnx": {
+            "bytes": 21420254,
+            "sha256": "74c982058e772073b671ecd49f9eb3cdf3e7728be59efcf81a798b66a983d717"
+          },
+          "model.json": {
+            "bytes": 1428,
+            "sha256": "e45b75cf87f2bcaa3a58d93e6a54efca6f581916d760c39e4e1c653f43f2f08e"
+          },
+          "frontend/urdu.mjs": {
+            "bytes": 12843,
+            "sha256": "f054aeba85685000a13af39dd40b4f4683ff9730b24c462270c98f84bd6369dc"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "enableCpuMemArena": false,
+        "enableMemPattern": false,
+        "graphOptimizationLevel": "basic",
+        "waveform": "Pinned stock punctuation sentence splitting and recursive 500-token fit; concatenate utterances in source order with 150 ms gaps only within a source span, then apply one 0.99 peak cap per completed source span.",
+        "assetCacheStats": {
+          "verifiedBytes": 50306462,
+          "assets": 6
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 835,
+        "description": "Observed 835 WebGPU compute dispatches during the untimed Tiny Urdu probe. ONNX Runtime Web may use WASM for unsupported operators."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 31498.28500008583,
+          "samples": 36267392,
+          "sampleRate": 24000,
+          "pcmSha256": "47b7b14af18340158fbf7b045aac0fe9b518de16245fde30780b042e9fb32b70",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 103,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 249.4300000667572,
+            "firstSourceChunkCompletedMs": 503,
+            "audioSeconds": 1511.1413333333333,
+            "realTimeFactor": 0.020844036428151767,
+            "minSamplesPerChunk": 132096,
+            "maxSamplesPerChunk": 404272,
+            "articleCallPeakRssBytes": 2477408256,
+            "generationMeanRssBytes": 2062644653,
+            "generationRssSampleCount": 62,
+            "loadMs": 1175.3632500000003,
+            "controllerTrialElapsedMs": 37337.913834,
+            "downloadBytes": 68202,
+            "idealDownloadSecondsAt1Mbps": 0.545616
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795451660122.065,
+            "finalPcmAtEpochMs": 1795451691620.35,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795451660728,
+                1512374272
+              ],
+              [
+                1795451661205,
+                1849966592
+              ],
+              [
+                1795451661684,
+                1885683712
+              ],
+              [
+                1795451662185,
+                1891074048
+              ],
+              [
+                1795451662678,
+                1903525888
+              ],
+              [
+                1795451663186,
+                1911406592
+              ],
+              [
+                1795451663680,
+                1921171456
+              ],
+              [
+                1795451664184,
+                1928396800
+              ],
+              [
+                1795451664682,
+                1930969088
+              ],
+              [
+                1795451665191,
+                1944322048
+              ],
+              [
+                1795451665685,
+                1941618688
+              ],
+              [
+                1795451666192,
+                1993965568
+              ],
+              [
+                1795451666688,
+                2001616896
+              ],
+              [
+                1795451667193,
+                2010759168
+              ],
+              [
+                1795451667691,
+                2012692480
+              ],
+              [
+                1795451668195,
+                2018902016
+              ],
+              [
+                1795451668695,
+                2007908352
+              ],
+              [
+                1795451669197,
+                2014478336
+              ],
+              [
+                1795451669707,
+                2025160704
+              ],
+              [
+                1795451670200,
+                2096136192
+              ],
+              [
+                1795451670702,
+                2098692096
+              ],
+              [
+                1795451671206,
+                2101854208
+              ],
+              [
+                1795451671704,
+                2103164928
+              ],
+              [
+                1795451672206,
+                2107621376
+              ],
+              [
+                1795451672709,
+                2109964288
+              ],
+              [
+                1795451673212,
+                2111848448
+              ],
+              [
+                1795451673721,
+                2068201472
+              ],
+              [
+                1795451674221,
+                2070216704
+              ],
+              [
+                1795451674717,
+                2084044800
+              ],
+              [
+                1795451675220,
+                2091270144
+              ],
+              [
+                1795451675724,
+                2093203456
+              ],
+              [
+                1795451676221,
+                2098872320
+              ],
+              [
+                1795451676722,
+                2103246848
+              ],
+              [
+                1795451677224,
+                2102689792
+              ],
+              [
+                1795451677726,
+                2106359808
+              ],
+              [
+                1795451678229,
+                2109784064
+              ],
+              [
+                1795451678731,
+                2111963136
+              ],
+              [
+                1795451679233,
+                2118123520
+              ],
+              [
+                1795451679735,
+                2116681728
+              ],
+              [
+                1795451680237,
+                2117435392
+              ],
+              [
+                1795451680740,
+                2131066880
+              ],
+              [
+                1795451681241,
+                2125316096
+              ],
+              [
+                1795451681743,
+                2126987264
+              ],
+              [
+                1795451682253,
+                2128494592
+              ],
+              [
+                1795451682747,
+                2128445440
+              ],
+              [
+                1795451683250,
+                2132525056
+              ],
+              [
+                1795451683751,
+                2135097344
+              ],
+              [
+                1795451684259,
+                2129657856
+              ],
+              [
+                1795451684762,
+                2129674240
+              ],
+              [
+                1795451685256,
+                2123776000
+              ],
+              [
+                1795451685760,
+                2127822848
+              ],
+              [
+                1795451686261,
+                2129002496
+              ],
+              [
+                1795451686762,
+                2131902464
+              ],
+              [
+                1795451687263,
+                2135048192
+              ],
+              [
+                1795451687764,
+                2137128960
+              ],
+              [
+                1795451688267,
+                2140061696
+              ],
+              [
+                1795451688770,
+                2146058240
+              ],
+              [
+                1795451689269,
+                2157740032
+              ],
+              [
+                1795451689772,
+                2160771072
+              ],
+              [
+                1795451690273,
+                2162524160
+              ],
+              [
+                1795451690777,
+                2169389056
+              ],
+              [
+                1795451691278,
+                2168111104
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "29cd2dbd9b4fd6972257db33db149535f5eecc1a4096c1c5fc75aca108b80ca3",
+            "bytes": 72534828
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T16-25-32-219Z-98f5a9c7732d; cell 4/4; source 54408783d9ba80b002a90ebb8106bb03ba43176f; fixture ur-latn-article-v1 (ur-Latn, 22486 JavaScript characters, 103 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro under AC power and sequential disposable profiles. Exact original Tiny Urdu FP32 browser graph, M2/index one, speed 1, pitch shift zero, range one, 24 kHz. Original pinned Roman Urdu TypeScript port compiled by erasing types, stock punctuation sentence splitting and recursive 500-token fit, a 150 ms inter-utterance gap within each source span, stock 0.99 span peak cap. ONNX Runtime Web 1.31.1 on both routes, one WASM thread or Apple hardware WebGPU plus WASM asyncify with synchronized CPU PCM readback, stock basic graph optimization with CPU arena and memory pattern disabled.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

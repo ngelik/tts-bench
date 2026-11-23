@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25",
+  "createdAt": "2026-11-23T16:30:35.864Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "ur-latn-article-v1",
+    "language": "ur-Latn",
+    "sha256": "1efd405d195af01f6f72acbafb54cfdf25495382f5cc4fece31352d2fffd4c0b",
+    "characters": 22486,
+    "unicodeCodePoints": 22486,
+    "utf8Bytes": 22486,
+    "chunks": 103,
+    "source": {
+      "type": "translation",
+      "description": "Roman Urdu translation of all 27 canonical source paragraphs. Written in ASCII, with spoken expansion of amounts, times, identifiers, and units and publisher casing for retroflex sounds. Compared with the source and audited through the pinned stock frontend. No native-speaker review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "54408783d9ba80b002a90ebb8106bb03ba43176f",
+    "dirty": false,
+    "manifestSha256": "4ba74115fa7be74cc7b382b6742998853664485c4cad2904107f0e167e121f7f"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-urdu:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-urdu-model-onnx",
+      "sha256": "74c982058e772073b671ecd49f9eb3cdf3e7728be59efcf81a798b66a983d717",
+      "bytes": 21420254
+    },
+    {
+      "id": "tiny-urdu-model-json",
+      "sha256": "e45b75cf87f2bcaa3a58d93e6a54efca6f581916d760c39e4e1c653f43f2f08e",
+      "bytes": 1428
+    },
+    {
+      "id": "tiny-urdu-frontend",
+      "sha256": "f054aeba85685000a13af39dd40b4f4683ff9730b24c462270c98f84bd6369dc",
+      "bytes": 12843
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-urdu",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ur"
+        ],
+        "scope": "Pinned zafar205/tiny-urdu-tts-4.5-million-parameters checkpoint, Roman Urdu input (ur-Latn), Urdu speech, M2/index 1, 24 kHz mono FP32.",
+        "sources": [
+          "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/tree/4fe6566118972ea0d44b517f413191e0e30f5880",
+          "https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/README.md",
+          "https://github.com/Zafar205/tiny-urdu/tree/5770756e05f33591eab29498a47f6644664beae7",
+          "https://github.com/Zafar205/tiny-urdu/blob/5770756e05f33591eab29498a47f6644664beae7/web/lib/urdu.ts",
+          "https://huggingface.co/datasets/kaab4321/UrduTTS/tree/f5c50b7aaabd4325bfe33617232203ad02e30f97",
+          "https://github.com/microsoft/onnxruntime/tree/v1.31.1"
+        ],
+        "notes": "The model card reports 4.5 million parameters; the registered exact count is the 4,545,739 logical scalar values across pinned ONNX initializer tensor shapes, including any graph constants, and is not asserted as a trainable-only count. The stock frontend audit covers ur-latn-article-v1: 103 ordered spans, 319 utterances, maximum 177 tokens, zero unknown token IDs, zero nonzero stress values, digest ef4562f72d6725d8f5a9b2a50644e914bcdd1b768b2baaffb38e64e57e5f9161. Roman Urdu uses Urdu phonemizer rules; common English loanwords are read with those Urdu rules, not as an English route. Urdu-script input is unsupported. Independent headed Chrome qualification tested stock 1.17.3 CPU and matched 1.31.1 CPU/WebGPU settings; the registered adapter uses 1.31.1 on both backends."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M2",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "zafar205/tiny-urdu-tts-4.5-million-parameters",
+        "modelRevision": "4fe6566118972ea0d44b517f413191e0e30f5880",
+        "sourceId": "Zafar205/tiny-urdu",
+        "sourceRevision": "5770756e05f33591eab29498a47f6644664beae7",
+        "parameterCount": 4545739,
+        "fixtureId": "ur-latn-article-v1",
+        "fixtureSha256": "1efd405d195af01f6f72acbafb54cfdf25495382f5cc4fece31352d2fffd4c0b",
+        "language": "ur-Latn",
+        "locale": "ur-Latn",
+        "spokenLanguage": "ur",
+        "supportedLanguages": [
+          "ur-Latn"
+        ],
+        "voice": "M2",
+        "voiceIndex": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "plannerTokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 25000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "peak": 0.99,
+        "interUtteranceGapSamples": 3600,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned stock Roman Urdu Frontend from Zafar205/tiny-urdu; no English synthesis route.",
+        "frontendFingerprint": "64f5034f3c3f5df340b2bfe86aa130542435bb15cd2dc530d4c30a51d99c3166",
+        "modelAssets": {
+          "model.onnx": {
+            "bytes": 21420254,
+            "sha256": "74c982058e772073b671ecd49f9eb3cdf3e7728be59efcf81a798b66a983d717"
+          },
+          "model.json": {
+            "bytes": 1428,
+            "sha256": "e45b75cf87f2bcaa3a58d93e6a54efca6f581916d760c39e4e1c653f43f2f08e"
+          },
+          "frontend/urdu.mjs": {
+            "bytes": 12843,
+            "sha256": "f054aeba85685000a13af39dd40b4f4683ff9730b24c462270c98f84bd6369dc"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "enableCpuMemArena": false,
+        "enableMemPattern": false,
+        "graphOptimizationLevel": "basic",
+        "waveform": "Pinned stock punctuation sentence splitting and recursive 500-token fit; concatenate utterances in source order with 150 ms gaps only within a source span, then apply one 0.99 peak cap per completed source span.",
+        "assetCacheStats": {
+          "verifiedBytes": 36361840,
+          "assets": 6
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit ONNX Runtime Web 1.31.1 single-thread WASM provider with CPU memory arena and memory pattern disabled."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 73508.3100001812,
+          "samples": 36267392,
+          "sampleRate": 24000,
+          "pcmSha256": "8dbcbce7ed2689c42e23e2076cb1460bbc1dac933aa930fe89022f43e6470909",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 103,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 285.65000009536743,
+            "firstSourceChunkCompletedMs": 791.8550000190735,
+            "audioSeconds": 1511.1413333333333,
+            "realTimeFactor": 0.048644232262533484,
+            "minSamplesPerChunk": 132096,
+            "maxSamplesPerChunk": 404272
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 73228.58000016212,
+          "samples": 36267392,
+          "sampleRate": 24000,
+          "pcmSha256": "db7a370db87203fcdbbcbadf6adcdc6180b1a9ede970bc12778f52d279ffff28",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 103,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 231.76500010490417,
+            "firstSourceChunkCompletedMs": 716.0150001049042,
+            "audioSeconds": 1511.1413333333333,
+            "realTimeFactor": 0.048459120523579174,
+            "minSamplesPerChunk": 132096,
+            "maxSamplesPerChunk": 404272
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 73312.92999982834,
+          "samples": 36267392,
+          "sampleRate": 24000,
+          "pcmSha256": "06080801a18178f019f949f0e897b954beb99c3dc9edf16cdb62491bcd26abae",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 103,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 231.7099997997284,
+            "firstSourceChunkCompletedMs": 716.2849998474121,
+            "audioSeconds": 1511.1413333333333,
+            "realTimeFactor": 0.048514939259924734,
+            "minSamplesPerChunk": 132096,
+            "maxSamplesPerChunk": 404272
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 73236.91000008583,
+          "samples": 36267392,
+          "sampleRate": 24000,
+          "pcmSha256": "705183be48d55a772ba722442f110e607e7605643d91fd60bbd43b4b996da6cc",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 103,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 232.6600000858307,
+            "firstSourceChunkCompletedMs": 716.2650001049042,
+            "audioSeconds": 1511.1413333333333,
+            "realTimeFactor": 0.04846463291328089,
+            "minSamplesPerChunk": 132096,
+            "maxSamplesPerChunk": 404272
+          },
+          "audio": {
+            "sha256": "27c13b675a4d60e4506ed32c1ef10f4020f7a80a13f888a6a68a050c1e95f41c",
+            "bytes": 72534828
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T16-25-32-219Z-98f5a9c7732d; cell 1/4; source 54408783d9ba80b002a90ebb8106bb03ba43176f; fixture ur-latn-article-v1 (ur-Latn, 22486 JavaScript characters, 103 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power and sequential disposable profiles. Exact original Tiny Urdu FP32 browser graph, M2/index one, speed 1, pitch shift zero, range one, 24 kHz. Original pinned Roman Urdu TypeScript port compiled by erasing types, stock punctuation sentence splitting and recursive 500-token fit, a 150 ms inter-utterance gap within each source span, stock 0.99 span peak cap. ONNX Runtime Web 1.31.1 on both routes, one WASM thread or Apple hardware WebGPU plus WASM asyncify with synchronized CPU PCM readback, stock basic graph optimization with CPU arena and memory pattern disabled."
+  ]
+}

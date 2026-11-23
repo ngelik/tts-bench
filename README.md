@@ -288,6 +288,14 @@ Warm and memory tables prefer native receipts that verify the registered model a
 |---|---|---:|---:|---:|---|
 | Serhiy 0.58M (Ukrainian) | E11 | 2.34 | [8.92 s (n=5)](results/2026-11-20t23-21-10-743z-ua-serhiy-0p58m-cpu-warm-c5806285/summary.md) | [9.36 s (n=5)](results/2026-11-20t23-22-31-529z-ua-serhiy-0p58m-webgpu-warm-f8a4d093/summary.md) | Native; independent attempts |
 
+### Urdu (Latin) (ur-Latn) — ur-latn-article-v1
+
+22486 characters / 103 spans · fixture SHA-256 `1efd405d195af01f6f72acbafb54cfdf25495382f5cc4fece31352d2fffd4c0b`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Tiny Urdu M2 (FP32) | E13 | 21.42 | [73.24 s (n=3)](results/2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25/summary.md) | [31.21 s (n=3)](results/2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b/summary.md) | Native; independent attempts |
+
 Each native warm score shows the number of timed articles (n) using the fixture size shown in its section after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
 **Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the raw receipt](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.
@@ -674,6 +682,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Serhiy 0.58M (Ukrainian) | 2.34 | [1085.64](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/summary.md) | [1964.76](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) |
 
+**RAM 58** · Urdu (Latin) (ur-Latn) · fixture `ur-latn-article-v1` · 22486 characters / 103 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`54408783`](https://github.com/ngelik/tts-bench/commit/54408783d9ba80b002a90ebb8106bb03ba43176f).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Tiny Urdu M2 (FP32) | 21.42 | [1162.48](results/2026-11-23t16-32-52-620z-tiny-urdu-cpu-cached-fe4688d8/summary.md) | [2062.64](results/2026-11-23t16-34-15-251z-tiny-urdu-webgpu-cached-faf31c2f/summary.md) |
+
 ![Average Chrome RAM during generation — English](docs/reference-memory.svg)
 
 ![Average Chrome RAM during generation — Arabic](docs/reference-memory-ar.svg)
@@ -715,6 +729,8 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 ![Average Chrome RAM during generation — Turkish](docs/reference-memory-tr.svg)
 
 ![Average Chrome RAM during generation — Ukrainian](docs/reference-memory-uk.svg)
+
+![Average Chrome RAM during generation — Urdu (Latin)](docs/reference-memory-ur-Latn.svg)
 
 ### Voice and language support
 
@@ -993,6 +1009,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![tiny-swara — campaign metrics](reports/tiny-swara/overview.svg)
 
+[tiny-urdu-cpu — all-metrics table and source receipts](reports/tiny-urdu-cpu/overview.md)
+
+![tiny-urdu-cpu — campaign metrics](reports/tiny-urdu-cpu/overview.svg)
+
+[tiny-urdu-webgpu — all-metrics table and source receipts](reports/tiny-urdu-webgpu/overview.md)
+
+![tiny-urdu-webgpu — campaign metrics](reports/tiny-urdu-webgpu/overview.svg)
+
 [tiny-voca-ar — all-metrics table and source receipts](reports/tiny-voca-ar/overview.md)
 
 ![tiny-voca-ar — campaign metrics](reports/tiny-voca-ar/overview.svg)
@@ -1227,6 +1251,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Tiny Broca Brazilian Portuguese F1 (FP32) | webgpu | pt-BR | [Receipt](results/2026-11-23t04-15-08-824z-tiny-broca-webgpu-warm-7c717bac/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t04-15-08-824z-tiny-broca-webgpu-warm-7c717bac--tiny-broca--webgpu.wav) | Not published |
 | Tiny Swara Bengali BF (INT8) | cpu | bn | [Receipt](results/2026-11-23t13-27-16-548z-tiny-swara-cpu-warm-2c97e097/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t13-27-16-548z-tiny-swara-cpu-warm-2c97e097--tiny-swara--cpu.wav) | Not published |
 | Tiny Swara Bengali BF (INT8) | webgpu | bn | [Receipt](results/2026-11-23t13-32-59-104z-tiny-swara-webgpu-warm-1ae9d42b/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t13-32-59-104z-tiny-swara-webgpu-warm-1ae9d42b--tiny-swara--webgpu.wav) | Not published |
+| Tiny Urdu M2 (FP32) | cpu | ur-Latn | [Receipt](results/2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25--tiny-urdu--cpu.wav) | Not published |
+| Tiny Urdu M2 (FP32) | webgpu | ur-Latn | [Receipt](results/2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b--tiny-urdu--webgpu.wav) | Not published |
 | Tiny Voca Arabic Halabi F2 (FP32) | cpu | ar | [Receipt](results/2026-11-23t05-22-26-884z-tiny-voca-ar-halabi-cpu-warm-f9178859/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t05-22-26-884z-tiny-voca-ar-halabi-cpu-warm-f9178859--tiny-voca-ar-halabi--cpu.wav) | Not published |
 | Tiny Voca Arabic Halabi F2 (FP32) | webgpu | ar | [Receipt](results/2026-11-23t05-29-00-720z-tiny-voca-ar-halabi-webgpu-warm-82fdd147/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t05-29-00-720z-tiny-voca-ar-halabi-webgpu-warm-82fdd147--tiny-voca-ar-halabi--webgpu.wav) | Not published |
 | Tiny Voca Arabic M2 (FP32) | cpu | ar | [Receipt](results/2026-11-23t06-16-48-416z-tiny-voca-ar-cpu-warm-cde348f7/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t06-16-48-416z-tiny-voca-ar-cpu-warm-cde348f7--tiny-voca-ar--cpu.wav) | Not published |
@@ -1582,6 +1608,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 297 · 2026-11-23 | tui-voice-mini-ml/webgpu | ml / ml-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-23t15-44-39-263z-tui-voice-mini-ml-webgpu-warm-28be0755/summary.md) | [SVG](results/2026-11-23t15-44-39-263z-tui-voice-mini-ml-webgpu-warm-28be0755/chart.svg) |
 | 298 · 2026-11-23 | tui-voice-mini-ml/cpu | ml / ml-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t15-46-19-544z-tui-voice-mini-ml-cpu-cached-457bf385/summary.md) | [SVG](results/2026-11-23t15-46-19-544z-tui-voice-mini-ml-cpu-cached-457bf385/chart.svg) |
 | 299 · 2026-11-23 | tui-voice-mini-ml/webgpu | ml / ml-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t15-47-58-087z-tui-voice-mini-ml-webgpu-cached-1aa0b577/summary.md) | [SVG](results/2026-11-23t15-47-58-087z-tui-voice-mini-ml-webgpu-cached-1aa0b577/chart.svg) |
+| 300 · 2026-11-23 | tiny-urdu/cpu | ur-Latn / ur-latn-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25/summary.md) | [SVG](results/2026-11-23t16-25-32-930z-tiny-urdu-cpu-warm-0f649d25/chart.svg) |
+| 301 · 2026-11-23 | tiny-urdu/webgpu | ur-Latn / ur-latn-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b/summary.md) | [SVG](results/2026-11-23t16-30-36-555z-tiny-urdu-webgpu-warm-eab2a71b/chart.svg) |
+| 302 · 2026-11-23 | tiny-urdu/cpu | ur-Latn / ur-latn-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t16-32-52-620z-tiny-urdu-cpu-cached-fe4688d8/summary.md) | [SVG](results/2026-11-23t16-32-52-620z-tiny-urdu-cpu-cached-fe4688d8/chart.svg) |
+| 303 · 2026-11-23 | tiny-urdu/webgpu | ur-Latn / ur-latn-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t16-34-15-251z-tiny-urdu-webgpu-cached-faf31c2f/summary.md) | [SVG](results/2026-11-23t16-34-15-251z-tiny-urdu-webgpu-cached-faf31c2f/chart.svg) |
 
 </details>
 
