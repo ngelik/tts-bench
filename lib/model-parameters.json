@@ -279,5 +279,12 @@
     "parameterCountSource": "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
     "upstreamModelCard": "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
     "scope": "Publisher-reported exact parameter count for the pinned Arabic F2 FP32 checkpoint, including the waveform generator."
+  },
+  "tiny-voca-ar": {
+    "parameterCount": 4537867,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/abdullah/tiny-voca-ar/blob/dcdf56c10c536d4df74576f036b512c0d212e17f/README.md",
+    "upstreamModelCard": "https://huggingface.co/abdullah/tiny-voca-ar/tree/dcdf56c10c536d4df74576f036b512c0d212e17f",
+    "scope": "The pinned publisher card reports 4,537,867 model parameters; use this only as the model-wide reported total, not a benchmark measurement."
   }
 }
