@@ -1,0 +1,801 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t17-49-52-453z-sobbie-tts-cpu-cached-a50fa7d2",
+  "createdAt": "2026-11-23T17:51:04.851Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "541739673980e4a5789a06360e9bbb3a211ac22f",
+    "dirty": false,
+    "manifestSha256": "04f4ef21f5bc924519d9eba4a448f72435cdd252535c0f0d759d3fe8212e89ea"
+  },
+  "assets": [
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "sobbie-tts-model-onnx",
+      "sha256": "eafb38b736c17872091c0f05de87814257925a9c3c5aeff168c74afc496d9317",
+      "bytes": 21386372
+    },
+    {
+      "id": "sobbie-tts-config-json",
+      "sha256": "d4d01f06170711045a1b5a020f2cc392dd114b596e82739a25f1a9e875a72860",
+      "bytes": 2565
+    },
+    {
+      "id": "sobbie-tts-model-json",
+      "sha256": "9649c7401ebbb999e8cf204af4ee6eee2ea152fcb99df6679f7b7cb8f866d01b",
+      "bytes": 1332
+    },
+    {
+      "id": "sobbie-tts-readme-md",
+      "sha256": "1f349ad106c88c9d5b932ab66ffb4fe7466e2fcdd6ab87a0f3291d43f01686d9",
+      "bytes": 4801
+    },
+    {
+      "id": "sobbie-tts-web-readme-md",
+      "sha256": "63fcb4da06f1d4b5c999d7d833da3f6d1aaf93ab62b29bdfce49e2855b389fbb",
+      "bytes": 391
+    },
+    {
+      "id": "sobbie-tts-dizione-source-zip",
+      "sha256": "f7773c30fef90ed3c2f1daa973868b2b26ab4efd82c08340d0e1815a98fca09a",
+      "bytes": 135578
+    },
+    {
+      "id": "sobbie-tts-phonemizer-lexicon-tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "sobbie-tts-phonemizer-align-json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "sobbie-tts-phonemizer-g2p-json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "sobbie-tts-phonemizer-g2p-npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "sobbie-tts-phonemizer-homographs-json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "sobbie-tts-phonemizer-sources-json",
+      "sha256": "f4c54924d30a5bc0bc1e3d7b058adb924484b3fab8541bc8d8bcecfb028fdbad",
+      "bytes": 213
+    },
+    {
+      "id": "sobbie-tts-phonemizer-license-cmudict",
+      "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+      "bytes": 1754
+    },
+    {
+      "id": "sobbie-tts-phonemizer-license-homograph-data",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide.js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide.asm.js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide.asm.wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "sobbie-tts-pyodide-python_stdlib.zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide-lock.json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "sobbie-tts-pyodide-numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "sobbie-tts-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "sobbie-tts-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    }
+  ],
+  "cells": [
+    {
+      "model": "sobbie-tts",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned SobbieTTS FP32 checkpoint; English canonical fixture, publisher F/index 0, 24 kHz mono. Dizione at pinned source/data; speed 1, pitch shift 0, pitch range 1.15.",
+        "sources": [
+          "https://huggingface.co/PatnaikAshish/SobbieTTS/tree/6b6132c6d34b5fc163d8f5553580678a60532ac3",
+          "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+          "https://github.com/n4ze3m/dizione/tree/8cd889e4de7be6bd1dd2e6891344a0729fa14dd4"
+        ],
+        "notes": "The browser route follows the staged publisher worker for finished(), abbreviations/sentence boundaries, max_tokens minus 12 recursive token fitting, default F voice, direct PCM concatenation and one 0.99 final source-span peak cap. The Dizione config frontend fingerprint is retained as a distinct release identifier; the source/data digest is recorded separately."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "PatnaikAshish/SobbieTTS",
+        "modelRevision": "6b6132c6d34b5fc163d8f5553580678a60532ac3",
+        "sourceId": "PatnaikAshish/SobbieTTS",
+        "sourceRevision": "6b6132c6d34b5fc163d8f5553580678a60532ac3",
+        "parameterCount": 4537291,
+        "fixtureId": "english-20k-v1",
+        "fixtureSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "language": "en",
+        "locale": "en-US",
+        "spokenLanguage": "en",
+        "supportedLanguages": [
+          "en"
+        ],
+        "voice": "F",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1.15,
+        "peak": 0.99,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned Dizione Python frontend under Pyodide 0.26.4 + NumPy 1.26.4; browser demo sentence/finished/token-fit protocol.",
+        "frontendFingerprint": "dizione:8cd889e4de7be6bd1dd2e6891344a0729fa14dd4; config:c729f235e10daa1a08ce7711169c1cb93fb552b3c24eecb16527513d7b69d4da",
+        "configFrontendFingerprint": "c729f235e10daa1a08ce7711169c1cb93fb552b3c24eecb16527513d7b69d4da",
+        "dizioneRevision": "8cd889e4de7be6bd1dd2e6891344a0729fa14dd4",
+        "dizioneIdentity": {
+          "version": 4,
+          "built": {
+            "lexicon.tsv": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+            "align.json": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+            "g2p.json": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+            "g2p.npz": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+            "homographs.json": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192"
+          },
+          "tables": "fc40bd3e65ad2c5af834409c4c7f377fe04be144f4bc61737471324ff73c7d29",
+          "code": "102db3045b4a24979e3619000e5817d202afa5f9902e929908b2e43d331f2734",
+          "fingerprint": "f41b6f9dac16c0b3ac492e255fcbebf6b73f737b20a62dfba7576ceb208f9190"
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "pyodide": "0.26.4",
+          "numpy": "1.26.4"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Publisher sentence-at-a-time graph calls; direct source-order concatenation; one 0.99 peak cap on each complete source span."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit one-thread ONNX Runtime Web 1.31.1 WASM CPU route; pinned Dizione frontend uses local Pyodide 0.26.4 and NumPy 1.26.4."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 60154.83499979973,
+          "samples": 29417216,
+          "sampleRate": 24000,
+          "pcmSha256": "12351e2a75e52445d59cceb362fa0560a151066ba589c4ee9ca618f53d92d52b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 170.57999992370605,
+            "firstSourceChunkCompletedMs": 698.6150000095367,
+            "audioSeconds": 1225.7173333333333,
+            "realTimeFactor": 0.04907724918616342,
+            "minSamplesPerChunk": 237824,
+            "maxSamplesPerChunk": 426752,
+            "articleCallPeakRssBytes": 1621606400,
+            "generationMeanRssBytes": 1078238475,
+            "generationRssSampleCount": 119,
+            "loadMs": 2597.2763750000004,
+            "controllerTrialElapsedMs": 66633.33833299999,
+            "downloadBytes": 64636,
+            "idealDownloadSecondsAt1Mbps": 0.517088
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795456200654.975,
+            "finalPcmAtEpochMs": 1795456260809.81,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795456201200,
+                1328545792
+              ],
+              [
+                1795456201701,
+                1311473664
+              ],
+              [
+                1795456202202,
+                1296613376
+              ],
+              [
+                1795456202705,
+                1291108352
+              ],
+              [
+                1795456203207,
+                1324351488
+              ],
+              [
+                1795456203708,
+                1328726016
+              ],
+              [
+                1795456204209,
+                1330298880
+              ],
+              [
+                1795456204712,
+                1332117504
+              ],
+              [
+                1795456205211,
+                1332133888
+              ],
+              [
+                1795456205712,
+                1334509568
+              ],
+              [
+                1795456206214,
+                1337163776
+              ],
+              [
+                1795456206716,
+                1338621952
+              ],
+              [
+                1795456207221,
+                1341210624
+              ],
+              [
+                1795456207723,
+                1341440000
+              ],
+              [
+                1795456208224,
+                1343078400
+              ],
+              [
+                1795456208725,
+                1344962560
+              ],
+              [
+                1795456209227,
+                1344978944
+              ],
+              [
+                1795456209731,
+                1348190208
+              ],
+              [
+                1795456210234,
+                1350172672
+              ],
+              [
+                1795456210733,
+                1352073216
+              ],
+              [
+                1795456211235,
+                1352646656
+              ],
+              [
+                1795456211744,
+                1354940416
+              ],
+              [
+                1795456212244,
+                1354973184
+              ],
+              [
+                1795456212742,
+                1356562432
+              ],
+              [
+                1795456213261,
+                1358659584
+              ],
+              [
+                1795456213746,
+                1359757312
+              ],
+              [
+                1795456214256,
+                1361690624
+              ],
+              [
+                1795456214753,
+                1362247680
+              ],
+              [
+                1795456215255,
+                1364246528
+              ],
+              [
+                1795456215756,
+                1367539712
+              ],
+              [
+                1795456216259,
+                1368653824
+              ],
+              [
+                1795456216760,
+                1370783744
+              ],
+              [
+                1795456217263,
+                1371963392
+              ],
+              [
+                1795456217775,
+                1372028928
+              ],
+              [
+                1795456218277,
+                1342095360
+              ],
+              [
+                1795456218771,
+                1265401856
+              ],
+              [
+                1795456219275,
+                1134985216
+              ],
+              [
+                1795456219777,
+                1091436544
+              ],
+              [
+                1795456220279,
+                1052213248
+              ],
+              [
+                1795456220777,
+                1004519424
+              ],
+              [
+                1795456221279,
+                1007190016
+              ],
+              [
+                1795456221779,
+                1008779264
+              ],
+              [
+                1795456222281,
+                1009123328
+              ],
+              [
+                1795456222786,
+                1010991104
+              ],
+              [
+                1795456223288,
+                1013645312
+              ],
+              [
+                1795456223791,
+                1015332864
+              ],
+              [
+                1795456224299,
+                996130816
+              ],
+              [
+                1795456224796,
+                905625600
+              ],
+              [
+                1795456225295,
+                907182080
+              ],
+              [
+                1795456225798,
+                910262272
+              ],
+              [
+                1795456226298,
+                909918208
+              ],
+              [
+                1795456226803,
+                903430144
+              ],
+              [
+                1795456227304,
+                906264576
+              ],
+              [
+                1795456227804,
+                914079744
+              ],
+              [
+                1795456228306,
+                929775616
+              ],
+              [
+                1795456228810,
+                929497088
+              ],
+              [
+                1795456229312,
+                930856960
+              ],
+              [
+                1795456229815,
+                934330368
+              ],
+              [
+                1795456230318,
+                935493632
+              ],
+              [
+                1795456230824,
+                935493632
+              ],
+              [
+                1795456231328,
+                937213952
+              ],
+              [
+                1795456231824,
+                936886272
+              ],
+              [
+                1795456232325,
+                938393600
+              ],
+              [
+                1795456232829,
+                940457984
+              ],
+              [
+                1795456233330,
+                940457984
+              ],
+              [
+                1795456233831,
+                946765824
+              ],
+              [
+                1795456234336,
+                948666368
+              ],
+              [
+                1795456234836,
+                948731904
+              ],
+              [
+                1795456235338,
+                950353920
+              ],
+              [
+                1795456235838,
+                951894016
+              ],
+              [
+                1795456236347,
+                952090624
+              ],
+              [
+                1795456236849,
+                948191232
+              ],
+              [
+                1795456237350,
+                936984576
+              ],
+              [
+                1795456237852,
+                939737088
+              ],
+              [
+                1795456238352,
+                939884544
+              ],
+              [
+                1795456238852,
+                942358528
+              ],
+              [
+                1795456239356,
+                943931392
+              ],
+              [
+                1795456239857,
+                945635328
+              ],
+              [
+                1795456240363,
+                946552832
+              ],
+              [
+                1795456240861,
+                948092928
+              ],
+              [
+                1795456241364,
+                951189504
+              ],
+              [
+                1795456241866,
+                952369152
+              ],
+              [
+                1795456242369,
+                952369152
+              ],
+              [
+                1795456242872,
+                963559424
+              ],
+              [
+                1795456243372,
+                962166784
+              ],
+              [
+                1795456243875,
+                963461120
+              ],
+              [
+                1795456244377,
+                963493888
+              ],
+              [
+                1795456244880,
+                964886528
+              ],
+              [
+                1795456245388,
+                965885952
+              ],
+              [
+                1795456245884,
+                967032832
+              ],
+              [
+                1795456246389,
+                963952640
+              ],
+              [
+                1795456246892,
+                962920448
+              ],
+              [
+                1795456247391,
+                951353344
+              ],
+              [
+                1795456247894,
+                952778752
+              ],
+              [
+                1795456248395,
+                953843712
+              ],
+              [
+                1795456248897,
+                955138048
+              ],
+              [
+                1795456249398,
+                956760064
+              ],
+              [
+                1795456249900,
+                958431232
+              ],
+              [
+                1795456250402,
+                960446464
+              ],
+              [
+                1795456250905,
+                961560576
+              ],
+              [
+                1795456251406,
+                962789376
+              ],
+              [
+                1795456251909,
+                962789376
+              ],
+              [
+                1795456252411,
+                964362240
+              ],
+              [
+                1795456252913,
+                966524928
+              ],
+              [
+                1795456253416,
+                968867840
+              ],
+              [
+                1795456253917,
+                969129984
+              ],
+              [
+                1795456254421,
+                970522624
+              ],
+              [
+                1795456254921,
+                971669504
+              ],
+              [
+                1795456255425,
+                972980224
+              ],
+              [
+                1795456255925,
+                975306752
+              ],
+              [
+                1795456256430,
+                977780736
+              ],
+              [
+                1795456256933,
+                977780736
+              ],
+              [
+                1795456257433,
+                980303872
+              ],
+              [
+                1795456257953,
+                991854592
+              ],
+              [
+                1795456258437,
+                995573760
+              ],
+              [
+                1795456258938,
+                997457920
+              ],
+              [
+                1795456259441,
+                999292928
+              ],
+              [
+                1795456259943,
+                1000620032
+              ],
+              [
+                1795456260445,
+                1005371392
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "7b8970bf840eb91c40411babfad6e1c368487be629b1f91643043ed66577e35c",
+            "bytes": 58834476
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T17-43-43-862Z-b6127a3103f3; cell 3/4; source 541739673980e4a5789a06360e9bbb3a211ac22f; fixture english-20k-v1 (en, 20000 JavaScript characters, 93 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro under AC power, sequential disposable profiles. Exact SobbieTTS FP32 English graph, revision 6b6132c6d34b5fc163d8f5553580678a60532ac3, F/index zero, speed 1, pitch shift zero, pitch range 1.15, 24 kHz. Stock Dizione assets, publisher frontend format and token budgeting with Pyodide 0.26.4. ONNX Runtime Web 1.31.1 on both routes, one WASM thread and verified Apple hardware WebGPU plus WASM asyncify. PCM is joined and capped at the publisher peak for each source span.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

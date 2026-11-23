@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t17-43-44-593z-sobbie-tts-cpu-warm-2e30d714",
+  "createdAt": "2026-11-23T17:47:57.358Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "541739673980e4a5789a06360e9bbb3a211ac22f",
+    "dirty": false,
+    "manifestSha256": "04f4ef21f5bc924519d9eba4a448f72435cdd252535c0f0d759d3fe8212e89ea"
+  },
+  "assets": [
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:sobbie-tts:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "sobbie-tts-model-onnx",
+      "sha256": "eafb38b736c17872091c0f05de87814257925a9c3c5aeff168c74afc496d9317",
+      "bytes": 21386372
+    },
+    {
+      "id": "sobbie-tts-config-json",
+      "sha256": "d4d01f06170711045a1b5a020f2cc392dd114b596e82739a25f1a9e875a72860",
+      "bytes": 2565
+    },
+    {
+      "id": "sobbie-tts-model-json",
+      "sha256": "9649c7401ebbb999e8cf204af4ee6eee2ea152fcb99df6679f7b7cb8f866d01b",
+      "bytes": 1332
+    },
+    {
+      "id": "sobbie-tts-readme-md",
+      "sha256": "1f349ad106c88c9d5b932ab66ffb4fe7466e2fcdd6ab87a0f3291d43f01686d9",
+      "bytes": 4801
+    },
+    {
+      "id": "sobbie-tts-web-readme-md",
+      "sha256": "63fcb4da06f1d4b5c999d7d833da3f6d1aaf93ab62b29bdfce49e2855b389fbb",
+      "bytes": 391
+    },
+    {
+      "id": "sobbie-tts-dizione-source-zip",
+      "sha256": "f7773c30fef90ed3c2f1daa973868b2b26ab4efd82c08340d0e1815a98fca09a",
+      "bytes": 135578
+    },
+    {
+      "id": "sobbie-tts-phonemizer-lexicon-tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "sobbie-tts-phonemizer-align-json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "sobbie-tts-phonemizer-g2p-json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "sobbie-tts-phonemizer-g2p-npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "sobbie-tts-phonemizer-homographs-json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "sobbie-tts-phonemizer-sources-json",
+      "sha256": "f4c54924d30a5bc0bc1e3d7b058adb924484b3fab8541bc8d8bcecfb028fdbad",
+      "bytes": 213
+    },
+    {
+      "id": "sobbie-tts-phonemizer-license-cmudict",
+      "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+      "bytes": 1754
+    },
+    {
+      "id": "sobbie-tts-phonemizer-license-homograph-data",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide.js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide.asm.js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide.asm.wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "sobbie-tts-pyodide-python_stdlib.zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "sobbie-tts-pyodide-pyodide-lock.json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "sobbie-tts-pyodide-numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "sobbie-tts-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "sobbie-tts-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    }
+  ],
+  "cells": [
+    {
+      "model": "sobbie-tts",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned SobbieTTS FP32 checkpoint; English canonical fixture, publisher F/index 0, 24 kHz mono. Dizione at pinned source/data; speed 1, pitch shift 0, pitch range 1.15.",
+        "sources": [
+          "https://huggingface.co/PatnaikAshish/SobbieTTS/tree/6b6132c6d34b5fc163d8f5553580678a60532ac3",
+          "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+          "https://github.com/n4ze3m/dizione/tree/8cd889e4de7be6bd1dd2e6891344a0729fa14dd4"
+        ],
+        "notes": "The browser route follows the staged publisher worker for finished(), abbreviations/sentence boundaries, max_tokens minus 12 recursive token fitting, default F voice, direct PCM concatenation and one 0.99 final source-span peak cap. The Dizione config frontend fingerprint is retained as a distinct release identifier; the source/data digest is recorded separately."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "PatnaikAshish/SobbieTTS",
+        "modelRevision": "6b6132c6d34b5fc163d8f5553580678a60532ac3",
+        "sourceId": "PatnaikAshish/SobbieTTS",
+        "sourceRevision": "6b6132c6d34b5fc163d8f5553580678a60532ac3",
+        "parameterCount": 4537291,
+        "fixtureId": "english-20k-v1",
+        "fixtureSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "language": "en",
+        "locale": "en-US",
+        "spokenLanguage": "en",
+        "supportedLanguages": [
+          "en"
+        ],
+        "voice": "F",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1.15,
+        "peak": 0.99,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned Dizione Python frontend under Pyodide 0.26.4 + NumPy 1.26.4; browser demo sentence/finished/token-fit protocol.",
+        "frontendFingerprint": "dizione:8cd889e4de7be6bd1dd2e6891344a0729fa14dd4; config:c729f235e10daa1a08ce7711169c1cb93fb552b3c24eecb16527513d7b69d4da",
+        "configFrontendFingerprint": "c729f235e10daa1a08ce7711169c1cb93fb552b3c24eecb16527513d7b69d4da",
+        "dizioneRevision": "8cd889e4de7be6bd1dd2e6891344a0729fa14dd4",
+        "dizioneIdentity": {
+          "version": 4,
+          "built": {
+            "lexicon.tsv": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+            "align.json": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+            "g2p.json": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+            "g2p.npz": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+            "homographs.json": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192"
+          },
+          "tables": "fc40bd3e65ad2c5af834409c4c7f377fe04be144f4bc61737471324ff73c7d29",
+          "code": "102db3045b4a24979e3619000e5817d202afa5f9902e929908b2e43d331f2734",
+          "fingerprint": "f41b6f9dac16c0b3ac492e255fcbebf6b73f737b20a62dfba7576ceb208f9190"
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "pyodide": "0.26.4",
+          "numpy": "1.26.4"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Publisher sentence-at-a-time graph calls; direct source-order concatenation; one 0.99 peak cap on each complete source span."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit one-thread ONNX Runtime Web 1.31.1 WASM CPU route; pinned Dizione frontend uses local Pyodide 0.26.4 and NumPy 1.26.4."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 59994.890000104904,
+          "samples": 29417216,
+          "sampleRate": 24000,
+          "pcmSha256": "c9d2cbe17e0e3deff12b72e05e1668a1bb8b36636adc7a2cbea4556a61d3b6cd",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 172.2850000858307,
+            "firstSourceChunkCompletedMs": 705.1549999713898,
+            "audioSeconds": 1225.7173333333333,
+            "realTimeFactor": 0.04894675825212412,
+            "minSamplesPerChunk": 237824,
+            "maxSamplesPerChunk": 426752
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 59784.50999999046,
+          "samples": 29417216,
+          "sampleRate": 24000,
+          "pcmSha256": "255f643785baf220b1af634cc458cbfde8899c510e90c5b0d6b2f472fbc0b733",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 160.99000000953674,
+            "firstSourceChunkCompletedMs": 673.7449998855591,
+            "audioSeconds": 1225.7173333333333,
+            "realTimeFactor": 0.048775119984153875,
+            "minSamplesPerChunk": 237824,
+            "maxSamplesPerChunk": 426752
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 59769.390000104904,
+          "samples": 29417216,
+          "sampleRate": 24000,
+          "pcmSha256": "9aefa8e97ae6e302092e7dbfddd69fc3e0e91d29501d7c3b92d28f0923615271",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 159.88000011444092,
+            "firstSourceChunkCompletedMs": 672.4000000953674,
+            "audioSeconds": 1225.7173333333333,
+            "realTimeFactor": 0.04876278435058293,
+            "minSamplesPerChunk": 237824,
+            "maxSamplesPerChunk": 426752
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 59620.24499988556,
+          "samples": 29417216,
+          "sampleRate": 24000,
+          "pcmSha256": "723212f7722fae424aafe19e90d9f8c2ef1ce9112cf5f2d8d35b73f87edca7a4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 160.90499997138977,
+            "firstSourceChunkCompletedMs": 674.1699998378754,
+            "audioSeconds": 1225.7173333333333,
+            "realTimeFactor": 0.048641104583018784,
+            "minSamplesPerChunk": 237824,
+            "maxSamplesPerChunk": 426752
+          },
+          "audio": {
+            "sha256": "287775540742e2018dd9a13873d056ce394abedf0bafd131943c34f925698171",
+            "bytes": 58834476
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T17-43-43-862Z-b6127a3103f3; cell 1/4; source 541739673980e4a5789a06360e9bbb3a211ac22f; fixture english-20k-v1 (en, 20000 JavaScript characters, 93 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power, sequential disposable profiles. Exact SobbieTTS FP32 English graph, revision 6b6132c6d34b5fc163d8f5553580678a60532ac3, F/index zero, speed 1, pitch shift zero, pitch range 1.15, 24 kHz. Stock Dizione assets, publisher frontend format and token budgeting with Pyodide 0.26.4. ONNX Runtime Web 1.31.1 on both routes, one WASM thread and verified Apple hardware WebGPU plus WASM asyncify. PCM is joined and capped at the publisher peak for each source span."
+  ]
+}
