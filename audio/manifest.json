@@ -3339,6 +3339,72 @@
       }
     },
     {
+      "resultId": "2026-11-23t05-22-26-884z-tiny-voca-ar-halabi-cpu-warm-f9178859",
+      "model": "tiny-voca-ar-halabi",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "ar",
+      "attribution": "AI-generated Modern Standard Arabic narration using BenkadourKhaled’s Apache-2.0 Tiny Voca Halabi F2 checkpoint. The Arabic Speech Corpus and derivatives are licensed under CC BY 4.0. Credit Nawar Halabi (2016), Modern standard Arabic phonetics for speech synthesis, PhD thesis, University of Southampton. https://en.arabicspeechcorpus.com/ This is generated narration of the benchmark translation.",
+      "modelTerms": "Apache-2.0 for code and weights. CC BY 4.0 applies to the Halabi corpus and derivatives; preserve the required citation and attribution asset. Generated audio has no blanket redistribution grant.",
+      "sourceUrls": [
+        "https://github.com/BenkadourKhaled/tiny-voca/tree/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb",
+        "https://github.com/BenkadourKhaled/tiny-voca/releases/tag/v0.1-ar-demo-kit",
+        "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
+        "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/docs/arabic-data.md",
+        "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/docs/arabic-demo.md",
+        "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t05-22-26-884z-tiny-voca-ar-halabi-cpu-warm-f9178859--tiny-voca-ar-halabi--cpu.wav",
+        "sha256": "651e97f305740ab091d7d950fb1fd2bfe5984360d706e493e71b5ab03e03e6e1",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "f136c4d23ed1c3baec5ae1d247b54f0a79dcd6665333f32ca25b79652cc1e5cc",
+        "bytes": 97648172
+      }
+    },
+    {
+      "resultId": "2026-11-23t05-29-00-720z-tiny-voca-ar-halabi-webgpu-warm-82fdd147",
+      "model": "tiny-voca-ar-halabi",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2",
+      "language": "ar",
+      "attribution": "AI-generated Modern Standard Arabic narration using BenkadourKhaled’s Apache-2.0 Tiny Voca Halabi F2 checkpoint. The Arabic Speech Corpus and derivatives are licensed under CC BY 4.0. Credit Nawar Halabi (2016), Modern standard Arabic phonetics for speech synthesis, PhD thesis, University of Southampton. https://en.arabicspeechcorpus.com/ This is generated narration of the benchmark translation.",
+      "modelTerms": "Apache-2.0 for code and weights. CC BY 4.0 applies to the Halabi corpus and derivatives; preserve the required citation and attribution asset. Generated audio has no blanket redistribution grant.",
+      "sourceUrls": [
+        "https://github.com/BenkadourKhaled/tiny-voca/tree/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb",
+        "https://github.com/BenkadourKhaled/tiny-voca/releases/tag/v0.1-ar-demo-kit",
+        "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
+        "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/docs/arabic-data.md",
+        "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/docs/arabic-demo.md",
+        "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t05-29-00-720z-tiny-voca-ar-halabi-webgpu-warm-82fdd147--tiny-voca-ar-halabi--webgpu.wav",
+        "sha256": "d4146f18d9d1bec7b7e2273ccda2308cdfa62769cb07aa24b3b7bfa46ccbff9c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "fed0bde6e7519cd8a18a6d9cdf990b880de88763f506f527fa7a7bd0ad2b914f",
+        "bytes": 97648172
+      }
+    },
+    {
       "resultId": "2026-11-22t06-59-31-757z-tiny-voca-de-en-cpu-warm-9cd2b0be",
       "model": "tiny-voca-de-en",
       "backend": "cpu",
