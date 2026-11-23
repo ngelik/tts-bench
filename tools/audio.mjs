@@ -76,6 +76,8 @@ attribution['tiny-voca-hindi']='AI-generated Hindi benchmark narration using RL1
 attribution['bengali-voice']='AI-generated Bengali narration using Tamal Hansda’s Apache-2.0 Bengali Voice compact model and the Jahnavi voice. The model is based on Muhammed Nazeem’s Tiny Voca and trained on the CC BY 4.0 Bengali Maya 2 Native Jahnavi dataset. Bengali pronunciation uses the Google Bengali language resources dictionary (CC BY 4.0) and the publisher’s trained phonemizer.';
 attribution['tiny-swara']='AI-generated Bengali narration using Xeven7’s Apache-2.0 Tiny Swara INT8 checkpoint with the BF voice. This model is based on Muhammed Nazeem’s Tiny Voca. Its Bengali training audio is from AI4Bharat’s CC BY 4.0 Rasa dataset by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra. Pronunciation uses eSpeak NG.';
 attribution['tui-voice-mini-ml']='AI-generated Malayalam benchmark narration from Cyrax321’s Apache-2.0 Tui Voice Mini checkpoint, using the fixed F2 voice (AI4Bharat Rasa Malayalam Female). The model card credits AI4Bharat Rasa, by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra (CC BY 4.0), as training data and Muhammed Nazeem’s Tiny Voca architecture.';
+attribution['tiny-urdu'] = 'AI-generated Roman Urdu narration using Zafar205’s Apache-2.0 Tiny Urdu checkpoint and M2 voice. ' +
+  'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the CC BY-NC 4.0 UrduTTS dataset by M. Kaab Bin Shahid and Muhammed Izharuddin. Noncommercial benchmark evaluation.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');

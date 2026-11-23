@@ -820,3 +820,70 @@ article runs.
 [Retained notices](../web/tui-voice-mini-ml/NOTICE.md) ·
 [Pinned model card](https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md) ·
 [Rasa CC BY 4.0 dataset at pinned revision](https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5).
+
+<a id="tiny-urdu"></a>
+
+## Tiny Urdu M2 (FP32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`ur`).
+The benchmark takes Roman Urdu (`ur-Latn`) and synthesizes Urdu with M2/index 1. The English controls follow Urdu pronunciation rules.
+
+The pinned [model card](https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/blob/4fe6566118972ea0d44b517f413191e0e30f5880/README.md)
+reports a 4.5-million-parameter, 21 MB model, trained for 25,000 steps on 5,000
+UrduTTS clips. It identifies one male Urdu voice, M2, and a 24 kHz mono output.
+The pinned ONNX graph stores 4,545,739 FP32 scalars across 184 initializer tensors.
+
+The adapter loads the hash-locked stock Roman Urdu frontend from the ignored
+asset cache. `tools/tiny-urdu/build-frontend.mjs` verifies the upstream
+[`urdu.ts`](https://github.com/Zafar205/tiny-urdu/blob/5770756e05f33591eab29498a47f6644664beae7/web/lib/urdu.ts)
+at commit `5770756e05f33591eab29498a47f6644664beae7` (12,843 bytes,
+SHA-256 `92fac4d08fdb5b0c219e6972c0a79e4467dbc238396e57ada353c1ab878b870d`)
+and its stripped `frontend/urdu.mjs` output (12,843 bytes, SHA-256
+`f054aeba85685000a13af39dd40b4f4683ff9730b24c462270c98f84bd6369dc`). The route keeps the stock punctuation
+sentence split and recursive 500-token fit, inserts 150 ms only between
+utterances within each source span, and applies a 0.99 peak cap once per span.
+The fixed `ur-latn-article-v1` audit covers 103 ordered spans and 319 utterances,
+with a maximum of 177 tokens, zero unknown token IDs and zero nonzero stress
+values. Its token/stress digest is pinned in the adapter profile.
+
+Both CPU/WASM and WebGPU use ONNX Runtime Web 1.31.1, the stock basic graph
+optimization setting, one WASM thread, and disabled CPU memory arena/memory
+pattern. WebGPU permits WASM fallback for unsupported operators and must show a
+separate untimed hardware dispatch probe. An independent headed-Chrome qualification
+compared the publisher’s CPU setup with both 1.31.1 routes. The integrated
+CPU and WebGPU adapters each emitted 1,055,072 samples in a separate cached
+smoke run, with 835 hardware dispatches in the WebGPU capability probe.
+
+### Reproduction
+
+After reviewing the noncommercial dataset terms, prepare and verify the pinned
+assets, then run both backends against the same fixture. The builder accepts a
+local copy of the upstream TypeScript when network access is unavailable; it
+checks that copy against the source SHA above before creating the ignored cache
+artifact. The benchmark harness uses disposable Chrome profiles and sequential
+headed runs.
+
+```sh
+node tools/tiny-urdu/build-frontend.mjs
+npm run assets -- fetch --model tiny-urdu --accept-license
+npm run assets -- verify --model tiny-urdu --accept-license
+npm run bench -- models --language ur-Latn
+npm run bench -- run --model tiny-urdu --backend cpu --fixture ur-latn-article-v1 --smoke --accept-license
+npm run bench -- run --model tiny-urdu --backend webgpu --fixture ur-latn-article-v1 --smoke --accept-license
+npm run bench -- run --model tiny-urdu --backend cpu --fixture ur-latn-article-v1 --scenario warm --warm-protocol v2 --repetitions 3 --machine "<actual machine>" --accept-license
+npm run bench -- run --model tiny-urdu --backend webgpu --fixture ur-latn-article-v1 --scenario warm --warm-protocol v2 --repetitions 3 --machine "<actual machine>" --accept-license
+```
+
+The WebGPU run is usable only when its separate untimed probe confirms hardware
+dispatch; fallback alone is not GPU qualification. Keep backend runs
+sequential, preserve the fixture and all asset pins, and record the actual
+machine and Chrome version with results. Never substitute a CPU run for a
+requested WebGPU result.
+
+The model card describes common English loanwords as spoken with Urdu rules;
+this is not an independent English route. UrduTTS is [CC BY-NC 4.0](https://huggingface.co/datasets/kaab4321/UrduTTS): benchmark use and any derived-audio sharing must be noncommercial and retain attribution. No blanket recording redistribution right is inferred. The model card also says its source audio uses four male speakers, while this checkpoint has one M2 output voice.
+
+[Pinned model](https://huggingface.co/zafar205/tiny-urdu-tts-4.5-million-parameters/tree/4fe6566118972ea0d44b517f413191e0e30f5880) ·
+[UrduTTS dataset and attribution](https://huggingface.co/datasets/kaab4321/UrduTTS) ·
+[Pinned frontend repository](https://github.com/Zafar205/tiny-urdu/tree/5770756e05f33591eab29498a47f6644664beae7) ·
+[ONNX Runtime Web 1.31.1](https://github.com/microsoft/onnxruntime/tree/v1.31.1).

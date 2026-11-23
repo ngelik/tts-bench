@@ -468,7 +468,8 @@
     "bengali-voice": "bn-article-v1",
     "tiny-swara": "bn-article-v1",
     "tiny-voca-hindi": "hi-article-v1",
-    "tui-voice-mini-ml": "ml-article-v1"
+    "tui-voice-mini-ml": "ml-article-v1",
+    "tiny-urdu": "ur-latn-article-v1"
   },
   "modelRequiredFixtures": {
     "ua-serhiy-0p58m": "uk-article-v1",
@@ -495,7 +496,8 @@
     "tiny-voca-he": "he-article-v1",
     "tiny-swara": "bn-article-v1",
     "tiny-voca-hindi": "hi-article-v1",
-    "tui-voice-mini-ml": "ml-article-v1"
+    "tui-voice-mini-ml": "ml-article-v1",
+    "tiny-urdu": "ur-latn-article-v1"
   },
   "modelFrontendLanguages": {
     "ua-serhiy-0p58m": [
@@ -621,6 +623,9 @@
     ],
     "tui-voice-mini-ml": [
       "ml"
+    ],
+    "tiny-urdu": [
+      "ur-Latn"
     ]
   }
 }
