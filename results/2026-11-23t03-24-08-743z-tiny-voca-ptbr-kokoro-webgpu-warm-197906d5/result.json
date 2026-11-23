@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t03-24-08-743z-tiny-voca-ptbr-kokoro-webgpu-warm-197906d5",
+  "createdAt": "2026-11-23T03:25:42.549Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "pt-br-article-v1",
+    "language": "pt-BR",
+    "sha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+    "characters": 22164,
+    "unicodeCodePoints": 22164,
+    "utf8Bytes": 22793,
+    "chunks": 101,
+    "source": {
+      "type": "translation",
+      "description": "Complete Brazilian Portuguese translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 source paragraphs and edited for Brazilian usage and fidelity. The translation preserves original measurement units, values and identifiers, renders the implicit evening times in 24-hour notation, and preserves the bell directions and four-count pause. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "5576650cfde71cb70cea0f3bc8766c7094e767de",
+    "dirty": false,
+    "manifestSha256": "ed4fbf4774a1ab3ec4d06d3fe6c810fa031410ab287ced11290d9166b582f11d"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-ptbr-kokoro:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-onnx",
+      "sha256": "f6819ce8cd6eebf5cee2f5a9911c017fe348373fcb1dd42fe56ef885561eecde",
+      "bytes": 21374289
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-config",
+      "sha256": "1e495cbe1726f79dff37c2d9808d95d6251da1f10f26091d73f53cf78a68832b",
+      "bytes": 954
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-voices",
+      "sha256": "8fe00642d7fd6b2afc0973db71a6d6fd86ca76894fa0ef1ffa2e1422aee74830",
+      "bytes": 115
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.mjs",
+      "sha256": "af4d7a31d0c98f44c299ceae92c9c7ededcaf9f7f384d78b9cedc88b6cd48ef4",
+      "bytes": 66914
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.wasm",
+      "sha256": "99eb86f85bfc877052e30d8f42e0932e18beef1f8b3ef9b4b21db5ea55e098c3",
+      "bytes": 356841
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-151-espeak-quiet.data",
+      "sha256": "61c00cb091e058a66e96b2861eda93f99edf34ff07d03406a2fa7772e6170ec5",
+      "bytes": 883170
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-apache-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-apache-notice",
+      "sha256": "12bbcca6d90412485509b4c199e430872777ea8d0c2b9ea0356905ab8a42e929",
+      "bytes": 837
+    },
+    {
+      "id": "tiny-voca-ptbr-kokoro-espeak-copying",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ptbr-kokoro",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-BR"
+        ],
+        "scope": "Pinned Haple/tiny-voca-ptbr-kokoro checkpoint only. Two fixed synthetic voices, F and M, at 24 kHz mono; benchmark default is F/index 0. This browser profile supports Brazilian Portuguese (pt-BR) only.",
+        "sources": [
+          "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/tree/596401fc87f1635f73326872001e370d3aedab9b",
+          "https://github.com/Haple/tiny-voca-ptbr-kokoro/tree/1e7ed993260ecdd91552762f7403c00632bf5dab",
+          "https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.31.1.tgz"
+        ],
+        "notes": "Author-reported exact count is 4,535,755 parameters including the waveform generator. The immutable pt-br-article-v1 text/frontend audit matches 101 spans and 310 utterances, maximum 228 tokens, zero unknown tokens, and the native token/stress digest; this is diagnostic evidence, not a score. eSpeak NG 1.51 is part of the trained frontend ABI. English trace output is not a supported language. Generated recordings have no blanket redistribution grant."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F",
+      "precision": "FP32 ONNX export of the released Brazilian Portuguese checkpoint",
+      "settings": {
+        "modelId": "Haple/tiny-voca-ptbr-kokoro",
+        "modelRevision": "596401fc87f1635f73326872001e370d3aedab9b",
+        "sourceId": "Haple/tiny-voca-ptbr-kokoro",
+        "sourceRevision": "1e7ed993260ecdd91552762f7403c00632bf5dab",
+        "parameterCount": 4535755,
+        "fixtureId": "pt-br-article-v1",
+        "fixtureSha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+        "language": "pt-BR",
+        "locale": "pt-BR",
+        "supportedLanguages": [
+          "pt-BR"
+        ],
+        "voice": "F",
+        "voiceIndex": 0,
+        "teacherVoice": "Kokoro pf_dora*0.7 + af_heart*0.3",
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "precision": "FP32 ONNX export of the released Brazilian Portuguese checkpoint",
+        "frontend": "eSpeak NG pt-br 1.51; NFD 68-symbol ABI and pinned Portuguese normalizer",
+        "frontendFingerprint": "8fcf234a3759b90b7f8b3c399c6632a22a6bb3d50ce290636b3ab80936d09dee",
+        "trainedEspeakRelease": "1.51",
+        "espeakRuntimeVersion": "1.51",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "waveformExecutionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Released FP32 graph; utterance PCM concatenated in source order without inserted audio, then one whole-span peak cap at 0.99.",
+        "languageSupportNote": "This pinned checkpoint/frontend supports pt-BR only. English trace output is a pronunciation diagnostic, not a supported benchmark language."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2277,
+        "description": "Observed 2277 WebGPU compute dispatches in an untimed probe; ONNX Runtime Web may use internal WASM kernels for unsupported operators."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 21101.59500002861,
+          "samples": 34872576,
+          "sampleRate": 24000,
+          "pcmSha256": "2cf939db4ecc9563ec279ebc8706ed3d36e30ccb510e84c11f3c229407dab23b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 125.8050000667572,
+            "firstSourceChunkCompletedMs": 287.24000000953674,
+            "audioSeconds": 1453.024,
+            "realTimeFactor": 0.014522537136364307,
+            "minSamplesPerChunk": 282368,
+            "maxSamplesPerChunk": 440320
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 20922.414999961853,
+          "samples": 34872576,
+          "sampleRate": 24000,
+          "pcmSha256": "7c5b17b1e766ea405411bdf3ede67ece37cd262c01274fac9b2b273df88208f3",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 73.22499990463257,
+            "firstSourceChunkCompletedMs": 205.65499997138977,
+            "audioSeconds": 1453.024,
+            "realTimeFactor": 0.014399221898579688,
+            "minSamplesPerChunk": 282368,
+            "maxSamplesPerChunk": 440320
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 20929.02499985695,
+          "samples": 34872576,
+          "sampleRate": 24000,
+          "pcmSha256": "26423c57421bb88876731bb9077d02b0ae3d1e07293d2337ae1a2c047caa66d0",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 70.47499990463257,
+            "firstSourceChunkCompletedMs": 203.95499992370605,
+            "audioSeconds": 1453.024,
+            "realTimeFactor": 0.014403771031901021,
+            "minSamplesPerChunk": 282368,
+            "maxSamplesPerChunk": 440320
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 20937.27999997139,
+          "samples": 34872576,
+          "sampleRate": 24000,
+          "pcmSha256": "d629f45394d7942c99f83c720ca8dac852084cac934e8cb211708e59a92d5e92",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 63.72000002861023,
+            "firstSourceChunkCompletedMs": 197.27999997138977,
+            "audioSeconds": 1453.024,
+            "realTimeFactor": 0.014409452287072608,
+            "minSamplesPerChunk": 282368,
+            "maxSamplesPerChunk": 440320
+          },
+          "audio": {
+            "sha256": "29e9c5b53959734229f59244852313858ba6e7b0310fd98503573d7a7fc961c2",
+            "bytes": 69745196
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T03-19-06-976Z-6b948d514829; cell 2/4; source 5576650cfde71cb70cea0f3bc8766c7094e767de; fixture pt-br-article-v1 (pt-BR, 22164 JavaScript characters, 101 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Haple tiny-voca-ptbr-kokoro released FP32 graph, F voice index zero, neutral controls, and completed-span peak cap 0.99. Pinned eSpeak NG 1.51 and original Brazilian Portuguese normalization and frontend. ORT Web 1.31.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations."
+  ]
+}
