@@ -126,6 +126,13 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await arabicLabel.getAttribute('lang'), 'ar');
   assert.equal(await arabicLabel.getAttribute('dir'), 'auto');
   assert.equal(await arabicLabel.evaluate(label => getComputedStyle(label).direction), 'rtl');
+  await page.locator('#language-search').fill('עִבְרִית');
+  const hebrew = page.locator('#language-he');
+  assert.equal(await hebrew.isVisible(), true, 'A vowel-marked Hebrew query finds the native language label');
+  const hebrewLabel = hebrew.locator('bdi');
+  assert.equal(await hebrewLabel.getAttribute('lang'), 'he');
+  assert.equal(await hebrewLabel.getAttribute('dir'), 'auto');
+  assert.equal(await hebrewLabel.evaluate(label => getComputedStyle(label).direction), 'rtl');
   await page.locator('#language-search').fill('');
   await page.locator('#language-search').fill('Bahdini');
   assert.equal(await page.locator('#language-ku-Arab-IQ').isVisible(),true,'Behdînî aliases are searchable');
