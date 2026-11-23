@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t04-15-08-824z-tiny-broca-webgpu-warm-7c717bac",
+  "createdAt": "2026-11-23T04:19:09.010Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "pt-br-article-v1",
+    "language": "pt-BR",
+    "sha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+    "characters": 22164,
+    "unicodeCodePoints": 22164,
+    "utf8Bytes": 22793,
+    "chunks": 101,
+    "source": {
+      "type": "translation",
+      "description": "Complete Brazilian Portuguese translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 source paragraphs and edited for Brazilian usage and fidelity. The translation preserves original measurement units, values and identifiers, renders the implicit evening times in 24-hour notation, and preserves the bell directions and four-count pause. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "5bbac603e361df0789e4a1a72f30d5fc9f1c7143",
+    "dirty": false,
+    "manifestSha256": "d4962cd62f6f5f4db736c6422b0211ffaea83a10064f1d497d9b9f7e75ce5cc5"
+  },
+  "assets": [
+    {
+      "id": "tiny-broca-config",
+      "sha256": "8d19979f8d93c40ba3c12824880048f657efb7a303b070c7fd3ad6233f3f45bc",
+      "bytes": 2087
+    },
+    {
+      "id": "tiny-broca-onnx",
+      "sha256": "2e3b7a57884047b933eb35782d9456afd3e04311009828b775c94f28270dd616",
+      "bytes": 21372510
+    },
+    {
+      "id": "tiny-broca-text",
+      "sha256": "b5b80d8515a33eff7daa0d0e8a548c2760499b0e832a5e655917099fe2460ca3",
+      "bytes": 17357
+    },
+    {
+      "id": "tiny-broca-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-broca-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "tiny-broca-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "tiny-broca-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "tiny-broca-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "tiny-broca-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "tiny-broca-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "tiny-broca-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "tiny-broca-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-broca-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-broca-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-broca-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "tiny-broca-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "tiny-broca-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "id": "tiny-broca-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-broca",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-BR"
+        ],
+        "scope": "Pinned brenorb/tiny-broca checkpoint only. Two fixed synthetic voices F1 and M1 at 24 kHz mono; benchmark default F1/index 0. This browser profile supports Brazilian Portuguese (pt-BR) only.",
+        "sources": [
+          "https://huggingface.co/brenorb/tiny-broca/tree/0ea879d8f532ad0c6e7308017b45105a74f81a95",
+          "https://github.com/brenorb/tiny-broca/tree/56d68b9fd3375c52030b3de053a26bfcc6e823c2",
+          "https://huggingface.co/spaces/brenorb/tiny-broca-demo/tree/56d68b9fd3375c52030b3de053a26bfcc6e823c2",
+          "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.20.1.tgz"
+        ],
+        "notes": "Exact pt-br-article-v1 frontend audit: 101 spans, 294 utterances, maximum 262 tokens, seven <unk> tokens. The pinned upstream frontend leaves digits in 18h, 21h, 16h and 1º unnormalized; these four spans are disclosed and preserved. English is unsupported. Model card reports 9,384 sentences / 16,434 clips / 17.3 hours of accepted synthetic training audio; no training recordings or upstream sample WAVs are bundled."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F1",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "brenorb/tiny-broca",
+        "modelRevision": "0ea879d8f532ad0c6e7308017b45105a74f81a95",
+        "sourceId": "brenorb/tiny-broca",
+        "sourceRevision": "56d68b9fd3375c52030b3de053a26bfcc6e823c2",
+        "fixtureId": "pt-br-article-v1",
+        "fixtureSha256": "718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686",
+        "language": "pt-BR",
+        "locale": "pt-BR",
+        "supportedLanguages": [
+          "pt-BR"
+        ],
+        "voice": "F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "parameterCount": 4533835,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned upstream tiny-broca text.py via Pyodide 0.26.4; Brazilian Portuguese orthographic character/grapheme IDs with lexical stress.",
+        "frontendFingerprint": "87e0dcc95e144113252a020e1d39b61678cbfc29923f6e4a443dc2ff39b69a41",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4"
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 2520,
+        "description": "Observed 2520 hardware WebGPU dispatches in an untimed probe. WASM handles unsupported operators."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 57440.22000002861,
+          "samples": 36713728,
+          "sampleRate": 24000,
+          "pcmSha256": "16d23717d8a9dc00ea730310b03d7c011b037a65e1a1421e37404a441a4c29c8",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 245.09999990463257,
+            "firstSourceChunkCompletedMs": 656.4649999141693,
+            "audioSeconds": 1529.7386666666666,
+            "realTimeFactor": 0.03754904105626883,
+            "minSamplesPerChunk": 310528,
+            "maxSamplesPerChunk": 431104
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 57234.18000006676,
+          "samples": 36713728,
+          "sampleRate": 24000,
+          "pcmSha256": "0fc54c7a59107336e5ebd6259a366fbcbda45eb01395a7091b3c77d8c1cc423a",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 155.68499994277954,
+            "firstSourceChunkCompletedMs": 555.414999961853,
+            "audioSeconds": 1529.7386666666666,
+            "realTimeFactor": 0.037414351383809406,
+            "minSamplesPerChunk": 310528,
+            "maxSamplesPerChunk": 431104
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 57098.03999996185,
+          "samples": 36713728,
+          "sampleRate": 24000,
+          "pcmSha256": "ef5a50500489d0b78cfa93af17ebc6ff3830bceb35e16eb9f41d5be8a9c66176",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 165.2149999141693,
+            "firstSourceChunkCompletedMs": 561.289999961853,
+            "audioSeconds": 1529.7386666666666,
+            "realTimeFactor": 0.03732535579059376,
+            "minSamplesPerChunk": 310528,
+            "maxSamplesPerChunk": 431104
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 57113.36500000954,
+          "samples": 36713728,
+          "sampleRate": 24000,
+          "pcmSha256": "2a8d463f604c0e2837935b9ac1d2cbcefcf6e8826e68c0c83b6fcc1f7fd95a13",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 101,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 160.33500003814697,
+            "firstSourceChunkCompletedMs": 558.3399999141693,
+            "audioSeconds": 1529.7386666666666,
+            "realTimeFactor": 0.037335373841638445,
+            "minSamplesPerChunk": 310528,
+            "maxSamplesPerChunk": 431104
+          },
+          "audio": {
+            "sha256": "f8cad8c5219c7f1702633a738c0580a34d89e7cef0d59cfae5ce4d88061abe2f",
+            "bytes": 73427500
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T04-09-38-812Z-ad6dbeba5b52; cell 2/4; source 5bbac603e361df0789e4a1a72f30d5fc9f1c7143; fixture pt-br-article-v1 (pt-BR, 22164 JavaScript characters, 101 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. brenorb tiny-broca released FP32 graph, F1 voice index zero, neutral controls, and unchanged stock graph PCM. Pinned Brazilian Portuguese letter-and-stress frontend through stock Pyodide 0.26.4. ORT Web 1.20.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations."
+  ]
+}
