@@ -286,5 +286,12 @@
     "parameterCountSource": "https://huggingface.co/abdullah/tiny-voca-ar/blob/dcdf56c10c536d4df74576f036b512c0d212e17f/README.md",
     "upstreamModelCard": "https://huggingface.co/abdullah/tiny-voca-ar/tree/dcdf56c10c536d4df74576f036b512c0d212e17f",
     "scope": "The pinned publisher card reports 4,537,867 model parameters; use this only as the model-wide reported total, not a benchmark measurement."
+  },
+  "tiny-voca-arabic": {
+    "parameterCount": 4531723,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
+    "upstreamModelCard": "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
+    "scope": "Publisher-reported exact count for the selected FP32 speech checkpoint; CATT v2 diacritizer is a separately licensed frontend component, not included in the speech-model parameter count."
   }
 }

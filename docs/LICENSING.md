@@ -39,6 +39,7 @@ their own licenses. A benchmark result is not a commercial-use clearance.
 | Tiny Voca French model and stock frontend | Apache-2.0 checkpoint and frontend from Daniel Suncost, with attribution to Muhammed Nazeem's tiny-voca. The eSpeak NG 1.0.2 browser package retains GPL-3.0-or-later and COPYING. CPU uses MIT ONNX Runtime Web 1.20.1; WebGPU uses the existing MIT 1.31.1 runtime alias and its bundled third-party notices. [Profile](TINY_VOCA_FR.md) · [Source notice](../web/tiny-voca-fr/NOTICE.md). |
 | Tiny Voca Arabic M2 model and frontend | Apache-2.0 checkpoint and Python source with attribution to tiny-voca. The retained notice attributes the CC BY 4.0 ClArTTS transcript text and Arabic Speech Corpus teacher reference. It records the publisher’s unresolved clearance for client use. Pyodide 0.26.4 is MPL-2.0 with CPython PSF terms. ONNX Runtime Web 1.20.1 is MIT. [Profile](TINY_VOCA_AR.md) · [Notices](../web/tiny-voca-ar/NOTICE.md). |
 | Tiny Voca Arabic Halabi F2 model and frontend | Apache-2.0 code and weights, with attribution to Muhammed Nazeem's tiny-voca. The release credits the CC BY 4.0 Halabi corpus and derivatives. Retain the thesis citation and extracted attribution asset. Pyodide 0.26.4 is MPL-2.0 with CPython PSF terms. ONNX Runtime Web 1.20.1 is MIT. [Profile](TINY_VOCA_AR_HALABI.md) · [Notices](../web/tiny-voca-ar-halabi/NOTICE.md). |
+| Oddadmix Tiny Voca Arabic and CATT frontend | Apache-2.0 for the released speech checkpoint and current CATT v2 distribution. The notices preserve Abjad AI’s license history and the CATT utility’s BSD notice. NumPy 1.26.4 is BSD-3-Clause. Pyodide 0.26.4 uses MPL-2.0 and CPython PSF terms. ONNX Runtime Web 1.20.1 is MIT. [Profile](TINY_VOCA_ARABIC.md) · [Notices and licenses](../web/tiny-voca-arabic/NOTICE.md). |
 | Tiny Voca Brazilian Portuguese checkpoint | CC BY 4.0; credit “tiny-voca-ptbr, by SemFence (Gustavo Toledo)” and indicate model changes. The Tiny Voca inference code and pinned Dizione browser source are Apache-2.0 with separate retained notices and attribution to Muhammed Nazeem. The Dizione lexicon and vowel table are derived from the Portuguese (Brazil) MFA dictionary under CC BY 4.0; see the retained dictionary notice. ONNX Runtime Web 1.22.0 is MIT and its exact browser bundle is URL-backed and hash-pinned. Generated recordings have no blanket redistribution grant. [Profile](TINY_VOCA_PTBR.md) · [Retained notices](../web/tiny-voca-ptbr/NOTICE.md). |
 | Tiny Voca Brazilian Portuguese Kokoro checkpoint | Apache-2.0 Haple checkpoint and code, with attribution to Muhammed Nazeem's tiny-voca; trained on Kokoro-82M synthetic teacher speech. The browser's pinned eSpeak NG 1.51 WebAssembly runtime/data are a separate GPL-3.0-or-later component with retained COPYING and a source-pinned build. ONNX Runtime Web 1.31.1 is MIT with third-party notices. Generated recordings have no blanket redistribution grant. [Profile](TINY_VOCA_PTBR_KOKORO.md) · [Retained Apache notice](../web/tiny-voca-ptbr-kokoro/NOTICE) · [eSpeak COPYING](../web/licenses/ESPEAK-NG-COPYING-TINY-VOCA-PTBR-KOKORO.txt). |
 | Alpa Spanish checkpoint and frontend | Apache-2.0 code and weights from Francisco Carlos Erra, with attribution to Alpa and Muhammed Nazeem's tiny-voca. The checkpoint was trained on OpenSLR 61 Argentinian Spanish recordings (CC BY-SA 4.0). The model card asks users to check how the corpus's share-alike terms apply to the weights. ONNX Runtime Web 1.31.1 is MIT with bundled notices. [Profile and export](ALPA_ES.md) · [Retained license and notices](../web/alpa-es/NOTICE.md). |
@@ -375,3 +376,17 @@ Retain Nawar Halabi’s 2016 thesis citation and the attribution file from the
 release. Pyodide 0.26.4 retains MPL-2.0 and CPython PSF terms. ONNX Runtime Web
 1.20.1 declares MIT.
 [Profile and sources](TINY_VOCA_AR_HALABI.md) · [Retained notices](../web/tiny-voca-ar-halabi/NOTICE.md)
+
+### Oddadmix Tiny Voca Arabic
+
+The pinned speech checkpoint and frontend declare Apache-2.0. The CATT v2
+archive comes from Abjad AI. The original tag retains its historical license
+text. Abjad AI’s later announcement documents the move to Apache-2.0 and the
+current repository points to the same v2 checkpoints. The CATT tokenizer and
+Buckwalter code preserve their notices, including the BSD notice in the utility
+source.
+
+The runtime uses NumPy 1.26.4 under BSD-3-Clause, Pyodide 0.26.4 under MPL-2.0,
+CPython 3.12 under PSF terms and ONNX Runtime Web 1.20.1 under MIT. The publisher
+asks that generated speech be identified to listeners.
+[Profile](TINY_VOCA_ARABIC.md) · [Release notice](../web/tiny-voca-arabic/NOTICE.md) · [Abjad AI license update](https://github.com/abjadai/catt/blob/8d5330499feb85f6625e6af632141ed2ed6065fd/README.md#license-change-cc-by-nc-to-apache-20)

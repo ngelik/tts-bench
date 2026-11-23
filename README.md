@@ -694,6 +694,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Voca Brazilian Portuguese F (Haple Kokoro, FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptbr-kokoro) |
 | Tiny Broca Brazilian Portuguese F1 (FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-broca) |
 | Tiny Voca Arabic Halabi F2 (FP32) | 1 | 1 | 1 (ar) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ar-halabi) |
+| Tiny Voca Arabic CATT a000 (FP32) | 1 | 1 | 1 (ar) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-arabic) |
 | Tiny Voca Arabic M2 (FP32) | 1 | 1 | 1 (ar) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ar) |
 
 ### Controlled native comparisons

@@ -16,6 +16,7 @@ import { createTinyVocaPtbrKokoroAdapter } from './adapters/tiny-voca-ptbr-kokor
 import { createTinyBrocaAdapter } from './adapters/tiny-broca.mjs';
 import { createTinyVocaArHalabiAdapter } from './adapters/tiny-voca-ar-halabi.mjs';
 import { createTinyVocaArAdapter } from './adapters/tiny-voca-ar.mjs';
+import { createTinyVocaArabicAdapter } from './adapters/tiny-voca-arabic.mjs';
 import { createAlpaEsAdapter } from './adapters/alpa-es.mjs';
 import { createClarviaTtsTinyAdapter } from './adapters/clarvia-tts-tiny.mjs';
 import { createZerreTtsAdapter } from './adapters/zerre-tts.mjs';
@@ -80,6 +81,7 @@ const FACTORIES = {
   'tiny-broca': createTinyBrocaAdapter,
   'tiny-voca-ar-halabi': createTinyVocaArHalabiAdapter,
   'tiny-voca-ar': createTinyVocaArAdapter,
+  'tiny-voca-arabic': createTinyVocaArabicAdapter,
   'alpa-es': createAlpaEsAdapter,
   'clarvia-tts-tiny': createClarviaTtsTinyAdapter,
   'zerre-tts': createZerreTtsAdapter,
@@ -288,9 +290,12 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
         (model === 'tiny-broca' && fixtureId === 'pt-br-article-v1') ||
         (model === 'tiny-voca-ar-halabi' && fixtureId === 'ar-article-v1') ||
         (model === 'tiny-voca-ar' && fixtureId === 'ar-article-v1') ||
+        (model === 'tiny-voca-arabic' && fixtureId === 'ar-article-v1') ||
         (model === 'alpa-es' && fixtureId === 'es-ar-article-v1')
       )))
-        ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : [],
+        ? (model === 'tiny-voca-arabic'
+          ? (await loadFixture(fixtureId)).chunks.slice(0, 3)
+          : (await loadFixture(fixtureId)).chunks).map(({ id, text }) => ({ id, text })) : [],
     });
     if (result.status === 'unsupported') {
       await dispose();
