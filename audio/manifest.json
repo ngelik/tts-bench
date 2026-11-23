@@ -62,6 +62,66 @@
       }
     },
     {
+      "resultId": "2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb",
+      "model": "alpa-sanskrit",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "female",
+      "language": "sa",
+      "attribution": "AI-generated Sanskrit narration using 77ethers’ Apache-2.0 Alpa v0.2 checkpoint and female voice. The publisher credits Muhammed Nazeem’s Tiny Voca, Prathosh A P’s Vāgdhenu pronunciation rules, and the AI4Bharat Rasa dataset (CC BY 4.0) by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra.",
+      "modelTerms": "Apache-2.0 per the pinned Alpa model release.",
+      "sourceUrls": [
+        "https://huggingface.co/77ethers/alpa/tree/b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+        "https://alpa.blog/",
+        "https://alpa.blog/js/text.js?v=ab33b3eb",
+        "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb--alpa-sanskrit--cpu.wav",
+        "sha256": "96f2691281499bb3c47c6fa768196749f54c4cb5d84339586b20e75cf76b46db",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "074829dce988ed7b4f1700c6b4ab86c58a5813ced325a788c34f66ce1fb6d206",
+        "bytes": 86459436
+      }
+    },
+    {
+      "resultId": "2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f",
+      "model": "alpa-sanskrit",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "female",
+      "language": "sa",
+      "attribution": "AI-generated Sanskrit narration using 77ethers’ Apache-2.0 Alpa v0.2 checkpoint and female voice. The publisher credits Muhammed Nazeem’s Tiny Voca, Prathosh A P’s Vāgdhenu pronunciation rules, and the AI4Bharat Rasa dataset (CC BY 4.0) by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra.",
+      "modelTerms": "Apache-2.0 per the pinned Alpa model release.",
+      "sourceUrls": [
+        "https://huggingface.co/77ethers/alpa/tree/b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+        "https://alpa.blog/",
+        "https://alpa.blog/js/text.js?v=ab33b3eb",
+        "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f--alpa-sanskrit--webgpu.wav",
+        "sha256": "e39afb07928fcae469e2e22131406c134312895497025f7e870275f7c3e9c392",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "25d3a091655378dc789a4b7b8b48491b97362fe602d3e6bee6c2a726b64cb4fe",
+        "bytes": 86459436
+      }
+    },
+    {
       "resultId": "2026-11-22t05-39-38-969z-apptor-tiny-tts-at-cpu-warm-106ec536",
       "model": "apptor-tiny-tts-at",
       "backend": "cpu",

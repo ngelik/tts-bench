@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb",
+  "createdAt": "2026-11-23T18:29:11.069Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "sa-article-v1",
+    "language": "sa",
+    "sha256": "7f1e80ac2b25b36b36fd8af34a863f182cba6572739b00d4f5094cd381ca014c",
+    "characters": 19801,
+    "unicodeCodePoints": 19801,
+    "utf8Bytes": 54173,
+    "chunks": 90,
+    "source": {
+      "type": "translation",
+      "description": "Sanskrit translation of all 27 source paragraphs in Devanagari. Dates, times, amounts, identifiers and units use spoken forms. Codex reviewed the source coverage and checked the browser and Python phoneme and syllable-weight sequences over all 90 fixed spans.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "7f6c1496053453747bbb47b4f6af6ac041ecc6eb",
+    "dirty": false,
+    "manifestSha256": "f6ca971c148dd5510413309f7ed38b7c6af00ee56fa4770b8078fb485711d16a"
+  },
+  "assets": [
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:alpa-sanskrit:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "alpa-sanskrit-onnx-v02",
+      "sha256": "a4602849514fb0a08553b8728b6ca0e8595124c774d2355cd9568b261af69046",
+      "bytes": 22550089
+    },
+    {
+      "id": "alpa-sanskrit-config-v02",
+      "sha256": "1bff70e5e03c6d6c5ec0df0bf9ca8dfb298cf6dfb27d8ffa2bfc04f3e3fb2c9f",
+      "bytes": 1391
+    },
+    {
+      "id": "alpa-sanskrit-official-text-v2",
+      "sha256": "e908e7794ebe602f8e5e283a4af753e6caf5f15121b520f60ecaed46ec03540e",
+      "bytes": 14965
+    },
+    {
+      "id": "alpa-sanskrit-model-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    }
+  ],
+  "cells": [
+    {
+      "model": "alpa-sanskrit",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "sa"
+        ],
+        "scope": "Pinned Alpa v0.2 FP32 graph and official JavaScript Devanagari frontend. Benchmark voice female at index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/77ethers/alpa/tree/b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+          "https://alpa.blog/",
+          "https://alpa.blog/js/text.js?v=ab33b3eb",
+          "https://huggingface.co/datasets/ai4bharat/Rasa/tree/632f55c7ac590219d41cd7adffce5b440e4604f5"
+        ],
+        "notes": "The published browser frontend processes Devanagari. The publisher’s ITRANS setting transliterates Roman Sanskrit. The fixed Sanskrit fixture produces 90 complete plans with up to 262 tokens and zero unknowns. Token IDs and syllable weights match the official Python implementation over all 90 source spans."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "female",
+      "precision": "FP32 ONNX graph alpa-v0.2",
+      "settings": {
+        "modelId": "77ethers/alpa",
+        "modelRevision": "b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+        "sourceRevision": "b3973a79888b9c63b2fc6f56140c1699c0bd44d6",
+        "frontendRevision": "ab33b3eb",
+        "frontend": "Official Alpa Sanskrit browser text.js v2; stock chunks(text), same-origin cache-only asset",
+        "frontendFingerprint": "605680d636eba1c6b48119392b97d43de2b71f8abfc52ead230d0f2074ef69f2",
+        "fixtureId": "sa-article-v1",
+        "fixtureSha256": "7f1e80ac2b25b36b36fd8af34a863f182cba6572739b00d4f5094cd381ca014c",
+        "language": "sa",
+        "locale": "sa",
+        "voice": "female",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "parameterCount": 4531723,
+        "precision": "FP32 ONNX graph alpa-v0.2",
+        "maxTokens": 512,
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Raw 24 kHz PCM joined in the stock Devanagari planner order.",
+        "polish": {
+          "pitch_smooth": 3,
+          "consonant_limit": 1000,
+          "open_limit": 4500,
+          "sharpen": 1.6,
+          "sharpen_from": 8,
+          "sharpen_to": 40,
+          "noise_cap": -15,
+          "treble": 4
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Single-thread ONNX Runtime Web CPU/WASM with local Sanskrit text planning."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 148871.22499990463,
+          "samples": 43229696,
+          "sampleRate": 24000,
+          "pcmSha256": "640c4378489373818f21d762cd21fd29e3fef977b5826bdb0394b28b0f3c6507",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 90,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1897.704999923706,
+            "firstSourceChunkCompletedMs": 1899.4900000095367,
+            "audioSeconds": 1801.2373333333333,
+            "realTimeFactor": 0.08264942228596082,
+            "minSamplesPerChunk": 405504,
+            "maxSamplesPerChunk": 518144
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 148557.52500009537,
+          "samples": 43229696,
+          "sampleRate": 24000,
+          "pcmSha256": "2190fe1ddddfaf3d767b183b74f56ad570f0a88401a0d816978ee5c6f5cabb54",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 90,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1790.8650000095367,
+            "firstSourceChunkCompletedMs": 1790.9300000667572,
+            "audioSeconds": 1801.2373333333333,
+            "realTimeFactor": 0.0824752642258296,
+            "minSamplesPerChunk": 405504,
+            "maxSamplesPerChunk": 518144
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 149180.27500009537,
+          "samples": 43229696,
+          "sampleRate": 24000,
+          "pcmSha256": "1cac524d828661d9a747687dc8d007d5ff4f3cbf4ba89ad38e11ae93e7c3ff21",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 90,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1881.6800000667572,
+            "firstSourceChunkCompletedMs": 1881.7249999046326,
+            "audioSeconds": 1801.2373333333333,
+            "realTimeFactor": 0.0828209987875531,
+            "minSamplesPerChunk": 405504,
+            "maxSamplesPerChunk": 518144
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 148456.35500001907,
+          "samples": 43229696,
+          "sampleRate": 24000,
+          "pcmSha256": "c233239f387c8d2c2b7f17befcf0293cf378335b1131e0fc8ed0edac0efa353c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 90,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1819.7050001621246,
+            "firstSourceChunkCompletedMs": 1819.755000114441,
+            "audioSeconds": 1801.2373333333333,
+            "realTimeFactor": 0.08241909727980641,
+            "minSamplesPerChunk": 405504,
+            "maxSamplesPerChunk": 518144
+          },
+          "audio": {
+            "sha256": "074829dce988ed7b4f1700c6b4ab86c58a5813ced325a788c34f66ce1fb6d206",
+            "bytes": 86459436
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T18-19-02-403Z-9f5d222bdb01; cell 1/4; source 7f6c1496053453747bbb47b4f6af6ac041ecc6eb; fixture sa-article-v1 (sa, 19801 JavaScript characters, 90 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power, sequential disposable profiles. Exact Alpa v0.2 Sanskrit FP32 browser graph from b3973a79888b9c63b2fc6f56140c1699c0bd44d6, female/index zero, speed 1, pitch shift zero, pitch range 1, 24 kHz. Exact stock JavaScript Devanagari reading and parts planner from alpa.blog with syllable weights. Concatenate raw PCM directly. ONNX Runtime Web 1.31.1 on both routes, one WASM thread and verified Apple hardware WebGPU plus WASM asyncify with synchronized CPU PCM readback."
+  ]
+}

@@ -272,6 +272,14 @@ Warm and memory tables prefer native receipts that verify the registered model a
 |---|---|---:|---:|---:|---|
 | Tiny Voca Russian M | E13 | 21.37 | [68.00 s (n=3)](results/2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147/summary.md) | [53.87 s (n=3)](results/2026-11-22t18-37-17-189z-tiny-voca-ru-webgpu-warm-bc7a5c22/summary.md) | Native; matched configuration |
 
+### Sanskrit (sa) — sa-article-v1
+
+19801 characters / 90 spans · fixture SHA-256 `7f1e80ac2b25b36b36fd8af34a863f182cba6572739b00d4f5094cd381ca014c`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Alpa (Sanskrit) | E13 | 22.55 | [148.56 s (n=3)](results/2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb/summary.md) | [34.19 s (n=3)](results/2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f/summary.md) | Native; matched configuration |
+
 ### Swahili (sw) — sw-article-v1
 
 23917 characters / 109 spans · fixture SHA-256 `7ad4f4839ffb808429c538e40b08e0e6c87655a150a1ceb0d52106cce9ecd4b1`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
@@ -679,31 +687,37 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Tiny Voca Russian M | 21.37 | [1892.80](results/2026-11-22t18-41-07-258z-tiny-voca-ru-cpu-cached-fa5685ae/summary.md) | [1696.58](results/2026-11-22t18-42-27-395z-tiny-voca-ru-webgpu-cached-58ba502e/summary.md) |
 
-**RAM 56** · Swahili (sw) · fixture `sw-article-v1` · 23917 characters / 109 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`ac0cebd5`](https://github.com/ngelik/tts-bench/commit/ac0cebd561863f8bb27411b6d01453fe99c842a1).
+**RAM 56** · Sanskrit (sa) · fixture `sa-article-v1` · 19801 characters / 90 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`7f6c1496`](https://github.com/ngelik/tts-bench/commit/7f6c1496053453747bbb47b4f6af6ac041ecc6eb).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Alpa (Sanskrit) | 22.55 | [1151.19](results/2026-11-23t18-31-41-474z-alpa-sanskrit-cpu-cached-9318014f/summary.md) | [2207.11](results/2026-11-23t18-34-23-366z-alpa-sanskrit-webgpu-cached-3b277786/summary.md) |
+
+**RAM 57** · Swahili (sw) · fixture `sw-article-v1` · 23917 characters / 109 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`ac0cebd5`](https://github.com/ngelik/tts-bench/commit/ac0cebd561863f8bb27411b6d01453fe99c842a1).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Tiny Voca Kiswahili | 21.39 | [1273.60](results/2026-11-23t17-25-31-201z-tiny-voca-swahili-cpu-cached-3675422b/summary.md) | [2314.90](results/2026-11-23t17-27-46-135z-tiny-voca-swahili-webgpu-cached-3e15b3f0/summary.md) |
 
-**RAM 57** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`fe8f6690`](https://github.com/ngelik/tts-bench/commit/fe8f66909ca808473dac4ceb56dc36e23ec44943).
+**RAM 58** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`fe8f6690`](https://github.com/ngelik/tts-bench/commit/fe8f66909ca808473dac4ceb56dc36e23ec44943).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Zerre TTS ~4.5M INT8 (Turkish, SES-A) | 8.55 | [1322.87](results/2026-11-22t11-14-02-780z-zerre-tts-cpu-cached-4c204eed/summary.md) | [1221.60](results/2026-11-22t11-15-27-394z-zerre-tts-webgpu-cached-2baa29d6/summary.md) |
 
-**RAM 58** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · Apple M1 Pro / 16 GiB · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2c2716b5`](https://github.com/ngelik/tts-bench/commit/2c2716b5482c5bcbe094fa7a11a0c30ce0fca318).
+**RAM 59** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · Apple M1 Pro / 16 GiB · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2c2716b5`](https://github.com/ngelik/tts-bench/commit/2c2716b5482c5bcbe094fa7a11a0c30ce0fca318).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | 21.38 | [1096.66](results/2026-11-22t12-07-05-151z-clarvia-tts-tiny-cpu-cached-0255b0f5/summary.md) | [1067.00](results/2026-11-22t12-08-18-105z-clarvia-tts-tiny-webgpu-cached-d6879c29/summary.md) |
 
-**RAM 59** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
+**RAM 60** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Serhiy 0.58M (Ukrainian) | 2.34 | [1085.64](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/summary.md) | [1964.76](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) |
 
-**RAM 60** · Urdu (Latin) (ur-Latn) · fixture `ur-latn-article-v1` · 22486 characters / 103 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`54408783`](https://github.com/ngelik/tts-bench/commit/54408783d9ba80b002a90ebb8106bb03ba43176f).
+**RAM 61** · Urdu (Latin) (ur-Latn) · fixture `ur-latn-article-v1` · 22486 characters / 103 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`54408783`](https://github.com/ngelik/tts-bench/commit/54408783d9ba80b002a90ebb8106bb03ba43176f).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
@@ -746,6 +760,8 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 ![Average Chrome RAM during generation — Brazilian Portuguese](docs/reference-memory-pt-BR.svg)
 
 ![Average Chrome RAM during generation — Russian](docs/reference-memory-ru.svg)
+
+![Average Chrome RAM during generation — Sanskrit](docs/reference-memory-sa.svg)
 
 ![Average Chrome RAM during generation — Swahili](docs/reference-memory-sw.svg)
 
@@ -894,6 +910,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 [alpa-es — all-metrics table and source receipts](reports/alpa-es/overview.md)
 
 ![alpa-es — campaign metrics](reports/alpa-es/overview.svg)
+
+[alpa-sanskrit-cpu — all-metrics table and source receipts](reports/alpa-sanskrit-cpu/overview.md)
+
+![alpa-sanskrit-cpu — campaign metrics](reports/alpa-sanskrit-cpu/overview.svg)
+
+[alpa-sanskrit-webgpu — all-metrics table and source receipts](reports/alpa-sanskrit-webgpu/overview.md)
+
+![alpa-sanskrit-webgpu — campaign metrics](reports/alpa-sanskrit-webgpu/overview.svg)
 
 [apptor-tiny-tts-at-de-at — all-metrics table and source receipts](reports/apptor-tiny-tts-at-de-at/overview.md)
 
@@ -1175,6 +1199,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 |---|---|---|---|---|---|
 | Alpa Spanish female (FP32) | cpu | es-AR | [Receipt](results/2026-11-22t23-02-41-155z-alpa-es-cpu-warm-574587f7/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t23-02-41-155z-alpa-es-cpu-warm-574587f7--alpa-es--cpu.wav) | Not published |
 | Alpa Spanish female (FP32) | webgpu | es-AR | [Receipt](results/2026-11-22t23-09-13-541z-alpa-es-webgpu-warm-8e4418d0/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t23-09-13-541z-alpa-es-webgpu-warm-8e4418d0--alpa-es--webgpu.wav) | Not published |
+| Alpa (Sanskrit) | cpu | sa | [Receipt](results/2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb--alpa-sanskrit--cpu.wav) | Not published |
+| Alpa (Sanskrit) | webgpu | sa | [Receipt](results/2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f--alpa-sanskrit--webgpu.wav) | Not published |
 | Apptor Tiny TTS 4.5M (Austrian German) | cpu | de-AT | [Receipt](results/2026-11-22t05-39-38-969z-apptor-tiny-tts-at-cpu-warm-106ec536/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t05-39-38-969z-apptor-tiny-tts-at-cpu-warm-106ec536--apptor-tiny-tts-at--cpu.wav) | Not published |
 | Apptor Tiny TTS 4.5M (Austrian German) | webgpu | de-AT | [Receipt](results/2026-11-22t05-54-50-412z-apptor-tiny-tts-at-webgpu-warm-6c488d22/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t05-54-50-412z-apptor-tiny-tts-at-webgpu-warm-6c488d22--apptor-tiny-tts-at--webgpu.wav) | Not published |
 | Apptor Tiny TTS 4.5M (Standard German) | cpu | de | [Receipt](results/2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t01-18-02-717z-apptor-tiny-tts-cpu-warm-1107507d--apptor-tiny-tts--cpu.wav) | Not published |
@@ -1666,6 +1692,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 309 · 2026-11-23 | sobbie-tts/webgpu | en / english-20k-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-23t17-47-58-036z-sobbie-tts-webgpu-warm-1150b096/summary.md) | [SVG](results/2026-11-23t17-47-58-036z-sobbie-tts-webgpu-warm-1150b096/chart.svg) |
 | 310 · 2026-11-23 | sobbie-tts/cpu | en / english-20k-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t17-49-52-453z-sobbie-tts-cpu-cached-a50fa7d2/summary.md) | [SVG](results/2026-11-23t17-49-52-453z-sobbie-tts-cpu-cached-a50fa7d2/chart.svg) |
 | 311 · 2026-11-23 | sobbie-tts/webgpu | en / english-20k-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t17-51-05-540z-sobbie-tts-webgpu-cached-42982eae/summary.md) | [SVG](results/2026-11-23t17-51-05-540z-sobbie-tts-webgpu-cached-42982eae/chart.svg) |
+| 312 · 2026-11-23 | alpa-sanskrit/cpu | sa / sa-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb/summary.md) | [SVG](results/2026-11-23t18-19-03-145z-alpa-sanskrit-cpu-warm-3efb94fb/chart.svg) |
+| 313 · 2026-11-23 | alpa-sanskrit/webgpu | sa / sa-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f/summary.md) | [SVG](results/2026-11-23t18-29-11-752z-alpa-sanskrit-webgpu-warm-2a7a248f/chart.svg) |
+| 314 · 2026-11-23 | alpa-sanskrit/cpu | sa / sa-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t18-31-41-474z-alpa-sanskrit-cpu-cached-9318014f/summary.md) | [SVG](results/2026-11-23t18-31-41-474z-alpa-sanskrit-cpu-cached-9318014f/chart.svg) |
+| 315 · 2026-11-23 | alpa-sanskrit/webgpu | sa / sa-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-23t18-34-23-366z-alpa-sanskrit-webgpu-cached-3b277786/summary.md) | [SVG](results/2026-11-23t18-34-23-366z-alpa-sanskrit-webgpu-cached-3b277786/chart.svg) |
 
 </details>
 
