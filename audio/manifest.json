@@ -3835,6 +3835,70 @@
       }
     },
     {
+      "resultId": "2026-11-23t09-51-57-690z-tiny-voca-he-cpu-warm-0889617d",
+      "model": "tiny-voca-he",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "AH",
+      "language": "he",
+      "attribution": "AI-generated Modern Hebrew benchmark narration using Idan Buzaglo’s CC BY 4.0 tiny-voca-he he-v3 checkpoint with voice AH. The model uses training audio derived from ivrit.ai’s crowd-recital dataset. It is based on Muhammed Nazeem’s Tiny Voca and uses RenikudPlus for Hebrew pronunciation.",
+      "modelTerms": "CC BY 4.0 for Tiny Voca Hebrew acoustic weights; Apache-2.0 for Tiny Voca source. RenikudPlus G2P weights are Apache-2.0.",
+      "sourceUrls": [
+        "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
+        "https://raw.githubusercontent.com/buzagloidan/tiny-voca-he/fdc9b3080984c94768239989391fbaddcf9b5519/models/he-v3/LICENSE",
+        "https://huggingface.co/notmax123/RenikudPlus/tree/679c56ca449d41873fb8ff7711ddf7563d28198f",
+        "https://pypi.org/project/renikud-plus/0.6.0/",
+        "https://pypi.org/project/hebrew-num2words/0.1.0/",
+        "https://github.com/maxmelichov/RenikudPlus/blob/93a82fad122207f9dc38105ceb5068e98d00f092/pyproject.toml"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t09-51-57-690z-tiny-voca-he-cpu-warm-0889617d--tiny-voca-he--cpu.wav",
+        "sha256": "4112cff05353a0cf9cba245629af40729538f444b93a461514f70d19876e9219",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "8050dca378a02842662e59a64eb89eec9ed484c5affef82ba40bf050233ab599",
+        "bytes": 53794348
+      }
+    },
+    {
+      "resultId": "2026-11-23t10-21-45-420z-tiny-voca-he-webgpu-warm-a6ab48f0",
+      "model": "tiny-voca-he",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "AH",
+      "language": "he",
+      "attribution": "AI-generated Modern Hebrew benchmark narration using Idan Buzaglo’s CC BY 4.0 tiny-voca-he he-v3 checkpoint with voice AH. The model uses training audio derived from ivrit.ai’s crowd-recital dataset. It is based on Muhammed Nazeem’s Tiny Voca and uses RenikudPlus for Hebrew pronunciation.",
+      "modelTerms": "CC BY 4.0 for Tiny Voca Hebrew acoustic weights; Apache-2.0 for Tiny Voca source. RenikudPlus G2P weights are Apache-2.0.",
+      "sourceUrls": [
+        "https://github.com/buzagloidan/tiny-voca-he/tree/fdc9b3080984c94768239989391fbaddcf9b5519",
+        "https://raw.githubusercontent.com/buzagloidan/tiny-voca-he/fdc9b3080984c94768239989391fbaddcf9b5519/models/he-v3/LICENSE",
+        "https://huggingface.co/notmax123/RenikudPlus/tree/679c56ca449d41873fb8ff7711ddf7563d28198f",
+        "https://pypi.org/project/renikud-plus/0.6.0/",
+        "https://pypi.org/project/hebrew-num2words/0.1.0/",
+        "https://github.com/maxmelichov/RenikudPlus/blob/93a82fad122207f9dc38105ceb5068e98d00f092/pyproject.toml"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t10-21-45-420z-tiny-voca-he-webgpu-warm-a6ab48f0--tiny-voca-he--webgpu.wav",
+        "sha256": "2882f03a09915bca6e809ca9fc17ed7a813627202c9185a615b74cb1a04e70f0",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "0385126415233580a984e3bc5f2909c4de83887b8eac718392a3af95ff08e1e3",
+        "bytes": 53794348
+      }
+    },
+    {
       "resultId": "2026-11-22t08-31-21-521z-tiny-voca-it-cpu-warm-8ba15836",
       "model": "tiny-voca-it",
       "backend": "cpu",
