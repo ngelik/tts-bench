@@ -273,6 +273,13 @@
     "upstreamModelCard": "https://huggingface.co/Haple/tiny-voca-ptbr-kokoro/blob/596401fc87f1635f73326872001e370d3aedab9b/README.md",
     "scope": "Author-reported exact parameter total for the pinned FP32 ONNX checkpoint, including the waveform generator."
   },
+  "tui-voice-mini-ml": {
+    "parameterCount": 4537291,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/Cyrax321/tui-voice-mini-ml/blob/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea/README.md",
+    "upstreamModelCard": "https://huggingface.co/Cyrax321/tui-voice-mini-ml/tree/9c2fee75373d81bbd62fbe2d683b1bad3c4415ea",
+    "scope": "Publisher-reported exact count for the pinned Malayalam model; not independently recomputed from the checkpoint."
+  },
   "tiny-broca": {
     "parameterCount": 4533835,
     "countKind": "exact",
