@@ -907,3 +907,13 @@ The benchmark uses the released pronunciation dictionary and a pinned snapshot o
 Both scored routes use ONNX Runtime Web 1.31.1 with one WASM thread. Apple WebGPU requires an untimed hardware dispatch proof and permits WASM for unsupported operators. Four English controls produced the same audio lengths in the original 1.20.1 browser worker, the benchmark’s CPU route and its Apple WebGPU route.
 
 [Model card](https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md) · [Publisher browser worker](https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/web/public/worker.js).
+
+### Alpa (Sanskrit)
+
+The benchmark uses the exact Alpa v0.2 FP32 graph loaded by the publisher’s browser demo. It contains 4,531,723 logical scalars across 184 FP32 initializers and bundles female and male voices. The fixed benchmark voice is female at index 0. Both routes use 24 kHz mono PCM, speed 1, pitch shift 0 and pitch range 1.
+
+The browser worker uses the publisher’s versioned JavaScript frontend directly from the verified local asset cache. The official JavaScript and Python frontends agree on phoneme IDs and syllable weights across all 90 fixed Devanagari spans. The stock planner produces 90 plans, with a maximum of 262 tokens and zero unknowns. The demo’s ITRANS input mode converts Roman Sanskrit to Devanagari. The English control produced unknown inputs in the Sanskrit frontend.
+
+The publisher’s original one-thread ORT 1.20.1 browser worker and both benchmark routes returned matching sample lengths for four Sanskrit text controls. The benchmark fixes one WASM thread in ONNX Runtime Web 1.31.1. WebGPU uses the same graph with WASM operator fallback and an untimed hardware dispatch probe. The worker checks raw PCM length against the duration outputs before returning the stock parts in source order.
+
+[Model release](https://huggingface.co/77ethers/alpa/tree/b3973a79888b9c63b2fc6f56140c1699c0bd44d6) · [Official browser demo](https://alpa.blog/) · [Exact browser frontend](https://alpa.blog/js/text.js?v=ab33b3eb).

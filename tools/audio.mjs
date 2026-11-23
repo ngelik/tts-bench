@@ -83,6 +83,8 @@ attribution['tiny-voca-swahili'] = 'AI-generated Kiswahili narration using adoam
   'This excerpt is shared under CC BY-SA 4.0.';
 attribution['sobbie-tts'] = 'AI-generated English narration using Ashish Patnaik’s Apache-2.0 SobbieTTS checkpoint and voice F. ' +
   'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and Dizione phonemizer.';
+attribution['alpa-sanskrit'] = 'AI-generated Sanskrit narration using 77ethers’ Apache-2.0 Alpa v0.2 checkpoint and female voice. ' +
+  'The publisher credits Muhammed Nazeem’s Tiny Voca, Prathosh A P’s Vāgdhenu pronunciation rules, and the AI4Bharat Rasa dataset (CC BY 4.0) by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');
