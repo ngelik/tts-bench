@@ -917,3 +917,13 @@ The browser worker uses the publisher’s versioned JavaScript frontend directly
 The publisher’s original one-thread ORT 1.20.1 browser worker and both benchmark routes returned matching sample lengths for four Sanskrit text controls. The benchmark fixes one WASM thread in ONNX Runtime Web 1.31.1. WebGPU uses the same graph with WASM operator fallback and an untimed hardware dispatch probe. The worker checks raw PCM length against the duration outputs before returning the stock parts in source order.
 
 [Model release](https://huggingface.co/77ethers/alpa/tree/b3973a79888b9c63b2fc6f56140c1699c0bd44d6) · [Official browser demo](https://alpa.blog/) · [Exact browser frontend](https://alpa.blog/js/text.js?v=ab33b3eb).
+
+### Fiato
+
+Fiato’s pinned English FP32 ONNX graph contains 4,537,867 scalar initializer values and bundles American English voices F1 and M1. The benchmark uses F1 at index 0, 24 kHz mono PCM, speed 1, pitch shift 0 and pitch range 1.
+
+The adapter uses the Dizione archive and dictionary shipped with the release. It follows the publisher’s sentence splitting and punctuation rules, checks the sample count against each sentence’s predicted durations, and applies the publisher’s 0.99 peak cap after concatenating each source span’s PCM. The fixed English article contains 93 spans. The publisher’s sigh, exhale and gasp tokens have separate controls outside the scored article.
+
+Both backend routes use ONNX Runtime Web 1.31.1 with one WASM thread. The WebGPU route checks hardware dispatch separately and permits WASM operator fallback. The original browser worker and both benchmark routes matched the audio lengths of four plain English controls and three expression controls.
+
+[Model and assets](https://huggingface.co/cfahlgren1/fiato/tree/967de50b6a9ab673ef7de9f8f276fa93a8c0db81) · [Publisher browser worker](https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/demo/worker.js).

@@ -854,6 +854,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Voca Kiswahili | 7 | 7 | 1 (sw) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-swahili) |
 | SobbieTTS | 2 | 2 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#sobbie-tts) |
 | Alpa (Sanskrit) | 2 | 2 | 1 (sa) | [Details](docs/MODEL_SUPPORT.md#alpa-sanskrit) |
+| Fiato | 2 | 2 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#fiato) |
 
 ### Controlled native comparisons
 

@@ -85,6 +85,8 @@ attribution['sobbie-tts'] = 'AI-generated English narration using Ashish Patnaik
   'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and Dizione phonemizer.';
 attribution['alpa-sanskrit'] = 'AI-generated Sanskrit narration using 77ethers’ Apache-2.0 Alpa v0.2 checkpoint and female voice. ' +
   'The publisher credits Muhammed Nazeem’s Tiny Voca, Prathosh A P’s Vāgdhenu pronunciation rules, and the AI4Bharat Rasa dataset (CC BY 4.0) by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra.';
+attribution.fiato = 'AI-generated English narration using cfahlgren1’s Apache-2.0 Fiato checkpoint and voice F1. ' +
+  'The publisher credits Muhammed Nazeem’s Tiny Voca and Dizione, and the CC BY 4.0 Fiato synthetic-speech dataset derived from Maya-1.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');

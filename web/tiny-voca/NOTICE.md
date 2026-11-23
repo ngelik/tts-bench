@@ -5,3 +5,13 @@ The sentence splitter, phoneme budget, tensor inputs and synthesis settings foll
 The upstream worker uses ONNX Runtime Web 1.20.1 with one WASM thread. This adapter uses the benchmark’s 1.23.2 distribution for both CPU and WebGPU. The WebGPU session allows WASM operator fallback and requires an observed hardware compute dispatch. The controller collects the capability probe separately from timed speech. The adapter checks the duration head against the number of samples returned and raises an error if a single word exceeds the phoneme budget. First PCM is available when the first utterance in a source span returns to the worker.
 
 Phonemization uses upstream Dizione, its five published data files, Pyodide 0.26.4 and NumPy 1.26.4. The pinned source matches the Python and text files bundled with the hosted demo. Its source/data identity differs from the training frontend fingerprint in the model configuration. The SHA-256 manifest records the browser files and source archive used here. [Dizione source](https://github.com/n4ze3m/dizione/tree/f8629fe989f3d0db5f440f9b3c6f0154f2e6110f) · [Pyodide](https://github.com/pyodide/pyodide/tree/0.26.4) · [License inventory](../../docs/LICENSING.md)
+
+## Fiato
+
+The sentence and punctuation helpers in `fiato-frontend.mjs` and the expression
+wrapper in `fiato-dizione.mjs` adapt the publisher’s browser worker. They retain
+the adjacent [Apache-2.0 license](LICENSE). The adapter uses same-origin verified
+assets, keeps the published expression rules and measures the worker within
+fixed benchmark spans. Fiato builds on Muhammed Nazeem’s Tiny Voca at
+`62e2ade`. [Pinned browser worker](https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/demo/worker.js) ·
+[Upstream notice](https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/fiato/NOTICE).
