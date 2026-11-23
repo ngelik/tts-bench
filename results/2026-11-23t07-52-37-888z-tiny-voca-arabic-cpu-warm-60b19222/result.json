@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t07-52-37-888z-tiny-voca-arabic-cpu-warm-60b19222",
+  "createdAt": "2026-11-23T08:06:08.485Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "ar-article-v1",
+    "language": "ar",
+    "sha256": "3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5",
+    "characters": 28275,
+    "unicodeCodePoints": 28275,
+    "utf8Bytes": 53247,
+    "chunks": 129,
+    "source": {
+      "type": "translation",
+      "description": "Complete translation of all 27 original paragraphs into fully vocalized Modern Standard Arabic. Dates, quantities, units and identifiers are rendered as spoken Arabic with the original values, including A-17 and E.W. English context determines the evening return and radio times. The authored shadda-before-vowel order is preserved for deterministic replay. AI editorial review against the original story and factual details.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "16bdd280e2fa8296f6e9ecfcfd062bf0ec66a765",
+    "dirty": false,
+    "manifestSha256": "2c97d4d29fc7271f35d83680108fab2633850103ed59e876e8ad8865f9f18d83"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-arabic-config",
+      "sha256": "c00789356049545702f7e42624b1bdef1b105c22c38832eaec364d4d5ea007cc",
+      "bytes": 808
+    },
+    {
+      "id": "tiny-voca-arabic-model-onnx",
+      "sha256": "1eb04ad05ec96808eac3cb761ddb7fc0e17edb636deb3263ccb13d99f725ab8f",
+      "bytes": 21364044
+    },
+    {
+      "id": "tiny-voca-arabic-source-tiny_voca_ar-__init__.py",
+      "sha256": "acb18e52d919afbf75df34d80ec768935b2a7c0e01265510f0679dc96ca2bef9",
+      "bytes": 86
+    },
+    {
+      "id": "tiny-voca-arabic-source-tiny_voca_ar-arabic_frontend.py",
+      "sha256": "b94b2938d6cc5f2eabe67d776a907d9297954d037e47fa38f5bf76ee1fb28428",
+      "bytes": 14876
+    },
+    {
+      "id": "tiny-voca-arabic-source-tiny_voca_ar-numbers.py",
+      "sha256": "6ef9592da4332184f8223a7048cc821abdea4b851e1575a29a5bd277971d91fe",
+      "bytes": 2876
+    },
+    {
+      "id": "tiny-voca-arabic-source-tiny_voca_ar-text.py",
+      "sha256": "04342306ffd01b1978a55c39e67fc0b44c635d9f4afbb406f346b29c9622a32c",
+      "bytes": 5011
+    },
+    {
+      "id": "tiny-voca-arabic-source-catt_tashkeel-__init__.py",
+      "sha256": "798d70b292464e102df2a7527529c3ef64a67e1ee7506d6f051e87bcfb3e2d66",
+      "bytes": 80
+    },
+    {
+      "id": "tiny-voca-arabic-source-catt_tashkeel-bw2ar.py",
+      "sha256": "1064d0adec9cb0aea33a10ad944b8e7b8b558f17fef7c145da2a534efc6c6b66",
+      "bytes": 4480
+    },
+    {
+      "id": "tiny-voca-arabic-source-catt_tashkeel-tokenizer.py",
+      "sha256": "6895f284e88971c366f72e1c34aee896659ad61e3b7737ae201ab7f25daab8cc",
+      "bytes": 8504
+    },
+    {
+      "id": "tiny-voca-arabic-source-catt_tashkeel-utils.py",
+      "sha256": "b3c02fdc7ba2853c4e75a6a405530765930fd6c90481197fbf49543d110751d3",
+      "bytes": 3505
+    },
+    {
+      "id": "tiny-voca-arabic-source-catt_bridge.py",
+      "sha256": "3bfa2bcf3b803072b262d1d031a9431e8c3b7cf7d5e44306b6d4e966be77e4c1",
+      "bytes": 2162
+    },
+    {
+      "id": "tiny-voca-arabic-catt-encoder.onnx",
+      "sha256": "988a91ec817bc50a7857a9851a5edd80d6a4c2f594b7ba6fea615b4ebe336590",
+      "bytes": 40049261
+    },
+    {
+      "id": "tiny-voca-arabic-catt-decoder.onnx",
+      "sha256": "9ab419f6e48b25f81e08e64479fc1caa6921a88dbba9932a901fc64ce8cf1240",
+      "bytes": 52699358
+    },
+    {
+      "id": "tiny-voca-arabic-numpy-wheel",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "tiny-voca-arabic-model-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-arabic-catt-LICENSE",
+      "sha256": "958c2bbc9350931476edb7d354dfca1e420333ff05bf3bfbc62bc047f6816b3d",
+      "bytes": 10774
+    },
+    {
+      "id": "tiny-voca-arabic-numpy-LICENSE",
+      "sha256": "263223390c43a9d4a0841e0209265fd927a198f8e89c8eee809b7437d7e5e8c2",
+      "bytes": 1543
+    },
+    {
+      "id": "tiny-voca-arabic-notice",
+      "sha256": "07f2457fe78fb10599b7cac666989a544ecea067491b8f86fe8ae210d0adfad0",
+      "bytes": 2810
+    },
+    {
+      "id": "tiny-voca-arabic-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "tiny-voca-arabic-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "tiny-voca-arabic-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "tiny-voca-arabic-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "tiny-voca-arabic-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "tiny-voca-arabic-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "tiny-voca-arabic-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-voca-arabic-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "tiny-voca-arabic-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "tiny-voca-arabic-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "tiny-voca-arabic-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-arabic",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ar"
+        ],
+        "scope": "Experimental MSA profile with one synthetic a000 voice, 24 kHz mono, CATT v2 browser diacritization, and ar-article-v1. Latin-script text is stripped; no standalone English support.",
+        "sources": [
+          "https://huggingface.co/oddadmix/tiny-voca-arabic/tree/e529f716965142f51835adc9e5661f224c3fa103",
+          "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
+          "https://huggingface.co/spaces/oddadmix/tiny-voca-arabic/tree/64e3e2ae08f7553c38f280a58f05b955a0c296f4",
+          "https://huggingface.co/datasets/oddadmix/msa-duplex-assistant-tts/tree/ace6ef2243b47f5152fa95c5c5a6b1db56a05ca2",
+          "https://github.com/abjadai/catt/releases/tag/v2",
+          "https://github.com/abjadai/catt/commit/8d5330499feb85f6625e6af632141ed2ed6065fd"
+        ],
+        "notes": "Frontend audit: 129 spans, 339 utterances, max 194 tokens, zero unknown tokens/words; token/stress SHA-256 1f5bce0f95699c495b17ec67838ba5f3269bbd2fb631499ab40b26eebe8b3194. CATT runs CPU/WASM on both adapters; WebGPU capability applies only to the acoustic ONNX graph."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "a000",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "oddadmix/tiny-voca-arabic",
+        "modelRevision": "e529f716965142f51835adc9e5661f224c3fa103",
+        "sourceId": "oddadmix/tiny-voca-arabic",
+        "sourceRevision": "64e3e2ae08f7553c38f280a58f05b955a0c296f4",
+        "fixtureId": "ar-article-v1",
+        "fixtureSha256": "3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5",
+        "language": "ar",
+        "locale": "ar",
+        "supportedLanguages": [
+          "ar"
+        ],
+        "voice": "a000",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 104000,
+        "parameterCount": 4531723,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned Tiny Voca Arabic frontend plus browser CATT v2 ED diacritizer; number expansion and the original sentence/clause fitting policy.",
+        "frontendFingerprint": "8b5781d0348623398ce7ce16b5013e1ccea1ee8dd2d6e9f9f3db0398ab0d32c2",
+        "catt": {
+          "modelRevision": "de4bdb51cc43e5c9ddb6570686b44a4b9aef61a0",
+          "encoderBytes": 40049261,
+          "decoderBytes": 52699358,
+          "runtime": "CATT v2 ED ONNX, CPU/WASM"
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4",
+          "numpy": "1.26.4"
+        },
+        "executionProviders": [
+          "wasm"
+        ],
+        "cattExecutionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "waveform": "Stock Tiny Voca source-filter output; one 120 ms silence between utterances and one 0.99 peak cap per source span."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Acoustic and CATT inference use explicit single-thread CPU/WASM."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 526811.6549999714,
+          "samples": 41483392,
+          "sampleRate": 24000,
+          "pcmSha256": "2b1c5bd5634285075016449c0d62e02530b123b752c9cc716f15e82f6c4be25d",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 5655.045000076294,
+            "firstSourceChunkCompletedMs": 5662.9400000572205,
+            "audioSeconds": 1728.4746666666667,
+            "realTimeFactor": 0.30478413433499635,
+            "minSamplesPerChunk": 249920,
+            "maxSamplesPerChunk": 359808
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 87590.53499984741,
+          "samples": 41483392,
+          "sampleRate": 24000,
+          "pcmSha256": "088bf8d78e6a721eeef2840d0fe355a227ecc5921ba1cc599d81c78e4610ea46",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 771.6949999332428,
+            "firstSourceChunkCompletedMs": 773.9049999713898,
+            "audioSeconds": 1728.4746666666667,
+            "realTimeFactor": 0.050675047016317705,
+            "minSamplesPerChunk": 249920,
+            "maxSamplesPerChunk": 359808
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 87586.25999999046,
+          "samples": 41483392,
+          "sampleRate": 24000,
+          "pcmSha256": "b7a84e37bf82e30140437e95ec1c552a748aee7940e5ed726b465aee7619d96b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 772.6600000858307,
+            "firstSourceChunkCompletedMs": 774.954999923706,
+            "audioSeconds": 1728.4746666666667,
+            "realTimeFactor": 0.050672573737455484,
+            "minSamplesPerChunk": 249920,
+            "maxSamplesPerChunk": 359808
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 88670.70500016212,
+          "samples": 41483392,
+          "sampleRate": 24000,
+          "pcmSha256": "54eba1cd11e68a6799143dff498e8601e29dc84d9995b372d1853decaf79e64b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 771.9049999713898,
+            "firstSourceChunkCompletedMs": 774.0900001525879,
+            "audioSeconds": 1728.4746666666667,
+            "realTimeFactor": 0.05129997373416067,
+            "minSamplesPerChunk": 249920,
+            "maxSamplesPerChunk": 359808
+          },
+          "audio": {
+            "sha256": "6b40d7e7d49179b2834e5b7b00c9e5fac75a523d1dc4ae942616926b912aa65b",
+            "bytes": 82966828
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T07-52-37-125Z-d70f7068be34; cell 1/4; source 16bdd280e2fa8296f6e9ecfcfd062bf0ec66a765; fixture ar-article-v1 (ar, 28275 JavaScript characters, 129 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Oddadmix’s released Arabic FP32 graph at step 104000, a000 voice index zero, neutral controls, stock sentence/fit, 120 ms inter-utterance gaps and per-span peak normalization. The original CATT v2 ED executes through single-thread CPU/WASM in both acoustic modes, with exact Python tokenizer and Arabic rules in Pyodide 0.26.4. ORT Web 1.20.1 supports acoustic CPU/WASM or Apple hardware WebGPU+WASM. The excluded warm-up populates the worker phrase cache. Cached resource observations begin with a fresh phrase cache."
+  ]
+}

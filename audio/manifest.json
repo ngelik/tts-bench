@@ -3469,6 +3469,70 @@
       }
     },
     {
+      "resultId": "2026-11-23t07-52-37-888z-tiny-voca-arabic-cpu-warm-60b19222",
+      "model": "tiny-voca-arabic",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "a000",
+      "language": "ar",
+      "attribution": "AI-generated Modern Standard Arabic benchmark narration using Ahmed Wasfy’s (Oddadmix) Apache-2.0 tiny-voca-arabic a000 checkpoint. Based on Muhammed Nazeem’s Tiny Voca. Arabic diacritization uses the CATT v2 encoder-decoder by Abjad AI. The model was trained with Oddadmix’s synthetic MSA Duplex Assistant TTS dataset.",
+      "modelTerms": "Apache-2.0 for pinned model and frontend. Training dataset is published as oddadmix/msa-duplex-assistant-tts; no independent audio or generated recording rights are inferred.",
+      "sourceUrls": [
+        "https://huggingface.co/oddadmix/tiny-voca-arabic/tree/e529f716965142f51835adc9e5661f224c3fa103",
+        "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
+        "https://huggingface.co/spaces/oddadmix/tiny-voca-arabic/tree/64e3e2ae08f7553c38f280a58f05b955a0c296f4",
+        "https://huggingface.co/datasets/oddadmix/msa-duplex-assistant-tts/tree/ace6ef2243b47f5152fa95c5c5a6b1db56a05ca2",
+        "https://github.com/abjadai/catt/releases/tag/v2",
+        "https://github.com/abjadai/catt/commit/8d5330499feb85f6625e6af632141ed2ed6065fd"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t07-52-37-888z-tiny-voca-arabic-cpu-warm-60b19222--tiny-voca-arabic--cpu.wav",
+        "sha256": "2afce017e144bd730af3ea4346ed4ffbb546a84aad1dbebc297ff3c7a9ba1fdd",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "6b40d7e7d49179b2834e5b7b00c9e5fac75a523d1dc4ae942616926b912aa65b",
+        "bytes": 82966828
+      }
+    },
+    {
+      "resultId": "2026-11-23t08-06-09-230z-tiny-voca-arabic-webgpu-warm-4abbd0ea",
+      "model": "tiny-voca-arabic",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "a000",
+      "language": "ar",
+      "attribution": "AI-generated Modern Standard Arabic benchmark narration using Ahmed Wasfy’s (Oddadmix) Apache-2.0 tiny-voca-arabic a000 checkpoint. Based on Muhammed Nazeem’s Tiny Voca. Arabic diacritization uses the CATT v2 encoder-decoder by Abjad AI. The model was trained with Oddadmix’s synthetic MSA Duplex Assistant TTS dataset.",
+      "modelTerms": "Apache-2.0 for pinned model and frontend. Training dataset is published as oddadmix/msa-duplex-assistant-tts; no independent audio or generated recording rights are inferred.",
+      "sourceUrls": [
+        "https://huggingface.co/oddadmix/tiny-voca-arabic/tree/e529f716965142f51835adc9e5661f224c3fa103",
+        "https://huggingface.co/oddadmix/tiny-voca-arabic/blob/e529f716965142f51835adc9e5661f224c3fa103/README.md",
+        "https://huggingface.co/spaces/oddadmix/tiny-voca-arabic/tree/64e3e2ae08f7553c38f280a58f05b955a0c296f4",
+        "https://huggingface.co/datasets/oddadmix/msa-duplex-assistant-tts/tree/ace6ef2243b47f5152fa95c5c5a6b1db56a05ca2",
+        "https://github.com/abjadai/catt/releases/tag/v2",
+        "https://github.com/abjadai/catt/commit/8d5330499feb85f6625e6af632141ed2ed6065fd"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t08-06-09-230z-tiny-voca-arabic-webgpu-warm-4abbd0ea--tiny-voca-arabic--webgpu.wav",
+        "sha256": "5da9d241cbad3d6bef407c97615ac229367391b366d7f878c6b425faf4f77790",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "0600bd3507767d53cccbaa8dade1fddb83fa5eaffa37f2d4d79d097d9db1071c",
+        "bytes": 82966828
+      }
+    },
+    {
       "resultId": "2026-11-22t06-59-31-757z-tiny-voca-de-en-cpu-warm-9cd2b0be",
       "model": "tiny-voca-de-en",
       "backend": "cpu",
