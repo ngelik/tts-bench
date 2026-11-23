@@ -75,6 +75,13 @@
     "parameterCountSource": "https://huggingface.co/Fraunhofer-IEM/tiny-voca-de-en/blob/57fe34dfc061e6cc58e27d186bf7ba16d82d2def/README.md",
     "scope": "The pinned Voca64 model card reports the exact total trained parameter count, including the waveform generator."
   },
+  "tiny-swara": {
+    "parameterCount": 4537483,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/Xeven7/tiny-swara/blob/9432a340c46249c8acae4ff4b062d46b9cbd1991/README.md",
+    "upstreamModelCard": "https://huggingface.co/Xeven7/tiny-swara/tree/9432a340c46249c8acae4ff4b062d46b9cbd1991",
+    "scope": "The pinned model card reports the total synthesis parameter count, including its waveform generator."
+  },
   "tiny-voca-it": {
     "parameterCount": 446157,
     "countKind": "lower-bound",
