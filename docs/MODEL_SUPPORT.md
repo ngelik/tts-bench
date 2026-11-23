@@ -738,3 +738,36 @@ reports 930,224 acoustic parameters; this lower bound excludes the G2P encoder
 and decoder. See [profile and reproduction](BENGALI_VOICE.md), [adapter notice](../web/bengali-voice/NOTICE.md),
 [pinned model](https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac),
 and [browser source](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3).
+
+<a id="tiny-swara"></a>
+
+## Tiny Swara Bengali BF (INT8)
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (`bn`).
+
+The pinned INT8 checkpoint bundles BF/index 0 and BM/index 1; BF is the
+benchmark default. It produces 24 kHz mono audio with speed 1, pitch shift 0
+and pitch range 1. The profile uses the existing Bengali article. Its eSpeak
+NG 1.52.0 frontend keeps the released Bengali inventory and lexicon. Known
+Latin lexicon words route through Bengali spelling; other Latin words use
+`en-us` phones mapped through the Bengali inventory. This code-mix path is not
+an English model/voice or registered English profile. See [profile and
+behavior](TINY_SWARA.md) and [source/license notice](../web/tiny-swara/NOTICE.md).
+
+The frontend audit matches 89 fixture spans and 305 sentence plans, maximum
+220 tokens, 2,908 primary-stress marks and zero unknown phones. The checkpoint
+card reports 4,537,483 synthesis parameters, including the waveform generator.
+CPU uses one-thread WASM. WebGPU requires a separate hardware dispatch probe and
+returns CPU-readable PCM; ONNX Runtime Web may use WASM for unsupported GPU
+operators. The graph includes `RandomNormalLike`, so PCM is stochastic.
+
+The checkpoint config declares frontend fingerprint
+`54cece4f400be1fbb56c30bbeedbcdcf5d432702e6d8c6389f44fbb79dc4c94b`; the
+complete released inventory computes
+`9b2e2c1495ada4f44cb6a52c1fb7811fb7756beda6ae20185d9b66ef6195bada`. Native
+Bengali fixture tokens and stress match the source oracle under both. Rasa
+training data is CC BY 4.0; follow its terms for redistributed derived audio.
+
+[Pinned model card](https://huggingface.co/Xeven7/tiny-swara/tree/9432a340c46249c8acae4ff4b062d46b9cbd1991) ·
+[pinned eSpeak NG source](https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c) ·
+[ONNX Runtime Web 1.31.1](https://github.com/microsoft/onnxruntime/tree/v1.31.1).
