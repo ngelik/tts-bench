@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t18-46-00-439z-fiato-cpu-warm-a60b486c",
+  "createdAt": "2026-11-23T18:50:17.572Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "d24857e8727041e252b4a453a0cdac158d541081",
+    "dirty": false,
+    "manifestSha256": "5b9e630727079c2f48a8104229ba9af3fd71e77711094cfbe32bf771842493b4"
+  },
+  "assets": [
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "fiato-onnx-model-onnx",
+      "sha256": "179df2e1ede3935d4f928c0757947b25eb1f678ff347aef90e2efdf7ffb0048c",
+      "bytes": 21388682
+    },
+    {
+      "id": "fiato-config-json",
+      "sha256": "e07c1829084f87770cc1b0659053310dac8070aef222b53be71081ff1ebf80e1",
+      "bytes": 2262
+    },
+    {
+      "id": "fiato-onnx-model-json",
+      "sha256": "8bd17418a0f830868a5bf0752af70a6849fd1e7f73c09aab380356bd109388dd",
+      "bytes": 1083
+    },
+    {
+      "id": "fiato-demo-assets-dizione-zip",
+      "sha256": "7636962ad7370fc186a912a48e6493890f2121582925e718d60a5b4369b27166",
+      "bytes": 68485
+    },
+    {
+      "id": "fiato-phonemizer-lexicon-tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "fiato-phonemizer-align-json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "fiato-phonemizer-g2p-json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "fiato-phonemizer-g2p-npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "fiato-phonemizer-homographs-json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "fiato-phonemizer-LICENSE-cmudict",
+      "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+      "bytes": 1754
+    },
+    {
+      "id": "fiato-phonemizer-LICENSE-homograph-data",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "fiato-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "fiato-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "fiato-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "fiato-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "fiato-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "fiato-pyodide-numpy-1-26-4-cp312-cp312-pyodide_2024_0_wasm32-whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "fiato-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "fiato-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "id": "fiato-readme-md",
+      "sha256": "2babb96752e11831716ff3189918a9ed46a7958a851ad41bce953548ef851a79",
+      "bytes": 8877
+    },
+    {
+      "id": "fiato-demo-worker-js",
+      "sha256": "ba5a81905b1ebdc560078e5372c39e77be88858bdb5561d9a0392f91f09e2aeb",
+      "bytes": 6758
+    },
+    {
+      "id": "fiato-fiato-notice",
+      "sha256": "b6005829cc58e9d8a17f9240236f9eccab70c23628aa7366cb6ab882cdf3a478",
+      "bytes": 463
+    },
+    {
+      "id": "fiato-fiato-license-tiny-voca",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "fiato-demo-assets-license-dizione",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    }
+  ],
+  "cells": [
+    {
+      "model": "fiato",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Fiato FP32 ONNX checkpoint; English canonical english-20k-v1 fixture; benchmark voice F1/index 0; 24 kHz mono; speed 1, pitch shift 0, pitch range 1; publisher sentence finishing, expression tokens and post-span 0.99 peak ceiling.",
+        "sources": [
+          "https://huggingface.co/cfahlgren1/fiato/tree/967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+          "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/README.md",
+          "https://huggingface.co/datasets/cfahlgren1/fiato/tree/df0dcab5b7df8c130b5f4d8867caab25c602707f",
+          "https://huggingface.co/spaces/cfahlgren1/fiato"
+        ],
+        "notes": "The upstream bundle contains F1 and M1. The benchmark uses F1 at index 0. Dizione runs through Pyodide 0.26.4 and NumPy 1.26.4. Separate untimed controls cover sigh, exhale and gasp. The fixed English article is used unchanged."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F1",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "cfahlgren1/fiato",
+        "modelRevision": "967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+        "sourceId": "cfahlgren1/fiato",
+        "sourceRevision": "967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+        "fixtureId": "english-20k-v1",
+        "fixtureSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "language": "en",
+        "locale": "en-US",
+        "supportedLanguages": [
+          "en"
+        ],
+        "voice": "F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "parameterCount": 4537867,
+        "precision": "FP32 ONNX checkpoint",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "pyodide": "0.26.4",
+          "numpy": "1.26.4",
+          "dizione": "0.1.0"
+        },
+        "dizioneIdentity": {
+          "version": 4,
+          "built": {
+            "lexicon.tsv": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+            "align.json": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+            "g2p.json": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+            "g2p.npz": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+            "homographs.json": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192"
+          },
+          "tables": "fc40bd3e65ad2c5af834409c4c7f377fe04be144f4bc61737471324ff73c7d29",
+          "code": "102db3045b4a24979e3619000e5817d202afa5f9902e929908b2e43d331f2734",
+          "fingerprint": "f41b6f9dac16c0b3ac492e255fcbebf6b73f737b20a62dfba7576ceb208f9190"
+        },
+        "configDizioneFingerprint": "f41b6f9dac16c0b3ac492e255fcbebf6b73f737b20a62dfba7576ceb208f9190",
+        "graphFrontendFingerprint": "ec7ee6f521ecf6ad031b9d179a99c29bbbf7ddc70b58e25a03a3db0020712d7f",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "peakCap": 0.99,
+        "peakPolicy": "Publisher 0.99 ceiling applied after sentence PCM is concatenated within each harness source span; no per-sentence normalization, added pause or trim.",
+        "expressions": [
+          "<sigh>",
+          "<exhale>",
+          "<gasp>"
+        ],
+        "frontend": "Pinned Fiato Dizione 0.1.0 convention 4 through local Pyodide 0.26.4 and NumPy 1.26.4; publisher sentence and finish semantics."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit one-thread ONNX Runtime Web WASM CPU route; Fiato Dizione G2P runs in local Pyodide."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 61168.1850001812,
+          "samples": 29780224,
+          "sampleRate": 24000,
+          "pcmSha256": "34421f76b11bf28f21296caad63d33e90414cef79f1d50ce4b0a4e427b97e8af",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 179.30000019073486,
+            "firstSourceChunkCompletedMs": 725.9950001239777,
+            "audioSeconds": 1240.8426666666667,
+            "realTimeFactor": 0.049295681590721036,
+            "minSamplesPerChunk": 244224,
+            "maxSamplesPerChunk": 413184
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 60890.925000190735,
+          "samples": 29780224,
+          "sampleRate": 24000,
+          "pcmSha256": "f69aa03bd0d9848dc66c5faa84ca74608ed19ff81381fc60909481fb000f3c3b",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 167.8600001335144,
+            "firstSourceChunkCompletedMs": 694.0200002193451,
+            "audioSeconds": 1240.8426666666667,
+            "realTimeFactor": 0.049072236662980696,
+            "minSamplesPerChunk": 244224,
+            "maxSamplesPerChunk": 413184
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 60961.67999982834,
+          "samples": 29780224,
+          "sampleRate": 24000,
+          "pcmSha256": "08ead36bf59383851eae7f1ef436b3d1ed4a26ab6af33040679c83ccea51f718",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 167.5199999809265,
+            "firstSourceChunkCompletedMs": 697.3899998664856,
+            "audioSeconds": 1240.8426666666667,
+            "realTimeFactor": 0.04912925839630622,
+            "minSamplesPerChunk": 244224,
+            "maxSamplesPerChunk": 413184
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 60942.85500001907,
+          "samples": 29780224,
+          "sampleRate": 24000,
+          "pcmSha256": "3f20cad998f6154d617031e3c9ce49b98e56c1e770178dc9fd6106d9bb236850",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 168.64999985694885,
+            "firstSourceChunkCompletedMs": 694.3899998664856,
+            "audioSeconds": 1240.8426666666667,
+            "realTimeFactor": 0.04911408725469821,
+            "minSamplesPerChunk": 244224,
+            "maxSamplesPerChunk": 413184
+          },
+          "audio": {
+            "sha256": "e87ac39f0214d64babf8595f6b293a4dde84d3267fe8c46b71d98ac118f02ec3",
+            "bytes": 59560492
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T18-45-59-688Z-7348f0ef444f; cell 1/4; source d24857e8727041e252b4a453a0cdac158d541081; fixture english-20k-v1 (en, 20000 JavaScript characters, 93 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro under AC power, sequential disposable profiles. Exact Fiato FP32 English graph, revision 967de50b6a9ab673ef7de9f8f276fa93a8c0db81, F1/index zero, speed 1, pitch shift zero, pitch range 1, 24 kHz. Stock Dizione assets, publisher frontend format and token budgeting with Pyodide 0.26.4. ONNX Runtime Web 1.31.1 on both routes, one WASM thread and verified Apple hardware WebGPU plus WASM asyncify. PCM is joined and capped at the publisher peak for each source span."
+  ]
+}

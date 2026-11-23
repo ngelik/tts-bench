@@ -508,6 +508,66 @@
       }
     },
     {
+      "resultId": "2026-11-23t18-46-00-439z-fiato-cpu-warm-a60b486c",
+      "model": "fiato",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F1",
+      "language": "en",
+      "attribution": "AI-generated English narration using cfahlgren1’s Apache-2.0 Fiato checkpoint and voice F1. The publisher credits Muhammed Nazeem’s Tiny Voca and Dizione, and the CC BY 4.0 Fiato synthetic-speech dataset derived from Maya-1.",
+      "modelTerms": "Apache-2.0 per pinned model card and README.",
+      "sourceUrls": [
+        "https://huggingface.co/cfahlgren1/fiato/tree/967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+        "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/README.md",
+        "https://huggingface.co/datasets/cfahlgren1/fiato/tree/df0dcab5b7df8c130b5f4d8867caab25c602707f",
+        "https://huggingface.co/spaces/cfahlgren1/fiato"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t18-46-00-439z-fiato-cpu-warm-a60b486c--fiato--cpu.wav",
+        "sha256": "c5e29401624d5c5e31454ea3ed12debfd5e0c9200116fb536f9ebfb1312ff5be",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "e87ac39f0214d64babf8595f6b293a4dde84d3267fe8c46b71d98ac118f02ec3",
+        "bytes": 59560492
+      }
+    },
+    {
+      "resultId": "2026-11-23t18-50-18-324z-fiato-webgpu-warm-6841c1a0",
+      "model": "fiato",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F1",
+      "language": "en",
+      "attribution": "AI-generated English narration using cfahlgren1’s Apache-2.0 Fiato checkpoint and voice F1. The publisher credits Muhammed Nazeem’s Tiny Voca and Dizione, and the CC BY 4.0 Fiato synthetic-speech dataset derived from Maya-1.",
+      "modelTerms": "Apache-2.0 per pinned model card and README.",
+      "sourceUrls": [
+        "https://huggingface.co/cfahlgren1/fiato/tree/967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+        "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/README.md",
+        "https://huggingface.co/datasets/cfahlgren1/fiato/tree/df0dcab5b7df8c130b5f4d8867caab25c602707f",
+        "https://huggingface.co/spaces/cfahlgren1/fiato"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-23t18-50-18-324z-fiato-webgpu-warm-6841c1a0--fiato--webgpu.wav",
+        "sha256": "9bed39d54b9d7ece1efcaffe488d28faf11306af07eaee1f19bd944bebfaaf1f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "ef9c008af396e1fcc6e2e5945393a20907d49a61dbe3346d6add6f269511c2ef",
+        "bytes": 59560492
+      }
+    },
+    {
       "resultId": "2026-11-14t19-46-27-024z-fun-cosyvoice3-0.5b-2512-cpu-cached-7c12aec4",
       "model": "fun-cosyvoice3-0.5b-2512",
       "backend": "cpu",

@@ -1,0 +1,820 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t18-52-15-794z-fiato-cpu-cached-aee03084",
+  "createdAt": "2026-11-23T18:53:29.165Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "english-20k-v1",
+    "sha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "characters": 20000,
+    "chunks": 93
+  },
+  "source": {
+    "gitCommit": "d24857e8727041e252b4a453a0cdac158d541081",
+    "dirty": false,
+    "manifestSha256": "5b9e630727079c2f48a8104229ba9af3fd71e77711094cfbe32bf771842493b4"
+  },
+  "assets": [
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:fiato:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "fiato-onnx-model-onnx",
+      "sha256": "179df2e1ede3935d4f928c0757947b25eb1f678ff347aef90e2efdf7ffb0048c",
+      "bytes": 21388682
+    },
+    {
+      "id": "fiato-config-json",
+      "sha256": "e07c1829084f87770cc1b0659053310dac8070aef222b53be71081ff1ebf80e1",
+      "bytes": 2262
+    },
+    {
+      "id": "fiato-onnx-model-json",
+      "sha256": "8bd17418a0f830868a5bf0752af70a6849fd1e7f73c09aab380356bd109388dd",
+      "bytes": 1083
+    },
+    {
+      "id": "fiato-demo-assets-dizione-zip",
+      "sha256": "7636962ad7370fc186a912a48e6493890f2121582925e718d60a5b4369b27166",
+      "bytes": 68485
+    },
+    {
+      "id": "fiato-phonemizer-lexicon-tsv",
+      "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+      "bytes": 3454357
+    },
+    {
+      "id": "fiato-phonemizer-align-json",
+      "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+      "bytes": 29729
+    },
+    {
+      "id": "fiato-phonemizer-g2p-json",
+      "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+      "bytes": 834
+    },
+    {
+      "id": "fiato-phonemizer-g2p-npz",
+      "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+      "bytes": 1840104
+    },
+    {
+      "id": "fiato-phonemizer-homographs-json",
+      "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+      "bytes": 51956
+    },
+    {
+      "id": "fiato-phonemizer-LICENSE-cmudict",
+      "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+      "bytes": 1754
+    },
+    {
+      "id": "fiato-phonemizer-LICENSE-homograph-data",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "fiato-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "fiato-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "fiato-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "fiato-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "fiato-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "fiato-pyodide-numpy-1-26-4-cp312-cp312-pyodide_2024_0_wasm32-whl",
+      "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+      "bytes": 11959269
+    },
+    {
+      "id": "fiato-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "fiato-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "id": "fiato-readme-md",
+      "sha256": "2babb96752e11831716ff3189918a9ed46a7958a851ad41bce953548ef851a79",
+      "bytes": 8877
+    },
+    {
+      "id": "fiato-demo-worker-js",
+      "sha256": "ba5a81905b1ebdc560078e5372c39e77be88858bdb5561d9a0392f91f09e2aeb",
+      "bytes": 6758
+    },
+    {
+      "id": "fiato-fiato-notice",
+      "sha256": "b6005829cc58e9d8a17f9240236f9eccab70c23628aa7366cb6ab882cdf3a478",
+      "bytes": 463
+    },
+    {
+      "id": "fiato-fiato-license-tiny-voca",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "fiato-demo-assets-license-dizione",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    }
+  ],
+  "cells": [
+    {
+      "model": "fiato",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned Fiato FP32 ONNX checkpoint; English canonical english-20k-v1 fixture; benchmark voice F1/index 0; 24 kHz mono; speed 1, pitch shift 0, pitch range 1; publisher sentence finishing, expression tokens and post-span 0.99 peak ceiling.",
+        "sources": [
+          "https://huggingface.co/cfahlgren1/fiato/tree/967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+          "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/README.md",
+          "https://huggingface.co/datasets/cfahlgren1/fiato/tree/df0dcab5b7df8c130b5f4d8867caab25c602707f",
+          "https://huggingface.co/spaces/cfahlgren1/fiato"
+        ],
+        "notes": "The upstream bundle contains F1 and M1. The benchmark uses F1 at index 0. Dizione runs through Pyodide 0.26.4 and NumPy 1.26.4. Separate untimed controls cover sigh, exhale and gasp. The fixed English article is used unchanged."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F1",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "cfahlgren1/fiato",
+        "modelRevision": "967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+        "sourceId": "cfahlgren1/fiato",
+        "sourceRevision": "967de50b6a9ab673ef7de9f8f276fa93a8c0db81",
+        "fixtureId": "english-20k-v1",
+        "fixtureSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "language": "en",
+        "locale": "en-US",
+        "supportedLanguages": [
+          "en"
+        ],
+        "voice": "F1",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "parameterCount": 4537867,
+        "precision": "FP32 ONNX checkpoint",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "pyodide": "0.26.4",
+          "numpy": "1.26.4",
+          "dizione": "0.1.0"
+        },
+        "dizioneIdentity": {
+          "version": 4,
+          "built": {
+            "lexicon.tsv": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+            "align.json": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+            "g2p.json": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+            "g2p.npz": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+            "homographs.json": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192"
+          },
+          "tables": "fc40bd3e65ad2c5af834409c4c7f377fe04be144f4bc61737471324ff73c7d29",
+          "code": "102db3045b4a24979e3619000e5817d202afa5f9902e929908b2e43d331f2734",
+          "fingerprint": "f41b6f9dac16c0b3ac492e255fcbebf6b73f737b20a62dfba7576ceb208f9190"
+        },
+        "configDizioneFingerprint": "f41b6f9dac16c0b3ac492e255fcbebf6b73f737b20a62dfba7576ceb208f9190",
+        "graphFrontendFingerprint": "ec7ee6f521ecf6ad031b9d179a99c29bbbf7ddc70b58e25a03a3db0020712d7f",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "peakCap": 0.99,
+        "peakPolicy": "Publisher 0.99 ceiling applied after sentence PCM is concatenated within each harness source span; no per-sentence normalization, added pause or trim.",
+        "expressions": [
+          "<sigh>",
+          "<exhale>",
+          "<gasp>"
+        ],
+        "frontend": "Pinned Fiato Dizione 0.1.0 convention 4 through local Pyodide 0.26.4 and NumPy 1.26.4; publisher sentence and finish semantics."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit one-thread ONNX Runtime Web WASM CPU route; Fiato Dizione G2P runs in local Pyodide."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 60976.669999837875,
+          "samples": 29780224,
+          "sampleRate": 24000,
+          "pcmSha256": "ad4c36a35a8f70247b8d09a74c86c21ff356f015799f0ab0a244b32c9ce5b742",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 93,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 177.5550000667572,
+            "firstSourceChunkCompletedMs": 712.9099998474121,
+            "audioSeconds": 1240.8426666666667,
+            "realTimeFactor": 0.04914133889644715,
+            "minSamplesPerChunk": 244224,
+            "maxSamplesPerChunk": 413184,
+            "articleCallPeakRssBytes": 1686159360,
+            "generationMeanRssBytes": 1412910258,
+            "generationRssSampleCount": 121,
+            "loadMs": 2664.843416999999,
+            "controllerTrialElapsedMs": 67517.848708,
+            "downloadBytes": 65796,
+            "idealDownloadSecondsAt1Mbps": 0.526368
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795459944377.335,
+            "finalPcmAtEpochMs": 1795460005354.0051,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795459944924,
+                1299808256
+              ],
+              [
+                1795459945423,
+                1306034176
+              ],
+              [
+                1795459945926,
+                1312948224
+              ],
+              [
+                1795459946432,
+                1311457280
+              ],
+              [
+                1795459946935,
+                1354973184
+              ],
+              [
+                1795459947433,
+                1352548352
+              ],
+              [
+                1795459947934,
+                1353236480
+              ],
+              [
+                1795459948447,
+                1356546048
+              ],
+              [
+                1795459948940,
+                1358561280
+              ],
+              [
+                1795459949439,
+                1361166336
+              ],
+              [
+                1795459949940,
+                1363214336
+              ],
+              [
+                1795459950443,
+                1364410368
+              ],
+              [
+                1795459950944,
+                1364443136
+              ],
+              [
+                1795459951445,
+                1367162880
+              ],
+              [
+                1795459951948,
+                1367293952
+              ],
+              [
+                1795459952451,
+                1369751552
+              ],
+              [
+                1795459952952,
+                1371619328
+              ],
+              [
+                1795459953455,
+                1371635712
+              ],
+              [
+                1795459953956,
+                1374109696
+              ],
+              [
+                1795459954457,
+                1374404608
+              ],
+              [
+                1795459954959,
+                1377632256
+              ],
+              [
+                1795459955461,
+                1377730560
+              ],
+              [
+                1795459955962,
+                1380040704
+              ],
+              [
+                1795459956463,
+                1382318080
+              ],
+              [
+                1795459956968,
+                1382367232
+              ],
+              [
+                1795459957470,
+                1383727104
+              ],
+              [
+                1795459957970,
+                1386135552
+              ],
+              [
+                1795459958473,
+                1387479040
+              ],
+              [
+                1795459958973,
+                1388085248
+              ],
+              [
+                1795459959473,
+                1390149632
+              ],
+              [
+                1795459959974,
+                1391788032
+              ],
+              [
+                1795459960477,
+                1392869376
+              ],
+              [
+                1795459960979,
+                1395048448
+              ],
+              [
+                1795459961481,
+                1396310016
+              ],
+              [
+                1795459961982,
+                1398996992
+              ],
+              [
+                1795459962486,
+                1400913920
+              ],
+              [
+                1795459962986,
+                1400930304
+              ],
+              [
+                1795459963490,
+                1402273792
+              ],
+              [
+                1795459963991,
+                1405173760
+              ],
+              [
+                1795459964496,
+                1406828544
+              ],
+              [
+                1795459964997,
+                1427865600
+              ],
+              [
+                1795459965495,
+                1409269760
+              ],
+              [
+                1795459965998,
+                1410629632
+              ],
+              [
+                1795459966499,
+                1410367488
+              ],
+              [
+                1795459967002,
+                1411858432
+              ],
+              [
+                1795459967505,
+                1413382144
+              ],
+              [
+                1795459968007,
+                1414578176
+              ],
+              [
+                1795459968507,
+                1414594560
+              ],
+              [
+                1795459969009,
+                1415839744
+              ],
+              [
+                1795459969511,
+                1417035776
+              ],
+              [
+                1795459970013,
+                1418412032
+              ],
+              [
+                1795459970515,
+                1419689984
+              ],
+              [
+                1795459971018,
+                1419952128
+              ],
+              [
+                1795459971521,
+                1421836288
+              ],
+              [
+                1795459972022,
+                1426833408
+              ],
+              [
+                1795459972525,
+                1428652032
+              ],
+              [
+                1795459973027,
+                1428652032
+              ],
+              [
+                1795459973526,
+                1430601728
+              ],
+              [
+                1795459974027,
+                1432649728
+              ],
+              [
+                1795459974531,
+                1432649728
+              ],
+              [
+                1795459975033,
+                1434042368
+              ],
+              [
+                1795459975534,
+                1435451392
+              ],
+              [
+                1795459976037,
+                1436909568
+              ],
+              [
+                1795459976537,
+                1438334976
+              ],
+              [
+                1795459977040,
+                1438302208
+              ],
+              [
+                1795459977542,
+                1440595968
+              ],
+              [
+                1795459978045,
+                1442365440
+              ],
+              [
+                1795459978546,
+                1442365440
+              ],
+              [
+                1795459979049,
+                1443233792
+              ],
+              [
+                1795459979551,
+                1444528128
+              ],
+              [
+                1795459980055,
+                1446494208
+              ],
+              [
+                1795459980554,
+                1446494208
+              ],
+              [
+                1795459981057,
+                1447804928
+              ],
+              [
+                1795459981559,
+                1448968192
+              ],
+              [
+                1795459982062,
+                1450409984
+              ],
+              [
+                1795459982564,
+                1450524672
+              ],
+              [
+                1795459983063,
+                1451786240
+              ],
+              [
+                1795459983564,
+                1453015040
+              ],
+              [
+                1795459984064,
+                1454505984
+              ],
+              [
+                1795459984567,
+                1454505984
+              ],
+              [
+                1795459985072,
+                1456046080
+              ],
+              [
+                1795459985572,
+                1457537024
+              ],
+              [
+                1795459986073,
+                1458618368
+              ],
+              [
+                1795459986575,
+                1459044352
+              ],
+              [
+                1795459987078,
+                1461010432
+              ],
+              [
+                1795459987581,
+                1462337536
+              ],
+              [
+                1795459988083,
+                1464303616
+              ],
+              [
+                1795459988584,
+                1464369152
+              ],
+              [
+                1795459989087,
+                1465712640
+              ],
+              [
+                1795459989590,
+                1467154432
+              ],
+              [
+                1795459990093,
+                1468989440
+              ],
+              [
+                1795459990596,
+                1469415424
+              ],
+              [
+                1795459991097,
+                1470939136
+              ],
+              [
+                1795459991598,
+                1472479232
+              ],
+              [
+                1795459992099,
+                1472577536
+              ],
+              [
+                1795459992602,
+                1473888256
+              ],
+              [
+                1795459993104,
+                1475362816
+              ],
+              [
+                1795459993606,
+                1476591616
+              ],
+              [
+                1795459994110,
+                1477591040
+              ],
+              [
+                1795459994611,
+                1479163904
+              ],
+              [
+                1795459995112,
+                1480704000
+              ],
+              [
+                1795459995617,
+                1480704000
+              ],
+              [
+                1795459996117,
+                1481900032
+              ],
+              [
+                1795459996619,
+                1483423744
+              ],
+              [
+                1795459997123,
+                1484734464
+              ],
+              [
+                1795459997624,
+                1484734464
+              ],
+              [
+                1795459998128,
+                1486864384
+              ],
+              [
+                1795459998628,
+                1488732160
+              ],
+              [
+                1795459999140,
+                1480572928
+              ],
+              [
+                1795459999634,
+                1448296448
+              ],
+              [
+                1795460000136,
+                1449623552
+              ],
+              [
+                1795460000640,
+                1309065216
+              ],
+              [
+                1795460001141,
+                1310343168
+              ],
+              [
+                1795460001642,
+                1313636352
+              ],
+              [
+                1795460002144,
+                1315831808
+              ],
+              [
+                1795460002647,
+                1317240832
+              ],
+              [
+                1795460003149,
+                1318305792
+              ],
+              [
+                1795460003651,
+                1319976960
+              ],
+              [
+                1795460004151,
+                1320009728
+              ],
+              [
+                1795460004654,
+                1322500096
+              ],
+              [
+                1795460005156,
+                1323696128
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "2274c02dc29b90eb94606d4e6708bd6b29c4635c2ec5c0aee97eb55349e1d138",
+            "bytes": 59560492
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T18-45-59-688Z-7348f0ef444f; cell 3/4; source d24857e8727041e252b4a453a0cdac158d541081; fixture english-20k-v1 (en, 20000 JavaScript characters, 93 spans); requested n=1; effective n=1; Headed Google Chrome on Apple M1 Pro under AC power, sequential disposable profiles. Exact Fiato FP32 English graph, revision 967de50b6a9ab673ef7de9f8f276fa93a8c0db81, F1/index zero, speed 1, pitch shift zero, pitch range 1, 24 kHz. Stock Dizione assets, publisher frontend format and token budgeting with Pyodide 0.26.4. ONNX Runtime Web 1.31.1 on both routes, one WASM thread and verified Apple hardware WebGPU plus WASM asyncify. PCM is joined and capped at the publisher peak for each source span.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
