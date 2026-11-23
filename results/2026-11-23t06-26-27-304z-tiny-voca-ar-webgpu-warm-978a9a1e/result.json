@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-23t06-26-27-304z-tiny-voca-ar-webgpu-warm-978a9a1e",
+  "createdAt": "2026-11-23T06:32:47.278Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 157.0.8103.79",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "ar-article-v1",
+    "language": "ar",
+    "sha256": "3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5",
+    "characters": 28275,
+    "unicodeCodePoints": 28275,
+    "utf8Bytes": 53247,
+    "chunks": 129,
+    "source": {
+      "type": "translation",
+      "description": "Complete translation of all 27 original paragraphs into fully vocalized Modern Standard Arabic. Dates, quantities, units and identifiers are rendered as spoken Arabic with the original values, including A-17 and E.W. English context determines the evening return and radio times. The authored shadda-before-vowel order is preserved for deterministic replay. AI editorial review against the original story and factual details.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "cf9b05a408ecce9e0ed7ecc1ea8a8504a545bbc9",
+    "dirty": false,
+    "manifestSha256": "75a09e80b30fd675fce932499d8a1608a071fab46022974140ea5319cafc92c3"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-ar-onnx",
+      "sha256": "e15b25eb8164fc5e575472f58c6edf4fa141245cf8faa254427c232a449944e9",
+      "bytes": 21388681
+    },
+    {
+      "id": "tiny-voca-ar-config",
+      "sha256": "d32e39061e02b6879412bc7f6aa10ae7a93b3d5f0d37d4f205cc2701ad55d6af",
+      "bytes": 1764
+    },
+    {
+      "id": "tiny-voca-ar-frontend",
+      "sha256": "d623f77fd78c53def6908edba580a0f04962097cdb70cd1fbffcea917db22b22",
+      "bytes": 49809
+    },
+    {
+      "id": "tiny-voca-ar-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ar-notice",
+      "sha256": "1d4c47b116f7b9fc700d0dad25c206fe481b37dff6144be822b47765a6bce0fc",
+      "bytes": 1343
+    },
+    {
+      "id": "tiny-voca-ar-pyodide-pyodide-js",
+      "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+      "bytes": 14761
+    },
+    {
+      "id": "tiny-voca-ar-pyodide-pyodide-asm-js",
+      "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+      "bytes": 1229099
+    },
+    {
+      "id": "tiny-voca-ar-pyodide-pyodide-asm-wasm",
+      "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+      "bytes": 10088051
+    },
+    {
+      "id": "tiny-voca-ar-pyodide-python_stdlib-zip",
+      "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+      "bytes": 2341872
+    },
+    {
+      "id": "tiny-voca-ar-pyodide-pyodide-lock-json",
+      "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+      "bytes": 106335
+    },
+    {
+      "id": "tiny-voca-ar-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "tiny-voca-ar-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "tiny-voca-ar-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-ar-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-ar-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-voca-ar-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "tiny-voca-ar-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "tiny-voca-ar-cpython-license",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "bytes": 13936
+    },
+    {
+      "id": "tiny-voca-ar-ort-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ar",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ar"
+        ],
+        "scope": "Experimental Modern Standard Arabic profile with the trained M2/index 1 voice only, 24 kHz, fully vocalized text, and ar-article-v1 fixture. F2 is untrained. No browser diacritizer; not cleared for client use.",
+        "sources": [
+          "https://huggingface.co/abdullah/tiny-voca-ar/tree/dcdf56c10c536d4df74576f036b512c0d212e17f",
+          "https://huggingface.co/abdullah/tiny-voca-ar/blob/dcdf56c10c536d4df74576f036b512c0d212e17f/README.md",
+          "https://huggingface.co/abdullah/tiny-voca-ar/blob/dcdf56c10c536d4df74576f036b512c0d212e17f/NOTICE.md",
+          "https://huggingface.co/datasets/abdullah/tiny-voca-ar/tree/704dae1f4c6b1746e17e287cc9324499679769cd",
+          "https://tiny-voca-ar-site.pages.dev/"
+        ],
+        "notes": "Exact ar-article-v1 frontend audit: 129 spans, 340 utterances, maximum 189 tokens, zero unknown token IDs/words, token/stress SHA-256 aff88555e8f3b33e73656fbdc38cbc8fca3b345d3128a1a0d1316be5e03ffc0d. Publisher says only M2 was trained; F2 is untrained/noise. Publisher says not cleared for client use while the modeled reference voice rights question remains open."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M2",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "abdullah/tiny-voca-ar",
+        "modelRevision": "dcdf56c10c536d4df74576f036b512c0d212e17f",
+        "sourceId": "abdullah/tiny-voca-ar",
+        "sourceRevision": "dcdf56c10c536d4df74576f036b512c0d212e17f",
+        "fixtureId": "ar-article-v1",
+        "fixtureSha256": "3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5",
+        "language": "ar",
+        "locale": "ar",
+        "supportedLanguages": [
+          "ar"
+        ],
+        "voice": "M2",
+        "voiceIndex": 1,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 79955,
+        "parameterCount": 4537867,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Exact tiny_voca/text.py extracted from the pinned 0.2.0 wheel and run in Pyodide 0.26.4; fully vocalized MSA rules G2P. No browser diacritizer.",
+        "frontendFingerprint": "eaf8efe872bb2dd98a0a942fc290ba640e2c07bc96353cc7bb30075d5342e045",
+        "runtimeVersion": "1.20.1",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "pyodide": "0.26.4"
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "waveformExecutionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "waveform": "Pinned FP32 graph. Utterances concatenate in source order with no inserted audio; apply one 0.99 peak cap to each completed source span."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 840,
+        "description": "Observed 840 hardware WebGPU dispatches in an untimed probe. WASM handles unsupported operators; frontend work and output readback are CPU-side."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 91543,
+          "samples": 58286592,
+          "sampleRate": 24000,
+          "pcmSha256": "dc838ebc5285970ff1468a1ed8f55a79be2ad656aaea8ec603cecd73819494f4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 809.8849999904633,
+            "firstSourceChunkCompletedMs": 817.1499998569489,
+            "audioSeconds": 2428.608,
+            "realTimeFactor": 0.037693608849184386,
+            "minSamplesPerChunk": 355072,
+            "maxSamplesPerChunk": 491008
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 91106.0799999237,
+          "samples": 58286592,
+          "sampleRate": 24000,
+          "pcmSha256": "a2f33522a8d1f74a8f5d32041ea2e16593128b1dc2729a9e7cbb1146fc60dcd7",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 819.2849998474121,
+            "firstSourceChunkCompletedMs": 822.5449998378754,
+            "audioSeconds": 2428.608,
+            "realTimeFactor": 0.03751370332302443,
+            "minSamplesPerChunk": 355072,
+            "maxSamplesPerChunk": 491008
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 91221.5150001049,
+          "samples": 58286592,
+          "sampleRate": 24000,
+          "pcmSha256": "d52f3b6ccc4c7b7b2f16be2216e932ef4ac80c3968f5d5dba665a174624f0a01",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 816.045000076294,
+            "firstSourceChunkCompletedMs": 819.3250000476837,
+            "audioSeconds": 2428.608,
+            "realTimeFactor": 0.037561234666156455,
+            "minSamplesPerChunk": 355072,
+            "maxSamplesPerChunk": 491008
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 91071.45000004768,
+          "samples": 58286592,
+          "sampleRate": 24000,
+          "pcmSha256": "cf0ed659f4779b60bc8d94a79bdb1ecd1deb39dcc8f9f2103c674d5b5f6c118f",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 129,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 781.835000038147,
+            "firstSourceChunkCompletedMs": 785.1600000858307,
+            "audioSeconds": 2428.608,
+            "realTimeFactor": 0.0374994441260375,
+            "minSamplesPerChunk": 355072,
+            "maxSamplesPerChunk": 491008
+          },
+          "audio": {
+            "sha256": "fc53a056ec9d9b265cae18256a833491fde507c297cb0fe915f460f7259bfd01",
+            "bytes": 116573228
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-23T06-16-47-684Z-2471d878d928; cell 2/4; source cf9b05a408ecce9e0ed7ecc1ea8a8504a545bbc9; fixture ar-article-v1 (ar, 28275 JavaScript characters, 129 spans); requested n=3; effective n=3; Headed Google Chrome on Apple M1 Pro, disposable sequential profiles. Abdullah’s released Arabic FP32 graph at step 79955, trained M2 voice index one, neutral controls, stock sentence/fit and completed-span peak normalization. Pinned fully vowel-marked Modern Standard Arabic rules frontend through stock Pyodide 0.26.4. ORT Web 1.20.1 single-thread CPU/WASM or Apple hardware WebGPU+WASM. Separate cached process-tree RSS observations."
+  ]
+}
