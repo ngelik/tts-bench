@@ -81,6 +81,8 @@ attribution['tiny-urdu'] = 'AI-generated Roman Urdu narration using Zafar205’s
 attribution['tiny-voca-swahili'] = 'AI-generated Kiswahili narration using adoamesh’s Tiny Voca Kiswahili 55k checkpoint and WAXAL speaker 1. ' +
   'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and the WAXAL Swahili TTS dataset from Google Research, Makerere University and Loud and Clear. ' +
   'This excerpt is shared under CC BY-SA 4.0.';
+attribution['sobbie-tts'] = 'AI-generated English narration using Ashish Patnaik’s Apache-2.0 SobbieTTS checkpoint and voice F. ' +
+  'The publisher credits Muhammed Nazeem’s Tiny Voca architecture and Dizione phonemizer.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');

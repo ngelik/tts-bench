@@ -15822,6 +15822,303 @@
           "kind": "license"
         }
       ]
+    },
+    "sobbie-tts": {
+      "displayName": "SobbieTTS",
+      "modelRevision": "6b6132c6d34b5fc163d8f5553580678a60532ac3",
+      "sourceId": "PatnaikAshish/SobbieTTS",
+      "sourceRevision": "6b6132c6d34b5fc163d8f5553580678a60532ac3",
+      "parameterCount": 4537291,
+      "frontendFingerprint": "dizione:8cd889e4de7be6bd1dd2e6891344a0729fa14dd4; config:c729f235e10daa1a08ce7711169c1cb93fb552b3c24eecb16527513d7b69d4da",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "license": "MIT ONNX Runtime Web 1.31.1 with retained license and third-party notices.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "sobbie-tts-dist-ort-wasm-min-mjs"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "sobbie-tts-dist-ort-webgpu-min-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "sobbie-tts-dist-ort-wasm-simd-threaded-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "sobbie-tts-dist-ort-wasm-simd-threaded-wasm"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "sobbie-tts-dist-ort-wasm-simd-threaded-asyncify-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "sobbie-tts-dist-ort-wasm-simd-threaded-asyncify-wasm"
+          },
+          {
+            "path": "LICENSE.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "id": "sobbie-tts-license-txt"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "id": "sobbie-tts-thirdpartynotices-txt"
+          }
+        ]
+      },
+      "license": {
+        "model": "Apache-2.0 per the pinned model card and README.",
+        "trainingData": "Model card attributes the model to the training materials; review model card for full training-data provenance.",
+        "frontend": "Dizione is Apache-2.0 at pinned revision 8cd889e4de7be6bd1dd2e6891344a0729fa14dd4. CMUdict and homograph data notices are retained as assets.",
+        "inferenceSource": "Original benchmark adapter under the repository MIT license.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 with retained third-party notices; Pyodide 0.26.4 and NumPy 1.26.4 runtime notices are included.",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "en"
+        ],
+        "scope": "Pinned SobbieTTS FP32 checkpoint; English canonical fixture, publisher F/index 0, 24 kHz mono. Dizione at pinned source/data; speed 1, pitch shift 0, pitch range 1.15.",
+        "sources": [
+          "https://huggingface.co/PatnaikAshish/SobbieTTS/tree/6b6132c6d34b5fc163d8f5553580678a60532ac3",
+          "https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+          "https://github.com/n4ze3m/dizione/tree/8cd889e4de7be6bd1dd2e6891344a0729fa14dd4"
+        ],
+        "notes": "The browser route follows the staged publisher worker for finished(), abbreviations/sentence boundaries, max_tokens minus 12 recursive token fitting, default F voice, direct PCM concatenation and one 0.99 final source-span peak cap. The Dizione config frontend fingerprint is retained as a distinct release identifier; the source/data digest is recorded separately."
+      },
+      "assets": [
+        {
+          "id": "sobbie-tts-model-onnx",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/model.onnx",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/onnx/model.onnx",
+          "bytes": 21386372,
+          "sha256": "eafb38b736c17872091c0f05de87814257925a9c3c5aeff168c74afc496d9317",
+          "kind": "model-weights"
+        },
+        {
+          "id": "sobbie-tts-config-json",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/config.json",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/config.json",
+          "bytes": 2565,
+          "sha256": "d4d01f06170711045a1b5a020f2cc392dd114b596e82739a25f1a9e875a72860",
+          "kind": "model-config"
+        },
+        {
+          "id": "sobbie-tts-model-json",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/model.json",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/onnx/model.json",
+          "bytes": 1332,
+          "sha256": "9649c7401ebbb999e8cf204af4ee6eee2ea152fcb99df6679f7b7cb8f866d01b",
+          "kind": "model-config"
+        },
+        {
+          "id": "sobbie-tts-readme-md",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md",
+          "bytes": 4801,
+          "sha256": "1f349ad106c88c9d5b932ab66ffb4fe7466e2fcdd6ab87a0f3291d43f01686d9",
+          "kind": "provenance"
+        },
+        {
+          "id": "sobbie-tts-web-readme-md",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/web/README.md",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/web/README.md",
+          "bytes": 391,
+          "sha256": "63fcb4da06f1d4b5c999d7d833da3f6d1aaf93ab62b29bdfce49e2855b389fbb",
+          "kind": "provenance"
+        },
+        {
+          "id": "sobbie-tts-dizione-source-zip",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/dizione/source.zip",
+          "url": "https://codeload.github.com/n4ze3m/dizione/zip/8cd889e4de7be6bd1dd2e6891344a0729fa14dd4",
+          "bytes": 135578,
+          "sha256": "f7773c30fef90ed3c2f1daa973868b2b26ab4efd82c08340d0e1815a98fca09a",
+          "kind": "model-support"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-lexicon-tsv",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/lexicon.tsv",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/lexicon.tsv",
+          "bytes": 3454357,
+          "sha256": "3fc930345c6b3cabc533981c4b212fa309eec83913fcdbd42919338270d64b06",
+          "kind": "model-support"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-align-json",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/align.json",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/align.json",
+          "bytes": 29729,
+          "sha256": "864763dbd558a864950266b2c30627f1cad203e75062ee842ee63c653e823b75",
+          "kind": "model-support"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-g2p-json",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/g2p.json",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/g2p.json",
+          "bytes": 834,
+          "sha256": "c518fd839ea0109c0b2b4f778c17506bf0d7653557b8b8c97a4c8dd9883d4432",
+          "kind": "model-support"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-g2p-npz",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/g2p.npz",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/g2p.npz",
+          "bytes": 1840104,
+          "sha256": "eb3fd519ff00e72d850928d2fccb968adc36134bca2f3bda09de7e794c2ed01b",
+          "kind": "model-support"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-homographs-json",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/homographs.json",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/homographs.json",
+          "bytes": 51956,
+          "sha256": "9c3a96fcdf79fa27d1b3686dc6a507c37e4f754966928608ee9ddb617ba39192",
+          "kind": "model-support"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-sources-json",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/sources.json",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/sources.json",
+          "bytes": 213,
+          "sha256": "f4c54924d30a5bc0bc1e3d7b058adb924484b3fab8541bc8d8bcecfb028fdbad",
+          "kind": "provenance"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-license-cmudict",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/LICENSE.cmudict",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/LICENSE.cmudict",
+          "bytes": 1754,
+          "sha256": "bd4ce8e44170a5f9f481310ca85c51de3c4f851a65e679b40e603b143bd3542a",
+          "kind": "license"
+        },
+        {
+          "id": "sobbie-tts-phonemizer-license-homograph-data",
+          "target": "models/sobbie-tts/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/LICENSE.homograph-data",
+          "url": "https://huggingface.co/PatnaikAshish/SobbieTTS/resolve/6b6132c6d34b5fc163d8f5553580678a60532ac3/phonemizer/LICENSE.homograph-data",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "sobbie-tts-pyodide-pyodide.js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+          "bytes": 14761,
+          "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+          "kind": "runtime"
+        },
+        {
+          "id": "sobbie-tts-pyodide-pyodide.asm.js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+          "bytes": 1229099,
+          "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+          "kind": "runtime"
+        },
+        {
+          "id": "sobbie-tts-pyodide-pyodide.asm.wasm",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+          "bytes": 10088051,
+          "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+          "kind": "runtime"
+        },
+        {
+          "id": "sobbie-tts-pyodide-python_stdlib.zip",
+          "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+          "bytes": 2341872,
+          "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+          "kind": "runtime"
+        },
+        {
+          "id": "sobbie-tts-pyodide-pyodide-lock.json",
+          "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+          "bytes": 106335,
+          "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "sobbie-tts-pyodide-numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "target": "runtimes/pyodide/0.26.4/numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/numpy-1.26.4-cp312-cp312-pyodide_2024_0_wasm32.whl",
+          "bytes": 11959269,
+          "sha256": "4a2f5303a88a0747c5e6c80701e0ff4ff5667e487c0c9f9c73875e4d88f4cf9a",
+          "kind": "runtime"
+        },
+        {
+          "id": "sobbie-tts-pyodide-license",
+          "target": "licenses/tiny-voca/PYODIDE-MPL-2.0.txt",
+          "url": "https://raw.githubusercontent.com/pyodide/pyodide/0.26.4/LICENSE",
+          "bytes": 16725,
+          "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+          "kind": "license"
+        },
+        {
+          "id": "sobbie-tts-cpython-license",
+          "target": "licenses/tiny-voca/CPYTHON-LICENSE.txt",
+          "url": "https://raw.githubusercontent.com/python/cpython/v3.12.1/LICENSE",
+          "bytes": 13936,
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+          "kind": "license"
+        }
+      ]
     }
   }
 }

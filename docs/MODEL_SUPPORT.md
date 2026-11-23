@@ -897,3 +897,13 @@ The publisher describes a deterministic Kiswahili letter-to-phone frontend and d
 The article has 109 fixed spans. The browser frontend divides them into sentences and concatenates the raw PCM in source order at each span boundary. Each graph call checks the token budget, the 3,000-frame limit and the exact correspondence between the duration head and the audio samples. Headed Chrome runs ONNX Runtime Web 1.31.1 with one WASM thread and graph optimization set to all. Apple WebGPU uses the same graph with WASM operator fallback and an untimed hardware dispatch probe. The release’s pretokenized reference cases produced identical sample counts on the two browser routes.
 
 [Model and reference inputs](https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b) · [WAXAL dataset and license](https://huggingface.co/datasets/google/WaxalNLP/blob/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580/README.md).
+
+### SobbieTTS
+
+The pinned expressive English FP32 ONNX checkpoint bundles voices F and M. The benchmark uses the publisher’s default F at index 0, 24 kHz mono PCM, speed 1, pitch shift 0 and pitch range 1.15. The 21,386,372-byte graph contains 4,537,291 logical scalars across 184 FP32 initializers.
+
+The benchmark uses the released pronunciation dictionary and a pinned snapshot of the Dizione source selected by the publisher’s demo builder. It preserves the demo’s sentence segmentation, abbreviation handling, token budget, terminal punctuation and 0.99 peak cap. The canonical English fixture supplies all 93 source spans. Each graph call validates its PCM and predicted token durations.
+
+Both scored routes use ONNX Runtime Web 1.31.1 with one WASM thread. Apple WebGPU requires an untimed hardware dispatch proof and permits WASM for unsupported operators. Four English controls produced the same audio lengths in the original 1.20.1 browser worker, the benchmark’s CPU route and its Apple WebGPU route.
+
+[Model card](https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/README.md) · [Publisher browser worker](https://huggingface.co/PatnaikAshish/SobbieTTS/blob/6b6132c6d34b5fc163d8f5553580678a60532ac3/web/public/worker.js).
