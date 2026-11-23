@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "cs-article-v1",
+  "file": "cs-article-v1.txt",
+  "sha256": "a2c49b6e2836315147c99bc0ff79cd1216823f434eae3de3992378b9a334408b",
+  "utf8Bytes": 20626,
+  "unicodeCodePoints": 18724,
+  "javascriptStringLength": 18724,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 85,
+  "chunkCharacters": {
+    "min": 215,
+    "max": 225
+  },
+  "fixtureId": "cs-article-v1",
+  "language": "cs",
+  "source": {
+    "type": "translation",
+    "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "GPT-6 Luna, reviewed by Codex",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}
