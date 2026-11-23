@@ -83,7 +83,7 @@ for (const [page,html] of Object.entries(htmlFiles)) {
     assert.equal(new URL(url,'https://local.invalid/').searchParams.get('v'),version,`${page} asset ${url} shares the build identity`);
   }
 }
-for (const path of ['assets/app.mjs','audio/player.mjs','assets/diagnostics.mjs']) {
+for (const path of ['assets/app.mjs','assets/coverage.mjs','audio/player.mjs','assets/diagnostics.mjs']) {
   const source=await readFile(resolve(root,path),'utf8');
   assert.equal(source.includes(SITE_VERSION_TOKEN),false,`${path} contains no unresolved cache token`);
 }
@@ -104,7 +104,7 @@ const staleData=JSON.stringify({schemaVersion:1,models:Array.from({length:13},(_
   languages:[{id:'en',label:'English'},{id:'uk',label:'Ukrainian'}],
   byLanguage:{uk:{schemaVersion:1,models:Array.from({length:2},(_,index)=>({id:`old-uk-${index}`})),fixture:{id:'old-uk-fixture',language:'uk',characters:19980,chunks:92}}}});
 const staleObservations=JSON.stringify({inputs:{},models:{},observations:[]});
-const legacyApp="import '../audio/waveform-integrity.mjs'; document.querySelector('#recording-count').textContent='cached legacy app'; document.body.dataset.legacyApp='loaded';";
+const legacyApp="import '../audio/waveform-integrity.mjs'; import './coverage.mjs'; document.querySelector('#recording-count').textContent='cached legacy app'; document.body.dataset.legacyApp='loaded';";
 const legacyPlayer="import './waveform-integrity.mjs'; import './links.mjs'; document.body.dataset.legacyPlayer='loaded';";
 const legacyDiagnostics="document.querySelector('#recording-count').textContent='cached legacy diagnostics'; document.body.dataset.legacyDiagnostics='loaded';";
 const seedHtml=`<!doctype html><html><head>
@@ -136,7 +136,7 @@ const server=createServer(async(req,res)=>{
       const body='body{background-color:rgb(255,0,255)!important}';
       return reply(res,200,body,'text/css; charset=utf-8',{'cache-control':'public, max-age=86400, immutable'});
     }
-    if (unversioned && ['/audio/links.mjs','/audio/waveform-integrity.mjs'].includes(url.pathname)) {
+    if (unversioned && ['/assets/coverage.mjs','/audio/links.mjs','/audio/waveform-integrity.mjs'].includes(url.pathname)) {
       return reply(res,200,'export const legacyCachedModule=true;','text/javascript; charset=utf-8',{'cache-control':'public, max-age=86400, immutable'});
     }
     if (unversioned && url.pathname==='/assets/data.json') return reply(res,200,staleData,'application/json; charset=utf-8',{'cache-control':'public, max-age=86400, immutable'});
@@ -276,7 +276,7 @@ async function verifyDashboard(page,label) {
   assert.deepEqual(actualIds,expectedIds,`${label} visitor loaded the eligible published model IDs`);
   const rowCount=actualIds.length;
   assert.equal(await page.locator('#load-error').isVisible(),false,`${label} visitor has no dashboard load error`);
-  const resources=await assertResources(page,['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs']);
+  const resources=await assertResources(page,['/assets/app.mjs','/assets/coverage.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs']);
   const languageRows=await verifyLanguageRows(page,label);
   const playback=await verifyPlayback(page);
   return {rows:rowCount,resources,playback,languages:languageRows};
@@ -363,7 +363,7 @@ try {
   assert.equal(await mixedPage.evaluate(()=>getComputedStyle(document.body).backgroundColor),staleBackground,'Seed visit cached the stale stylesheet');
   assert.equal(await mixedPage.evaluate(()=>document.body.dataset.legacyLanguageTotal),'15','The legacy seed records both English and Ukrainian model groups');
   const seeded=requestLog.filter(entry=>entry.phase==='legacy-cache-seed');
-  for (const path of ['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/player.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/diagnostics.mjs','/assets/diagnostics.css','/diagnostics/2026-11-multilingual/observations.json']) {
+  for (const path of ['/assets/app.mjs','/assets/coverage.mjs','/assets/style.css','/assets/data.json','/audio/player.mjs','/audio/player.css','/audio/links.mjs','/audio/waveform-integrity.mjs','/assets/diagnostics.mjs','/assets/diagnostics.css','/diagnostics/2026-11-multilingual/observations.json']) {
     assert.ok(seeded.some(entry=>entry.path===path&&!entry.search),`Mixed-cache seed fetched legacy ${path}`);
   }
   mixedErrors.length=0;
@@ -385,7 +385,7 @@ try {
     const publicPage=await publicContext.newPage();
     const publicErrors=[];
     const publicAssetResponses=[];
-    const publicAssetPaths=['/assets/app.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs'];
+    const publicAssetPaths=['/assets/app.mjs','/assets/coverage.mjs','/assets/style.css','/assets/data.json','/audio/waveform-integrity.mjs'];
     publicPage.on('pageerror',error=>publicErrors.push(String(error)));
     publicPage.on('console',message=>{if(message.type()==='error')publicErrors.push(message.text());});
     publicPage.on('response',response=>{
