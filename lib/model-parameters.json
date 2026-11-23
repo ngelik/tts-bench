@@ -272,5 +272,12 @@
     "parameterCountSource": "https://huggingface.co/brenorb/tiny-broca/blob/0ea879d8f532ad0c6e7308017b45105a74f81a95/README.md",
     "upstreamModelCard": "https://huggingface.co/brenorb/tiny-broca/blob/0ea879d8f532ad0c6e7308017b45105a74f81a95/README.md",
     "scope": "Publisher-reported exact parameter count for the pinned FP32 checkpoint, including its waveform generator."
+  },
+  "tiny-voca-ar-halabi": {
+    "parameterCount": 4532683,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
+    "upstreamModelCard": "https://github.com/BenkadourKhaled/tiny-voca/blob/4601b2bdb44bc52ebf73e87d5082b49fa138c6fb/README.md",
+    "scope": "Publisher-reported exact parameter count for the pinned Arabic F2 FP32 checkpoint, including the waveform generator."
   }
 }
