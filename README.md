@@ -720,6 +720,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Voca Hebrew AH (FP32) | 1 | 1 | 1 (he) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-he) |
 | Tiny Voca Arabic CATT a000 (FP32) | 1 | 1 | 1 (ar) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-arabic) |
 | Tiny Voca Arabic M2 (FP32) | 1 | 1 | 1 (ar) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ar) |
+| Hansda Bengali Voice Compact INT8 (Jahnavi) | 1 | 1 | 1 (bn) | [Details](docs/MODEL_SUPPORT.md#bengali-voice) |
 
 ### Controlled native comparisons
 
