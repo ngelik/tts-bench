@@ -10,6 +10,7 @@ import { createTinyVocaRuAdapter } from './adapters/tiny-voca-ru.mjs';
 import { createTinyVocaGrAdapter } from './adapters/tiny-voca-gr.mjs';
 import { createMiniVozAdapter } from './adapters/mini-voz.mjs';
 import { createTinyVocaEsAdapter } from './adapters/tiny-voca-es.mjs';
+import { createTinyVocaFrAdapter } from './adapters/tiny-voca-fr.mjs';
 import { createAlpaEsAdapter } from './adapters/alpa-es.mjs';
 import { createClarviaTtsTinyAdapter } from './adapters/clarvia-tts-tiny.mjs';
 import { createZerreTtsAdapter } from './adapters/zerre-tts.mjs';
@@ -68,6 +69,7 @@ const FACTORIES = {
   'tiny-voca-gr': createTinyVocaGrAdapter,
   'mini-voz': createMiniVozAdapter,
   'tiny-voca-es': createTinyVocaEsAdapter,
+  'tiny-voca-fr': createTinyVocaFrAdapter,
   'alpa-es': createAlpaEsAdapter,
   'clarvia-tts-tiny': createClarviaTtsTinyAdapter,
   'zerre-tts': createZerreTtsAdapter,
@@ -270,6 +272,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
         (model === 'tiny-voca-gr' && fixtureId === 'el-article-v1') ||
         (model === 'mini-voz' && fixtureId === 'es-es-article-v1') ||
         (model === 'tiny-voca-es' && fixtureId === 'es-es-article-v1') ||
+        (model === 'tiny-voca-fr' && fixtureId === 'fr-article-v1') ||
         (model === 'alpa-es' && fixtureId === 'es-ar-article-v1')
       )))
         ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : [],
