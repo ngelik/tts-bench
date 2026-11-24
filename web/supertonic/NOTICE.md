@@ -11,9 +11,11 @@ Restoring the original import in the vendored copy produces the whitespace-
 normalized upstream SHA-256
 `8d254a8e900a2553c987efbd8d9eabd084819e79a286f1a008e8c8ecdeabe08d`.
 Synthesis, normalization, duration prediction, latent sampling and paragraph/
-sentence chunking logic remain upstream helper code. The canonical 93 source
-spans yield 111 internal utterances; the helper adds 0.3 seconds between the 18
-intra-span splits. The adapter's `audio.mjs` applies the same output trim as
+sentence chunking logic remain upstream helper code. The English article has 93 source spans, 111 internal utterances and 18
+intra-span pauses of 0.3 seconds. Other articles use the same helper with their
+own text and language tag. [Counts for every language](../../docs/campaigns/supertonic-3/fixture-split-audit.md)
+
+The adapter's `audio.mjs` applies the same output trim as
 the pinned official `web/main.js` (`floor(sampleRate * duration[0])`, then
 `slice(0, wavLen)`); the helper itself does not perform this trim. The original
 `web/main.js` SHA-256 is

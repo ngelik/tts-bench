@@ -37,3 +37,12 @@ test('Supertonic keeps the regional fixture tag and submits the supported model 
   assert.throws(() => resolveSupertonicFixtureLanguage('pt-PT'), /does not support fixture language/);
   assert.throws(() => resolveSupertonicFixtureLanguage('es-AR'), /does not support fixture language/);
 });
+
+test('Supertonic frontend description reports each language tag and official split target', () => {
+  for (const [language, target] of [['en', 300], ['it', 300], ['ko', 120], ['ja', 120]]) {
+    const description = describeSupertonicFrontend(FRONTEND_DESCRIPTION, language);
+    assert.match(description, new RegExp(`<${language}> tags`));
+    assert.match(description, new RegExp(`target internal chunk length of ${target} UTF-16 code units`));
+    assert.match(description, /0\.3-second pause between internal utterances/);
+  }
+});

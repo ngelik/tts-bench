@@ -23,7 +23,10 @@ export function resolveSupertonicLanguage(requested, fallback = 'en') {
 }
 
 export function describeSupertonicFrontend(description, language) {
-  return description.replaceAll('<en>', `<${language}>`);
+  const target = language === 'ko' || language === 'ja' ? 120 : 300;
+  return description
+    .replaceAll('<en>', `<${language}>`)
+    .replaceAll('<maxLen>', String(target));
 }
 
 export function resolveSupertonicFixtureLanguage(requested, fallback = 'en') {

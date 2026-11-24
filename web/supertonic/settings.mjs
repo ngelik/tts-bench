@@ -19,6 +19,6 @@ export const EXECUTION_PROVIDERS = Object.freeze({
   webgpu: Object.freeze(['webgpu', 'wasm']),
 });
 
-export const FRONTEND_DESCRIPTION = 'Official Supertonic browser helper: NFKD normalization, emoji/symbol cleanup, whitespace compaction, terminal punctuation and <en> tags. It splits each source span at paragraph/sentence boundaries (max 300 characters); the 93-span canonical fixture yields 111 internal utterances and 18 intra-span 0.3-second silences.';
+export const FRONTEND_DESCRIPTION = 'The official Supertonic browser helper applies NFKD normalization, cleans up emoji and symbols, compacts whitespace, adds terminal punctuation and wraps text in <en> tags. It splits each source span at paragraph/sentence boundaries with a target internal chunk length of <maxLen> UTF-16 code units and inserts a 0.3-second pause between internal utterances.';
 export const OUTPUT_TRIM_DESCRIPTION = 'Matches the official browser demo: trim waveform to floor(sampleRate × predicted duration) before returning Float32 PCM.';
 export const RANDOMNESS_DESCRIPTION = 'The official helper samples Box-Muller latent noise with Math.random; it exposes no validated seed input.';
