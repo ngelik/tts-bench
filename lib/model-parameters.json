@@ -377,5 +377,12 @@
     "parameterCountSource": "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
     "upstreamModelCard": "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
     "scope": "Publisher-reported exact parameter count for the pinned step-4000 tiny-voca-lg FP32 ONNX configuration; count is not independently recomputed from tensor shapes."
+  },
+  "browser-voice-gu-int6": {
+    "parameterCount": 934816,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://huggingface.co/Hansda/gujarati-voice-compact/blob/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser/size.json",
+    "upstreamModelCard": "https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f",
+    "scope": "Publisher count for the acoustic checkpoint. The recurrent G2P encoder and decoder are loaded separately and excluded."
   }
 }

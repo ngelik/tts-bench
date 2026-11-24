@@ -957,3 +957,9 @@ sentence plans have been qualified, but no inference or benchmark score is
 claimed.
 
 [Pinned model card](https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md) · [Pinned model files](https://huggingface.co/henryhale/tiny-voca-lg/tree/dcb36749b11027ef8e57319d6508104e235ff783) · [Pinned Luganda frontend](https://github.com/henryhale/tiny-voca-lg/tree/258107cba9bdf820a815554ce1b601369b8c1388) · [Dataset attribution](https://huggingface.co/datasets/CraneAILabs/waxal-lug-clean).
+
+<a id="browser-voice-gu-int6"></a>
+
+## Browser Voice Gujarati INT6
+
+The publisher's Jahnavi voice reads the registered Gujarati-script article at 24 kHz. Its shipped worker runs the acoustic model and its recurrent pronunciation model in one-thread WASM. Each source span goes through the same normalization, lexicon lookup, G2P, sentence splitting and peak limiting as the online demo. The browser's first audio event contains the completed span. The source manifest identifies 934,816 acoustic parameters and lists the pronunciation model separately. [Model card](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f) · [Size manifest](https://huggingface.co/Hansda/gujarati-voice-compact/blob/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser/size.json) · [Browser worker](https://github.com/DarvinX/multilingual-browser-tts/blob/f2977727b8baccb989f80b492ea8da00124ecba3/web/worker.js)
