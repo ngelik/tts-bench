@@ -818,6 +818,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "pt-pt-article-v1",
+      "smokeId": "pt-pt-article-smoke-v1",
+      "language": "pt-PT",
+      "articleFile": "pt-pt-article-v1.txt",
+      "chunksFile": "pt-pt-article-v1.chunks.json",
+      "metadataFile": "pt-pt-article-v1.meta.json",
+      "sha256": "08e524e4a56f05d9a8b6f043bc91accfd6dfc94156601213f4c9ae53585573c7",
+      "characters": 23265,
+      "unicodeCodePoints": 23265,
+      "utf8Bytes": 23886,
+      "chunks": 106,
+      "source": {
+        "type": "translation",
+        "description": "European Portuguese edition translated and edited by Codex using the original English and the published Brazilian Portuguese edition. AI editorial review of all 27 paragraphs, names, numerical quantities and article units. Dates, times and prices use spoken forms.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
