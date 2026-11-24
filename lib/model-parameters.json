@@ -439,5 +439,12 @@
     "parameterCountSource": "https://github.com/blue-buff/tiny-voca-zh/blob/8b3fb5b460e828a90913edc28f3f1ddc51a66127/src/tiny_voca/export.py",
     "upstreamModelCard": "https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2",
     "scope": "Counted 4,545,355 trainable parameters in the pinned PyTorch checkpoint during the reference ONNX export and verified the count on the independent asset rebuild."
+  },
+  "tiny-voca-fa": {
+    "parameterCount": 4531147,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+    "upstreamModelCard": "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+    "scope": "The publisher reports 4,531,147 parameters for the Parisa acoustic checkpoint including the waveform generator. The two Persian pronunciation graphs are separate frontend dependencies."
   }
 }
