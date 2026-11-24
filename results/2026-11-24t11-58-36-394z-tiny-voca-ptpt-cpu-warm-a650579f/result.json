@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f",
+  "createdAt": "2026-11-24T12:03:09.098Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "pt-pt-article-v1",
+    "language": "pt-PT",
+    "sha256": "08e524e4a56f05d9a8b6f043bc91accfd6dfc94156601213f4c9ae53585573c7",
+    "characters": 23265,
+    "unicodeCodePoints": 23265,
+    "utf8Bytes": 23886,
+    "chunks": 106,
+    "source": {
+      "type": "translation",
+      "description": "European Portuguese edition translated and edited by Codex using the original English and the published Brazilian Portuguese edition. AI editorial review of all 27 paragraphs, names, numerical quantities and article units. Dates, times and prices use spoken forms.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "2581937c17b500bda80cb158cd86a0c804149026",
+    "dirty": false,
+    "manifestSha256": "f8076a363297b8531c641efc210304a52c37c61875d9e5d7356dbd1d8e08cd5e"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-ptpt-onnx",
+      "sha256": "bf12f20419b6485d986063348c497ad99bc0bf3d64339c8429e3c078ed0abf88",
+      "bytes": 21368660
+    },
+    {
+      "id": "tiny-voca-ptpt-model-config",
+      "sha256": "55bda62f6e259a346d865f143af0e020cc21a5f9144adfcded553a1c4d753913",
+      "bytes": 679
+    },
+    {
+      "id": "tiny-voca-ptpt-browser-config",
+      "sha256": "caddd758918301f9aa7af81ded5afb626361e4800ab13458d3635a683eb87b07",
+      "bytes": 830
+    },
+    {
+      "id": "tiny-voca-ptpt-open-vowel-list",
+      "sha256": "690a3c5ab1f19ae51752113f772ded0d0eed2de4e4a0aea2d46b2bdc86b4e982",
+      "bytes": 4304
+    },
+    {
+      "id": "tiny-voca-ptpt-pronuncia-js",
+      "sha256": "96f69be7471f2a325e3a247ced0c80901a8616452f94311b5e859c61134d5b38",
+      "bytes": 21428
+    },
+    {
+      "id": "tiny-voca-ptpt-article-oracle",
+      "sha256": "43aa9a5d0e11b3dbfb5920cd1ab820cb389974d28bf2131b01d871e15249991e",
+      "bytes": 51673
+    },
+    {
+      "id": "tiny-voca-ptpt-fixture-chunks",
+      "sha256": "30e32fad520481d2475a1c7510dde107d55a4eee7837decaeb0e38932beeac78",
+      "bytes": 19244
+    },
+    {
+      "id": "tiny-voca-ptpt-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ptpt-browser-notice",
+      "sha256": "1c0e96c8cd9e59a177adf92444c8a4e23062037f4a11b9f96e451067d4547f7f",
+      "bytes": 863
+    },
+    {
+      "id": "tiny-voca-ptpt-upstream-notice",
+      "sha256": "d7ac92cb8a58535d18a5b2fec66ed2b51b229bfbe26f3cfaad77d4ea85477712",
+      "bytes": 931
+    },
+    {
+      "id": "tiny-voca-ptpt-runtime-ort-webgpu-mjs",
+      "sha256": "e131e81c9324807e1e6f9103e8f8e936112827dcc9993cde9407a333b1f07ae0",
+      "bytes": 357582
+    },
+    {
+      "id": "tiny-voca-ptpt-runtime-jsep-mjs",
+      "sha256": "1cbcba8f2c769c1eecbab66a1b1e55ef11704515bf4306373e3db3c37cf6dcd8",
+      "bytes": 44677
+    },
+    {
+      "id": "tiny-voca-ptpt-runtime-jsep-wasm",
+      "sha256": "b45970d0632383a057c27ca5b660b216f8e00c17cf8db9f6207b5e4abc839368",
+      "bytes": 21872216
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ptpt",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-PT"
+        ],
+        "scope": "Pinned joserui/tiny-voca-pt-pt ONNX graph, two fictional synthetic Lisbon voices (F3 and M1), 24 kHz mono, and the registered pt-pt-article-v1 fixture. CPU/WASM and WebGPU are explicit selections.",
+        "sources": [
+          "https://huggingface.co/joserui/tiny-voca-pt-pt/tree/9d547821151d1f009eada6f49b5be73af77ae245",
+          "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/tree/744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/pronuncia.js",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/test/vectores.json",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+        ],
+        "notes": "Supplied full-article frontend oracle binds the registered fixture SHA and reports 106 spans, 350 utterances, maximum 185 tokens, and zero unknown phones (oracle SHA-256 43aa9a5d0e11b3dbfb5920cd1ab820cb389974d28bf2131b01d871e15249991e). The pinned upstream vector file contains 632 Python/JavaScript parity vectors; their source identities are recorded in the adapter profile. This patch is not a browser or inference qualification receipt. WebGPU requires an explicit selection and can use internal WASM kernels for unsupported graph operators; use the untimed dispatch probe to record dispatch."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F3",
+      "precision": "FP32 ONNX export of the released European Portuguese checkpoint",
+      "settings": {
+        "modelId": "joserui/tiny-voca-pt-pt",
+        "modelRevision": "9d547821151d1f009eada6f49b5be73af77ae245",
+        "sourceId": "joseruimemory/tiny-voca-pt-pt",
+        "sourceRevision": "744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+        "fixtureId": "pt-pt-article-v1",
+        "fixtureSha256": "08e524e4a56f05d9a8b6f043bc91accfd6dfc94156601213f4c9ae53585573c7",
+        "language": "pt-PT",
+        "locale": "pt-PT",
+        "voice": "F3",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 120000,
+        "precision": "FP32 ONNX export of the released European Portuguese checkpoint",
+        "frontend": "Pinned joseruimemory/tiny-voca-pt-pt browser frontend at 744e42406fd481fbe61f3b67bf8012a7d29cb57a; JavaScript port of pronuncia-pt 0.2.0 with its native open-vowel list",
+        "frontendFingerprint": "5a15e081f3d834a1b59f294b174a78f6797c14c84dabb2f434e31fe7df070b31",
+        "pronunciationVectors": {
+          "count": 632,
+          "result": "632 upstream Python pronunciation vectors matched the released JavaScript frontend",
+          "vectorsGitBlob": "76853ae4ce396627fda35c27c904115e6aab5347",
+          "checkerGitBlob": "9c58a959ace54082b501264da764e81db314542a",
+          "vectorsSha256": "c9be7fa4c809f60a628c2effd81ac1738e48315142620a67745909af649656a3"
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.22.0"
+        },
+        "runtimePackageIntegrity": "sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Pinned FP32 European Portuguese ONNX graph; sentence utterances are concatenated without inserted audio, then each source span receives one 0.99 peak cap.",
+        "unknownPhonePolicy": "The pinned pronuncia-pt rules and measured open-vowel list produce the released 53-symbol inventory; unknown phones fail the full-article audit."
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit single-thread ONNX Runtime Web WASM provider; this is the CPU backend."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 66370.10000014305,
+          "samples": 32275968,
+          "sampleRate": 24000,
+          "pcmSha256": "3525bd95bbba0cff9b80ebb7e72f81f9ee3d204065c1a49c8a1bffa057fc872c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 106,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 243.3400001525879,
+            "firstSourceChunkCompletedMs": 700.4950001239777,
+            "audioSeconds": 1344.832,
+            "realTimeFactor": 0.04935196366545639,
+            "minSamplesPerChunk": 253696,
+            "maxSamplesPerChunk": 345088
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 66226.44499993324,
+          "samples": 32275968,
+          "sampleRate": 24000,
+          "pcmSha256": "dfbaf193709e65d15809e2e40204de753e98592a0dab61193e546bd899faf53a",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 106,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 167.63499999046326,
+            "firstSourceChunkCompletedMs": 604.960000038147,
+            "audioSeconds": 1344.832,
+            "realTimeFactor": 0.04924514363127383,
+            "minSamplesPerChunk": 253696,
+            "maxSamplesPerChunk": 345088
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 66145.13000011444,
+          "samples": 32275968,
+          "sampleRate": 24000,
+          "pcmSha256": "cafc32fa934b4d466d5db18bced6c4d1ea5eb712615e0a5540e14d1e8d58b5eb",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 106,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 166.29999995231628,
+            "firstSourceChunkCompletedMs": 602.5299999713898,
+            "audioSeconds": 1344.832,
+            "realTimeFactor": 0.049184678829857144,
+            "minSamplesPerChunk": 253696,
+            "maxSamplesPerChunk": 345088
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 66060.65000009537,
+          "samples": 32275968,
+          "sampleRate": 24000,
+          "pcmSha256": "7907dc5a8bcdcaa9097f7a65790408627e3566666498edcd2e811012782b9a30",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 106,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 167.02999997138977,
+            "firstSourceChunkCompletedMs": 602.9800000190735,
+            "audioSeconds": 1344.832,
+            "realTimeFactor": 0.04912186057447723,
+            "minSamplesPerChunk": 253696,
+            "maxSamplesPerChunk": 345088
+          },
+          "audio": {
+            "sha256": "c4974ebd26f4e3e5f8fa583e9bb9ad67a39e5258907cb7a0bd326c61e85081b4",
+            "bytes": 64551980
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-24T11-58-35-821Z-27c9051e8645; cell 1/4; source 2581937c17b500bda80cb158cd86a0c804149026; fixture pt-pt-article-v1 (pt-PT, 23265 JavaScript characters, 106 spans); requested n=3; effective n=3; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-ptpt, F3, FP32 ONNX export of the released European Portuguese checkpoint. Qualified backends: cpu, webgpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup."
+  ]
+}
