@@ -476,6 +476,36 @@
       }
     },
     {
+      "resultId": "2026-11-24t19-38-00-411z-browser-voice-te-preview-int8-cpu-warm-f5174d41",
+      "model": "browser-voice-te-preview-int8",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Sreekar",
+      "language": "te",
+      "attribution": "AI-generated Telugu benchmark narration using Tamal Hansda’s Browser Voice Sreekar preview. Publisher credits Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). Hansda’s Telugu Maya 2 Native Sreekar 20h synthetic recordings and original release annotations are CC BY-SA 4.0. The dataset credits AI4Bharat Rasa, OpenSLR and Dakshina contributors for source prompts. Preview checkpoint terms are unspecified; this does not grant generated-audio reuse rights.",
+      "modelTerms": "Unspecified for this preview checkpoint; publisher credits Tiny Voca adaptation under Apache-2.0, but no separate checkpoint grant is identified",
+      "sourceUrls": [
+        "https://tts.hansda.in/?lang=te",
+        "https://tts.hansda.in/credits.html",
+        "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
+        "https://huggingface.co/datasets/Hansda/telugu-maya2-sreekar-20h/blob/63713495116f46b9a5b0a56ca06ec23059841034/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t19-38-00-411z-browser-voice-te-preview-int8-cpu-warm-f5174d41--browser-voice-te-preview-int8--cpu.wav",
+        "sha256": "5a53ecb2c04d4cba9c4e8d7b04aeddb86cdd1c11d43f2dd171c73bd4b4c755fe",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "cacd4405fbe9ee48cd45a66415176ea60f7bc35a4511575e4426baac19847750",
+        "bytes": 68638252
+      }
+    },
+    {
       "resultId": "2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530",
       "model": "clarvia-tts-tiny",
       "backend": "cpu",
