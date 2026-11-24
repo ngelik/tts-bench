@@ -425,5 +425,12 @@
     "parameterCountSource": "https://huggingface.co/Hansda/english-voice-compact/resolve/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser/size.json",
     "upstreamModelCard": "https://huggingface.co/Hansda/english-voice-compact/blob/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/README.md",
     "scope": "FP32 scalar values in the 200 external INT6 acoustic graph initializers; separate G2P components excluded"
+  },
+  "tiny-voca-uz-navoiy": {
+    "parameterCount": 4531531,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
+    "upstreamModelCard": "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
+    "scope": "Publisher-reported count of learned model parameters in the pinned 104737-step checkpoint; the staged export receipt independently sums the PyTorch model parameters to the same count. Source-filter constants and generated graph constants are excluded."
   }
 }

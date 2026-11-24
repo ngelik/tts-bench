@@ -1014,3 +1014,32 @@ The checkpoint declares Apache-2.0. The synthetic speech and original release an
 This source profile uses the unchanged `english-20k-v1` fixture and Nivedita voice at 24 kHz. The pinned checkpoint revision is `c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63`; the released stock pace scale is 1.0 at UI speed 1. The worker, frontend, runtime, INT6 acoustic assets, both G2P graphs and immutable credits are hash-pinned in `assets.lock.json`. The publisher worker uses one-thread WASM. The reported 932,800 scalar values cover 200 external INT6 acoustic graph initializers and exclude G2P.
 
 The checkpoint declares Apache-2.0. The synthetic speech and original release annotations are CC BY 4.0; source prompts retain original terms. The pinned dataset card identifies Common Voice English prompt material as CC0-1.0 and cites Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). [Model card](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63) · [Dataset card at pinned revision](https://huggingface.co/datasets/Hansda/english-maya2-nivedita-20h/blob/d90ae476053ac26d9d85d41219a70a5d2651b4a3/README.md) · [Pinned publisher credits](https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html)
+
+### Tiny Voca Uzbek Navoiy M2
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`uz`).
+
+The pinned step-104737 FP32 checkpoint selects its only synthetic male voice M2
+at index 0 and reports 4,531,531 learned parameters. The staged ONNX export
+receipt independently matches that parameter count. It outputs 24 kHz mono PCM
+and consumes external seed-controlled noise as its seventh graph input. The
+fixed `uz-article-v1` frontend matches the author's Python controls across 105
+spans and 11 edge cases: 345 utterances, maximum 191 tokens and zero unknowns.
+Stress follows the publisher's final-vowel baseline; frontend parity does not
+establish pronunciation quality or output fidelity.
+
+The worker uses the model's numeric/Cyrillic normalizer, sentence boundaries,
+token/stress rules and recursive 500-token fitting margin. It resets the
+seed-plus-utterance noise index to 42 for each source span, preserves actual
+duration from the graph, adds no inter-utterance silence and applies the
+publisher's 0.99 peak limiter once per span. The model, export receipt and
+deterministic noise assets are pinned by SHA-256 and imported from the staged
+build directory described in [reproduction notes](TINY_VOCA_UZ.md).
+
+CPU/WASM and mixed WebGPU/WASM paths are configured with ONNX Runtime Web
+1.31.1. The WebGPU route needs a real hardware dispatch proof. This adapter
+change has not run Chrome inference or either backend qualification.
+
+[Pinned model](https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1) ·
+[Pinned frontend/source notice](../web/tiny-voca-uz/NOTICE.md) ·
+[Model, export and backend notes](TINY_VOCA_UZ.md).

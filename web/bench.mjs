@@ -19,6 +19,7 @@ import { createTinyVocaPtbrKokoroAdapter } from './adapters/tiny-voca-ptbr-kokor
 import { createTuiVoiceMiniMlAdapter } from './adapters/tui-voice-mini-ml.mjs';
 import { createTinyUrduAdapter } from './adapters/tiny-urdu.mjs';
 import { createTinyVocaLgAdapter } from './adapters/tiny-voca-lg.mjs';
+import { createTinyVocaUzAdapter } from './adapters/tiny-voca-uz.mjs';
 import { createTinyVocaSwahiliAdapter } from './adapters/tiny-voca-swahili.mjs';
 import { createTinyVocaSinhalaAdapter } from './adapters/tiny-voca-sinhala.mjs';
 import { createSobbieTTSAdapter } from './adapters/sobbie-tts.mjs';
@@ -104,6 +105,7 @@ const FACTORIES = {
   'tui-voice-mini-ml': createTuiVoiceMiniMlAdapter,
   'tiny-urdu': createTinyUrduAdapter,
   'tiny-voca-lg': createTinyVocaLgAdapter,
+  'tiny-voca-uz-navoiy': createTinyVocaUzAdapter,
   'tiny-voca-swahili': createTinyVocaSwahiliAdapter,
   'tiny-voca-sinhala': createTinyVocaSinhalaAdapter,
   'sobbie-tts': createSobbieTTSAdapter,
@@ -309,7 +311,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       sourceSha256: smoke ? undefined : loaded.fixture.sha256,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
       control: smoke && model === 'tiny-voca-he',
-      auditTexts: (model === 'tiny-voca-lg' && fixtureId === 'lg-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : ((smoke && (
+      auditTexts: (model === 'tiny-voca-lg' && fixtureId === 'lg-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-uz-navoiy' && fixtureId === 'uz-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : ((smoke && (
         (model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'tiny-voca-it' && fixtureId === 'it-article-v1') ||
         (model === 'tiny-voca-ja-tsukuyomi-chan' && fixtureId === 'ja-article-v1') ||

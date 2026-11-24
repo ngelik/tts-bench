@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/n4ze3m/tiny-voca",
+  "commit": "62e2adef158bc997042cc6234f541f1e0e4cd55d",
+  "changes": [
+    "Rule-based Uzbek Latin phoneme frontend (48 tokens); final-vowel stress baseline",
+    "Single M2 speaker, 4,531,531 parameters; all weights initialized from scratch",
+    "Pin original forced aligner revision; annotation-only Uzbek allophone emission alternatives",
+    "3,000 padded frames per batch to fit RTX 3060 Ti 8 GB (upstream 9,000 OOM in GAN phase)",
+    "Parallel wrapper calling unchanged upstream extract(); resumable detached pipeline",
+    "Released final recipe for 104,737 steps with one fixed Uzbek frontend, rather than historical English frontend/batch migration"
+  ],
+  "unchanged_core_files_sha256": {
+    "model.py": "3174174c935fcc5e9a2a037c728dff257a935484c5c4beaf55d5fe4db47bea9c",
+    "train.py": "55807909e2f90c575a7d1a46de194fe2397f5bc4bbe44e27fc5611eced64f5a9",
+    "losses.py": "d7be35c3015b8bc39740ca6c87d35f56d4371a2e8164ec714542165cab8fde35",
+    "data.py": "487f6608b91500d476e646dbf4edb0d6ada25388804aa879c651405c838b0092",
+    "prepare.py": "d91a29d0d3290908474b9f95be3f020adcff8fac73309e13b3fc815d088dc72a",
+    "annotate.py": "29bba23c3ecda8c6d3eb1d64fa38656175dcea062dbaeec171e248923ea997f7"
+  }
+}
