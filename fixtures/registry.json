@@ -978,6 +978,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "gu-latn-article-v1",
+      "smokeId": "gu-latn-article-smoke-v1",
+      "language": "gu-Latn",
+      "articleFile": "gu-latn-article-v1.txt",
+      "chunksFile": "gu-latn-article-v1.chunks.json",
+      "metadataFile": "gu-latn-article-v1.meta.json",
+      "sha256": "a44c7559473406b9060235133b2886b07ef7b2a4b09612d11f4087ad3d340e27",
+      "characters": 24553,
+      "unicodeCodePoints": 24553,
+      "utf8Bytes": 24553,
+      "chunks": 112,
+      "source": {
+        "type": "translation",
+        "description": "Roman Gujarati edition of the registered native article. GPT-6 Luna edited each of its 27 paragraphs. Codex compared it with the native and English texts. Dates, amounts and identifiers use spoken words. Native-speaker review is pending.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
