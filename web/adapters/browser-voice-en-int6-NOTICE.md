@@ -1,0 +1,11 @@
+# Browser Voice English INT6 notice
+
+This profile selects Tamal Hansda's English Voice Compact INT6 checkpoint and the fixed Nivedita voice. It uses the unchanged `english-20k-v1` fixture. The checkpoint revision is `c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63`; the browser worker source is pinned separately at `f2977727b8baccb989f80b492ea8da00124ecba3`. Asset URLs, byte lengths and SHA-256 digests, including both G2P graphs and the immutable publisher credits, are in `assets.lock.json`.
+
+The checkpoint declares Apache-2.0. The 20-hour synthetic English speech and original release annotations are CC BY 4.0; source prompts retain their original terms. The pinned dataset card identifies the Common Voice English Sentence Collector prompts (CC0-1.0) and credits Mozilla Common Voice and its contributors. It also cites Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). Keep source-prompt terms separate from the checkpoint license; no blanket license for generated recordings is inferred.
+
+The pinned publisher credits identify Tiny Voca by Muhammed Nazeem under Apache-2.0, Maya 2 Native, Kyutai Mimi (CC BY 4.0), and eSpeak NG pronunciation labels. ONNX Runtime Web 1.24.3 is MIT. The relevant Apache and MIT license texts are retained or referenced in the asset lock.
+
+At UI speed 1 the released browser uses `paceScale` 1.0. The worker uses one-thread WASM for acoustic and G2P inference. The reported 932,800 scalar values cover the 200 external INT6 acoustic graph initializers and exclude the separate G2P encoder and decoder. No speech-quality or benchmark claim is made by this source profile.
+
+[Model card at the pinned revision](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63) · [Model Apache license](https://huggingface.co/Hansda/english-voice-compact/blob/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/LICENSE) · [Nivedita dataset card at pinned revision](https://huggingface.co/datasets/Hansda/english-maya2-nivedita-20h/blob/d90ae476053ac26d9d85d41219a70a5d2651b4a3/README.md) · [Common Voice English prompts](https://github.com/common-voice/common-voice/blob/605c25e48f9fb87cb25ca794cb39bf91d3741f29/server/data/en/sentence-collector.txt) · [Pinned browser credits](https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html)

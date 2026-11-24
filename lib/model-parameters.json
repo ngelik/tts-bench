@@ -418,5 +418,12 @@
     "parameterCountSource": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser/size.json",
     "upstreamModelCard": "https://huggingface.co/Hansda/malayalam-voice-compact/blob/651bf3cbe3e9891bb298becaaff713033b0d384a/README.md",
     "scope": "FP32 scalar values in the 200 external INT6 acoustic graph initializers; separate G2P components excluded"
+  },
+  "browser-voice-en-int6": {
+    "parameterCount": 932800,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://huggingface.co/Hansda/english-voice-compact/resolve/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser/size.json",
+    "upstreamModelCard": "https://huggingface.co/Hansda/english-voice-compact/blob/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/README.md",
+    "scope": "FP32 scalar values in the 200 external INT6 acoustic graph initializers; separate G2P components excluded"
   }
 }
