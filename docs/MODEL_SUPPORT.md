@@ -1043,3 +1043,13 @@ change has not run Chrome inference or either backend qualification.
 [Pinned model](https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1) ·
 [Pinned frontend/source notice](../web/tiny-voca-uz/NOTICE.md) ·
 [Model, export and backend notes](TINY_VOCA_UZ.md).
+
+<a id="tiny-voca-zh-blue-buff"></a>
+
+### Blue-Buff Tiny Voca Mandarin F
+
+The pinned Mandarin checkpoint contains two voices, F and M. This browser profile uses F (index 0) and the Simplified Chinese article. Its 24 kHz FP32 graph uses seeded excitation, speed 1, pitch shift 0 and pitch range 1. The pinned Python frontend runs locally in Pyodide with the publisher’s segmentation, tone and pronunciation rules.
+
+Native Python and headed Chrome produced identical pronunciation plans for all 30 article spans. The adapter splits them into 92 utterances of up to 240 tokens. The longest duration prediction was 2,003 frames against the model limit of 3,000. [Per-span measurements](campaigns/tiny-voca-community/mandarin-duration.json) The asset build verifies the checkpoint, generated graph, seed streams, packaged frontend and third-party notices.
+
+[Model checkpoint](https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2) · [Inference source](https://github.com/blue-buff/tiny-voca-zh/tree/8b3fb5b460e828a90913edc28f3f1ddc51a66127) · [Rebuild the browser assets](../tools/build-blue-buff/README.md)

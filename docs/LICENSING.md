@@ -219,6 +219,21 @@ The inclusionAI model and Fusor runtime carry MIT licenses. The original usage d
 
 The code and model weights are Apache-2.0. The training dataset is CC BY 4.0. The benchmark uses the released F2 synthetic voice. The pinned Dizione source archive includes its Apache-2.0 license. The model assets include separate CMUdict and homograph-data notices. ONNX Runtime Web is MIT. The Pyodide distribution uses MPL-2.0, CPython uses its PSF license, and the NumPy wheel includes its BSD and bundled component notices. [Model and dataset terms](https://github.com/n4ze3m/tiny-voca/blob/28e0722c6ad040d74a1f6e63d77621272477a71f/README.md#license) · [Dizione license](https://github.com/n4ze3m/dizione/blob/f8629fe989f3d0db5f440f9b3c6f0154f2e6110f/LICENSE) · [Runtime configuration and source](../web/tiny-voca/NOTICE.md)
 
+### Tiny Voca Mandarin F (Blue-Buff)
+
+The checkpoint and source code declare Apache-2.0. The pinned project notice says
+the training-data preparation and final Chinese model were created for the
+project, but the supplied pinned materials do not state a separate training-data
+license. This benchmark profile bundles the released F and M voices and selects
+the synthetic F voice only. The pinned zh frontend and its pypinyin, cn2an,
+proces and jieba dependencies retain their separate licenses and notices. ONNX
+Runtime Web is MIT; Pyodide 0.29.3 is MPL-2.0 and its bundled CPython 3.13.2
+retains PSF terms. The exact Pyodide and CPython license files are tracked with
+the Blue-Buff notice sources and included in its local asset closure. No separate
+blanket generated-audio redistribution grant is stated in the pinned materials. [Pinned checkpoint](https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2) ·
+[pinned source and notices](https://github.com/blue-buff/tiny-voca-zh/tree/8b3fb5b460e828a90913edc28f3f1ddc51a66127) ·
+[browser adapter notices and runtime licenses](../web/tiny-voca-zh-blue-buff/notices/NOTICE.md) · [Pyodide MPL-2.0](https://raw.githubusercontent.com/pyodide/pyodide/0.29.3/LICENSE) · [CPython PSF license](https://raw.githubusercontent.com/python/cpython/v3.13.2/LICENSE)
+
 ### Tiny Voca DE/EN (Voca64)
 
 The pinned model code and weights declare Apache-2.0; its training data card

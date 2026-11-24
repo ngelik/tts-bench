@@ -432,5 +432,12 @@
     "parameterCountSource": "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
     "upstreamModelCard": "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
     "scope": "Publisher-reported count of learned model parameters in the pinned 104737-step checkpoint; the staged export receipt independently sums the PyTorch model parameters to the same count. Source-filter constants and generated graph constants are excluded."
+  },
+  "tiny-voca-zh-blue-buff": {
+    "parameterCount": 4545355,
+    "countKind": "exact",
+    "parameterCountSource": "https://github.com/blue-buff/tiny-voca-zh/blob/8b3fb5b460e828a90913edc28f3f1ddc51a66127/src/tiny_voca/export.py",
+    "upstreamModelCard": "https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2",
+    "scope": "Counted 4,545,355 trainable parameters in the pinned PyTorch checkpoint during the reference ONNX export and verified the count on the independent asset rebuild."
   }
 }
