@@ -580,6 +580,21 @@ see the [profile and limits](TINY_VOCA_FR.md).
 
 [Pinned French checkpoint](https://huggingface.co/DanielSuncost/tiny-voca-fr/tree/73f7700f514e70eef3b459aedcc49829d41945d4) · [Pinned browser source](https://github.com/DanielSuncost/tiny-voca-fr/tree/4cc26ab23d934e3d33796eb06bf11f23f4c9ab34).
 
+<a id="tiny-voca-ptpt"></a>
+### Tiny Voca European Portuguese
+
+The `tiny-voca-ptpt` profile uses the released FP32 graph with voice F3 at
+24 kHz, speed 1 and the native Portuguese pronunciation rules. The
+`pt-pt-article-v1` fixture contains 106 spans. The released pronunciation
+code and open-vowel list produced 350 utterances, a maximum of 185 tokens,
+and zero unknown phones. The evaluator matched the browser frontend against
+all 632 upstream Python pronunciation vectors. The registered oracle binds
+each utterance’s token and stress sequences to its source span.
+
+The CPU route requests one WASM thread. The WebGPU route requires a hardware
+adapter and an observed compute dispatch. Performance values come from the
+published browser receipts. [Checkpoint](https://huggingface.co/joserui/tiny-voca-pt-pt/tree/9d547821151d1f009eada6f49b5be73af77ae245) · [Browser frontend](https://github.com/joseruimemory/tiny-voca-pt-pt/tree/744e42406fd481fbe61f3b67bf8012a7d29cb57a) · [Notices](../web/tiny-voca-ptpt/NOTICE.md)
+
 <a id="tiny-voca-ptbr"></a>
 
 ## Tiny Voca Brazilian Portuguese 4.5M FP32 (F_s4)
