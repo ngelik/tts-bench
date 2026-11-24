@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a",
+  "createdAt": "2026-11-24T23:17:35.546Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "zh-hans-article-v1",
+    "language": "zh-Hans",
+    "sha256": "e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336",
+    "characters": 6570,
+    "unicodeCodePoints": 6570,
+    "utf8Bytes": 19588,
+    "chunks": 30,
+    "source": {
+      "type": "translation",
+      "description": "Simplified Chinese edition of the original English benchmark story, translated and reviewed by Codex for spoken Mandarin. The 27 paragraphs retain the names, dates, quantities, units and identifiers, including spoken forms of Latin letter names.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "939917ac5bc6b4e310a5ad6a49b485120d929a5a",
+    "dirty": false,
+    "manifestSha256": "7873e711f0caf286d8e1d4e39bcfa8d03aa57cd4c954861cb2b36c5c03832f1a"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-zh-blue-buff:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-mandarin-f-external-noise",
+      "sha256": "0ba0b4d3ffaf70ffbce2ac31205248d7506f12a85639fd5530630c85fb50028a",
+      "bytes": 21413272
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-mandarin-config",
+      "sha256": "78db443a5d510240f8c073776d8804d39858843182c0bb39b0f9d7d25561e464",
+      "bytes": 2225
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-noise-0",
+      "sha256": "9b0877ff8cbe099f0873f0d6e87afcc06fa28436edba96755424951a7cb0421a",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-noise-1",
+      "sha256": "6e5a2e184b919af5f2476c942dbc963f74b3881b8a115d6061a97a0e496b6a27",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-noise-2",
+      "sha256": "b50c610eb72a34fbd053716a0489c69428f7772037cf2cf04f98340e7e6940de",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-noise-3",
+      "sha256": "403ad908de2496aa4d22acc9351f439e7612177ffc763923f232b572fd650630",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-mandarin-frontend",
+      "sha256": "7d559d88d0d5b1ab0c31f512fa35fba14ed3b9c3aacf73daa4bc8d5f0f1d9747",
+      "bytes": 3461659
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-source-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-runtime-notices-pyodide-license",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "bytes": 16725
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-runtime-notices-python-license",
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "bytes": 13809
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-notice-md",
+      "sha256": "a8e403b17a5591b61ebcc382440b6853828dd76642eb6ea404511fcdf785e68b",
+      "bytes": 441
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-frontend-notices-manifest-json",
+      "sha256": "2f3ce85f5f3304a7a6998441b725c13b0784268cd76ff460af7b898be3a7d79b",
+      "bytes": 2731
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-frontend-notices-pypinyin-license-txt",
+      "sha256": "1e6c90014b4912815c296ee64bb6f6280af47e6d4c5d80e86232dfc5defe764c",
+      "bytes": 1105
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-frontend-notices-cn2an-license-txt",
+      "sha256": "b18d8d4ad8bc57e00ae80d08d9da80a32176f031062f87c739ea7557c1b5d759",
+      "bytes": 1062
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-frontend-notices-proces-license-txt",
+      "sha256": "5d91f10d65a205287675a1308b35989979e0a0b15007119b2b539a67643223f0",
+      "bytes": 1062
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-frontend-notices-jieba-license-txt",
+      "sha256": "18ba0984839f85853b29fadaf992f7dba8fd0ca0fbeae34de2b8735222dc7a37",
+      "bytes": 1075
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-pyodide-pyodide-mjs",
+      "sha256": "23213d27e9dacbda6f25f955fb38dabfc40ada082c04ee253047ea5dddcaa3b5",
+      "bytes": 17616
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-pyodide-pyodide-asm-js",
+      "sha256": "1263f02b5b26099b96112378156f242dd98b39a8201ba7765e5fe3d455c5ce91",
+      "bytes": 1074322
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-pyodide-pyodide-asm-wasm",
+      "sha256": "e2f4ee75b325e35eb31bfb8c613d4dd5098f5502c156a97847686875b5025480",
+      "bytes": 8647684
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-pyodide-python-stdlib-zip",
+      "sha256": "4298b6ee445cb724c3973437da47789752b9e6ff4e26619026b283ec801fc46b",
+      "bytes": 2423989
+    },
+    {
+      "id": "tiny-voca-zh-blue-buff-pyodide-pyodide-lock-json",
+      "sha256": "3256ffc76388de0e37f4b34d42ab484268d1afc675179ff97b2a5bb14f84ccac",
+      "bytes": 120010
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-zh-blue-buff",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "zh-Hans"
+        ],
+        "scope": "Pinned Blue-Buff tiny-voca-zh FP32 checkpoint bundles voices F and M; this qualified browser profile selects F at graph index 0 for Simplified Chinese, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2",
+          "https://github.com/blue-buff/tiny-voca-zh/tree/8b3fb5b460e828a90913edc28f3f1ddc51a66127"
+        ],
+        "notes": "The browser frontend uses the pinned per-span Pyodide phonemizer and checked dictionary/dependency notices. Native and browser plans must match the independent frontend receipts. The direct acoustic control qualifies only three spans and does not establish a benchmark result or listening quality."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "songLucasXXX/tiny-voca-zh",
+        "modelRevision": "9d6b4631bd59b1fa69b398913b852d03f22071d2",
+        "sourceId": "blue-buff/tiny-voca-zh",
+        "sourceRevision": "8b3fb5b460e828a90913edc28f3f1ddc51a66127",
+        "parameterCount": 4545355,
+        "fixtureId": "zh-hans-article-v1",
+        "fixtureSha256": "e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336",
+        "language": "zh-Hans",
+        "locale": "zh-Hans",
+        "supportedLanguages": [
+          "zh-Hans"
+        ],
+        "voice": "F",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "peak": 0.99,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned Blue-Buff zh-v1 text.py/zh_text.py in Pyodide 0.29.3; pinned cn2an, jieba, pypinyin and proces wheels",
+        "frontendFingerprint": "c1d3f1a39a1887a6f39691a5d687dceb97f8e3c268ab9783827027a7ec7a7543",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1",
+          "pyodide": "0.29.3"
+        },
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "noiseSeeds": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "framePlan": {
+          "policy": "zh-natural-boundary-v1",
+          "policyVersion": 1,
+          "policySha256": "da40affe377b8fb79d54d7620ba0793eb2afe902edca0aa862738fddab52db51",
+          "tokenTarget": 240,
+          "allPlanSha256": "60b4ce5df21aff4f62a857a9c3c16919ab0848f66285634869dd65b4cbf52191",
+          "internalPieceCount": 92,
+          "maximumPiecesPerSpan": 4,
+          "noiseReset": "per-outer-span"
+        },
+        "fixtureAudit": {
+          "fixtureId": "zh-hans-article-v1",
+          "fixtureSha256": "e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336",
+          "splitPolicy": "zh-natural-boundary-v1",
+          "splitPolicySha256": "da40affe377b8fb79d54d7620ba0793eb2afe902edca0aa862738fddab52db51",
+          "status": "matched",
+          "spans": 30,
+          "utterances": 92,
+          "maximumTokens": 240,
+          "unknownTokens": 0,
+          "frontendFingerprint": "c1d3f1a39a1887a6f39691a5d687dceb97f8e3c268ab9783827027a7ec7a7543",
+          "planSha256": "60b4ce5df21aff4f62a857a9c3c16919ab0848f66285634869dd65b4cbf52191"
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit one-thread ONNX Runtime WASM provider; Mandarin normalization, segmentation and phonemization execute locally in Pyodide."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 81640.58500003815,
+          "samples": 30006784,
+          "sampleRate": 24000,
+          "pcmSha256": "756553c720646979cb606be44e8857ea3c5be61159f8d715274390a2169f5fca",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 30,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 608.6100001335144,
+            "firstSourceChunkCompletedMs": 2739.640000104904,
+            "audioSeconds": 1250.2826666666667,
+            "realTimeFactor": 0.06529770201301531,
+            "minSamplesPerChunk": 828416,
+            "maxSamplesPerChunk": 1070848
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 82274.25,
+          "samples": 30006784,
+          "sampleRate": 24000,
+          "pcmSha256": "756553c720646979cb606be44e8857ea3c5be61159f8d715274390a2169f5fca",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 30,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 590.045000076294,
+            "firstSourceChunkCompletedMs": 2690.159999847412,
+            "audioSeconds": 1250.2826666666667,
+            "realTimeFactor": 0.06580451940467862,
+            "minSamplesPerChunk": 828416,
+            "maxSamplesPerChunk": 1070848
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 84421.22999978065,
+          "samples": 30006784,
+          "sampleRate": 24000,
+          "pcmSha256": "756553c720646979cb606be44e8857ea3c5be61159f8d715274390a2169f5fca",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 30,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 589.4199998378754,
+            "firstSourceChunkCompletedMs": 2748.0949997901917,
+            "audioSeconds": 1250.2826666666667,
+            "realTimeFactor": 0.06752171508931899,
+            "minSamplesPerChunk": 828416,
+            "maxSamplesPerChunk": 1070848
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 83015.22000002861,
+          "samples": 30006784,
+          "sampleRate": 24000,
+          "pcmSha256": "756553c720646979cb606be44e8857ea3c5be61159f8d715274390a2169f5fca",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 30,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 580.9850001335144,
+            "firstSourceChunkCompletedMs": 2733.435000181198,
+            "audioSeconds": 1250.2826666666667,
+            "realTimeFactor": 0.06639716138859421,
+            "minSamplesPerChunk": 828416,
+            "maxSamplesPerChunk": 1070848
+          },
+          "audio": {
+            "sha256": "693742d418a7a7ba4d5a1a8fa38efdf45a4adcb528c8adb1fbaf06dc1a817365",
+            "bytes": 60013612
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-24T23-11-44-741Z-251e85f51339; cell 1/4; source 939917ac5bc6b4e310a5ad6a49b485120d929a5a; fixture zh-hans-article-v1 (zh-Hans, 6570 JavaScript characters, 30 spans); requested n=3; effective n=3; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-zh-blue-buff, F, FP32 ONNX checkpoint. Qualified backends: cpu, webgpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup."
+  ]
+}

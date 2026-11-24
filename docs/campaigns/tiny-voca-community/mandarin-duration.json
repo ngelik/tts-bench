@@ -575,5 +575,199 @@
         1617
       ]
     }
-  ]
+  ],
+  "fullArticleAudioComparison": {
+    "commit": "939917ac5bc6b4e310a5ad6a49b485120d929a5a",
+    "plan": "60b4ce5df21aff4f62a857a9c3c16919ab0848f66285634869dd65b4cbf52191",
+    "sourceSpans": 30,
+    "plannedUtterances": 92,
+    "expectedSamples": 30006784,
+    "expectedSeconds": 1250.2826666666667,
+    "values": [
+      {
+        "id": "2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a",
+        "backend": "cpu",
+        "scenario": "warm",
+        "checkedScoredRounds": 3,
+        "checkedMemoryTrials": 0,
+        "wavSha256": "693742d418a7a7ba4d5a1a8fa38efdf45a4adcb528c8adb1fbaf06dc1a817365",
+        "matched": [
+          {
+            "span": 0,
+            "startSample": 0,
+            "samples": 988928,
+            "pcm16Sha256": "dad5328ff3c3fd98cc34c7ff5027745baa3a04964d16c111f5df0f4aca4cf3b2",
+            "stockPcm16Sha256": "dad5328ff3c3fd98cc34c7ff5027745baa3a04964d16c111f5df0f4aca4cf3b2",
+            "exact": true,
+            "relativeRms": 0.00017624994848563857
+          },
+          {
+            "span": 1,
+            "startSample": 988928,
+            "samples": 1070848,
+            "pcm16Sha256": "a066eda4ce4b04e15f8890cd421d872291051874492266811d86a6be6015933a",
+            "stockPcm16Sha256": "a066eda4ce4b04e15f8890cd421d872291051874492266811d86a6be6015933a",
+            "exact": true,
+            "relativeRms": 0.00018128179266104408
+          },
+          {
+            "span": 2,
+            "startSample": 2059776,
+            "samples": 975872,
+            "pcm16Sha256": "6a69b14f6df3e9f90f4f48a42fb977cfd9222ff7810add1576a29214bd8816ed",
+            "stockPcm16Sha256": "6a69b14f6df3e9f90f4f48a42fb977cfd9222ff7810add1576a29214bd8816ed",
+            "exact": true,
+            "relativeRms": 0.00018767929076917
+          },
+          {
+            "span": 11,
+            "startSample": 11064832,
+            "samples": 949248,
+            "pcm16Sha256": "f4421c02c27c6e6ed5ab770f6555ccf8ea40df36e0c442be200700b5cd54c419",
+            "stockPcm16Sha256": "f4421c02c27c6e6ed5ab770f6555ccf8ea40df36e0c442be200700b5cd54c419",
+            "exact": true,
+            "relativeRms": 0.00015944249361607215
+          }
+        ]
+      },
+      {
+        "id": "2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc",
+        "backend": "webgpu",
+        "scenario": "warm",
+        "checkedScoredRounds": 3,
+        "checkedMemoryTrials": 0,
+        "wavSha256": "69bf13f80d361e741efdd49a8acabe8c37ff3c4a1ca33da92c30c354aa77fda2",
+        "matched": [
+          {
+            "span": 0,
+            "startSample": 0,
+            "samples": 988928,
+            "pcm16Sha256": "44c2abdcc4e6300147ab9da963369420117c2b3890041e471ba83464f2d6aa3c",
+            "stockPcm16Sha256": "dad5328ff3c3fd98cc34c7ff5027745baa3a04964d16c111f5df0f4aca4cf3b2",
+            "exact": false,
+            "relativeRms": 0.0004855541249206453
+          },
+          {
+            "span": 1,
+            "startSample": 988928,
+            "samples": 1070848,
+            "pcm16Sha256": "f95013391380e211ebccbc0650b27712eb0126634174e310d6e422460b83bafd",
+            "stockPcm16Sha256": "a066eda4ce4b04e15f8890cd421d872291051874492266811d86a6be6015933a",
+            "exact": false,
+            "relativeRms": 0.0005920478762433113
+          },
+          {
+            "span": 2,
+            "startSample": 2059776,
+            "samples": 975872,
+            "pcm16Sha256": "052e7959c26f9d7647140bea1c01bce640b4ea6e7da068533416dab031837f5c",
+            "stockPcm16Sha256": "6a69b14f6df3e9f90f4f48a42fb977cfd9222ff7810add1576a29214bd8816ed",
+            "exact": false,
+            "relativeRms": 0.0006641959708932797
+          },
+          {
+            "span": 11,
+            "startSample": 11064832,
+            "samples": 949248,
+            "pcm16Sha256": "f65c202b3c91bc7ac685fb1cafca3c38d4656ecd2af4ff8efbe560c808f8bc48",
+            "stockPcm16Sha256": "f4421c02c27c6e6ed5ab770f6555ccf8ea40df36e0c442be200700b5cd54c419",
+            "exact": false,
+            "relativeRms": 0.004324968968493678
+          }
+        ]
+      },
+      {
+        "id": "2026-11-24t23-18-48-694z-tiny-voca-zh-blue-buff-cpu-cached-b6713c39",
+        "backend": "cpu",
+        "scenario": "cached",
+        "checkedScoredRounds": 0,
+        "checkedMemoryTrials": 1,
+        "wavSha256": "693742d418a7a7ba4d5a1a8fa38efdf45a4adcb528c8adb1fbaf06dc1a817365",
+        "matched": [
+          {
+            "span": 0,
+            "startSample": 0,
+            "samples": 988928,
+            "pcm16Sha256": "dad5328ff3c3fd98cc34c7ff5027745baa3a04964d16c111f5df0f4aca4cf3b2",
+            "stockPcm16Sha256": "dad5328ff3c3fd98cc34c7ff5027745baa3a04964d16c111f5df0f4aca4cf3b2",
+            "exact": true,
+            "relativeRms": 0.00017624994848563857
+          },
+          {
+            "span": 1,
+            "startSample": 988928,
+            "samples": 1070848,
+            "pcm16Sha256": "a066eda4ce4b04e15f8890cd421d872291051874492266811d86a6be6015933a",
+            "stockPcm16Sha256": "a066eda4ce4b04e15f8890cd421d872291051874492266811d86a6be6015933a",
+            "exact": true,
+            "relativeRms": 0.00018128179266104408
+          },
+          {
+            "span": 2,
+            "startSample": 2059776,
+            "samples": 975872,
+            "pcm16Sha256": "6a69b14f6df3e9f90f4f48a42fb977cfd9222ff7810add1576a29214bd8816ed",
+            "stockPcm16Sha256": "6a69b14f6df3e9f90f4f48a42fb977cfd9222ff7810add1576a29214bd8816ed",
+            "exact": true,
+            "relativeRms": 0.00018767929076917
+          },
+          {
+            "span": 11,
+            "startSample": 11064832,
+            "samples": 949248,
+            "pcm16Sha256": "f4421c02c27c6e6ed5ab770f6555ccf8ea40df36e0c442be200700b5cd54c419",
+            "stockPcm16Sha256": "f4421c02c27c6e6ed5ab770f6555ccf8ea40df36e0c442be200700b5cd54c419",
+            "exact": true,
+            "relativeRms": 0.00015944249361607215
+          }
+        ]
+      },
+      {
+        "id": "2026-11-24t23-20-26-972z-tiny-voca-zh-blue-buff-webgpu-cached-287ac381",
+        "backend": "webgpu",
+        "scenario": "cached",
+        "checkedScoredRounds": 0,
+        "checkedMemoryTrials": 1,
+        "wavSha256": "69bf13f80d361e741efdd49a8acabe8c37ff3c4a1ca33da92c30c354aa77fda2",
+        "matched": [
+          {
+            "span": 0,
+            "startSample": 0,
+            "samples": 988928,
+            "pcm16Sha256": "44c2abdcc4e6300147ab9da963369420117c2b3890041e471ba83464f2d6aa3c",
+            "stockPcm16Sha256": "dad5328ff3c3fd98cc34c7ff5027745baa3a04964d16c111f5df0f4aca4cf3b2",
+            "exact": false,
+            "relativeRms": 0.0004855541249206453
+          },
+          {
+            "span": 1,
+            "startSample": 988928,
+            "samples": 1070848,
+            "pcm16Sha256": "f95013391380e211ebccbc0650b27712eb0126634174e310d6e422460b83bafd",
+            "stockPcm16Sha256": "a066eda4ce4b04e15f8890cd421d872291051874492266811d86a6be6015933a",
+            "exact": false,
+            "relativeRms": 0.0005920478762433113
+          },
+          {
+            "span": 2,
+            "startSample": 2059776,
+            "samples": 975872,
+            "pcm16Sha256": "052e7959c26f9d7647140bea1c01bce640b4ea6e7da068533416dab031837f5c",
+            "stockPcm16Sha256": "6a69b14f6df3e9f90f4f48a42fb977cfd9222ff7810add1576a29214bd8816ed",
+            "exact": false,
+            "relativeRms": 0.0006641959708932797
+          },
+          {
+            "span": 11,
+            "startSample": 11064832,
+            "samples": 949248,
+            "pcm16Sha256": "f65c202b3c91bc7ac685fb1cafca3c38d4656ecd2af4ff8efbe560c808f8bc48",
+            "stockPcm16Sha256": "f4421c02c27c6e6ed5ab770f6555ccf8ea40df36e0c442be200700b5cd54c419",
+            "exact": false,
+            "relativeRms": 0.004324968968493678
+          }
+        ]
+      }
+    ]
+  }
 }

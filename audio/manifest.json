@@ -6108,6 +6108,62 @@
       }
     },
     {
+      "resultId": "2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a",
+      "model": "tiny-voca-zh-blue-buff",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F",
+      "language": "zh-Hans",
+      "attribution": "AI-generated Simplified Chinese benchmark narration using Blue-Buff’s Apache-2.0 Tiny Voca Mandarin checkpoint and its synthetic F voice. The pinned browser frontend retains separate component notices; the source NOTICE does not state a separate training-data license. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 per the pinned Blue-Buff source LICENSE and pyproject.toml.",
+      "sourceUrls": [
+        "https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2",
+        "https://github.com/blue-buff/tiny-voca-zh/tree/8b3fb5b460e828a90913edc28f3f1ddc51a66127"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a--tiny-voca-zh-blue-buff--cpu.wav",
+        "sha256": "01cf8fe339b60994ad5c5624ccdc89317ca85b5bef4c7bf1c09d1cfebf451a22",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "693742d418a7a7ba4d5a1a8fa38efdf45a4adcb528c8adb1fbaf06dc1a817365",
+        "bytes": 60013612
+      }
+    },
+    {
+      "resultId": "2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc",
+      "model": "tiny-voca-zh-blue-buff",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F",
+      "language": "zh-Hans",
+      "attribution": "AI-generated Simplified Chinese benchmark narration using Blue-Buff’s Apache-2.0 Tiny Voca Mandarin checkpoint and its synthetic F voice. The pinned browser frontend retains separate component notices; the source NOTICE does not state a separate training-data license. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 per the pinned Blue-Buff source LICENSE and pyproject.toml.",
+      "sourceUrls": [
+        "https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2",
+        "https://github.com/blue-buff/tiny-voca-zh/tree/8b3fb5b460e828a90913edc28f3f1ddc51a66127"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc--tiny-voca-zh-blue-buff--webgpu.wav",
+        "sha256": "030dc6a7eb5c05fba8f813051c3ba8738f68ddcaad3f7defe9e4853eef857b60",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "69bf13f80d361e741efdd49a8acabe8c37ff3c4a1ca33da92c30c354aa77fda2",
+        "bytes": 60013612
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",
