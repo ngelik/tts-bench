@@ -1,0 +1,11 @@
+# Browser Voice Telugu preview notice
+
+This source profile selects the publisher's Telugu Sreekar voice and the public `preview-int8` browser release. The browser profile records its acoustic graph and weight SHA-256 values, frontend and both G2P graph SHA-256 values, runtime assets, and pinned worker source revision in `assets.lock.json`. The public model assets are not present in GitHub; their original publisher URLs remain in the lock.
+
+The publisher's retained [pinned credits page](https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html) credits Tamal Hansda, the Tiny Voca architecture by Muhammed Nazeem under Apache-2.0, Maya 2 Native training audio, the Kyutai Mimi codec, eSpeak NG pronunciation labels, and Dakshina lexicons for the Roman-input converters. This profile takes native Telugu-script text and does not use the Roman-input converter. See the linked [Telugu Sreekar dataset card](https://huggingface.co/datasets/Hansda/telugu-maya2-sreekar-20h/blob/63713495116f46b9a5b0a56ca06ec23059841034/README.md) for its own terms.
+
+The intake identifies no separate license for this `preview-int8` checkpoint. The attribution to Tiny Voca and training sources does not establish a separate license grant for these preview weights. The catalog therefore records the checkpoint terms as unresolved and requires license acceptance. It does not infer recording redistribution rights.
+
+The upstream browser source is pinned to [`DarvinX/multilingual-browser-tts` at `f2977727b8baccb989f80b492ea8da00124ecba3](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3). Its publisher worker and frontend source revisions are recorded separately from the deployed preview asset hashes. ONNX Runtime Web is 1.24.3 and uses a single WASM thread in the publisher worker.
+
+The reported count of 931,232 is the verified number of FP32 scalar values across 200 external acoustic graph initializers. It excludes the separate G2P encoder and decoder and is not a total count for every component. The publisher labels this deployed profile `INT8 preview`; the count describes external acoustic graph tensors, not a conflicting precision claim.

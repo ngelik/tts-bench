@@ -971,3 +971,11 @@ claimed.
 ## Browser Voice Gujarati INT6
 
 The publisher's Jahnavi voice reads the registered Gujarati-script article at 24 kHz. Its shipped worker runs the acoustic model and its recurrent pronunciation model in one-thread WASM. Each source span goes through the same normalization, lexicon lookup, G2P, sentence splitting and peak limiting as the online demo. The browser's first audio event contains the completed span. The source manifest identifies 934,816 acoustic parameters and lists the pronunciation model separately. [Model card](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f) · [Size manifest](https://huggingface.co/Hansda/gujarati-voice-compact/blob/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser/size.json) · [Browser worker](https://github.com/DarvinX/multilingual-browser-tts/blob/f2977727b8baccb989f80b492ea8da00124ecba3/web/worker.js)
+
+<a id="browser-voice-te-preview-int8"></a>
+
+## Browser Voice Telugu preview INT8 (Sreekar)
+
+The source profile routes the fixed native Telugu `te-article-v1` fixture through the publisher's Sreekar preview at 24 kHz, default speed 1, with a 512-token cap. The worker and all public model, frontend, G2P, runtime, and notice inputs are pinned by SHA-256 in `assets.lock.json`; the worker source is pinned to revision `f2977727b8baccb989f80b492ea8da00124ecba3`. The acoustic and recurrent G2P sessions use one-thread WASM. The catalog reports 931,232 acoustic scalar values across 200 external graph initializers, with G2P excluded. The preview checkpoint has no separate license identified in the handoff, so no benchmark result or reusable rights claim is made here.
+
+[Publisher demo](https://tts.hansda.in/?lang=te) · [Publisher credits](https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html) · [Telugu Sreekar dataset card](https://huggingface.co/datasets/Hansda/telugu-maya2-sreekar-20h) · [Pinned browser source](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3)
