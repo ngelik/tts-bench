@@ -59,3 +59,20 @@ The Browser Voice publisher serves matching compact weights, an acoustic graph, 
 Telugu Sreekar is a distinct INT8 preview. The deployed manifest links a 967,398-byte weights file, an acoustic graph and both pronunciation graphs. The [registered Telugu-script article](../../../fixtures/te-article-v1.meta.json) has 93 spans. The released lexicon covers 1,924 of its 2,742 word occurrences. The remaining 818 need the pronunciation model and include 634 distinct spellings. All fit its 64-character spelling limit. Native audio still requires browser testing. Roman Telugu additionally requires a separate input edition. The four Indian-language Roman converters use the publisher’s Dakshina-derived data under CC BY-SA 4.0. [Live model manifest](https://tts.hansda.in/languages.json) · [Publisher credits](https://tts.hansda.in/credits.html)
 
 The intake above records coverage at the cited revision. Each published score requires its own full-article receipt, a verified effective backend and the registered fixture hash. Roman input and regional editions retain separate fixtures and measurements.
+
+### Roman-input text conversion
+
+The publisher provides 100 two-sentence examples per language by combining four openings with 25 follow-ups. We ran its scoring script against the deployed converter dictionaries. An exact prompt reproduces the native-script reference after the scorer removes punctuation and whitespace. Character error rate counts insertions, deletions and substitutions across all normalized reference characters. Audio evaluation uses separate headed-browser recordings. [Publisher examples](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3/converter/fixtures) · [Scoring script](https://github.com/DarvinX/multilingual-browser-tts/blob/f2977727b8baccb989f80b492ea8da00124ecba3/converter/score.mjs)
+
+| Roman input | Exact full prompts out of 100 | Character error rate |
+|---|---:|---:|
+| Gujarati | 10 | 11.52% |
+| Hindi | 24 | 9.39% |
+| Malayalam | 14 | 13.97% |
+| Telugu | 24 | 8.28% |
+
+### Reviewed Roman-input articles
+
+The stock text converter transcribed each Roman paragraph back to native script. Character error rate compares that text with the registered native article after removing punctuation and spaces. Differences include alternate spellings and names. These measurements cover text conversion only.
+
+- [Hindi](../../../fixtures/hi-latn-article-v1.txt) uses the `hi-Latn` edition, with 107 spans across 27 paragraphs. The stock converter made 1,223 edits across 15,344 normalized reference characters (7.97% character error rate).

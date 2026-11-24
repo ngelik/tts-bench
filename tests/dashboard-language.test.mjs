@@ -59,7 +59,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   frenchWithoutAudio.name = 'Synthetic French result without published audio';
   frenchWithoutAudio.playbackAudio = {cpu:null,webgpu:null};
   frenchWithoutAudio.audio = [];
-  const previewTags = ['ar','bn','bn-Latn','de','de-AT','el','es-AR','es-ES','fr','he','hi','it','ja','ko','ml','pl','pt-BR','ru','sa','si','sw','tr','ur-Latn','zh-Hans','zh-Hant'];
+  const previewTags = ['ar','bn','bn-Latn','de','de-AT','el','es-AR','es-ES','fr','he','hi','hi-Latn','it','ja','ko','ml','pl','pt-BR','ru','sa','si','sw','tr','ur-Latn','zh-Hans','zh-Hant'];
   const previewLanguages = [{id:'en',label:'English'},{id:'uk',label:'Українська'},...previewTags.map(id=>id==='si'?{id,label:'සිංහල'}:{id})];
   const previewByLanguage = Object.fromEntries(previewTags.map(id=>[id,{fixture:{id:`${id.toLowerCase()}-preview-v1`,language:id,characters:3000,articleFile:`${id.toLowerCase()}-preview-v1.txt`},models:[]} ]));
   previewByLanguage.uk = {fixture:{id:'uk-article-v1',characters:12345,language:'uk',articleFile:'uk-article-v1.txt'},models:[ukrainian]};
@@ -119,9 +119,9 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await page.locator('#language-picker').evaluate(dialog=>dialog.open),false,'Enter selects a locale link');
   assert.equal(await page.locator('#language-picker-trigger').evaluate(button=>button===document.activeElement),true,'Selection restores focus to the picker button');
   await page.locator('#language-picker-trigger').focus(); await page.keyboard.press('Enter');
-  assert.equal(await page.locator('#language-options [data-language]').count(),29,'The picker includes All languages, the hosted entry, and 27 benchmark editions');
+  assert.equal(await page.locator('#language-options [data-language]').count(),previewLanguages.length + 2,'The picker includes All languages, the hosted entry and every fixture edition');
   assert.equal(await page.locator('[data-language-group=measured] [data-language]').count(),4);
-  assert.equal(await page.locator('[data-language-group=pending] [data-language]').count(),25);
+  assert.equal(await page.locator('[data-language-group=pending] [data-language]').count(),previewLanguages.length - 2);
   assert.ok((await page.locator('#language-ku-Arab-IQ').innerText()).includes('Kurdish Behdînî (Arabic script)'));
   assert.equal(await page.locator('#language-ku-Arab-IQ .language-option-english').textContent(),'Kurdish Behdînî (Arabic script)');
   assert.equal(await page.locator('#language-ku-Arab-IQ').getAttribute('lang'),null,'Kurdish English copy is not mislabeled as unverified native text');
@@ -169,6 +169,11 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await romanBengali.locator('.language-option-english').textContent(), 'Romanized Bengali');
   assert.equal(await romanBengali.locator('bdi').getAttribute('lang'), 'bn-Latn');
   assert.equal(await romanBengali.locator('bdi').textContent(), 'Bangla (Roman horofe)');
+  for (const query of ['Roman Hindi', 'Romanized Hindi', 'Romanised Hindi', 'Hindi Latin']) {
+    await page.locator('#language-search').fill(query);
+    assert.equal(await page.locator('#language-hi-Latn').isVisible(), true);
+    assert.equal(await page.locator('#language-hi').isVisible(), false);
+  }
   await page.locator('#language-search').fill('Romanised Urdu');
   const romanUrdu = page.locator('#language-ur-Latn');
   assert.equal(await romanUrdu.isVisible(), true);

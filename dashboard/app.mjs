@@ -76,6 +76,10 @@ function languageDetails(id, registryLabel = '') {
   try { if (region) regionName = new Intl.DisplayNames(['en'], {type:'region'}).of(region) || region; } catch {}
   const meta = hostedCoverage ? '' : [scriptName && `${scriptName} script`, regionName].filter(Boolean).join(' · ');
   const aliases = hostedCoverage ? hostedCoverage.aliases : id === 'bn' ? ['Bengali'] : [];
+  if (script === 'Latn' && !hostedCoverage) {
+    const spoken = languageLabel(id.split('-')[0]);
+    aliases.push(`Roman ${spoken}`, `Romanized ${spoken}`, `Romanised ${spoken}`, `${spoken} Latin`);
+  }
   return {englishName, nativeName, meta, aliases};
 }
 function registeredLanguages() {

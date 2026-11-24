@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "hi-latn-article-v1",
+  "file": "hi-latn-article-v1.txt",
+  "sha256": "acce9de48b72daf86d6fc4126497f55977c64dafa3e7a3d84809051df1298d9e",
+  "utf8Bytes": 23420,
+  "unicodeCodePoints": 23420,
+  "javascriptStringLength": 23420,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 107,
+  "chunkCharacters": {
+    "min": 118,
+    "max": 224
+  },
+  "fixtureId": "hi-latn-article-v1",
+  "language": "hi-Latn",
+  "source": {
+    "type": "translation",
+    "description": "Roman Hindi edition of the registered native article. GPT-6 Luna edited each of its 27 paragraphs. Codex compared it with the native and English texts. Dates, amounts and identifiers use spoken words. Native-speaker review is pending.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "GPT-6 Luna, with independent Codex editorial comparison",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}
