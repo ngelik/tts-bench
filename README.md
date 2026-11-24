@@ -249,7 +249,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
-| Browser Voice Gujarati INT6 (Jahnavi) | E16 | 2.64 | [89.51 s (n=3)](results/2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed/summary.md) | — | Native; independent attempts |
+| Browser Voice Gujarati INT6 (Jahnavi) | E16 | 2.64 | [89.51 s (n=3)](results/2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed/summary.md) | — | Archived native; independent attempts |
 
 ### Hebrew (he) — he-article-v1
 

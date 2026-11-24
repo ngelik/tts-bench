@@ -21,6 +21,11 @@ export default {
       "language": "gu",
       "sha256": "9c211be0c5462306eac6e9434fbbd2370a00ec671875f0be20693275aa03c73b",
       "spans": 89
+    },
+    "gu-latn-article-v1": {
+      "language": "gu-Latn",
+      "sha256": "a44c7559473406b9060235133b2886b07ef7b2a4b09612d11f4087ad3d340e27",
+      "spans": 112
     }
   }
 };

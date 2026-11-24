@@ -26,3 +26,20 @@ test('Gujarati CPU worker rejects an incorrect fixture identity and reports unsu
   assert.equal((await adapter.initialize({ ...options, language: 'hi' })).status, 'unsupported');
   await assert.rejects(adapter.initialize({ ...options, sourceSha256: '0'.repeat(64) }), /checksum/);
 });
+
+test('Roman Gujarati uses the same spoken language and the published dictionary', async () => {
+  const model = getAssetLock().models[profile.id];
+  const layout = profile.fixtures['gu-latn-article-v1'];
+  assert.equal(layout.sha256, 'a44c7559473406b9060235133b2886b07ef7b2a4b09612d11f4087ad3d340e27');
+  assert.equal(layout.spans, 112);
+  assert.equal(layout.language, 'gu-Latn');
+  assert.equal(profile.spokenLanguage, 'gu');
+  assert.deepEqual(model.support.languages, ['gu']);
+  const dictionary = model.assets.find(asset => asset.id === profile.id + '-roman-dictionary');
+  assert.equal(dictionary.sha256, '3bae79d970c9493e6968267384204fa8b3cf33424c5bc8ee9bd12cc903a4dbe2');
+  assert.equal('/' + dictionary.target, profile.workerUrl.replace(/worker\.js$/, 'assets/converter/gu.json.gz'));
+  const adapter = createBrowserVoiceAdapter(profile);
+  const options = { fixtureId: 'gu-latn-article-v1', language: 'gu-Latn', backend: 'cpu' };
+  assert.equal((await adapter.initialize({ ...options, language: 'gu' })).status, 'unsupported');
+  await assert.rejects(adapter.initialize({ ...options, sourceSha256: '0'.repeat(64) }), /checksum/);
+});
