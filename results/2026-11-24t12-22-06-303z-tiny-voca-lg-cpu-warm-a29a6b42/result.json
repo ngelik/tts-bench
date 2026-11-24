@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24t12-22-06-303z-tiny-voca-lg-cpu-warm-a29a6b42",
+  "createdAt": "2026-11-24T12:29:10.755Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "lg-article-v1",
+    "language": "lg",
+    "sha256": "484bdc44ec7a0bfabf0198a081897f993f690e8ff36d6667029e8f982e50bd9e",
+    "characters": 25641,
+    "unicodeCodePoints": 25641,
+    "utf8Bytes": 25757,
+    "chunks": 117,
+    "source": {
+      "type": "translation",
+      "description": "Complete AI-assisted translation of english-20k-v1. Paragraph facts, local clock terms and terminology were checked against the English source and cited references; no independent fluent-speaker review is claimed.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "abf55cecbaff617762d6bfdd4a3b47ad231fc414",
+    "dirty": false,
+    "manifestSha256": "c63f0bf90d953466244154fb0b9e6ae2f42cf224326c9664168ab9d9ef94757d"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-lg:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-lg-model-onnx",
+      "sha256": "a5a6235e1dbfaf068324ff586c5f079c0052adc5987aae94482f8cbe0abeba9d",
+      "bytes": 21386372
+    },
+    {
+      "id": "tiny-voca-lg-model-json",
+      "sha256": "3b27b8cfe44474c04b4fd600fc6e8f6a9cea8f64a70ddd1811e5979e0866f6af",
+      "bytes": 1045
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-lg",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "lg"
+        ],
+        "scope": "Pinned tiny-voca-lg step-4000 FP32 ONNX checkpoint; Luganda, F2 (WAXAL speaker 5) at graph voice index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/henryhale/tiny-voca-lg/tree/dcb36749b11027ef8e57319d6508104e235ff783",
+          "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
+          "https://github.com/henryhale/tiny-voca-lg/tree/258107cba9bdf820a815554ce1b601369b8c1388",
+          "https://huggingface.co/datasets/CraneAILabs/waxal-lug-clean"
+        ],
+        "notes": "The registered lg-article-v1 fixture is a translator draft without fluent-speaker review. Its canonical spans have been checked against the pinned Luganda Python and JavaScript frontends and stock worker token/stress planning controls; this is frontend qualification, not a model inference or benchmark result. The profile selects only F2; M2 remains a checkpoint voice but is not exposed by this adapter."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F2 (female; WAXAL Luganda speaker 5)",
+      "precision": "FP32 ONNX export of tiny-voca-lg step 4000",
+      "settings": {
+        "modelId": "henryhale/tiny-voca-lg",
+        "modelRevision": "dcb36749b11027ef8e57319d6508104e235ff783",
+        "sourceId": "henryhale/tiny-voca-lg",
+        "sourceRevision": "258107cba9bdf820a815554ce1b601369b8c1388",
+        "parameterCount": 4537291,
+        "fixtureId": "lg-article-v1",
+        "fixtureSha256": "484bdc44ec7a0bfabf0198a081897f993f690e8ff36d6667029e8f982e50bd9e",
+        "language": "lg",
+        "locale": "lg-UG",
+        "spokenLanguage": "lg",
+        "supportedLanguages": [
+          "lg"
+        ],
+        "voice": "F2",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "peak": 0.99,
+        "precision": "FP32 ONNX export of tiny-voca-lg step 4000",
+        "frontend": "Pinned tiny-voca-lg Luganda spelling rules at GitHub commit 258107cba9bdf820a815554ce1b601369b8c1388; pinned worker finished/sentences/fit controls with its abbreviation, uppercase lookahead and max_tokens minus 12 fitting rules.",
+        "frontendFingerprint": "89f8eca58520c5e03a8b59c10cfc9465408cc25df62a1e0681f0f1178fb05840",
+        "modelAssets": {
+          "model.onnx": {
+            "bytes": 21386372,
+            "sha256": "a5a6235e1dbfaf068324ff586c5f079c0052adc5987aae94482f8cbe0abeba9d"
+          },
+          "model.json": {
+            "bytes": 1045,
+            "sha256": "3b27b8cfe44474c04b4fd600fc6e8f6a9cea8f64a70ddd1811e5979e0866f6af"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Sentence-level raw PCM is joined per source span in order, then peak-limited to 0.99.",
+        "fixtureAudit": {
+          "fixtureId": "lg-article-v1",
+          "sourceSha256": "484bdc44ec7a0bfabf0198a081897f993f690e8ff36d6667029e8f982e50bd9e",
+          "spans": 117,
+          "utterances": 321,
+          "nonWhitespaceCharacters": 22354,
+          "maximumTokens": 211,
+          "unknownTokens": 0,
+          "spanTokenStressSha256": "950739ebe9a2a5c76f35e3b3f764d5dfb15148fad6584856b1c8dc92e2372795",
+          "tokenStressSha256": "a9e00c8c719c8781d3726afdd384ca4d6a60ed46fd20936057020177c7c2d66e"
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "Explicit one-thread ONNX Runtime Web 1.31.1 WASM route; Luganda text frontend runs locally in the worker."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 102986.5600001812,
+          "samples": 45778176,
+          "sampleRate": 24000,
+          "pcmSha256": "c5f8e789b53a44459ada8268460e15e3c7c4fd271e3fa683c22e00450d2a045c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 117,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 292.9500000476837,
+            "firstSourceChunkCompletedMs": 996.4550001621246,
+            "audioSeconds": 1907.424,
+            "realTimeFactor": 0.05399248410431094,
+            "minSamplesPerChunk": 349440,
+            "maxSamplesPerChunk": 436480
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 102839.05500006676,
+          "samples": 45778176,
+          "sampleRate": 24000,
+          "pcmSha256": "a0278ef316b8ff8455e4298cb372d9c9434ac90aceb314ef6452fec9cbc64cc6",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 117,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 284.6749999523163,
+            "firstSourceChunkCompletedMs": 958.1150000095367,
+            "audioSeconds": 1907.424,
+            "realTimeFactor": 0.05391515205851806,
+            "minSamplesPerChunk": 349440,
+            "maxSamplesPerChunk": 436480
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 102806.60000014305,
+          "samples": 45778176,
+          "sampleRate": 24000,
+          "pcmSha256": "571bf181f00bc6191c6b36d661b32380f42ff7d6bc89911e4ffe58b4415b0d64",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 117,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 280.90000009536743,
+            "firstSourceChunkCompletedMs": 954.7400000095367,
+            "audioSeconds": 1907.424,
+            "realTimeFactor": 0.05389813696385442,
+            "minSamplesPerChunk": 349440,
+            "maxSamplesPerChunk": 436480
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 102800.34500002861,
+          "samples": 45778176,
+          "sampleRate": 24000,
+          "pcmSha256": "31a83ff2e58b160d62ab6e56b6d9e640c104409990fa65eb584d6bea7b001dd9",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 117,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 285.09500002861023,
+            "firstSourceChunkCompletedMs": 971.25,
+            "audioSeconds": 1907.424,
+            "realTimeFactor": 0.05389485767193273,
+            "minSamplesPerChunk": 349440,
+            "maxSamplesPerChunk": 436480
+          },
+          "audio": {
+            "sha256": "786e923e5db94636fa6e53ef7929970ad439e9dd94982453ed5059cc8fcd281a",
+            "bytes": 91556396
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-24T12-22-05-696Z-eb70ca864aec; cell 1/4; source abf55cecbaff617762d6bfdd4a3b47ad231fc414; fixture lg-article-v1 (lg, 25641 JavaScript characters, 117 spans); requested n=3; effective n=3; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-lg, F2, FP32 ONNX export of tiny-voca-lg step 4000. Qualified backends: cpu, webgpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup."
+  ]
+}

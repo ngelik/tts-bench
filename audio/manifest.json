@@ -5466,6 +5466,66 @@
       }
     },
     {
+      "resultId": "2026-11-24t12-22-06-303z-tiny-voca-lg-cpu-warm-a29a6b42",
+      "model": "tiny-voca-lg",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F2 (female; WAXAL Luganda speaker 5)",
+      "language": "lg",
+      "attribution": "AI-generated Luganda benchmark narration using the F2 voice in Henry Hale’s Tiny Voca Luganda. Based on Muhammed Nazeem’s Tiny Voca (Apache-2.0), fine-tuned on CraneAILabs/waxal-lug-clean, derived from WaxalNLP (CC BY 4.0).",
+      "modelTerms": "Apache-2.0 per the pinned tiny-voca-lg model card.",
+      "sourceUrls": [
+        "https://huggingface.co/henryhale/tiny-voca-lg/tree/dcb36749b11027ef8e57319d6508104e235ff783",
+        "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
+        "https://github.com/henryhale/tiny-voca-lg/tree/258107cba9bdf820a815554ce1b601369b8c1388",
+        "https://huggingface.co/datasets/CraneAILabs/waxal-lug-clean"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t12-22-06-303z-tiny-voca-lg-cpu-warm-a29a6b42--tiny-voca-lg--cpu.wav",
+        "sha256": "11383abf964fea24db7aaa56e5ff1ba3992051fd5a0308d7617c8d063dd72698",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "786e923e5db94636fa6e53ef7929970ad439e9dd94982453ed5059cc8fcd281a",
+        "bytes": 91556396
+      }
+    },
+    {
+      "resultId": "2026-11-24t12-29-11-634z-tiny-voca-lg-webgpu-warm-a0885b1a",
+      "model": "tiny-voca-lg",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F2 (female; WAXAL Luganda speaker 5)",
+      "language": "lg",
+      "attribution": "AI-generated Luganda benchmark narration using the F2 voice in Henry Hale’s Tiny Voca Luganda. Based on Muhammed Nazeem’s Tiny Voca (Apache-2.0), fine-tuned on CraneAILabs/waxal-lug-clean, derived from WaxalNLP (CC BY 4.0).",
+      "modelTerms": "Apache-2.0 per the pinned tiny-voca-lg model card.",
+      "sourceUrls": [
+        "https://huggingface.co/henryhale/tiny-voca-lg/tree/dcb36749b11027ef8e57319d6508104e235ff783",
+        "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
+        "https://github.com/henryhale/tiny-voca-lg/tree/258107cba9bdf820a815554ce1b601369b8c1388",
+        "https://huggingface.co/datasets/CraneAILabs/waxal-lug-clean"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t12-29-11-634z-tiny-voca-lg-webgpu-warm-a0885b1a--tiny-voca-lg--webgpu.wav",
+        "sha256": "85f3f1a2af9202d6ce6b751d6309b3de1265aa0e4a6cdc524101e4670323fc8d",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "9a08b6677d1761f2bc07cac4f278a8f460704b7a25cb09674467b94a30a734c1",
+        "bytes": 91556396
+      }
+    },
+    {
       "resultId": "2026-11-23t03-19-07-622z-tiny-voca-ptbr-kokoro-cpu-warm-f23b292d",
       "model": "tiny-voca-ptbr-kokoro",
       "backend": "cpu",
