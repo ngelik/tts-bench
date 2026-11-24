@@ -22,6 +22,11 @@ export default {
       "language": "te",
       "sha256": "3dbf5136b343b34f1548c4acb06e209ecdfc755237912932a58d331c5dcc0fdc",
       "spans": 93
+    },
+    "te-latn-article-v1": {
+      "language": "te-Latn",
+      "sha256": "bb308136b764b649d53d38948bdb707e39b7e952531a80ed73a8a53c5d336eea",
+      "spans": 113
     }
   }
 };

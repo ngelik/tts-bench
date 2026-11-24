@@ -27,7 +27,7 @@ test('Telugu profile pins the deployed worker, acoustic assets, both G2P graphs,
 
 test('Telugu adapter rejects GPU and any nonmatching fixture checksum', async () => {
   assert.equal(defaultFixtureForModel(profile.id), 'te-article-v1');
-  assert.equal(requiredFixtureForModel(profile.id), 'te-article-v1');
+  assert.equal(requiredFixtureForModel(profile.id), null);
   const adapter = createBrowserVoiceAdapter(profile);
   const options = { fixtureId: 'te-article-v1', language: 'te', backend: 'cpu' };
   assert.equal((await adapter.initialize({ ...options, backend: 'webgpu' })).status, 'unsupported');
@@ -43,4 +43,21 @@ test('audio attribution remains bound to the catalog terms and publisher sources
     attribution: 'AI-generated Telugu benchmark narration using Tamal Hansda’s Browser Voice Sreekar preview. Publisher credits Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). Hansda’s Telugu Maya 2 Native Sreekar 20h synthetic recordings and original release annotations are CC BY-SA 4.0. The dataset credits AI4Bharat Rasa, OpenSLR and Dakshina contributors for source prompts. Preview checkpoint terms are unspecified; this does not grant generated-audio reuse rights.',
     sourceUrls: model.support.sources,
   }));
+});
+
+test('Roman Telugu uses the same spoken language and the published dictionary', async () => {
+  const model = getAssetLock().models[profile.id];
+  const layout = profile.fixtures['te-latn-article-v1'];
+  assert.equal(layout.sha256, 'bb308136b764b649d53d38948bdb707e39b7e952531a80ed73a8a53c5d336eea');
+  assert.equal(layout.spans, 113);
+  assert.equal(layout.language, 'te-Latn');
+  assert.equal(profile.spokenLanguage, 'te');
+  assert.deepEqual(model.support.languages, ['te']);
+  const dictionary = model.assets.find(asset => asset.id === profile.id + '-roman-dictionary');
+  assert.equal(dictionary.sha256, '01710af6f2eb107113fb1465eb82ecdfce5cc52aaa89fffad06d0c89c834e240');
+  assert.equal('/' + dictionary.target, profile.workerUrl.replace(/worker\.js$/, 'assets/converter/te.json.gz'));
+  const adapter = createBrowserVoiceAdapter(profile);
+  const options = { fixtureId: 'te-latn-article-v1', language: 'te-Latn', backend: 'cpu' };
+  assert.equal((await adapter.initialize({ ...options, language: 'te' })).status, 'unsupported');
+  await assert.rejects(adapter.initialize({ ...options, sourceSha256: '0'.repeat(64) }), /checksum/);
 });
