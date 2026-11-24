@@ -61,6 +61,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 - **E13**: MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0.
 - **E14**: MacBook Pro 18,3 / Apple M1 Pro 8-core / 16 GB / arm64 · Google Chrome 157.0.8103.79 · Darwin 25.6.0.
 - **E15**: Apple M1 Pro / 16 GiB · Google Chrome 157.0.8103.79 · Darwin 25.6.0.
+- **E16**: MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 158.0.8127.37 · Darwin 25.6.0.
 
 ### Arabic (ar) — ar-article-v1
 
@@ -363,6 +364,14 @@ Warm and memory tables prefer native receipts that verify the registered model a
 | Tiny Broca Brazilian Portuguese F1 (FP32) | E13 | 21.37 | [79.37 s (n=3)](results/2026-11-23t04-09-39-454z-tiny-broca-cpu-warm-738f8a1a/summary.md) | [57.11 s (n=3)](results/2026-11-23t04-15-08-824z-tiny-broca-webgpu-warm-7c717bac/summary.md) | Native; matched configuration |
 | Tiny Voca Brazilian Portuguese F_s4 (FP32) | E13 | 21.37 | [93.30 s (n=3)](results/2026-11-23t02-09-13-281z-tiny-voca-ptbr-cpu-warm-9ed2786e/summary.md) | [31.90 s (n=3)](results/2026-11-23t02-15-37-064z-tiny-voca-ptbr-webgpu-warm-31911807/summary.md) | Native; matched configuration |
 | Tiny Voca Brazilian Portuguese F (Haple Kokoro, FP32) | E13 | 21.37 | [72.78 s (n=3)](results/2026-11-23t03-19-07-622z-tiny-voca-ptbr-kokoro-cpu-warm-f23b292d/summary.md) | [20.93 s (n=3)](results/2026-11-23t03-24-08-743z-tiny-voca-ptbr-kokoro-webgpu-warm-197906d5/summary.md) | Native; matched configuration |
+
+### European Portuguese (pt-PT) — pt-pt-article-v1
+
+23265 characters / 106 spans · fixture SHA-256 `08e524e4a56f05d9a8b6f043bc91accfd6dfc94156601213f4c9ae53585573c7`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Tiny Voca European Portuguese F3 (FP32) | E16 | 21.37 | [66.15 s (n=3)](results/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f/summary.md) | [25.97 s (n=3)](results/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b/summary.md) | Native; matched configuration |
 
 ### Romanian (ro) — ro-article-v1
 
@@ -968,97 +977,103 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [1984.03](results/2026-11-23t22-58-56-802z-supertonic-3-webgpu-cached-6fb7e7d0/summary.md) |
 
-**RAM 79** · Romanian (ro) · fixture `ro-article-v1` · 21543 characters / 98 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
+**RAM 79** · European Portuguese (pt-PT) · fixture `pt-pt-article-v1` · 23265 characters / 106 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 158.0.8127.37 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2581937c`](https://github.com/ngelik/tts-bench/commit/2581937c17b500bda80cb158cd86a0c804149026).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Tiny Voca European Portuguese F3 (FP32) | 21.37 | [1086.49](results/2026-11-24t12-05-03-409z-tiny-voca-ptpt-cpu-cached-fab0d37b/summary.md) | [1450.63](results/2026-11-24t12-06-19-233z-tiny-voca-ptpt-webgpu-cached-639c3866/summary.md) |
+
+**RAM 80** · Romanian (ro) · fixture `ro-article-v1` · 21543 characters / 98 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2330.51](results/2026-11-24t02-28-55-526z-supertonic-3-webgpu-cached-1184377d/summary.md) |
 
-**RAM 80** · Russian (ru) · fixture `ru-article-v1` · 20732 characters / 95 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`b61a139d`](https://github.com/ngelik/tts-bench/commit/b61a139d470464f8bbbd0e9088242122f0a21d80).
+**RAM 81** · Russian (ru) · fixture `ru-article-v1` · 20732 characters / 95 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`b61a139d`](https://github.com/ngelik/tts-bench/commit/b61a139d470464f8bbbd0e9088242122f0a21d80).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Tiny Voca Russian M | 21.37 | [1892.80](results/2026-11-22t18-41-07-258z-tiny-voca-ru-cpu-cached-fa5685ae/summary.md) | [1696.58](results/2026-11-22t18-42-27-395z-tiny-voca-ru-webgpu-cached-58ba502e/summary.md) |
 
-**RAM 81** · Russian (ru) · fixture `ru-article-v1` · 20732 characters / 95 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c5ef9de0`](https://github.com/ngelik/tts-bench/commit/c5ef9de02620c7c5ec3c04d5f2aea101957939ae).
+**RAM 82** · Russian (ru) · fixture `ru-article-v1` · 20732 characters / 95 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c5ef9de0`](https://github.com/ngelik/tts-bench/commit/c5ef9de02620c7c5ec3c04d5f2aea101957939ae).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2631.20](results/2026-11-24t00-19-18-776z-supertonic-3-webgpu-cached-3c6fd771/summary.md) |
 
-**RAM 82** · Sanskrit (sa) · fixture `sa-article-v1` · 19801 characters / 90 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`7f6c1496`](https://github.com/ngelik/tts-bench/commit/7f6c1496053453747bbb47b4f6af6ac041ecc6eb).
+**RAM 83** · Sanskrit (sa) · fixture `sa-article-v1` · 19801 characters / 90 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`7f6c1496`](https://github.com/ngelik/tts-bench/commit/7f6c1496053453747bbb47b4f6af6ac041ecc6eb).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Alpa (Sanskrit) | 22.55 | [1151.19](results/2026-11-23t18-31-41-474z-alpa-sanskrit-cpu-cached-9318014f/summary.md) | [2207.11](results/2026-11-23t18-34-23-366z-alpa-sanskrit-webgpu-cached-3b277786/summary.md) |
 
-**RAM 83** · Slovak (sk) · fixture `sk-article-v1` · 19232 characters / 88 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
+**RAM 84** · Slovak (sk) · fixture `sk-article-v1` · 19232 characters / 88 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [1690.69](results/2026-11-24t02-44-06-587z-supertonic-3-webgpu-cached-c38e2e15/summary.md) |
 
-**RAM 84** · Slovenian (sl) · fixture `sl-article-v1` · 20301 characters / 93 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
+**RAM 85** · Slovenian (sl) · fixture `sl-article-v1` · 20301 characters / 93 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2347.30](results/2026-11-24t02-51-56-223z-supertonic-3-webgpu-cached-40cab55c/summary.md) |
 
-**RAM 85** · Swedish (sv) · fixture `sv-article-v1` · 20264 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
+**RAM 86** · Swedish (sv) · fixture `sv-article-v1` · 20264 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2351.43](results/2026-11-24t02-59-31-506z-supertonic-3-webgpu-cached-1aa9ed2c/summary.md) |
 
-**RAM 86** · Swahili (sw) · fixture `sw-article-v1` · 23917 characters / 109 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`ac0cebd5`](https://github.com/ngelik/tts-bench/commit/ac0cebd561863f8bb27411b6d01453fe99c842a1).
+**RAM 87** · Swahili (sw) · fixture `sw-article-v1` · 23917 characters / 109 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`ac0cebd5`](https://github.com/ngelik/tts-bench/commit/ac0cebd561863f8bb27411b6d01453fe99c842a1).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Tiny Voca Kiswahili | 21.39 | [1273.60](results/2026-11-23t17-25-31-201z-tiny-voca-swahili-cpu-cached-3675422b/summary.md) | [2314.90](results/2026-11-23t17-27-46-135z-tiny-voca-swahili-webgpu-cached-3e15b3f0/summary.md) |
 
-**RAM 87** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`fe8f6690`](https://github.com/ngelik/tts-bench/commit/fe8f66909ca808473dac4ceb56dc36e23ec44943).
+**RAM 88** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`fe8f6690`](https://github.com/ngelik/tts-bench/commit/fe8f66909ca808473dac4ceb56dc36e23ec44943).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Zerre TTS ~4.5M INT8 (Turkish, SES-A) | 8.55 | [1322.87](results/2026-11-22t11-14-02-780z-zerre-tts-cpu-cached-4c204eed/summary.md) | [1221.60](results/2026-11-22t11-15-27-394z-zerre-tts-webgpu-cached-2baa29d6/summary.md) |
 
-**RAM 88** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · Apple M1 Pro / 16 GiB · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2c2716b5`](https://github.com/ngelik/tts-bench/commit/2c2716b5482c5bcbe094fa7a11a0c30ce0fca318).
+**RAM 89** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · Apple M1 Pro / 16 GiB · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`2c2716b5`](https://github.com/ngelik/tts-bench/commit/2c2716b5482c5bcbe094fa7a11a0c30ce0fca318).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Clarvia TTS Tiny 4.54M FP32 (Turkish, female_1) | 21.38 | [1096.66](results/2026-11-22t12-07-05-151z-clarvia-tts-tiny-cpu-cached-0255b0f5/summary.md) | [1067.00](results/2026-11-22t12-08-18-105z-clarvia-tts-tiny-webgpu-cached-d6879c29/summary.md) |
 
-**RAM 89** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c5ef9de0`](https://github.com/ngelik/tts-bench/commit/c5ef9de02620c7c5ec3c04d5f2aea101957939ae).
+**RAM 90** · Turkish (tr) · fixture `tr-article-v1` · 20679 characters / 94 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c5ef9de0`](https://github.com/ngelik/tts-bench/commit/c5ef9de02620c7c5ec3c04d5f2aea101957939ae).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2362.78](results/2026-11-24t00-26-32-809z-supertonic-3-webgpu-cached-9dcec036/summary.md) |
 
-**RAM 90** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
+**RAM 91** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB, native arm64; macOS 26.6.2) · Google Chrome 157.0.8103.40 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`9870c198`](https://github.com/ngelik/tts-bench/commit/9870c198651481dfed69ece7dc7bb88d870edabd).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Serhiy 0.58M (Ukrainian) | 2.34 | [1085.64](results/2026-11-20t23-20-52-422z-ua-serhiy-0p58m-cpu-cached-54c94956/summary.md) | [1964.76](results/2026-11-20t23-22-14-572z-ua-serhiy-0p58m-webgpu-cached-ac55e923/summary.md) |
 
-**RAM 91** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c5ef9de0`](https://github.com/ngelik/tts-bench/commit/c5ef9de02620c7c5ec3c04d5f2aea101957939ae).
+**RAM 92** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`c5ef9de0`](https://github.com/ngelik/tts-bench/commit/c5ef9de02620c7c5ec3c04d5f2aea101957939ae).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2380.50](results/2026-11-24t00-33-30-480z-supertonic-3-webgpu-cached-b59ecd55/summary.md) |
 
-**RAM 92** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 158.0.8127.37 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
+**RAM 93** · Ukrainian (uk) · fixture `uk-article-v1` · 19980 characters / 92 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 158.0.8127.37 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | [1206.82](results/2026-11-24t11-23-00-524z-supertonic-3-cpu-cached-d26260ba/summary.md) | — |
 
-**RAM 93** · Urdu (Latin) (ur-Latn) · fixture `ur-latn-article-v1` · 22486 characters / 103 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`54408783`](https://github.com/ngelik/tts-bench/commit/54408783d9ba80b002a90ebb8106bb03ba43176f).
+**RAM 94** · Urdu (Latin) (ur-Latn) · fixture `ur-latn-article-v1` · 22486 characters / 103 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`54408783`](https://github.com/ngelik/tts-bench/commit/54408783d9ba80b002a90ebb8106bb03ba43176f).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
 | Tiny Urdu M2 (FP32) | 21.42 | [1162.48](results/2026-11-23t16-32-52-620z-tiny-urdu-cpu-cached-fe4688d8/summary.md) | [2062.64](results/2026-11-23t16-34-15-251z-tiny-urdu-webgpu-cached-faf31c2f/summary.md) |
 
-**RAM 94** · Vietnamese (vi) · fixture `vi-article-v1` · 19900 characters / 91 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
+**RAM 95** · Vietnamese (vi) · fixture `vi-article-v1` · 19900 characters / 91 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 157.0.8103.79 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`448eba53`](https://github.com/ngelik/tts-bench/commit/448eba5382c28247e98d389e151a1983a109d8ce).
 
 | Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
 |---|---:|---:|---:|
@@ -1121,6 +1136,8 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 ![Average Chrome RAM during generation — Polish](docs/reference-memory-pl.svg)
 
 ![Average Chrome RAM during generation — Brazilian Portuguese](docs/reference-memory-pt-BR.svg)
+
+![Average Chrome RAM during generation — European Portuguese](docs/reference-memory-pt-PT.svg)
 
 ![Average Chrome RAM during generation — Romanian](docs/reference-memory-ro.svg)
 
@@ -1663,6 +1680,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![tiny-voca-ptbr-kokoro — campaign metrics](reports/tiny-voca-ptbr-kokoro/overview.svg)
 
+[tiny-voca-ptpt-cpu — all-metrics table and source receipts](reports/tiny-voca-ptpt-cpu/overview.md)
+
+![tiny-voca-ptpt-cpu — campaign metrics](reports/tiny-voca-ptpt-cpu/overview.svg)
+
+[tiny-voca-ptpt-webgpu — all-metrics table and source receipts](reports/tiny-voca-ptpt-webgpu/overview.md)
+
+![tiny-voca-ptpt-webgpu — campaign metrics](reports/tiny-voca-ptpt-webgpu/overview.svg)
+
 [tiny-voca-ru — all-metrics table and source receipts](reports/tiny-voca-ru/overview.md)
 
 ![tiny-voca-ru — campaign metrics](reports/tiny-voca-ru/overview.svg)
@@ -1903,6 +1928,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Tiny Voca Brazilian Portuguese F (Haple Kokoro, FP32) | webgpu | pt-BR | [Receipt](results/2026-11-23t03-24-08-743z-tiny-voca-ptbr-kokoro-webgpu-warm-197906d5/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t03-24-08-743z-tiny-voca-ptbr-kokoro-webgpu-warm-197906d5--tiny-voca-ptbr-kokoro--webgpu.wav) | Not published |
 | Tiny Voca Brazilian Portuguese F_s4 (FP32) | cpu | pt-BR | [Receipt](results/2026-11-23t02-09-13-281z-tiny-voca-ptbr-cpu-warm-9ed2786e/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t02-09-13-281z-tiny-voca-ptbr-cpu-warm-9ed2786e--tiny-voca-ptbr--cpu.wav) | Not published |
 | Tiny Voca Brazilian Portuguese F_s4 (FP32) | webgpu | pt-BR | [Receipt](results/2026-11-23t02-15-37-064z-tiny-voca-ptbr-webgpu-warm-31911807/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t02-15-37-064z-tiny-voca-ptbr-webgpu-warm-31911807--tiny-voca-ptbr--webgpu.wav) | Not published |
+| Tiny Voca European Portuguese F3 (FP32) | cpu | pt-PT | [Receipt](results/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f--tiny-voca-ptpt--cpu.wav) | Not published |
+| Tiny Voca European Portuguese F3 (FP32) | webgpu | pt-PT | [Receipt](results/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b--tiny-voca-ptpt--webgpu.wav) | Not published |
 | Tiny Voca Russian M | cpu | ru | [Receipt](results/2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147--tiny-voca-ru--cpu.wav) | Not published |
 | Tiny Voca Russian M | webgpu | ru | [Receipt](results/2026-11-22t18-37-17-189z-tiny-voca-ru-webgpu-warm-bc7a5c22/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-22t18-37-17-189z-tiny-voca-ru-webgpu-warm-bc7a5c22--tiny-voca-ru--webgpu.wav) | Not published |
 | Tiny Voca Kiswahili | cpu | sw | [Receipt](results/2026-11-23t17-14-17-810z-tiny-voca-swahili-cpu-warm-5f0f319c/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t17-14-17-810z-tiny-voca-swahili-cpu-warm-5f0f319c--tiny-voca-swahili--cpu.wav) | Not published |
@@ -2314,6 +2341,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 381 · 2026-11-24 | supertonic-3/cpu | de / de-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t08-56-37-753z-supertonic-3-cpu-cached-7101687e/summary.md) | [SVG](results/2026-11-24t08-56-37-753z-supertonic-3-cpu-cached-7101687e/chart.svg) |
 | 382 · 2026-11-24 | supertonic-3/cpu | uk / uk-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-24t09-41-28-236z-supertonic-3-cpu-warm-6baf9686/summary.md) | [SVG](results/2026-11-24t09-41-28-236z-supertonic-3-cpu-warm-6baf9686/chart.svg) |
 | 383 · 2026-11-24 | supertonic-3/cpu | uk / uk-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t11-23-00-524z-supertonic-3-cpu-cached-d26260ba/summary.md) | [SVG](results/2026-11-24t11-23-00-524z-supertonic-3-cpu-cached-d26260ba/chart.svg) |
+| 384 · 2026-11-24 | tiny-voca-ptpt/cpu | pt-PT / pt-pt-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f/summary.md) | [SVG](results/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f/chart.svg) |
+| 385 · 2026-11-24 | tiny-voca-ptpt/webgpu | pt-PT / pt-pt-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b/summary.md) | [SVG](results/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b/chart.svg) |
+| 386 · 2026-11-24 | tiny-voca-ptpt/cpu | pt-PT / pt-pt-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t12-05-03-409z-tiny-voca-ptpt-cpu-cached-fab0d37b/summary.md) | [SVG](results/2026-11-24t12-05-03-409z-tiny-voca-ptpt-cpu-cached-fab0d37b/chart.svg) |
+| 387 · 2026-11-24 | tiny-voca-ptpt/webgpu | pt-PT / pt-pt-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t12-06-19-233z-tiny-voca-ptpt-webgpu-cached-639c3866/summary.md) | [SVG](results/2026-11-24t12-06-19-233z-tiny-voca-ptpt-webgpu-cached-639c3866/chart.svg) |
 
 </details>
 

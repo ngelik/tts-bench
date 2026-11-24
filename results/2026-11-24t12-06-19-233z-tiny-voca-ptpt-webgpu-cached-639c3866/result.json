@@ -1,0 +1,447 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24t12-06-19-233z-tiny-voca-ptpt-webgpu-cached-639c3866",
+  "createdAt": "2026-11-24T12:06:53.427Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "pt-pt-article-v1",
+    "language": "pt-PT",
+    "sha256": "08e524e4a56f05d9a8b6f043bc91accfd6dfc94156601213f4c9ae53585573c7",
+    "characters": 23265,
+    "unicodeCodePoints": 23265,
+    "utf8Bytes": 23886,
+    "chunks": 106,
+    "source": {
+      "type": "translation",
+      "description": "European Portuguese edition translated and edited by Codex using the original English and the published Brazilian Portuguese edition. AI editorial review of all 27 paragraphs, names, numerical quantities and article units. Dates, times and prices use spoken forms.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "2581937c17b500bda80cb158cd86a0c804149026",
+    "dirty": false,
+    "manifestSha256": "f8076a363297b8531c641efc210304a52c37c61875d9e5d7356dbd1d8e08cd5e"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-ptpt-onnx",
+      "sha256": "bf12f20419b6485d986063348c497ad99bc0bf3d64339c8429e3c078ed0abf88",
+      "bytes": 21368660
+    },
+    {
+      "id": "tiny-voca-ptpt-model-config",
+      "sha256": "55bda62f6e259a346d865f143af0e020cc21a5f9144adfcded553a1c4d753913",
+      "bytes": 679
+    },
+    {
+      "id": "tiny-voca-ptpt-browser-config",
+      "sha256": "caddd758918301f9aa7af81ded5afb626361e4800ab13458d3635a683eb87b07",
+      "bytes": 830
+    },
+    {
+      "id": "tiny-voca-ptpt-open-vowel-list",
+      "sha256": "690a3c5ab1f19ae51752113f772ded0d0eed2de4e4a0aea2d46b2bdc86b4e982",
+      "bytes": 4304
+    },
+    {
+      "id": "tiny-voca-ptpt-pronuncia-js",
+      "sha256": "96f69be7471f2a325e3a247ced0c80901a8616452f94311b5e859c61134d5b38",
+      "bytes": 21428
+    },
+    {
+      "id": "tiny-voca-ptpt-article-oracle",
+      "sha256": "43aa9a5d0e11b3dbfb5920cd1ab820cb389974d28bf2131b01d871e15249991e",
+      "bytes": 51673
+    },
+    {
+      "id": "tiny-voca-ptpt-fixture-chunks",
+      "sha256": "30e32fad520481d2475a1c7510dde107d55a4eee7837decaeb0e38932beeac78",
+      "bytes": 19244
+    },
+    {
+      "id": "tiny-voca-ptpt-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-ptpt-browser-notice",
+      "sha256": "1c0e96c8cd9e59a177adf92444c8a4e23062037f4a11b9f96e451067d4547f7f",
+      "bytes": 863
+    },
+    {
+      "id": "tiny-voca-ptpt-upstream-notice",
+      "sha256": "d7ac92cb8a58535d18a5b2fec66ed2b51b229bfbe26f3cfaad77d4ea85477712",
+      "bytes": 931
+    },
+    {
+      "id": "tiny-voca-ptpt-runtime-ort-webgpu-mjs",
+      "sha256": "e131e81c9324807e1e6f9103e8f8e936112827dcc9993cde9407a333b1f07ae0",
+      "bytes": 357582
+    },
+    {
+      "id": "tiny-voca-ptpt-runtime-jsep-mjs",
+      "sha256": "1cbcba8f2c769c1eecbab66a1b1e55ef11704515bf4306373e3db3c37cf6dcd8",
+      "bytes": 44677
+    },
+    {
+      "id": "tiny-voca-ptpt-runtime-jsep-wasm",
+      "sha256": "b45970d0632383a057c27ca5b660b216f8e00c17cf8db9f6207b5e4abc839368",
+      "bytes": 21872216
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-ptpt",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-PT"
+        ],
+        "scope": "Pinned joserui/tiny-voca-pt-pt ONNX graph, two fictional synthetic Lisbon voices (F3 and M1), 24 kHz mono, and the registered pt-pt-article-v1 fixture. CPU/WASM and WebGPU are explicit selections.",
+        "sources": [
+          "https://huggingface.co/joserui/tiny-voca-pt-pt/tree/9d547821151d1f009eada6f49b5be73af77ae245",
+          "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/tree/744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/pronuncia.js",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/test/vectores.json",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+        ],
+        "notes": "Supplied full-article frontend oracle binds the registered fixture SHA and reports 106 spans, 350 utterances, maximum 185 tokens, and zero unknown phones (oracle SHA-256 43aa9a5d0e11b3dbfb5920cd1ab820cb389974d28bf2131b01d871e15249991e). The pinned upstream vector file contains 632 Python/JavaScript parity vectors; their source identities are recorded in the adapter profile. This patch is not a browser or inference qualification receipt. WebGPU requires an explicit selection and can use internal WASM kernels for unsupported graph operators; use the untimed dispatch probe to record dispatch."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "F3",
+      "precision": "FP32 ONNX export of the released European Portuguese checkpoint",
+      "settings": {
+        "modelId": "joserui/tiny-voca-pt-pt",
+        "modelRevision": "9d547821151d1f009eada6f49b5be73af77ae245",
+        "sourceId": "joseruimemory/tiny-voca-pt-pt",
+        "sourceRevision": "744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+        "fixtureId": "pt-pt-article-v1",
+        "fixtureSha256": "08e524e4a56f05d9a8b6f043bc91accfd6dfc94156601213f4c9ae53585573c7",
+        "language": "pt-PT",
+        "locale": "pt-PT",
+        "voice": "F3",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "tokenLimit": 500,
+        "maxFrames": 3000,
+        "step": 120000,
+        "precision": "FP32 ONNX export of the released European Portuguese checkpoint",
+        "frontend": "Pinned joseruimemory/tiny-voca-pt-pt browser frontend at 744e42406fd481fbe61f3b67bf8012a7d29cb57a; JavaScript port of pronuncia-pt 0.2.0 with its native open-vowel list",
+        "frontendFingerprint": "5a15e081f3d834a1b59f294b174a78f6797c14c84dabb2f434e31fe7df070b31",
+        "pronunciationVectors": {
+          "count": 632,
+          "result": "632 upstream Python pronunciation vectors matched the released JavaScript frontend",
+          "vectorsGitBlob": "76853ae4ce396627fda35c27c904115e6aab5347",
+          "checkerGitBlob": "9c58a959ace54082b501264da764e81db314542a",
+          "vectorsSha256": "c9be7fa4c809f60a628c2effd81ac1738e48315142620a67745909af649656a3"
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.22.0"
+        },
+        "runtimePackageIntegrity": "sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==",
+        "executionProviders": [
+          "webgpu"
+        ],
+        "wasmThreads": 1,
+        "graphOptimization": "ONNX Runtime Web default",
+        "waveform": "Pinned FP32 European Portuguese ONNX graph; sentence utterances are concatenated without inserted audio, then each source span receives one 0.99 peak cap.",
+        "unknownPhonePolicy": "The pinned pronuncia-pt rules and measured open-vowel list produce the released 53-symbol inventory; unknown phones fail the full-article audit."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 842,
+        "description": "Observed 842 WebGPU dispatches during an untimed probe; ONNX Runtime Web can use internal WASM CPU kernels for operators without a WebGPU implementation."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 26254.855000019073,
+          "samples": 32275968,
+          "sampleRate": 24000,
+          "pcmSha256": "0de4f2e506705d7001e0b4ce407bdbf9b4d8dcc2c61ec5d333885ee065508b64",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 106,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 183.1449999809265,
+            "firstSourceChunkCompletedMs": 441.7000000476837,
+            "audioSeconds": 1344.832,
+            "realTimeFactor": 0.01952277682269538,
+            "minSamplesPerChunk": 253696,
+            "maxSamplesPerChunk": 345088,
+            "articleCallPeakRssBytes": 1586315264,
+            "generationMeanRssBytes": 1450630853,
+            "generationRssSampleCount": 52,
+            "loadMs": 580.5305839999996,
+            "controllerTrialElapsedMs": 31236.894667000004,
+            "downloadBytes": 94711,
+            "idealDownloadSecondsAt1Mbps": 0.757688
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795521982976.215,
+            "finalPcmAtEpochMs": 1795522009231.07,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795521983561,
+                1397833728
+              ],
+              [
+                1795521984033,
+                1443233792
+              ],
+              [
+                1795521984521,
+                1448869888
+              ],
+              [
+                1795521985040,
+                1476640768
+              ],
+              [
+                1795521985526,
+                1485062144
+              ],
+              [
+                1795521986024,
+                1488617472
+              ],
+              [
+                1795521986523,
+                1491517440
+              ],
+              [
+                1795521987023,
+                1477328896
+              ],
+              [
+                1795521987529,
+                1476526080
+              ],
+              [
+                1795521988028,
+                1481146368
+              ],
+              [
+                1795521988533,
+                1484029952
+              ],
+              [
+                1795521989035,
+                1498300416
+              ],
+              [
+                1795521989533,
+                1490173952
+              ],
+              [
+                1795521990037,
+                1495203840
+              ],
+              [
+                1795521990537,
+                1498103808
+              ],
+              [
+                1795521991036,
+                1500577792
+              ],
+              [
+                1795521991537,
+                1511079936
+              ],
+              [
+                1795521992043,
+                1519550464
+              ],
+              [
+                1795521992544,
+                1523957760
+              ],
+              [
+                1795521993043,
+                1527595008
+              ],
+              [
+                1795521993547,
+                1529593856
+              ],
+              [
+                1795521994048,
+                1532133376
+              ],
+              [
+                1795521994548,
+                1535311872
+              ],
+              [
+                1795521995056,
+                1570979840
+              ],
+              [
+                1795521995554,
+                1573650432
+              ],
+              [
+                1795521996050,
+                1579827200
+              ],
+              [
+                1795521996552,
+                1586315264
+              ],
+              [
+                1795521997055,
+                1581842432
+              ],
+              [
+                1795521997553,
+                1563672576
+              ],
+              [
+                1795521998055,
+                1567850496
+              ],
+              [
+                1795521998557,
+                1563164672
+              ],
+              [
+                1795521999055,
+                1560477696
+              ],
+              [
+                1795521999559,
+                1563901952
+              ],
+              [
+                1795522000060,
+                1411973120
+              ],
+              [
+                1795522000561,
+                1398210560
+              ],
+              [
+                1795522001063,
+                1400635392
+              ],
+              [
+                1795522001565,
+                1403355136
+              ],
+              [
+                1795522002066,
+                1428832256
+              ],
+              [
+                1795522002568,
+                1427210240
+              ],
+              [
+                1795522003072,
+                1419116544
+              ],
+              [
+                1795522003573,
+                1413464064
+              ],
+              [
+                1795522004075,
+                1406828544
+              ],
+              [
+                1795522004575,
+                1406189568
+              ],
+              [
+                1795522005080,
+                1410367488
+              ],
+              [
+                1795522005584,
+                1365426176
+              ],
+              [
+                1795522006087,
+                1213825024
+              ],
+              [
+                1795522006580,
+                1207402496
+              ],
+              [
+                1795522007082,
+                1209745408
+              ],
+              [
+                1795522007582,
+                1217232896
+              ],
+              [
+                1795522008085,
+                1221509120
+              ],
+              [
+                1795522008587,
+                1222377472
+              ],
+              [
+                1795522009087,
+                1225031680
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "74b5fc15c73a31e7a7e9375475b3ccb1c73f12a70f7e4a010aa6fff0294db4c3",
+            "bytes": 64551980
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-24T11-58-35-821Z-27c9051e8645; cell 4/4; source 2581937c17b500bda80cb158cd86a0c804149026; fixture pt-pt-article-v1 (pt-PT, 23265 JavaScript characters, 106 spans); requested n=1; effective n=1; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-ptpt, F3, FP32 ONNX export of the released European Portuguese checkpoint. Qualified backends: cpu, webgpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

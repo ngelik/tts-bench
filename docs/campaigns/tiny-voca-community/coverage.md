@@ -1,5 +1,16 @@
 # Tiny Voca community benchmark coverage
 
+## Full-article measurements
+
+Each timing is the median of three full-article runs in headed Chrome on the Apple M1 Pro. Memory comes from a separate cached run. Each 30-second recording comes from the third timing run.
+
+| Language board | Model | Backend | Median generation time | Mean Chrome memory | Evidence |
+|---|---|---|---:|---:|---|
+| [pt-PT](https://ngelik.github.io/tts-bench/?lang=pt-PT&view=table) | `tiny-voca-ptpt` | CPU | 66.15 s | 1086.49 MB | [Timing](../../../results/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f/summary.md) · [Memory](../../../results/2026-11-24t12-05-03-409z-tiny-voca-ptpt-cpu-cached-fab0d37b/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f--tiny-voca-ptpt--cpu.wav) |
+| [pt-PT](https://ngelik.github.io/tts-bench/?lang=pt-PT&view=table) | `tiny-voca-ptpt` | WebGPU | 25.97 s | 1450.63 MB | [Timing](../../../results/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b/summary.md) · [Memory](../../../results/2026-11-24t12-06-19-233z-tiny-voca-ptpt-webgpu-cached-639c3866/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b--tiny-voca-ptpt--webgpu.wav) |
+
+## Directory intake
+
 The [upstream directory at 4bf796d](https://github.com/n4ze3m/tiny-voca/blob/4bf796d29ea775edd5a7cc5ee3a6806b3c3b91f6/README.md#community) lists 42 language-and-voice entries. Compared with the original 34-entry campaign, eight entries were added and Bengali Voice expanded into Browser Voice. The [dashboard at acaa9e8](https://github.com/ngelik/tts-bench/tree/acaa9e82efdf8bd937050a838ba9e63652e1b2ec/results) has full-article measurements for 33 of the original entries. Kurdish Behdînî remains a [hosted demo](https://behdinan.com/) with no reference browser result.
 
 Seven spoken languages in the expanded directory lack a measured board: Uzbek, Mandarin Chinese, Gujarati, Telugu, Sinhala, Persian and Luganda. European Portuguese also lacks a measured result. The published Portuguese results use Brazilian Portuguese. Hebrew, Hindi and Malayalam already have boards, but the newly listed models or language routes have no matching receipts.

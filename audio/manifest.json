@@ -5590,6 +5590,70 @@
       }
     },
     {
+      "resultId": "2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f",
+      "model": "tiny-voca-ptpt",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F3",
+      "language": "pt-PT",
+      "attribution": "AI-generated European Portuguese benchmark narration in José Rui’s fictional F3 voice from Tiny Voca PT-PT, Apache-2.0, based on Muhammed Nazeem’s tiny-voca. The pinned frontend uses pronuncia-pt 0.2.0 and its measured open-vowel list. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/joserui/tiny-voca-pt-pt/tree/9d547821151d1f009eada6f49b5be73af77ae245",
+        "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+        "https://github.com/joseruimemory/tiny-voca-pt-pt/tree/744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+        "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/pronuncia.js",
+        "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/test/vectores.json",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f--tiny-voca-ptpt--cpu.wav",
+        "sha256": "35453acd39d810c49a6133d1451a9134cf0c29d799c547c0b5e5ab954eb0875f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "c4974ebd26f4e3e5f8fa583e9bb9ad67a39e5258907cb7a0bd326c61e85081b4",
+        "bytes": 64551980
+      }
+    },
+    {
+      "resultId": "2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b",
+      "model": "tiny-voca-ptpt",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "F3",
+      "language": "pt-PT",
+      "attribution": "AI-generated European Portuguese benchmark narration in José Rui’s fictional F3 voice from Tiny Voca PT-PT, Apache-2.0, based on Muhammed Nazeem’s tiny-voca. The pinned frontend uses pronuncia-pt 0.2.0 and its measured open-vowel list. Benchmark evaluation sample.",
+      "modelTerms": "Apache-2.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/joserui/tiny-voca-pt-pt/tree/9d547821151d1f009eada6f49b5be73af77ae245",
+        "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+        "https://github.com/joseruimemory/tiny-voca-pt-pt/tree/744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+        "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/pronuncia.js",
+        "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/test/vectores.json",
+        "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b--tiny-voca-ptpt--webgpu.wav",
+        "sha256": "aeb8c1d1abdb9d45a2a41b9d48b8d999352d541ed84bcb709b16aaf212fa56ab",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "caab6ce636d7112df1d1883c9b768d94a71be6bd394517f8bcdba0398ef09b51",
+        "bytes": 64551980
+      }
+    },
+    {
       "resultId": "2026-11-22t18-32-32-311z-tiny-voca-ru-cpu-warm-ec443147",
       "model": "tiny-voca-ru",
       "backend": "cpu",
