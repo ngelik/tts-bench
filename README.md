@@ -1207,6 +1207,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Tiny Swara Bengali BF (INT8) | 2 | 2 | 1 (bn) | [Details](docs/MODEL_SUPPORT.md#tiny-swara) |
 | Tiny Voca French FR_F1 (FP32) | 2 | 2 | 1 (fr) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-fr) |
 | Alpa Spanish female (FP32) | 2 | 2 | 1 (es-AR) | [Details](docs/MODEL_SUPPORT.md#alpa-es) |
+| Tiny Voca European Portuguese F3 (FP32) | 2 | 2 | 1 (pt-PT) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptpt) |
 | Tiny Voca Brazilian Portuguese F_s4 (FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptbr) |
 | Tiny Voca Brazilian Portuguese F (Haple Kokoro, FP32) | 2 | 2 | 1 (pt-BR) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptbr-kokoro) |
 | Tui Voice Mini Malayalam F2 (FP32) | 1 | 1 | 1 (ml) | [Details](docs/MODEL_SUPPORT.md#tui-voice-mini-ml) |
