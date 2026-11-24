@@ -16752,6 +16752,144 @@
           "kind": "license"
         }
       ]
+    },
+    "tiny-voca-lg": {
+      "displayName": "Tiny Voca Luganda F2",
+      "modelRevision": "dcb36749b11027ef8e57319d6508104e235ff783",
+      "sourceId": "henryhale/tiny-voca-lg",
+      "sourceRevision": "258107cba9bdf820a815554ce1b601369b8c1388",
+      "parameterCount": 4537291,
+      "frontendFingerprint": "89f8eca58520c5e03a8b59c10cfc9465408cc25df62a1e0681f0f1178fb05840",
+      "runtime": {
+        "package": "onnxruntime-web-pocket",
+        "version": "1.31.1",
+        "integrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "license": "MIT ONNX Runtime Web 1.31.1 with retained license and third-party notices.",
+        "files": [
+          {
+            "path": "dist/ort.wasm.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.wasm.min.mjs",
+            "bytes": 53725,
+            "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-lg-ort-ort-wasm-min-mjs"
+          },
+          {
+            "path": "dist/ort.webgpu.min.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort.webgpu.min.mjs",
+            "bytes": 70742,
+            "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-lg-ort-ort-webgpu-min-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.mjs",
+            "bytes": 24738,
+            "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-lg-ort-ort-wasm-simd-threaded-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.wasm",
+            "bytes": 14848852,
+            "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-lg-ort-ort-wasm-simd-threaded-wasm"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.mjs",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.mjs",
+            "bytes": 53457,
+            "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-lg-ort-ort-wasm-simd-threaded-asyncify-mjs"
+          },
+          {
+            "path": "dist/ort-wasm-simd-threaded.asyncify.wasm",
+            "target": "runtimes/onnxruntime-web-pocket/1.31.1/ort-wasm-simd-threaded.asyncify.wasm",
+            "bytes": 28747738,
+            "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "id": "tiny-voca-lg-ort-ort-wasm-simd-threaded-asyncify-wasm"
+          },
+          {
+            "path": "LICENSE.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/LICENSE.txt",
+            "bytes": 1073,
+            "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/LICENSE.txt",
+            "id": "tiny-voca-lg-ort-license"
+          },
+          {
+            "path": "ThirdPartyNotices.txt",
+            "target": "licenses/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "bytes": 338088,
+            "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+            "package": "onnxruntime-web-pocket",
+            "version": "1.31.1",
+            "kind": "license",
+            "sourcePath": "docs/runtime-notices/onnxruntime-web-1.31.1/ThirdPartyNotices.txt",
+            "id": "tiny-voca-lg-ort-notices"
+          }
+        ]
+      },
+      "license": {
+        "model": "Apache-2.0 per the pinned tiny-voca-lg model card.",
+        "trainingData": "CraneAILabs/waxal-lug-clean, derived from WaxalNLP; CC BY 4.0 per pinned model card.",
+        "frontend": "Pinned Apache-2.0 Luganda spelling-rule frontend from henryhale/tiny-voca-lg; attribution, source hash and modification notice in web/tiny-voca-lg/.",
+        "inferenceSource": "Benchmark adapter and integration under the repository MIT license.",
+        "runtime": "MIT ONNX Runtime Web 1.31.1 with retained third-party notices.",
+        "requiresAcceptance": true
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "lg"
+        ],
+        "scope": "Pinned tiny-voca-lg step-4000 FP32 ONNX checkpoint; Luganda, F2 (WAXAL speaker 5) at graph voice index 0, 24 kHz mono.",
+        "sources": [
+          "https://huggingface.co/henryhale/tiny-voca-lg/tree/dcb36749b11027ef8e57319d6508104e235ff783",
+          "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
+          "https://github.com/henryhale/tiny-voca-lg/tree/258107cba9bdf820a815554ce1b601369b8c1388",
+          "https://huggingface.co/datasets/CraneAILabs/waxal-lug-clean"
+        ],
+        "notes": "The registered lg-article-v1 fixture is a translator draft without fluent-speaker review. Its canonical spans have been checked against the pinned Luganda Python and JavaScript frontends and stock worker token/stress planning controls; this is frontend qualification, not a model inference or benchmark result. The profile selects only F2; M2 remains a checkpoint voice but is not exposed by this adapter."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-lg-model-onnx",
+          "target": "models/tiny-voca-lg/dcb36749b11027ef8e57319d6508104e235ff783/model.onnx",
+          "url": "https://huggingface.co/henryhale/tiny-voca-lg/resolve/dcb36749b11027ef8e57319d6508104e235ff783/model.onnx",
+          "bytes": 21386372,
+          "sha256": "a5a6235e1dbfaf068324ff586c5f079c0052adc5987aae94482f8cbe0abeba9d",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-lg-model-json",
+          "target": "models/tiny-voca-lg/dcb36749b11027ef8e57319d6508104e235ff783/model.json",
+          "url": "https://huggingface.co/henryhale/tiny-voca-lg/resolve/dcb36749b11027ef8e57319d6508104e235ff783/model.json",
+          "bytes": 1045,
+          "sha256": "3b27b8cfe44474c04b4fd600fc6e8f6a9cea8f64a70ddd1811e5979e0866f6af",
+          "kind": "model-config"
+        }
+      ]
     }
   }
 }

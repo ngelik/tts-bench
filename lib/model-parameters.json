@@ -370,5 +370,12 @@
     "parameterCountSource": "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
     "upstreamModelCard": "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
     "scope": "Publisher count for the complete European Portuguese F3 and M1 checkpoint, including waveform generation."
+  },
+  "tiny-voca-lg": {
+    "parameterCount": 4537291,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
+    "upstreamModelCard": "https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md",
+    "scope": "Publisher-reported exact parameter count for the pinned step-4000 tiny-voca-lg FP32 ONNX configuration; count is not independently recomputed from tensor shapes."
   }
 }

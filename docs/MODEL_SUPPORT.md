@@ -942,3 +942,18 @@ The adapter uses the Dizione archive and dictionary shipped with the release. It
 Both backend routes use ONNX Runtime Web 1.31.1 with one WASM thread. The WebGPU route checks hardware dispatch separately and permits WASM operator fallback. The original browser worker and both benchmark routes matched the audio lengths of four plain English controls and three expression controls.
 
 [Model and assets](https://huggingface.co/cfahlgren1/fiato/tree/967de50b6a9ab673ef7de9f8f276fa93a8c0db81) · [Publisher browser worker](https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/demo/worker.js).
+
+### Tiny Voca Luganda
+
+Supported voices: **2**. Bundled voices: **2**. Supported languages: **1** (lg).
+
+The pinned step-4000 FP32 checkpoint exposes F2 and M2; this benchmark profile
+selects F2 (WAXAL speaker 5) only, at 24 kHz mono. The model card reports
+4,537,291 parameters. The Luganda spelling-rule frontend is pinned with the
+source revision; its tone limitation and digit handling are documented by the
+publisher. The registered `lg-article-v1` fixture remains a translator draft
+awaiting fluent-speaker review. Its frontend tokenization and stock worker
+sentence plans have been qualified, but no inference or benchmark score is
+claimed.
+
+[Pinned model card](https://huggingface.co/henryhale/tiny-voca-lg/blob/dcb36749b11027ef8e57319d6508104e235ff783/README.md) · [Pinned model files](https://huggingface.co/henryhale/tiny-voca-lg/tree/dcb36749b11027ef8e57319d6508104e235ff783) · [Pinned Luganda frontend](https://github.com/henryhale/tiny-voca-lg/tree/258107cba9bdf820a815554ce1b601369b8c1388) · [Dataset attribution](https://huggingface.co/datasets/CraneAILabs/waxal-lug-clean).

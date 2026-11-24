@@ -994,7 +994,8 @@
     "sobbie-tts": "english-20k-v1",
     "alpa-sanskrit": "sa-article-v1",
     "fiato": "english-20k-v1",
-    "tiny-voca-ptpt": "pt-pt-article-v1"
+    "tiny-voca-ptpt": "pt-pt-article-v1",
+    "tiny-voca-lg": "lg-article-v1"
   },
   "modelRequiredFixtures": {
     "ua-serhiy-0p58m": "uk-article-v1",
@@ -1027,7 +1028,8 @@
     "sobbie-tts": "english-20k-v1",
     "alpa-sanskrit": "sa-article-v1",
     "fiato": "english-20k-v1",
-    "tiny-voca-ptpt": "pt-pt-article-v1"
+    "tiny-voca-ptpt": "pt-pt-article-v1",
+    "tiny-voca-lg": "lg-article-v1"
   },
   "modelFrontendLanguages": {
     "ua-serhiy-0p58m": [
@@ -1173,6 +1175,9 @@
     ],
     "tiny-voca-ptpt": [
       "pt-PT"
+    ],
+    "tiny-voca-lg": [
+      "lg"
     ]
   }
 }
