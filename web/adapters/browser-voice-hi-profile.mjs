@@ -23,6 +23,11 @@ export default {
       "language": "hi",
       "sha256": "c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128",
       "spans": 91
+    },
+    "hi-latn-article-v1": {
+      "language": "hi-Latn",
+      "sha256": "acce9de48b72daf86d6fc4126497f55977c64dafa3e7a3d84809051df1298d9e",
+      "spans": 107
     }
   }
 };
