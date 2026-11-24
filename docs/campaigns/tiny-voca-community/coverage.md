@@ -77,3 +77,4 @@ The stock text converter transcribed each Roman paragraph back to native script.
 
 - [Hindi](../../../fixtures/hi-latn-article-v1.txt) uses the `hi-Latn` edition, with 107 spans across 27 paragraphs. The stock converter made 1,223 edits across 15,344 normalized reference characters (7.97% character error rate).
 - [Gujarati](../../../fixtures/gu-latn-article-v1.txt) uses the `gu-Latn` edition, with 112 spans across 27 paragraphs. The stock converter made 1,570 edits across 15,792 normalized reference characters (9.94% character error rate).
+- [Telugu](../../../fixtures/te-latn-article-v1.txt) uses the `te-Latn` edition, with 113 spans across 27 paragraphs. The stock converter made 1,784 edits across 17,189 normalized reference characters (10.38% character error rate).
