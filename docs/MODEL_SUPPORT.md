@@ -985,7 +985,7 @@ The source profile routes the fixed native Telugu `te-article-v1` fixture throug
 
 ## Browser Voice Hindi INT6 (Ishwari)
 
-The profile uses the publisher's native-script Hindi `hi-article-v1` fixture and single Ishwari voice at 24 kHz. The pinned checkpoint is `04e39413827f3d45af54ceb480cb77e732983c1b`; its stock pace scale is 0.9719864176570459 at UI speed 1. The worker, frontend, runtime, acoustic assets, both G2P graphs and immutable credits are hash-pinned in `assets.lock.json`. The publisher worker uses one-thread WASM. The reported 934,704 acoustic scalar values cover 200 external graph initializers and exclude G2P.
+Ishwari reads both `hi-article-v1` (Devanagari) and `hi-latn-article-v1` (Roman Hindi) at 24 kHz. The pinned checkpoint is `04e39413827f3d45af54ceb480cb77e732983c1b`; its stock pace scale is 0.9719864176570459 at UI speed 1. The worker, frontend, runtime, acoustic assets, both G2P graphs and immutable credits are hash-pinned in `assets.lock.json`. The publisher worker uses one-thread WASM. The reported 934,704 acoustic scalar values cover 200 external graph initializers and exclude G2P.
 
 Tamal Hansda’s Hindi INT6 checkpoint is Apache-2.0. The 20-hour Ishwari training dataset uses CC BY 4.0 for its synthetic recordings and original annotations. Its Hindi prompts credit the Mozilla Common Voice Sentence Collector (CC0) and AI4Bharat Rasa contributors via the indic-tts-mini-24k transcript index (CC BY 4.0). [Pinned dataset card](https://huggingface.co/datasets/Hansda/hindi-maya2-ishwari-20h/blob/c835a1a2c3892f5cd47507824bf33df19deec955/README.md)
 

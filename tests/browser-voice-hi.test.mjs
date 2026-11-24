@@ -31,7 +31,7 @@ test('Hindi profile pins its HF checkpoint, complete browser/runtime closure, an
 
 test('Hindi route binds the unchanged fixture and rejects GPU or checksum mismatch', async () => {
   assert.equal(defaultFixtureForModel(profile.id), 'hi-article-v1');
-  assert.equal(requiredFixtureForModel(profile.id), 'hi-article-v1');
+  assert.equal(requiredFixtureForModel(profile.id), null);
   const adapter = createBrowserVoiceAdapter(profile);
   const options = { fixtureId: 'hi-article-v1', language: 'hi', backend: 'cpu' };
   assert.equal((await adapter.initialize({ ...options, backend: 'webgpu' })).status, 'unsupported');
@@ -46,4 +46,21 @@ test('recording attribution is catalog-bound and keeps dataset terms separate', 
     attribution: 'AI-generated Hindi benchmark narration using Tamal Hansda’s Browser Voice Ishwari INT6. Publisher credits Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0), and the Hansda Hindi Maya 2 Native Ishwari 20h dataset. The synthetic training recordings and annotations are CC BY 4.0. Prompt sources include Common Voice (CC0) and AI4Bharat Rasa transcripts (CC BY 4.0).',
     sourceUrls: model.support.sources,
   }));
+});
+
+test('Roman Hindi uses the same spoken language and the published dictionary', async () => {
+  const model = getAssetLock().models[profile.id];
+  const layout = profile.fixtures['hi-latn-article-v1'];
+  assert.equal(layout.sha256, 'acce9de48b72daf86d6fc4126497f55977c64dafa3e7a3d84809051df1298d9e');
+  assert.equal(layout.spans, 107);
+  assert.equal(layout.language, 'hi-Latn');
+  assert.equal(profile.spokenLanguage, 'hi');
+  assert.deepEqual(model.support.languages, ['hi']);
+  const dictionary = model.assets.find(asset => asset.id === profile.id + '-roman-dictionary');
+  assert.equal(dictionary.sha256, '18584a4e1f0f79034fc7c54224ec31f7ebe4a6692afc034f23613ff391d598f2');
+  assert.equal('/' + dictionary.target, profile.workerUrl.replace(/worker\.js$/, 'assets/converter/hi.json.gz'));
+  const adapter = createBrowserVoiceAdapter(profile);
+  const options = { fixtureId: 'hi-latn-article-v1', language: 'hi-Latn', backend: 'cpu' };
+  assert.equal((await adapter.initialize({ ...options, language: 'hi' })).status, 'unsupported');
+  await assert.rejects(adapter.initialize({ ...options, sourceSha256: '0'.repeat(64) }), /checksum/);
 });
