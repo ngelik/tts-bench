@@ -446,6 +446,36 @@
       }
     },
     {
+      "resultId": "2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed",
+      "model": "browser-voice-gu-int6",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Jahnavi",
+      "language": "gu",
+      "attribution": "AI-generated Gujarati narration using Tamal Hansda’s Apache-2.0 Browser Voice INT6 checkpoint. The Jahnavi training voice comes from Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). Hansda’s Gujarati Maya 2 Native Jahnavi 20h synthetic recordings and original release annotations are CC BY-SA 4.0. The dataset credits AI4Bharat Rasa, OpenSLR and Dakshina contributors for source prompts. The acoustic model adapts Tiny Voca by Muhammed Nazeem, and the pronunciation model uses eSpeak NG training labels.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f",
+        "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
+        "https://tts.hansda.in/?lang=gu",
+        "https://huggingface.co/datasets/Hansda/gujarati-maya2-jahnavi-20h/blob/d2e587e6278a4792fb5d5952b2bda1871037eaf9/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed--browser-voice-gu-int6--cpu.wav",
+        "sha256": "a0f55b4acdcf7eaa8b5cfe9be5fccc0154e0293956d317698c9f33236ea2c12c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "23a04a81f5af130862a3e03484885aab21415005fc3123718a84f9931bdc5594",
+        "bytes": 68545068
+      }
+    },
+    {
       "resultId": "2026-11-22t11-59-32-801z-clarvia-tts-tiny-cpu-warm-9d9cd530",
       "model": "clarvia-tts-tiny",
       "backend": "cpu",
