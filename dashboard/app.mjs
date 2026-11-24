@@ -60,10 +60,13 @@ function languageDetails(id, registryLabel = '') {
   const englishName = hostedCoverage?.label ?? languageLabel(id);
   let nativeName = null;
   if (!hostedCoverage) {
-    nativeName = englishName;
-    try { nativeName = new Intl.DisplayNames([id], {type:'language'}).of(id) || englishName; } catch {}
+    // Chrome may lack the locale data used to build the dashboard registry.
+    nativeName = registryLabel && registryLabel !== id ? registryLabel : null;
+    if (!nativeName) {
+      try { nativeName = new Intl.DisplayNames([id], {type:'language'}).of(id); } catch {}
+      if (!nativeName || nativeName === id) nativeName = englishName;
+    }
   }
-  if (registryLabel && !hostedCoverage && nativeName === id) nativeName = registryLabel;
   if (nativeName) nativeName = Array.from(nativeName).map((part,index)=>index===0?part.toLocaleUpperCase(id):part).join('');
   const subtags = id.split('-').slice(1);
   const script = subtags.find(part => /^[A-Za-z]{4}$/.test(part));
