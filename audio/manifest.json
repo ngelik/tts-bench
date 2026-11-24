@@ -5955,6 +5955,68 @@
       }
     },
     {
+      "resultId": "2026-11-24t19-19-49-945z-tiny-voca-uz-navoiy-cpu-warm-6bc5b74b",
+      "model": "tiny-voca-uz-navoiy",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "uz",
+      "attribution": "AI-generated Uzbek benchmark narration using Inomjonov’s M2 checkpoint and this project’s local ONNX export. The Apache-2.0 student model is based on Muhammed Nazeem’s Tiny Voca and trained on Navoiy-generated synthetic speech; credit Aisha AI, Mozilla Common Voice Uzbek and project-authored training prompts where applicable. Attribution is not a recording redistribution grant.",
+      "modelTerms": "Apache-2.0 per the pinned Inomjonov model card.",
+      "sourceUrls": [
+        "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1",
+        "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
+        "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+        "https://huggingface.co/aisha-org/navoiy-tts/tree/9445f41ee5f38bd3a34eb16b0279dc05f9997fc2",
+        "https://commonvoice.mozilla.org/en/datasets"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t19-19-49-945z-tiny-voca-uz-navoiy-cpu-warm-6bc5b74b--tiny-voca-uz-navoiy--cpu.wav",
+        "sha256": "db171e4860bdd4ba3aefc88b9918104cd4d7eb7cc8a6f3da07bce7ffbacd209b",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "eb546f7d6d59b414d6e7cae597786415afe26de3916071ed7922aa3866032559",
+        "bytes": 73374764
+      }
+    },
+    {
+      "resultId": "2026-11-24t19-25-00-128z-tiny-voca-uz-navoiy-webgpu-warm-9d35be1e",
+      "model": "tiny-voca-uz-navoiy",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "M2",
+      "language": "uz",
+      "attribution": "AI-generated Uzbek benchmark narration using Inomjonov’s M2 checkpoint and this project’s local ONNX export. The Apache-2.0 student model is based on Muhammed Nazeem’s Tiny Voca and trained on Navoiy-generated synthetic speech; credit Aisha AI, Mozilla Common Voice Uzbek and project-authored training prompts where applicable. Attribution is not a recording redistribution grant.",
+      "modelTerms": "Apache-2.0 per the pinned Inomjonov model card.",
+      "sourceUrls": [
+        "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1",
+        "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
+        "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+        "https://huggingface.co/aisha-org/navoiy-tts/tree/9445f41ee5f38bd3a34eb16b0279dc05f9997fc2",
+        "https://commonvoice.mozilla.org/en/datasets"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t19-25-00-128z-tiny-voca-uz-navoiy-webgpu-warm-9d35be1e--tiny-voca-uz-navoiy--webgpu.wav",
+        "sha256": "21be6ec3879499e9a0b69252ab41b1bebf4a1aa0e11969659a30a56b4345d9dc",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "061a3b1b8a0b7e5fd2fd4a5ddcc36e9783b6ae6d157b724a16258deda6b65334",
+        "bytes": 73374764
+      }
+    },
+    {
       "resultId": "2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10",
       "model": "tiny-voca",
       "backend": "cpu",

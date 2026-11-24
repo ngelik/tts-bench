@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24t19-27-57-522z-tiny-voca-uz-navoiy-webgpu-cached-6d4c9180",
+  "createdAt": "2026-11-24T19:28:28.076Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "uz-article-v1",
+    "language": "uz",
+    "sha256": "ccf5419bdd654df31cd4df1ff79707cd1e32ffc7fcf26817d8b58d6a204a0254",
+    "characters": 23088,
+    "unicodeCodePoints": 23088,
+    "utf8Bytes": 24046,
+    "chunks": 105,
+    "source": {
+      "type": "translation",
+      "description": "Uzbek Latin-script edition of the original English article, translated and reviewed by Codex. The 27 paragraphs retain names, dates, times, amounts, dimensions and identifiers in spoken form.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "007f6ae5d51aa27b8f9323a862bd56eed152a0eb",
+    "dirty": false,
+    "manifestSha256": "0f79f5922f14a143ac6162a6d3844b93586f89b38f3eac3fc688118de8d4f076"
+  },
+  "assets": [
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:dist/ort.wasm.min.mjs",
+      "sha256": "c21d9c326d453a4a61398270c804d5979e118540597cb0c07f7b3d64e6098234",
+      "bytes": 53725
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:dist/ort.webgpu.min.mjs",
+      "sha256": "329cd956772397a1aedd668e911195d39afefb182f6fc14aafa4f08ac8d8f379",
+      "bytes": 70742
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "30ed0b5cd1182ede931fea448afb567d4dc705ec957af09f108a2be5f770dac3",
+      "bytes": 24738
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "4b884c203b0fa48d057be3332c65513ff85aa3c5bddd6946acc0fab7ecda001d",
+      "bytes": 14848852
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "59cf781530e1a16df2a291d78798e3ec1152467edaec402d6f9599d85047c302",
+      "bytes": 53457
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "ca319e9539cd0f1e291cf56074760121eaf39650f5dbf84b6e52c07f4b2944ec",
+      "bytes": 28747738
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:tiny-voca-uz-navoiy:onnxruntime-web-pocket:ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3",
+      "bytes": 338088
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-model-weights",
+      "sha256": "7003f4334796dbc08d932cd00e08945d3285eb3b9d9df9c34da29b7b0e563052",
+      "bytes": 21357838
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-model-config",
+      "sha256": "1b29f2c7f8a72ecc75bacecb4127667104cd65a8dfffb206aa8c0038e1b589c9",
+      "bytes": 919
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-license-apache",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-noise-42-f32le",
+      "sha256": "eea6f4da94ac279fc9c324187bdc38af7d8c4d9c4701617c1d5c404ed02b732f",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-noise-43-f32le",
+      "sha256": "b00694940fbc8e09afcb55445d3a1fddd22d3d78a7d1e0ecf63be16f44c9cc59",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-noise-44-f32le",
+      "sha256": "2b6065028de51b0812b968a212bcaa60eb1a8ba63b9fb272b3ec66f2d8ef48f8",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-noise-45-f32le",
+      "sha256": "ed01c002246d02270703133043e6e6415c582e8fff13fd55ea2da0ee4c7b1479",
+      "bytes": 3072000
+    },
+    {
+      "id": "tiny-voca-uz-navoiy-noise-46-f32le",
+      "sha256": "71e18ff0f9b172affdf93e837f0b63c612e863a8bf3600f4148c383f4dba11c9",
+      "bytes": 3072000
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-uz-navoiy",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "uz"
+        ],
+        "scope": "Pinned 104737-step FP32 Uzbek checkpoint trained from scratch; one synthetic male voice M2, Uzbek Latin input, 24 kHz mono. The model card reports 4,531,531 learned parameters.",
+        "sources": [
+          "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1",
+          "https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/blob/3d960bd05c728b21fff4ec5154cada7f6b082df1/README.md",
+          "https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d",
+          "https://huggingface.co/aisha-org/navoiy-tts/tree/9445f41ee5f38bd3a34eb16b0279dc05f9997fc2",
+          "https://commonvoice.mozilla.org/en/datasets"
+        ],
+        "notes": "The local external-noise ONNX export is 21357838 bytes with SHA-256 7003f4334796dbc08d932cd00e08945d3285eb3b9d9df9c34da29b7b0e563052; its export receipt reports 4531531 learned parameters, matching the publisher's PyTorch checkpoint. Browser frontend parity is verified against Python inference for all 105 ordered fixture spans and 11 edge cases; 345 utterances, maximum 191 tokens, zero unknowns. The graph takes deterministic seed-plus-utterance noise as an explicit seventh input. ONNX Runtime Web 1.31.1 CPU/WASM and mixed WebGPU/WASM routes are registered; no browser inference or backend qualification has yet been performed."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M2",
+      "precision": "FP32 ONNX checkpoint",
+      "settings": {
+        "modelId": "Inomjonov/tiny-voca-uzbek-navoiy",
+        "modelRevision": "3d960bd05c728b21fff4ec5154cada7f6b082df1",
+        "sourceId": "n4ze3m/tiny-voca",
+        "sourceRevision": "62e2adef158bc997042cc6234f541f1e0e4cd55d",
+        "parameterCount": 4531531,
+        "fixtureId": "uz-article-v1",
+        "fixtureSha256": "ccf5419bdd654df31cd4df1ff79707cd1e32ffc7fcf26817d8b58d6a204a0254",
+        "language": "uz",
+        "locale": "uz-Latn",
+        "spokenLanguage": "uz",
+        "supportedLanguages": [
+          "uz"
+        ],
+        "voice": "M2",
+        "voiceIndex": 0,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "peak": 0.99,
+        "precision": "FP32 ONNX checkpoint",
+        "frontend": "Pinned Uzbek normalization, sentence splitting and rule-based phonemizer from the model source release",
+        "frontendFingerprint": "3712af88f938a03339d63500b448cb16f01d95ae66a546376100b1c44bc5891e",
+        "modelAssets": {
+          "model.onnx": {
+            "bytes": 21357838,
+            "sha256": "7003f4334796dbc08d932cd00e08945d3285eb3b9d9df9c34da29b7b0e563052"
+          },
+          "model.json": {
+            "bytes": 919,
+            "sha256": "1b29f2c7f8a72ecc75bacecb4127667104cd65a8dfffb206aa8c0038e1b589c9"
+          },
+          "noise-42.f32le": {
+            "bytes": 3072000,
+            "sha256": "eea6f4da94ac279fc9c324187bdc38af7d8c4d9c4701617c1d5c404ed02b732f"
+          },
+          "noise-43.f32le": {
+            "bytes": 3072000,
+            "sha256": "b00694940fbc8e09afcb55445d3a1fddd22d3d78a7d1e0ecf63be16f44c9cc59"
+          },
+          "noise-44.f32le": {
+            "bytes": 3072000,
+            "sha256": "2b6065028de51b0812b968a212bcaa60eb1a8ba63b9fb272b3ec66f2d8ef48f8"
+          },
+          "noise-45.f32le": {
+            "bytes": 3072000,
+            "sha256": "ed01c002246d02270703133043e6e6415c582e8fff13fd55ea2da0ee4c7b1479"
+          },
+          "noise-46.f32le": {
+            "bytes": 3072000,
+            "sha256": "71e18ff0f9b172affdf93e837f0b63c612e863a8bf3600f4148c383f4dba11c9"
+          }
+        },
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.31.1"
+        },
+        "runtimePackage": "onnxruntime-web-pocket",
+        "runtimePackageIntegrity": "sha512-5GeH+bWQ+HxM10z7erGlsWqryrwMbSvm/1tkIsKTT48g0fI19VXVVC435t4t7VsPdSQeS7NmuZPXrQ73k82URw==",
+        "noiseIndexes": [
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "audio": "Upstream normalize/sentence/token processing is preserved; raw utterance PCM is concatenated without inserted pauses, then peak-limited to 0.99 once per source span.",
+        "fixtureAudit": {
+          "fixtureId": "uz-article-v1",
+          "sourceSha256": "ccf5419bdd654df31cd4df1ff79707cd1e32ffc7fcf26817d8b58d6a204a0254",
+          "spans": 105,
+          "utterances": 345,
+          "maximumTokens": 191,
+          "unknownTokens": 0,
+          "completeFrontendSha256": "e4be32f73dadb28f35412cdea215919e46cf81d6906bbf2a1fe389229b2741c0"
+        }
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "dispatches": 760,
+        "description": "Observed 760 compute dispatch(es) in the separate hardware WebGPU probe; WASM remains explicit fallback for unsupported operators."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 21184.025000095367,
+          "samples": 36687360,
+          "sampleRate": 24000,
+          "pcmSha256": "c08728d8da5de72a92334469ce38cc7b2f2a24092c149cc3736e808ce7ffbad4",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 179.02500009536743,
+            "firstSourceChunkCompletedMs": 382.0750000476837,
+            "audioSeconds": 1528.64,
+            "realTimeFactor": 0.01385808627282772,
+            "minSamplesPerChunk": 322048,
+            "maxSamplesPerChunk": 382464,
+            "articleCallPeakRssBytes": 1965785088,
+            "generationMeanRssBytes": 1810600521,
+            "generationRssSampleCount": 42,
+            "loadMs": 1135.1725830000005,
+            "controllerTrialElapsedMs": 27087.001292,
+            "downloadBytes": 99680,
+            "idealDownloadSecondsAt1Mbps": 0.79744
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795548482293.875,
+            "finalPcmAtEpochMs": 1795548503477.9,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795548482839,
+                1373765632
+              ],
+              [
+                1795548483413,
+                1650458624
+              ],
+              [
+                1795548483844,
+                1802141696
+              ],
+              [
+                1795548484347,
+                1808564224
+              ],
+              [
+                1795548484847,
+                1820524544
+              ],
+              [
+                1795548485349,
+                1824325632
+              ],
+              [
+                1795548485851,
+                1828421632
+              ],
+              [
+                1795548486346,
+                1835499520
+              ],
+              [
+                1795548486851,
+                1853898752
+              ],
+              [
+                1795548487350,
+                1858715648
+              ],
+              [
+                1795548487853,
+                1870249984
+              ],
+              [
+                1795548488352,
+                1865285632
+              ],
+              [
+                1795548488852,
+                1888927744
+              ],
+              [
+                1795548489354,
+                1889419264
+              ],
+              [
+                1795548489855,
+                1898233856
+              ],
+              [
+                1795548490355,
+                1889468416
+              ],
+              [
+                1795548490853,
+                1889959936
+              ],
+              [
+                1795548491353,
+                1893662720
+              ],
+              [
+                1795548491853,
+                1899118592
+              ],
+              [
+                1795548492356,
+                1904656384
+              ],
+              [
+                1795548492856,
+                1906376704
+              ],
+              [
+                1795548493361,
+                1908031488
+              ],
+              [
+                1795548493861,
+                1918550016
+              ],
+              [
+                1795548494364,
+                1922056192
+              ],
+              [
+                1795548494866,
+                1920663552
+              ],
+              [
+                1795548495367,
+                1923088384
+              ],
+              [
+                1795548495869,
+                1934000128
+              ],
+              [
+                1795548496370,
+                1930657792
+              ],
+              [
+                1795548496871,
+                1948352512
+              ],
+              [
+                1795548497375,
+                1954463744
+              ],
+              [
+                1795548497875,
+                1957675008
+              ],
+              [
+                1795548498383,
+                1965785088
+              ],
+              [
+                1795548498892,
+                1952595968
+              ],
+              [
+                1795548499386,
+                1942929408
+              ],
+              [
+                1795548499889,
+                1763803136
+              ],
+              [
+                1795548500399,
+                1756643328
+              ],
+              [
+                1795548500929,
+                1763295232
+              ],
+              [
+                1795548501397,
+                1593032704
+              ],
+              [
+                1795548501897,
+                1391738880
+              ],
+              [
+                1795548502395,
+                1383645184
+              ],
+              [
+                1795548502899,
+                1389084672
+              ],
+              [
+                1795548503396,
+                1373454336
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "061a3b1b8a0b7e5fd2fd4a5ddcc36e9783b6ae6d157b724a16258deda6b65334",
+            "bytes": 73374764
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-24T19-19-49-344Z-2d48a1db0b22; cell 4/4; source 007f6ae5d51aa27b8f9323a862bd56eed152a0eb; fixture uz-article-v1 (uz, 23088 JavaScript characters, 105 spans); requested n=1; effective n=1; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-uz-navoiy, M2, FP32 ONNX checkpoint. Qualified backends: cpu, webgpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
