@@ -1,0 +1,20 @@
+tiny-voca PT-PT
+Copyright 2026 José Rui
+
+This product is a modified version of tiny-voca
+Copyright 2026 Muhammed Nazeem, licensed under the Apache License 2.0
+https://github.com/n4ze3m/tiny-voca
+
+Changes from the original (see the git history from commit 5f645b9):
+- src/tiny_voca/text.py, config.py, model.py: European Portuguese front end
+  (TINY_VOCA_FRONTEND=pt) and its phoneme inventory.
+- src/tiny_voca/align.py, annotate.py: alignment accepts the phoneme
+  recogniser's labels for each Portuguese phoneme.
+- src/tiny_voca/infer.py: the front end is matched to the checkpoint without
+  switching inventories after import.
+- pronuncia-pt/: new, a rule-based European Portuguese phonemizer.
+- pt-pt/: new, the data generation and training scripts of this model.
+
+The training data was generated with Sopro (samuel-vitorino/sopro-v2-turbo,
+Apache-2.0) and Qwen3-TTS VoiceDesign (Apache-2.0) from Common Voice
+sentences (CC0).

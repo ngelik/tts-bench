@@ -13478,6 +13478,162 @@
         }
       ]
     },
+    "tiny-voca-ptpt": {
+      "displayName": "Tiny Voca European Portuguese F3 (FP32)",
+      "modelRevision": "9d547821151d1f009eada6f49b5be73af77ae245",
+      "sourceId": "joseruimemory/tiny-voca-pt-pt",
+      "sourceRevision": "744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+      "parameterCount": 4532875,
+      "step": 120000,
+      "frontendFingerprint": "5a15e081f3d834a1b59f294b174a78f6797c14c84dabb2f434e31fe7df070b31",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.22.0",
+        "integrity": "sha512-Ud/+EBo6mhuaQWt/OjaOk0iNWjXqJoeeMFr6xQEERZdIZH2OWpGzuujz7lfuOBjUa6TEE/sc4nb7Da5dNL34fg==",
+        "license": "MIT; URL-backed runtime assets are hash-pinned.",
+        "files": []
+      },
+      "license": {
+        "model": "Apache-2.0 per the pinned Hugging Face model card.",
+        "inferenceSource": "Apache-2.0 Tiny Voca PT-PT source; retain the pinned upstream NOTICE.",
+        "frontend": "Apache-2.0 pronuncia-pt frontend and its measured open-vowel list from the pinned source revision.",
+        "trainingData": "Common Voice text is CC0; synthetic training speech is attributed to Sopro and Qwen3-TTS under Apache-2.0.",
+        "runtime": "MIT ONNX Runtime Web 1.22.0; pinned runtime files are listed below.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "pt-PT"
+        ],
+        "scope": "Pinned joserui/tiny-voca-pt-pt ONNX graph, two fictional synthetic Lisbon voices (F3 and M1), 24 kHz mono, and the registered pt-pt-article-v1 fixture. CPU/WASM and WebGPU are explicit selections.",
+        "sources": [
+          "https://huggingface.co/joserui/tiny-voca-pt-pt/tree/9d547821151d1f009eada6f49b5be73af77ae245",
+          "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/tree/744e42406fd481fbe61f3b67bf8012a7d29cb57a",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/pronuncia.js",
+          "https://github.com/joseruimemory/tiny-voca-pt-pt/blob/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/test/vectores.json",
+          "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.22.0.tgz"
+        ],
+        "notes": "Supplied full-article frontend oracle binds the registered fixture SHA and reports 106 spans, 350 utterances, maximum 185 tokens, and zero unknown phones (oracle SHA-256 43aa9a5d0e11b3dbfb5920cd1ab820cb389974d28bf2131b01d871e15249991e). The pinned upstream vector file contains 632 Python/JavaScript parity vectors; their source identities are recorded in the adapter profile. This patch is not a browser or inference qualification receipt. WebGPU requires an explicit selection and can use internal WASM kernels for unsupported graph operators; use the untimed dispatch probe to record dispatch."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-ptpt-onnx",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/onnx/model.onnx",
+          "url": "https://huggingface.co/joserui/tiny-voca-pt-pt/resolve/9d547821151d1f009eada6f49b5be73af77ae245/onnx/model.onnx",
+          "bytes": 21368660,
+          "sha256": "bf12f20419b6485d986063348c497ad99bc0bf3d64339c8429e3c078ed0abf88",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-ptpt-model-config",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/models/config.json",
+          "url": "https://huggingface.co/joserui/tiny-voca-pt-pt/resolve/9d547821151d1f009eada6f49b5be73af77ae245/config.json",
+          "sourcePath": "web/tiny-voca-ptpt/model-config.json",
+          "bytes": 679,
+          "sha256": "55bda62f6e259a346d865f143af0e020cc21a5f9144adfcded553a1c4d753913",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-ptpt-browser-config",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/site/assets/config.json",
+          "url": "https://raw.githubusercontent.com/joseruimemory/tiny-voca-pt-pt/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/assets/config.json",
+          "sourcePath": "web/tiny-voca-ptpt/config.json",
+          "bytes": 830,
+          "sha256": "caddd758918301f9aa7af81ded5afb626361e4800ab13458d3635a683eb87b07",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-ptpt-open-vowel-list",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/site/assets/abertas.txt",
+          "url": "https://raw.githubusercontent.com/joseruimemory/tiny-voca-pt-pt/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/assets/abertas.txt",
+          "sourcePath": "web/tiny-voca-ptpt/abertas.txt",
+          "bytes": 4304,
+          "sha256": "690a3c5ab1f19ae51752113f772ded0d0eed2de4e4a0aea2d46b2bdc86b4e982",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-ptpt-pronuncia-js",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/site/pronuncia.js",
+          "url": "https://raw.githubusercontent.com/joseruimemory/tiny-voca-pt-pt/744e42406fd481fbe61f3b67bf8012a7d29cb57a/docs/pronuncia.js",
+          "sourcePath": "web/tiny-voca-ptpt/pronuncia.js",
+          "bytes": 21428,
+          "sha256": "96f69be7471f2a325e3a247ced0c80901a8616452f94311b5e859c61134d5b38",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-ptpt-article-oracle",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/site/pt-pt-article-v1-frontend-coverage.json",
+          "sourcePath": "web/tiny-voca-ptpt/frontend-coverage.json",
+          "bytes": 51673,
+          "sha256": "43aa9a5d0e11b3dbfb5920cd1ab820cb389974d28bf2131b01d871e15249991e",
+          "kind": "frontend-audit"
+        },
+        {
+          "id": "tiny-voca-ptpt-fixture-chunks",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/site/pt-pt-article-v1.chunks.json",
+          "sourcePath": "fixtures/pt-pt-article-v1.chunks.json",
+          "bytes": 19244,
+          "sha256": "30e32fad520481d2475a1c7510dde107d55a4eee7837decaeb0e38932beeac78",
+          "kind": "fixture"
+        },
+        {
+          "id": "tiny-voca-ptpt-license",
+          "target": "licenses/tiny-voca-ptpt/LICENSE",
+          "sourcePath": "web/tiny-voca-ptpt/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ptpt-browser-notice",
+          "target": "licenses/tiny-voca-ptpt/NOTICE.md",
+          "sourcePath": "web/tiny-voca-ptpt/NOTICE.md",
+          "bytes": 863,
+          "sha256": "1c0e96c8cd9e59a177adf92444c8a4e23062037f4a11b9f96e451067d4547f7f",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ptpt-upstream-notice",
+          "target": "licenses/tiny-voca-ptpt/UPSTREAM-NOTICE.txt",
+          "sourcePath": "web/tiny-voca-ptpt/UPSTREAM-NOTICE.txt",
+          "bytes": 931,
+          "sha256": "d7ac92cb8a58535d18a5b2fec66ed2b51b229bfbe26f3cfaad77d4ea85477712",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-ptpt-runtime-ort-webgpu-mjs",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/runtime/ort.webgpu.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.webgpu.min.mjs",
+          "bytes": 357582,
+          "sha256": "e131e81c9324807e1e6f9103e8f8e936112827dcc9993cde9407a333b1f07ae0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ptpt-runtime-jsep-mjs",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/runtime/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 44677,
+          "sha256": "1cbcba8f2c769c1eecbab66a1b1e55ef11704515bf4306373e3db3c37cf6dcd8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-ptpt-runtime-jsep-wasm",
+          "target": "models/tiny-voca-ptpt/9d547821151d1f009eada6f49b5be73af77ae245/744e42406fd481fbe61f3b67bf8012a7d29cb57a/runtime/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21872216,
+          "sha256": "b45970d0632383a057c27ca5b660b216f8e00c17cf8db9f6207b5e4abc839368",
+          "kind": "runtime"
+        }
+      ]
+    },
     "tiny-voca-ptbr": {
           "displayName": "Tiny Voca Brazilian Portuguese F_s4 (FP32)",
           "modelRevision": "f231cbe318c9f972e27fd8dad5d8ebcfb40a672f",

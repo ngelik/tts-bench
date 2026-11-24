@@ -363,5 +363,12 @@
     "parameterCountSource": "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/onnx/model.onnx",
     "upstreamModelCard": "https://huggingface.co/cfahlgren1/fiato/blob/967de50b6a9ab673ef7de9f8f276fa93a8c0db81/README.md",
     "scope": "Sum of logical scalar values in the 184 FP32 ONNX initializers of the pinned graph, including constant tensors."
+  },
+  "tiny-voca-ptpt": {
+    "parameterCount": 4532875,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+    "upstreamModelCard": "https://huggingface.co/joserui/tiny-voca-pt-pt/blob/9d547821151d1f009eada6f49b5be73af77ae245/README.md",
+    "scope": "Publisher count for the complete European Portuguese F3 and M1 checkpoint, including waveform generation."
   }
 }
