@@ -137,6 +137,18 @@ try {
   assert.equal(await page.locator('#language-en .language-option-count').textContent(), `${expectedResultModels.length} ${expectedResultModels.length === 1 ? 'model' : 'models'}`);
   assert.ok(typeof ukData?.fixture?.id === 'string' && ukData.fixture.language === 'uk', 'The built dashboard data contains the active registered Ukrainian fixture edition');
   assert.equal(await page.locator('#language-uk .language-option-count').textContent(), ukResultModels.length ? `${ukResultModels.length} ${ukResultModels.length === 1 ? 'model' : 'models'}` : 'Awaiting results');
+  const search = page.locator('#language-search');
+  for (const language of ['gu', 'hi', 'ml', 'te']) {
+    const roman = language + '-Latn';
+    if (!expected.byLanguage?.[roman]) continue;
+    const name = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
+    for (const query of ['Roman ' + name, 'Romanized ' + name, 'Romanised ' + name, name + ' Latin']) {
+      await search.fill(query);
+      assert.equal(await page.locator('#language-' + roman).isVisible(), true, query);
+      assert.equal(await page.locator('#language-' + language).isVisible(), false, query);
+    }
+  }
+  await search.fill('');
   await page.keyboard.press('Escape');
   const ukPlayback = ukResultModels.flatMap(model => ['cpu','webgpu'].map(backend => ({model,backend,sample:model.playbackAudio?.[backend]})))
     .find(entry => entry.sample?.language === 'uk' && !matchesAuditedWav(entry.sample.full.sha256));
