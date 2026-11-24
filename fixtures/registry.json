@@ -918,6 +918,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "si-article-v1",
+      "smokeId": "si-article-smoke-v1",
+      "language": "si",
+      "articleFile": "si-article-v1.txt",
+      "chunksFile": "si-article-v1.chunks.json",
+      "metadataFile": "si-article-v1.meta.json",
+      "sha256": "6bf7b054ee96b965287c7b4473f7e66cac06436fac16a0ad9aaea6d31ef00f15",
+      "characters": 19752,
+      "unicodeCodePoints": 19752,
+      "utf8Bytes": 52042,
+      "chunks": 90,
+      "source": {
+        "type": "translation",
+        "description": "Sinhala-script edition of the original English article, translated and reviewed by Codex. The 27 paragraphs retain names, dates, times, amounts, dimensions and identifiers in spoken form.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
