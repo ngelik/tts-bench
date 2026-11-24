@@ -20,6 +20,7 @@ import { createTuiVoiceMiniMlAdapter } from './adapters/tui-voice-mini-ml.mjs';
 import { createTinyUrduAdapter } from './adapters/tiny-urdu.mjs';
 import { createTinyVocaLgAdapter } from './adapters/tiny-voca-lg.mjs';
 import { createTinyVocaSwahiliAdapter } from './adapters/tiny-voca-swahili.mjs';
+import { createTinyVocaSinhalaAdapter } from './adapters/tiny-voca-sinhala.mjs';
 import { createSobbieTTSAdapter } from './adapters/sobbie-tts.mjs';
 import { createAlpaSanskritAdapter } from './adapters/alpa-sanskrit.mjs';
 import { createFiatoAdapter } from './adapters/fiato.mjs';
@@ -99,6 +100,7 @@ const FACTORIES = {
   'tiny-urdu': createTinyUrduAdapter,
   'tiny-voca-lg': createTinyVocaLgAdapter,
   'tiny-voca-swahili': createTinyVocaSwahiliAdapter,
+  'tiny-voca-sinhala': createTinyVocaSinhalaAdapter,
   'sobbie-tts': createSobbieTTSAdapter,
   'alpa-sanskrit': createAlpaSanskritAdapter,
   fiato: createFiatoAdapter,
@@ -322,6 +324,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
         (model === 'tui-voice-mini-ml' && fixtureId === 'ml-article-v1') ||
         (model === 'tiny-urdu' && fixtureId === 'ur-latn-article-v1') ||
         (model === 'tiny-voca-swahili' && fixtureId === 'sw-article-v1') ||
+        (model === 'tiny-voca-sinhala' && fixtureId === 'si-article-v1') ||
         (model === 'sobbie-tts' && fixtureId === 'english-20k-v1') ||
         (model === 'alpa-sanskrit' && fixtureId === 'sa-article-v1') ||
         (model === 'fiato' && fixtureId === 'english-20k-v1') ||

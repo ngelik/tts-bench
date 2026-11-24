@@ -91,6 +91,7 @@ attribution['alpa-sanskrit'] = 'AI-generated Sanskrit narration using 77ethers�
   'The publisher credits Muhammed Nazeem’s Tiny Voca, Prathosh A P’s Vāgdhenu pronunciation rules, and the AI4Bharat Rasa dataset (CC BY 4.0) by Praveen Srinivasa Varadhan, Ashwin Sankar, Giri Raju, and Mitesh M. Khapra.';
 attribution.fiato = 'AI-generated English narration using cfahlgren1’s Apache-2.0 Fiato checkpoint and voice F1. ' +
   'The publisher credits Muhammed Nazeem’s Tiny Voca and Dizione, and the CC BY 4.0 Fiato synthetic-speech dataset derived from Maya-1.';
+attribution['tiny-voca-sinhala'] = 'AI-generated Sinhala benchmark narration using Emindu Perera’s Tiny Voca Sinhala M1 voice. Ven. Mettananda donated the source voice through the Path Nirvana Foundation. The model and Sinhala training dataset are GPL-3.0. The publisher credits Muhammed Nazeem’s Tiny Voca and the eSpeak NG pronunciation frontend. The donated voices are restricted to non-obscene, non-offensive speech and the publisher prohibits impersonation and deceptive use.';
 export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const playbackNotice = playbackNotices[model];
  if (playbackNotice && !clipOnly) throw new Error('This recording is restricted to clip-only listening');

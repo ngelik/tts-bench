@@ -913,6 +913,14 @@ The article has 109 fixed spans. The browser frontend divides them into sentence
 
 [Model and reference inputs](https://huggingface.co/adoamesh/tiny-voca-swahili/tree/408b7b783b0c77ed66030521f8cec88f5c6d6e2b) · [WAXAL dataset and license](https://huggingface.co/datasets/google/WaxalNLP/blob/5f4d8ca24f2b9d168b2ee545f1febaaff4b40580/README.md).
 
+### Tiny Voca Sinhala
+
+The benchmark uses the pinned step-55,000 FP32 Sinhala graph. Its 184 FP32 ONNX initializers contain 4,536,715 logical scalar values. The publisher's metadata has 73 symbols, voices M1 and F1, a 512-token maximum, a 3,000-frame limit, and a 24 kHz output rate. The two voices map to Ven. Mettananda (M1/index 0) and Mrs. Oshadi (F1/index 1). Both donated voices are limited to non-obscene, non-offensive speech; impersonation and deceptive uses are prohibited.
+
+The adapter uses the publisher's pinned `frontend.js`, `unicode-tables.js`, `espeak.js`, eSpeak NG 1.52.0 data and the native `sentences()` / `shorter()` planner with the graph's token, stress, voice, speed, pitch and duration interface. The registered `si-article-v1` fixture has 90 spans. Its supplied frontend oracle covers 373 utterances, at most 207 tokens and no unknown phones. The output follows the publisher's 0.35-second default pause between sentences and its 0.99 peak normalization over a complete playable span. The adapter is CPU/WASM only and pins the publisher's ONNX Runtime Web 1.20.1 route to one thread; WebGPU is unsupported.
+
+[Pinned model and parameter source](https://huggingface.co/eminduperera/tiny-voca-sinhala/tree/c54a456ed65ac8173a666a69b81d99c4ac882dd6) · [Pinned browser source](https://github.com/Emindu/tiny-voca-sinhala/tree/f9f903be847f89458dbc9af750b0ffc6d66a2c9b) · [eSpeak NG 1.52.0](https://github.com/espeak-ng/espeak-ng/tree/1.52.0) · [Adapter and retained notices](TINY_VOCA_SINHALA.md).
+
 ### SobbieTTS
 
 The pinned expressive English FP32 ONNX checkpoint bundles voices F and M. The benchmark uses the publisher’s default F at index 0, 24 kHz mono PCM, speed 1, pitch shift 0 and pitch range 1.15. The 21,386,372-byte graph contains 4,537,291 logical scalars across 184 FP32 initializers.

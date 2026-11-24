@@ -384,5 +384,12 @@
     "parameterCountSource": "https://huggingface.co/Hansda/gujarati-voice-compact/blob/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser/size.json",
     "upstreamModelCard": "https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f",
     "scope": "Publisher count for the acoustic checkpoint. The recurrent G2P encoder and decoder are loaded separately and excluded."
+  },
+  "tiny-voca-sinhala": {
+    "parameterCount": 4536715,
+    "countKind": "exact",
+    "parameterCountSource": "https://huggingface.co/eminduperera/tiny-voca-sinhala/blob/c54a456ed65ac8173a666a69b81d99c4ac882dd6/tiny-voca-si.onnx",
+    "upstreamModelCard": "https://huggingface.co/eminduperera/tiny-voca-sinhala/blob/c54a456ed65ac8173a666a69b81d99c4ac882dd6/README.md",
+    "scope": "Exact sum of logical scalar values in all 184 FP32 ONNX initializer shapes in the pinned step-55000 speech graph, including graph constants; the publisher rounds the checkpoint to 4.5 million parameters."
   }
 }

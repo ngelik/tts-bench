@@ -17048,6 +17048,138 @@
           "kind": "license"
         }
       ]
+    },
+    "tiny-voca-sinhala": {
+      "displayName": "Tiny Voca Sinhala M1 / F1",
+      "modelRevision": "c54a456ed65ac8173a666a69b81d99c4ac882dd6",
+      "sourceId": "Emindu/tiny-voca-sinhala",
+      "sourceRevision": "f9f903be847f89458dbc9af750b0ffc6d66a2c9b",
+      "parameterCount": 4536715,
+      "frontendFingerprint": "8f52dfbdfdf4c65ff541437d2ae22980fbee05263136ed9c76f4c9ae9c38af8b",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "integrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==",
+        "license": "MIT. The unchanged stock CPU route uses one-thread ONNX Runtime Web 1.20.1.",
+        "files": []
+      },
+      "backends": [
+        "cpu"
+      ],
+      "license": {
+        "model": "GPL-3.0 per the pinned Hugging Face model card.",
+        "trainingData": "Path Nirvana Sinhala TTS dataset, GPL-3.0, per the pinned publisher model card.",
+        "voices": "M1 (Ven. Mettananda) and F1 (Mrs. Oshadi) are donated voices restricted to non-obscene, non-offensive speech generation only. Do not impersonate either speaker or use the model for deceptive, obscene or offensive content.",
+        "frontend": "Apache-2.0 Tiny Voca Sinhala source; exact pinned browser frontend, Unicode tables, eSpeak wrapper and attribution retained in web/tiny-voca-si/.",
+        "phonemizer": "GPL-3.0 eSpeak NG 1.52.0 WASM/data and exact GPL-3.0 license retained.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1 with package integrity pinned.",
+        "requiresAcceptance": true
+      },
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "si"
+        ],
+        "scope": "Pinned tiny-voca Sinhala step-55000 FP32 ONNX checkpoint; Sinhala text, M1 (Ven. Mettananda, index 0) and F1 (Mrs. Oshadi, index 1), 24 kHz mono. Both donated voices have the publisher’s non-obscene/non-offensive use restriction.",
+        "sources": [
+          "https://huggingface.co/eminduperera/tiny-voca-sinhala/tree/c54a456ed65ac8173a666a69b81d99c4ac882dd6",
+          "https://huggingface.co/eminduperera/tiny-voca-sinhala/blob/c54a456ed65ac8173a666a69b81d99c4ac882dd6/README.md",
+          "https://github.com/Emindu/tiny-voca-sinhala/tree/f9f903be847f89458dbc9af750b0ffc6d66a2c9b",
+          "https://github.com/espeak-ng/espeak-ng/tree/1.52.0",
+          "https://github.com/pnfo/sinhala-tts-dataset"
+        ],
+        "notes": "Uses the publisher’s browser frontend and genuine sentences()/shorter() controls with eSpeak NG inc/si, the exact 73-symbol inventory and pinned frontend fingerprint. Only the stock CPU/WASM provider is enabled. The browser player defaults to 0.35 seconds between sentence ends, with a single 0.99 normalizer over the complete playable span; benchmark source spans apply the same pause and complete-span normalization. The registered article has 90 spans; pinned frontend control covers 373 utterances, maximum 207 tokens and zero unknowns. The model and voice terms require license acceptance."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-sinhala-onnx",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/tiny-voca-si.onnx",
+          "url": "https://huggingface.co/eminduperera/tiny-voca-sinhala/resolve/c54a456ed65ac8173a666a69b81d99c4ac882dd6/tiny-voca-si.onnx",
+          "bytes": 21384062,
+          "sha256": "6003a2017de8e42907fc445e00656d35d23dd2594986c042f2c95ec3c9b229c0",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-sinhala-metadata",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/tiny-voca-si.json",
+          "url": "https://huggingface.co/eminduperera/tiny-voca-sinhala/resolve/c54a456ed65ac8173a666a69b81d99c4ac882dd6/tiny-voca-si.json",
+          "bytes": 1021,
+          "sha256": "63a864b7cd46f4242d62a77273066ffab5eeb897c9fe656e0a3bb97d4a5fe5b4",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-sinhala-espeak-wasm",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/phonemizer/espeak-ng.wasm",
+          "url": "https://raw.githubusercontent.com/Emindu/tiny-voca-sinhala/f9f903be847f89458dbc9af750b0ffc6d66a2c9b/playground/espeak-ng.wasm",
+          "bytes": 786623,
+          "sha256": "36d82eafb5ad6467d79de9568ac682145178f8d5feaaa2adc60fe832d95a754e",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-sinhala-espeak-data",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/phonemizer/espeak-ng-data.bin",
+          "url": "https://raw.githubusercontent.com/Emindu/tiny-voca-sinhala/f9f903be847f89458dbc9af750b0ffc6d66a2c9b/playground/espeak-ng-data.bin",
+          "bytes": 913014,
+          "sha256": "c5a5fc1dc54b5d4cb66097ca455cad474da04baf7cd11f4a30b496473344279f",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-sinhala-ort-ort-wasm-min-mjs",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/runtime/ort.wasm.min.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime",
+          "package": "onnxruntime-web",
+          "version": "1.20.1"
+        },
+        {
+          "id": "tiny-voca-sinhala-ort-ort-wasm-simd-threaded-mjs",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/runtime/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime",
+          "package": "onnxruntime-web",
+          "version": "1.20.1"
+        },
+        {
+          "id": "tiny-voca-sinhala-ort-ort-wasm-simd-threaded-wasm",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/runtime/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime",
+          "package": "onnxruntime-web",
+          "version": "1.20.1"
+        },
+        {
+          "id": "tiny-voca-sinhala-license-apache",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/legal/LICENSE-APACHE-2.0.txt",
+          "sourcePath": "web/tiny-voca-si/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-sinhala-license-gpl3",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/legal/LICENSE-GPL-3.0.txt",
+          "sourcePath": "web/tiny-voca-si/LICENSE-GPL-3.0.txt",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-sinhala-upstream-notice",
+          "target": "models/tiny-voca-sinhala/c54a456ed65ac8173a666a69b81d99c4ac882dd6/legal/NOTICE.txt",
+          "sourcePath": "web/tiny-voca-si/UPSTREAM-NOTICE.txt",
+          "bytes": 1392,
+          "sha256": "2f4d2b187739346c5993270a14e3a0cc9ea51ce339e0b0576ee8085173803ce1",
+          "kind": "provenance"
+        }
+      ]
     }
   }
 }
