@@ -89,8 +89,22 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   const base = `http://127.0.0.1:${server.address().port}/`;
   const review = resolve(process.env.TTS_BENCH_UI_REVIEW || resolve(root,'.cache/dashboard-language-review'));
   await mkdir(review,{recursive:true});
-  await page.goto(base);
+  // Hold the data request so even a fast local server exercises the loading state.
+  let releaseData;
+  const dataGate = new Promise(resolve => { releaseData = resolve; });
+  await page.route('**/assets/data.json*', async route => { await dataGate; await route.continue(); }, {times: 1});
+  const requested = page.waitForRequest(request => new URL(request.url()).pathname === '/assets/data.json');
+  const navigation = page.goto(base, {waitUntil: 'domcontentloaded'});
+  await requested;
+  const picker = page.locator('#language-picker-trigger');
+  try {
+    assert.equal(await picker.isDisabled(), true, 'Wait for language options before enabling the picker');
+  } finally {
+    releaseData();
+  }
+  await navigation;
   await page.locator('#charts .edition-section').first().waitFor();
+  assert.equal(await picker.isEnabled(), true);
   await expectLanguage(page,'all');
   assert.equal(await page.locator('[data-view=charts]').getAttribute('aria-pressed'),'true');
   const ukBoard = page.locator('#charts [data-edition=uk]');

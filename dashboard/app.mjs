@@ -709,5 +709,7 @@ try {
   if (state.data.schemaVersion !== 1 || !Array.isArray(state.data.models)) throw new Error('Unsupported dashboard data');
   state.editions = registeredLanguages();
   state.allModels = state.editions.flatMap(edition => activeModels(edition.id).map(model => ({...model, edition:edition.id})));
-  buildLanguagePicker(); restoreLocation();
+  buildLanguagePicker();
+  restoreLocation();
+  $('#language-picker-trigger').disabled = false;
 } catch (error) { $('#load-error').hidden = false; $('#table-view').hidden = true; $('#updated').textContent = 'Results unavailable'; console.error('Dashboard failed:', error); }
