@@ -75,6 +75,7 @@ import { createBrowserVoiceAdapter } from './adapters/browser-voice.mjs';
 import gujaratiBrowserVoice from './adapters/browser-voice-gu-profile.mjs';
 import teluguBrowserVoice from './adapters/browser-voice-te-profile.mjs';
 import hindiBrowserVoice from './adapters/browser-voice-hi-profile.mjs';
+import hindiBrowserVoiceInt7 from './adapters/browser-voice-hi-int7-profile.mjs';
 import { createBengaliVoiceAdapter } from './adapters/bengali-voice.mjs';
 
 const statusNode = document.querySelector('#status');
@@ -156,6 +157,7 @@ const FACTORIES = {
   'browser-voice-gu-int6': () => createBrowserVoiceAdapter(gujaratiBrowserVoice),
   'browser-voice-te-preview-int8': () => createBrowserVoiceAdapter(teluguBrowserVoice),
   'browser-voice-hi-int6': () => createBrowserVoiceAdapter(hindiBrowserVoice),
+  'browser-voice-hi-int7': () => createBrowserVoiceAdapter(hindiBrowserVoiceInt7),
   'bengali-voice': createBengaliVoiceAdapter,
   ...Object.fromEntries(Object.entries(SANO_KOKOPOP_PROFILES).map(([id, profile]) => [id, () => createSanoKokopopAdapter(profile)])),
 };
