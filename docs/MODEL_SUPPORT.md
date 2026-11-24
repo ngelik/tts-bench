@@ -565,6 +565,14 @@ upstream source requires a separate English checkpoint.
 
 [Pinned Spanish checkpoint](https://huggingface.co/marcosmaceo/tiny-voca-es/tree/9898eaef9b245d7a5240156eed919ee1bd2a9b84) · [Pinned browser source](https://github.com/stdevMac/tiny-voca/tree/a4bf2bd979fc40b1bd7e34e13c0164db627d14ec).
 
+<a id="tiny-voca-fa"></a>
+
+## Tiny Ava Persian (Parisa)
+
+The published Parisa checkpoint supports one voice and one language, Persian. The adapter selects the Parisa voice at index 0 and the registered Persian article. The upstream demo provides the pronunciation encoder and decoder. Both run locally on a single WASM thread. The acoustic graph accepts tokens, stress, voice, speed, pitch shift and pitch range. It returns 24 kHz audio and phoneme durations. [Acoustic model and configuration](https://huggingface.co/mehdi-hf/tiny-ava/tree/cd2a2217ac31447763cbb500bdc2433973e6e4f4) · [Upstream browser implementation](https://github.com/mallahyari/tiny-ava/blob/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/demo/worker.js)
+
+The CPU route uses WASM throughout. The accelerated route permits WASM for unsupported acoustic operators and requires an observed hardware WebGPU dispatch during qualification. Each scored round includes pronunciation and waveform generation for the complete article. [Persian acoustic qualification](campaigns/tiny-voca-community/persian-acoustic.json) [Persian fixture](../fixtures/fa-article-v1.meta.json)
+
 <a id="tiny-voca-fr"></a>
 
 ## Tiny Voca French (FP32)

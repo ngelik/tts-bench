@@ -18587,6 +18587,157 @@
           "url": "https://cdn.jsdelivr.net/pyodide/v0.29.3/full/pyodide-lock.json"
         }
       ]
+    },
+    "tiny-voca-fa": {
+      "displayName": "Tiny Ava Persian Parisa (FP32)",
+      "modelRevision": "cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+      "sourceId": "mallahyari/tiny-ava",
+      "sourceRevision": "d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+      "parameterCount": 4531147,
+      "frontendFingerprint": "f8c95de34b918211b7071d156dca1693a50f804ba7db4bf76c631983f1fb9845",
+      "g2pModelId": "mehdi-hf/persian-g2p-tiny",
+      "g2pArtifactsSourceId": "mallahyari/tiny-ava",
+      "g2pArtifactsSourceRevision": "d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT",
+        "files": []
+      },
+      "license": {
+        "model": "CC BY 4.0; required Tiny Ava attribution applies.",
+        "frontend": "Tiny Ava source Apache-2.0; Persian G2P model MIT.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1.",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu",
+        "webgpu"
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "fa"
+        ],
+        "scope": "Persian only; Parisa voice at 24 kHz. G2P uses CPU/WASM; WebGPU applies to acoustic synthesis.",
+        "sources": [
+          "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+          "https://huggingface.co/mehdi-hf/tiny-ava",
+          "https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+          "https://huggingface.co/mehdi-hf/tiny-ava/tree/cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+          "https://huggingface.co/mehdi-hf/persian-g2p-tiny/blob/596e9b915f2973ac476a32b4c8558c6544eb53db/README.md"
+        ],
+        "notes": "The 4,531,147-parameter acoustic model uses the single Parisa voice. Both ByT5 pronunciation graphs run in the Chrome worker on WASM. The acoustic graph and pronunciation graphs are separately pinned."
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-fa-tiny-ava-parisa-onnx",
+          "target": "models/tiny-voca-fa/cd2a2217ac31447763cbb500bdc2433973e6e4f4/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/tiny-ava-parisa.onnx",
+          "url": "https://huggingface.co/mehdi-hf/tiny-ava/resolve/cd2a2217ac31447763cbb500bdc2433973e6e4f4/onnx/tiny-ava-parisa.onnx",
+          "bytes": 21361734,
+          "sha256": "4e387b2f28a6d65916ed7c33ecdac4428135e9adfc13e1734b77592e6993a340",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-fa-g2p-encoder-onnx",
+          "target": "models/tiny-voca-fa/cd2a2217ac31447763cbb500bdc2433973e6e4f4/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/g2p_encoder.onnx",
+          "url": "https://raw.githubusercontent.com/mallahyari/tiny-ava/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/demo/assets/g2p/g2p_encoder.onnx",
+          "bytes": 3459754,
+          "sha256": "0af8f89cf0ab7737aed7045efc9d0471225017e36cee65efd82ce65e5f5e7939",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-fa-g2p-decoder-onnx",
+          "target": "models/tiny-voca-fa/cd2a2217ac31447763cbb500bdc2433973e6e4f4/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/g2p_decoder.onnx",
+          "url": "https://raw.githubusercontent.com/mallahyari/tiny-ava/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/demo/assets/g2p/g2p_decoder.onnx",
+          "bytes": 5305604,
+          "sha256": "926970e0e337224a85036585142d305ec69217290e690b96838c3c97418ebe2f",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-fa-tiny-ava-parisa-json",
+          "target": "models/tiny-voca-fa/cd2a2217ac31447763cbb500bdc2433973e6e4f4/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/tiny-ava-parisa.json",
+          "url": "https://raw.githubusercontent.com/mallahyari/tiny-ava/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/demo/assets/tiny-ava-parisa.json",
+          "bytes": 761,
+          "sha256": "ee73627bb32339094bccc475d63b0f3ea022e5f9d214bf7035998a7e82a027ba",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-fa-ort-ort-wasm-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.wasm.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+          "bytes": 49026,
+          "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fa-ort-ort-webgpu-min-js",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort.webgpu.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.webgpu.min.js",
+          "bytes": 333594,
+          "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-jsep-mjs",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.mjs",
+          "bytes": 46839,
+          "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-jsep-wasm",
+          "target": "runtimes/onnxruntime-web/1.20.1/ort-wasm-simd-threaded.jsep.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.jsep.wasm",
+          "bytes": 21663894,
+          "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-fa-code-license",
+          "kind": "license",
+          "target": "licenses/tiny-voca-fa/tiny-ava-code-LICENSE",
+          "url": "https://raw.githubusercontent.com/mallahyari/tiny-ava/d4bd268a5386c60f15d1abb7e706df02b6ba4d32/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "id": "tiny-voca-fa-model-card",
+          "kind": "model-terms",
+          "target": "licenses/tiny-voca-fa/tiny-ava-model-card.md",
+          "url": "https://huggingface.co/mehdi-hf/tiny-ava/raw/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+          "bytes": 9504,
+          "sha256": "0ec5da40027b7f413ac57c68acbdc398a2bda359b1decc5238936e303a88a22e"
+        },
+        {
+          "id": "tiny-voca-fa-g2p-readme",
+          "kind": "model-terms",
+          "target": "licenses/tiny-voca-fa/persian-g2p-model-card.md",
+          "url": "https://huggingface.co/mehdi-hf/persian-g2p-tiny/raw/596e9b915f2973ac476a32b4c8558c6544eb53db/README.md",
+          "bytes": 6698,
+          "sha256": "d8bb23eda7fbded92984c57e72d948d609fb99e5fc3255e0c04c77a51b727245"
+        }
+      ],
+      "g2pModelCardRevision": "596e9b915f2973ac476a32b4c8558c6544eb53db"
     }
   }
 }

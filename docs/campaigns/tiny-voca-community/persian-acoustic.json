@@ -1,0 +1,4273 @@
+{
+  "schema": "tiny-ava-persian-public-acoustic-qualification-v1",
+  "status": "qualified",
+  "scored": false,
+  "fullArticleAudioGenerated": false,
+  "rawDrawsPersisted": false,
+  "audioIncluded": false,
+  "qualificationRule": "Each native backend passed the controlled-draw comparison in headed Chrome. The natural comparison records which spans exceeded the distance between two publisher takes.",
+  "model": {
+    "id": "tiny-voca-fa",
+    "modelRevision": "cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+    "frontendSourceRevision": "d4bd268a5386c60f15d1abb7e706df02b6ba4d32"
+  },
+  "pronunciationOracle": {
+    "artifactSha256": "e7172a2096720ea349146a5a2bc571278c66fb540db1e4662648b1f9e4e2c070",
+    "fixtureId": "fa-article-v1",
+    "fixtureSha256": "17d9ce8d7038eb0be3f6b772e8dd47c0acc68bcad6bf64616b9c84bafa2c204a",
+    "sourceSpans": 86,
+    "pronunciationClauses": 522,
+    "utterances": 315,
+    "maximumTokens": 186,
+    "unknownTokens": 0,
+    "tokenStressSha256": "74ad35633ad0614a5ecec2fc990427331933b973b719b6294081fb3e41c2ce33",
+    "omittedDecoderSymbols": {
+      ";": 5,
+      "$": 1
+    },
+    "source": "Pronunciation audit of all 86 spans in the pinned Persian article."
+  },
+  "backends": {
+    "cpu": {
+      "candidateBackend": {
+        "requested": "cpu",
+        "effective": "cpu/wasm"
+      },
+      "nativeSmoke": {
+        "id": "2026-11-24t22-07-02-559z-tiny-voca-fa-cpu-cached-a7764ff0",
+        "resultSha256": "d3132299da51bd0d34c0ad49de0d537f4448e4a3adef99be317320670c200397",
+        "audioSha256": "29eadf6c2a377ea7aa0180c91498a4f0c89b6ea0c5cd284f3b9b6262c88d06a0",
+        "sampleRate": 24000,
+        "sampleCount": 1323264,
+        "generationMs": 14811.784999847412,
+        "trialIndex": 1
+      },
+      "originalNaturalControl": {
+        "status": "failed_as_expected",
+        "artifactSha256": "8d6ff2f9e3ff37ba41cfd61792f46afd4bb1780e4e9a3edee1a8997ba8d4d876",
+        "comparisonMethod": "Two publisher WASM takes give a reference distance for each span. We matched the native audio to source spans by minimum distance and recorded a failure whenever the candidate distance exceeded the reference.",
+        "candidateBackendRequested": "cpu",
+        "candidateBackendEffective": "cpu/wasm",
+        "publisherTakes": 2,
+        "publisherLengthsStableBySpan": true,
+        "candidateMultisetMatchesPublisher": true,
+        "orderResolution": {
+          "resolved": true,
+          "matchesBothPublisherSequences": true,
+          "bestMeanDistance": 0.014678897894104752,
+          "runnerUpMeanDistance": 0.28592888989629006
+        },
+        "outOfEnvelopeSpanIds": [
+          1,
+          2
+        ],
+        "spans": [
+          {
+            "spanId": 0,
+            "samples": 439168,
+            "stockPairDistance": 0.023292820377730325,
+            "empiricalThreshold": 0.023292820377730325,
+            "candidateToPublisherDistances": [
+              0.015699875679189873,
+              0.015691536374083416
+            ],
+            "withinObservedPublisherVariability": true
+          },
+          {
+            "spanId": 1,
+            "samples": 440192,
+            "stockPairDistance": 0.01529691289132916,
+            "empiricalThreshold": 0.01529691289132916,
+            "candidateToPublisherDistances": [
+              0.01565662743730812,
+              0.010247214526784506
+            ],
+            "withinObservedPublisherVariability": false
+          },
+          {
+            "spanId": 2,
+            "samples": 443904,
+            "stockPairDistance": 0.014643263269228744,
+            "empiricalThreshold": 0.014643263269228744,
+            "candidateToPublisherDistances": [
+              0.01605512320861542,
+              0.014723010138647168
+            ],
+            "withinObservedPublisherVariability": false
+          }
+        ]
+      },
+      "controlledDrawReplay": {
+        "status": "passed",
+        "artifactSha256": "251d4aa80ca2397124bb1608e17e64103b0645dde120411913d80d86870546f4",
+        "scored": false,
+        "publisherBackend": "cpu/wasm",
+        "publisherRuntime": "ONNX Runtime Web 1.20.1 WASM",
+        "spans": [
+          {
+            "spanId": 0,
+            "fixtureSpanSha256": "388cad8f4ea19503dee571f50ab33788ad2c1543d893932f2c22ebfc102181a9",
+            "candidateInputsMatchNaturalPublisher": true,
+            "stockReplayInputsMatchCandidate": true,
+            "naturalSamples": 439168,
+            "calls": [
+              {
+                "callIndex": 0,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "d44789bd38cd8dcd9af23f30b302475c7c95b8f7fb68e5cb9403b79ef2c2a2ce"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "61353db5bc028a7741183ec037e0cb48c7877146ea95a82714899bbbce3be66b"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      113152
+                    ],
+                    "byteLength": 452608,
+                    "sha256": "fd512ae883a3cb1e4128ffc134677a1e7d6cfeedc0e00dfa77af449fb57a3361"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      70
+                    ],
+                    "byteLength": 560,
+                    "sha256": "f0b77ba05c1d8a86d74543684557288997b10e5ea7fe6e673e6a25a5a26a4e2e"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "d44789bd38cd8dcd9af23f30b302475c7c95b8f7fb68e5cb9403b79ef2c2a2ce"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "61353db5bc028a7741183ec037e0cb48c7877146ea95a82714899bbbce3be66b"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      113152
+                    ],
+                    "byteLength": 452608,
+                    "sha256": "503cfd2d7c88b952404a1de92f7785fe26d64a5c972495a4fa13018913f7a52e"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      70
+                    ],
+                    "byteLength": 560,
+                    "sha256": "f0b77ba05c1d8a86d74543684557288997b10e5ea7fe6e673e6a25a5a26a4e2e"
+                  }
+                }
+              },
+              {
+                "callIndex": 1,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "e2024dff82a3d4469a571bdaea9cfadb9bc56a075a9cd4a1a846f54f50dc8ae4"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "cc97b913d002c89cc7873f8d84004d32f83770963d498744d5daab8c07406bae"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      188672
+                    ],
+                    "byteLength": 754688,
+                    "sha256": "ecaec88a5a68b970d8879f22fe1ecb9c03ae208fbed333f836cdfc2498adb974"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      125
+                    ],
+                    "byteLength": 1000,
+                    "sha256": "904b12cd6f8d7150af0c0daf1ee8ceeac83bfa56e0a5fc937514deeec372a434"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "e2024dff82a3d4469a571bdaea9cfadb9bc56a075a9cd4a1a846f54f50dc8ae4"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "cc97b913d002c89cc7873f8d84004d32f83770963d498744d5daab8c07406bae"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      188672
+                    ],
+                    "byteLength": 754688,
+                    "sha256": "6bac7b43382520d1297f77334c0a42a89cf301bbcaf0ada648c06f094ec19418"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      125
+                    ],
+                    "byteLength": 1000,
+                    "sha256": "904b12cd6f8d7150af0c0daf1ee8ceeac83bfa56e0a5fc937514deeec372a434"
+                  }
+                }
+              },
+              {
+                "callIndex": 2,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "5ebc9dc0e9abe9dae7005c5a22e88379d72627ea827237738af116b1dfc0f16a"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "6e78b703eb11a9ab0730965d8479a9b66aec1fb9fc3eb9488179b61fa2331920"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131584
+                    ],
+                    "byteLength": 526336,
+                    "sha256": "4861cf2b94a30a41940f3028a30ae06a05cadbe564802b732ac232fa31e34df6"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      78
+                    ],
+                    "byteLength": 624,
+                    "sha256": "48ce0787433a9dab7607a1ae052aa37ad9e9a5898fcf85547ee672883f7e96d3"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "5ebc9dc0e9abe9dae7005c5a22e88379d72627ea827237738af116b1dfc0f16a"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "6e78b703eb11a9ab0730965d8479a9b66aec1fb9fc3eb9488179b61fa2331920"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131584
+                    ],
+                    "byteLength": 526336,
+                    "sha256": "8022a06ffe441a18ef8d0e5fce2a5eb837feee2356b6553e4852c5b76fb06145"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      78
+                    ],
+                    "byteLength": 624,
+                    "sha256": "48ce0787433a9dab7607a1ae052aa37ad9e9a5898fcf85547ee672883f7e96d3"
+                  }
+                }
+              }
+            ],
+            "candidateLiveSpan": {
+              "sampleRate": 24000,
+              "sampleCount": 439168,
+              "sha256": "3a3391667a041e42d1fede241044609f0dd3137c6aec0a47202f85b8c8f35948"
+            },
+            "publisherReplaySpan": {
+              "sampleRate": 24000,
+              "sampleCount": 439168,
+              "sha256": "3a3391667a041e42d1fede241044609f0dd3137c6aec0a47202f85b8c8f35948"
+            },
+            "exactFinalFloat32PcmMatch": {
+              "equal": true,
+              "reason": null
+            }
+          },
+          {
+            "spanId": 1,
+            "fixtureSpanSha256": "837bd6187a5617ab2387dfa3a89b6c7a7b1836e74a62e718fe10670025b96364",
+            "candidateInputsMatchNaturalPublisher": true,
+            "stockReplayInputsMatchCandidate": true,
+            "naturalSamples": 440192,
+            "calls": [
+              {
+                "callIndex": 0,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "b913ab5c1beda9aae9213156d62d4f7e2e6078b7b75e59232e7cbb02053a3ae2"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "e4690dc9a627f4d45b9484d87f72e77058e3ce534a859b0b9a9c06d7ffd9d5ba"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      155648
+                    ],
+                    "byteLength": 622592,
+                    "sha256": "f6ce43f1fb44ab4684daedf0cce66add3b58f6e4b226e05d70b4417a9b120e9d"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      93
+                    ],
+                    "byteLength": 744,
+                    "sha256": "d2e9150115c2537e6ada1c8fdf8dcdaf90da18ebc9cdd978de6e409b01da40e1"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "b913ab5c1beda9aae9213156d62d4f7e2e6078b7b75e59232e7cbb02053a3ae2"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "e4690dc9a627f4d45b9484d87f72e77058e3ce534a859b0b9a9c06d7ffd9d5ba"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      155648
+                    ],
+                    "byteLength": 622592,
+                    "sha256": "c463b1a93ddc3dc0f96fb5cdd240c87fb1186ac119ad6f76d93087074076f32c"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      93
+                    ],
+                    "byteLength": 744,
+                    "sha256": "d2e9150115c2537e6ada1c8fdf8dcdaf90da18ebc9cdd978de6e409b01da40e1"
+                  }
+                }
+              },
+              {
+                "callIndex": 1,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "c842100a48bd2efde957776ecc9886addef897d03872cda302c11ef9cd91ba44"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "37158c2f9cb34f457565e774c45ca1b20df902ede9563e94a3c561a1fe9d05f8"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      142080
+                    ],
+                    "byteLength": 568320,
+                    "sha256": "e60922cc40ed868078ebc15ae7d57b11d3a8982d4864be7f09aa085d470f599b"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      83
+                    ],
+                    "byteLength": 664,
+                    "sha256": "03b30f973bb008e4bcd6514562ee10e81ef755a39d0fbe13956e947af14bb5ba"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "c842100a48bd2efde957776ecc9886addef897d03872cda302c11ef9cd91ba44"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "37158c2f9cb34f457565e774c45ca1b20df902ede9563e94a3c561a1fe9d05f8"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      142080
+                    ],
+                    "byteLength": 568320,
+                    "sha256": "53ca5a6387ebbe530b639dd58d0441e3c30d971fc0b3522b92a7ae64b5ac91b2"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      83
+                    ],
+                    "byteLength": 664,
+                    "sha256": "03b30f973bb008e4bcd6514562ee10e81ef755a39d0fbe13956e947af14bb5ba"
+                  }
+                }
+              },
+              {
+                "callIndex": 2,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "3c7d641dc6ed1db3f2bb5e376dbaa24ebfe27919b43515d6649d9d91f357065b"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "89d711f6f687b263836e25a11ee51ec1863b71b6163b8c0cd7ac5752e26b5186"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      136704
+                    ],
+                    "byteLength": 546816,
+                    "sha256": "5402d5c5a1184ddb887b2f7bb57b06ac9ed13ca40f7f7692d7fce6fe3ad9ca96"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      88
+                    ],
+                    "byteLength": 704,
+                    "sha256": "b65d1f6cc3a853d5d3699e20606e8e256fa9c839866ef93a6674e5f3a1e1f6df"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "3c7d641dc6ed1db3f2bb5e376dbaa24ebfe27919b43515d6649d9d91f357065b"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "89d711f6f687b263836e25a11ee51ec1863b71b6163b8c0cd7ac5752e26b5186"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      136704
+                    ],
+                    "byteLength": 546816,
+                    "sha256": "0fb4333ad33fca609fbd6b325216191e5bf9917b3c7f61cbce363d807faab90d"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      88
+                    ],
+                    "byteLength": 704,
+                    "sha256": "b65d1f6cc3a853d5d3699e20606e8e256fa9c839866ef93a6674e5f3a1e1f6df"
+                  }
+                }
+              }
+            ],
+            "candidateLiveSpan": {
+              "sampleRate": 24000,
+              "sampleCount": 440192,
+              "sha256": "d911d58c8d8e5cee183d139003358236324c8165419adb10115b40e93b45a349"
+            },
+            "publisherReplaySpan": {
+              "sampleRate": 24000,
+              "sampleCount": 440192,
+              "sha256": "d911d58c8d8e5cee183d139003358236324c8165419adb10115b40e93b45a349"
+            },
+            "exactFinalFloat32PcmMatch": {
+              "equal": true,
+              "reason": null
+            }
+          },
+          {
+            "spanId": 2,
+            "fixtureSpanSha256": "8a7053a87056b157b686f314f65e52ffe502e7321594bbf618bb74de9fc56252",
+            "candidateInputsMatchNaturalPublisher": true,
+            "stockReplayInputsMatchCandidate": true,
+            "naturalSamples": 443904,
+            "calls": [
+              {
+                "callIndex": 0,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "f76373f10638a8b07ae596924d95f3b9b667f982a513ea1562cd27034ada6e83"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "3f534a77129c2d27e3a0fee073aaa69e0312d39400d8998b2afd92e0c73ce881"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      43520
+                    ],
+                    "byteLength": 174080,
+                    "sha256": "54c15b8d8fcb35fa9d6741239b2144aaf179ef004d93df874940947ea59d4855"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      25
+                    ],
+                    "byteLength": 200,
+                    "sha256": "dff874f3312c0c20b5b887cf34826bfa6c6eb2138569f24c8a828167db3c0529"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "f76373f10638a8b07ae596924d95f3b9b667f982a513ea1562cd27034ada6e83"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "3f534a77129c2d27e3a0fee073aaa69e0312d39400d8998b2afd92e0c73ce881"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      43520
+                    ],
+                    "byteLength": 174080,
+                    "sha256": "f4cfd4d93b992f8eaf74679601f54870b7584d2930df691fb1aa42dc7cc7dc0f"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      25
+                    ],
+                    "byteLength": 200,
+                    "sha256": "dff874f3312c0c20b5b887cf34826bfa6c6eb2138569f24c8a828167db3c0529"
+                  }
+                }
+              },
+              {
+                "callIndex": 1,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "64e2d7bdf577aa6c689179774e09a7e8bebc8527bfd491e738225611b3cd25a5"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "4bb3fc8edf20ae6829c060341f35deb65bbf73942ca03e3ce937b605e0b2222f"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131328
+                    ],
+                    "byteLength": 525312,
+                    "sha256": "8100a588b1cfacf5b2ccbca3655fc40129a77e717448c48061e4aecb5fe28bb9"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      77
+                    ],
+                    "byteLength": 616,
+                    "sha256": "44426e16ec51917fb90cb553fec8c62262d7fe5f208f412ab96c99695ba21f16"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "64e2d7bdf577aa6c689179774e09a7e8bebc8527bfd491e738225611b3cd25a5"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "4bb3fc8edf20ae6829c060341f35deb65bbf73942ca03e3ce937b605e0b2222f"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131328
+                    ],
+                    "byteLength": 525312,
+                    "sha256": "a89d9f3c43a786dc17337aa7be42a3787cf7eac6675afe0c396eac85635d693c"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      77
+                    ],
+                    "byteLength": 616,
+                    "sha256": "44426e16ec51917fb90cb553fec8c62262d7fe5f208f412ab96c99695ba21f16"
+                  }
+                }
+              },
+              {
+                "callIndex": 2,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "285f5b53ebee54c16278c2b2dd0131aa18f137fc2c00868c6b5441c7ae560446"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "36915759003c52d326b074054c892c4e8c094aa558f326f0694aa7dbfc4bd90c"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      104192
+                    ],
+                    "byteLength": 416768,
+                    "sha256": "63b21f07875e7167f11385eda96727d8408f12b93373d6f51d69004f92a65b34"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      63
+                    ],
+                    "byteLength": 504,
+                    "sha256": "e7d8097357009b39346b3ea1214d64ecd4e57c3fd2fdb6247b51ae0b77fb8ff5"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "285f5b53ebee54c16278c2b2dd0131aa18f137fc2c00868c6b5441c7ae560446"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "36915759003c52d326b074054c892c4e8c094aa558f326f0694aa7dbfc4bd90c"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      104192
+                    ],
+                    "byteLength": 416768,
+                    "sha256": "4d33f8c111b6f72094f45542308a19ca900d9db17882ef87be1ec7e444c8a7a3"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      63
+                    ],
+                    "byteLength": 504,
+                    "sha256": "e7d8097357009b39346b3ea1214d64ecd4e57c3fd2fdb6247b51ae0b77fb8ff5"
+                  }
+                }
+              },
+              {
+                "callIndex": 3,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 3,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "2e0e997c5b3e3ab0984d49ff8b62ffb898ec29d1cfec3af8929f41f61f45a189"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "aa8651babadaa75be32df7b52680f96d6a1c47c1da7c150e08a0574f3f9121b2"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      129280
+                    ],
+                    "byteLength": 517120,
+                    "sha256": "9d7ef18ed82197b1ef4fa3a25c04de77235637c6f860f059e3fd061c5ae8035a"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      85
+                    ],
+                    "byteLength": 680,
+                    "sha256": "3b89105f1b5be78c6c19f5e1f88edf90880a750b459998d2c56f8ec196911b51"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 3,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "2e0e997c5b3e3ab0984d49ff8b62ffb898ec29d1cfec3af8929f41f61f45a189"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "aa8651babadaa75be32df7b52680f96d6a1c47c1da7c150e08a0574f3f9121b2"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      129280
+                    ],
+                    "byteLength": 517120,
+                    "sha256": "3dca0366851e686589e07f20ba8980914430acf6f68d2168173970d1a823781a"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      85
+                    ],
+                    "byteLength": 680,
+                    "sha256": "3b89105f1b5be78c6c19f5e1f88edf90880a750b459998d2c56f8ec196911b51"
+                  }
+                }
+              },
+              {
+                "callIndex": 4,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 4,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "f8f126f53558cf25eb66bf4f692090c4f3f561edabcf23d35ce2544290cebe9d"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "6dbea04d2b8c8466a61bc03a712f42f5fe85c2e1f69ac7dc4c949f060c8be088"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      24064
+                    ],
+                    "byteLength": 96256,
+                    "sha256": "94bcf226641cfb9ea7f0afb47d785a0897ed9762600282b2540ae9618b9cffeb"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      15
+                    ],
+                    "byteLength": 120,
+                    "sha256": "a1744443e6cf9237797ff92a404ffc7b161774d43a2238a20ceedecbbf9dc979"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 4,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "f8f126f53558cf25eb66bf4f692090c4f3f561edabcf23d35ce2544290cebe9d"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "6dbea04d2b8c8466a61bc03a712f42f5fe85c2e1f69ac7dc4c949f060c8be088"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      24064
+                    ],
+                    "byteLength": 96256,
+                    "sha256": "8d4840703cb1e45b3d948ca2344b4a6dbc8ee9b1714cbd7298a6e1b29d1b7652"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      15
+                    ],
+                    "byteLength": 120,
+                    "sha256": "a1744443e6cf9237797ff92a404ffc7b161774d43a2238a20ceedecbbf9dc979"
+                  }
+                }
+              }
+            ],
+            "candidateLiveSpan": {
+              "sampleRate": 24000,
+              "sampleCount": 443904,
+              "sha256": "332cef8daab61cab9ddba01e84e56b65b0df98087e55641b20039a23a03bb58c"
+            },
+            "publisherReplaySpan": {
+              "sampleRate": 24000,
+              "sampleCount": 443904,
+              "sha256": "332cef8daab61cab9ddba01e84e56b65b0df98087e55641b20039a23a03bb58c"
+            },
+            "exactFinalFloat32PcmMatch": {
+              "equal": true,
+              "reason": null
+            }
+          }
+        ]
+      },
+      "sourceEvidence": {
+        "candidateWorkerSha256": "dac02a6e538d3c96e6410ba5f279af0d5be9f28e2a928f6d7c4fece3b86a8f15",
+        "publisherWorkerSha256": "83ae08f2d72d7c1d6bba14b803d40d9a6b74b1cc99ac562a019cdb3e376c77b7",
+        "acousticGraphSha256": "4e387b2f28a6d65916ed7c33ecdac4428135e9adfc13e1734b77592e6993a340",
+        "fixtureSha256": "17d9ce8d7038eb0be3f6b772e8dd47c0acc68bcad6bf64616b9c84bafa2c204a",
+        "smokeFixtureSha256": "356e46d8232ea79c9667b59eda9dab8310218e008af44e09c60d6a8fc19da92a",
+        "smokeReceiptSha256": "d3132299da51bd0d34c0ad49de0d537f4448e4a3adef99be317320670c200397",
+        "smokeWavSha256": "29eadf6c2a377ea7aa0180c91498a4f0c89b6ea0c5cd284f3b9b6262c88d06a0"
+      }
+    },
+    "webgpu": {
+      "candidateBackend": {
+        "requested": "webgpu",
+        "effective": "webgpu+wasm"
+      },
+      "nativeSmoke": {
+        "id": "2026-11-24t22-18-52-879z-tiny-voca-fa-webgpu-cached-ec8418c0",
+        "resultSha256": "2c4d082f79a86dd56fd73d3a1e01ef4eb632d8aaa996ce2c29e2712f28d6ae8b",
+        "audioSha256": "b251ca7466942e2b2f6fe85bfa053867a326b474b80cbfbeee211a080dc20154",
+        "sampleRate": 24000,
+        "sampleCount": 1323264,
+        "generationMs": 14795.974999904633,
+        "trialIndex": 1
+      },
+      "originalNaturalControl": {
+        "status": "failed_as_expected",
+        "artifactSha256": "d8716d50e66c74aea947dfd3aa4c40f9440a51d189f748a00c127959bc14f0a1",
+        "comparisonMethod": "Two publisher WASM takes give a reference distance for each span. We matched the native audio to source spans by minimum distance and recorded a failure whenever the candidate distance exceeded the reference.",
+        "candidateBackendRequested": "webgpu",
+        "candidateBackendEffective": "webgpu+wasm",
+        "publisherTakes": 2,
+        "publisherLengthsStableBySpan": true,
+        "candidateMultisetMatchesPublisher": true,
+        "orderResolution": {
+          "resolved": true,
+          "matchesBothPublisherSequences": true,
+          "bestMeanDistance": 0.013591722557666224,
+          "runnerUpMeanDistance": 0.28475063390418276
+        },
+        "outOfEnvelopeSpanIds": [
+          1
+        ],
+        "spans": [
+          {
+            "spanId": 0,
+            "samples": 439168,
+            "stockPairDistance": 0.01898925316142892,
+            "empiricalThreshold": 0.01898925316142892,
+            "candidateToPublisherDistances": [
+              0.012081439833233718,
+              0.016550198779022383
+            ],
+            "withinObservedPublisherVariability": true
+          },
+          {
+            "spanId": 1,
+            "samples": 440192,
+            "stockPairDistance": 0.015019474862967019,
+            "empiricalThreshold": 0.015019474862967019,
+            "candidateToPublisherDistances": [
+              0.01470348002919656,
+              0.015220118997651178
+            ],
+            "withinObservedPublisherVariability": false
+          },
+          {
+            "spanId": 2,
+            "samples": 443904,
+            "stockPairDistance": 0.016176981506992275,
+            "empiricalThreshold": 0.016176981506992275,
+            "candidateToPublisherDistances": [
+              0.011809166000838586,
+              0.011185931706054926
+            ],
+            "withinObservedPublisherVariability": true
+          }
+        ]
+      },
+      "controlledDrawReplay": {
+        "status": "passed",
+        "artifactSha256": "f4dc9c05d25a7548c420ee6648ab0d2aa52c28dda096f45988b4a81bfa9b9654",
+        "scored": false,
+        "publisherBackend": "cpu/wasm",
+        "publisherRuntime": "ONNX Runtime Web 1.20.1 WASM",
+        "spans": [
+          {
+            "spanId": 0,
+            "fixtureSpanSha256": "388cad8f4ea19503dee571f50ab33788ad2c1543d893932f2c22ebfc102181a9",
+            "candidateInputsMatchNaturalPublisher": true,
+            "stockReplayInputsMatchCandidate": true,
+            "naturalSamples": 439168,
+            "calls": [
+              {
+                "callIndex": 0,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "d44789bd38cd8dcd9af23f30b302475c7c95b8f7fb68e5cb9403b79ef2c2a2ce"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "61353db5bc028a7741183ec037e0cb48c7877146ea95a82714899bbbce3be66b"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      113152
+                    ],
+                    "byteLength": 452608,
+                    "sha256": "17d248641886cb44c6ad27fde657ddb6556d00be624a476d5d0f4186a7672ae0"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      70
+                    ],
+                    "byteLength": 560,
+                    "sha256": "f0b77ba05c1d8a86d74543684557288997b10e5ea7fe6e673e6a25a5a26a4e2e"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "d44789bd38cd8dcd9af23f30b302475c7c95b8f7fb68e5cb9403b79ef2c2a2ce"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        70
+                      ],
+                      "byteLength": 560,
+                      "sha256": "61353db5bc028a7741183ec037e0cb48c7877146ea95a82714899bbbce3be66b"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      113152
+                    ],
+                    "byteLength": 452608,
+                    "sha256": "0a571a20d32d726f527c88da29efc9d8ada30bdc78ee0e818c7de35cd1a10218"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      70
+                    ],
+                    "byteLength": 560,
+                    "sha256": "f0b77ba05c1d8a86d74543684557288997b10e5ea7fe6e673e6a25a5a26a4e2e"
+                  }
+                }
+              },
+              {
+                "callIndex": 1,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "e2024dff82a3d4469a571bdaea9cfadb9bc56a075a9cd4a1a846f54f50dc8ae4"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "cc97b913d002c89cc7873f8d84004d32f83770963d498744d5daab8c07406bae"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      188672
+                    ],
+                    "byteLength": 754688,
+                    "sha256": "348dbd7cbf40bb16fd59aca4777e380cb6018feea1b4cb9083674f16dee82703"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      125
+                    ],
+                    "byteLength": 1000,
+                    "sha256": "904b12cd6f8d7150af0c0daf1ee8ceeac83bfa56e0a5fc937514deeec372a434"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "e2024dff82a3d4469a571bdaea9cfadb9bc56a075a9cd4a1a846f54f50dc8ae4"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        125
+                      ],
+                      "byteLength": 1000,
+                      "sha256": "cc97b913d002c89cc7873f8d84004d32f83770963d498744d5daab8c07406bae"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      188672
+                    ],
+                    "byteLength": 754688,
+                    "sha256": "b0a7c3cad9cde061884ad0203d5164907854ade53af435abfba847a82885c482"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      125
+                    ],
+                    "byteLength": 1000,
+                    "sha256": "904b12cd6f8d7150af0c0daf1ee8ceeac83bfa56e0a5fc937514deeec372a434"
+                  }
+                }
+              },
+              {
+                "callIndex": 2,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "5ebc9dc0e9abe9dae7005c5a22e88379d72627ea827237738af116b1dfc0f16a"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "6e78b703eb11a9ab0730965d8479a9b66aec1fb9fc3eb9488179b61fa2331920"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131584
+                    ],
+                    "byteLength": 526336,
+                    "sha256": "873b5182f860f8d914ce05a1148732777287713fa61ef5bf5ecac47818d641b5"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      78
+                    ],
+                    "byteLength": 624,
+                    "sha256": "48ce0787433a9dab7607a1ae052aa37ad9e9a5898fcf85547ee672883f7e96d3"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "5ebc9dc0e9abe9dae7005c5a22e88379d72627ea827237738af116b1dfc0f16a"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        78
+                      ],
+                      "byteLength": 624,
+                      "sha256": "6e78b703eb11a9ab0730965d8479a9b66aec1fb9fc3eb9488179b61fa2331920"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131584
+                    ],
+                    "byteLength": 526336,
+                    "sha256": "d521db47de7f6fbbdbd3257d913aa07f5ff27df268c48602399306853b77d3b1"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      78
+                    ],
+                    "byteLength": 624,
+                    "sha256": "48ce0787433a9dab7607a1ae052aa37ad9e9a5898fcf85547ee672883f7e96d3"
+                  }
+                }
+              }
+            ],
+            "candidateLiveSpan": {
+              "sampleRate": 24000,
+              "sampleCount": 439168,
+              "sha256": "379dcbf129d4eb5163aced38b5f764189c1648a83faff5fe1a29b5d64df36e04"
+            },
+            "publisherReplaySpan": {
+              "sampleRate": 24000,
+              "sampleCount": 439168,
+              "sha256": "379dcbf129d4eb5163aced38b5f764189c1648a83faff5fe1a29b5d64df36e04"
+            },
+            "exactFinalFloat32PcmMatch": {
+              "equal": true,
+              "reason": null
+            }
+          },
+          {
+            "spanId": 1,
+            "fixtureSpanSha256": "837bd6187a5617ab2387dfa3a89b6c7a7b1836e74a62e718fe10670025b96364",
+            "candidateInputsMatchNaturalPublisher": true,
+            "stockReplayInputsMatchCandidate": true,
+            "naturalSamples": 440192,
+            "calls": [
+              {
+                "callIndex": 0,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "b913ab5c1beda9aae9213156d62d4f7e2e6078b7b75e59232e7cbb02053a3ae2"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "e4690dc9a627f4d45b9484d87f72e77058e3ce534a859b0b9a9c06d7ffd9d5ba"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      155648
+                    ],
+                    "byteLength": 622592,
+                    "sha256": "066e264f9560bf800f949a72841da1c31b20540117b9971e0d7f71788b833f31"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      93
+                    ],
+                    "byteLength": 744,
+                    "sha256": "d2e9150115c2537e6ada1c8fdf8dcdaf90da18ebc9cdd978de6e409b01da40e1"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "b913ab5c1beda9aae9213156d62d4f7e2e6078b7b75e59232e7cbb02053a3ae2"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        93
+                      ],
+                      "byteLength": 744,
+                      "sha256": "e4690dc9a627f4d45b9484d87f72e77058e3ce534a859b0b9a9c06d7ffd9d5ba"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      155648
+                    ],
+                    "byteLength": 622592,
+                    "sha256": "1c94ac031dd2ccbe9e3a84054d068e02ace674a90cbb66bef1e0716f6811eb2d"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      93
+                    ],
+                    "byteLength": 744,
+                    "sha256": "d2e9150115c2537e6ada1c8fdf8dcdaf90da18ebc9cdd978de6e409b01da40e1"
+                  }
+                }
+              },
+              {
+                "callIndex": 1,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "c842100a48bd2efde957776ecc9886addef897d03872cda302c11ef9cd91ba44"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "37158c2f9cb34f457565e774c45ca1b20df902ede9563e94a3c561a1fe9d05f8"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      142080
+                    ],
+                    "byteLength": 568320,
+                    "sha256": "31849ce604d69cc90a5b39592c6aa83bfb9302abcf57e602268932cdce280c45"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      83
+                    ],
+                    "byteLength": 664,
+                    "sha256": "03b30f973bb008e4bcd6514562ee10e81ef755a39d0fbe13956e947af14bb5ba"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "c842100a48bd2efde957776ecc9886addef897d03872cda302c11ef9cd91ba44"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        83
+                      ],
+                      "byteLength": 664,
+                      "sha256": "37158c2f9cb34f457565e774c45ca1b20df902ede9563e94a3c561a1fe9d05f8"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      142080
+                    ],
+                    "byteLength": 568320,
+                    "sha256": "b552b080f191ae4d057b8fc73960b1e6a1c2be94398317d2cae34da8b62f11c4"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      83
+                    ],
+                    "byteLength": 664,
+                    "sha256": "03b30f973bb008e4bcd6514562ee10e81ef755a39d0fbe13956e947af14bb5ba"
+                  }
+                }
+              },
+              {
+                "callIndex": 2,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "3c7d641dc6ed1db3f2bb5e376dbaa24ebfe27919b43515d6649d9d91f357065b"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "89d711f6f687b263836e25a11ee51ec1863b71b6163b8c0cd7ac5752e26b5186"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      136704
+                    ],
+                    "byteLength": 546816,
+                    "sha256": "884c5a53d58bf87c1b0a682b083b4b1b10a443e5676d6e06dd718fe98abaddb6"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      88
+                    ],
+                    "byteLength": 704,
+                    "sha256": "b65d1f6cc3a853d5d3699e20606e8e256fa9c839866ef93a6674e5f3a1e1f6df"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "3c7d641dc6ed1db3f2bb5e376dbaa24ebfe27919b43515d6649d9d91f357065b"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        88
+                      ],
+                      "byteLength": 704,
+                      "sha256": "89d711f6f687b263836e25a11ee51ec1863b71b6163b8c0cd7ac5752e26b5186"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      136704
+                    ],
+                    "byteLength": 546816,
+                    "sha256": "61b12ac79da21f320576504f311b065c92b6de985cded861dd2741a3d7c3216d"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      88
+                    ],
+                    "byteLength": 704,
+                    "sha256": "b65d1f6cc3a853d5d3699e20606e8e256fa9c839866ef93a6674e5f3a1e1f6df"
+                  }
+                }
+              }
+            ],
+            "candidateLiveSpan": {
+              "sampleRate": 24000,
+              "sampleCount": 440192,
+              "sha256": "7000b3ee05678f6277b70698346e9b3076cd70f0bbeef9fe7c11be3dde9c60dc"
+            },
+            "publisherReplaySpan": {
+              "sampleRate": 24000,
+              "sampleCount": 440192,
+              "sha256": "7000b3ee05678f6277b70698346e9b3076cd70f0bbeef9fe7c11be3dde9c60dc"
+            },
+            "exactFinalFloat32PcmMatch": {
+              "equal": true,
+              "reason": null
+            }
+          },
+          {
+            "spanId": 2,
+            "fixtureSpanSha256": "8a7053a87056b157b686f314f65e52ffe502e7321594bbf618bb74de9fc56252",
+            "candidateInputsMatchNaturalPublisher": true,
+            "stockReplayInputsMatchCandidate": true,
+            "naturalSamples": 443904,
+            "calls": [
+              {
+                "callIndex": 0,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "f76373f10638a8b07ae596924d95f3b9b667f982a513ea1562cd27034ada6e83"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "3f534a77129c2d27e3a0fee073aaa69e0312d39400d8998b2afd92e0c73ce881"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      43520
+                    ],
+                    "byteLength": 174080,
+                    "sha256": "c96aac3fffb4c715fdab12b1e88e8ef6e58eec9b6436ea2397dbc54cdc225f67"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      25
+                    ],
+                    "byteLength": 200,
+                    "sha256": "dff874f3312c0c20b5b887cf34826bfa6c6eb2138569f24c8a828167db3c0529"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 0,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "f76373f10638a8b07ae596924d95f3b9b667f982a513ea1562cd27034ada6e83"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        25
+                      ],
+                      "byteLength": 200,
+                      "sha256": "3f534a77129c2d27e3a0fee073aaa69e0312d39400d8998b2afd92e0c73ce881"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      43520
+                    ],
+                    "byteLength": 174080,
+                    "sha256": "75eada4e3f8a801372454f0240f1f248564ab3db28106438882d587d0bbe447e"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      25
+                    ],
+                    "byteLength": 200,
+                    "sha256": "dff874f3312c0c20b5b887cf34826bfa6c6eb2138569f24c8a828167db3c0529"
+                  }
+                }
+              },
+              {
+                "callIndex": 1,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "64e2d7bdf577aa6c689179774e09a7e8bebc8527bfd491e738225611b3cd25a5"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "4bb3fc8edf20ae6829c060341f35deb65bbf73942ca03e3ce937b605e0b2222f"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131328
+                    ],
+                    "byteLength": 525312,
+                    "sha256": "4a80cadccc07ec3156d5ed0402fff425a82d48849aef718e1a5fc53dcb78bdc6"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      77
+                    ],
+                    "byteLength": 616,
+                    "sha256": "44426e16ec51917fb90cb553fec8c62262d7fe5f208f412ab96c99695ba21f16"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 1,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "64e2d7bdf577aa6c689179774e09a7e8bebc8527bfd491e738225611b3cd25a5"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        77
+                      ],
+                      "byteLength": 616,
+                      "sha256": "4bb3fc8edf20ae6829c060341f35deb65bbf73942ca03e3ce937b605e0b2222f"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      131328
+                    ],
+                    "byteLength": 525312,
+                    "sha256": "5bfe874414926e181f45ba1666da195bb6a0e420a5210fd2131882c6f526d0fe"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      77
+                    ],
+                    "byteLength": 616,
+                    "sha256": "44426e16ec51917fb90cb553fec8c62262d7fe5f208f412ab96c99695ba21f16"
+                  }
+                }
+              },
+              {
+                "callIndex": 2,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "285f5b53ebee54c16278c2b2dd0131aa18f137fc2c00868c6b5441c7ae560446"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "36915759003c52d326b074054c892c4e8c094aa558f326f0694aa7dbfc4bd90c"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      104192
+                    ],
+                    "byteLength": 416768,
+                    "sha256": "7197ae0cc2878c68d72f3dcd406aa5dd14181b996cb161993fa665617f81d17a"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      63
+                    ],
+                    "byteLength": 504,
+                    "sha256": "e7d8097357009b39346b3ea1214d64ecd4e57c3fd2fdb6247b51ae0b77fb8ff5"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 2,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "285f5b53ebee54c16278c2b2dd0131aa18f137fc2c00868c6b5441c7ae560446"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        63
+                      ],
+                      "byteLength": 504,
+                      "sha256": "36915759003c52d326b074054c892c4e8c094aa558f326f0694aa7dbfc4bd90c"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      104192
+                    ],
+                    "byteLength": 416768,
+                    "sha256": "d06cb27509216cf4d301ad1ac88a92d687080c23410626f73f0660f24d117095"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      63
+                    ],
+                    "byteLength": 504,
+                    "sha256": "e7d8097357009b39346b3ea1214d64ecd4e57c3fd2fdb6247b51ae0b77fb8ff5"
+                  }
+                }
+              },
+              {
+                "callIndex": 3,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 3,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "2e0e997c5b3e3ab0984d49ff8b62ffb898ec29d1cfec3af8929f41f61f45a189"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "aa8651babadaa75be32df7b52680f96d6a1c47c1da7c150e08a0574f3f9121b2"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      129280
+                    ],
+                    "byteLength": 517120,
+                    "sha256": "e532acc1a4fdad033545f3bcc90a9fc778fa3fc58be7f5ef6fcdbebb20b56368"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      85
+                    ],
+                    "byteLength": 680,
+                    "sha256": "3b89105f1b5be78c6c19f5e1f88edf90880a750b459998d2c56f8ec196911b51"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 3,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "2e0e997c5b3e3ab0984d49ff8b62ffb898ec29d1cfec3af8929f41f61f45a189"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        85
+                      ],
+                      "byteLength": 680,
+                      "sha256": "aa8651babadaa75be32df7b52680f96d6a1c47c1da7c150e08a0574f3f9121b2"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      129280
+                    ],
+                    "byteLength": 517120,
+                    "sha256": "300c09aae8780dbab741373a8c9c95f3703c15c706da8cce47d62961aa84897b"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      85
+                    ],
+                    "byteLength": 680,
+                    "sha256": "3b89105f1b5be78c6c19f5e1f88edf90880a750b459998d2c56f8ec196911b51"
+                  }
+                }
+              },
+              {
+                "callIndex": 4,
+                "candidateInputsMatchPublisher": true,
+                "candidate": {
+                  "callIndex": 4,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "f8f126f53558cf25eb66bf4f692090c4f3f561edabcf23d35ce2544290cebe9d"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "6dbea04d2b8c8466a61bc03a712f42f5fe85c2e1f69ac7dc4c949f060c8be088"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      24064
+                    ],
+                    "byteLength": 96256,
+                    "sha256": "32156d089698dec4978b2223348b1167682615f4101c0fc48d913e7ee64b8286"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      15
+                    ],
+                    "byteLength": 120,
+                    "sha256": "a1744443e6cf9237797ff92a404ffc7b161774d43a2238a20ceedecbbf9dc979"
+                  }
+                },
+                "publisher": {
+                  "callIndex": 4,
+                  "inputNames": [
+                    "tokens",
+                    "stress",
+                    "voice",
+                    "speed",
+                    "pitch_shift",
+                    "pitch_range"
+                  ],
+                  "inputs": [
+                    {
+                      "name": "tokens",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "f8f126f53558cf25eb66bf4f692090c4f3f561edabcf23d35ce2544290cebe9d"
+                    },
+                    {
+                      "name": "stress",
+                      "type": "int64",
+                      "dims": [
+                        1,
+                        15
+                      ],
+                      "byteLength": 120,
+                      "sha256": "6dbea04d2b8c8466a61bc03a712f42f5fe85c2e1f69ac7dc4c949f060c8be088"
+                    },
+                    {
+                      "name": "voice",
+                      "type": "int64",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 8,
+                      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+                    },
+                    {
+                      "name": "speed",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "e00e5eb9444182f352323374ef4e08ebcb784725fdd4fd612d7730540b3e0c8c"
+                    },
+                    {
+                      "name": "pitch_shift",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+                    },
+                    {
+                      "name": "pitch_range",
+                      "type": "float32",
+                      "dims": [
+                        1
+                      ],
+                      "byteLength": 4,
+                      "sha256": "5af2169fc7e6a3268ca6146f2ba18f312fde17563e7dff42572633d9b0b92c7c"
+                    }
+                  ],
+                  "rawAudio": {
+                    "type": "float32",
+                    "dims": [
+                      1,
+                      24064
+                    ],
+                    "byteLength": 96256,
+                    "sha256": "4cbb6910fabc80ceeb706ad30d34da310649a1ab4f2cec65542a11d6b625196d"
+                  },
+                  "durations": {
+                    "type": "int64",
+                    "dims": [
+                      1,
+                      15
+                    ],
+                    "byteLength": 120,
+                    "sha256": "a1744443e6cf9237797ff92a404ffc7b161774d43a2238a20ceedecbbf9dc979"
+                  }
+                }
+              }
+            ],
+            "candidateLiveSpan": {
+              "sampleRate": 24000,
+              "sampleCount": 443904,
+              "sha256": "eabe730284d27be5a2791daca720bd9cbe6de449f86622a365247d1b5481e05e"
+            },
+            "publisherReplaySpan": {
+              "sampleRate": 24000,
+              "sampleCount": 443904,
+              "sha256": "eabe730284d27be5a2791daca720bd9cbe6de449f86622a365247d1b5481e05e"
+            },
+            "exactFinalFloat32PcmMatch": {
+              "equal": true,
+              "reason": null
+            }
+          }
+        ]
+      },
+      "sourceEvidence": {
+        "candidateWorkerSha256": "dac02a6e538d3c96e6410ba5f279af0d5be9f28e2a928f6d7c4fece3b86a8f15",
+        "publisherWorkerSha256": "83ae08f2d72d7c1d6bba14b803d40d9a6b74b1cc99ac562a019cdb3e376c77b7",
+        "acousticGraphSha256": "4e387b2f28a6d65916ed7c33ecdac4428135e9adfc13e1734b77592e6993a340",
+        "fixtureSha256": "17d9ce8d7038eb0be3f6b772e8dd47c0acc68bcad6bf64616b9c84bafa2c204a",
+        "smokeFixtureSha256": "356e46d8232ea79c9667b59eda9dab8310218e008af44e09c60d6a8fc19da92a",
+        "smokeReceiptSha256": "2c4d082f79a86dd56fd73d3a1e01ef4eb632d8aaa996ce2c29e2712f28d6ae8b",
+        "smokeWavSha256": "b251ca7466942e2b2f6fe85bfa053867a326b474b80cbfbeee211a080dc20154"
+      }
+    }
+  },
+  "publisherControl": {
+    "backendEffective": "cpu/wasm",
+    "runtime": "ONNX Runtime Web 1.20.1 WASM",
+    "meaning": "Both comparisons use the original publisher WASM graph as the reference."
+  },
+  "scope": {
+    "controlledReplay": "We compared the acoustic inputs and durations for each utterance, then sent the same model draw through both postprocessors and compared the final Float32 PCM bytes for each span.",
+    "timing": "The native generation time covers three source spans. Full-article timing uses separate benchmark runs.",
+    "speechQuality": "These checks measure adapter fidelity. Subjective listening quality was unmeasured.",
+    "audioIncluded": false,
+    "rawTensorOrDrawBytesIncluded": false
+  }
+}
