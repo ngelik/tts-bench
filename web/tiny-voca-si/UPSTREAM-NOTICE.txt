@@ -1,0 +1,26 @@
+tiny-voca-sinhala
+Copyright 2026 Emindu Perera
+
+This product is a modified version of tiny-voca
+(https://github.com/n4ze3m/tiny-voca), Copyright Muhammed Nazeem,
+licensed under the Apache License, Version 2.0.
+Based on upstream commit 60d965d7ea0a4b2a51f9abb011bfe810ae8074d0.
+
+Main changes from tiny-voca:
+- Sinhala text front end (src/tiny_voca/sinhala.py): eSpeak NG `si` from the
+  pinned espeakng-loader wheel, with Sinhala corrections (zero-width joiners,
+  ශ as ʃ, prenasalised stops as single phonemes) and a 73-symbol inventory,
+  selected with TINY_VOCA_LANGUAGE=si (English behaviour is unchanged).
+- Aligner label fallbacks for Sinhala phonemes (align.py), a vocabulary size
+  that follows the active inventory (config.py), Sinhala sentence splitting and
+  voice names from the checkpoint (infer.py), parallel feature extraction
+  (prepare.py) and a movable acoustic-feature root (train.py).
+- Data preparation for the Path Nirvana Sinhala TTS dataset and OpenSLR-30
+  (scripts/sinhala_data.py), Kaggle notebooks (notebooks/), Sinhala tests and
+  documentation.
+
+Third-party components used at run time or for training keep their own
+licences: eSpeak NG (GPL-3.0, via espeakng-loader), phonemizer (GPL-3.0),
+the Path Nirvana Sinhala TTS dataset (GPL-3.0; non-obscene, non-offensive
+speech generation only) and facebook/wav2vec2-lv-60-espeak-cv-ft (Apache-2.0,
+alignment only).
