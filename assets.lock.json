@@ -17696,6 +17696,178 @@
           "sourcePath": "web/bengali-voice/onnxruntime-web-LICENSE.txt"
         }
       ]
+    },
+    "browser-voice-ml-int6": {
+      "displayName": "Browser Voice Malayalam INT6 (Jahnavi)",
+      "modelRevision": "651bf3cbe3e9891bb298becaaff713033b0d384a",
+      "browserSourceRevision": "f2977727b8baccb989f80b492ea8da00124ecba3",
+      "immutableCheckpointRevision": "651bf3cbe3e9891bb298becaaff713033b0d384a",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.24.3",
+        "license": "MIT; retain bundled third-party notices",
+        "files": []
+      },
+      "license": {
+        "model": "Apache-2.0",
+        "trainingData": "Malayalam Maya 2 Native Jahnavi 20h synthetic speech and original release annotations CC BY-SA 4.0; Common Voice Malayalam prompt CC0-1.0; Indic TTS Mini ml_F/ml_M prompts CC BY 4.0; OpenSLR transcript indexes and Dakshina native-script Wikipedia prompts CC BY-SA 4.0; source prompts retain original terms",
+        "runtime": "Pinned publisher browser source Apache-2.0; ONNX Runtime Web MIT",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "notes": "Native Malayalam-script fixture only. Stock pace scale is 0.9473172987974098 at UI speed 1. The publisher worker uses one-thread WebAssembly for acoustic and G2P sessions.",
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ml"
+        ],
+        "scope": "Jahnavi in the native Malayalam-script benchmark using the pinned compact INT6 checkpoint.",
+        "sources": [
+          "https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a",
+          "https://huggingface.co/datasets/Hansda/malayalam-maya2-jahnavi-20h/blob/44b501c1e6688b61015c6ba4e07f6e17014731ca/README.md",
+          "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+          "https://github.com/common-voice/common-voice/blob/605c25e48f9fb87cb25ca794cb39bf91d3741f29/server/data/ml/sentence-collector.txt",
+          "https://huggingface.co/datasets/sulabhkatiyar/indic-tts-mini-24k/tree/8fe16c93456540d567f4ae952adb18ab173912b3/index/parts",
+          "https://www.openslr.org/63/",
+          "https://github.com/google-research-datasets/dakshina#native-script-wikipedia"
+        ]
+      },
+      "assets": [
+        {
+          "id": "browser-voice-ml-int6-worker-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/worker.js",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/worker.js",
+          "sha256": "c620a0af032424a74570012281610c32c94a02598391da06d4a81fcf45f618a7",
+          "bytes": 7858,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-frontend-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/frontend.js",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/frontend.js",
+          "sha256": "87d0282594755b6f5e5ea9f348b878ab2363b776fbc0069ace277951a306ee64",
+          "bytes": 3758,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-weight-shuffle-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/weight-shuffle.js",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/weight-shuffle.js",
+          "sha256": "f6e7b0fdc95d4ee12308f1cd227c44f426fda071401d78b94596430b5f3d0e92",
+          "bytes": 1167,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-converter-mjs",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/converter.mjs",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/converter.mjs",
+          "sha256": "b2c7202c1a2ac09878fcf19ac2f03ec3f904a572e97623a4dc8313d87c67b534",
+          "bytes": 3317,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-weights-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/weights.js",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/weights.js",
+          "sha256": "702155516bc665b9bc6814d8a1d9eeffb66b924530c3c50e6d9b02136363cbd0",
+          "bytes": 1899,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-runtime-ort-wasm-min-mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort.wasm.min.mjs",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort.wasm.min.mjs",
+          "sha256": "d5a6d7bc8ee587648fb3742dde8c0094d17cbd3822a68bbec8ddfcd4f2adb88e",
+          "bytes": 49997,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-runtime-ort-wasm-simd-threaded-mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort-wasm-simd-threaded.mjs",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort-wasm-simd-threaded.mjs",
+          "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57",
+          "bytes": 24274,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-runtime-ort-wasm-simd-threaded-wasm-gz",
+          "url": "https://tts.hansda.in/runtime/ort-wasm-simd-threaded.wasm.gz",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort-wasm-simd-threaded.wasm.gz",
+          "sha256": "ad64341b75d860bb282beba9d2a8511858bbe1cbf408b6b460e15aafcc2b4448",
+          "bytes": 3140838,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-ml-int6-model-weights-gz",
+          "url": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser/model.weights.gz",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/assets/ml-int6/model.weights.gz",
+          "sha256": "ed6c4a192462754a6fe2a8e77d5db195909b8f0f28e9695ba466410f33b3cba9",
+          "bytes": 795702,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-ml-int6-voice-onnx-gz",
+          "url": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser/voice.onnx.gz",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/assets/ml-int6/voice.onnx.gz",
+          "sha256": "0ce243edca55241b224ee3c73668ca4cae3f5a49e0f53d3a4e68dab100ed4ca2",
+          "bytes": 29295,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-ml-int6-frontend-json-gz",
+          "url": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser/frontend.json.gz",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/assets/ml-int6/frontend.json.gz",
+          "sha256": "7b72dea00f805ea9114f9e5c69df5d96a2f2f29b874cb3936a4505911c25574b",
+          "bytes": 509267,
+          "kind": "model-config"
+        },
+        {
+          "id": "browser-voice-ml-int6-g2p-encode-onnx-gz",
+          "url": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser/g2p-encode.onnx.gz",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/assets/ml-int6/g2p-encode.onnx.gz",
+          "sha256": "d9e5cf65f565db252220ab68cd2b3bb5d8fdc3b88cdaf0dc521582bb248458bc",
+          "bytes": 667105,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-ml-int6-g2p-decode-onnx-gz",
+          "url": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser/g2p-decode.onnx.gz",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/assets/ml-int6/g2p-decode.onnx.gz",
+          "sha256": "330a504dfca39da0d04c6032a03abf0baa3680288a6077ad0f99a35291892a3f",
+          "bytes": 1124269,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-ml-int6-publisher-credits-html",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+          "target": "models/browser-voice-ml-int6/651bf3cbe3e9891bb298becaaff713033b0d384a/f2977727b8baccb989f80b492ea8da00124ecba3/publisher/credits.html",
+          "sha256": "f061cffaf43c8bf1200be7265abc936a8587f76cdfe138d69dd7c656408623da",
+          "bytes": 2411,
+          "kind": "license"
+        },
+        {
+          "id": "browser-voice-ml-int6-model-apache-license",
+          "url": "https://huggingface.co/Hansda/malayalam-voice-compact/resolve/651bf3cbe3e9891bb298becaaff713033b0d384a/LICENSE",
+          "target": "licenses/browser-voice-ml-int6/model-LICENSE.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358,
+          "kind": "license",
+          "sourcePath": "web/bengali-voice/model-LICENSE.txt"
+        },
+        {
+          "id": "browser-voice-ml-int6-onnxruntime-mit-license",
+          "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+          "target": "licenses/browser-voice-ml-int6/onnxruntime-web-LICENSE.txt",
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "bytes": 1073,
+          "kind": "license",
+          "sourcePath": "web/bengali-voice/onnxruntime-web-LICENSE.txt"
+        }
+      ]
     }
   }
 }
