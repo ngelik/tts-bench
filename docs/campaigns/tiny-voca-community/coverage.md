@@ -2,16 +2,15 @@
 
 ## Full-article measurements
 
-**4 of 8 new language editions have published full-article results.** The remaining editions are Persian, Telugu, Uzbek, and Mandarin Chinese.
+**5 of 8 new language editions have published full-article results.** The remaining editions are Persian, Telugu, and Mandarin Chinese.
 
-Full-article results are available for **4 of 17 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
+Full-article results are available for **5 of 17 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
 
 Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation lexicon and two pronunciation graphs. Roman input also uses the publisher’s script converter. A three-segment check qualifies a browser adapter for full-article measurement.
 
 | Model | Pending input | Browser dependencies and qualification |
 |---|---|---|
 | Tiny Ava | Persian | Parisa acoustic model and both ByT5 pronunciation graphs. [Source](https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32) |
-| Tiny Voca Uzbek Navoiy | Uzbek | M2 checkpoint export, native normalization, phonemizer and seeded noise. [Source](https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1) |
 | Blue-Buff Tiny Voca | Mandarin Chinese | Checkpoint export and the publisher’s Python number, segmentation and tone pipeline. [Source](https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2) |
 | Browser Voice Jahnavi INT6 | Roman Gujarati | Gujarati INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser) |
 | Browser Voice Ishwari INT6 | Hindi | Hindi INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/317) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
@@ -34,6 +33,8 @@ Each timing is the median of three full-article runs in headed Chrome on the App
 | [pt-PT](https://ngelik.github.io/tts-bench/?lang=pt-PT&view=table) | `tiny-voca-ptpt` | CPU | 66.15 s | 1086.49 MB | [Timing](../../../results/2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f/summary.md) · [Memory](../../../results/2026-11-24t12-05-03-409z-tiny-voca-ptpt-cpu-cached-fab0d37b/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t11-58-36-394z-tiny-voca-ptpt-cpu-warm-a650579f--tiny-voca-ptpt--cpu.wav) |
 | [pt-PT](https://ngelik.github.io/tts-bench/?lang=pt-PT&view=table) | `tiny-voca-ptpt` | WebGPU | 25.97 s | 1450.63 MB | [Timing](../../../results/2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b/summary.md) · [Memory](../../../results/2026-11-24t12-06-19-233z-tiny-voca-ptpt-webgpu-cached-639c3866/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t12-03-09-762z-tiny-voca-ptpt-webgpu-warm-0db4328b--tiny-voca-ptpt--webgpu.wav) |
 | [si](https://ngelik.github.io/tts-bench/?lang=si&view=table) | `tiny-voca-sinhala` | CPU | 98.30 s | 1106.62 MB | [Timing](../../../results/2026-11-24t16-27-10-198z-tiny-voca-sinhala-cpu-warm-5c7f1fe0/summary.md) · [Memory](../../../results/2026-11-24t16-33-56-405z-tiny-voca-sinhala-cpu-cached-8c41cc9f/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t16-27-10-198z-tiny-voca-sinhala-cpu-warm-5c7f1fe0--tiny-voca-sinhala--cpu.wav) |
+| [uz](https://ngelik.github.io/tts-bench/?lang=uz&view=table) | `tiny-voca-uz-navoiy` | CPU | 74.73 s | 1156.10 MB | [Timing](../../../results/2026-11-24t19-19-49-945z-tiny-voca-uz-navoiy-cpu-warm-6bc5b74b/summary.md) · [Memory](../../../results/2026-11-24t19-26-33-960z-tiny-voca-uz-navoiy-cpu-cached-ac44d22a/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t19-19-49-945z-tiny-voca-uz-navoiy-cpu-warm-6bc5b74b--tiny-voca-uz-navoiy--cpu.wav) |
+| [uz](https://ngelik.github.io/tts-bench/?lang=uz&view=table) | `tiny-voca-uz-navoiy` | WebGPU | 20.71 s | 1810.60 MB | [Timing](../../../results/2026-11-24t19-25-00-128z-tiny-voca-uz-navoiy-webgpu-warm-9d35be1e/summary.md) · [Memory](../../../results/2026-11-24t19-27-57-522z-tiny-voca-uz-navoiy-webgpu-cached-6d4c9180/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t19-25-00-128z-tiny-voca-uz-navoiy-webgpu-warm-9d35be1e--tiny-voca-uz-navoiy--webgpu.wav) |
 
 ## Directory intake
 
