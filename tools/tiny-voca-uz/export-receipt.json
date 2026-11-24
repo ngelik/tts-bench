@@ -1,0 +1,43 @@
+{
+  "exporter": "62e2adef158bc997042cc6234f541f1e0e4cd55d",
+  "modelRevision": "3d960bd05c728b21fff4ec5154cada7f6b082df1",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "torch": "2.8.0",
+  "onnx": "1.18.0",
+  "parameters": 4531531,
+  "publisherParameterCount": 4531531,
+  "acousticGraphSha256": "7003f4334796dbc08d932cd00e08945d3285eb3b9d9df9c34da29b7b0e563052",
+  "graphBytes": 21357838,
+  "fixtureSha256": "ccf5419bdd654df31cd4df1ff79707cd1e32ffc7fcf26817d8b58d6a204a0254",
+  "completeFrontendSha256": "e4be32f73dadb28f35412cdea215919e46cf81d6906bbf2a1fe389229b2741c0",
+  "spans": 105,
+  "utterances": 345,
+  "maxUtterancesPerSpan": 5,
+  "noiseInputs": [
+    [
+      "noise-42.f32le",
+      "eea6f4da94ac279fc9c324187bdc38af7d8c4d9c4701617c1d5c404ed02b732f",
+      3072000
+    ],
+    [
+      "noise-43.f32le",
+      "b00694940fbc8e09afcb55445d3a1fddd22d3d78a7d1e0ecf63be16f44c9cc59",
+      3072000
+    ],
+    [
+      "noise-44.f32le",
+      "2b6065028de51b0812b968a212bcaa60eb1a8ba63b9fb272b3ec66f2d8ef48f8",
+      3072000
+    ],
+    [
+      "noise-45.f32le",
+      "ed01c002246d02270703133043e6e6415c582e8fff13fd55ea2da0ee4c7b1479",
+      3072000
+    ],
+    [
+      "noise-46.f32le",
+      "71e18ff0f9b172affdf93e837f0b63c612e863a8bf3600f4148c383f4dba11c9",
+      3072000
+    ]
+  ]
+}
