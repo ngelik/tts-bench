@@ -5835,6 +5835,37 @@
       }
     },
     {
+      "resultId": "2026-11-24t16-27-10-198z-tiny-voca-sinhala-cpu-warm-5c7f1fe0",
+      "model": "tiny-voca-sinhala",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M1",
+      "language": "si",
+      "attribution": "AI-generated Sinhala benchmark narration using Emindu Perera’s Tiny Voca Sinhala M1 voice. Ven. Mettananda donated the source voice through the Path Nirvana Foundation. The model and Sinhala training dataset are GPL-3.0. The publisher credits Muhammed Nazeem’s Tiny Voca and the eSpeak NG pronunciation frontend. The donated voices are restricted to non-obscene, non-offensive speech and the publisher prohibits impersonation and deceptive use.",
+      "modelTerms": "GPL-3.0 per the pinned Hugging Face model card.",
+      "sourceUrls": [
+        "https://huggingface.co/eminduperera/tiny-voca-sinhala/tree/c54a456ed65ac8173a666a69b81d99c4ac882dd6",
+        "https://huggingface.co/eminduperera/tiny-voca-sinhala/blob/c54a456ed65ac8173a666a69b81d99c4ac882dd6/README.md",
+        "https://github.com/Emindu/tiny-voca-sinhala/tree/f9f903be847f89458dbc9af750b0ffc6d66a2c9b",
+        "https://github.com/espeak-ng/espeak-ng/tree/1.52.0",
+        "https://github.com/pnfo/sinhala-tts-dataset"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-24t16-27-10-198z-tiny-voca-sinhala-cpu-warm-5c7f1fe0--tiny-voca-sinhala--cpu.wav",
+        "sha256": "6df1e02783fbfa829164d74936ded4daa5da0baa7838e26cb94fb0874667df9f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d72864a6db33bad1727c800b5cba383fac2edeb6d1691afab5be0a4575bc3970",
+        "bytes": 96384012
+      }
+    },
+    {
       "resultId": "2026-11-23t17-14-17-810z-tiny-voca-swahili-cpu-warm-5f0f319c",
       "model": "tiny-voca-swahili",
       "backend": "cpu",

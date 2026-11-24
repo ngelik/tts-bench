@@ -1,0 +1,1005 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24t16-33-56-405z-tiny-voca-sinhala-cpu-cached-8c41cc9f",
+  "createdAt": "2026-11-24T16:35:44.913Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "si-article-v1",
+    "language": "si",
+    "sha256": "6bf7b054ee96b965287c7b4473f7e66cac06436fac16a0ad9aaea6d31ef00f15",
+    "characters": 19752,
+    "unicodeCodePoints": 19752,
+    "utf8Bytes": 52042,
+    "chunks": 90,
+    "source": {
+      "type": "translation",
+      "description": "Sinhala-script edition of the original English article, translated and reviewed by Codex. The 27 paragraphs retain names, dates, times, amounts, dimensions and identifiers in spoken form.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "65036acbd399d20db9dbea6c4ce74254f5a26d54",
+    "dirty": false,
+    "manifestSha256": "f00fea29efec7b25e96b3067808e3acb33646b2a1845403c795cb41afd021738"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-sinhala-onnx",
+      "sha256": "6003a2017de8e42907fc445e00656d35d23dd2594986c042f2c95ec3c9b229c0",
+      "bytes": 21384062
+    },
+    {
+      "id": "tiny-voca-sinhala-metadata",
+      "sha256": "63a864b7cd46f4242d62a77273066ffab5eeb897c9fe656e0a3bb97d4a5fe5b4",
+      "bytes": 1021
+    },
+    {
+      "id": "tiny-voca-sinhala-espeak-wasm",
+      "sha256": "36d82eafb5ad6467d79de9568ac682145178f8d5feaaa2adc60fe832d95a754e",
+      "bytes": 786623
+    },
+    {
+      "id": "tiny-voca-sinhala-espeak-data",
+      "sha256": "c5a5fc1dc54b5d4cb66097ca455cad474da04baf7cd11f4a30b496473344279f",
+      "bytes": 913014
+    },
+    {
+      "id": "tiny-voca-sinhala-ort-ort-wasm-min-mjs",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "tiny-voca-sinhala-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-sinhala-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-sinhala-license-apache",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-sinhala-license-gpl3",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "tiny-voca-sinhala-upstream-notice",
+      "sha256": "2f4d2b187739346c5993270a14e3a0cc9ea51ce339e0b0576ee8085173803ce1",
+      "bytes": 1392
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-sinhala",
+      "support": {
+        "voiceCount": 2,
+        "bundledVoiceCount": 2,
+        "languageCount": 1,
+        "languages": [
+          "si"
+        ],
+        "scope": "Pinned tiny-voca Sinhala step-55000 FP32 ONNX checkpoint; Sinhala text, M1 (Ven. Mettananda, index 0) and F1 (Mrs. Oshadi, index 1), 24 kHz mono. Both donated voices have the publisher’s non-obscene/non-offensive use restriction.",
+        "sources": [
+          "https://huggingface.co/eminduperera/tiny-voca-sinhala/tree/c54a456ed65ac8173a666a69b81d99c4ac882dd6",
+          "https://huggingface.co/eminduperera/tiny-voca-sinhala/blob/c54a456ed65ac8173a666a69b81d99c4ac882dd6/README.md",
+          "https://github.com/Emindu/tiny-voca-sinhala/tree/f9f903be847f89458dbc9af750b0ffc6d66a2c9b",
+          "https://github.com/espeak-ng/espeak-ng/tree/1.52.0",
+          "https://github.com/pnfo/sinhala-tts-dataset"
+        ],
+        "notes": "Uses the publisher’s browser frontend and genuine sentences()/shorter() controls with eSpeak NG inc/si, the exact 73-symbol inventory and pinned frontend fingerprint. Only the stock CPU/WASM provider is enabled. The browser player defaults to 0.35 seconds between sentence ends, with a single 0.99 normalizer over the complete playable span; benchmark source spans apply the same pause and complete-span normalization. The registered article has 90 spans; pinned frontend control covers 373 utterances, maximum 207 tokens and zero unknowns. The model and voice terms require license acceptance."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "M1",
+      "precision": "FP32 ONNX export of the pinned tiny-voca Sinhala step-55000 checkpoint",
+      "settings": {
+        "modelId": "eminduperera/tiny-voca-sinhala",
+        "modelRevision": "c54a456ed65ac8173a666a69b81d99c4ac882dd6",
+        "sourceId": "Emindu/tiny-voca-sinhala",
+        "sourceRevision": "f9f903be847f89458dbc9af750b0ffc6d66a2c9b",
+        "parameterCount": 4536715,
+        "parameterCountKind": "exact sum of 184 FP32 ONNX initializer shapes",
+        "fixtureId": "si-article-v1",
+        "fixtureSha256": "6bf7b054ee96b965287c7b4473f7e66cac06436fac16a0ad9aaea6d31ef00f15",
+        "language": "si",
+        "locale": "si-LK",
+        "supportedLanguages": [
+          "si"
+        ],
+        "voice": "M1",
+        "voiceIndex": 0,
+        "speaker": "Ven. Mettananda",
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "peak": 0.99,
+        "interSentencePauseSeconds": 0.35,
+        "precision": "FP32 ONNX export of the pinned tiny-voca Sinhala step-55000 checkpoint",
+        "frontend": "Publisher browser frontend.js and Unicode tables at Emindu/tiny-voca-sinhala f9f903be847f89458dbc9af750b0ffc6d66a2c9b; eSpeak NG 1.52.0 Sinhala inc/si.",
+        "frontendFingerprint": "8f52dfbdfdf4c65ff541437d2ae22980fbee05263136ed9c76f4c9ae9c38af8b",
+        "runtimeVersion": "1.20.1",
+        "runtimePackage": "onnxruntime-web",
+        "runtimePackageIntegrity": "sha512-TePF6XVpLL1rWVMIl5Y9ACBQcyCNFThZON/jgElNd9Txb73CIEGlklhYR3UEr1cp5r0rbGI6nDwwrs79g7WjoA==",
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "graphOptimizationLevel": "all",
+        "sourceLimitations": "The publisher restricts both donated voices to non-obscene, non-offensive speech; no impersonation, deception, obscene or offensive content.",
+        "outputPolicy": "Stock browser default: 0.35 seconds of silence between sentences, with one 0.99 peak normalizer over each complete canonical source span; no trailing pause after its last sentence.",
+        "runtimeFiles": [
+          "ort.wasm.min.mjs",
+          "ort-wasm-simd-threaded.mjs",
+          "ort-wasm-simd-threaded.wasm"
+        ]
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Explicit ONNX Runtime Web 1.20.1 one-thread WASM CPU route; WebGPU is unsupported by this adapter."
+      },
+      "warmup": [],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 98387.82500004768,
+          "samples": 48191984,
+          "sampleRate": 24000,
+          "pcmSha256": "f2fb303e05aa0ffcb3d6913c9f8590bba164cad58862f5a6f04385bc7be24e57",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 90,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 264.69000005722046,
+            "firstSourceChunkCompletedMs": 1072.7149999141693,
+            "audioSeconds": 2007.9993333333334,
+            "realTimeFactor": 0.048997937084332206,
+            "minSamplesPerChunk": 476576,
+            "maxSamplesPerChunk": 594752,
+            "articleCallPeakRssBytes": 1623851008,
+            "generationMeanRssBytes": 1106624344,
+            "generationRssSampleCount": 195,
+            "loadMs": 513.8834999999999,
+            "controllerTrialElapsedMs": 104966.241875,
+            "downloadBytes": 124115,
+            "idealDownloadSecondsAt1Mbps": 0.99292
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795538040539.0752,
+            "finalPcmAtEpochMs": 1795538138926.9001,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795538041081,
+                1569669120
+              ],
+              [
+                1795538041579,
+                1571848192
+              ],
+              [
+                1795538042084,
+                1590919168
+              ],
+              [
+                1795538042588,
+                1590050816
+              ],
+              [
+                1795538043086,
+                1560625152
+              ],
+              [
+                1795538043589,
+                1563492352
+              ],
+              [
+                1795538044092,
+                1548845056
+              ],
+              [
+                1795538044595,
+                1539260416
+              ],
+              [
+                1795538045096,
+                1542438912
+              ],
+              [
+                1795538045597,
+                1542242304
+              ],
+              [
+                1795538046099,
+                1543782400
+              ],
+              [
+                1795538046601,
+                1574404096
+              ],
+              [
+                1795538047103,
+                1574436864
+              ],
+              [
+                1795538047606,
+                1579401216
+              ],
+              [
+                1795538048107,
+                1580384256
+              ],
+              [
+                1795538048609,
+                1586397184
+              ],
+              [
+                1795538049112,
+                1588740096
+              ],
+              [
+                1795538049614,
+                1592557568
+              ],
+              [
+                1795538050114,
+                1594736640
+              ],
+              [
+                1795538050616,
+                1595539456
+              ],
+              [
+                1795538051120,
+                1602027520
+              ],
+              [
+                1795538051621,
+                1603977216
+              ],
+              [
+                1795538052126,
+                1595719680
+              ],
+              [
+                1795538052627,
+                1527775232
+              ],
+              [
+                1795538053129,
+                1496170496
+              ],
+              [
+                1795538053629,
+                1464909824
+              ],
+              [
+                1795538054132,
+                1442234368
+              ],
+              [
+                1795538054631,
+                1425276928
+              ],
+              [
+                1795538055135,
+                1412661248
+              ],
+              [
+                1795538055636,
+                1391755264
+              ],
+              [
+                1795538056140,
+                1386201088
+              ],
+              [
+                1795538056642,
+                1358020608
+              ],
+              [
+                1795538057144,
+                1359970304
+              ],
+              [
+                1795538057647,
+                1362083840
+              ],
+              [
+                1795538058149,
+                1362100224
+              ],
+              [
+                1795538058650,
+                1101463552
+              ],
+              [
+                1795538059159,
+                1047707648
+              ],
+              [
+                1795538059652,
+                946896896
+              ],
+              [
+                1795538060156,
+                949387264
+              ],
+              [
+                1795538060662,
+                910114816
+              ],
+              [
+                1795538061158,
+                900317184
+              ],
+              [
+                1795538061661,
+                901332992
+              ],
+              [
+                1795538062163,
+                905314304
+              ],
+              [
+                1795538062665,
+                905314304
+              ],
+              [
+                1795538063166,
+                908165120
+              ],
+              [
+                1795538063668,
+                910409728
+              ],
+              [
+                1795538064171,
+                913047552
+              ],
+              [
+                1795538064673,
+                913686528
+              ],
+              [
+                1795538065173,
+                918274048
+              ],
+              [
+                1795538065676,
+                918503424
+              ],
+              [
+                1795538066179,
+                913620992
+              ],
+              [
+                1795538066681,
+                913735680
+              ],
+              [
+                1795538067183,
+                916307968
+              ],
+              [
+                1795538067684,
+                916865024
+              ],
+              [
+                1795538068187,
+                918896640
+              ],
+              [
+                1795538068690,
+                918962176
+              ],
+              [
+                1795538069191,
+                920977408
+              ],
+              [
+                1795538069693,
+                921944064
+              ],
+              [
+                1795538070195,
+                931872768
+              ],
+              [
+                1795538070697,
+                934363136
+              ],
+              [
+                1795538071197,
+                938360832
+              ],
+              [
+                1795538071703,
+                989921280
+              ],
+              [
+                1795538072203,
+                989921280
+              ],
+              [
+                1795538072704,
+                995033088
+              ],
+              [
+                1795538073209,
+                995295232
+              ],
+              [
+                1795538073711,
+                999817216
+              ],
+              [
+                1795538074213,
+                1002504192
+              ],
+              [
+                1795538074713,
+                1002520576
+              ],
+              [
+                1795538075216,
+                1005420544
+              ],
+              [
+                1795538075718,
+                1005453312
+              ],
+              [
+                1795538076219,
+                1007697920
+              ],
+              [
+                1795538076722,
+                1007075328
+              ],
+              [
+                1795538077222,
+                1010221056
+              ],
+              [
+                1795538077723,
+                1010384896
+              ],
+              [
+                1795538078226,
+                1013088256
+              ],
+              [
+                1795538078729,
+                1013645312
+              ],
+              [
+                1795538079231,
+                1016266752
+              ],
+              [
+                1795538079733,
+                1016266752
+              ],
+              [
+                1795538080235,
+                1023197184
+              ],
+              [
+                1795538080739,
+                1024770048
+              ],
+              [
+                1795538081239,
+                1021296640
+              ],
+              [
+                1795538081741,
+                1021296640
+              ],
+              [
+                1795538082243,
+                1021345792
+              ],
+              [
+                1795538082745,
+                1023590400
+              ],
+              [
+                1795538083246,
+                1023623168
+              ],
+              [
+                1795538083747,
+                1025966080
+              ],
+              [
+                1795538084250,
+                1025998848
+              ],
+              [
+                1795538084751,
+                1028325376
+              ],
+              [
+                1795538085264,
+                1002536960
+              ],
+              [
+                1795538085756,
+                1019740160
+              ],
+              [
+                1795538086258,
+                1028947968
+              ],
+              [
+                1795538086758,
+                1032257536
+              ],
+              [
+                1795538087262,
+                1033682944
+              ],
+              [
+                1795538087768,
+                1033764864
+              ],
+              [
+                1795538088265,
+                1031274496
+              ],
+              [
+                1795538088768,
+                1030799360
+              ],
+              [
+                1795538089268,
+                1030799360
+              ],
+              [
+                1795538089772,
+                1034076160
+              ],
+              [
+                1795538090274,
+                1034076160
+              ],
+              [
+                1795538090776,
+                1036795904
+              ],
+              [
+                1795538091277,
+                1036795904
+              ],
+              [
+                1795538091780,
+                1045938176
+              ],
+              [
+                1795538092280,
+                1046675456
+              ],
+              [
+                1795538092784,
+                1045479424
+              ],
+              [
+                1795538093284,
+                1046151168
+              ],
+              [
+                1795538093789,
+                1041268736
+              ],
+              [
+                1795538094292,
+                1041317888
+              ],
+              [
+                1795538094794,
+                1043824640
+              ],
+              [
+                1795538095294,
+                1043038208
+              ],
+              [
+                1795538095793,
+                1048068096
+              ],
+              [
+                1795538096297,
+                1046200320
+              ],
+              [
+                1795538096798,
+                1046233088
+              ],
+              [
+                1795538097301,
+                1048674304
+              ],
+              [
+                1795538097802,
+                1048707072
+              ],
+              [
+                1795538098303,
+                1051377664
+              ],
+              [
+                1795538098805,
+                1055408128
+              ],
+              [
+                1795538099309,
+                1053949952
+              ],
+              [
+                1795538099810,
+                1057095680
+              ],
+              [
+                1795538100312,
+                1059143680
+              ],
+              [
+                1795538100813,
+                1061486592
+              ],
+              [
+                1795538101318,
+                1061896192
+              ],
+              [
+                1795538101817,
+                1064632320
+              ],
+              [
+                1795538102320,
+                1065500672
+              ],
+              [
+                1795538102821,
+                1068974080
+              ],
+              [
+                1795538103324,
+                1068990464
+              ],
+              [
+                1795538103827,
+                1072463872
+              ],
+              [
+                1795538104328,
+                1072480256
+              ],
+              [
+                1795538104829,
+                1077329920
+              ],
+              [
+                1795538105332,
+                1077313536
+              ],
+              [
+                1795538105832,
+                1079672832
+              ],
+              [
+                1795538106335,
+                1079902208
+              ],
+              [
+                1795538106838,
+                1081409536
+              ],
+              [
+                1795538107339,
+                1081409536
+              ],
+              [
+                1795538107841,
+                1083523072
+              ],
+              [
+                1795538108343,
+                1083555840
+              ],
+              [
+                1795538108844,
+                1083604992
+              ],
+              [
+                1795538109347,
+                1085734912
+              ],
+              [
+                1795538109848,
+                1085751296
+              ],
+              [
+                1795538110346,
+                1087995904
+              ],
+              [
+                1795538110850,
+                1088012288
+              ],
+              [
+                1795538111351,
+                1090387968
+              ],
+              [
+                1795538111853,
+                1090387968
+              ],
+              [
+                1795538112359,
+                1092714496
+              ],
+              [
+                1795538112866,
+                1083654144
+              ],
+              [
+                1795538113373,
+                1089552384
+              ],
+              [
+                1795538113867,
+                1090404352
+              ],
+              [
+                1795538114371,
+                1092698112
+              ],
+              [
+                1795538114872,
+                998244352
+              ],
+              [
+                1795538115374,
+                992591872
+              ],
+              [
+                1795538115875,
+                995115008
+              ],
+              [
+                1795538116379,
+                997277696
+              ],
+              [
+                1795538116880,
+                1000112128
+              ],
+              [
+                1795538117382,
+                1000914944
+              ],
+              [
+                1795538117885,
+                1001455616
+              ],
+              [
+                1795538118387,
+                1003962368
+              ],
+              [
+                1795538118889,
+                1008959488
+              ],
+              [
+                1795538119391,
+                1007108096
+              ],
+              [
+                1795538119892,
+                1009123328
+              ],
+              [
+                1795538120394,
+                1011892224
+              ],
+              [
+                1795538120896,
+                1012809728
+              ],
+              [
+                1795538121398,
+                1016152064
+              ],
+              [
+                1795538121899,
+                1015463936
+              ],
+              [
+                1795538122403,
+                1015480320
+              ],
+              [
+                1795538122904,
+                1015349248
+              ],
+              [
+                1795538123406,
+                993837056
+              ],
+              [
+                1795538123907,
+                993837056
+              ],
+              [
+                1795538124410,
+                996261888
+              ],
+              [
+                1795538124917,
+                996261888
+              ],
+              [
+                1795538125416,
+                998408192
+              ],
+              [
+                1795538125918,
+                998424576
+              ],
+              [
+                1795538126420,
+                1001635840
+              ],
+              [
+                1795538126920,
+                1001897984
+              ],
+              [
+                1795538127424,
+                1004093440
+              ],
+              [
+                1795538127925,
+                1009451008
+              ],
+              [
+                1795538128427,
+                1010761728
+              ],
+              [
+                1795538128930,
+                1011269632
+              ],
+              [
+                1795538129432,
+                1014235136
+              ],
+              [
+                1795538129933,
+                1018544128
+              ],
+              [
+                1795538130436,
+                1016709120
+              ],
+              [
+                1795538130940,
+                1016774656
+              ],
+              [
+                1795538131440,
+                1021018112
+              ],
+              [
+                1795538131942,
+                1021493248
+              ],
+              [
+                1795538132443,
+                1021526016
+              ],
+              [
+                1795538132945,
+                1023852544
+              ],
+              [
+                1795538133448,
+                1024917504
+              ],
+              [
+                1795538133951,
+                1027391488
+              ],
+              [
+                1795538134457,
+                1027522560
+              ],
+              [
+                1795538134955,
+                1025900544
+              ],
+              [
+                1795538135458,
+                1026260992
+              ],
+              [
+                1795538135964,
+                1028947968
+              ],
+              [
+                1795538136463,
+                1024000000
+              ],
+              [
+                1795538136964,
+                1023852544
+              ],
+              [
+                1795538137472,
+                1023852544
+              ],
+              [
+                1795538137967,
+                1027342336
+              ],
+              [
+                1795538138469,
+                1027473408
+              ]
+            ],
+            "availability": "measured"
+          },
+          "audio": {
+            "sha256": "a270afa836e84eca7f8f64c247e41d19f72a50f60732f63edbe41ab3a68d7855",
+            "bytes": 96384012
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-24T16-27-09-629Z-bcf4e26c239b; cell 2/2; source 65036acbd399d20db9dbea6c4ce74254f5a26d54; fixture si-article-v1 (si, 19752 JavaScript characters, 90 spans); requested n=1; effective n=1; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-sinhala, M1, FP32 ONNX export of the pinned tiny-voca Sinhala step-55000 checkpoint. Qualified backends: cpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}
