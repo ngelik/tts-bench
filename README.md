@@ -513,6 +513,14 @@ Warm and memory tables prefer native receipts that verify the registered model a
 |---|---|---:|---:|---:|---|
 | Supertonic 3 FP32 (M3) | E13 | 398.08 | — | [94.73 s (n=3)](results/2026-11-24t03-01-28-790z-supertonic-3-webgpu-warm-2098f995/summary.md) | Native; independent attempts |
 
+### Simplified Chinese (zh-Hans) — zh-hans-article-v1
+
+6570 characters / 30 spans · fixture SHA-256 `e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336`. Compare timing only within this exact fixture and compatible source/settings/environment. Translations are separate workloads.
+
+| Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
+|---|---|---:|---:|---:|---|
+| Blue-Buff Tiny Voca Mandarin F | E16 | 21.41 | [83.02 s (n=3)](results/2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a/summary.md) | [13.07 s (n=3)](results/2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc/summary.md) | Native; matched configuration |
+
 Each native warm score shows the number of timed articles (n) using the fixture size shown in its section after the excluded warm-up. For n=1 the reported time is a single observation. A reviewed partial selection also shows the original planned count. Open the receipts for timing boundaries, observed ranges, voice, precision and power conditions.
 
 **Reviewed CosyVoice3 CPU selection:** the displayed median uses two completed scored articles from five originally planned. The operator stopped during trial 3; the native receipt remains error (page.evaluate: Target page, context or browser has been closed). [Review the raw receipt](results/2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e/summary.md) and [hash-bound selection with checkpoints](docs/campaigns/nov14-english/cosy-cpu-warm-selection.json). The following incomplete trial is excluded.
@@ -1181,6 +1189,12 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 |---|---:|---:|---:|
 | Supertonic 3 FP32 (M3) | 398.08 | — | [2080.95](results/2026-11-24t03-08-08-828z-supertonic-3-webgpu-cached-9f90ae40/summary.md) |
 
+**RAM 105** · Simplified Chinese (zh-Hans) · fixture `zh-hans-article-v1` · 6570 characters / 30 spans · MacBook Pro (Apple M1 Pro, 16 GB) · Google Chrome 158.0.8127.37 · Darwin 25.6.0 · browser-tts-cached-v1-resources · 1 full article(s) per measured cell · source [`939917ac`](https://github.com/ngelik/tts-bench/commit/939917ac5bc6b4e310a5ad6a49b485120d929a5a).
+
+| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |
+|---|---:|---:|---:|
+| Blue-Buff Tiny Voca Mandarin F | 21.41 | [1543.39](results/2026-11-24t23-18-48-694z-tiny-voca-zh-blue-buff-cpu-cached-b6713c39/summary.md) | [1883.41](results/2026-11-24t23-20-26-972z-tiny-voca-zh-blue-buff-webgpu-cached-287ac381/summary.md) |
+
 ![Average Chrome RAM during generation — English](docs/reference-memory.svg)
 
 ![Average Chrome RAM during generation — Arabic](docs/reference-memory-ar.svg)
@@ -1272,6 +1286,8 @@ Dedicated full-article memory runs measure an isolated Chrome instance with one 
 ![Average Chrome RAM during generation — Uzbek](docs/reference-memory-uz.svg)
 
 ![Average Chrome RAM during generation — Vietnamese](docs/reference-memory-vi.svg)
+
+![Average Chrome RAM during generation — Simplified Chinese](docs/reference-memory-zh-Hans.svg)
 
 ### Voice and language support
 
@@ -1865,6 +1881,14 @@ Each report states its selected scenarios and keeps their measurement boundaries
 
 ![tiny-voca-uz-navoiy-webgpu — campaign metrics](reports/tiny-voca-uz-navoiy-webgpu/overview.svg)
 
+[tiny-voca-zh-blue-buff-cpu — all-metrics table and source receipts](reports/tiny-voca-zh-blue-buff-cpu/overview.md)
+
+![tiny-voca-zh-blue-buff-cpu — campaign metrics](reports/tiny-voca-zh-blue-buff-cpu/overview.svg)
+
+[tiny-voca-zh-blue-buff-webgpu — all-metrics table and source receipts](reports/tiny-voca-zh-blue-buff-webgpu/overview.md)
+
+![tiny-voca-zh-blue-buff-webgpu — campaign metrics](reports/tiny-voca-zh-blue-buff-webgpu/overview.svg)
+
 [tui-voice-mini-ml — all-metrics table and source receipts](reports/tui-voice-mini-ml/overview.md)
 
 ![tui-voice-mini-ml — campaign metrics](reports/tui-voice-mini-ml/overview.svg)
@@ -2110,6 +2134,8 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | Tiny Voca Kiswahili | webgpu | sw | [Receipt](results/2026-11-23t17-22-45-151z-tiny-voca-swahili-webgpu-warm-322bcfcb/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-23t17-22-45-151z-tiny-voca-swahili-webgpu-warm-322bcfcb--tiny-voca-swahili--webgpu.wav) | Not published |
 | Tiny Voca Uzbek Navoiy M2 | cpu | uz | [Receipt](results/2026-11-24t19-19-49-945z-tiny-voca-uz-navoiy-cpu-warm-6bc5b74b/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t19-19-49-945z-tiny-voca-uz-navoiy-cpu-warm-6bc5b74b--tiny-voca-uz-navoiy--cpu.wav) | Not published |
 | Tiny Voca Uzbek Navoiy M2 | webgpu | uz | [Receipt](results/2026-11-24t19-25-00-128z-tiny-voca-uz-navoiy-webgpu-warm-9d35be1e/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t19-25-00-128z-tiny-voca-uz-navoiy-webgpu-warm-9d35be1e--tiny-voca-uz-navoiy--webgpu.wav) | Not published |
+| Blue-Buff Tiny Voca Mandarin F | cpu | zh-Hans | [Receipt](results/2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a--tiny-voca-zh-blue-buff--cpu.wav) | Not published |
+| Blue-Buff Tiny Voca Mandarin F | webgpu | zh-Hans | [Receipt](results/2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc--tiny-voca-zh-blue-buff--webgpu.wav) | Not published |
 | Tiny Voca 4.5M | cpu | en | [Receipt](results/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t22-52-41-928z-tiny-voca-cpu-cached-1379ab10--tiny-voca--cpu-full.wav) |
 | Tiny Voca 4.5M | cpu | en | [Receipt](results/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-16t17-55-16-727z-tiny-voca-cpu-warm-be739c20--tiny-voca--cpu-full.wav) |
 | Tiny Voca 4.5M | webgpu | en | [Receipt](results/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec/summary.md) | [▶ Listen](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec--tiny-voca--webgpu.wav) | [Download / listen](https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-15t22-55-04-428z-tiny-voca-webgpu-cached-4a50b4ec--tiny-voca--webgpu-full.wav) |
@@ -2543,6 +2569,10 @@ Synthetic speech from the actual recorded runs. [Listening instructions and attr
 | 407 · 2026-11-24 | supertonic-3/cpu | ko / ko-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t21-33-09-638z-supertonic-3-cpu-cached-acf859f4/summary.md) | [SVG](results/2026-11-24t21-33-09-638z-supertonic-3-cpu-cached-acf859f4/chart.svg) |
 | 408 · 2026-11-24 | browser-voice-hi-int6/cpu | hi / hi-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-24t22-32-39-750z-browser-voice-hi-int6-cpu-warm-adafb947/summary.md) | [SVG](results/2026-11-24t22-32-39-750z-browser-voice-hi-int6-cpu-warm-adafb947/chart.svg) |
 | 409 · 2026-11-24 | browser-voice-hi-int6/cpu | hi / hi-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t22-38-51-135z-browser-voice-hi-int6-cpu-cached-6a5bbc54/summary.md) | [SVG](results/2026-11-24t22-38-51-135z-browser-voice-hi-int6-cpu-cached-6a5bbc54/chart.svg) |
+| 410 · 2026-11-24 | tiny-voca-zh-blue-buff/cpu | zh-Hans / zh-hans-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a/summary.md) | [SVG](results/2026-11-24t23-11-45-368z-tiny-voca-zh-blue-buff-cpu-warm-705edf6a/chart.svg) |
+| 411 · 2026-11-24 | tiny-voca-zh-blue-buff/webgpu | zh-Hans / zh-hans-article-v1 | warm / browser-tts-warm-v2 | measured | [Report](results/2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc/summary.md) | [SVG](results/2026-11-24t23-17-36-306z-tiny-voca-zh-blue-buff-webgpu-warm-a816facc/chart.svg) |
+| 412 · 2026-11-24 | tiny-voca-zh-blue-buff/cpu | zh-Hans / zh-hans-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t23-18-48-694z-tiny-voca-zh-blue-buff-cpu-cached-b6713c39/summary.md) | [SVG](results/2026-11-24t23-18-48-694z-tiny-voca-zh-blue-buff-cpu-cached-b6713c39/chart.svg) |
+| 413 · 2026-11-24 | tiny-voca-zh-blue-buff/webgpu | zh-Hans / zh-hans-article-v1 | cached / browser-tts-cached-v1-resources | measured | [Report](results/2026-11-24t23-20-26-972z-tiny-voca-zh-blue-buff-webgpu-cached-287ac381/summary.md) | [SVG](results/2026-11-24t23-20-26-972z-tiny-voca-zh-blue-buff-webgpu-cached-287ac381/chart.svg) |
 
 </details>
 
