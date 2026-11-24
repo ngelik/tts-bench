@@ -6,19 +6,23 @@
 
 Full-article results are available for **4 of 17 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
 
-These inputs still need published results. Each Browser Voice bundle includes matching acoustic weights, a graph, a pronunciation lexicon and neural pronunciation models. Roman input also uses the publisher’s script converter.
+Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation lexicon and two pronunciation graphs. Roman input also uses the publisher’s script converter. A three-segment check qualifies a browser adapter for full-article measurement.
 
-| Model | Pending input | Browser dependencies |
+| Model | Pending input | Browser dependencies and qualification |
 |---|---|---|
 | Tiny Ava | Persian | Parisa acoustic model and both ByT5 pronunciation graphs. [Source](https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32) |
 | Tiny Voca Uzbek Navoiy | Uzbek | M2 checkpoint export, native normalization, phonemizer and seeded noise. [Source](https://huggingface.co/Inomjonov/tiny-voca-uzbek-navoiy/tree/3d960bd05c728b21fff4ec5154cada7f6b082df1) |
 | Blue-Buff Tiny Voca | Mandarin Chinese | Checkpoint export and the publisher’s Python number, segmentation and tone pipeline. [Source](https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2) |
-| Browser Voice Jahnavi INT6 | Roman Gujarati | Gujarati INT6 browser bundle. [Source](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser) |
-| Browser Voice Ishwari INT6 | Hindi, Roman Hindi | Hindi INT6 browser bundle. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
-| Browser Voice Ishwari INT7 | Hindi, Roman Hindi | Hindi INT7 browser bundle. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
-| Browser Voice Jahnavi INT6 | Malayalam, Roman Malayalam | Malayalam INT6 browser bundle. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
-| Browser Voice Sreekar INT8 preview | Telugu, Roman Telugu | Telugu INT8 preview browser bundle. [Source](https://tts.hansda.in/languages.json) |
-| Browser Voice Nivedita INT6 | English | English INT6 browser bundle. [Source](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser) |
+| Browser Voice Jahnavi INT6 | Roman Gujarati | Gujarati INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser) |
+| Browser Voice Ishwari INT6 | Hindi | Hindi INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/317) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
+| Browser Voice Ishwari INT6 | Roman Hindi | Hindi INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
+| Browser Voice Ishwari INT7 | Hindi | Hindi INT7 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/318) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
+| Browser Voice Ishwari INT7 | Roman Hindi | Hindi INT7 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
+| Browser Voice Jahnavi INT6 | Malayalam | Malayalam INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/320) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
+| Browser Voice Jahnavi INT6 | Roman Malayalam | Malayalam INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
+| Browser Voice Sreekar INT8 preview | Telugu | Telugu INT8 preview browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/316) passed the three-segment check for this input. [Source](https://tts.hansda.in/languages.json) |
+| Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://tts.hansda.in/languages.json) |
+| Browser Voice Nivedita INT6 | English | English INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/321) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser) |
 
 Each timing is the median of three full-article runs in headed Chrome on the Apple M1 Pro. Memory comes from a separate cached run. Each 30-second recording comes from the third timing run.
 
