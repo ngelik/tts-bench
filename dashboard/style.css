@@ -635,7 +635,7 @@ td:last-child {
   border:1px solid var(--line);
   border-radius:6px
 }
-.chart-panel h3 {
+.chart-panel :is(h3,h4) {
   font-size:14px;
   font-weight:600;
   margin:0 0 5px
@@ -645,7 +645,7 @@ td:last-child {
   color:var(--muted);
   font-size:12px
 }
-.chart-panel h3 .key {
+.chart-panel :is(h3,h4) .key {
   margin-right:7px
 }
 .bar-row {
@@ -1786,7 +1786,7 @@ dialog h3 {
 .listen-button { background:var(--paper); border-radius:5px; border-color:var(--line); color:var(--ink); min-height:36px; font-size:10px; }
 .listen-button:hover,.listen-button[aria-pressed=true] { background:var(--cpu); border-color:var(--cpu); color:var(--accent-ink); }
 .chart-panel { border:1px solid var(--line); border-radius:10px; background:var(--paper); padding:23px; }
-.chart-panel h3 { font-size:17px; letter-spacing:-.5px; }
+.chart-panel :is(h3,h4) { font-size:17px; letter-spacing:-.5px; }
 .chart-context { font-size:11px; color:var(--muted); }
 .bar-track { background:var(--soft); border-radius:3px; overflow:hidden; }
 .bar-fill { border-radius:3px; }
@@ -1924,3 +1924,27 @@ dialog::backdrop { background:#14231c66; backdrop-filter:blur(4px); }
   .language-option-count { max-width:40%; }
 }
 #fixture-link[hidden] { display:none; }
+
+.charts.by-edition { grid-template-columns:minmax(0,1fr); gap:2rem; }
+.edition-section { min-width:0; }
+.edition-section > h3 { margin:0 0 .75rem; font-size:1.1rem; }
+.edition-section > h3 a, .board-heading a { color:var(--ink); text-underline-offset:.2em; }
+.edition-section .chart-panel, .bar-label button { min-width:0; }
+.bar-label button { min-height:24px; overflow-wrap:anywhere; }
+.bar-value { flex-shrink:0; font-variant-numeric:tabular-nums; }
+.missing-values { margin-top:.5rem; color:var(--muted); font-size:.85rem; }
+.missing-values summary { cursor:pointer; }
+.missing-values button { margin:.3rem .5rem .3rem 0; text-align:left; text-decoration:underline; }
+.table-wrap .board-heading th { position:static; padding:12px 16px; text-align:left; }
+@media(max-width:850px) {
+  .table-wrap tbody .board-heading { grid-column:1 / -1; display:block; padding:.5rem 0 0; border:0; background:transparent; }
+  .table-wrap .board-heading th { display:block; padding:.5rem 0; border:0; background:transparent; }
+}
+
+@media(max-width:700px) {
+  .filters:has(.sort-field[hidden]) .filter-details:not([open]) { grid-column:1; }
+  .chart-toolbar { align-items:start; gap:6px; }
+  .metric-toggle { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; }
+  .metric-toggle button { padding-inline:4px; }
+  .bar-label button { min-height:36px; }
+}

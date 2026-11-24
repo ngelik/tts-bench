@@ -90,6 +90,21 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   const review = resolve(process.env.TTS_BENCH_UI_REVIEW || resolve(root,'.cache/dashboard-language-review'));
   await mkdir(review,{recursive:true});
   await page.goto(base);
+  await page.locator('#charts .edition-section').first().waitFor();
+  await expectLanguage(page,'all');
+  assert.equal(await page.locator('[data-view=charts]').getAttribute('aria-pressed'),'true');
+  const ukBoard = page.locator('#charts [data-edition=uk]');
+  await ukBoard.locator('[data-detail]').first().click();
+  assert.match(await page.locator('#detail-content').innerText(),/12,345 Ukrainian characters/);
+  assert.equal(new URL(await page.getByRole('link',{name:'Link to this model'}).getAttribute('href'),base).searchParams.get('lang'),'uk');
+  await page.locator('#close-details').click();
+  await page.locator('[data-view=table]').click();
+  await page.reload();
+  assert.equal(await page.locator('tr[data-edition=uk] .model-name').innerText(),ukrainian.name);
+  await page.locator('tr[data-edition=uk] [data-play]').first().click();
+  assert.match(await page.locator('#sample-audio').getAttribute('src'),/qa-uk.wav/);
+  await page.locator('#close-player').click();
+  await page.goto(`${base}?lang=en&view=table`);
   await page.waitForFunction(() => document.querySelectorAll('#model-rows tr').length === 3);
   await expectLanguage(page,'en');
   assert.equal(await page.locator('#language-picker').isVisible(),false,'The closed native dialog is hidden');
@@ -97,13 +112,15 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await page.locator('#language-picker').isVisible(),true);
   assert.equal(await page.locator('#language-search').evaluate(input=>input===document.activeElement),true,'Desktop opening focuses the labeled search field');
   await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#language-all').evaluate(link=>link===document.activeElement),true);
+  await page.keyboard.press('Tab');
   assert.equal(await page.locator('#language-en').evaluate(link=>link===document.activeElement),true,'Tab moves from search to the first real language link');
   await page.keyboard.press('Enter');
   assert.equal(await page.locator('#language-picker').evaluate(dialog=>dialog.open),false,'Enter selects a locale link');
   assert.equal(await page.locator('#language-picker-trigger').evaluate(button=>button===document.activeElement),true,'Selection restores focus to the picker button');
   await page.locator('#language-picker-trigger').focus(); await page.keyboard.press('Enter');
-  assert.equal(await page.locator('#language-options [data-language]').count(),27,'The picker includes the directory entry alongside 26 benchmark editions');
-  assert.equal(await page.locator('[data-language-group=measured] [data-language]').count(),3);
+  assert.equal(await page.locator('#language-options [data-language]').count(),28,'The picker includes All languages, the hosted entry, and 26 benchmark editions');
+  assert.equal(await page.locator('[data-language-group=measured] [data-language]').count(),4);
   assert.equal(await page.locator('[data-language-group=pending] [data-language]').count(),24);
   assert.ok((await page.locator('#language-ku-Arab-IQ').innerText()).includes('Kurdish Behdînî (Arabic script)'));
   assert.equal(await page.locator('#language-ku-Arab-IQ .language-option-english').textContent(),'Kurdish Behdînî (Arabic script)');
@@ -259,10 +276,10 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   capabilityModels.forEach(model=>validateSupport(model.support));
   data = {...data, models:capabilityModels, fixture:{characters:9999}};
   await page.setViewportSize({width:1440,height:1000});
-  await page.goto(base);
+  await page.goto(`${base}?lang=en&view=table`);
   await page.waitForFunction(()=>document.querySelectorAll('#model-rows tr').length===3);
   assert.equal(await page.locator('#fixture-language').innerText(),'9,999 English characters');
-  await page.goto(`${base}?cohort=historical&voices=all`);
+  await page.goto(`${base}?lang=en&view=table&cohort=historical&voices=all`);
   await page.waitForFunction(()=>document.querySelectorAll('#model-rows tr').length===3);
   assert.equal(new URL(page.url()).searchParams.has('cohort'),false);
   assert.equal(new URL(page.url()).searchParams.get('voices'),'all');
@@ -277,7 +294,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
     assert.equal(await page.locator('#model-rows tr').count(),count,`${id} ${value}`);
     await page.locator(`#${id}`).selectOption('all');
   }
-  await page.goto(base);
+  await page.goto(`${base}?lang=en&view=table`);
   await page.waitForFunction(()=>document.querySelectorAll('#model-rows tr').length===3);
   await page.locator('#search').fill(en[0].name);
   await page.locator('#supported-language').selectOption('uk');
@@ -289,7 +306,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   const filteredEditionHref = new URL(await page.locator('#language-uk').getAttribute('href'),page.url());
   assert.equal(filteredEditionHref.searchParams.get('lang'),'uk');
   assert.equal(filteredEditionHref.searchParams.get('q'),en[0].name);
-  assert.equal(filteredEditionHref.searchParams.get('view'),'charts');
+  assert.equal(filteredEditionHref.searchParams.get('view') ?? 'charts','charts');
   assert.equal(filteredEditionHref.searchParams.get('metric'),'coverage');
   assert.equal(filteredEditionHref.searchParams.has('sort'),false,'Default sort stays canonical when omitted');
   assert.equal(filteredEditionHref.searchParams.has('supports'),false,'Copied destinations drop unsupported locale-specific support filters');
@@ -298,11 +315,11 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(new URL(page.url()).searchParams.has('supports'),false,'Ordinary selection and the real href resolve incompatible support filters alike');
   assert.equal(new URL(page.url()).searchParams.has('license'),false,'Ordinary selection and the real href resolve incompatible licenses alike');
   assert.equal(new URL(page.url()).searchParams.get('q'),en[0].name);
-  assert.equal(new URL(page.url()).searchParams.get('view'),'charts');
+  assert.equal(new URL(page.url()).searchParams.get('view') ?? 'charts','charts');
   assert.equal(new URL(page.url()).searchParams.get('metric'),'coverage');
   await page.goBack();
   await page.waitForFunction(()=>document.querySelector('#language-en')?.getAttribute('aria-current')==='page');
-  await page.goto(base);
+  await page.goto(`${base}?lang=en&view=table`);
   await page.waitForFunction(()=>document.querySelectorAll('#model-rows tr').length===3);
   await page.locator('#weight-filter').selectOption('le10');
   await page.locator('#supported-language').selectOption('uk');
@@ -320,7 +337,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await page.locator('#voice-count').inputValue(),'unknown');
   await page.goForward();
   await expectLanguage(page,'uk');
-  await page.goto(`${base}?voices=unknown`);
+  await page.goto(`${base}?lang=en&view=table&voices=unknown`);
   await page.waitForFunction(()=>document.querySelector('#voice-count').value==='unknown');
   assert.equal(await page.locator('#model-rows tr').count(),1);
   await page.locator('#reset').click();
@@ -347,7 +364,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   // is ever included in this screenshot or in a generated site asset.
   data = {...original, languages:data.languages, byLanguage:{uk:{models:[]}}};
   await page.setViewportSize({width:1440,height:1000});
-  await page.goto(base);
+  await page.goto(`${base}?lang=en&view=table`);
   await page.waitForFunction(() => document.querySelector('#model-count').textContent !== '—');
   const eligibleReal = original.models.filter(model=>['cpu','webgpu'].some(backend=>
     (model.warm[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform)||
@@ -396,7 +413,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   await page.locator('#close-details').click();
   await selectLanguage(page,'en');
   assert.equal(new URL(page.url()).searchParams.has('model'),false,'Changing editions removes the stale model detail selection');
-  assert.equal(new URL(page.url()).searchParams.get('view'),'charts');
+  assert.equal(new URL(page.url()).searchParams.get('view') ?? 'charts','charts');
   assert.equal(new URL(page.url()).searchParams.get('metric'),'coverage');
   await page.goBack();
   await expectLanguage(page,'fr');
@@ -413,11 +430,11 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
     await page.waitForFunction(()=>document.querySelector('#language-fr')?.getAttribute('aria-current')==='page');
     assert.equal(await page.locator('#fixture-link').getAttribute('href'),null,'Unsafe fixture paths never become links');
   }
-  // Missing labels use endonyms, while unknown URL languages safely use English.
+  // Missing labels use endonyms, while unknown URL languages safely use the overview.
   data.languages[2] = {id:'fr'};
   await page.goto(`${base}?lang=fr`); await page.locator('#language-fr').waitFor({state:'attached'});
   await page.goto(`${base}?lang=de&q=Kokoro`);
-  await page.waitForFunction(()=>document.querySelector('#language-en')?.getAttribute('aria-current')==='page');
+  await page.waitForFunction(()=>document.querySelector('#language-all')?.getAttribute('aria-current')==='page');
   assert.equal(new URL(page.url()).searchParams.has('lang'),false);
   assert.equal(new URL(page.url()).searchParams.get('q'),'Kokoro');
   assert.deepEqual(errors,[]);
@@ -425,7 +442,9 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   const touchContext = await browser.newContext({viewport:{width:320,height:720},isMobile:true,hasTouch:true});
   const touchPage = await touchContext.newPage();
   await touchPage.goto(base);
-  await touchPage.waitForFunction(()=>document.querySelector('#current-language')?.textContent==='English');
+  await touchPage.locator('.edition-section').first().waitFor();
+  assert.equal(await touchPage.locator('#current-language').textContent(),'All languages');
+  assert.ok(await touchPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Default charts fit the 320px viewport');
   assert.equal(await touchPage.locator('#language-picker').isVisible(),false,'Touch preview starts with a hidden dialog');
   assert.equal(await touchPage.locator('#language-picker').getAttribute('tabindex'),null,'The dialog does not set the disallowed tabindex attribute');
   await touchPage.locator('#language-picker-trigger').tap();

@@ -269,8 +269,33 @@ async function verifyLanguageRows(page,label) {
   await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,expectedIds.length,{timeout:20000});
   return rows;
 }
+async function verifyOverview(page,label) {
+  const boards=page.locator('#charts .edition-section');
+  await boards.first().waitFor();
+  assert.equal(await page.locator('#current-language').innerText(),'All languages');
+  assert.equal(await page.locator('[data-view=charts]').getAttribute('aria-pressed'),'true');
+  const inventory=await boards.evaluateAll(sections=>sections.map(section=>({
+    edition:section.dataset.edition,
+    cpu:[...section.querySelectorAll('.chart-panel.cpu .bar-row')].map(row=>row.dataset.model).sort(),
+    webgpu:[...section.querySelectorAll('.chart-panel.gpu .bar-row')].map(row=>row.dataset.model).sort(),
+  })));
+  for(const {id,group} of languageGroups) {
+    const board=inventory.find(row=>row.edition===id);
+    assert.ok(board,`${label} includes ${id}`);
+    for(const backend of ['cpu','webgpu']) {
+      const ids=group.models.filter(model=>{
+        const score=model.warm[backend];
+        return score?.status==='measured' && Number.isFinite(score.medianSeconds) && !score.waveform;
+      }).map(model=>model.id).sort();
+      assert.deepEqual(board[backend],ids,`${label} ${id} ${backend} overview measurements`);
+    }
+  }
+  await selectLanguage(page,'en',label);
+  await page.locator('[data-view=table]').click();
+}
 async function verifyDashboard(page,label) {
   await page.goto(base);
+  await verifyOverview(page,label);
   await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count || !document.querySelector('#load-error')?.hidden,expectedIds.length,{timeout:20000});
   const actualIds=(await page.locator('#model-rows tr').evaluateAll(rows=>rows.map(row=>row.dataset.model))).sort();
   assert.deepEqual(actualIds,expectedIds,`${label} visitor loaded the eligible published model IDs`);
@@ -398,6 +423,7 @@ try {
       phase='public-fresh';
       assert.equal(freshUrl.search,'','Live verification uses the exact canonical public URL');
       await publicPage.goto(freshUrl.href,{waitUntil:'domcontentloaded'});
+      await verifyOverview(publicPage,'Public');
       await publicPage.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count||!document.querySelector('#load-error')?.hidden,expectedIds.length,{timeout:20000});
       const publicIds=(await publicPage.locator('#model-rows tr').evaluateAll(rows=>rows.map(row=>row.dataset.model))).sort();
       const rows=publicIds.length;

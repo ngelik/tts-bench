@@ -38,7 +38,7 @@ selection rules, local checks and deployment workflow.
 
 ## Reference results
 
-Liquid LFM3: [interactive table](https://ngelik.github.io/tts-bench/?q=LFM3) · [generation charts](https://ngelik.github.io/tts-bench/?q=LFM3&view=charts) · [memory charts](https://ngelik.github.io/tts-bench/?q=LFM3&view=charts&metric=memory). Four CPU/GPU configurations represent two speech-generating models; their different quantizations and runtimes are not a controlled backend speedup comparison.
+Liquid LFM3: [interactive table](https://ngelik.github.io/tts-bench/?lang=en&view=table&q=LFM3) · [generation charts](https://ngelik.github.io/tts-bench/?lang=en&q=LFM3&view=charts) · [memory charts](https://ngelik.github.io/tts-bench/?lang=en&q=LFM3&view=charts&metric=memory). Four CPU/GPU configurations represent two speech-generating models; their different quantizations and runtimes are not a controlled backend speedup comparison.
 
 [Liquid LFM3 run notes](docs/LIQUID_LFM3_RUN_NOTES.md) document retained initialization failures, the selected clean memory repeat, and speech-completeness observations.
 
