@@ -467,7 +467,7 @@ Warm and memory tables prefer native receipts that verify the registered model a
 
 | Model | Environment | Model weights (MB) | CPU warm median | WebGPU warm median | Evidence scope |
 |---|---|---:|---:|---:|---|
-| Browser Voice Telugu preview INT8 (Sreekar) | E16 | 2.77 | [88.37 s (n=3)](results/2026-11-24t19-38-00-411z-browser-voice-te-preview-int8-cpu-warm-f5174d41/summary.md) | — | Native; independent attempts |
+| Browser Voice Telugu preview INT8 (Sreekar) | E16 | 2.77 | [88.37 s (n=3)](results/2026-11-24t19-38-00-411z-browser-voice-te-preview-int8-cpu-warm-f5174d41/summary.md) | — | Archived native; independent attempts |
 
 ### Turkish (tr) — tr-article-v1
 
