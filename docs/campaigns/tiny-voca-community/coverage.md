@@ -12,14 +12,14 @@ Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation le
 |---|---|---|
 | Tiny Ava | Persian | Parisa acoustic model and both ByT5 pronunciation graphs. [Source](https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32) |
 | Blue-Buff Tiny Voca | Mandarin Chinese | Checkpoint export and the publisher’s Python number, segmentation and tone pipeline. [Source](https://huggingface.co/songLucasXXX/tiny-voca-zh/tree/9d6b4631bd59b1fa69b398913b852d03f22071d2) |
-| Browser Voice Jahnavi INT6 | Roman Gujarati | Gujarati INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser) |
+| Browser Voice Jahnavi INT6 | Roman Gujarati | Gujarati INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/327) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f/int6/browser) |
 | Browser Voice Ishwari INT6 | Hindi | Hindi INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/317) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
-| Browser Voice Ishwari INT6 | Roman Hindi | Hindi INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
+| Browser Voice Ishwari INT6 | Roman Hindi | Hindi INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/328) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser) |
 | Browser Voice Ishwari INT7 | Hindi | Hindi INT7 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/318) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
-| Browser Voice Ishwari INT7 | Roman Hindi | Hindi INT7 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
+| Browser Voice Ishwari INT7 | Roman Hindi | Hindi INT7 browser bundle. The CPU adapter passed the three-span Roman-input audio check. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
 | Browser Voice Jahnavi INT6 | Malayalam | Malayalam INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/320) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
-| Browser Voice Jahnavi INT6 | Roman Malayalam | Malayalam INT6 browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
-| Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The browser adapter still needs qualification on the Roman-script article. [Source](https://tts.hansda.in/languages.json) |
+| Browser Voice Jahnavi INT6 | Roman Malayalam | Malayalam INT6 browser bundle. The CPU adapter passed the three-span Roman-input audio check. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
+| Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The CPU adapter passed the three-span Roman-input audio check. [Source](https://tts.hansda.in/languages.json) |
 | Browser Voice Nivedita INT6 | English | English INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/321) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser) |
 
 Each timing is the median of three full-article runs in headed Chrome on the Apple M1 Pro. Memory comes from a separate cached run. Each 30-second recording comes from the third timing run.
@@ -70,12 +70,12 @@ The intake above records coverage at the cited revision. Each published score re
 
 The publisher provides 100 two-sentence examples per language by combining four openings with 25 follow-ups. We ran its scoring script against the deployed converter dictionaries. An exact prompt reproduces the native-script reference after the scorer removes punctuation and whitespace. Character error rate counts insertions, deletions and substitutions across all normalized reference characters. Audio evaluation uses separate headed-browser recordings. [Publisher examples](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3/converter/fixtures) · [Scoring script](https://github.com/DarvinX/multilingual-browser-tts/blob/f2977727b8baccb989f80b492ea8da00124ecba3/converter/score.mjs)
 
-| Roman input | Exact full prompts out of 100 | Character error rate |
-|---|---:|---:|
-| Gujarati | 10 | 11.52% |
-| Hindi | 24 | 9.39% |
-| Malayalam | 14 | 13.97% |
-| Telugu | 24 | 8.28% |
+| Roman input | Exact full prompts out of 100 | Character error rate | Dictionary download |
+|---|---:|---:|---:|
+| Gujarati | 10 | 11.52% | [968,274 bytes](https://tts.hansda.in/assets/converter/gu.json.gz) |
+| Hindi | 24 | 9.39% | [641,082 bytes](https://tts.hansda.in/assets/converter/hi.json.gz) |
+| Malayalam | 14 | 13.97% | [840,024 bytes](https://tts.hansda.in/assets/converter/ml.json.gz) |
+| Telugu | 24 | 8.28% | [818,577 bytes](https://tts.hansda.in/assets/converter/te.json.gz) |
 
 ### Reviewed Roman-input articles
 
