@@ -23,6 +23,11 @@ export default {
       "language": "ml",
       "sha256": "ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd",
       "spans": 105
+    },
+    "ml-latn-article-v1": {
+      "language": "ml-Latn",
+      "sha256": "16638b2f59789d7ce6b4cc0fe7692a6d56d413170eb8272d7002f58281366764",
+      "spans": 116
     }
   }
 };

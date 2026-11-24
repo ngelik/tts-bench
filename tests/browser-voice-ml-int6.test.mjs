@@ -31,7 +31,7 @@ test('Malayalam INT6 profile pins checkpoint, asset closure, and source credits'
 });
 
 test('Malayalam route binds native fixture and rejects GPU or checksum mismatch',async()=>{
-  assert.equal(defaultFixtureForModel(profile.id),'ml-article-v1'); assert.equal(requiredFixtureForModel(profile.id),'ml-article-v1');
+  assert.equal(defaultFixtureForModel(profile.id),'ml-article-v1'); assert.equal(requiredFixtureForModel(profile.id), null);
   const adapter=createBrowserVoiceAdapter(profile);const options={fixtureId:'ml-article-v1',language:'ml',backend:'cpu'};
   assert.equal((await adapter.initialize({...options,backend:'webgpu'})).status,'unsupported');
   assert.equal((await adapter.initialize({...options,language:'hi'})).status,'unsupported');
@@ -41,4 +41,21 @@ test('Malayalam route binds native fixture and rejects GPU or checksum mismatch'
 test('Malayalam INT6 audio attribution is catalog-bound and distinguishes source terms',()=>{
   const model=getAssetLock().models[profile.id];
   assert.doesNotThrow(()=>verifyAudioAttribution({model:profile.id,modelTerms:model.license.model,attribution:"AI-generated Malayalam benchmark narration using Tamal Hansda’s Browser Voice Jahnavi INT6. The Apache-2.0 INT6 checkpoint is separate from its training sources. The Malayalam Maya 2 Native Jahnavi 20h synthetic speech and original release annotations are CC BY-SA 4.0. The dataset card credits Common Voice Malayalam prompt material (CC0-1.0), Indic TTS Mini Malayalam prompt indexes (CC BY 4.0), OpenSLR transcript indexes and Dakshina native-script Wikipedia text (CC BY-SA 4.0), with source prompts retaining their original terms. Credits include Mozilla Common Voice contributors, AI4Bharat and Rasa contributors, OpenSLR resource authors, Google Research and Wikipedia contributors. Publisher credits include Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). No generated-audio reuse rights are inferred.",sourceUrls:model.support.sources}));
+});
+
+test('Roman Malayalam uses the same spoken language and the published dictionary', async () => {
+  const model = getAssetLock().models[profile.id];
+  const layout = profile.fixtures['ml-latn-article-v1'];
+  assert.equal(layout.sha256, '16638b2f59789d7ce6b4cc0fe7692a6d56d413170eb8272d7002f58281366764');
+  assert.equal(layout.spans, 116);
+  assert.equal(layout.language, 'ml-Latn');
+  assert.equal(profile.spokenLanguage, 'ml');
+  assert.deepEqual(model.support.languages, ['ml']);
+  const dictionary = model.assets.find(asset => asset.id === profile.id + '-roman-dictionary');
+  assert.equal(dictionary.sha256, '95ec273b839908c628e15d8014a1dc8cee180751a8d00b718dba3dfdc35631cc');
+  assert.equal('/' + dictionary.target, profile.workerUrl.replace(/worker\.js$/, 'assets/converter/ml.json.gz'));
+  const adapter = createBrowserVoiceAdapter(profile);
+  const options = { fixtureId: 'ml-latn-article-v1', language: 'ml-Latn', backend: 'cpu' };
+  assert.equal((await adapter.initialize({ ...options, language: 'ml' })).status, 'unsupported');
+  await assert.rejects(adapter.initialize({ ...options, sourceSha256: '0'.repeat(64) }), /checksum/);
 });
