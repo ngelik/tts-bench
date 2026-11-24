@@ -16911,19 +16911,20 @@
         "cpu"
       ],
       "support": {
-        "notes": "The registered route reads Gujarati script using voice index zero. The published worker explicitly selects one-thread WebAssembly for the acoustic and pronunciation sessions.",
+        "notes": "Gujarati script and Roman Gujarati have separate registered articles. The stock Roman frontend uses the Dakshina-derived dictionary. The published worker explicitly selects one-thread WebAssembly for the acoustic and pronunciation sessions.",
         "voiceCount": 1,
         "bundledVoiceCount": 1,
         "languageCount": 1,
         "languages": [
           "gu"
         ],
-        "scope": "Jahnavi in the native Gujarati-script benchmark, using the published compact INT6 checkpoint.",
+        "scope": "Jahnavi speaks Gujarati from Gujarati script or Roman input using the published INT6 checkpoint.",
         "sources": [
           "https://huggingface.co/Hansda/gujarati-voice-compact/tree/e20cc854291738b7bdd7986cb01c90c9bfe1415f",
           "https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3",
           "https://tts.hansda.in/?lang=gu",
-          "https://huggingface.co/datasets/Hansda/gujarati-maya2-jahnavi-20h/blob/d2e587e6278a4792fb5d5952b2bda1871037eaf9/README.md"
+          "https://huggingface.co/datasets/Hansda/gujarati-maya2-jahnavi-20h/blob/d2e587e6278a4792fb5d5952b2bda1871037eaf9/README.md",
+          "https://github.com/google-research-datasets/dakshina"
         ]
       },
       "assets": [
@@ -17046,6 +17047,14 @@
           "bytes": 1073,
           "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
           "kind": "license"
+        },
+        {
+          "id": "browser-voice-gu-int6-roman-dictionary",
+          "url": "https://tts.hansda.in/assets/converter/gu.json.gz",
+          "target": "models/browser-voice-gu-int6/e20cc854291738b7bdd7986cb01c90c9bfe1415f/f2977727b8baccb989f80b492ea8da00124ecba3/assets/converter/gu.json.gz",
+          "sha256": "3bae79d970c9493e6968267384204fa8b3cf33424c5bc8ee9bd12cc903a4dbe2",
+          "bytes": 968274,
+          "kind": "model-config"
         }
       ]
     },
