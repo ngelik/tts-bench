@@ -1,0 +1,26 @@
+{
+  "corpusVersion": "fa-article-v1",
+  "file": "fa-article-v1.txt",
+  "sha256": "17d9ce8d7038eb0be3f6b772e8dd47c0acc68bcad6bf64616b9c84bafa2c204a",
+  "utf8Bytes": 34049,
+  "unicodeCodePoints": 18805,
+  "javascriptStringLength": 18805,
+  "terminalNewline": "1 LF character included in character and byte totals",
+  "chunkCount": 86,
+  "chunkCharacters": {
+    "min": 108,
+    "max": 223
+  },
+  "fixtureId": "fa-article-v1",
+  "language": "fa",
+  "source": {
+    "type": "translation",
+    "description": "Complete Persian translation of the 27-paragraph English article. Codex reviewed source fidelity and corrected times, measurements, initials, the archive checklist and the terminal folder year. Numbers and initials use spoken Persian forms. AI translation and editorial review.",
+    "sourceFixtureId": "english-20k-v1",
+    "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+    "sourceLanguage": "en"
+  },
+  "creator": "GPT-6 Luna with Codex editorial review",
+  "license": "MIT",
+  "generator": "translation-fixture-v1"
+}
