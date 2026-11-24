@@ -1,0 +1,368 @@
+{
+  "model": "tiny-voca-zh-blue-buff",
+  "sourceRevision": "8b3fb5b460e828a90913edc28f3f1ddc51a66127",
+  "modelRevision": "9d6b4631bd59b1fa69b398913b852d03f22071d2",
+  "voice": "F",
+  "speed": 1,
+  "fixtureId": "zh-hans-article-v1",
+  "fixtureSha256": "e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336",
+  "sourceSpans": 30,
+  "durationMeasurement": {
+    "measuredAt": "2026-11-24T15:56:55.998Z",
+    "backend": "cpu/wasm",
+    "runtime": "ONNX Runtime Web 1.31.1",
+    "checkpointSha256": "862293aaf5e97fdc8ed01d9d774603dc21e03d3642f188f651e20a92fbeef722",
+    "acousticGraphSha256": "0ba0b4d3ffaf70ffbce2ac31205248d7506f12a85639fd5530630c85fb50028a",
+    "durationGraphSha256": "3243f7a1d2d44db28084f32d0183bfa5eb279e3a421fb7b8a4377fc077b67d1d",
+    "inputPlanSha256": "e93cbf338de4a120d7ab1c4d847f8ce5b8ff47f8bf6ae8cddd99b447b28330e8",
+    "diagnosticReceiptSha256": "b0c3cdab9ac105d20218e6044dea19084083c1503b0b00e3c604f79ae0679d84",
+    "maxAllowedFrames": 3000,
+    "utterances": 31,
+    "overLimit": 29,
+    "highestPrediction": 4146,
+    "audioGenerated": false
+  },
+  "revisedTextPlan": {
+    "policy": "zh-natural-boundary-v1",
+    "policySha256": "da40affe377b8fb79d54d7620ba0793eb2afe902edca0aa862738fddab52db51",
+    "inputPlanSha256": "60b4ce5df21aff4f62a857a9c3c16919ab0848f66285634869dd65b4cbf52191",
+    "utterances": 92,
+    "maximumTokens": 240,
+    "stage": "Source coverage and token lengths verified. Duration and audio checks pending for these inputs."
+  },
+  "bySourceSpan": [
+    {
+      "sourceSpan": 0,
+      "originalPredictedFrames": [
+        3842
+      ],
+      "revisedInputTokens": [
+        111,
+        136,
+        233
+      ]
+    },
+    {
+      "sourceSpan": 1,
+      "originalPredictedFrames": [
+        4146
+      ],
+      "revisedInputTokens": [
+        182,
+        93,
+        223
+      ]
+    },
+    {
+      "sourceSpan": 2,
+      "originalPredictedFrames": [
+        3812
+      ],
+      "revisedInputTokens": [
+        226,
+        122,
+        130
+      ]
+    },
+    {
+      "sourceSpan": 3,
+      "originalPredictedFrames": [
+        3821
+      ],
+      "revisedInputTokens": [
+        105,
+        153,
+        232
+      ]
+    },
+    {
+      "sourceSpan": 4,
+      "originalPredictedFrames": [
+        4091
+      ],
+      "revisedInputTokens": [
+        233,
+        109,
+        136
+      ]
+    },
+    {
+      "sourceSpan": 5,
+      "originalPredictedFrames": [
+        3894
+      ],
+      "revisedInputTokens": [
+        170,
+        95,
+        224
+      ]
+    },
+    {
+      "sourceSpan": 6,
+      "originalPredictedFrames": [
+        3759
+      ],
+      "revisedInputTokens": [
+        239,
+        230
+      ]
+    },
+    {
+      "sourceSpan": 7,
+      "originalPredictedFrames": [
+        3842
+      ],
+      "revisedInputTokens": [
+        111,
+        161,
+        212
+      ]
+    },
+    {
+      "sourceSpan": 8,
+      "originalPredictedFrames": [
+        3779
+      ],
+      "revisedInputTokens": [
+        223,
+        96,
+        164
+      ]
+    },
+    {
+      "sourceSpan": 9,
+      "originalPredictedFrames": [
+        3808
+      ],
+      "revisedInputTokens": [
+        230,
+        104,
+        155
+      ]
+    },
+    {
+      "sourceSpan": 10,
+      "originalPredictedFrames": [
+        3928
+      ],
+      "revisedInputTokens": [
+        223,
+        125,
+        128
+      ]
+    },
+    {
+      "sourceSpan": 11,
+      "originalPredictedFrames": [
+        3626
+      ],
+      "revisedInputTokens": [
+        111,
+        136,
+        139,
+        106
+      ]
+    },
+    {
+      "sourceSpan": 12,
+      "originalPredictedFrames": [
+        3932
+      ],
+      "revisedInputTokens": [
+        133,
+        114,
+        139,
+        120
+      ]
+    },
+    {
+      "sourceSpan": 13,
+      "originalPredictedFrames": [
+        3922
+      ],
+      "revisedInputTokens": [
+        126,
+        129,
+        235
+      ]
+    },
+    {
+      "sourceSpan": 14,
+      "originalPredictedFrames": [
+        3892
+      ],
+      "revisedInputTokens": [
+        115,
+        159,
+        211
+      ]
+    },
+    {
+      "sourceSpan": 15,
+      "originalPredictedFrames": [
+        3805
+      ],
+      "revisedInputTokens": [
+        113,
+        138,
+        141,
+        103
+      ]
+    },
+    {
+      "sourceSpan": 16,
+      "originalPredictedFrames": [
+        3871
+      ],
+      "revisedInputTokens": [
+        232,
+        135,
+        112
+      ]
+    },
+    {
+      "sourceSpan": 17,
+      "originalPredictedFrames": [
+        3879
+      ],
+      "revisedInputTokens": [
+        136,
+        137,
+        223
+      ]
+    },
+    {
+      "sourceSpan": 18,
+      "originalPredictedFrames": [
+        3916
+      ],
+      "revisedInputTokens": [
+        103,
+        160,
+        232
+      ]
+    },
+    {
+      "sourceSpan": 19,
+      "originalPredictedFrames": [
+        3948
+      ],
+      "revisedInputTokens": [
+        231,
+        240
+      ]
+    },
+    {
+      "sourceSpan": 20,
+      "originalPredictedFrames": [
+        3885
+      ],
+      "revisedInputTokens": [
+        115,
+        138,
+        232
+      ]
+    },
+    {
+      "sourceSpan": 21,
+      "originalPredictedFrames": [
+        3943
+      ],
+      "revisedInputTokens": [
+        208,
+        162,
+        111
+      ]
+    },
+    {
+      "sourceSpan": 22,
+      "originalPredictedFrames": [
+        3805
+      ],
+      "revisedInputTokens": [
+        216,
+        125,
+        131
+      ]
+    },
+    {
+      "sourceSpan": 23,
+      "originalPredictedFrames": [
+        3807
+      ],
+      "revisedInputTokens": [
+        199,
+        108,
+        191
+      ]
+    },
+    {
+      "sourceSpan": 24,
+      "originalPredictedFrames": [
+        3846
+      ],
+      "revisedInputTokens": [
+        235,
+        134,
+        118
+      ]
+    },
+    {
+      "sourceSpan": 25,
+      "originalPredictedFrames": [
+        3918
+      ],
+      "revisedInputTokens": [
+        103,
+        149,
+        167,
+        87
+      ]
+    },
+    {
+      "sourceSpan": 26,
+      "originalPredictedFrames": [
+        3949
+      ],
+      "revisedInputTokens": [
+        216,
+        127,
+        153
+      ]
+    },
+    {
+      "sourceSpan": 27,
+      "originalPredictedFrames": [
+        3781
+      ],
+      "revisedInputTokens": [
+        120,
+        129,
+        138,
+        112
+      ]
+    },
+    {
+      "sourceSpan": 28,
+      "originalPredictedFrames": [
+        2596,
+        1214
+      ],
+      "revisedInputTokens": [
+        159,
+        107,
+        238
+      ]
+    },
+    {
+      "sourceSpan": 29,
+      "originalPredictedFrames": [
+        3209
+      ],
+      "revisedInputTokens": [
+        212,
+        179
+      ]
+    }
+  ]
+}
