@@ -70,6 +70,8 @@ import { createZonos3Adapter } from './adapters/zonos3.mjs';
 import { createSanoKokopopAdapter } from './adapters/sano-kokopop.mjs';
 import { SANO_KOKOPOP_PROFILES } from './adapters/sano-kokopop-config.mjs';
 import { createUaSerhiyAdapter } from './adapters/ua-serhiy.mjs';
+import { createBrowserVoiceAdapter } from './adapters/browser-voice.mjs';
+import gujaratiBrowserVoice from './adapters/browser-voice-gu-profile.mjs';
 import { createBengaliVoiceAdapter } from './adapters/bengali-voice.mjs';
 
 const statusNode = document.querySelector('#status');
@@ -147,6 +149,7 @@ const FACTORIES = {
   'klein-tts-x1.5-pro': createKleinAdapter,
   'zonos3-mini': createZonos3Adapter,
   'ua-serhiy-0p58m': createUaSerhiyAdapter,
+  'browser-voice-gu-int6': () => createBrowserVoiceAdapter(gujaratiBrowserVoice),
   'bengali-voice': createBengaliVoiceAdapter,
   ...Object.fromEntries(Object.entries(SANO_KOKOPOP_PROFILES).map(([id, profile]) => [id, () => createSanoKokopopAdapter(profile)])),
 };

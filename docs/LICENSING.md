@@ -417,3 +417,9 @@ recordings. No blanket generated-audio redistribution grant is inferred.
 [Pinned model](https://huggingface.co/Hansda/bengali-voice-compact/tree/18c8afbee3a4cf230e175a5f618350ed2c9560ac) ·
 [Pinned browser source](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3) ·
 [Dataset terms](https://huggingface.co/datasets/Hansda/bengali-maya2-jahnavi-20h)
+
+### Browser Voice Gujarati INT6
+
+Hansda's compact Gujarati checkpoint and DarvinX's published browser worker carry the Apache 2.0 license. The benchmark serves the original assets from the ignored model cache and preserves the Apache and ONNX Runtime Web MIT license texts when staging the runtime. The source dataset credits the Maya 2 Native Jahnavi voice and documents the provenance of the training text. [Model license](https://huggingface.co/Hansda/gujarati-voice-compact/blob/e20cc854291738b7bdd7986cb01c90c9bfe1415f/LICENSE) · [Worker license](https://github.com/DarvinX/multilingual-browser-tts/blob/f2977727b8baccb989f80b492ea8da00124ecba3/LICENSE) · [Training dataset](https://huggingface.co/datasets/Hansda/gujarati-maya2-jahnavi-20h/tree/433f3159a88016e287f67ce1ffb2efa8f084af16)
+
+Hansda’s Gujarati Maya 2 Native Jahnavi 20h synthetic recordings and original release annotations are CC BY-SA 4.0. The dataset credits AI4Bharat Rasa, OpenSLR and Dakshina contributors for source prompts. [Publisher dataset card](https://huggingface.co/datasets/Hansda/gujarati-maya2-jahnavi-20h/blob/d2e587e6278a4792fb5d5952b2bda1871037eaf9/README.md)

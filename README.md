@@ -1263,6 +1263,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Alpa (Sanskrit) | 2 | 2 | 1 (sa) | [Details](docs/MODEL_SUPPORT.md#alpa-sanskrit) |
 | Fiato | 2 | 2 | 1 (en) | [Details](docs/MODEL_SUPPORT.md#fiato) |
 | Tiny Voca Luganda F2 | 2 | 2 | 1 (lg) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-lg) |
+| Browser Voice Gujarati INT6 (Jahnavi) | 1 | 1 | 1 (gu) | [Details](docs/MODEL_SUPPORT.md#browser-voice-gu-int6) |
 
 ### Controlled native comparisons
 
