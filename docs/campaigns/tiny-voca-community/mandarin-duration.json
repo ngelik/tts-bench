@@ -28,7 +28,66 @@
     "inputPlanSha256": "60b4ce5df21aff4f62a857a9c3c16919ab0848f66285634869dd65b4cbf52191",
     "utterances": 92,
     "maximumTokens": 240,
-    "stage": "Source coverage and token lengths verified. Duration and audio checks pending for these inputs."
+    "stage": "Chrome measured durations for the full plan. The reference acoustic graph generated four control spans.",
+    "durationMeasurement": {
+      "createdAt": "2026-11-24T22:45:30.716Z",
+      "backend": "cpu/wasm",
+      "acousticGraphSha256": "0ba0b4d3ffaf70ffbce2ac31205248d7506f12a85639fd5530630c85fb50028a",
+      "durationGraphSha256": "3243f7a1d2d44db28084f32d0183bfa5eb279e3a421fb7b8a4377fc077b67d1d",
+      "maxFrames": 3000,
+      "audioGenerated": false,
+      "diagnosticReceiptSha256": "7b86c90d26e1401f36d6600d7424773ce93bb80091d9355ef7dd7ec6233b3de5",
+      "overLimit": 0,
+      "highestPrediction": 2003
+    },
+    "acousticControls": {
+      "backend": "cpu/wasm",
+      "sampleRate": 24000,
+      "directReceiptSha256": "593251cc42558246d3e563f5239f66ec16a5be24a462f728f2c0df0d68b412e1",
+      "spans": [
+        {
+          "id": 0,
+          "samples": 988928,
+          "pcmSha256": "c0901e76b8856929dce799e69ca9e9edf7fbf0c45dba268fbce0a219cf95d817",
+          "utteranceSamples": [
+            242432,
+            276736,
+            469760
+          ]
+        },
+        {
+          "id": 1,
+          "samples": 1070848,
+          "pcmSha256": "cedb4dad2a64e1f6b10b6c292f2ab51cd106b60fe5b6fd16768aa3a5e21398f2",
+          "utteranceSamples": [
+            378112,
+            222720,
+            470016
+          ]
+        },
+        {
+          "id": 2,
+          "samples": 975872,
+          "pcmSha256": "43043deeba266571621b119896a4ef641dfd8f9eb54b0c7a45d345e791a11d78",
+          "utteranceSamples": [
+            468224,
+            251136,
+            256512
+          ]
+        },
+        {
+          "id": 11,
+          "samples": 949248,
+          "pcmSha256": "84ec3ba08d985fdf81af313501e0c01a6ea0ab2860bba7e8daf7b0df245cef77",
+          "utteranceSamples": [
+            204032,
+            255744,
+            273920,
+            215552
+          ]
+        }
+      ]
+    }
   },
   "bySourceSpan": [
     {
@@ -40,6 +99,11 @@
         111,
         136,
         233
+      ],
+      "revisedPredictedFrames": [
+        947,
+        1081,
+        1835
       ]
     },
     {
@@ -51,6 +115,11 @@
         182,
         93,
         223
+      ],
+      "revisedPredictedFrames": [
+        1477,
+        870,
+        1836
       ]
     },
     {
@@ -62,6 +131,11 @@
         226,
         122,
         130
+      ],
+      "revisedPredictedFrames": [
+        1829,
+        981,
+        1002
       ]
     },
     {
@@ -73,6 +147,11 @@
         105,
         153,
         232
+      ],
+      "revisedPredictedFrames": [
+        805,
+        1208,
+        1896
       ]
     },
     {
@@ -84,6 +163,11 @@
         233,
         109,
         136
+      ],
+      "revisedPredictedFrames": [
+        1949,
+        969,
+        1177
       ]
     },
     {
@@ -95,6 +179,11 @@
         170,
         95,
         224
+      ],
+      "revisedPredictedFrames": [
+        1352,
+        804,
+        1780
       ]
     },
     {
@@ -105,6 +194,10 @@
       "revisedInputTokens": [
         239,
         230
+      ],
+      "revisedPredictedFrames": [
+        1869,
+        1948
       ]
     },
     {
@@ -116,6 +209,11 @@
         111,
         161,
         212
+      ],
+      "revisedPredictedFrames": [
+        882,
+        1275,
+        1742
       ]
     },
     {
@@ -127,6 +225,11 @@
         223,
         96,
         164
+      ],
+      "revisedPredictedFrames": [
+        1754,
+        787,
+        1286
       ]
     },
     {
@@ -138,6 +241,11 @@
         230,
         104,
         155
+      ],
+      "revisedPredictedFrames": [
+        1860,
+        797,
+        1246
       ]
     },
     {
@@ -149,6 +257,11 @@
         223,
         125,
         128
+      ],
+      "revisedPredictedFrames": [
+        1810,
+        1164,
+        1004
       ]
     },
     {
@@ -161,6 +274,12 @@
         136,
         139,
         106
+      ],
+      "revisedPredictedFrames": [
+        797,
+        999,
+        1070,
+        842
       ]
     },
     {
@@ -173,6 +292,12 @@
         114,
         139,
         120
+      ],
+      "revisedPredictedFrames": [
+        1029,
+        959,
+        1047,
+        1019
       ]
     },
     {
@@ -184,6 +309,11 @@
         126,
         129,
         235
+      ],
+      "revisedPredictedFrames": [
+        926,
+        1052,
+        1979
       ]
     },
     {
@@ -195,6 +325,11 @@
         115,
         159,
         211
+      ],
+      "revisedPredictedFrames": [
+        962,
+        1165,
+        1828
       ]
     },
     {
@@ -207,6 +342,12 @@
         138,
         141,
         103
+      ],
+      "revisedPredictedFrames": [
+        838,
+        1070,
+        1220,
+        771
       ]
     },
     {
@@ -218,6 +359,11 @@
         232,
         135,
         112
+      ],
+      "revisedPredictedFrames": [
+        1889,
+        1108,
+        939
       ]
     },
     {
@@ -229,6 +375,11 @@
         136,
         137,
         223
+      ],
+      "revisedPredictedFrames": [
+        1150,
+        1112,
+        1683
       ]
     },
     {
@@ -240,6 +391,11 @@
         103,
         160,
         232
+      ],
+      "revisedPredictedFrames": [
+        815,
+        1257,
+        1875
       ]
     },
     {
@@ -250,6 +406,10 @@
       "revisedInputTokens": [
         231,
         240
+      ],
+      "revisedPredictedFrames": [
+        1937,
+        2003
       ]
     },
     {
@@ -261,6 +421,11 @@
         115,
         138,
         232
+      ],
+      "revisedPredictedFrames": [
+        969,
+        1192,
+        1787
       ]
     },
     {
@@ -272,6 +437,11 @@
         208,
         162,
         111
+      ],
+      "revisedPredictedFrames": [
+        1862,
+        1379,
+        791
       ]
     },
     {
@@ -283,6 +453,11 @@
         216,
         125,
         131
+      ],
+      "revisedPredictedFrames": [
+        1840,
+        924,
+        1078
       ]
     },
     {
@@ -294,6 +469,11 @@
         199,
         108,
         191
+      ],
+      "revisedPredictedFrames": [
+        1591,
+        866,
+        1401
       ]
     },
     {
@@ -305,6 +485,11 @@
         235,
         134,
         118
+      ],
+      "revisedPredictedFrames": [
+        1835,
+        1063,
+        1035
       ]
     },
     {
@@ -317,6 +502,12 @@
         149,
         167,
         87
+      ],
+      "revisedPredictedFrames": [
+        810,
+        1176,
+        1392,
+        719
       ]
     },
     {
@@ -328,6 +519,11 @@
         216,
         127,
         153
+      ],
+      "revisedPredictedFrames": [
+        1820,
+        1043,
+        1124
       ]
     },
     {
@@ -340,6 +536,12 @@
         129,
         138,
         112
+      ],
+      "revisedPredictedFrames": [
+        924,
+        1028,
+        1062,
+        881
       ]
     },
     {
@@ -352,6 +554,11 @@
         159,
         107,
         238
+      ],
+      "revisedPredictedFrames": [
+        1207,
+        828,
+        1788
       ]
     },
     {
@@ -362,6 +569,10 @@
       "revisedInputTokens": [
         212,
         179
+      ],
+      "revisedPredictedFrames": [
+        1619,
+        1617
       ]
     }
   ]
