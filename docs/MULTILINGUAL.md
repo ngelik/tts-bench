@@ -22,7 +22,7 @@ npm run fixtures -- list
 npm run fixtures -- check --id uk-article-v1
 ```
 
-Choose the fixture by its versioned ID. The dashboard’s **Benchmark language** picker selects the language of the article spoken in the benchmark. A model’s supported-language list describes its wider capabilities. The dashboard shows results from actual receipts for the selected edition.
+Choose the fixture by its versioned ID. The dashboard opens in Charts with All languages selected. Each language has its own chart scale and article receipts. The dashboard’s **Benchmark language** picker selects the language of the article spoken in the benchmark. A model’s supported-language list describes its wider capabilities. The dashboard shows results from actual receipts for the selected edition.
 
 ## Add a translation
 

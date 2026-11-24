@@ -126,7 +126,7 @@ try {
   page.on('pageerror', e => errors.push(String(e)));
   page.on('request', r => {if (new URL(r.url()).origin !== new URL(base).origin) external.push(r.url());});
   page.on('response', r => {if (r.status() >= 400) failedResponses.push(r.status()+' '+r.url());});
-  await page.goto(base);
+  await page.goto(new URL('?lang=en&view=table',base).href);
   await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
   const candidateLayout = await measureResults(page);
   assert.ok(candidateLayout.firstResultRowTop < 650, `First result row should remain near the top; observed y=${candidateLayout.firstResultRowTop}`);
@@ -159,7 +159,7 @@ try {
         const url = new URL(response.url());
         return url.origin === new URL(baselineUrl).origin && url.pathname.endsWith('/assets/data.json');
       });
-      await baseline.goto(baselineUrl);
+      await baseline.goto(new URL('?lang=en&view=table',baselineUrl).href);
       const baselineDataResponse = await baselineDataResponsePromise;
       assert.equal(baselineDataResponse.status(), 200, 'Baseline dashboard data request succeeds');
       const baselineData = await baselineDataResponse.json();
@@ -239,7 +239,7 @@ try {
     assert.equal(await page.locator('#sample-audio').evaluate(audio => audio.currentSrc), new URL(ukPlayback.sample.clip.path, base).href, 'The Ukrainian tab plays its registered local recording');
     await page.locator('#close-player').click();
     const ukDetailUrl = new URL(base);
-    ukDetailUrl.search = '';
+    ukDetailUrl.search = '?lang=en&view=table';
     ukDetailUrl.searchParams.set('lang','uk');
     ukDetailUrl.searchParams.set('model',ukPlayback.model.id);
     await page.goto(ukDetailUrl.href);
@@ -402,18 +402,18 @@ try {
     await page.keyboard.press('Escape');
 
     const retestChartUrl = new URL(base);
-    retestChartUrl.search = '';
+    retestChartUrl.search = '?lang=en&view=table';
     retestChartUrl.searchParams.set('models', audio8.id);
     retestChartUrl.searchParams.set('view', 'charts');
     await page.goto(retestChartUrl.href);
     await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 result');
     const chartStatus = page.locator('.chart-panel.gpu .bar-row').filter({has: page.locator('[data-detail="audio8-realistic-0.6b-int4"]')});
     assert.equal(await chartStatus.count(), 0, 'An archived failed timing is not plotted');
-    await page.goto(base);
+    await page.goto(new URL('?lang=en&view=table',base).href);
     await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
   }
   const chartCampaignUrl = new URL(base);
-  chartCampaignUrl.search = '';
+  chartCampaignUrl.search = '?lang=en&view=table';
   chartCampaignUrl.searchParams.set('models', campaignModelIds.join(','));
   chartCampaignUrl.searchParams.set('view', 'charts');
   await page.goto(chartCampaignUrl.href);
@@ -437,7 +437,7 @@ try {
   }
 
   const campaignUrl = new URL(base);
-  campaignUrl.search = '';
+  campaignUrl.search = '?lang=en&view=table';
   campaignUrl.searchParams.set('models', campaignModelIds.join(','));
   campaignUrl.searchParams.set('q', 'Audio8');
   campaignUrl.searchParams.set('view', 'charts');
@@ -452,12 +452,12 @@ try {
   const clearedCampaignUrl = new URL(page.url());
   assert.equal(clearedCampaignUrl.searchParams.has('models'), false);
   assert.equal(clearedCampaignUrl.searchParams.get('q'), 'Audio8', 'Clearing the subset preserves search');
-  assert.equal(clearedCampaignUrl.searchParams.get('view'), 'charts', 'Clearing the subset preserves the selected view');
+  assert.equal(clearedCampaignUrl.searchParams.get('view') ?? 'charts', 'charts', 'Clearing the subset preserves the selected view');
   assert.equal(await page.locator('#visible-count').innerText(), '1 result');
   assert.equal(await page.locator('#model-rows tr').count(), 1);
 
   const repeatedScopeUrl = new URL(base);
-  repeatedScopeUrl.search = '';
+  repeatedScopeUrl.search = '?lang=en&view=table';
   campaignModelIds.slice(0, 2).forEach(id => repeatedScopeUrl.searchParams.append('models', id));
   await page.goto(repeatedScopeUrl.href);
   const repeatedModels = resultModels(campaignModels.filter(model => campaignModelIds.slice(0, 2).includes(model.id)));
@@ -465,7 +465,7 @@ try {
   assert.deepEqual(await page.locator('#model-rows tr').evaluateAll(rows => rows.map(row => row.dataset.model)), rankedIds(repeatedModels, model => eligibleWarm(model.warm.cpu) ? model.warm.cpu.medianSeconds : null));
 
   const unknownScopeUrl = new URL(base);
-  unknownScopeUrl.search = '';
+  unknownScopeUrl.search = '?lang=en&view=table';
   unknownScopeUrl.searchParams.set('models', `${campaignResultModels[0].id},bad-model-id`);
   await page.goto(unknownScopeUrl.href);
   await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '1 result');
@@ -473,7 +473,7 @@ try {
   assert.ok((await page.locator('#scope-note').innerText()).includes('bad-model-id'));
 
   const onlyUnknownScopeUrl = new URL(base);
-  onlyUnknownScopeUrl.search = '';
+  onlyUnknownScopeUrl.search = '?lang=en&view=table';
   onlyUnknownScopeUrl.searchParams.set('models', 'bad-model-id');
   await page.goto(onlyUnknownScopeUrl.href);
   await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
@@ -486,7 +486,7 @@ try {
   assert.equal(await page.locator('#model-rows tr').count(), expectedResultModels.length, 'Clear subset returns to the full eligible result list');
 
   const emptyScopeUrl = new URL(base);
-  emptyScopeUrl.search = '';
+  emptyScopeUrl.search = '?lang=en&view=table';
   emptyScopeUrl.searchParams.set('models', '');
   await page.goto(emptyScopeUrl.href);
   await page.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
@@ -607,7 +607,7 @@ try {
   // Legacy cohort URLs are ignored so they cannot silently hide eligible rows.
   for (const oldCohort of ['paired','historical','source-cohort-v1']) {
     const legacyCohortUrl = new URL(base);
-    legacyCohortUrl.search = '';
+    legacyCohortUrl.search = '?lang=en&view=table';
     legacyCohortUrl.searchParams.set('cohort', oldCohort);
     await page.goto(legacyCohortUrl.href);
     await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
@@ -615,7 +615,7 @@ try {
     assert.equal(new URL(page.url()).searchParams.has('cohort'), false, 'Obsolete cohort query is discarded without hiding results');
   }
   const scopedLegacyCohortUrl = new URL(base);
-  scopedLegacyCohortUrl.search = '';
+  scopedLegacyCohortUrl.search = '?lang=en&view=table';
   scopedLegacyCohortUrl.searchParams.set('cohort','paired');
   scopedLegacyCohortUrl.searchParams.set('weight','unknown');
   await page.goto(scopedLegacyCohortUrl.href);
@@ -712,13 +712,13 @@ try {
   await page.setViewportSize({width:1440,height:1000});
   const family = resultModels(expected.models.filter(model => model.name.toLowerCase().includes('lfm3')));
   assert.ok(family.length >= 4, 'The published LFM3 configurations must remain discoverable');
-  await page.goto(new URL('?q=LFM3', base).href);
+  await page.goto(new URL('?lang=en&view=table&q=LFM3', base).href);
   await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, family.length);
   assert.equal(await page.locator('#search').inputValue(), 'LFM3');
   assert.equal(await page.locator('#table-view').isVisible(), true);
   await page.screenshot({path:`${review}/lfm3-table.png`,fullPage:true});
   for (const metric of ['generation','memory','size']) {
-    await page.goto(new URL(`?q=LFM3&view=charts&metric=${metric}`, base).href);
+    await page.goto(new URL(`?lang=en&q=LFM3&view=charts&metric=${metric}`, base).href);
     const familyChartCount = metric === 'size' ? family.filter(model => Number.isFinite(model.modelMB)).length : metric === 'generation' ? expectedGeneration(family, 'cpu').length + expectedGeneration(family, 'webgpu').length : expectedMemory(family, 'cpu').length + expectedMemory(family, 'webgpu').length;
     await page.waitForFunction(n => document.querySelectorAll('.bar-row').length === n, familyChartCount);
     assert.equal(await page.locator('[data-view="charts"]').getAttribute('aria-pressed'), 'true');
@@ -766,7 +766,7 @@ try {
     synthetic.playbackAudio = {cpu:null,webgpu:null};
     syntheticData.models.push(archivedOnly,currentFault,currentRecordingFault,unknownCapabilities,synthetic);
     await syntheticPage.route('**/assets/data.json*', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
-    await syntheticPage.goto(base);
+    await syntheticPage.goto(new URL('?lang=en&view=table',base).href);
     const syntheticVisibleCount = expectedResultModels.length + 4;
     await syntheticPage.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, syntheticVisibleCount);
     assert.equal(await syntheticPage.locator('#model-count').innerText(), String(syntheticVisibleCount), 'A model with only error, unsupported and fault-only data is excluded from result counts');
@@ -802,7 +802,7 @@ try {
     const syntheticSizeCount = expectedResultModels.filter(model => Number.isFinite(model.modelMB)).length + [archivedOnly,currentFault,currentRecordingFault,unknownCapabilities].filter(model => Number.isFinite(model.modelMB)).length;
     assert.equal(await syntheticPage.locator('#charts .bar-row').count(), syntheticSizeCount, 'A downloaded weight alone does not add a model to size ranking');
     assert.equal(await syntheticPage.locator('#charts [data-detail="synthetic-no-eligible-result"]').count(), 0);
-    await syntheticPage.goto(new URL('?models=synthetic-no-eligible-result',base).href);
+    await syntheticPage.goto(new URL('?lang=en&view=table&models=synthetic-no-eligible-result',base).href);
     await syntheticPage.waitForFunction(() => document.querySelector('#visible-count')?.textContent === '0 results');
     assert.ok((await syntheticPage.locator('#no-results p').innerText()).includes('No eligible published measurements'));
     await syntheticPage.goto(new URL('?model=synthetic-no-eligible-result',base).href);

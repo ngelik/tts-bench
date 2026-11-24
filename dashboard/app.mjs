@@ -24,7 +24,7 @@ const shortLicense = value => {
   return value.length <= 36 ? value : 'See terms';
 };
 const chromeVersion = metric => (metric?.environment?.chromeVersion ?? 'unknown').replace(/^Google Chrome\s+/, '');
-const state = {data: null, view: 'table', metric: 'generation', sort: 'cpu', direction: 1, playing: null, cohorts: new Map(), modelIds: null, language: 'en'};
+const state = {data: null, view: 'charts', metric: 'generation', sort: 'cpu', direction: 1, playing: null, cohorts: new Map(), modelIds: null, language: 'all', editions: [], allModels: []};
 const languageName = () => languageLabel(state.language);
 const capabilityFilters = ['weight-filter', 'supported-language', 'language-count', 'voice-count'];
 const filterParams = {'weight-filter':'weight', 'supported-language':'supports', 'language-count':'languages', 'voice-count':'voices'};
@@ -94,18 +94,18 @@ function registeredLanguages() {
     .sort((a,b) => Number(b.count > 0) - Number(a.count > 0) || a.englishName.localeCompare(b.englishName, 'en') || a.id.localeCompare(b.id));
 }
 function normalizeLanguage(id) {
-  return registeredLanguages().some(entry=>entry.id===id) ? id : 'en';
+  return state.editions.some(entry => entry.id === id) ? id : 'all';
 }
 function stateUrl(language = state.language, {removeModel = false} = {}) {
   const url = new URL(location.href);
-  const values = {lang:language === 'en' ? '' : language, q:$('#search').value,
-    view:state.view === 'table' ? '' : state.view, metric:state.metric === 'generation' ? '' : state.metric,
+  const values = {lang:language === 'all' ? '' : language, q:$('#search').value,
+    view:state.view === 'charts' ? '' : state.view, metric:state.metric === 'generation' ? '' : state.metric,
     sort:state.sort === 'cpu' ? '' : state.sort, direction:state.direction === 1 ? '' : 'desc',
     license:$('#license').value === 'all' ? '' : $('#license').value};
   url.searchParams.delete('cohort');
   if (removeModel) url.searchParams.delete('model');
   for (const id of capabilityFilters) values[filterParams[id]] = $(`#${id}`).value === 'all' ? '' : $(`#${id}`).value;
-  const targetModels = language === 'en' ? state.data?.models ?? [] : state.data?.byLanguage?.[language]?.models ?? [];
+  const targetModels = activeModels(language);
   if (values.supports && values.supports !== 'unlisted' && !targetModels.some(model=>supportCodes(model).includes(values.supports))) values.supports = '';
   if (values.license && !targetModels.some(model=>model.license?.model === values.license)) values.license = '';
   for (const [key, value] of Object.entries(values)) {
@@ -120,7 +120,8 @@ function languageHref(language) {
 function buildLanguagePicker() {
   const measured = $('#measured-languages'), pending = $('#pending-languages');
   measured.replaceChildren(); pending.replaceChildren();
-  for (const language of registeredLanguages()) {
+  const overview = {id: 'all', englishName: 'All languages', aliases: [], count: new Set(state.allModels.map(model => model.id)).size};
+  for (const language of [overview, ...state.editions]) {
     const li = document.createElement('li'), link = document.createElement('a');
     link.id = `language-${language.id}`; link.href = languageHref(language.id); link.dataset.language = language.id;
     link.className = 'language-option';
@@ -137,7 +138,7 @@ function buildLanguagePicker() {
     }
     if (language.meta) { const meta = document.createElement('span'); meta.className = 'language-option-meta'; meta.textContent = language.meta; names.append(meta); }
     const tag = document.createElement('span'); tag.className = 'language-option-tag'; tag.textContent = language.id;
-    names.append(tag);
+    if (language.id !== 'all') names.append(tag);
     const count = document.createElement('span'); count.className = 'language-option-count'; count.dataset.languageCount = language.id;
     count.textContent = language.count > 0 ? `${language.count} ${language.count === 1 ? 'model' : 'models'}` : language.coverage ? language.coverage.status : 'Awaiting results';
     link.append(names, count);
@@ -156,7 +157,7 @@ function filterLanguagePicker() {
   $('#language-no-match').hidden = visible > 0;
 }
 function renderLanguageChoice() {
-  const selected = registeredLanguages().find(entry => entry.id === state.language) ?? registeredLanguages()[0];
+  const selected = state.editions.find(entry => entry.id === state.language) ?? {englishName:'All languages'};
   const current = $('#current-language'); current.replaceChildren();
   if (selected.nativeName) {
     const native = document.createElement('bdi'); native.lang = selected.id; native.dir = 'auto'; native.textContent = selected.nativeName; current.append(native);
@@ -201,23 +202,24 @@ function capabilitySummary(model) {
   const full = `${counts}. ${names.length ? names.join(', ') : 'Languages not listed'}. Open model support details.`;
   return `<button class="model-capabilities" data-detail="${escape(model.id)}" title="${escape(full)}" aria-label="${escape(full)}"><span class="capability-counts">${escape(counts)}</span><span class="capability-languages">${escape(compact)}</span></button>`;
 }
-function fixtureDescription() {
-  const group = languageGroup();
-  if (hostedOnlyCoverage()) return languageName();
-  const characters = group?.fixture?.characters ?? (state.language === 'en' ? 20000 : null);
+function fixtureDescription(language = state.language) {
+  if (language === 'all') return `${state.editions.length} benchmark languages`;
+  const group = languageGroup(language);
+  if (hostedOnlyCoverage(language)) return languageLabel(language);
+  const characters = group?.fixture?.characters ?? (language === 'en' ? 20000 : null);
   return Number.isSafeInteger(characters) && characters > 0
-    ? `${characters.toLocaleString('en-US')} ${languageName()} characters`
-    : `${languageName()} benchmark`;
+    ? `${characters.toLocaleString('en-US')} ${languageLabel(language)} characters`
+    : `${languageLabel(language)} benchmark`;
 }
 // These datasets are assembled from receipt fixture language. Never infer a
 // benchmark language from the model's advertised supported languages.
-function activeModels() {
-  return languageGroup()?.models ?? [];
+function activeModels(language = state.language) {
+  return language === 'all' ? state.allModels : languageGroup(language)?.models ?? [];
 }
-function modelLink(id) {
+function modelLink(id, edition) {
   const url = new URL(location.href);
   url.searchParams.set('model', id);
-  if (state.language !== 'en') url.searchParams.set('lang', state.language); else url.searchParams.delete('lang');
+  url.searchParams.set('lang', edition);
   return url.pathname + url.search + url.hash;
 }
 function syncUrl({ push = false, removeModel = false } = {}) {
@@ -249,7 +251,7 @@ function stopPlayback({ restoreFocus = false } = {}) {
   const previous = state.playing; ++playRequest; audio.pause(); audio.removeAttribute('src'); audio.load();
   state.playing = null; $('#player').hidden = true; document.body.classList.remove('has-player'); $('#player-error').hidden = true;
   updatePlaybackButtons();
-  if (restoreFocus) $$('[data-play]').find(button => button.dataset.play === previous?.model && button.dataset.backend === previous?.backend && button.getClientRects().length)?.focus();
+  if (restoreFocus) $$('[data-play]').find(button => button.dataset.play === previous?.model && button.dataset.backend === previous?.backend && (button.closest('[data-edition]')?.dataset.edition ?? state.language) === previous?.language && button.getClientRects().length)?.focus();
 }
 function setLanguage(language, { push = true } = {}) {
   language = normalizeLanguage(language);
@@ -257,12 +259,12 @@ function setLanguage(language, { push = true } = {}) {
   const filters = { license: $('#license').value, supportedLanguage: $('#supported-language').value };
   if (push) syncUrl();
   stopPlayback(); dialog.close(); state.language = language;
-  rebuildLanguageFilters(filters); render(); renderLanguageChoice();
+  rebuildLanguageFilters(filters); render();
   if (push) syncUrl({ push: true, removeModel: true });
-  const selected = registeredLanguages().find(entry => entry.id === state.language);
-  const count = languageGroup()?.models?.filter(hasEligibleResult).length ?? 0;
+  const selected = state.editions.find(entry => entry.id === state.language);
+  const count = new Set(activeModels().filter(hasEligibleResult).map(model => model.id)).size;
   const status = hostedOnlyCoverage() ? 'Hosted demo available. Local benchmark results are unavailable.' : `${count} ${count === 1 ? 'model' : 'models'} have eligible results.`;
-  $('#language-announcement').textContent = `Benchmark language changed to ${selected?.englishName ?? language}. ${status}`;
+  $('#language-announcement').textContent = `Benchmark language changed to ${selected?.englishName ?? 'All languages'}. ${status}`;
   if ($('#language-picker').open) $('#language-picker').close();
   $('#language-picker-trigger').focus();
 }
@@ -270,12 +272,12 @@ function restoreLocation() {
   const url = new URL(location.href), params = url.searchParams;
   if (params.has('cohort')) { params.delete('cohort'); history.replaceState(null,'',url); }
   const language = normalizeLanguage(params.get('lang'));
-  if (params.has('lang') && language === 'en') { params.delete('lang'); history.replaceState(null,'',url); }
+  if (params.has('lang') && language === 'all') { params.delete('lang'); history.replaceState(null,'',url); }
   if (language !== state.language) { stopPlayback(); state.language = language; }
   dialog.close();
   state.modelIds = params.has('models') ? [...new Set(params.getAll('models').flatMap(value => value.split(',').map(id => id.trim()).filter(Boolean)))] : null;
   $('#search').value = params.get('q') ?? '';
-  state.view = params.get('view') === 'charts' ? 'charts' : 'table';
+  state.view = params.get('view') === 'table' ? 'table' : 'charts';
   state.metric = ['generation', 'memory', 'size', 'coverage'].includes(params.get('metric')) ? params.get('metric') : 'generation';
   state.sort = ['name', 'modelMB', 'cpu', 'webgpu', 'cpuMemory', 'gpuMemory'].includes(params.get('sort')) ? params.get('sort') : 'cpu';
   state.direction = params.get('direction') === 'desc' ? -1 : 1; $('#sort-select').value = state.sort;
@@ -285,8 +287,11 @@ function restoreLocation() {
     select.value = [...select.options].some(option=>option.value===value) ? value : 'all';
   }
   render();
-  renderLanguageChoice();
-  if (params.get('model')) openDetails(params.get('model'));
+  if (params.get('model')) {
+    const id = params.get('model');
+    const edition = language === 'all' && activeModels('en').some(model => model.id === id) ? 'en' : language;
+    openDetails(id, edition);
+  }
 }
 let theme;
 try { theme = localStorage.getItem('tts-bench-theme'); } catch {}
@@ -367,10 +372,13 @@ const compareValues = (a, b, av, bv, direction = 1) => {
 const compare = (a, b) => compareValues(a, b, metricValue(a, state.sort), metricValue(b, state.sort), state.direction);
 function selectedModelScope() {
   if (state.modelIds === null) return null;
-  const byId = new Map(activeModels().map(model => [model.id, model]));
+  const byId = new Map();
+  for (const model of activeModels()) {
+    if (!byId.has(model.id) || hasEligibleResult(model)) byId.set(model.id, model);
+  }
   return {
-    models: state.modelIds.map(id => byId.get(id)).filter(model => model && hasEligibleResult(model)),
-    excluded: state.modelIds.map(id => byId.get(id)).filter(model => model && !hasEligibleResult(model)),
+    models: state.modelIds.map(id => byId.get(id)).filter(model => model && (state.language === 'all' || hasEligibleResult(model))),
+    excluded: state.language === 'all' ? [] : state.modelIds.map(id => byId.get(id)).filter(model => model && !hasEligibleResult(model)),
     unknown: state.modelIds.filter(id => !byId.has(id))
   };
 }
@@ -387,7 +395,7 @@ function clearNoResults() {
 }
 function visibleModels() {
   const term = $('#search').value.trim().toLowerCase(), license = $('#license').value;
-  return activeModels().filter(model => hasEligibleResult(model) && matchesCapabilities(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license)).sort(compare);
+  return activeModels().filter(model => (state.language === 'all' || hasEligibleResult(model)) && matchesCapabilities(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license)).sort(compare);
 }
 function exampleFor(model, backend) {
   return model?.playbackAudio?.[backend];
@@ -437,55 +445,89 @@ function metricCell(metric, key, max, backend, label, withBar = true, showRunCou
   const sampleCount = showRunCount ? warmCountLabel(metric) : '';
   return `<td data-label="${label}"><a class="value metric-link" href="${escape(href)}" title="${escape(title)}">${fmt(value)}</a>${sampleCount}${withBar ? `<div class="mini-track ${backend === 'webgpu' ? 'gpu' : ''}" aria-hidden="true"><span style="width:${max > 0 ? value / max * 100 : 0}%"></span></div>` : ''}</td>`;
 }
-function renderTable(models) {
+function tableRows(models) {
   const maxTime = Math.max(1, ...models.flatMap(m => ['cpu', 'webgpu'].map(b => isEligibleWarm(m.warm[b]) ? m.warm[b].medianSeconds : 0)));
-  $('#model-rows').innerHTML = models.map(model => {
+  return models.map(model => {
     const memoryOnly = !hasWarmScore(model) && hasHealthyCachedMemory(model);
     const countPair = showWarmCounts(model);
 
-    return `<tr data-model="${escape(model.id)}"><td data-label="Model"><div class="model-cell"><span class="model-monogram" aria-hidden="true">${escape(model.name.slice(0, 2).toUpperCase())}</span><div><button class="model-name" data-detail="${escape(model.id)}">${escape(model.name)}</button><div class="model-sub">${memoryOnly ? '<span class="evidence-tag cached-only">RAM only · cached</span>' : ''}${outputWarningTag(model)}</div>${capabilitySummary(model)}</div></div></td><td data-label="Weights · MB"><span class="value">${fmt(model.modelMB)}</span></td><td data-label="License"><button class="license-tag" data-detail="${escape(model.id)}" title="${escape(model.license.model)}" aria-label="Model license: ${escape(model.name)}. ${escape(model.license.model)}">${escape(shortLicense(model.license.model))}</button></td>${metricCell(model.warm.cpu, 'medianSeconds', maxTime, 'cpu', 'CPU · seconds', true, countPair)}${metricCell(model.warm.webgpu, 'medianSeconds', maxTime, 'webgpu', 'GPU · seconds', true, countPair)}${metricCell(model.memory.cpu, 'meanMB', 1, 'cpu', 'Cached RAM · CPU · avg MB', false)}${metricCell(model.memory.webgpu, 'meanMB', 1, 'webgpu', 'Cached RAM · GPU · avg MB', false)}<td data-label="Listen · 30s">${audioButtons(model)}</td></tr>`;
+    return `<tr data-edition="${escape(model.edition ?? state.language)}" data-model="${escape(model.id)}"><td data-label="Model"><div class="model-cell"><span class="model-monogram" aria-hidden="true">${escape(model.name.slice(0, 2).toUpperCase())}</span><div><button class="model-name" data-detail="${escape(model.id)}">${escape(model.name)}</button><div class="model-sub">${memoryOnly ? '<span class="evidence-tag cached-only">RAM only · cached</span>' : ''}${outputWarningTag(model)}</div>${capabilitySummary(model)}</div></div></td><td data-label="Weights · MB"><span class="value">${fmt(model.modelMB)}</span></td><td data-label="License"><button class="license-tag" data-detail="${escape(model.id)}" title="${escape(model.license.model)}" aria-label="Model license: ${escape(model.name)}. ${escape(model.license.model)}">${escape(shortLicense(model.license.model))}</button></td>${metricCell(model.warm.cpu, 'medianSeconds', maxTime, 'cpu', 'CPU · seconds', true, countPair)}${metricCell(model.warm.webgpu, 'medianSeconds', maxTime, 'webgpu', 'GPU · seconds', true, countPair)}${metricCell(model.memory.cpu, 'meanMB', 1, 'cpu', 'Cached RAM · CPU · avg MB', false)}${metricCell(model.memory.webgpu, 'meanMB', 1, 'webgpu', 'Cached RAM · GPU · avg MB', false)}<td data-label="Listen · 30s">${audioButtons(model)}</td></tr>`;
   }).join('');
+}
+function renderTable(models, boards) {
+  const body = $('#model-rows');
+  body.innerHTML = boards ? '' : tableRows(models);
+  if (boards) {
+    const groups = boards.map(({edition, rows}) => {
+      const status = rows.length ? '' : ` · ${edition.coverage ? 'Hosted demo' : 'Awaiting results'}`;
+      return `<tbody class="edition-rows"><tr class="board-heading"><th colspan="8" scope="rowgroup">${boardHeading(edition)}${status}</th></tr>${tableRows(rows)}</tbody>`;
+    });
+    body.insertAdjacentHTML('afterend', groups.join(''));
+  }
   $$('th[data-column]').forEach(th => {
     const active = th.dataset.column === state.sort;
     if (active) th.setAttribute('aria-sort', state.direction === 1 ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort');
     th.querySelector('button > span').textContent = active ? state.direction === 1 ? '↑' : '↓' : '↕';
   });
 }
-function renderCharts(models) {
+function chartPanels(models) {
   const kind = state.metric, key = kind === 'generation' ? 'medianSeconds' : 'meanMB';
   const backends = kind === 'size' ? ['size'] : kind === 'coverage' ? ['languages','voices'] : ['cpu', 'webgpu'];
   const get = (model, backend) => backend === 'size' ? weightValue(model) : kind === 'coverage' ? countValue(model.support?.[backend === 'languages' ? 'languageCount' : 'voiceCount']) : model[kind === 'generation' ? 'warm' : 'memory'][backend]?.[key];
   const eligible = (model, backend) => kind === 'size' || kind === 'coverage' ? get(model,backend) !== null : kind === 'generation' ? isEligibleWarm(model.warm[backend]) : isEligibleMemory(model.memory[backend]);
   const max = Math.max(1, ...models.flatMap(m => backends.map(b => eligible(m, b) ? get(m, b) : 0)));
+  const heading = state.language === 'all' ? 'h4' : 'h3';
   const units = kind === 'generation' ? 'seconds' : kind === 'coverage' ? 'supported' : 'MB';
-  $('#chart-order').textContent = kind === 'coverage' ? 'Reported support · broadest first' : 'Eligible results · lowest first';
-  $('#charts').classList.toggle('single', kind === 'size');
-  $('#charts').innerHTML = backends.map(backend => {
+  return backends.map(backend => {
     const panelModels = models.filter(model => eligible(model, backend)).sort((a, b) => compareValues(a, b, get(a, backend), get(b, backend), kind === 'coverage' ? -1 : 1));
     const chartRows = panelModels.map(model => {
-    const value = get(model, backend);
-    const metric = kind === 'size' || kind === 'coverage' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
-    const countLabel = kind === 'generation' && showWarmCounts(model) ? warmCountLabel(metric) : '';
-    const score = metric?.selectionKind && kind === 'generation'
-      ? `<a class="value metric-link selection-report-link" href="${escape(metric.selectionReportUrl)}" title="Open reviewed selection report · ${escape(statusDetails(metric))}">${fmt(value)} <span class="sr-only">${units}</span></a>`
-      : `<span class="value">${fmt(value,kind === 'coverage' ? 0 : 2)} <span class="sr-only">${units}</span></span>`;
-    return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="bar-value">${score}${countLabel}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
-  }).join('');
+      const value = get(model, backend);
+      const metric = kind === 'size' || kind === 'coverage' ? null : model[kind === 'generation' ? 'warm' : 'memory'][backend];
+      const countLabel = kind === 'generation' && showWarmCounts(model) ? warmCountLabel(metric) : '';
+      const selected = kind === 'generation' && metric?.selectionKind;
+      const report = selected ? metric.selectionReportUrl : metric?.reportUrl;
+      const number = `${fmt(value, kind === 'coverage' ? 0 : 2)} <span class="sr-only">${units}</span>`;
+      const score = report
+        ? `<a class="value metric-link${selected ? ' selection-report-link' : ''}" href="${escape(report)}" title="${selected ? escape(statusDetails(metric)) : 'Open benchmark receipt'}" aria-label="${escape(model.name)} · ${labels[backend]} · ${fmt(value)} ${units} · open receipt">${number}</a>`
+        : `<span class="value">${number}</span>`;
+      return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="bar-value">${score}${countLabel}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
+    }).join('');
     const context = kind === 'generation' ? 'Warm generation · seconds · lower is faster' : kind === 'memory' ? 'Chrome process RSS · cached runs · faulted audio excluded' : kind === 'coverage' ? 'Reported model support · unspecified counts excluded' : 'Verified core weights · MB';
-    return `<section class="chart-panel ${kind === 'coverage' ? 'coverage' : backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><h3>${backend === 'size' ? 'Model weights' : kind === 'coverage' ? labels[backend] : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]}`}</h3><p class="chart-context">${context}</p>${chartRows || '<p class="chart-empty">No eligible measurements.</p>'}</section>`;
+    return `<section class="chart-panel ${kind === 'coverage' ? 'coverage' : backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><${heading}>${backend === 'size' ? 'Model weights' : kind === 'coverage' ? labels[backend] : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]}`}</${heading}><p class="chart-context">${context}</p>${chartRows || '<p class="chart-empty">No eligible measurements.</p>'}</section>`;
   }).join('');
+}
+function boardHeading(edition) {
+  return `<a href="${escape(languageHref(edition.id))}">${escape(edition.englishName)} <span aria-hidden="true">↗</span></a>`;
+}
+function renderCharts(models, boards) {
+  const kind = state.metric;
+  $('#chart-order').textContent = kind === 'coverage' ? 'Reported support · broadest first' : 'Eligible results · lowest first';
+  $('#charts').classList.toggle('single', kind === 'size');
+  $('#charts').classList.toggle('by-edition', Boolean(boards));
+  $('#charts').innerHTML = boards ? boards.map(({edition, rows}) => {
+    const panels = rows.length ? `<div class="charts ${kind === 'size' ? 'single' : ''}">${chartPanels(rows)}</div>` : '';
+    const missing = rows.filter(model => {
+      if (kind === 'size') return weightValue(model) === null;
+      if (kind === 'coverage') return countValue(model.support?.languageCount) === null && countValue(model.support?.voiceCount) === null;
+      return !['cpu','webgpu'].some(backend => kind === 'generation' ? isEligibleWarm(model.warm[backend]) : isEligibleMemory(model.memory[backend]));
+    });
+    const unavailable = missing.length ? `<details class="missing-values"><summary>Without a published value (${missing.length})</summary>${missing.map(model => `<button data-detail="${escape(model.id)}">${escape(model.name)}</button>`).join('')}</details>` : '';
+    return `<section class="edition-section" data-edition="${escape(edition.id)}"><h3>${boardHeading(edition)}</h3>${panels || `<p class="chart-empty">${edition.coverage ? 'Hosted demo available' : 'Awaiting results'}</p>`}${unavailable}</section>`;
+  }).join('') : chartPanels(models);
 }
 function render() {
   if (!state.data) return;
   const models = visibleModels();
   renderLanguageChoice();
   $('#fixture-language').textContent = fixtureDescription();
-  $('#method-fixture').textContent = hostedOnlyCoverage() ? 'a local benchmark article fixture' : fixtureDescription();
+  $('#method-fixture').textContent = state.language === 'all' ? 'each language’s benchmark article' : hostedOnlyCoverage() ? 'a local benchmark article fixture' : fixtureDescription();
   $('#language-hint').hidden = Boolean(hostedOnlyCoverage());
   const fixtureUrl = fixtureLink(), fixtureAnchor = $('#fixture-link');
   fixtureAnchor.hidden = !fixtureUrl;
   if (fixtureUrl) fixtureAnchor.href = fixtureUrl; else fixtureAnchor.removeAttribute('href');
-  const modelCount = activeModels().filter(hasEligibleResult).length;
+  const overview = state.language === 'all';
+  const modelCount = overview ? new Set(state.allModels.map(model => model.id)).size : activeModels().filter(hasEligibleResult).length;
+  $('#language-hint').textContent = overview ? 'Results grouped by benchmark language' : 'Results use the selected article edition';
   const scoreCount = activeModels().reduce((sum, model) => sum + ['cpu', 'webgpu'].filter(backend => isEligibleWarm(model.warm[backend])).length, 0);
   $('#model-count').textContent = modelCount;
   $('#model-count-label').textContent = modelCount === 1 ? 'configuration' : 'configurations';
@@ -498,7 +540,6 @@ function render() {
   const emptyLanguage = activeModels().filter(hasEligibleResult).length === 0;
   const hostedOnly = emptyLanguage ? hostedOnlyCoverage() : null;
   const scope = selectedModelScope();
-  const denominator = scope === null ? activeModels().filter(hasEligibleResult).length : scope.models.length;
   const filtersApplied = Boolean($('#search').value.trim() || $('#license').value !== 'all' || state.modelIds !== null || capabilityFilters.some(id=>$(`#${id}`).value!=='all'));
   $('#visible-count').hidden = !filtersApplied;
   $('#visible-count').textContent = `${models.length} result${models.length === 1 ? '' : 's'}`;
@@ -516,10 +557,16 @@ function render() {
   if (hostedOnly) hostedLink.href = hostedOnly.demoUrl; else hostedLink.removeAttribute('href');
   $('#clear-filters').hidden = emptyLanguage;
   $('#clear-filters').textContent = unresolvedSelection ? 'Clear subset and filters' : 'Clear filters';
-  const scopeNote = 'Lower is faster · open a model for settings, source receipts and full support details.';
+  const scopeNote = overview ? 'Each language uses its own benchmark article. Compare measurements within an edition.' : 'Lower is faster · open a model for settings, source receipts and full support details.';
   const selection = scope === null ? '' : ` <span class="evidence-tag">Subset · ${scope.models.length}</span> ${scope.models.map(model => escape(model.name)).join(', ') || 'No eligible configurations'}${scope.excluded.length ? ` · No eligible result: ${scope.excluded.map(model => escape(model.name)).join(', ')}` : ''}${scope.unknown.length ? ` · Unknown: ${scope.unknown.map(escape).join(', ')}` : ''} <button type="button" class="text-button" data-clear-model-scope>Clear subset</button>`;
   $('#scope-note').innerHTML = `${escape(scopeNote)}${selection}`;
-  renderTable(models); renderCharts(models);
+  const boards = overview ? state.editions.map(edition => ({edition, rows:models.filter(model => model.edition === edition.id)}))
+    .filter(board => board.rows.length || !filtersApplied) : null;
+  for (const body of $$('.edition-rows')) body.remove();
+  if (!overview || state.view === 'table') renderTable(models, boards);
+  else $('#model-rows').replaceChildren();
+  if (!overview || state.view === 'charts') renderCharts(models, boards);
+  else $('#charts').replaceChildren();
 }
 function reset() { $('#search').value = ''; $('#license').value = 'all'; for (const id of capabilityFilters) $(`#${id}`).value = 'all'; state.sort = 'cpu'; state.direction = 1; $('#sort-select').value = 'cpu'; render(); syncUrl(); }
 function provenance(metric) {
@@ -541,8 +588,10 @@ function detailMetric(metric, backend, kind) {
   const warm = kind === 'warm';
   return `<section class="detail-card"><h4><i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i> ${labels[backend]} ${warm ? 'warm generation' : 'memory diagnostic'}</h4>${metric?.selectionKind || isScheduledRetest(metric) ? `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>` : ''}${isMeasured(metric) ? `<dl>${warm ? `<dt>${metric.n === 1 ? 'Generation time' : 'Median'}</dt><dd>${fmt(metric.medianSeconds)} s</dd>${metric.n === 1 ? '' : `<dt>Observed min–max</dt><dd>${fmt(metric.minSeconds)}–${fmt(metric.maxSeconds)} s</dd>`}<dt>Scored articles</dt><dd>${fmt(metric.n, 0)}${metric.selectionKind ? ` selected / ${fmt(metric.originalPlannedRepetitions, 0)} planned` : ''}</dd><dt>First PCM${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.firstPcmMs)} ms</dd><dt>Real-time factor</dt><dd>${fmt(metric.rtf, 3)}</dd><dt>Audio length${metric.n === 1 ? '' : ' (median)'}</dt><dd>${fmt(metric.audioSeconds)} s</dd>` : `<dt>Mean Chrome memory</dt><dd>${fmt(metric.meanMB)} MB</dd><dt>Sampled generation peak</dt><dd>${fmt(metric.peakMB)} MB</dd><dt>Diagnostic articles</dt><dd>${fmt(metric.n, 0)}</dd><dt>Memory samples</dt><dd>${fmt(metric.sampleCount, 0)}</dd><dt>Generation time${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.generationSeconds)} s</dd><dt>${metric.waveform ? 'PCM duration, including constant intervals' : 'Audio duration'}${metric.n > 1 ? ' (median)' : ''}</dt><dd>${fmt(metric.audioSeconds)} s</dd>`}</dl>` : `<p class="detail-note">${statusLabel(metric)}. ${escape(statusDetails(metric))}</p>`}${waveformNote(metric)}${warm ? outputNoteDetails(metric) : ''}${metric?.selectionKind && metric.pairedCachedResultId ? `<p class="detail-note">Audio comes from a <a href="${repo}/blob/main/results/${escape(metric.pairedCachedResultId)}/summary.md">separate cached recording</a>. ${metric.cachedAudioMatchesSelectedPcm ? 'Its PCM hash, frame count and sample rate match the selected warm article.' : 'It is a different recording, not the selected warm output.'}</p>` : ''}${provenance(metric)}</section>`;
 }
-function openDetails(id) {
-  const model = activeModels().find(m => m.id === id); if (!model) return;
+function openDetails(id, language = state.language) {
+  const model = activeModels(language).find(m => m.id === id); if (!model) return;
+  const edition = model.edition ?? language;
+  $('#detail-content').dataset.edition = edition;
   const samples = ['cpu', 'webgpu'].map(b => exampleFor(model, b)).filter(Boolean);
   const audioList = samples.map(sample => {
     const diagnostic = matchesAuditedWav(sample.full.sha256);
@@ -556,34 +605,34 @@ function openDetails(id) {
     <p class="detail-subtitle">Model capabilities and published browser measurements</p>
     <div class="detail-stats"><div class="detail-stat"><strong>${fmt(model.modelMB)}</strong><span>MB · core weights</span></div><div class="detail-stat"><strong>${countValue(model.support?.voiceCount) === null ? 'Not specified' : fmt(model.support.voiceCount, 0)}</strong><span>supported voices</span></div><div class="detail-stat"><strong>${countValue(model.support?.languageCount) === null ? 'Not specified' : fmt(model.support.languageCount, 0)}</strong><span>supported languages</span></div></div>
     <h3>Supported languages</h3><p class="detail-language-list">${supportCodes(model).length ? supportCodes(model).map(code=>`${escape(languageLabel(code))} <span class="mono">(${escape(code)})</span>`).join(' · ') : 'Languages not listed'}</p>
-    <p class="detail-note">Bundled voices: ${countValue(model.support?.bundledVoiceCount,0) === null ? 'Not specified' : fmt(model.support.bundledVoiceCount,0)}. ${escape(model.support?.scope)} ${escape(model.support?.notes)} ${languageName()} and one selected voice are benchmarked.</p>
-    <h3>Warm generation · ${escape(fixtureDescription())}</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.warm[b], b, 'warm')).join('')}</div>
+    <p class="detail-note">Bundled voices: ${countValue(model.support?.bundledVoiceCount,0) === null ? 'Not specified' : fmt(model.support.bundledVoiceCount,0)}. ${escape(model.support?.scope)} ${escape(model.support?.notes)} ${escape(languageLabel(edition))} and one selected voice are benchmarked.</p>
+    <h3>Warm generation · ${escape(fixtureDescription(edition))}</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.warm[b], b, 'warm')).join('')}</div>
     <p class="detail-note">First PCM measures generated audio availability, not audible playback. Real-time factor = generation time / audio duration; lower is faster. Exact voice, precision, settings, warm-up and power conditions are recorded in each receipt.</p>
     <h3>Average memory · separate resource diagnostics</h3><div class="detail-grid">${['cpu', 'webgpu'].map(b => detailMetric(model.memory[b], b, 'memory')).join('')}</div>
     <p class="detail-note">One isolated Chrome instance with one benchmark tab, sampled during generation. Process RSS includes workers and browser baseline; shared pages may be counted more than once. Mean RAM is not a minimum hardware requirement. Sampled peaks can miss brief spikes. These diagnostics have their own source and timing.</p>
     <h3>Licenses</h3><dl class="detail-license"><dt>Model weights</dt><dd>${escape(model.license.model)}</dd><dt>Runtime / code</dt><dd>${escape(model.license.code ?? 'Not specified in the pinned catalog')}</dd></dl>
     <p class="detail-note">The model license does not cover every component or determine output rights. See the upstream terms and <a href="${repo}/blob/main/docs/LICENSING.md">license inventory</a>.</p>
     <h3>Audio examples</h3><ul class="recording-list">${audioList}</ul>
-    <div class="detail-bottom">${model.sourceUrl ? `<a href="${escape(model.sourceUrl)}">Model source ↗</a>` : ''}<a href="${escape(modelLink(model.id))}">Link to this model ↗</a><a href="./audio/">Browse all recordings ↗</a></div>`;
+    <div class="detail-bottom">${model.sourceUrl ? `<a href="${escape(model.sourceUrl)}">Model source ↗</a>` : ''}<a href="${escape(modelLink(model.id, edition))}">Link to this model ↗</a><a href="./audio/">Browse all recordings ↗</a></div>`;
   if (!dialog.open) dialog.showModal();
   dialog.scrollTop = 0;
 }
 function updatePlaybackButtons() {
   $$('[data-play]').forEach(button => {
-    const m = activeModels().find(m => m.id === button.dataset.play);
+    const m = activeModels(button.closest('[data-edition]')?.dataset.edition).find(m => m.id === button.dataset.play);
     const selected = exampleFor(m, button.dataset.backend)?.clip.path === state.playing?.clip.path;
     button.setAttribute('aria-pressed', String(selected && !audio.paused));
   });
 }
-async function play(id, backend) {
-  const model = activeModels().find(m => m.id === id), sample = exampleFor(model, backend); if (!sample) return;
+async function play(id, backend, edition = state.language) {
+  const model = activeModels(edition).find(m => m.id === id), sample = exampleFor(model, backend); if (!sample) return;
   const request = ++playRequest;
   const same = state.playing?.clip.path === sample.clip.path;
   $('#player').hidden = false; document.body.classList.add('has-player'); $('#player-error').hidden = true;
   if (same && !audio.paused) { audio.pause(); return; }
   state.playing = sample;
   if (!same) { audio.src = new URL(sample.clip.path, document.baseURI).href; }
-  $('#player-title').textContent = `${model.name} · ${labels[backend]}`;
+  $('#player-title').textContent = `${model.name} · ${labels[backend]}${state.language === 'all' ? ' · '+languageLabel(edition) : ''}`;
   $('#player-tag').textContent = `${sample.clip.seconds}-SECOND AUDIO EXAMPLE`;
   $('#player-caption').textContent = `${sample.voice} · ${sample.matchesSelectedWarm ? 'selected warm receipt' : `${sample.scenario} recording · separate receipt`}`;
   $('#player-caption').classList.toggle('has-playback-notice', Boolean(sample.playbackNotice));
@@ -598,6 +647,7 @@ async function play(id, backend) {
   else $('#player-full').removeAttribute('href');
   $('#player-error').textContent = sample.full?.url ? 'Playback failed. Try opening the full WAV.' : 'Playback failed.';
   $('#player-receipt').href = sample.reportUrl;
+  $('#player-details').dataset.edition = edition;
   $('#player-details').dataset.detail = model.id;
   try { await audio.play(); } catch { if (request === playRequest) $('#player-error').hidden = false; }
   if (request === playRequest) updatePlaybackButtons();
@@ -615,8 +665,8 @@ document.addEventListener('click', event => {
   }
   const clearModelScopeButton = event.target.closest('[data-clear-model-scope]');
   if (clearModelScopeButton) { clearModelScope(); render(); syncUrl(); return; }
-  const detail = event.target.closest('[data-detail]'); if (detail) openDetails(detail.dataset.detail);
-  const playButton = event.target.closest('[data-play]'); if (playButton) play(playButton.dataset.play, playButton.dataset.backend);
+  const detail = event.target.closest('[data-detail]'); if (detail) openDetails(detail.dataset.detail, detail.closest('[data-edition]')?.dataset.edition);
+  const playButton = event.target.closest('[data-play]'); if (playButton) play(playButton.dataset.play, playButton.dataset.backend, playButton.closest('[data-edition]')?.dataset.edition);
   const view = event.target.closest('[data-view]'); if (view) { state.view = view.dataset.view; render(); syncUrl(); }
   const metric = event.target.closest('[data-metric]'); if (metric) { state.metric = metric.dataset.metric; render(); syncUrl(); }
   const sort = event.target.closest('[data-sort]'); if (sort) { state.direction = state.sort === sort.dataset.sort ? -state.direction : 1; state.sort = sort.dataset.sort; $('#sort-select').value = state.sort; render(); syncUrl(); }
@@ -650,5 +700,7 @@ try {
   const response = await fetch(`./assets/data.json?v=${siteVersion}`); if (!response.ok) throw new Error(`Data HTTP ${response.status}`);
   state.data = await response.json();
   if (state.data.schemaVersion !== 1 || !Array.isArray(state.data.models)) throw new Error('Unsupported dashboard data');
+  state.editions = registeredLanguages();
+  state.allModels = state.editions.flatMap(edition => activeModels(edition.id).map(model => ({...model, edition:edition.id})));
   buildLanguagePicker(); restoreLocation();
 } catch (error) { $('#load-error').hidden = false; $('#table-view').hidden = true; $('#updated').textContent = 'Results unavailable'; console.error('Dashboard failed:', error); }
