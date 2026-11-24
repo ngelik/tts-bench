@@ -979,3 +979,12 @@ The publisher's Jahnavi voice reads the registered Gujarati-script article at 24
 The source profile routes the fixed native Telugu `te-article-v1` fixture through the publisher's Sreekar preview at 24 kHz, default speed 1, with a 512-token cap. The worker and all public model, frontend, G2P, runtime, and notice inputs are pinned by SHA-256 in `assets.lock.json`; the worker source is pinned to revision `f2977727b8baccb989f80b492ea8da00124ecba3`. The acoustic and recurrent G2P sessions use one-thread WASM. The catalog reports 931,232 acoustic scalar values across 200 external graph initializers, with G2P excluded. The preview checkpoint has no separate license identified in the handoff, so no benchmark result or reusable rights claim is made here.
 
 [Publisher demo](https://tts.hansda.in/?lang=te) · [Publisher credits](https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html) · [Telugu Sreekar dataset card](https://huggingface.co/datasets/Hansda/telugu-maya2-sreekar-20h) · [Pinned browser source](https://github.com/DarvinX/multilingual-browser-tts/tree/f2977727b8baccb989f80b492ea8da00124ecba3)
+
+
+<a id="browser-voice-hi-int6"></a>
+
+## Browser Voice Hindi INT6 (Ishwari)
+
+The profile uses the publisher's native-script Hindi `hi-article-v1` fixture and single Ishwari voice at 24 kHz. The pinned checkpoint is `04e39413827f3d45af54ceb480cb77e732983c1b`; its stock pace scale is 0.9719864176570459 at UI speed 1. The worker, frontend, runtime, acoustic assets, both G2P graphs and immutable credits are hash-pinned in `assets.lock.json`. The publisher worker uses one-thread WASM. The reported 934,704 acoustic scalar values cover 200 external graph initializers and exclude G2P.
+
+Tamal Hansda’s Hindi INT6 checkpoint is Apache-2.0. The 20-hour Ishwari training dataset uses CC BY 4.0 for its synthetic recordings and original annotations. Its Hindi prompts credit the Mozilla Common Voice Sentence Collector (CC0) and AI4Bharat Rasa contributors via the indic-tts-mini-24k transcript index (CC BY 4.0). [Pinned dataset card](https://huggingface.co/datasets/Hansda/hindi-maya2-ishwari-20h/blob/c835a1a2c3892f5cd47507824bf33df19deec955/README.md)

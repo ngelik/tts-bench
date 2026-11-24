@@ -17358,6 +17358,175 @@
       ],
       "immutableCheckpointRevision": null,
       "assetSpecFingerprint": "ad1b678fabda39b3359ce10cdb8da95d92581b1c02014798c9c4f096316e15a2"
+    },
+    "browser-voice-hi-int6": {
+      "displayName": "Browser Voice Hindi INT6 (Ishwari)",
+      "modelRevision": "04e39413827f3d45af54ceb480cb77e732983c1b",
+      "browserSourceRevision": "f2977727b8baccb989f80b492ea8da00124ecba3",
+      "immutableCheckpointRevision": "04e39413827f3d45af54ceb480cb77e732983c1b",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.24.3",
+        "license": "MIT; retain bundled third-party notices",
+        "files": []
+      },
+      "license": {
+        "model": "Apache-2.0",
+        "trainingData": "Hansda Hindi Maya 2 Native Ishwari 20h recordings and annotations (CC BY 4.0). The dataset card credits Common Voice (CC0) and Rasa transcripts (CC BY 4.0).",
+        "runtime": "Pinned publisher browser source Apache-2.0; ONNX Runtime Web MIT",
+        "requiresAcceptance": false
+      },
+      "backends": [
+        "cpu"
+      ],
+      "support": {
+        "notes": "Native Hindi-script fixture only. Stock pace scale is 0.9719864176570459 at UI speed 1. The publisher worker uses one-thread WebAssembly for acoustic and G2P sessions.",
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "hi"
+        ],
+        "scope": "Ishwari in the native Hindi-script benchmark using the pinned compact INT6 checkpoint.",
+        "sources": [
+          "https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b",
+          "https://tts.hansda.in/?lang=hi",
+          "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+          "https://huggingface.co/datasets/Hansda/hindi-maya2-ishwari-20h/blob/c835a1a2c3892f5cd47507824bf33df19deec955/README.md"
+        ]
+      },
+      "assets": [
+        {
+          "id": "browser-voice-hi-int6-worker-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/worker.js",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/worker.js",
+          "sha256": "c620a0af032424a74570012281610c32c94a02598391da06d4a81fcf45f618a7",
+          "bytes": 7858,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-frontend-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/frontend.js",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/frontend.js",
+          "sha256": "87d0282594755b6f5e5ea9f348b878ab2363b776fbc0069ace277951a306ee64",
+          "bytes": 3758,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-weight-shuffle-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/weight-shuffle.js",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/weight-shuffle.js",
+          "sha256": "f6e7b0fdc95d4ee12308f1cd227c44f426fda071401d78b94596430b5f3d0e92",
+          "bytes": 1167,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-converter-mjs",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/converter.mjs",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/converter.mjs",
+          "sha256": "b2c7202c1a2ac09878fcf19ac2f03ec3f904a572e97623a4dc8313d87c67b534",
+          "bytes": 3317,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-weights-js",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/weights.js",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/weights.js",
+          "sha256": "702155516bc665b9bc6814d8a1d9eeffb66b924530c3c50e6d9b02136363cbd0",
+          "bytes": 1899,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-runtime-ort-wasm-min-mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort.wasm.min.mjs",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort.wasm.min.mjs",
+          "sha256": "d5a6d7bc8ee587648fb3742dde8c0094d17cbd3822a68bbec8ddfcd4f2adb88e",
+          "bytes": 49997,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-runtime-ort-wasm-simd-threaded-mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/ort-wasm-simd-threaded.mjs",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort-wasm-simd-threaded.mjs",
+          "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57",
+          "bytes": 24274,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-runtime-ort-wasm-simd-threaded-wasm-gz",
+          "url": "https://tts.hansda.in/runtime/ort-wasm-simd-threaded.wasm.gz",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/runtime/ort-wasm-simd-threaded.wasm.gz",
+          "sha256": "ad64341b75d860bb282beba9d2a8511858bbe1cbf408b6b460e15aafcc2b4448",
+          "bytes": 3140838,
+          "kind": "runtime"
+        },
+        {
+          "id": "browser-voice-hi-int6-model-weights-gz",
+          "url": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser/model.weights.gz",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/assets/hi-int6/model.weights.gz",
+          "sha256": "e786334c29a00186aa8603ecd7dea4cadcd29b3c8641029200ec27d139232ed2",
+          "bytes": 796705,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-hi-int6-voice-onnx-gz",
+          "url": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser/voice.onnx.gz",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/assets/hi-int6/voice.onnx.gz",
+          "sha256": "a36544e006e67304f2b5f70343729833cc7c0652af265626b21430df176a3e50",
+          "bytes": 29302,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-hi-int6-frontend-json-gz",
+          "url": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser/frontend.json.gz",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/assets/hi-int6/frontend.json.gz",
+          "sha256": "6cb51076c6bd67a073049a099ae88f3007e37f8847e45c08b491cea7b1eda241",
+          "bytes": 211366,
+          "kind": "model-config"
+        },
+        {
+          "id": "browser-voice-hi-int6-g2p-encode-onnx-gz",
+          "url": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser/g2p-encode.onnx.gz",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/assets/hi-int6/g2p-encode.onnx.gz",
+          "sha256": "eb7d670ae09add37d4634ad2bd293591fd8acc989e717f20fb6e18a7ee69aa90",
+          "bytes": 660442,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-hi-int6-g2p-decode-onnx-gz",
+          "url": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser/g2p-decode.onnx.gz",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/assets/hi-int6/g2p-decode.onnx.gz",
+          "sha256": "d86c96a5bf3db406b9691325cfc521c1444bdee4828f44db63c7aa8642a6ed3c",
+          "bytes": 1148287,
+          "kind": "model-weights"
+        },
+        {
+          "id": "browser-voice-hi-int6-publisher-credits-html",
+          "url": "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+          "target": "models/browser-voice-hi-int6/04e39413827f3d45af54ceb480cb77e732983c1b/f2977727b8baccb989f80b492ea8da00124ecba3/publisher/credits.html",
+          "sha256": "f061cffaf43c8bf1200be7265abc936a8587f76cdfe138d69dd7c656408623da",
+          "bytes": 2411,
+          "kind": "license"
+        },
+        {
+          "id": "browser-voice-hi-int6-model-apache-license",
+          "url": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/LICENSE",
+          "target": "licenses/browser-voice-hi-int6/model-LICENSE.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358,
+          "kind": "license",
+          "sourcePath": "web/bengali-voice/model-LICENSE.txt"
+        },
+        {
+          "id": "browser-voice-hi-int6-onnxruntime-mit-license",
+          "url": "https://raw.githubusercontent.com/ngelik/tts-bench/191aab1e66500f7fe7038e36955b4243e1394ba5/docs/runtime-notices/onnxruntime-web-legacy/LICENSE.txt",
+          "target": "licenses/browser-voice-hi-int6/onnxruntime-web-LICENSE.txt",
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "bytes": 1073,
+          "kind": "license",
+          "sourcePath": "web/bengali-voice/onnxruntime-web-LICENSE.txt"
+        }
+      ]
     }
   }
 }

@@ -397,5 +397,12 @@
     "countKind": "lower-bound",
     "parameterCountSource": "https://github.com/ngelik/tts-bench/blob/e5d586194caca7659b64b59ea0af80084a5aabf2/docs/campaigns/tiny-voca-community/telugu-acoustic-parameters.md",
     "scope": "FP32 scalar values in the 200 external acoustic graph initializers; separate G2P components excluded"
+  },
+  "browser-voice-hi-int6": {
+    "parameterCount": 934704,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://huggingface.co/Hansda/hindi-voice-compact/resolve/04e39413827f3d45af54ceb480cb77e732983c1b/int6/browser/size.json",
+    "upstreamModelCard": "https://huggingface.co/Hansda/hindi-voice-compact/blob/04e39413827f3d45af54ceb480cb77e732983c1b/README.md",
+    "scope": "FP32 scalar values in the 200 external acoustic graph initializers; separate G2P components excluded"
   }
 }

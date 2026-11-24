@@ -1305,6 +1305,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Browser Voice Gujarati INT6 (Jahnavi) | 1 | 1 | 1 (gu) | [Details](docs/MODEL_SUPPORT.md#browser-voice-gu-int6) |
 | Tiny Voca Sinhala M1 / F1 | 2 | 2 | 1 (si) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-sinhala) |
 | Browser Voice Telugu preview INT8 (Sreekar) | 1 | 1 | 1 (te) | [Details](docs/MODEL_SUPPORT.md#browser-voice-te-preview-int8) |
+| Browser Voice Hindi INT6 (Ishwari) | 1 | 1 | 1 (hi) | [Details](docs/MODEL_SUPPORT.md#browser-voice-hi-int6) |
 
 ### Controlled native comparisons
 
