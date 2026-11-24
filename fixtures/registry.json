@@ -838,6 +838,26 @@
         "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
         "sourceLanguage": "en"
       }
+    },
+    {
+      "id": "zh-hans-article-v1",
+      "smokeId": "zh-hans-article-smoke-v1",
+      "language": "zh-Hans",
+      "articleFile": "zh-hans-article-v1.txt",
+      "chunksFile": "zh-hans-article-v1.chunks.json",
+      "metadataFile": "zh-hans-article-v1.meta.json",
+      "sha256": "e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336",
+      "characters": 6570,
+      "unicodeCodePoints": 6570,
+      "utf8Bytes": 19588,
+      "chunks": 30,
+      "source": {
+        "type": "translation",
+        "description": "Simplified Chinese edition of the original English benchmark story, translated and reviewed by Codex for spoken Mandarin. The 27 paragraphs retain the names, dates, quantities, units and identifiers, including spoken forms of Latin letter names.",
+        "sourceFixtureId": "english-20k-v1",
+        "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+        "sourceLanguage": "en"
+      }
     }
   ],
   "modelDefaults": {
