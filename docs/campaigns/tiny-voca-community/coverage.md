@@ -18,7 +18,7 @@ Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation le
 | Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/344) passed the three-segment check for this input. [Source](https://tts.hansda.in/languages.json) |
 | Browser Voice Nivedita INT6 | English | English INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/321) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser) |
 
-[Download all three rounds, memory measurements and recordings (TSV)](./expanded-tiny-voca-rounds.tsv)
+Time to first audio starts when synthesis begins on the warm model and ends when the worker reports its first block of audio samples. Speaker playback happens separately. The download lists the latency for each scored round and how many rounds contributed to the median. [Download round timings, first-audio latencies, memory measurements and recordings (TSV)](./expanded-tiny-voca-rounds.tsv)
 
 Each timing is the median of three full-article runs in headed Chrome on the Apple M1 Pro. Memory comes from a separate cached run. Each 30-second recording comes from the third timing run.
 
