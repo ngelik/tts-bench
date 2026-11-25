@@ -659,6 +659,13 @@ td:last-child {
   font-size:12px;
   margin-bottom:6px
 }
+.bar-title {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex:1 1 auto;
+  min-width:0
+}
 .bar-label button {
   text-align:left;
   padding:0;
@@ -678,6 +685,27 @@ td:last-child {
   gap:6px;
   text-align:right
 }
+.bar-title .chart-play-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  flex:0 0 auto;
+  min-width:34px;
+  min-height:30px;
+  padding:3px 6px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--paper);
+  color:var(--muted);
+  font:10px/1 var(--mono);
+  cursor:pointer
+}
+.bar-label .chart-play-button:hover { border-color:var(--cpu); color:var(--ink); background:#e9eddf; text-decoration:none }
+.chart-play-button[aria-pressed=true] { border-color:var(--ink); background:var(--ink); color:var(--paper) }
+.chart-play-button:focus-visible { outline:3px solid var(--focus, #236b59); outline-offset:2px }
+.chart-play-icon::before { content:'▶'; font-size:10px }
+.chart-play-button[aria-pressed=true] .chart-play-icon::before { content:'Ⅱ' }
 .metric-count {
   display:block;
   color:var(--muted);
@@ -1947,4 +1975,8 @@ dialog::backdrop { background:#14231c66; backdrop-filter:blur(4px); }
   .metric-toggle { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; }
   .metric-toggle button { padding-inline:4px; }
   .bar-label button { min-height:36px; }
+  .bar-label { align-items:center; gap:6px; }
+  .bar-title { gap:5px; }
+  .bar-title .chart-play-button { min-width:44px; min-height:44px; padding:6px; }
+  .bar-value { max-width:46%; }
 }

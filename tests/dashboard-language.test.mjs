@@ -38,10 +38,26 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
 }, async t => {
   const { chromium } = await import(process.env.TTS_BENCH_PLAYWRIGHT || 'playwright-core');
   const original = JSON.parse(await readFile(process.env.TTS_BENCH_UI_DATA || resolve(root, '.cache/listening-site/assets/data.json')));
-  const en = original.models.filter(model => model.id !== 'matcha-ljspeech' && eligible(model)).slice(0, 3);
+  const en = original.models.filter(model => model.id !== 'matcha-ljspeech' && eligible(model)
+    && model.warm.cpu?.status === 'measured' && Number.isFinite(model.warm.cpu.medianSeconds) && !model.warm.cpu.waveform)
+    .slice(0, 3).map(model => structuredClone(model));
   assert.equal(en.length,3,'Test needs three real English result rows');
+  const syntheticWarmRecording = (model, language, path, resultId, sha256 = 'a'.repeat(64), matchesSelectedWarm = true) => ({
+    model: model.id, backend: 'cpu', language, voice: `Synthetic ${language} voice`, scenario: 'warm', resultId,
+    matchesSelectedWarm, matchesSelectedMemory: false, reportUrl: `https://example.test/${resultId}`,
+    clip: {path, seconds: 2}, full: {sha256},
+  });
+  for (const model of en) model.playbackAudio = {cpu:null,webgpu:null};
+  en[0].warm.cpu.resultId = 'synthetic-en-warm';
+  en[0].playbackAudio.cpu = syntheticWarmRecording(en[0], 'en', '/audio/qa-en.wav', 'synthetic-en-warm');
+  en[1].warm.cpu.resultId = 'synthetic-flagged-warm';
+  en[1].playbackAudio.cpu = syntheticWarmRecording(en[1], 'en', '/audio/qa-flagged.wav', 'synthetic-flagged-warm', '05664d30dbbdfe2b6731fa8e9b32db822f95b72a2e65e5c11f108bde83a1812f');
+  en[2].warm.cpu.resultId = 'synthetic-separate-warm';
+  en[2].playbackAudio.cpu = syntheticWarmRecording(en[2], 'en', '/audio/qa-separate.wav', 'synthetic-separate-recording', 'b'.repeat(64), false);
   const ukrainian = structuredClone(en[0]);
   ukrainian.name = 'Synthetic Ukrainian UI fixture';
+  ukrainian.warm.cpu.resultId = 'synthetic-uk-warm';
+  ukrainian.playbackAudio.cpu = syntheticWarmRecording(ukrainian, 'uk', '/audio/qa-uk.wav', 'synthetic-uk-warm');
   for (const backend of ['cpu', 'webgpu']) {
     const sample = ukrainian.playbackAudio[backend];
     if (sample) { sample.language = 'uk'; sample.voice = 'Synthetic test tone'; sample.clip.path = 'audio/qa-uk.wav'; }
@@ -74,7 +90,7 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
     const path = new URL(req.url, 'http://localhost').pathname;
     try {
       if (path === '/assets/data.json') { res.setHeader('Content-Type','application/json'); res.end(JSON.stringify(data)); return; }
-      if (path === '/audio/qa-uk.wav') { res.setHeader('Content-Type','audio/wav'); res.end(tone()); return; }
+      if (['/audio/qa-en.wav','/audio/qa-uk.wav'].includes(path)) { res.setHeader('Content-Type','audio/wav'); res.end(tone()); return; }
       const file = files.get(path);
       if (!file) { res.writeHead(404).end(); return; }
       res.setHeader('Content-Type',file[1]); res.end(await readFile(resolve(root,file[0])));
@@ -107,6 +123,48 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await picker.isEnabled(), true);
   await expectLanguage(page,'all');
   assert.equal(await page.locator('[data-view=charts]').getAttribute('aria-pressed'),'true');
+  const englishChartPlay = page.locator(`#charts [data-edition=en] .bar-row[data-model="${en[0].id}"] [data-chart-play]`);
+  const ukrainianChartPlay = page.locator(`#charts [data-edition=uk] .bar-row[data-model="${en[0].id}"] [data-chart-play]`);
+  assert.equal(await page.locator('#charts [data-chart-play]').count(),2,'Only edition recordings matching displayed warm results and passing waveform audit get chart controls');
+  assert.equal(await page.locator(`#charts [data-edition=en] .bar-row[data-model="${en[1].id}"] [data-chart-play]`).count(),0,'Waveform-flagged audio is not offered from a chart bar');
+  assert.equal(await page.locator(`#charts [data-edition=en] .bar-row[data-model="${en[2].id}"] [data-chart-play]`).count(),0,'A recording from another result is not offered from the displayed warm bar');
+  const ukrainianChartLabel = await ukrainianChartPlay.getAttribute('aria-label');
+  assert.match(ukrainianChartLabel,/Ukrainian edition/,'All-languages playback identifies the edition in its accessible name');
+  assert.equal(await ukrainianChartPlay.getAttribute('title'),ukrainianChartLabel,'The tooltip repeats the stable accessible name');
+  assert.equal(await ukrainianChartPlay.locator('.chart-play-edition').count(),0,'The edition heading supplies the visible language label without a duplicate badge');
+  assert.equal(await ukrainianChartPlay.getAttribute('data-edition'),'uk');
+  await ukrainianChartPlay.focus(); await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.querySelector('#sample-audio').readyState >= 2);
+  await page.waitForFunction(() => document.querySelector('#charts [data-edition=uk] [data-chart-play]')?.getAttribute('aria-pressed') === 'true');
+  assert.match(await page.locator('#sample-audio').getAttribute('src'),/qa-uk\.wav/,'Repeated model playback uses the Ukrainian recording for the Ukrainian bar');
+  assert.match(await page.locator('#player-title').textContent(),/Ukrainian/);
+  assert.equal(await ukrainianChartPlay.getAttribute('aria-pressed'),'true');
+  assert.equal(await ukrainianChartPlay.getAttribute('aria-label'),ukrainianChartLabel,'The toggle keeps a stable accessible name while active');
+  assert.match(await ukrainianChartPlay.locator('.chart-play-icon').evaluate(node=>getComputedStyle(node,'::before').content),/Ⅱ/,'The active toggle swaps only its decorative glyph');
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.querySelector('#charts [data-edition=uk] [data-chart-play]')?.getAttribute('aria-pressed') === 'false');
+  assert.equal(await ukrainianChartPlay.getAttribute('aria-label'),ukrainianChartLabel,'Pausing keeps the same accessible name and exposes state through aria-pressed');
+  assert.match(await ukrainianChartPlay.locator('.chart-play-icon').evaluate(node=>getComputedStyle(node,'::before').content),/▶/);
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.querySelector('#sample-audio').readyState >= 2 && !document.querySelector('#sample-audio').paused);
+  await page.locator('[data-view=table]').click();
+  await page.locator('[data-view=charts]').click();
+  await page.waitForFunction(() => document.querySelector('#charts [data-edition=uk] [data-chart-play]')?.getAttribute('aria-pressed') === 'true');
+  assert.equal(await ukrainianChartPlay.getAttribute('aria-label'),ukrainianChartLabel,'Re-rendering the chart preserves the stable name and active state');
+  await page.locator('#close-player').click();
+  assert.equal(await page.locator('#player').isVisible(),false);
+  assert.equal(await ukrainianChartPlay.evaluate(button=>button===document.activeElement),true,'Closing chart playback restores focus to the same edition control');
+  await englishChartPlay.focus(); await page.keyboard.press('Enter');
+  await page.waitForFunction(() => document.querySelector('#sample-audio').readyState >= 2);
+  assert.match(await page.locator('#sample-audio').getAttribute('src'),/qa-en\.wav/,'The English bar uses the English edition recording for the repeated model');
+  assert.match(await page.locator('#player-title').textContent(),/English/);
+  await page.locator('#close-player').click();
+  assert.equal(await englishChartPlay.evaluate(button=>button===document.activeElement),true,'Closing English chart playback restores focus to its bar control');
+  for (const metric of ['memory','size','coverage']) {
+    await page.locator(`[data-metric=${metric}]`).click();
+    assert.equal(await page.locator('#charts [data-chart-play]').count(),0,`${metric} charts keep their existing controls`);
+  }
+  await page.locator('[data-metric=generation]').click();
   const ukBoard = page.locator('#charts [data-edition=uk]');
   await ukBoard.locator('[data-detail]').first().click();
   assert.match(await page.locator('#detail-content').innerText(),/12,345 Ukrainian characters/);

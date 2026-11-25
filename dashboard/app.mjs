@@ -497,7 +497,16 @@ function chartPanels(models) {
       const score = report
         ? `<a class="value metric-link${selected ? ' selection-report-link' : ''}" href="${escape(report)}" title="${selected ? escape(statusDetails(metric)) : 'Open benchmark receipt'}" aria-label="${escape(model.name)} · ${labels[backend]} · ${fmt(value)} ${units} · open receipt">${number}</a>`
         : `<span class="value">${number}</span>`;
-      return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><button data-detail="${escape(model.id)}">${escape(model.name)}</button><span class="bar-value">${score}${countLabel}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
+      const edition = model.edition ?? state.language;
+      const sample = kind === 'generation' ? exampleFor(model, backend) : null;
+      const matchingRecording = sample?.matchesSelectedWarm && sample.resultId === metric?.resultId && !matchesAuditedWav(sample.full?.sha256);
+      const editionName = languageLabel(edition);
+      const chartPlayLabel = `Play or pause ${model.name} ${labels[backend]} recording for the ${editionName} edition, matching the displayed warm result`;
+      const chartPlayPressed = matchingRecording && sameRecording(sample, state.playing) && !audio.paused;
+      const playControl = matchingRecording
+        ? `<button type="button" class="chart-play-button" data-chart-play data-play="${escape(model.id)}" data-backend="${backend}" data-edition="${escape(edition)}" aria-label="${escape(chartPlayLabel)}" title="${escape(chartPlayLabel)}" aria-pressed="${chartPlayPressed}"><span class="chart-play-icon" aria-hidden="true"></span></button>`
+        : '';
+      return `<div class="bar-row" data-model="${escape(model.id)}"><div class="bar-label"><span class="bar-title"><button type="button" data-detail="${escape(model.id)}">${escape(model.name)}</button>${playControl}</span><span class="bar-value">${score}${countLabel}</span></div><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:${value / max * 100}%"></div></div></div>`;
     }).join('');
     const context = kind === 'generation' ? 'Warm generation · seconds · lower is faster' : kind === 'memory' ? 'Chrome process RSS · cached runs · faulted audio excluded' : kind === 'coverage' ? 'Reported model support · unspecified counts excluded' : 'Verified core weights · MB';
     return `<section class="chart-panel ${kind === 'coverage' ? 'coverage' : backend === 'webgpu' ? 'gpu' : backend}" aria-label="${backend === 'size' ? 'Model size' : labels[backend]} chart"><${heading}>${backend === 'size' ? 'Model weights' : kind === 'coverage' ? labels[backend] : `<i class="key ${backend === 'cpu' ? 'cpu' : 'gpu'}"></i>${labels[backend]}`}</${heading}><p class="chart-context">${context}</p>${chartRows || '<p class="chart-empty">No eligible measurements.</p>'}</section>`;
@@ -624,17 +633,22 @@ function openDetails(id, language = state.language) {
   if (!dialog.open) dialog.showModal();
   dialog.scrollTop = 0;
 }
+function sameRecording(a, b) {
+  return Boolean(a && b && a.clip?.path === b.clip?.path && a.resultId === b.resultId
+    && a.language === b.language && a.backend === b.backend);
+}
 function updatePlaybackButtons() {
   $$('[data-play]').forEach(button => {
-    const m = activeModels(button.closest('[data-edition]')?.dataset.edition).find(m => m.id === button.dataset.play);
-    const selected = exampleFor(m, button.dataset.backend)?.clip.path === state.playing?.clip.path;
-    button.setAttribute('aria-pressed', String(selected && !audio.paused));
+    const edition = button.dataset.edition || button.closest('[data-edition]')?.dataset.edition || state.language;
+    const m = activeModels(edition).find(m => m.id === button.dataset.play);
+    const sample = exampleFor(m, button.dataset.backend);
+    button.setAttribute('aria-pressed', String(sameRecording(sample, state.playing) && !audio.paused));
   });
 }
 async function play(id, backend, edition = state.language) {
   const model = activeModels(edition).find(m => m.id === id), sample = exampleFor(model, backend); if (!sample) return;
   const request = ++playRequest;
-  const same = state.playing?.clip.path === sample.clip.path;
+  const same = sameRecording(state.playing, sample);
   $('#player').hidden = false; document.body.classList.add('has-player'); $('#player-error').hidden = true;
   if (same && !audio.paused) { audio.pause(); return; }
   state.playing = sample;
