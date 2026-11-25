@@ -6,6 +6,8 @@ The table uses the article and chunk hashes from the scoring revision. Each sour
 
 The target is 120 UTF-16 code units for Korean and Japanese and 300 for the other languages. A sentence can exceed the target when the splitter finds no recognized sentence boundary. The longest Japanese piece was 249 code units.
 
+Across the 30 non-English articles, Supertonic’s Unicode indexer mapped two characters to token ID `-1`. The German article contains 30 low double quotation marks (`„`, U+201E) and the Polish article contains 24. The Arabic article contains 23 Arabic semicolons (`؛`, U+061B). The benchmark passed these IDs to the duration predictor and text encoder as the published helper does. [Unicode indexer](https://huggingface.co/Supertone/supertonic-3/blob/3cadd1ee6394adea1bd021217a0e650ede09a323/onnx/unicode_indexer.json) · [Text processing and model inputs](https://github.com/ngelik/tts-bench/blob/42f5d466737d91eb9a524ab1b01171e761740b2f/web/supertonic/helper.mjs#L162-L194)
+
 | Language board | Source spans | Internal utterances | Inserted pauses |
 |---|---:|---:|---:|
 | [`ar`](https://ngelik.github.io/tts-bench/?lang=ar) | 129 | 153 | 24 |
