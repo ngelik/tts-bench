@@ -532,6 +532,23 @@ Native frontend verification covers all 109 spans and 335 utterances, with a max
 
 [Model and Greek source](https://huggingface.co/ComputationalLinguisticsPlatform/tiny-voca-gr/tree/927ea15cf4edcb8695b75328c9c90c5c53928554) · [Base tiny-voca source](https://github.com/n4ze3m/tiny-voca/tree/62e2adef158bc997042cc6234f541f1e0e4cd55d) · [eSpeak NG 1.51 source](https://github.com/espeak-ng/espeak-ng/tree/2e9a5fccbb0095e87b2769e9249ea1f821918ecd).
 
+<a id="tiny-voca-nl"></a>
+
+## Tiny Voca Dutch Alex (calibrated FP32)
+
+Supported voices: **1**. Bundled voices: **1**. Supported languages: **1** (`nl`).
+
+Experimental Dutch profile with one Alex voice at 24 kHz. The pinned publisher
+browser worker uses its calibrated FP32 graph through one-thread ONNX Runtime
+WASM, the Dutch frontend and eSpeak NG 1.52.0. Its effective token limit is 256
+and its frame limit is 3,000; it recursively splits long clauses, caps each
+utterance at 0.99 peak and inserts no audio gaps. Calibrated excitation is
+stochastic and has no synthesis seed. The only candidate fixture is
+`nl-article-v1`, an AI-assisted translation without independent human review.
+See [qualification protocol](TINY_VOCA_NL.md) and [license notices](../web/tiny-voca-nl/NOTICE.md).
+
+[Pinned model](https://huggingface.co/xxy998/tiny-voca-nl/tree/ba761f35b72b76d473af2f1daea079944601c69f) · [Dutch project source](https://github.com/tetsuo/tiny-voca-nl/tree/63566400b13c184d10d6da1a563c4f6c7f3ccac5) · [Publisher browser Space](https://huggingface.co/spaces/xxy998/tiny-voca-nl/tree/cccbdddce753130c2d449225438c82b45af1d3da).
+
 <a id="mini-voz"></a>
 
 ## Mini Voz 4.5M FP32 (F1)

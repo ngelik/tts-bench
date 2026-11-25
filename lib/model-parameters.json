@@ -446,5 +446,12 @@
     "parameterCountSource": "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
     "upstreamModelCard": "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
     "scope": "The publisher reports 4,531,147 parameters for the Parisa acoustic checkpoint including the waveform generator. The two Persian pronunciation graphs are separate frontend dependencies."
+  },
+  "tiny-voca-nl": {
+    "parameterCount": 4537291,
+    "countKind": "lower-bound",
+    "parameterCountSource": "https://github.com/tetsuo/tiny-voca-nl/tree/63566400b13c184d10d6da1a563c4f6c7f3ccac5",
+    "upstreamModelCard": "https://huggingface.co/xxy998/tiny-voca-nl/tree/ba761f35b72b76d473af2f1daea079944601c69f",
+    "scope": "The model card reports 4,537,291 base parameters. The calibrated graph adds 4,053 learned excitation values and contains 4,541,728 ONNX initializer elements, which also include non-parameter constants. This lower bound excludes calibrated values until their exact parameter accounting is confirmed."
   }
 }

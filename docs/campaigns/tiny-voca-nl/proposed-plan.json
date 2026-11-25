@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "fixtureId": "nl-article-v1",
+  "conditions": "Sequential headed Google Chrome, disposable profile, one benchmark tab. Use the stock one-thread ONNX Runtime Web WASM path; record actual Chrome, hardware, power and background load. Stochastic calibrated excitation is unseeded by the upstream worker.",
+  "cells": [
+    {
+      "model": "tiny-voca-nl",
+      "backend": "cpu",
+      "scenario": "cached",
+      "repetitions": 1,
+      "timeoutMinutes": 1440,
+      "resources": true
+    },
+    {
+      "model": "tiny-voca-nl",
+      "backend": "cpu",
+      "scenario": "warm",
+      "warmProtocol": "v2",
+      "repetitions": 3,
+      "timeoutMinutes": 1440,
+      "resources": false
+    }
+  ]
+}
