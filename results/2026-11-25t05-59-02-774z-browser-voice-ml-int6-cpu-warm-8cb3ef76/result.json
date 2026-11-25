@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-25t05-59-02-774z-browser-voice-ml-int6-cpu-warm-8cb3ef76",
+  "createdAt": "2026-11-25T06:05:14.192Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "ml-article-v1",
+    "language": "ml",
+    "sha256": "ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd",
+    "characters": 23011,
+    "unicodeCodePoints": 23011,
+    "utf8Bytes": 63731,
+    "chunks": 105,
+    "source": {
+      "type": "translation",
+      "description": "Independent Malayalam translation of all 27 paragraphs of the canonical English benchmark article. Names, identifiers, UI labels, numbers and units are represented as spoken Malayalam. Evaluated with the documented Malayalam frontend. No native-speaker review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "b5f7429ea828f0be1a16b194edbbddbffb9f77ab",
+    "dirty": false,
+    "manifestSha256": "73c691bdde841747df499345e7a2c1384e73bd03648cc7843fbd595b7b26c592"
+  },
+  "assets": [
+    {
+      "id": "browser-voice-ml-int6-worker-js",
+      "sha256": "c620a0af032424a74570012281610c32c94a02598391da06d4a81fcf45f618a7",
+      "bytes": 7858
+    },
+    {
+      "id": "browser-voice-ml-int6-frontend-js",
+      "sha256": "87d0282594755b6f5e5ea9f348b878ab2363b776fbc0069ace277951a306ee64",
+      "bytes": 3758
+    },
+    {
+      "id": "browser-voice-ml-int6-weight-shuffle-js",
+      "sha256": "f6e7b0fdc95d4ee12308f1cd227c44f426fda071401d78b94596430b5f3d0e92",
+      "bytes": 1167
+    },
+    {
+      "id": "browser-voice-ml-int6-converter-mjs",
+      "sha256": "b2c7202c1a2ac09878fcf19ac2f03ec3f904a572e97623a4dc8313d87c67b534",
+      "bytes": 3317
+    },
+    {
+      "id": "browser-voice-ml-int6-weights-js",
+      "sha256": "702155516bc665b9bc6814d8a1d9eeffb66b924530c3c50e6d9b02136363cbd0",
+      "bytes": 1899
+    },
+    {
+      "id": "browser-voice-ml-int6-runtime-ort-wasm-min-mjs",
+      "sha256": "d5a6d7bc8ee587648fb3742dde8c0094d17cbd3822a68bbec8ddfcd4f2adb88e",
+      "bytes": 49997
+    },
+    {
+      "id": "browser-voice-ml-int6-runtime-ort-wasm-simd-threaded-mjs",
+      "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57",
+      "bytes": 24274
+    },
+    {
+      "id": "browser-voice-ml-int6-runtime-ort-wasm-simd-threaded-wasm-gz",
+      "sha256": "ad64341b75d860bb282beba9d2a8511858bbe1cbf408b6b460e15aafcc2b4448",
+      "bytes": 3140838
+    },
+    {
+      "id": "browser-voice-ml-int6-model-weights-gz",
+      "sha256": "ed6c4a192462754a6fe2a8e77d5db195909b8f0f28e9695ba466410f33b3cba9",
+      "bytes": 795702
+    },
+    {
+      "id": "browser-voice-ml-int6-voice-onnx-gz",
+      "sha256": "0ce243edca55241b224ee3c73668ca4cae3f5a49e0f53d3a4e68dab100ed4ca2",
+      "bytes": 29295
+    },
+    {
+      "id": "browser-voice-ml-int6-frontend-json-gz",
+      "sha256": "7b72dea00f805ea9114f9e5c69df5d96a2f2f29b874cb3936a4505911c25574b",
+      "bytes": 509267
+    },
+    {
+      "id": "browser-voice-ml-int6-g2p-encode-onnx-gz",
+      "sha256": "d9e5cf65f565db252220ab68cd2b3bb5d8fdc3b88cdaf0dc521582bb248458bc",
+      "bytes": 667105
+    },
+    {
+      "id": "browser-voice-ml-int6-g2p-decode-onnx-gz",
+      "sha256": "330a504dfca39da0d04c6032a03abf0baa3680288a6077ad0f99a35291892a3f",
+      "bytes": 1124269
+    },
+    {
+      "id": "browser-voice-ml-int6-publisher-credits-html",
+      "sha256": "f061cffaf43c8bf1200be7265abc936a8587f76cdfe138d69dd7c656408623da",
+      "bytes": 2411
+    },
+    {
+      "id": "browser-voice-ml-int6-model-apache-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "browser-voice-ml-int6-onnxruntime-mit-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "browser-voice-ml-int6",
+      "support": {
+        "notes": "Native Malayalam-script fixture only. Stock pace scale is 0.9473172987974098 at UI speed 1. The publisher worker uses one-thread WebAssembly for acoustic and G2P sessions.",
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "ml"
+        ],
+        "scope": "Jahnavi in the native Malayalam-script benchmark using the pinned compact INT6 checkpoint.",
+        "sources": [
+          "https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a",
+          "https://huggingface.co/datasets/Hansda/malayalam-maya2-jahnavi-20h/blob/44b501c1e6688b61015c6ba4e07f6e17014731ca/README.md",
+          "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+          "https://github.com/common-voice/common-voice/blob/605c25e48f9fb87cb25ca794cb39bf91d3741f29/server/data/ml/sentence-collector.txt",
+          "https://huggingface.co/datasets/sulabhkatiyar/indic-tts-mini-24k/tree/8fe16c93456540d567f4ae952adb18ab173912b3/index/parts",
+          "https://www.openslr.org/63/",
+          "https://github.com/google-research-datasets/dakshina#native-script-wikipedia"
+        ]
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Jahnavi",
+      "precision": "INT6 packed weights expanded to FP32",
+      "settings": {
+        "modelId": "browser-voice-ml-int6",
+        "modelRevision": "651bf3cbe3e9891bb298becaaff713033b0d384a",
+        "browserSourceRevision": "f2977727b8baccb989f80b492ea8da00124ecba3",
+        "fixtureId": "ml-article-v1",
+        "fixtureSha256": "ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd",
+        "language": "ml",
+        "spokenLanguage": "ml",
+        "voice": "Jahnavi",
+        "voiceIndex": 0,
+        "parameterCount": 932352,
+        "precision": "INT6 packed weights expanded to FP32",
+        "speed": 0.9473172987974098,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "maxTokens": 512,
+        "wasmThreads": 1,
+        "executionProviders": [
+          "wasm"
+        ],
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.24.3"
+        },
+        "cache": "Chrome HTTP cache of same-origin immutable assets",
+        "frontend": "Publisher worker with native lexicon and recurrent G2P",
+        "output": "Stock per-span PCM with publisher peak limiter"
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "The released acoustic and G2P sessions use the one-thread WASM provider."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 91312.18000006676,
+          "samples": 34857728,
+          "sampleRate": 24000,
+          "pcmSha256": "e81fc90bcd8e947530bab6c66be7677da82daaa9a9daf140ce18be06596a3926",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 989.9400000572205,
+            "firstSourceChunkCompletedMs": 989.960000038147,
+            "audioSeconds": 1452.4053333333334,
+            "realTimeFactor": 0.06286962592632549,
+            "minSamplesPerChunk": 295680,
+            "maxSamplesPerChunk": 378624
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 90824.38499999046,
+          "samples": 34857728,
+          "sampleRate": 24000,
+          "pcmSha256": "007e50f5ecdff4e09ecd697d9f7d0991434d24e74cb0108158075146e5134944",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 868.375,
+            "firstSourceChunkCompletedMs": 868.3849999904633,
+            "audioSeconds": 1452.4053333333334,
+            "realTimeFactor": 0.06253377271174332,
+            "minSamplesPerChunk": 295680,
+            "maxSamplesPerChunk": 378624
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 90852.92499995232,
+          "samples": 34857728,
+          "sampleRate": 24000,
+          "pcmSha256": "7afc527221d19bb4df4b69637d0657d8057971a942d390d4da4e31b548d7d140",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 870.9349999427795,
+            "firstSourceChunkCompletedMs": 870.9349999427795,
+            "audioSeconds": 1452.4053333333334,
+            "realTimeFactor": 0.06255342287365531,
+            "minSamplesPerChunk": 295680,
+            "maxSamplesPerChunk": 378624
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 90758.02499985695,
+          "samples": 34857728,
+          "sampleRate": 24000,
+          "pcmSha256": "e77bbe5626aab87680a9bc9acba58916d447332eb0be57e6df5077d6438ac3f0",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 105,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 862.2400000095367,
+            "firstSourceChunkCompletedMs": 862.2449998855591,
+            "audioSeconds": 1452.4053333333334,
+            "realTimeFactor": 0.06248808298683628,
+            "minSamplesPerChunk": 295680,
+            "maxSamplesPerChunk": 378624
+          },
+          "audio": {
+            "sha256": "6627919f8662380d95529195a59555a64794e2e22bff8ded465ed95d8435ab68",
+            "bytes": 69715500
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-25T05-59-02-201Z-8fc5758f47f8; cell 1/2; source b5f7429ea828f0be1a16b194edbbddbffb9f77ab; fixture ml-article-v1 (ml, 23011 JavaScript characters, 105 spans); requested n=3; effective n=3; Headed Google Chrome, Apple M1 Pro, AC power. Published browser-voice-ml-int6, Jahnavi, INT6 packed weights expanded to FP32. Qualified backends: cpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup."
+  ]
+}
