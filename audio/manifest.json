@@ -446,6 +446,39 @@
       }
     },
     {
+      "resultId": "2026-11-25t06-15-45-084z-browser-voice-en-int6-cpu-warm-c5fd3db2",
+      "model": "browser-voice-en-int6",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Nivedita",
+      "language": "en",
+      "attribution": "AI-generated English benchmark narration using Tamal Hansda’s Browser Voice Nivedita INT6. The Apache-2.0 INT6 checkpoint is separate from its training sources. The English Maya 2 Native Nivedita 20h synthetic speech and original release annotations are CC BY 4.0; the dataset card credits Common Voice English prompt material (CC0-1.0), Mozilla Common Voice and its contributors, Maya 2 Native (Apache-2.0), and Kyutai Mimi (CC BY 4.0). Publisher credits include Tiny Voca by Muhammed Nazeem (Apache-2.0) and eSpeak NG pronunciation labels. Source prompts retain their original terms; no generated-audio reuse rights are inferred.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63",
+        "https://huggingface.co/datasets/Hansda/english-maya2-nivedita-20h/blob/d90ae476053ac26d9d85d41219a70a5d2651b4a3/README.md",
+        "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+        "https://github.com/common-voice/common-voice/blob/605c25e48f9fb87cb25ca794cb39bf91d3741f29/server/data/en/sentence-collector.txt",
+        "https://huggingface.co/maya-research/maya2-native/tree/87a83efdd6551e038246b6b37836a6264713eec3",
+        "https://github.com/MayaResearch/maya2-native/tree/c6b376868e268551d065c4206193e96257bef4a1",
+        "https://huggingface.co/kyutai/mimi"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t06-15-45-084z-browser-voice-en-int6-cpu-warm-c5fd3db2--browser-voice-en-int6--cpu.wav",
+        "sha256": "0627c1b827827b9e1fc442fcfe6bd708b7d8f8648e1e0da569d9e4f1cd8cf900",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "0c26c035d4cc5b92b59d5184eded0387433f092612e9ee2b1797c3839303fc1f",
+        "bytes": 70424108
+      }
+    },
+    {
       "resultId": "2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed",
       "model": "browser-voice-gu-int6",
       "backend": "cpu",
