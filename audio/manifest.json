@@ -699,6 +699,40 @@
       }
     },
     {
+      "resultId": "2026-11-25t17-44-39-430z-browser-voice-ml-int6-cpu-warm-2dbfba92",
+      "model": "browser-voice-ml-int6",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Jahnavi",
+      "language": "ml-Latn",
+      "attribution": "AI-generated Malayalam benchmark narration using Tamal Hansda’s Browser Voice Jahnavi INT6. The Apache-2.0 INT6 checkpoint is separate from its training sources. The Malayalam Maya 2 Native Jahnavi 20h synthetic speech and original release annotations are CC BY-SA 4.0. The dataset card credits Common Voice Malayalam prompt material (CC0-1.0), Indic TTS Mini Malayalam prompt indexes (CC BY 4.0), OpenSLR transcript indexes and Dakshina native-script Wikipedia text (CC BY-SA 4.0), with source prompts retaining their original terms. Credits include Mozilla Common Voice contributors, AI4Bharat and Rasa contributors, OpenSLR resource authors, Google Research and Wikipedia contributors. Publisher credits include Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). No generated-audio reuse rights are inferred.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a",
+        "https://huggingface.co/datasets/Hansda/malayalam-maya2-jahnavi-20h/blob/44b501c1e6688b61015c6ba4e07f6e17014731ca/README.md",
+        "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+        "https://github.com/common-voice/common-voice/blob/605c25e48f9fb87cb25ca794cb39bf91d3741f29/server/data/ml/sentence-collector.txt",
+        "https://huggingface.co/datasets/sulabhkatiyar/indic-tts-mini-24k/tree/8fe16c93456540d567f4ae952adb18ab173912b3/index/parts",
+        "https://www.openslr.org/63/",
+        "https://github.com/google-research-datasets/dakshina#native-script-wikipedia",
+        "https://github.com/google-research-datasets/dakshina"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t17-44-39-430z-browser-voice-ml-int6-cpu-warm-2dbfba92--browser-voice-ml-int6--cpu.wav",
+        "sha256": "a7406dd8e502adc058e9d1c4cb2c8051a3e2bf647370efcaa710277ee49660db",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "98bb7305586be902fb2c0ddaba956c9317a5954e9338d3b74d105a7b740ad25d",
+        "bytes": 69810732
+      }
+    },
+    {
       "resultId": "2026-11-24t19-38-00-411z-browser-voice-te-preview-int8-cpu-warm-f5174d41",
       "model": "browser-voice-te-preview-int8",
       "backend": "cpu",
