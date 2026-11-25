@@ -5712,6 +5712,36 @@
       }
     },
     {
+      "resultId": "2026-11-25t18-20-16-118z-tiny-voca-french-cpu-warm-9d7f6396",
+      "model": "tiny-voca-french",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "F1",
+      "language": "fr",
+      "attribution": "Ymelka Tiny Voca French F1 (FP32)",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/ymelka/tiny-voca-french/tree/502ebbc0b9d442d056da1ef60926646394a2dbc8",
+        "https://github.com/yoch/tiny-voca/tree/9662a249d8ced6957d9f85665468f93df84fbea8",
+        "https://huggingface.co/spaces/ymelka/tiny-voca-french/tree/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b",
+        "https://www.npmjs.com/package/onnxruntime-web/v/1.20.1"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t18-20-16-118z-tiny-voca-french-cpu-warm-9d7f6396--tiny-voca-french--cpu.wav",
+        "sha256": "bbc49641b2018b56d3ea48cf15da8f0f3e64c1cf784b94fdb895382f17f41563",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "d9a7f711d053e8eea00c234e424266e14124f52c3d61765e134c8e0a2b7cb840",
+        "bytes": 59073580
+      }
+    },
+    {
       "resultId": "2026-11-22t19-55-14-092z-tiny-voca-gr-cpu-warm-ed6d78b7",
       "model": "tiny-voca-gr",
       "backend": "cpu",
