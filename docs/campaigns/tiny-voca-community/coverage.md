@@ -4,14 +4,15 @@
 
 **8 of 8 new language editions have published full-article results.**
 
-Full-article results are available for **15 of 18 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
+Full-article results are available for **15 of 19 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
 
-Dutch Alex stopped at article segment 31 while pronouncing “recorder” in three independent warm attempts and the separate cached attempt. It completed zero scored rounds. [Original attempts and receipts](../tiny-voca-nl/article-outcome.json) · [Listen to the opening on the Dutch board](https://ngelik.github.io/tts-bench/?lang=nl&model=tiny-voca-nl)
+Dutch Alex stopped on “recorder” in article segment 32 (receipt span ID 31). All three warm attempts and the separate cached attempt ended there. It completed zero scored rounds. [Original attempts and receipts](../tiny-voca-nl/article-outcome.json) · [Listen to the opening on the Dutch board](https://ngelik.github.io/tts-bench/?lang=nl&model=tiny-voca-nl)
 
 Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation lexicon and two pronunciation graphs. Roman input also uses the publisher’s script converter. A three-segment check qualifies a browser adapter for full-article measurement.
 
 | Model | Pending input | Browser dependencies and qualification |
 |---|---|---|
+| Tiny Voca French (ymelka) | French | F1 ONNX voice model, French pronunciation rules in Pyodide 0.26.4, eSpeak NG 1.51 and ONNX Runtime Web 1.20.1 on WASM. [Source](https://huggingface.co/spaces/ymelka/tiny-voca-french/tree/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b) |
 | Browser Voice Jahnavi INT6 | Roman Malayalam | Malayalam INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/338) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
 | Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/344) passed the three-segment check for this input. [Source](https://tts.hansda.in/languages.json) |
 
@@ -46,7 +47,9 @@ Each timing is the median of three full-article runs in headed Chrome on the App
 
 The dependency table lists the voice, pronunciation tools, qualified backends and ONNX Runtime version for each qualified input. File counts and bytes cover the benchmark asset lock, including notices and alternative runtime files. Actual network transfer depends on the backend and browser cache. Each link identifies the implementation, file checksums and frontend source. Roman-input dictionary sizes are included in the totals. The Telugu preview uses a release fingerprint because the publisher serves the model files directly. [Download browser dependencies for qualified models and inputs (TSV)](./expanded-tiny-voca-dependencies.tsv)
 
-The [upstream directory at 9ad67df](https://github.com/n4ze3m/tiny-voca/blob/9ad67df407a8c7dcfaea2bf43567a9da6a932980/README.md#community) lists 43 language-and-voice entries. Compared with the original 34-entry campaign, nine entries were added and Bengali Voice expanded into Browser Voice. The [dashboard at acaa9e8](https://github.com/ngelik/tts-bench/tree/acaa9e82efdf8bd937050a838ba9e63652e1b2ec/results) has full-article measurements for 33 of the original entries. Kurdish Behdînî remains a [hosted demo](https://behdinan.com/) with no reference browser result.
+The [upstream directory at 61b258f](https://github.com/n4ze3m/tiny-voca/blob/61b258fd2f2aeaad27818fcc6f097674cd609108/README.md#community) lists 44 language-and-voice entries. Compared with the original 34-entry campaign, ten entries were added and Bengali Voice expanded into Browser Voice. The [dashboard at acaa9e8](https://github.com/ngelik/tts-bench/tree/acaa9e82efdf8bd937050a838ba9e63652e1b2ec/results) has full-article measurements for 33 of the original entries. Kurdish Behdînî remains a [hosted demo](https://behdinan.com/) with no reference browser result.
+
+The new [ymelka/tiny-voca-french release](https://huggingface.co/ymelka/tiny-voca-french/tree/502ebbc0b9d442d056da1ef60926646394a2dbc8) has five voices. The benchmark configuration uses the default F1 synthetic voice and the French article. The publisher’s browser worker loads a 21,348,301-byte acoustic ONNX graph, calls the French eSpeak NG 1.51 frontend through Pyodide 0.26.4, and synthesizes 24 kHz mono audio with ONNX Runtime Web 1.20.1 using one WASM thread. The earlier `tiny-voca-fr` results use a different model. [Pinned browser worker](https://huggingface.co/spaces/ymelka/tiny-voca-french/blob/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/worker.js)
 
 The original screenshot has 33 measured models across 70 language and backend combinations, including ten English results from five models. Each measurement has three full-article rounds and a 30-second clip from the third round. The export includes the individual round times, median, audio duration, real-time factor, Chrome memory, fixture, voice and links to the recording, timing receipt and separate memory receipt. [Download the original screenshot results (TSV)](./original-screenshot-results.tsv)
 
