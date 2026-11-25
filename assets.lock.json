@@ -12390,6 +12390,185 @@
         "notes": "Both synthetic voices are bundled; only M index 1 is evaluated in ru-article-v1. WebGPU is used only by the waveform graph with explicit WASM fallback; OOV accent and contextual homograph resolution are single-thread WASM."
       }
     },
+    "tiny-voca-nl": {
+      "displayName": "Tiny Voca Dutch Alex (calibrated FP32)",
+      "modelRevision": "ba761f35b72b76d473af2f1daea079944601c69f",
+      "sourceId": "tetsuo/tiny-voca-nl",
+      "sourceRevision": "63566400b13c184d10d6da1a563c4f6c7f3ccac5",
+      "spaceId": "xxy998/tiny-voca-nl",
+      "spaceRevision": "cccbdddce753130c2d449225438c82b45af1d3da",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT ONNX Runtime Web; pinned publisher browser build and third-party notices.",
+        "files": []
+      },
+      "backends": [
+        "cpu"
+      ],
+      "license": {
+        "model": "Apache-2.0 for the model and Tiny Voca NL source; the model graph includes calibrated excitation.",
+        "frontend": "Apache-2.0 pinned Dutch browser frontend from the official Space.",
+        "phonemizer": "GPL-3.0-or-later eSpeak NG 1.52.0 data and WebAssembly runtime from the official Space.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1; bundled third-party notices retained. Piper nl_NL Alex source voice is identified as CC0/OHF Voice; dataset card license not independently declared.",
+        "requiresAcceptance": false
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-nl-assets-espeak-data",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/espeak.data",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/espeak.data",
+          "bytes": 956846,
+          "sha256": "14e63b4f2c295d1445d07ab099528b88dceadbac7da4a9e57780512d2e328ac9",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-espeak-mjs",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/espeak.mjs",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/espeak.mjs",
+          "bytes": 69218,
+          "sha256": "d9a5f1a06a897dd9291bfdf9e4cc228c57fbf24a3d2f5d020d37f19dfe696339",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-espeak-wasm",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/espeak.wasm",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/espeak.wasm",
+          "bytes": 377975,
+          "sha256": "879e87a564b897a5fe436a042f91d2060b12bcb625e6bfd88b09db0637dd13ad",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-model-json",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/model.json",
+          "url": "https://huggingface.co/xxy998/tiny-voca-nl/resolve/ba761f35b72b76d473af2f1daea079944601c69f/onnx/model.json",
+          "bytes": 1111,
+          "sha256": "48bfb1b1d5a22f16f989d7b740cefe32a3abff15f2a0578e58a22227fb06caf9",
+          "kind": "model-config"
+        },
+        {
+          "id": "tiny-voca-nl-assets-model-onnx",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/model.onnx",
+          "url": "https://huggingface.co/xxy998/tiny-voca-nl/resolve/ba761f35b72b76d473af2f1daea079944601c69f/onnx/model.onnx",
+          "bytes": 22469180,
+          "sha256": "e892f027d2d378748bfcd1b061894219f513f2e42490aeeccb3c779e0387483c",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-nl-assets-ort-LICENSE",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/LICENSE",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/LICENSE",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-ort-ThirdPartyNotices-txt",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ThirdPartyNotices.txt",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ThirdPartyNotices.txt",
+          "bytes": 338538,
+          "sha256": "cf7342f7ba482ef715ae58f5f497a8d3564fa255164175aea324cd293c5701a0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-ort-ort-wasm-simd-threaded-mjs",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ort-wasm-simd-threaded.mjs",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-ort-ort-wasm-simd-threaded-wasm",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ort-wasm-simd-threaded.wasm",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-assets-ort-ort-wasm-min-mjs",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ort.wasm.min.mjs",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/assets/ort/ort.wasm.min.mjs",
+          "bytes": 48904,
+          "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-nl-dutch-mjs",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/dutch.mjs",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/dutch.mjs",
+          "bytes": 6401,
+          "sha256": "c60bf2b74950ea1ee93dd2053147a9126afc4992fb43204812e22dd3dbe19cc8",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-nl-worker-mjs",
+          "target": "models/tiny-voca-nl/ba761f35b72b76d473af2f1daea079944601c69f/cccbdddce753130c2d449225438c82b45af1d3da/worker.mjs",
+          "url": "https://huggingface.co/spaces/xxy998/tiny-voca-nl/resolve/cccbdddce753130c2d449225438c82b45af1d3da/worker.mjs",
+          "bytes": 3460,
+          "sha256": "ee1e100155e30d8928272820b9d0269452d70d60955fe65f247bc82c75883f0c",
+          "kind": "source"
+        },
+        {
+          "id": "tiny-voca-nl-license-model",
+          "target": "licenses/tiny-voca-nl/LICENSE-MODEL",
+          "sourcePath": "web/tiny-voca-nl/LICENSE-MODEL",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-nl-license-espeak-ng",
+          "target": "licenses/tiny-voca-nl/LICENSE-ESPEAK-NG",
+          "sourcePath": "web/tiny-voca-nl/LICENSE-ESPEAK-NG",
+          "bytes": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-nl-license-onnxruntime-web-1-20-1-txt",
+          "target": "licenses/tiny-voca-nl/LICENSE-ONNXRUNTIME-WEB-1.20.1.txt",
+          "sourcePath": "web/tiny-voca-nl/LICENSE-ONNXRUNTIME-WEB-1.20.1.txt",
+          "bytes": 1073,
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-nl-license-bsd-2-clause-txt",
+          "target": "licenses/tiny-voca-nl/LICENSE-BSD-2-CLAUSE.txt",
+          "sourcePath": "web/tiny-voca-nl/LICENSE-BSD-2-CLAUSE.txt",
+          "bytes": 1244,
+          "sha256": "a8b0c1c7d7af6c0415c068be8cf373799d1a42b0707b79dc4ccfcaf593cd902d",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-nl-license-ucd-txt",
+          "target": "licenses/tiny-voca-nl/LICENSE-UCD.txt",
+          "sourcePath": "web/tiny-voca-nl/LICENSE-UCD.txt",
+          "bytes": 2788,
+          "sha256": "be029c50df83105a810e391778b6edcb522d6cb4b4e142332aca54437a499bf7",
+          "kind": "license"
+        }
+      ],
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "nl"
+        ],
+        "scope": "Pinned calibrated Dutch model and official Dutch browser frontend only. One bundled Alex voice (index 0), nl-NL, 24 kHz. Eligible fixture: nl-article-v1.",
+        "sources": [
+          "https://github.com/tetsuo/tiny-voca-nl/tree/63566400b13c184d10d6da1a563c4f6c7f3ccac5",
+          "https://huggingface.co/xxy998/tiny-voca-nl/tree/ba761f35b72b76d473af2f1daea079944601c69f",
+          "https://huggingface.co/spaces/xxy998/tiny-voca-nl/tree/cccbdddce753130c2d449225438c82b45af1d3da",
+          "https://huggingface.co/rhasspy/piper-voices/tree/e929968c3761f1c281875787685a745863db838d/nl/nl_NL/alex/medium",
+          "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c"
+        ],
+        "notes": "Experimental Dutch profile. Base model card reports 4,537,291 parameters; this is a lower bound because 4,053 calibrated-excitation values are also present and the graph has extra initializers. Publisher browser worker pins one-thread WASM, voice alex, speed 1, pitch 0/range 1, at most 256 tokens, 3,000 frames, recursive clause/word splits, per-utterance 0.99 peak cap and no inserted audio gaps. Calibrated excitation is stochastic and has no synthesis seed. The nl-article-v1 translation has no independent human review."
+      }
+    },
     "tiny-voca-gr": {
       "displayName": "Tiny Voca Greek M (FP32)",
       "modelRevision": "927ea15cf4edcb8695b75328c9c90c5c53928554",

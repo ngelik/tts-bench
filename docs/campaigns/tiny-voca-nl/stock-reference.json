@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "status": "diagnostic-only-full-fixture-blocker",
+  "worker": {
+    "source": "https://huggingface.co/spaces/xxy998/tiny-voca-nl",
+    "revision": "cccbdddce753130c2d449225438c82b45af1d3da",
+    "provider": "wasm",
+    "wasmThreads": 1,
+    "speed": 1,
+    "headless": false,
+    "browser": "Chrome 158.0.0.0"
+  },
+  "fixture": {
+    "id": "nl-article-v1",
+    "sha256": "afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8",
+    "frontendAudit": {
+      "sha256": "e678f1b5e2533ad8083c4a3e7f9b4a379b3e12689fa659b7aaecaffb2b1b9c80",
+      "successfulSpans": 96,
+      "failedSpans": 5,
+      "failures": [
+        { "id": 31, "sha256": "c33bc4f422e422fd5bcb2e464566af1aca704f29d6185e51267677883eef934e", "word": "recorder", "firstUnsupportedPhone": "e" },
+        { "id": 54, "sha256": "f5e36faf87d6b13c1b0a73360392b5cb286b12591baaae8fe4c101f438c8d408", "word": "Hardware", "firstUnsupportedPhone": "ɑː" },
+        { "id": 74, "sha256": "e8862af6d88b546e6b331f9ac36aabb956c996cfe00142ee1808f02ee1d15d58", "word": "Hardware", "firstUnsupportedPhone": "ɑː" },
+        { "id": 88, "sha256": "b1d5237f51318edced439543dde1ebb5e2cd9bf5e10763e009a942f3d63d7a49", "word": "recorder", "firstUnsupportedPhone": "e" },
+        { "id": 99, "sha256": "c9dae211a81b9f4c2e9620bdf5e1cb6049ea047a811bc1f1a55b4264ea8d7b33", "word": "recorder", "firstUnsupportedPhone": "e" }
+      ]
+    }
+  },
+  "openingSpans": {
+    "repeatedPasses": 2,
+    "samplesPerSpan": [261120, 251136, 233216],
+    "utterancesPerSpan": [3, 3, 2],
+    "producedAudioDurationSeconds": 31.061333,
+    "relativeRmsBetweenPasses": [0.299713, 0.267336, 0.312971],
+    "bitIdentical": false
+  },
+  "qualification": "The all-span stock phonemizer audit rejects source span 31 first in article order. A full native article worker run is pending. Only the first three spans have been synthesized twice; this is diagnostic control evidence, not a complete-fixture score or rankable result. Raw PCM remains outside the source repository."
+}

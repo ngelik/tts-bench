@@ -8,6 +8,7 @@ import { createKoreanTtsAdapter } from './adapters/korean-tts.mjs';
 import { createSlyszeglosyV1Adapter } from './adapters/slyszeglosy-v1.mjs';
 import { createTinyVocaRuAdapter } from './adapters/tiny-voca-ru.mjs';
 import { createTinyVocaGrAdapter } from './adapters/tiny-voca-gr.mjs';
+import { createTinyVocaNlAdapter } from './adapters/tiny-voca-nl.mjs';
 import { createMiniVozAdapter } from './adapters/mini-voz.mjs';
 import { createTinyVocaEsAdapter } from './adapters/tiny-voca-es.mjs';
 import { createTinyVocaFrAdapter } from './adapters/tiny-voca-fr.mjs';
@@ -96,6 +97,7 @@ const FACTORIES = {
   'slyszeglosy-v1': createSlyszeglosyV1Adapter,
   'tiny-voca-ru': createTinyVocaRuAdapter,
   'tiny-voca-gr': createTinyVocaGrAdapter,
+  'tiny-voca-nl': createTinyVocaNlAdapter,
   'mini-voz': createMiniVozAdapter,
   'tiny-voca-es': createTinyVocaEsAdapter,
   'tiny-voca-fr': createTinyVocaFrAdapter,
