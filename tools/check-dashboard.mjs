@@ -752,9 +752,38 @@ try {
   const [columns,...rows] = tsv.trimEnd().split('\n').map(line => line.split('\t'));
   const cpuStatus = columns.indexOf('CPU status');
   assert.ok(cpuStatus >= 0 && rows.length > 0);
+  const getColumn = name => {
+    const index = columns.indexOf(name);
+    assert.ok(index >= 0, `Missing Supertonic download column: ${name}`);
+    return index;
+  };
+  const gpuTimingBrowser = getColumn('WebGPU timing browser');
+  const gpuMemoryBrowser = getColumn('WebGPU memory browser');
+  const comparison = getColumn('Timing comparison status');
+  const ratio = getColumn('CPU time / WebGPU time (matching Chrome, runner and assets)');
+  for (const row of rows) {
+    const model = expected.byLanguage[row[0]].models.find(item => item.id === 'supertonic-3');
+    assert.equal(row[gpuTimingBrowser], model.warm.webgpu.environment.chromeVersion);
+    assert.equal(row[gpuMemoryBrowser], model.memory.webgpu.environment.chromeVersion);
+    assert.equal(row[comparison] === 'Awaiting CPU timing', !eligibleWarm(model.warm.cpu));
+    assert.equal(row[comparison] === 'Matched timing conditions', row[ratio] !== '');
+    if (eligibleWarm(model.warm.cpu)) {
+      assert.equal(row[comparison] === 'Chrome versions differ',
+        model.warm.cpu.environment.chromeVersion !== model.warm.webgpu.environment.chromeVersion);
+    }
+  }
   const publishedCpu = rows.filter(row => row[cpuStatus] === 'Published').length;
   assert.ok((await roundsLink.locator('..').innerText()).includes(`${publishedCpu} of ${rows.length} non-English editions`));
   await page.locator('#close-details').click();
+  const pendingBoard = rows.find(row => row[comparison] === 'Awaiting CPU timing');
+  if (pendingBoard) {
+    const language = pendingBoard[0];
+    await page.goto(new URL(`?lang=${encodeURIComponent(language)}&model=supertonic-3`, base).href);
+    await roundsLink.waitFor({state:'visible'});
+    const languageName = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
+    assert.ok((await roundsLink.locator('..').innerText()).includes(`The CPU timing for ${languageName} is pending.`));
+    await page.locator('#close-details').click();
+  }
   // Shareable family views must preserve the requested filter, chart and units.
   await page.setViewportSize({width:1440,height:1000});
   const family = resultModels(expected.models.filter(model => model.name.toLowerCase().includes('lfm3')));
