@@ -4,7 +4,7 @@
 
 **8 of 8 new language editions have published full-article results.**
 
-Full-article results are available for **11 of 17 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
+Full-article results are available for **12 of 17 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
 
 Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation lexicon and two pronunciation graphs. Roman input also uses the publisher’s script converter. A three-segment check qualifies a browser adapter for full-article measurement.
 
@@ -15,7 +15,6 @@ Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation le
 | Browser Voice Ishwari INT7 | Roman Hindi | Hindi INT7 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/329) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
 | Browser Voice Jahnavi INT6 | Roman Malayalam | Malayalam INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/338) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
 | Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/344) passed the three-segment check for this input. [Source](https://tts.hansda.in/languages.json) |
-| Browser Voice Nivedita INT6 | English | English INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/321) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/english-voice-compact/tree/c62d91d51f1bb1e80a2337ec4b0b86f6cc438c63/int6/browser) |
 
 Time to first audio starts when synthesis begins on the warm model and ends when the worker reports its first block of audio samples. Speaker playback happens separately. The download lists the latency for each scored round and how many rounds contributed to the median. [Download round timings, first-audio latencies, memory measurements and recordings (TSV)](./expanded-tiny-voca-rounds.tsv)
 
@@ -23,6 +22,7 @@ Each timing is the median of three full-article runs in headed Chrome on the App
 
 | Language board | Model | Backend | Median generation time | Mean Chrome memory | Evidence |
 |---|---|---|---:|---:|---|
+| [en](https://ngelik.github.io/tts-bench/?lang=en&view=table) | `browser-voice-en-int6` | CPU | 92.96 s | 1195.31 MB | [Timing](../../../results/2026-11-25t06-15-45-084z-browser-voice-en-int6-cpu-warm-c5fd3db2/summary.md) · [Memory](../../../results/2026-11-25t06-22-05-553z-browser-voice-en-int6-cpu-cached-472f41b5/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-25t06-15-45-084z-browser-voice-en-int6-cpu-warm-c5fd3db2--browser-voice-en-int6--cpu.wav) |
 | [fa](https://ngelik.github.io/tts-bench/?lang=fa&view=table) | `tiny-voca-fa` | CPU | 415.96 s | 1231.20 MB | [Timing](../../../results/2026-11-25t01-41-43-438z-tiny-voca-fa-cpu-warm-5a8600fc/summary.md) · [Memory](../../../results/2026-11-25t02-36-59-581z-tiny-voca-fa-cpu-cached-5c1cf4d6/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-25t01-41-43-438z-tiny-voca-fa-cpu-warm-5a8600fc--tiny-voca-fa--cpu.wav) |
 | [fa](https://ngelik.github.io/tts-bench/?lang=fa&view=table) | `tiny-voca-fa` | WebGPU | 406.85 s | 1074.31 MB | [Timing](../../../results/2026-11-25t02-09-37-256z-tiny-voca-fa-webgpu-warm-494d790f/summary.md) · [Memory](../../../results/2026-11-25t02-44-04-633z-tiny-voca-fa-webgpu-cached-3318b625/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-25t02-09-37-256z-tiny-voca-fa-webgpu-warm-494d790f--tiny-voca-fa--webgpu.wav) |
 | [gu](https://ngelik.github.io/tts-bench/?lang=gu&view=table) | `browser-voice-gu-int6` | CPU | 89.51 s | 1216.90 MB | [Timing](../../../results/2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed/summary.md) · [Memory](../../../results/2026-11-24t15-45-45-316z-browser-voice-gu-int6-cpu-cached-a8c23118/summary.md) · [Audio](https://ngelik.github.io/tts-bench/audio/?sample=2026-11-24t15-39-38-328z-browser-voice-gu-int6-cpu-warm-740d1bed--browser-voice-gu-int6--cpu.wav) |
