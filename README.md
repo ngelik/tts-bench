@@ -38,7 +38,7 @@ selection rules, local checks and deployment workflow.
 
 ## Reference results
 
-Supertonic 3 has an [English CPU timing receipt](results/2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0/summary.md). Its first multilingual campaign measured WebGPU on all 30 non-English boards. The CPU follow-up uses one WebAssembly thread in Chrome. For each completed board, the [Supertonic results table](docs/campaigns/supertonic-3/non-english-cpu-results.tsv) links three timing rounds, a separate memory measurement and a 30-second recording.
+Supertonic 3’s first multilingual campaign measured WebGPU on all 30 non-English boards. The CPU follow-up uses one WebAssembly thread in Chrome. For each measured backend, the download includes three full-article timings, median time to first audio, mean Chrome memory from a separate run, receipt links and a 30-second recording from round three. [Download Supertonic CPU and WebGPU results (TSV)](docs/campaigns/supertonic-3/non-english-cpu-results.tsv) · [English CPU timing receipt](results/2026-11-10t07-43-34-755z-supertonic-3-cpu-warm-a07fded0/summary.md)
 
 The [Tiny Voca community results](docs/campaigns/tiny-voca-community/coverage.md) list measured models and language editions, alongside the dependencies and browser checks for the remaining entries.
 
