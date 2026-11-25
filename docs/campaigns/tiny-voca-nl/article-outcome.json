@@ -1,0 +1,64 @@
+{
+  "source": "3475b20aa29d57a51c84c81ae8a04a9f3a7bd31a",
+  "fixtureSha256": "afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8",
+  "model": "tiny-voca-nl",
+  "language": "nl",
+  "firstRejectedSourceSpan": 31,
+  "unsupportedWord": "recorder",
+  "unsupportedPhone": "e",
+  "completedWarmRounds": 0,
+  "fullArticleAttempts": [
+    {
+      "scenario": "warm",
+      "protocol": "browser-tts-warm-v2",
+      "requestedRounds": 3,
+      "completedRounds": 0,
+      "status": "error",
+      "model": "tiny-voca-nl",
+      "backend": "cpu/wasm",
+      "fixture": "nl-article-v1",
+      "resultId": "2026-11-25t12-43-39-700z-tiny-voca-nl-cpu-warm-18e949aa",
+      "receiptSha256": "2da98eb36ce18d6c56f39f89a4d0e128660dabd714e52ec7399fa8d24978e4f0",
+      "receipt": "https://github.com/ngelik/tts-bench/blob/main/results/2026-11-25t12-43-39-700z-tiny-voca-nl-cpu-warm-18e949aa/result.json"
+    },
+    {
+      "scenario": "warm",
+      "protocol": "browser-tts-warm-v2",
+      "requestedRounds": 3,
+      "completedRounds": 0,
+      "status": "error",
+      "model": "tiny-voca-nl",
+      "backend": "cpu/wasm",
+      "fixture": "nl-article-v1",
+      "resultId": "2026-11-25t12-44-02-213z-tiny-voca-nl-cpu-warm-ffb3e178",
+      "receiptSha256": "0009eb08ef4e92434619293ef9c11d6e9db780e961918bd7803ced0b0912ceb0",
+      "receipt": "https://github.com/ngelik/tts-bench/blob/main/results/2026-11-25t12-44-02-213z-tiny-voca-nl-cpu-warm-ffb3e178/result.json"
+    },
+    {
+      "scenario": "warm",
+      "protocol": "browser-tts-warm-v2",
+      "requestedRounds": 3,
+      "completedRounds": 0,
+      "status": "error",
+      "model": "tiny-voca-nl",
+      "backend": "cpu/wasm",
+      "fixture": "nl-article-v1",
+      "resultId": "2026-11-25t12-44-24-932z-tiny-voca-nl-cpu-warm-a1d34dd7",
+      "receiptSha256": "04c8add03f15e624a3ef34bf92f1da7fe214a838c780692f026004eab1c98551",
+      "receipt": "https://github.com/ngelik/tts-bench/blob/main/results/2026-11-25t12-44-24-932z-tiny-voca-nl-cpu-warm-a1d34dd7/result.json"
+    },
+    {
+      "scenario": "cached",
+      "protocol": "browser-tts-cached-v1-resources",
+      "requestedRounds": 1,
+      "completedRounds": 0,
+      "status": "error",
+      "model": "tiny-voca-nl",
+      "backend": "cpu/wasm",
+      "fixture": "nl-article-v1",
+      "resultId": "2026-11-25t12-44-47-589z-tiny-voca-nl-cpu-cached-056508b8",
+      "receiptSha256": "0e4eaacf13899f7edf380ac01c063097997108f8c7bfa6c56e5888b3161503a5",
+      "receipt": "https://github.com/ngelik/tts-bench/blob/main/results/2026-11-25t12-44-47-589z-tiny-voca-nl-cpu-cached-056508b8/result.json"
+    }
+  ]
+}

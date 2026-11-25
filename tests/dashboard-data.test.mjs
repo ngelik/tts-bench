@@ -175,6 +175,28 @@ test('keeps every verified audio example and marks exact warm matches separately
   assert.ok(cachedExamples.every(entry => entry.matchesSelectedWarm === false));
 });
 
+test('diagnostic-only Dutch audio keeps its model discoverable without creating scores or ranked audio', () => {
+  const model = getAssetLock().models['tiny-voca'];
+  const diagnostic = {
+    id: 'tiny-voca-opening-diagnostic', model: 'tiny-voca', backend: 'cpu', language: 'nl',
+    voice: 'Alex', diagnosticOnly: true,
+    clip: { path: 'diagnostics/audio/tiny-voca-opening-diagnostic.wav', seconds: 30 },
+  };
+  const data = assembleDashboardData({
+    results: [], models: { 'tiny-voca': model }, diagnosticAudioEntries: [diagnostic],
+    fixtureRegistry: listBenchmarkFixtures(),
+  });
+  const dutch = data.byLanguage.nl.models.find(row => row.id === 'tiny-voca');
+  assert.ok(dutch, 'diagnostic-only model remains discoverable in its Dutch edition');
+  assert.deepEqual(dutch.diagnosticAudio, [diagnostic]);
+  assert.deepEqual(dutch.audio, []);
+  assert.deepEqual(dutch.playbackAudio, { cpu: null, webgpu: null });
+  for (const backend of ['cpu', 'webgpu']) {
+    assert.equal(dutch.warm[backend].medianSeconds, null);
+    assert.equal(dutch.memory[backend].meanMB, null);
+  }
+});
+
 test('a later failed attempt supersedes a prior score without emitting zero metrics', () => {
   const successful = results.find(result => result.id === dashboard.models.find(model => model.id === 'paradee').warm.cpu.resultId);
   const successfulCell = successful.cells.find(cell => cell.model === 'paradee' && cell.backendRequested === 'cpu');

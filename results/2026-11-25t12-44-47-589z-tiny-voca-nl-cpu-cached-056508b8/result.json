@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-25t12-44-47-589z-tiny-voca-nl-cpu-cached-056508b8",
+  "createdAt": "2026-11-25T12:45:09.664Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-cached-v1-resources",
+    "scenario": "cached",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export. Generation RSS uses timestamped samples inside browser generation start/end boundaries; it includes the owned Chrome process tree and browser baseline.",
+    "warmupRuns": 0,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "nl-article-v1",
+    "language": "nl",
+    "sha256": "afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8",
+    "characters": 22195,
+    "unicodeCodePoints": 22195,
+    "utf8Bytes": 22361,
+    "chunks": 101,
+    "source": {
+      "type": "translation",
+      "description": "AI-assisted translation of all 27 paragraphs of the original benchmark article. Codex checked the paragraph sequence, recurring names, plot details, numeric values and Supertonic frontend coverage. No independent human translation review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "3475b20aa29d57a51c84c81ae8a04a9f3a7bd31a",
+    "dirty": false,
+    "manifestSha256": "719be454181ae2ce1ebf6716b9f36c2738c966028c6459c6f18a1645d29048d8"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-nl-assets-espeak-data",
+      "sha256": "14e63b4f2c295d1445d07ab099528b88dceadbac7da4a9e57780512d2e328ac9",
+      "bytes": 956846
+    },
+    {
+      "id": "tiny-voca-nl-assets-espeak-mjs",
+      "sha256": "d9a5f1a06a897dd9291bfdf9e4cc228c57fbf24a3d2f5d020d37f19dfe696339",
+      "bytes": 69218
+    },
+    {
+      "id": "tiny-voca-nl-assets-espeak-wasm",
+      "sha256": "879e87a564b897a5fe436a042f91d2060b12bcb625e6bfd88b09db0637dd13ad",
+      "bytes": 377975
+    },
+    {
+      "id": "tiny-voca-nl-assets-model-json",
+      "sha256": "48bfb1b1d5a22f16f989d7b740cefe32a3abff15f2a0578e58a22227fb06caf9",
+      "bytes": 1111
+    },
+    {
+      "id": "tiny-voca-nl-assets-model-onnx",
+      "sha256": "e892f027d2d378748bfcd1b061894219f513f2e42490aeeccb3c779e0387483c",
+      "bytes": 22469180
+    },
+    {
+      "id": "tiny-voca-nl-assets-ort-LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "tiny-voca-nl-assets-ort-ThirdPartyNotices-txt",
+      "sha256": "cf7342f7ba482ef715ae58f5f497a8d3564fa255164175aea324cd293c5701a0",
+      "bytes": 338538
+    },
+    {
+      "id": "tiny-voca-nl-assets-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-nl-assets-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-nl-assets-ort-ort-wasm-min-mjs",
+      "sha256": "f53ed4792e758e7232f779d479eb8931b97ff3ab2e3b9a33ee00d1251ffdaad6",
+      "bytes": 48904
+    },
+    {
+      "id": "tiny-voca-nl-dutch-mjs",
+      "sha256": "c60bf2b74950ea1ee93dd2053147a9126afc4992fb43204812e22dd3dbe19cc8",
+      "bytes": 6401
+    },
+    {
+      "id": "tiny-voca-nl-worker-mjs",
+      "sha256": "ee1e100155e30d8928272820b9d0269452d70d60955fe65f247bc82c75883f0c",
+      "bytes": 3460
+    },
+    {
+      "id": "tiny-voca-nl-license-model",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-nl-license-espeak-ng",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    {
+      "id": "tiny-voca-nl-license-onnxruntime-web-1-20-1-txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "tiny-voca-nl-license-bsd-2-clause-txt",
+      "sha256": "a8b0c1c7d7af6c0415c068be8cf373799d1a42b0707b79dc4ccfcaf593cd902d",
+      "bytes": 1244
+    },
+    {
+      "id": "tiny-voca-nl-license-ucd-txt",
+      "sha256": "be029c50df83105a810e391778b6edcb522d6cb4b4e142332aca54437a499bf7",
+      "bytes": 2788
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-nl",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "nl"
+        ],
+        "scope": "Pinned calibrated Dutch model and official Dutch browser frontend only. One bundled Alex voice (index 0), nl-NL, 24 kHz. Eligible fixture: nl-article-v1.",
+        "sources": [
+          "https://github.com/tetsuo/tiny-voca-nl/tree/63566400b13c184d10d6da1a563c4f6c7f3ccac5",
+          "https://huggingface.co/xxy998/tiny-voca-nl/tree/ba761f35b72b76d473af2f1daea079944601c69f",
+          "https://huggingface.co/spaces/xxy998/tiny-voca-nl/tree/cccbdddce753130c2d449225438c82b45af1d3da",
+          "https://huggingface.co/rhasspy/piper-voices/tree/e929968c3761f1c281875787685a745863db838d/nl/nl_NL/alex/medium",
+          "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c"
+        ],
+        "notes": "Experimental Dutch profile. Base model card reports 4,537,291 parameters; this is a lower bound because 4,053 calibrated-excitation values are also present and the graph has extra initializers. Publisher browser worker pins one-thread WASM, voice alex, speed 1, pitch 0/range 1, at most 256 tokens, 3,000 frames, recursive clause/word splits, per-utterance 0.99 peak cap and no inserted audio gaps. Calibrated excitation is stochastic and has no synthesis seed. The nl-article-v1 translation has no independent human review."
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "error",
+      "reason": "page.evaluate: Error: Error: Tiny Voca Dutch source span 31 failed: Niet-ondersteunde Nederlandse klank: e\n    at generate (http://127.0.0.1:60536/web/workers/tiny-voca-nl.mjs:104:11)\n    at async self.onmessage (http://127.0.0.1:60536/web/workers/tiny-voca-nl.mjs:168:50)\n    at generate (http://127.0.0.1:60536/web/workers/tiny-voca-nl.mjs:104:11)\n    at async self.onmessage (http://127.0.0.1:60536/web/workers/tiny-voca-nl.mjs:168:50)\n    at worker.onmessage (http://127.0.0.1:60536/web/adapters/rpc-bridge.mjs:43:25)",
+      "voice": "alex",
+      "precision": "Pinned FP32 ONNX graph with calibrated excitation",
+      "settings": {
+        "modelId": "xxy998/tiny-voca-nl",
+        "modelRevision": "ba761f35b72b76d473af2f1daea079944601c69f",
+        "sourceId": "tetsuo/tiny-voca-nl",
+        "sourceRevision": "63566400b13c184d10d6da1a563c4f6c7f3ccac5",
+        "spaceId": "xxy998/tiny-voca-nl",
+        "spaceRevision": "cccbdddce753130c2d449225438c82b45af1d3da",
+        "fixtureId": "nl-article-v1",
+        "fixtureSha256": "afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8",
+        "language": "nl",
+        "locale": "nl-NL",
+        "voice": "alex",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 256,
+        "maxFrames": 3000,
+        "precision": "Pinned FP32 ONNX graph with calibrated excitation",
+        "frontend": "Pinned upstream dutch.mjs + eSpeak NG 1.52.0",
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.20.1",
+          "espeakNg": "1.52.0"
+        },
+        "executionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "waveform": "Stochastic calibrated excitation in the pinned FP32 ONNX graph; no synthesis seed. Upstream one-thread WASM worker behavior; 256-token recursive split; per-utterance 0.99 peak cap; no inserted gaps.",
+        "fixtureQualification": "AI-assisted Dutch translation; no independent human translation review. Full-article use has known stock-frontend failures at spans 31, 54, 74, 88 and 99; no unknown-phone fallback is applied."
+      },
+      "capability": {
+        "gpuDispatchVerified": false,
+        "description": "Pinned publisher browser path explicitly uses one-thread ONNX Runtime WASM; no GPU backend."
+      },
+      "warmup": [],
+      "trials": []
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "RSS is sampled every 500 ms across the owned Chrome process tree, including the Chrome baseline and inference workers. Whole-call peak spans post-timer validation/export; generation mean uses only in-window samples from browser generation start through final CPU-readable PCM."
+  ]
+}

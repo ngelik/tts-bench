@@ -7,6 +7,7 @@ import { getAssetLock } from '../lib/catalog.mjs';
 import { readResult, resultPaths, sha256, median } from './results.mjs';
 import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
+import { loadDiagnosticAudio } from './diagnostic-audio.mjs';
 import { affectedTrials, waveformFinding, waveformReport } from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
 import { loadWarmSelections } from './warm-selection.mjs';
@@ -253,7 +254,7 @@ function hasEligibleFullFixtureResult(results, fixtureId, selectedWarmResultIds)
 
 /** Pure assembly helper. Inputs must already be validated receipts and audio entries. */
 export function assembleDashboardData(input) {
-  const { results, models, audioEntries = [], campaignCells = [], fixtureRegistry = listBenchmarkFixtures() } = input;
+  const { results, models, audioEntries = [], diagnosticAudioEntries = [], campaignCells = [], fixtureRegistry = listBenchmarkFixtures() } = input;
   const receiptModels = new Set(results.filter(result => !result.protocol.smoke).flatMap(result => result.cells.map(cell => cell.model)));
   const fixturesByLanguage = new Map();
   for (const fixture of fixtureRegistry) {
@@ -281,13 +282,15 @@ export function assembleDashboardData(input) {
     const tested = new Set(localResults.flatMap(result => result.cells.map(cell => cell.model)));
     const localSchedule = campaignCells.filter(cell => (cell.fixtureId ?? 'english-20k-v1') === fixture.id);
     const scheduled = new Set(localSchedule.map(cell => cell.model));
+    const localDiagnostics = diagnosticAudioEntries.filter(entry => entry.language === fixture.language);
+    const diagnosticModels = new Set(localDiagnostics.map(entry => entry.model));
     // Keep registered, untested configurations discoverable without treating
     // advertised language coverage as a measurement.
     const localModels = Object.fromEntries(Object.entries(models).filter(([key, model]) =>
-      tested.has(key) || scheduled.has(key) || (!receiptModels.has(key) && defaultFixtureForModel(key) === fixture.id)));
+      tested.has(key) || scheduled.has(key) || diagnosticModels.has(key) || (!receiptModels.has(key) && defaultFixtureForModel(key) === fixture.id)));
     const localAudio = audioEntries.filter(entry => localIds.has(entry.resultId));
     byLanguage[id] = {...assembleLanguageData({...input, models: localModels, results: localResults,
-      audioEntries: localAudio, campaignCells: localSchedule}), fixture: {
+      audioEntries: localAudio, diagnosticAudioEntries: localDiagnostics, campaignCells: localSchedule}), fixture: {
         id: fixture.id, language: id, articleFile: fixture.articleFile,
         characters: fixture.unicodeCodePoints, chunks: fixture.chunks,
       }};
@@ -310,7 +313,7 @@ export function assembleDashboardData(input) {
   return {...en, languages, byLanguage: translations, recordings};
 }
 
-function assembleLanguageData({ results, models, audioEntries = [], campaignCells = [], warmSelection = null, warmSelections = [] }) {
+function assembleLanguageData({ results, models, audioEntries = [], diagnosticAudioEntries = [], campaignCells = [], warmSelection = null, warmSelections = [] }) {
   const scheduledWarm = new Set(campaignCells.filter(cell => cell.scenario === 'warm')
     .map(cell => `${cell.model}/${cell.backend}`));
   const scheduledMemory = new Set(campaignCells.filter(cell => cell.scenario === 'cached' && cell.resources === true)
@@ -341,6 +344,12 @@ function assembleLanguageData({ results, models, audioEntries = [], campaignCell
   const resultsById = new Map(results.map(result => [result.id, result]));
   const audio = enrichAudio(audioEntries, resultsById, selectedWarm, selectedMemory);
   const byModelAudio = new Map();
+  const byModelDiagnostics = new Map();
+  for (const entry of diagnosticAudioEntries) {
+    const list = byModelDiagnostics.get(entry.model) ?? [];
+    list.push(entry);
+    byModelDiagnostics.set(entry.model, list);
+  }
   for (const entry of audio) {
     const list = byModelAudio.get(entry.model) ?? [];
     list.push(entry);
@@ -381,6 +390,7 @@ function assembleLanguageData({ results, models, audioEntries = [], campaignCell
       memory,
       pairedWarm: !warm.cpu.waveform && !warm.webgpu.waveform && pairedWarm(selectedWarm.get(`${id}/cpu`), selectedWarm.get(`${id}/webgpu`), model),
       audio: byModelAudio.get(id) ?? [],
+      diagnosticAudio: byModelDiagnostics.get(id) ?? [],
       preferredAudio,
       playbackAudio,
     };
@@ -461,5 +471,6 @@ export async function buildDashboardData() {
   verifySourcesOnce(results);
   const campaignCells = await readCampaignCells(lock.models);
   const warmSelections = await loadWarmSelections(results);
-  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, campaignCells, warmSelections });
+  const diagnosticAudio = await loadDiagnosticAudio();
+  return assembleDashboardData({ results, models: lock.models, audioEntries: audioManifest.entries, diagnosticAudioEntries: diagnosticAudio, campaignCells, warmSelections });
 }

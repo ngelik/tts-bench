@@ -28,6 +28,7 @@
     "test": "node --test",
     "reference": "node tools/reference.mjs",
     "audio": "node tools/audio.mjs",
+    "audio:diagnostic": "node tools/diagnostic-audio.mjs",
     "listen": "node tools/listen.mjs",
     "listen:build": "node tools/build-listening-site.mjs",
     "dashboard:build": "node tools/build-listening-site.mjs",

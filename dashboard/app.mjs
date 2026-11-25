@@ -258,7 +258,7 @@ function stopPlayback({ restoreFocus = false } = {}) {
   const previous = state.playing; ++playRequest; audio.pause(); audio.removeAttribute('src'); audio.load();
   state.playing = null; $('#player').hidden = true; document.body.classList.remove('has-player'); $('#player-error').hidden = true;
   updatePlaybackButtons();
-  if (restoreFocus) $$('[data-play]').find(button => button.dataset.play === previous?.model && button.dataset.backend === previous?.backend && (button.closest('[data-edition]')?.dataset.edition ?? state.language) === previous?.language && button.getClientRects().length)?.focus();
+  if (restoreFocus) $$('[data-play], [data-diagnostic-play]').find(button => (button.dataset.play ?? button.dataset.diagnosticPlay) === previous?.model && (button.dataset.backend ?? previous?.backend) === previous?.backend && (button.closest('[data-edition]')?.dataset.edition ?? state.language) === previous?.language && button.getClientRects().length)?.focus();
 }
 function setLanguage(language, { push = true } = {}) {
   language = normalizeLanguage(language);
@@ -402,13 +402,13 @@ function clearNoResults() {
 }
 function visibleModels() {
   const term = $('#search').value.trim().toLowerCase(), license = $('#license').value;
-  return activeModels().filter(model => (state.language === 'all' || hasEligibleResult(model)) && matchesCapabilities(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license)).sort(compare);
+  return activeModels().filter(model => (state.language === 'all' || hasEligibleResult(model) || model.diagnosticAudio?.length) && matchesCapabilities(model) && (state.modelIds === null || state.modelIds.includes(model.id)) && (!term || `${model.name} ${model.id}`.toLowerCase().includes(term)) && (license === 'all' || model.license.model === license)).sort(compare);
 }
 function exampleFor(model, backend) {
   return model?.playbackAudio?.[backend];
 }
 function audioButtons(model) {
-  return `<div class="audio-buttons">${['cpu', 'webgpu'].map(backend => {
+  const scored = ['cpu', 'webgpu'].map(backend => {
     const sample = exampleFor(model, backend);
     if (sample && matchesAuditedWav(sample.full.sha256)) {
       const accessible = `${labels[backend]} recording is waveform flagged and hidden from default playback. Open model details or the audio page diagnostic option to listen.`;
@@ -417,7 +417,12 @@ function audioButtons(model) {
     const match = sample?.matchesSelectedWarm ? 'matches the selected warm score' : sample?.matchesSelectedMemory ? 'matches the cached memory run' : 'separate recording';
     const description = `${labels[backend]} ${sample?.scenario ?? 'published'} audio example, ${match}`;
     return sample ? `<button class="listen-button" data-play="${escape(model.id)}" data-backend="${backend}" aria-label="Play ${escape(model.name)} ${escape(description)}" title="${escape(description)}" aria-pressed="${state.playing?.clip.path === sample.clip.path && !audio.paused}"><span class="play-symbol" aria-hidden="true">▶</span> ${labels[backend]}</button>` : `<span class="metric-unavailable" title="No published ${labels[backend]} recording">${labels[backend]} —</span>`;
-  }).join('')}</div>`;
+  }).join('');
+  const diagnostic = model.diagnosticAudio?.[0];
+  const diagnosticButton = diagnostic
+    ? `<button class="listen-button diagnostic-listen-button" data-diagnostic-play="${escape(model.id)}" data-diagnostic-id="${escape(diagnostic.id)}" aria-label="Play ${escape(model.name)} diagnostic audio, excluded from scores" title="Diagnostic audio · excluded from scores and rankings"><span class="play-symbol" aria-hidden="true">▶</span> Diagnostic</button>`
+    : '';
+  return `<div class="audio-buttons">${scored}${diagnosticButton}</div>`;
 }
 function showWarmCounts(model) {
   return ['cpu', 'webgpu'].some(backend => {
@@ -515,6 +520,15 @@ function chartPanels(models) {
 function boardHeading(edition) {
   return `<a href="${escape(languageHref(edition.id))}">${escape(edition.englishName)} <span aria-hidden="true">↗</span></a>`;
 }
+function diagnosticAudioGroup(models) {
+  const rows = models.filter(model => !hasEligibleResult(model) && model.diagnosticAudio?.length);
+  if (!rows.length) return '';
+  const examples = rows.flatMap(model => model.diagnosticAudio.map(sample => `<li data-diagnostic-model="${escape(model.id)}">
+    <button class="listen-button diagnostic-listen-button" data-diagnostic-play="${escape(model.id)}" data-diagnostic-id="${escape(sample.id)}" aria-label="Play ${escape(model.name)} diagnostic audio, excluded from rankings" title="Diagnostic audio · excluded from scores and rankings"><span class="play-symbol" aria-hidden="true">▶</span> ${escape(model.name)} · ${escape(sample.clip.seconds)}s</button>
+    <span>${escape(sample.voice)} · ${escape(sample.diagnosticStatus)}</span>
+  </li>`)).join('');
+  return `<section class="diagnostic-audio-group" aria-label="Unranked diagnostic audio"><h4>Diagnostic audio · not ranked</h4><p>These short clips are supported-prefix examples. They do not count as full-article scores or ranking results.</p><ul>${examples}</ul></section>`;
+}
 function renderCharts(models, boards) {
   const kind = state.metric;
   $('#chart-order').textContent = kind === 'coverage' ? 'Reported support · broadest first' : 'Eligible results · lowest first';
@@ -528,8 +542,9 @@ function renderCharts(models, boards) {
       return !['cpu','webgpu'].some(backend => kind === 'generation' ? isEligibleWarm(model.warm[backend]) : isEligibleMemory(model.memory[backend]));
     });
     const unavailable = missing.length ? `<details class="missing-values"><summary>Without a published value (${missing.length})</summary>${missing.map(model => `<button data-detail="${escape(model.id)}">${escape(model.name)}</button>`).join('')}</details>` : '';
-    return `<section class="edition-section" data-edition="${escape(edition.id)}"><h3>${boardHeading(edition)}</h3>${panels || `<p class="chart-empty">${edition.coverage ? 'Hosted demo available' : 'Awaiting results'}</p>`}${unavailable}</section>`;
-  }).join('') : chartPanels(models);
+    const diagnosticExamples = kind === 'generation' ? diagnosticAudioGroup(rows) : '';
+    return `<section class="edition-section" data-edition="${escape(edition.id)}"><h3>${boardHeading(edition)}</h3>${panels || `<p class="chart-empty">${edition.coverage ? 'Hosted demo available' : 'Awaiting results'}</p>`}${diagnosticExamples}${unavailable}</section>`;
+  }).join('') : `${chartPanels(models)}${kind === 'generation' ? diagnosticAudioGroup(models) : ''}`;
 }
 function render() {
   if (!state.data) return;
@@ -558,7 +573,8 @@ function render() {
   const scope = selectedModelScope();
   const filtersApplied = Boolean($('#search').value.trim() || $('#license').value !== 'all' || state.modelIds !== null || capabilityFilters.some(id=>$(`#${id}`).value!=='all'));
   $('#visible-count').hidden = !filtersApplied;
-  $('#visible-count').textContent = `${models.length} result${models.length === 1 ? '' : 's'}`;
+  const visibleResults = models.filter(hasEligibleResult).length;
+  $('#visible-count').textContent = `${visibleResults} result${visibleResults === 1 ? '' : 's'}`;
   $('#table-view').hidden = state.view !== 'table' || models.length === 0;
   $('#charts-view').hidden = state.view !== 'charts' || models.length === 0;
   $('.sort-field').hidden = state.view !== 'table';
@@ -623,6 +639,14 @@ function openDetails(id, language = state.language) {
     const relation = sample.matchesSelectedWarm ? ' · matches the selected warm receipt' : sample.matchesSelectedMemory ? ' · matches the selected memory receipt' : ' · example from a separate receipt';
     return `<li>${playAction}<p>${escape(sample.voice)} · ${escape(sample.language)} · ${escape(sample.scenario)} recording${relation}${diagnostic ? ' · waveform flagged; diagnostic playback only' : ''}</p><p>${escape(sample.attribution ?? '')}</p><p>Model terms: ${escape(sample.modelTerms ?? model.license.model)}</p>${sample.full?.url ? `<a href="${escape(sample.full.url)}">Full WAV ↗</a>` : ''}<a href="${escape(sample.reportUrl)}">Recording receipt ↗</a></li>`;
   }).join('') || '<li>No published recording.</li>';
+  const diagnosticAudio = (model.diagnosticAudio ?? []).map(sample => `<li class="diagnostic-recording">
+      <p><strong>Diagnostic only · excluded from scores and rankings</strong></p>
+      <audio controls preload="none" src="./${escape(sample.clip.path)}" aria-label="${escape(model.name)} diagnostic audio"></audio>
+      <p>${escape(sample.voice)} · ${escape(sample.language)} · ${escape(sample.diagnosticStatus)}</p>
+      <p>${escape(sample.attribution)} Model terms: ${escape(sample.modelTerms)}</p>
+      <a href="${escape(sample.smokeReceiptUrl)}">Three-span smoke receipt ↗</a>
+      <a href="${escape(sample.fullAttemptReceiptUrl)}">Failed full-article receipt ↗</a>
+    </li>`).join('');
   $('#detail-content').innerHTML = `<h2 id="detail-title">${escape(model.name)}</h2>
     <p class="detail-subtitle">Model capabilities and published browser measurements</p>
     <div class="detail-stats"><div class="detail-stat"><strong>${fmt(model.modelMB)}</strong><span>MB · core weights</span></div><div class="detail-stat"><strong>${countValue(model.support?.voiceCount) === null ? 'Not specified' : fmt(model.support.voiceCount, 0)}</strong><span>supported voices</span></div><div class="detail-stat"><strong>${countValue(model.support?.languageCount) === null ? 'Not specified' : fmt(model.support.languageCount, 0)}</strong><span>supported languages</span></div></div>
@@ -635,12 +659,13 @@ function openDetails(id, language = state.language) {
     <h3>Licenses</h3><dl class="detail-license"><dt>Model weights</dt><dd>${escape(model.license.model)}</dd><dt>Runtime / code</dt><dd>${escape(model.license.code ?? 'Not specified in the pinned catalog')}</dd></dl>
     <p class="detail-note">The model license does not cover every component or determine output rights. See the upstream terms and <a href="${repo}/blob/main/docs/LICENSING.md">license inventory</a>.</p>
     <h3>Audio examples</h3><ul class="recording-list">${audioList}</ul>
+    ${diagnosticAudio ? `<h3>Diagnostic audio</h3><ul class="recording-list">${diagnosticAudio}</ul>` : ''}
     <div class="detail-bottom">${model.sourceUrl ? `<a href="${escape(model.sourceUrl)}">Model source ↗</a>` : ''}<a href="${escape(modelLink(model.id, edition))}">Link to this model ↗</a><a href="./audio/">Browse all recordings ↗</a></div>`;
   if (!dialog.open) dialog.showModal();
   dialog.scrollTop = 0;
 }
 function sameRecording(a, b) {
-  return Boolean(a && b && a.clip?.path === b.clip?.path && a.resultId === b.resultId
+  return Boolean(a && b && a.clip?.path === b.clip?.path && (a.diagnosticOnly && b.diagnosticOnly ? a.id === b.id : a.resultId === b.resultId)
     && a.language === b.language && a.backend === b.backend);
 }
 function updatePlaybackButtons() {
@@ -650,18 +675,28 @@ function updatePlaybackButtons() {
     const sample = exampleFor(m, button.dataset.backend);
     button.setAttribute('aria-pressed', String(sameRecording(sample, state.playing) && !audio.paused));
   });
+  $$('[data-diagnostic-play]').forEach(button => {
+    const edition = button.closest('[data-edition]')?.dataset.edition || state.language;
+    const model = activeModels(edition).find(item => item.id === button.dataset.diagnosticPlay);
+    const sample = model?.diagnosticAudio?.find(item => item.id === button.dataset.diagnosticId);
+    button.setAttribute('aria-pressed', String(sameRecording(sample, state.playing) && !audio.paused));
+  });
 }
-async function play(id, backend, edition = state.language) {
-  const model = activeModels(edition).find(m => m.id === id), sample = exampleFor(model, backend); if (!sample) return;
+async function play(id, backend, edition = state.language, diagnosticId = null) {
+  const model = activeModels(edition).find(m => m.id === id);
+  const sample = diagnosticId ? (model?.diagnosticAudio ?? []).find(item => item.id === diagnosticId) : exampleFor(model, backend);
+  if (!sample) return;
   const request = ++playRequest;
   const same = sameRecording(state.playing, sample);
   $('#player').hidden = false; document.body.classList.add('has-player'); $('#player-error').hidden = true;
   if (same && !audio.paused) { audio.pause(); return; }
   state.playing = sample;
   if (!same) { audio.src = new URL(sample.clip.path, document.baseURI).href; }
-  $('#player-title').textContent = `${model.name} · ${labels[backend]}${state.language === 'all' ? ' · '+languageLabel(edition) : ''}`;
+  $('#player-title').textContent = `${model.name} · ${sample.diagnosticOnly ? 'Diagnostic audio' : labels[backend]}${state.language === 'all' ? ' · '+languageLabel(edition) : ''}`;
   $('#player-tag').textContent = `${sample.clip.seconds}-SECOND AUDIO EXAMPLE`;
-  $('#player-caption').textContent = `${sample.voice} · ${sample.matchesSelectedWarm ? 'selected warm receipt' : `${sample.scenario} recording · separate receipt`}`;
+  $('#player-caption').textContent = sample.diagnosticOnly
+    ? `${sample.voice} · ${sample.diagnosticStatus}`
+    : `${sample.voice} · ${sample.matchesSelectedWarm ? 'selected warm receipt' : `${sample.scenario} recording · separate receipt`}`;
   $('#player-caption').classList.toggle('has-playback-notice', Boolean(sample.playbackNotice));
   if (sample.playbackNotice) {
     $('#player-caption').textContent += ' · ' + sample.playbackNotice;
@@ -673,7 +708,7 @@ async function play(id, backend, edition = state.language) {
   if (sample.full?.url) $('#player-full').href = sample.full.url;
   else $('#player-full').removeAttribute('href');
   $('#player-error').textContent = sample.full?.url ? 'Playback failed. Try opening the full WAV.' : 'Playback failed.';
-  $('#player-receipt').href = sample.reportUrl;
+  $('#player-receipt').href = sample.diagnosticOnly ? sample.smokeReceiptUrl : sample.reportUrl;
   $('#player-details').dataset.edition = edition;
   $('#player-details').dataset.detail = model.id;
   try { await audio.play(); } catch { if (request === playRequest) $('#player-error').hidden = false; }
@@ -694,6 +729,7 @@ document.addEventListener('click', event => {
   if (clearModelScopeButton) { clearModelScope(); render(); syncUrl(); return; }
   const detail = event.target.closest('[data-detail]'); if (detail) openDetails(detail.dataset.detail, detail.closest('[data-edition]')?.dataset.edition);
   const playButton = event.target.closest('[data-play]'); if (playButton) play(playButton.dataset.play, playButton.dataset.backend, playButton.closest('[data-edition]')?.dataset.edition);
+  const diagnosticButton = event.target.closest('[data-diagnostic-play]'); if (diagnosticButton) play(diagnosticButton.dataset.diagnosticPlay, 'cpu', diagnosticButton.closest('[data-edition]')?.dataset.edition, diagnosticButton.dataset.diagnosticId);
   const view = event.target.closest('[data-view]'); if (view) { state.view = view.dataset.view; render(); syncUrl(); }
   const metric = event.target.closest('[data-metric]'); if (metric) { state.metric = metric.dataset.metric; render(); syncUrl(); }
   const sort = event.target.closest('[data-sort]'); if (sort) { state.direction = state.sort === sort.dataset.sort ? -state.direction : 1; state.sort = sort.dataset.sort; $('#sort-select').value = state.sort; render(); syncUrl(); }
@@ -728,7 +764,8 @@ try {
   state.data = await response.json();
   if (state.data.schemaVersion !== 1 || !Array.isArray(state.data.models)) throw new Error('Unsupported dashboard data');
   state.editions = registeredLanguages();
-  state.allModels = state.editions.flatMap(edition => activeModels(edition.id).map(model => ({...model, edition:edition.id})));
+  state.allModels = state.editions.flatMap(edition => activeModels(edition.id)
+    .map(model => ({...model, edition:edition.id})));
   buildLanguagePicker();
   restoreLocation();
   $('#language-picker-trigger').disabled = false;

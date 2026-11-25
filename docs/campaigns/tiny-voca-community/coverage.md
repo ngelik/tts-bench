@@ -6,11 +6,12 @@
 
 Full-article results are available for **14 of 18 model and input combinations**. Hindi INT6 and INT7 use different weights. Native-script and Roman-script articles are measured separately.
 
+Dutch Alex stopped at article segment 31 while pronouncing “recorder” in three independent warm attempts and the separate cached attempt. It completed zero scored rounds. [Original attempts and receipts](../tiny-voca-nl/article-outcome.json) · [Listen to the opening on the Dutch board](https://ngelik.github.io/tts-bench/?lang=nl&model=tiny-voca-nl)
+
 Each Browser Voice bundle includes acoustic weights, a graph, a pronunciation lexicon and two pronunciation graphs. Roman input also uses the publisher’s script converter. A three-segment check qualifies a browser adapter for full-article measurement.
 
 | Model | Pending input | Browser dependencies and qualification |
 |---|---|---|
-| Tiny Voca Dutch | Dutch | Calibrated ONNX model, Dutch text normalization, eSpeak NG 1.52.0 WASM and language data, and ONNX Runtime Web 1.20.1. [Source](https://huggingface.co/spaces/xxy998/tiny-voca-nl/tree/cccbdddce753130c2d449225438c82b45af1d3da) |
 | Browser Voice Ishwari INT7 | Roman Hindi | Hindi INT7 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/329) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b/int7/browser) |
 | Browser Voice Jahnavi INT6 | Roman Malayalam | Malayalam INT6 browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/338) passed the three-segment check for this input. [Source](https://huggingface.co/Hansda/malayalam-voice-compact/tree/651bf3cbe3e9891bb298becaaff713033b0d384a/int6/browser) |
 | Browser Voice Sreekar INT8 preview | Roman Telugu | Telugu INT8 preview browser bundle. The [published CPU adapter](https://github.com/ngelik/tts-bench/pull/344) passed the three-segment check for this input. [Source](https://tts.hansda.in/languages.json) |

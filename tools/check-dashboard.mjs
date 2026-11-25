@@ -283,6 +283,8 @@ try {
   for (const [language, group] of Object.entries(expected.byLanguage ?? {})) {
     if (language === 'uk') continue;
     const models = resultModels(group.models ?? []);
+    const diagnosticOnlyModels = (group.models ?? []).filter(model => model.diagnosticAudio?.length && !hasEligibleResult(model));
+    const visibleModels = [...models, ...diagnosticOnlyModels];
     const displayName = new Intl.DisplayNames(['en'], {type:'language'}).of(language);
     const tabLabel = {
       'ku-Arab-IQ': 'Kurdish Behdînî (Arabic script)',
@@ -297,7 +299,7 @@ try {
       assert.equal(await tab.locator('.language-option-english').textContent(), 'Kurdish Behdînî (Arabic script)');
     }
     await selectLanguage(page, language);
-    await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, models.length);
+    await page.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, visibleModels.length);
     await expectLanguage(page, language);
     assert.equal(await page.locator('#results').getAttribute('aria-labelledby'), 'results-title');
     const pickerName = await tab.locator('.language-option-native, .language-option-english').first().textContent();
@@ -307,7 +309,7 @@ try {
     if (group.fixture?.characters) {
       assert.equal(await page.locator('#fixture-language').innerText(), `${group.fixture.characters.toLocaleString('en-US')} ${displayName} characters`);
     }
-    await assertRows(models);
+    await assertRows(visibleModels);
     for (const [selectId, key, value] of [
       ['weight-filter','weight','unknown'],
       ['language-count','languages','unknown'],
@@ -317,12 +319,14 @@ try {
       await page.locator('#reset').click();
       await page.locator(`#${selectId}`).selectOption(value);
       const filters = {weight:'all',supports:'all',languages:'all',voices:'all',[key]:value};
-      await assertRows(models.filter(model => matchesCapabilityFilters(model, filters)));
+      await assertRows(visibleModels.filter(model => matchesCapabilityFilters(model, filters)));
     }
     await page.locator('#reset').click();
-    await assertRows(models);
-    if (models.length === 0) {
+    await assertRows(visibleModels);
+    if (visibleModels.length === 0) {
       assert.equal(await page.locator('#no-results').isVisible(), true, `${language} remains usable before it has published results`);
+    } else {
+      assert.equal(await page.locator('#no-results').isVisible(), false, `${language} with visible results or diagnostic audio does not show the empty state`);
     }
   }
   await selectLanguage(page, 'en');
@@ -808,7 +812,42 @@ try {
     synthetic.audio = [];
     synthetic.playbackAudio = {cpu:null,webgpu:null};
     syntheticData.models.push(archivedOnly,currentFault,currentRecordingFault,unknownCapabilities,synthetic);
+    const diagnosticOnly = structuredClone(expected.models[0]);
+    diagnosticOnly.id = 'synthetic-dutch-diagnostic-only';
+    diagnosticOnly.name = 'Synthetic Dutch diagnostic only';
+    diagnosticOnly.pairedWarm = false;
+    diagnosticOnly.audio = [];
+    diagnosticOnly.playbackAudio = {cpu:null,webgpu:null};
+    diagnosticOnly.preferredAudio = {cpu:null,webgpu:null};
+    diagnosticOnly.warm = Object.fromEntries(['cpu','webgpu'].map(backend => [backend,{...diagnosticOnly.warm[backend],status:backend === 'cpu' ? 'error' : 'unsupported',medianSeconds:null,reason:'Full Dutch article has no complete result.'}]));
+    diagnosticOnly.memory = Object.fromEntries(['cpu','webgpu'].map(backend => [backend,{...diagnosticOnly.memory[backend],status:'error',meanMB:null,reason:'No Dutch memory score.'}]));
+    diagnosticOnly.diagnosticAudio = [{
+      id:'synthetic-dutch-opening',model:diagnosticOnly.id,backend:'cpu',language:'nl',voice:'Alex',
+      attribution:'Synthetic test attribution',modelTerms:'Apache-2.0',diagnosticOnly:true,
+      diagnosticStatus:'30-second prefix of the three-span smoke; full article failed at span 31. Excluded from scores and rankings.',
+      clip:{path:'diagnostics/audio/synthetic-dutch-opening.wav',seconds:30},
+      smokeReceiptUrl:'https://github.com/ngelik/tts-bench/blob/main/diagnostics/synthetic-dutch/smoke.json',
+      fullAttemptReceiptUrl:'https://github.com/ngelik/tts-bench/blob/main/results/synthetic-failed-full/result.json',
+      reportUrl:'https://github.com/ngelik/tts-bench/blob/main/results/synthetic-failed-full/result.json',
+    }];
+    assert.ok(syntheticData.byLanguage.nl, 'Dutch edition remains registered');
+    const originalAllModels = [syntheticData, ...Object.values(syntheticData.byLanguage)].flatMap(group => group.models ?? []);
+    const originalAllModelCount = new Set(originalAllModels.map(model => model.id)).size;
+    const originalAllScoreCount = originalAllModels.reduce((sum, model) => sum + ['cpu','webgpu'].filter(backend => eligibleWarm(model.warm[backend])).length, 0);
+    const originalDutchModels = syntheticData.byLanguage.nl.models;
+    const originalDutchResultModels = resultModels(originalDutchModels);
+    const originalDutchDiagnosticModels = originalDutchModels.filter(model => model.diagnosticAudio?.length && !hasEligibleResult(model));
+    const originalDutchScoreCount = expectedGeneration(originalDutchModels, 'cpu').length + expectedGeneration(originalDutchModels, 'webgpu').length;
+    syntheticData.byLanguage.nl.models.push(diagnosticOnly);
     await syntheticPage.route('**/assets/data.json*', route => route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(syntheticData)}));
+    const syntheticDiagnosticWav = Buffer.alloc(44 + 24000 * 30 * 2);
+    syntheticDiagnosticWav.write('RIFF',0); syntheticDiagnosticWav.writeUInt32LE(syntheticDiagnosticWav.length - 8,4);
+    syntheticDiagnosticWav.write('WAVEfmt ',8); syntheticDiagnosticWav.writeUInt32LE(16,16);
+    syntheticDiagnosticWav.writeUInt16LE(1,20); syntheticDiagnosticWav.writeUInt16LE(1,22);
+    syntheticDiagnosticWav.writeUInt32LE(24000,24); syntheticDiagnosticWav.writeUInt32LE(48000,28);
+    syntheticDiagnosticWav.writeUInt16LE(2,32); syntheticDiagnosticWav.writeUInt16LE(16,34);
+    syntheticDiagnosticWav.write('data',36); syntheticDiagnosticWav.writeUInt32LE(syntheticDiagnosticWav.length - 44,40);
+    await syntheticPage.route('**/diagnostics/audio/synthetic-dutch-opening.wav', route => route.fulfill({status:200,contentType:'audio/wav',body:syntheticDiagnosticWav}));
     await syntheticPage.goto(new URL('?lang=en&view=table',base).href);
     const syntheticVisibleCount = expectedResultModels.length + 4;
     await syntheticPage.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, syntheticVisibleCount);
@@ -851,6 +890,35 @@ try {
     await syntheticPage.goto(new URL('?model=synthetic-no-eligible-result',base).href);
     await syntheticPage.waitForFunction(() => document.querySelector('#details')?.open);
     assert.equal(await syntheticPage.locator('#detail-title').innerText(), 'Synthetic no-result configuration', 'A direct model link still exposes its evidence details');
+    await syntheticPage.goto(new URL('?lang=nl&view=charts',base).href);
+    await syntheticPage.locator('.diagnostic-audio-group').waitFor();
+    assert.equal(await syntheticPage.locator('#model-count').innerText(), String(originalDutchResultModels.length), 'Diagnostic-only Dutch configuration does not change the existing result count');
+    assert.equal(await syntheticPage.locator('#score-count').innerText(), String(originalDutchScoreCount), 'Diagnostic-only audio does not change the existing eligible timing score count');
+    assert.equal(await syntheticPage.locator('#charts .bar-row[data-model="synthetic-dutch-diagnostic-only"]').count(), 0, 'Diagnostic-only model has no chart bar');
+    assert.equal(await syntheticPage.locator('.diagnostic-audio-group [data-diagnostic-play="synthetic-dutch-diagnostic-only"]').count(), 1, 'Dutch chart exposes an unranked diagnostic player');
+    await syntheticPage.goto(new URL('?view=charts',base).href);
+    await syntheticPage.locator('.edition-section[data-edition="nl"] .diagnostic-audio-group').waitFor();
+    assert.equal(await syntheticPage.locator('#model-count').innerText(), String(originalAllModelCount + 1), 'All Languages includes the unranked Dutch diagnostic configuration');
+    assert.equal(await syntheticPage.locator('#score-count').innerText(), String(originalAllScoreCount), 'Adding a diagnostic configuration preserves all eligible timing counts');
+    assert.equal(await syntheticPage.locator('.edition-section[data-edition="nl"] .diagnostic-audio-group [data-diagnostic-play="synthetic-dutch-diagnostic-only"]').count(), 1, 'All Languages exposes Dutch diagnostic playback in its edition');
+    assert.equal(await syntheticPage.locator('.edition-section[data-edition="nl"] .bar-row[data-model="synthetic-dutch-diagnostic-only"]').count(), 0, 'All Languages keeps the diagnostic configuration out of ranked bars');
+    const allLanguageClipResponse = syntheticPage.waitForResponse(response => new URL(response.url()).pathname.endsWith('/diagnostics/audio/synthetic-dutch-opening.wav'));
+    await syntheticPage.locator('.edition-section[data-edition="nl"] [data-diagnostic-play="synthetic-dutch-diagnostic-only"]').click();
+    assert.equal((await allLanguageClipResponse).status(),200,'All Languages diagnostic player serves its playable WAV');
+    await syntheticPage.waitForFunction(url => document.querySelector('#player-receipt')?.href === url, diagnosticOnly.diagnosticAudio[0].smokeReceiptUrl);
+    await syntheticPage.goto(new URL('?lang=nl&view=table',base).href);
+    await syntheticPage.waitForFunction(count => document.querySelectorAll('#model-rows tr').length === count, originalDutchResultModels.length + originalDutchDiagnosticModels.length + 1);
+    const dutchDiagnosticRow = syntheticPage.locator('#model-rows tr[data-model="synthetic-dutch-diagnostic-only"]');
+    assert.equal(await dutchDiagnosticRow.count(), 1, 'Dutch table keeps the diagnostic-only model discoverable');
+    const dutchDiagnosticPlay = dutchDiagnosticRow.locator('[data-diagnostic-play="synthetic-dutch-diagnostic-only"]');
+    assert.equal(await dutchDiagnosticPlay.count(), 1, 'Dutch table exposes diagnostic playback');
+    await dutchDiagnosticPlay.click();
+    await syntheticPage.waitForFunction(url => document.querySelector('#player-receipt')?.href === url, diagnosticOnly.diagnosticAudio[0].smokeReceiptUrl);
+    await dutchDiagnosticRow.getByRole('button', {name: diagnosticOnly.name, exact: true}).click();
+    assert.ok((await syntheticPage.locator('#detail-content').innerText()).includes('Diagnostic only · excluded from scores and rankings'));
+    assert.ok((await syntheticPage.locator('#detail-content').innerText()).includes('Three-span smoke receipt'));
+    assert.ok((await syntheticPage.locator('#detail-content').innerText()).includes('Failed full-article receipt'));
+    assert.equal(await syntheticPage.locator(`#detail-content a[href="${diagnosticOnly.diagnosticAudio[0].fullAttemptReceiptUrl}"]`).count(), 1, 'Model details retain the failed full-article receipt');
   } finally {await syntheticPage.close();}
 
   const audioUrl = new URL('audio/', base);

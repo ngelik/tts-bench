@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "tiny-voca-nl-opening",
+      "model": "tiny-voca-nl",
+      "language": "nl",
+      "backend": "cpu",
+      "voice": "alex",
+      "sourceCommit": "3475b20aa29d57a51c84c81ae8a04a9f3a7bd31a",
+      "fixtureId": "nl-article-v1",
+      "fixtureSha256": "afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8",
+      "firstFailureSpanId": 31,
+      "attribution": "Tiny Voca Dutch Alex (calibrated FP32)",
+      "modelTerms": "Apache-2.0 for the model and Tiny Voca NL source; the model graph includes calibrated excitation.",
+      "sourceUrls": [
+        "https://github.com/tetsuo/tiny-voca-nl/tree/63566400b13c184d10d6da1a563c4f6c7f3ccac5",
+        "https://huggingface.co/xxy998/tiny-voca-nl/tree/ba761f35b72b76d473af2f1daea079944601c69f",
+        "https://huggingface.co/spaces/xxy998/tiny-voca-nl/tree/cccbdddce753130c2d449225438c82b45af1d3da",
+        "https://huggingface.co/rhasspy/piper-voices/tree/e929968c3761f1c281875787685a745863db838d/nl/nl_NL/alex/medium",
+        "https://github.com/espeak-ng/espeak-ng/tree/4870adfa25b1a32b4361592f1be8a40337c58d6c"
+      ],
+      "smoke": {
+        "fixtureId": "nl-article-smoke-v1",
+        "fixtureSha256": "7705f4c36e33db4c1b29f6b04756e93fab53d7f376ae854ccedfee8fa899d71d",
+        "trialIndex": 1,
+        "spanIds": [
+          0,
+          1,
+          2
+        ],
+        "receipt": {
+          "path": "diagnostics/tiny-voca-nl-opening/smoke.json",
+          "sha256": "de263bc289a5449f1af6180cb43d3f20ff1e0f613e26a6c83d474fb8abb7d55e"
+        },
+        "sourceWavSha256": "39a8a1d8495613dc1058dcf5d1ffa87b90783334ce7a98d4fa9f36a8b9e5e9b0",
+        "sourceWavBytes": 1490988
+      },
+      "fullAttempt": {
+        "receipt": {
+          "path": "results/2026-11-25t12-44-24-932z-tiny-voca-nl-cpu-warm-a1d34dd7/result.json",
+          "sha256": "04c8add03f15e624a3ef34bf92f1da7fe214a838c780692f026004eab1c98551"
+        }
+      },
+      "clip": {
+        "path": "diagnostics/audio/tiny-voca-nl-opening.wav",
+        "startSample": 0,
+        "bytes": 1440044,
+        "sha256": "e2627b9e55aaeb97fdd4d0aa36caacb93ff39cda13c1d2205d5b4474c98ec818",
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      }
+    }
+  ]
+}

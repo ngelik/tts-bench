@@ -1958,6 +1958,13 @@ dialog::backdrop { background:#14231c66; backdrop-filter:blur(4px); }
 .edition-section > h3 { margin:0 0 .75rem; font-size:1.1rem; }
 .edition-section > h3 a, .board-heading a { color:var(--ink); text-underline-offset:.2em; }
 .edition-section .chart-panel, .bar-label button { min-width:0; }
+.diagnostic-audio-group { margin-top:1rem; padding:1rem; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+.diagnostic-audio-group h4 { margin:0 0 .35rem; font-size:1rem; }
+.diagnostic-audio-group p { margin:.25rem 0 .75rem; color:var(--muted); font-size:.9rem; }
+.diagnostic-audio-group ul { display:grid; gap:.55rem; margin:0; padding:0; list-style:none; }
+.diagnostic-audio-group li { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; }
+.diagnostic-audio-group li > span { color:var(--muted); font-size:.85rem; }
+.diagnostic-listen-button { flex:none; }
 .bar-label button { min-height:24px; overflow-wrap:anywhere; }
 .bar-value { flex-shrink:0; font-variant-numeric:tabular-nums; }
 .missing-values { margin-top:.5rem; color:var(--muted); font-size:.85rem; }
