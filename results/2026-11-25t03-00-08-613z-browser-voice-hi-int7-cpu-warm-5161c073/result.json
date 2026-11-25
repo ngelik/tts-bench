@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-25t03-00-08-613z-browser-voice-hi-int7-cpu-warm-5161c073",
+  "createdAt": "2026-11-25T03:06:15.029Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": null,
+    "headless": false
+  },
+  "fixture": {
+    "id": "hi-article-v1",
+    "language": "hi",
+    "sha256": "c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128",
+    "characters": 19885,
+    "unicodeCodePoints": 19885,
+    "utf8Bytes": 51169,
+    "chunks": 91,
+    "source": {
+      "type": "translation",
+      "description": "Hindi translation of all 27 paragraphs of the canonical English benchmark article, checked against the source and the released Tiny Voca Hindi frontend. Identifiers, labels and numbers are spelled as they are spoken in Devanagari. No native-speaker review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "3aee337ce12dc3d7f941c174653a51bf4cc5f6df",
+    "dirty": false,
+    "manifestSha256": "92db8855876d8895cd906e6d9efd092a55a2568692bcb7e9a027de72aac66ca9"
+  },
+  "assets": [
+    {
+      "id": "browser-voice-hi-int7-worker-js",
+      "sha256": "c620a0af032424a74570012281610c32c94a02598391da06d4a81fcf45f618a7",
+      "bytes": 7858
+    },
+    {
+      "id": "browser-voice-hi-int7-frontend-js",
+      "sha256": "87d0282594755b6f5e5ea9f348b878ab2363b776fbc0069ace277951a306ee64",
+      "bytes": 3758
+    },
+    {
+      "id": "browser-voice-hi-int7-weight-shuffle-js",
+      "sha256": "f6e7b0fdc95d4ee12308f1cd227c44f426fda071401d78b94596430b5f3d0e92",
+      "bytes": 1167
+    },
+    {
+      "id": "browser-voice-hi-int7-converter-mjs",
+      "sha256": "b2c7202c1a2ac09878fcf19ac2f03ec3f904a572e97623a4dc8313d87c67b534",
+      "bytes": 3317
+    },
+    {
+      "id": "browser-voice-hi-int7-weights-js",
+      "sha256": "702155516bc665b9bc6814d8a1d9eeffb66b924530c3c50e6d9b02136363cbd0",
+      "bytes": 1899
+    },
+    {
+      "id": "browser-voice-hi-int7-runtime-ort-wasm-min-mjs",
+      "sha256": "d5a6d7bc8ee587648fb3742dde8c0094d17cbd3822a68bbec8ddfcd4f2adb88e",
+      "bytes": 49997
+    },
+    {
+      "id": "browser-voice-hi-int7-runtime-ort-wasm-simd-threaded-mjs",
+      "sha256": "5687566b1bc1c8cf628d76c2ddb16b2a3b81a7997273d4666564880495088e57",
+      "bytes": 24274
+    },
+    {
+      "id": "browser-voice-hi-int7-runtime-ort-wasm-simd-threaded-wasm-gz",
+      "sha256": "ad64341b75d860bb282beba9d2a8511858bbe1cbf408b6b460e15aafcc2b4448",
+      "bytes": 3140838
+    },
+    {
+      "id": "browser-voice-hi-int7-model-weights-gz",
+      "sha256": "7df3ebdcb97631e49e873ed7de65fecd3eabe54d748da2d8fdc0783cd8cec6c5",
+      "bytes": 882200
+    },
+    {
+      "id": "browser-voice-hi-int7-voice-onnx-gz",
+      "sha256": "a36544e006e67304f2b5f70343729833cc7c0652af265626b21430df176a3e50",
+      "bytes": 29302
+    },
+    {
+      "id": "browser-voice-hi-int7-frontend-json-gz",
+      "sha256": "6cb51076c6bd67a073049a099ae88f3007e37f8847e45c08b491cea7b1eda241",
+      "bytes": 211366
+    },
+    {
+      "id": "browser-voice-hi-int7-g2p-encode-onnx-gz",
+      "sha256": "eb7d670ae09add37d4634ad2bd293591fd8acc989e717f20fb6e18a7ee69aa90",
+      "bytes": 660442
+    },
+    {
+      "id": "browser-voice-hi-int7-g2p-decode-onnx-gz",
+      "sha256": "d86c96a5bf3db406b9691325cfc521c1444bdee4828f44db63c7aa8642a6ed3c",
+      "bytes": 1148287
+    },
+    {
+      "id": "browser-voice-hi-int7-publisher-credits-html",
+      "sha256": "f061cffaf43c8bf1200be7265abc936a8587f76cdfe138d69dd7c656408623da",
+      "bytes": 2411
+    },
+    {
+      "id": "browser-voice-hi-int7-model-apache-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "browser-voice-hi-int7-onnxruntime-mit-license",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    }
+  ],
+  "cells": [
+    {
+      "model": "browser-voice-hi-int7",
+      "support": {
+        "notes": "Native Hindi-script fixture only. Stock pace scale is 0.9333333333333333 at UI speed 1. The publisher worker uses one-thread WebAssembly for acoustic and G2P sessions.",
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "hi"
+        ],
+        "scope": "Ishwari in the native Hindi-script benchmark using the pinned compact INT7 checkpoint.",
+        "sources": [
+          "https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b",
+          "https://tts.hansda.in/?lang=hi",
+          "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+          "https://huggingface.co/datasets/Hansda/hindi-maya2-ishwari-20h/tree/c835a1a2c3892f5cd47507824bf33df19deec955"
+        ]
+      },
+      "backendRequested": "cpu",
+      "backendEffective": "cpu/wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Ishwari",
+      "precision": "INT7 packed weights expanded to FP32",
+      "settings": {
+        "modelId": "browser-voice-hi-int7",
+        "modelRevision": "04e39413827f3d45af54ceb480cb77e732983c1b",
+        "browserSourceRevision": "f2977727b8baccb989f80b492ea8da00124ecba3",
+        "fixtureId": "hi-article-v1",
+        "fixtureSha256": "c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128",
+        "language": "hi",
+        "spokenLanguage": "hi",
+        "voice": "Ishwari",
+        "voiceIndex": 0,
+        "parameterCount": 934704,
+        "precision": "INT7 packed weights expanded to FP32",
+        "speed": 0.9333333333333333,
+        "pitchShift": 0,
+        "pitchRange": 1,
+        "sampleRate": 24000,
+        "maxTokens": 512,
+        "wasmThreads": 1,
+        "executionProviders": [
+          "wasm"
+        ],
+        "runtimeVersions": {
+          "onnxruntimeWeb": "1.24.3"
+        },
+        "cache": "Chrome HTTP cache of same-origin immutable assets",
+        "frontend": "Publisher worker with native lexicon and recurrent G2P",
+        "output": "Stock per-span PCM with publisher peak limiter"
+      },
+      "capability": {
+        "gpuDispatchVerified": null,
+        "description": "The released acoustic and G2P sessions use the one-thread WASM provider."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 90217.5600001812,
+          "samples": 34452992,
+          "sampleRate": 24000,
+          "pcmSha256": "342086003407abb92fdb7e1e3b10b44b41e59d73fd4ad3b63f1bf38b12513679",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1194.6550002098083,
+            "firstSourceChunkCompletedMs": 1194.6750001907349,
+            "audioSeconds": 1435.5413333333333,
+            "realTimeFactor": 0.06284567215539216,
+            "minSamplesPerChunk": 228608,
+            "maxSamplesPerChunk": 409856
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 89574.80999994278,
+          "samples": 34452992,
+          "sampleRate": 24000,
+          "pcmSha256": "ce496dfa9a296e70e06d291dc39eba7a3bae6d5beefa39e4f4d8d15510d42b78",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1064.4100000858307,
+            "firstSourceChunkCompletedMs": 1064.4300000667572,
+            "audioSeconds": 1435.5413333333333,
+            "realTimeFactor": 0.06239793165129539,
+            "minSamplesPerChunk": 228608,
+            "maxSamplesPerChunk": 409856
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 89594.54999995232,
+          "samples": 34452992,
+          "sampleRate": 24000,
+          "pcmSha256": "f7a4d069415b0f08ab63ff82c11160a897c1be3633d4fd4e4a1a4edd842c663d",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1060.789999961853,
+            "firstSourceChunkCompletedMs": 1060.789999961853,
+            "audioSeconds": 1435.5413333333333,
+            "realTimeFactor": 0.062411682561527765,
+            "minSamplesPerChunk": 228608,
+            "maxSamplesPerChunk": 409856
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 89546.86500000954,
+          "samples": 34452992,
+          "sampleRate": 24000,
+          "pcmSha256": "9d8e3c21f9df8fab0ca3bf9006f83762ca7bb9052e15a36ca7088a91c3174507",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 91,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 1062.2999999523163,
+            "firstSourceChunkCompletedMs": 1063.4249999523163,
+            "audioSeconds": 1435.5413333333333,
+            "realTimeFactor": 0.062378465127215336,
+            "minSamplesPerChunk": 228608,
+            "maxSamplesPerChunk": 409856
+          },
+          "audio": {
+            "sha256": "579d084d19f089e70237342f3035d85384bfc4a3ff7cd40325b0faa60226ea95",
+            "bytes": 68906028
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-25T03-00-07-990Z-f0789d6a2486; cell 1/2; source 3aee337ce12dc3d7f941c174653a51bf4cc5f6df; fixture hi-article-v1 (hi, 19885 JavaScript characters, 91 spans); requested n=3; effective n=3; Headed Google Chrome, Apple M1 Pro, AC power. Published browser-voice-hi-int7, Ishwari, INT7 packed weights expanded to FP32. Qualified backends: cpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup."
+  ]
+}

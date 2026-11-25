@@ -508,6 +508,37 @@
       }
     },
     {
+      "resultId": "2026-11-25t03-00-08-613z-browser-voice-hi-int7-cpu-warm-5161c073",
+      "model": "browser-voice-hi-int7",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Ishwari",
+      "language": "hi",
+      "attribution": "AI-generated Hindi benchmark narration using Tamal Hansda’s Browser Voice Ishwari INT7. The Apache-2.0 INT7 checkpoint is separate from its training sources. The Hindi Maya 2 Native Ishwari 20h synthetic speech and original release annotations are CC BY 4.0; the dataset card credits Common Voice prompt material (CC0-1.0), Indic TTS Mini Hindi prompt material (CC BY 4.0), Mozilla Common Voice contributors, AI4Bharat and Rasa contributors, and the indic-tts-mini-24k transcript index publisher. Publisher credits include Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). Source prompts retain original terms; no generated-audio reuse rights are inferred.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b",
+        "https://tts.hansda.in/?lang=hi",
+        "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+        "https://huggingface.co/datasets/Hansda/hindi-maya2-ishwari-20h/tree/c835a1a2c3892f5cd47507824bf33df19deec955",
+        "https://github.com/google-research-datasets/dakshina"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t03-00-08-613z-browser-voice-hi-int7-cpu-warm-5161c073--browser-voice-hi-int7--cpu.wav",
+        "sha256": "ee6afeefa6a722d213719db0ec88767fc4e6220547a72bb955cf001d426e5b8d",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "579d084d19f089e70237342f3035d85384bfc4a3ff7cd40325b0faa60226ea95",
+        "bytes": 68906028
+      }
+    },
+    {
       "resultId": "2026-11-24t19-38-00-411z-browser-voice-te-preview-int8-cpu-warm-f5174d41",
       "model": "browser-voice-te-preview-int8",
       "backend": "cpu",
