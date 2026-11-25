@@ -576,7 +576,7 @@ async function writeCampaignReport(outValue, inputFiles) {
   return { out, resultCount: entries.length, models: new Set(entries.flatMap(entry => entry.data.cells.map(cell => cell.model))).size };
 }
 
-async function checkCampaignReport(reportValue, { log = true } = {}) {
+async function checkCampaignReport(reportValue, { log = true, sourceCache = new Map() } = {}) {
   const directory = repoPath(reportValue, 'reports');
   ensure(relative(ROOT, directory).split(sep).length === 2 && /^[a-z0-9][a-z0-9._-]{0,119}$/.test(relative(ROOT, directory).split(sep)[1]),
     'Campaign report path must be reports/<safe-name>');
@@ -590,7 +590,6 @@ async function checkCampaignReport(reportValue, { log = true } = {}) {
   ensure(ids.every(id => typeof id === 'string' && /^[a-z0-9][a-z0-9._-]{0,119}$/.test(id)), 'Invalid campaign input result ID');
   ensure(JSON.stringify(ids) === JSON.stringify([...new Set(ids)].sort((a, b) => a.localeCompare(b))), 'Campaign input IDs must be unique and sorted');
   for (const entry of manifest.results) ensure(typeof entry.sha256 === 'string' && /^[a-f0-9]{64}$/.test(entry.sha256), 'Invalid campaign input digest');
-  const sourceCache = new Map();
   const entries = [];
   for (const entry of manifest.results) entries.push(await committedResult(entry.id, entry.sha256));
   const warmSelections = await loadWarmSelections(entries.map(entry => entry.data));
@@ -612,10 +611,11 @@ async function checkAllReports(rootValue) {
   try { children = await readdir(root, { withFileTypes: true }); }
   catch (error) { if (error.code === 'ENOENT') { console.log('No campaign reports found'); return 0; } throw error; }
   let count = 0;
+  const sourceCache = new Map();
   for (const child of children.sort((a, b) => a.name.localeCompare(b.name))) {
     ensure(!child.isSymbolicLink(), 'Campaign report symlinks are not permitted');
     if (!child.isDirectory()) continue;
-    count += await checkCampaignReport(`${rootValue.replace(/[\\/]$/, '')}/${child.name}`, { log: true });
+    count += await checkCampaignReport(`${rootValue.replace(/[\\/]$/, '')}/${child.name}`, { log: true, sourceCache });
   }
   if (!count) console.log('No campaign reports found');
   return count;
