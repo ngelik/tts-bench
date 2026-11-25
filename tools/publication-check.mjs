@@ -1,11 +1,15 @@
 import { MAX_RESOURCE_RECEIPT_BYTES, readResult } from './results.mjs';
 import { checkAudio } from './audio.mjs';
+import { loadDiagnosticAudio } from './diagnostic-audio.mjs';
 import {reviewedIndex} from './publication-index.mjs';
 import { readFile, lstat } from 'node:fs/promises';
 const audioPaths=await checkAudio();
-const files=reviewedIndex(['audio/manifest.json',...audioPaths]);
+const diagnosticAudio=await loadDiagnosticAudio();
+const diagnosticPaths=new Set(diagnosticAudio.map(entry=>entry.clip.path));
+const diagnosticEvidencePaths=diagnosticAudio.flatMap(entry=>[entry.smokeReceiptPath,entry.fullAttemptReceiptPath,entry.clip.path]);
+const files=reviewedIndex(['audio/manifest.json','audio/diagnostics.json',...audioPaths,...diagnosticEvidencePaths]);
 for(const file of files){
-  if(audioPaths.has(file)){const st=await lstat(file);if(st.isSymbolicLink()||!st.isFile())throw new Error('Unsafe audio publication entry');continue;}
+  if(audioPaths.has(file)||diagnosticPaths.has(file)){const st=await lstat(file);if(st.isSymbolicLink()||!st.isFile())throw new Error('Unsafe audio publication entry');continue;}
   if(/(?:^|\/)(?:node_modules|\.cache|runs|chrome-profile[^/]*|\.env)(?:\/|$)/.test(file)||/\.(?:onnx|gguf|safetensors|wasm|wav|mp3|zip|tgz|heapsnapshot)$/i.test(file))throw new Error(`Nonpublic artifact tracked: ${file}`);
   const resultReceipt=/^results\/[a-z0-9._-]+\/result\.json$/.test(file);
   const st=await lstat(file);if(st.isSymbolicLink()||!st.isFile()||st.size>(resultReceipt?MAX_RESOURCE_RECEIPT_BYTES:2_000_000))throw new Error(`Unsafe or oversized publication entry: ${file}`);

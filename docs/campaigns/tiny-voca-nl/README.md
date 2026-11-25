@@ -1,15 +1,17 @@
-# Tiny Voca Dutch qualification (blocked)
+# Tiny Voca Dutch article results
 
-**Status: not qualified for the complete 101-span fixture.** The stock browser
-all-span stock phonemizer audit rejects span 31 first in article order
-(`recorder` → unsupported phone `e`); a full native article worker run is
-pending. The qualification-only audit found four additional failures at spans 54, 74,
-88 and 99. The pinned native `_voice` path also rejects unknown Dutch phones.
-This proposed schedule is retained for review; it is not a scoring authorization.
-A genuine full-article attempt is allowed as a diagnostic and must preserve the
-first source-span error. Do not publish a score or rank until the model renders
-all 101 spans. See the [failure evidence](../../TINY_VOCA_NL.md#full-fixture-failure-evidence)
-and the [stock worker reference](stock-reference.json).
+Three independent warm CPU/WASM attempts and one cached memory attempt stopped
+at source span 31 of the fixed 101-span article. The publisher’s Dutch frontend
+rejects the phone `e` in “recorder”. Each warm attempt failed during the excluded
+warmup, so the model has zero scored rounds. A separate three-span run generated
+31.061 seconds of speech with the Alex voice. Its first 30 seconds are playable
+on the Dutch board. [Four full-article receipts](article-outcome.json) · [Recording and source receipt](https://ngelik.github.io/tts-bench/?lang=nl&model=tiny-voca-nl)
+
+A text-only scan also identified unsupported phones at spans 54, 74, 88 and 99.
+The browser attempts stopped before reaching those spans.
+[Phonemizer findings](../../TINY_VOCA_NL.md#full-fixture-failure-evidence) · [Stock worker reference](stock-reference.json)
+
+## Original qualification plan
 
 This plan is a proposed qualification cell for `tiny-voca-nl` using the
 immutable `nl-article-v1` fixture. The article is 22,195 characters across 101

@@ -13,9 +13,6 @@ import {matchesAuditedWav} from '../audio/waveform-integrity.mjs';
 const root=resolve('.cache/listening-site');
 const expected=JSON.parse(await readFile(resolve(root,'assets/data.json'),'utf8'));
 const languageGroups=[{id:'en',group:expected},...Object.entries(expected.byLanguage??{}).map(([id,group])=>({id,group}))];
-const eligibleIds=group=>group.models.filter(model=>['cpu','webgpu'].some(backend=>
-  (model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform)||
-  (model.memory?.[backend]?.status==='measured'&&Number.isFinite(model.memory[backend].meanMB)&&!model.memory[backend].waveform))).map(model=>model.id).sort();
 const displayedAudioEntries=languageGroups.flatMap(({group})=>group.models.flatMap(model=>model.audio??[]));
 const audioEntries=expected.recordings??displayedAudioEntries;
 const activeResultIds=new Set(displayedAudioEntries.map(entry=>entry.resultId));
@@ -35,7 +32,11 @@ const expectedAudioByLanguage=Object.fromEntries(languageGroups.map(({id,group})
 const hasEligibleResult=model=>['cpu','webgpu'].some(backend=>
   (model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform)||
   (model.memory?.[backend]?.status==='measured'&&Number.isFinite(model.memory[backend].meanMB)&&!model.memory[backend].waveform));
-const expectedIds=eligibleIds(expected);
+const eligibleIds = group => group.models.filter(hasEligibleResult).map(model => model.id).sort();
+const tableIds = group => group.models
+  .filter(model => hasEligibleResult(model) || model.diagnosticAudio?.length)
+  .map(model => model.id).sort();
+const expectedIds=tableIds(expected);
 assert.ok(expectedIds.length>0,'The built Pages data contains eligible published rows');
 assert.equal(new Set(expectedIds).size,expectedIds.length,'The built Pages data has unique eligible model IDs');
 for (const {id,group} of languageGroups) {
@@ -177,7 +178,7 @@ const server=createServer(async(req,res)=>{
 
 let browser,base;
 const baseReports={deploymentId:version,sourceModelsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,group.models.length])),
-  expectedVisibleRowsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,eligibleIds(group).length])),
+  expectedVisibleRowsByLanguage:Object.fromEntries(languageGroups.map(({id,group})=>[id,tableIds(group).length])),
   audioEntriesByLanguage:expectedAudioByLanguage,displayedAudioEntries:displayedAudioEntries.length,
   archivedAudioEntries:archivedAudioEntries.length,expectedAudioEntries:audioEntries.length,expectedVisibleRows:expectedIds.length};
 const errors=[];
@@ -230,6 +231,7 @@ async function verifyLanguageRows(page,label) {
   const rows=[];
   for (const {id,group} of languageGroups) {
     const ids=eligibleIds(group);
+    const displayed=tableIds(group);
     const tab=page.locator(`#language-${id}`);
     await openLanguagePicker(page,label);
     assert.equal(await tab.count(),1,`${label} visit exposes the registered ${id} picker link`);
@@ -239,13 +241,13 @@ async function verifyLanguageRows(page,label) {
       await page.keyboard.press('Escape');
       assert.equal(await page.locator('#language-picker').isVisible(),false,`${label} language picker hides after Escape`);
     } else await selectLanguage(page,id,label);
-    await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,ids.length,{timeout:20000});
+    await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,displayed.length,{timeout:20000});
     assert.equal(await tab.getAttribute('aria-current'),'page',`${label} ${id} locale link is current`);
     assert.equal(await page.locator('#model-count').innerText(),String(ids.length),`${label} model count reflects ${id} results`);
     const scoreCount=group.models.reduce((sum,model)=>sum+['cpu','webgpu'].filter(backend=>model.warm?.[backend]?.status==='measured'&&Number.isFinite(model.warm[backend].medianSeconds)&&!model.warm[backend].waveform).length,0);
     assert.equal(await page.locator('#score-count').innerText(),String(scoreCount),`${label} score count reflects ${id} warm results`);
     const visibleIds=(await page.locator('#model-rows tr').evaluateAll(items=>items.map(row=>row.dataset.model))).sort();
-    assert.deepEqual(visibleIds,ids,`${label} language picker selects the correct ${id} result models`);
+    assert.deepEqual(visibleIds,displayed,`${label} language picker selects the correct ${id} result models`);
     if (group.fixture?.characters) {
       const languageName=new Intl.DisplayNames(['en'],{type:'language'}).of(id);
       assert.equal(await page.locator('#fixture-language').innerText(),`${group.fixture.characters.toLocaleString('en-US')} ${languageName} characters`,`${label} fixture descriptor matches ${id}`);
@@ -262,8 +264,8 @@ async function verifyLanguageRows(page,label) {
         playback=await verifyPlayback(page);
       } else assert.equal(await controls.count(),0,`${label} ${id} has no inline playback without a healthy selected sample`);
     }
-    if (id!=='en'&&!ids.length) assert.equal(await page.locator('#no-results').isVisible(),true,`${label} empty ${id} results show the empty-language state`);
-    rows.push({language:id,rows:ids.length,playback});
+    if (id!=='en'&&!displayed.length) assert.equal(await page.locator('#no-results').isVisible(),true,`${label} empty ${id} results show the empty-language state`);
+    rows.push({language:id,rows:displayed.length,playback});
   }
   if (languageGroups.some(({id})=>id!=='en')) await selectLanguage(page,'en',label);
   await page.waitForFunction(count=>document.querySelectorAll('#model-rows tr').length===count,expectedIds.length,{timeout:20000});

@@ -79,9 +79,11 @@ The publisher's text-only Node verification procedure reproduced browser plans
 for the other 96 spans. The browser version, fixture and per-span rejection
 digests are summarized in the [stock worker reference](campaigns/tiny-voca-nl/stock-reference.json).
 The all-span stock phonemizer audit rejects span 31 first in article order.
-A full native article worker run is pending. The adapter includes the source
-span ID in its returned error while retaining the original Dutch phonemizer
-message; this behavior has not yet been observed on the full article.
+Three fresh warm attempts and a separate cached attempt on the reference Mac all
+returned the original Dutch phonemizer error at span 31. Each warm attempt
+stopped during the excluded warmup. The Dutch board links a 30-second opening
+from a separate three-span run and reports zero completed full-article rounds.
+[Original article attempts](campaigns/tiny-voca-nl/article-outcome.json) · [Dutch board](https://ngelik.github.io/tts-bench/?lang=nl&model=tiny-voca-nl)
 
 The stock worker's exact first three spans produced 31.0613 seconds of audio
 in total (not execution time) and were synthesized twice. Their sample counts
