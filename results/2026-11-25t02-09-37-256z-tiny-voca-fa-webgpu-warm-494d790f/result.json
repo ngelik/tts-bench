@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-25t02-09-37-256z-tiny-voca-fa-webgpu-warm-494d790f",
+  "createdAt": "2026-11-25T02:36:58.923Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v2",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 3,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "fa-article-v1",
+    "language": "fa",
+    "sha256": "17d9ce8d7038eb0be3f6b772e8dd47c0acc68bcad6bf64616b9c84bafa2c204a",
+    "characters": 18805,
+    "unicodeCodePoints": 18805,
+    "utf8Bytes": 34049,
+    "chunks": 86,
+    "source": {
+      "type": "translation",
+      "description": "Complete Persian translation of the 27-paragraph English article. Codex reviewed source fidelity and corrected times, measurements, initials, the archive checklist and the terminal folder year. Numbers and initials use spoken Persian forms. AI translation and editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "02e06ca8b35a8e0bc3833822350935acec166c75",
+    "dirty": false,
+    "manifestSha256": "49fcc7b24edaa696ddf5956d88a6e08f50e946f6ee2e97bf712d489b606bb51e"
+  },
+  "assets": [
+    {
+      "id": "tiny-voca-fa-tiny-ava-parisa-onnx",
+      "sha256": "4e387b2f28a6d65916ed7c33ecdac4428135e9adfc13e1734b77592e6993a340",
+      "bytes": 21361734
+    },
+    {
+      "id": "tiny-voca-fa-g2p-encoder-onnx",
+      "sha256": "0af8f89cf0ab7737aed7045efc9d0471225017e36cee65efd82ce65e5f5e7939",
+      "bytes": 3459754
+    },
+    {
+      "id": "tiny-voca-fa-g2p-decoder-onnx",
+      "sha256": "926970e0e337224a85036585142d305ec69217290e690b96838c3c97418ebe2f",
+      "bytes": 5305604
+    },
+    {
+      "id": "tiny-voca-fa-tiny-ava-parisa-json",
+      "sha256": "ee73627bb32339094bccc475d63b0f3ea022e5f9d214bf7035998a7e82a027ba",
+      "bytes": 761
+    },
+    {
+      "id": "tiny-voca-fa-ort-ort-wasm-min-js",
+      "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+      "bytes": 49026
+    },
+    {
+      "id": "tiny-voca-fa-ort-ort-webgpu-min-js",
+      "sha256": "8443389bf14b34582ea40c590b5007bb652d6ac07dd76829a5bd82d2372e6895",
+      "bytes": 333594
+    },
+    {
+      "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-mjs",
+      "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+      "bytes": 24618
+    },
+    {
+      "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-wasm",
+      "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+      "bytes": 11246032
+    },
+    {
+      "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-jsep-mjs",
+      "sha256": "2fb14505d39926e4c544de8c57fe59a2f2bc74caba6f71890be9afecc5046758",
+      "bytes": 46839
+    },
+    {
+      "id": "tiny-voca-fa-ort-ort-wasm-simd-threaded-jsep-wasm",
+      "sha256": "185b0861a6cd6cbdfb057289338090436483cc59e10a7bc83bd167b15531a51b",
+      "bytes": 21663894
+    },
+    {
+      "id": "tiny-voca-fa-code-license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "id": "tiny-voca-fa-model-card",
+      "sha256": "0ec5da40027b7f413ac57c68acbdc398a2bda359b1decc5238936e303a88a22e",
+      "bytes": 9504
+    },
+    {
+      "id": "tiny-voca-fa-g2p-readme",
+      "sha256": "d8bb23eda7fbded92984c57e72d948d609fb99e5fc3255e0c04c77a51b727245",
+      "bytes": 6698
+    }
+  ],
+  "cells": [
+    {
+      "model": "tiny-voca-fa",
+      "support": {
+        "voiceCount": 1,
+        "bundledVoiceCount": 1,
+        "languageCount": 1,
+        "languages": [
+          "fa"
+        ],
+        "scope": "Persian only; Parisa voice at 24 kHz. G2P uses CPU/WASM; WebGPU applies to acoustic synthesis.",
+        "sources": [
+          "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+          "https://huggingface.co/mehdi-hf/tiny-ava",
+          "https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+          "https://huggingface.co/mehdi-hf/tiny-ava/tree/cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+          "https://huggingface.co/mehdi-hf/persian-g2p-tiny/blob/596e9b915f2973ac476a32b4c8558c6544eb53db/README.md"
+        ],
+        "notes": "The 4,531,147-parameter acoustic model uses the single Parisa voice. Both ByT5 pronunciation graphs run in the Chrome worker on WASM. The acoustic graph and pronunciation graphs are separately pinned."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "parisa",
+      "precision": "FP32",
+      "settings": {
+        "modelId": "mehdi-hf/tiny-ava",
+        "modelRevision": "cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+        "sourceRevision": "d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+        "fixtureId": "fa-article-v1",
+        "fixtureSha256": "17d9ce8d7038eb0be3f6b772e8dd47c0acc68bcad6bf64616b9c84bafa2c204a",
+        "language": "fa",
+        "locale": "fa-IR",
+        "voice": "parisa",
+        "voiceIndex": 0,
+        "speed": 1,
+        "pitchShift": 0,
+        "pitchRange": 1.05,
+        "sampleRate": 24000,
+        "hop": 256,
+        "maxTokens": 512,
+        "maxFrames": 3000,
+        "step": 104000,
+        "frontend": "Pinned Tiny Ava Persian ByT5 G2P worker port; source d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+        "frontendFingerprint": "f8c95de34b918211b7071d156dca1693a50f804ba7db4bf76c631983f1fb9845",
+        "g2p": {
+          "encoderSha256": "0af8f89cf0ab7737aed7045efc9d0471225017e36cee65efd82ce65e5f5e7939",
+          "decoderSha256": "926970e0e337224a85036585142d305ec69217290e690b96838c3c97418ebe2f",
+          "executionProviders": [
+            "wasm"
+          ],
+          "maxSteps": 256,
+          "overflowPolicy": "split at whitespace midpoint and retry complete input; fail if a single word still reaches max steps"
+        },
+        "executionProviders": [
+          "webgpu",
+          "wasm"
+        ],
+        "g2pExecutionProviders": [
+          "wasm"
+        ],
+        "wasmThreads": 1,
+        "withinSpanPauseMs": 120,
+        "peakLimit": 0.99,
+        "waveform": "Tiny Ava stock Parisa graph; 0.99 per-utterance peak cap; 120 ms silence only between utterances in a canonical span."
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Observed 840 WebGPU dispatches; G2P uses WASM."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 407695.90000009537,
+          "samples": 37460032,
+          "sampleRate": 24000,
+          "pcmSha256": "0a3705c953446ae8b9c3b7d986281d33ff7a207aa8d8192f6949cdca3e51eb41",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 86,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 980.9049999713898,
+            "firstSourceChunkCompletedMs": 4551.170000076294,
+            "audioSeconds": 1560.8346666666666,
+            "realTimeFactor": 0.26120377046133564,
+            "minSamplesPerChunk": 184576,
+            "maxSamplesPerChunk": 495424
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 407071.71000003815,
+          "samples": 37460032,
+          "sampleRate": 24000,
+          "pcmSha256": "3d9782dfa9d192238ac0af2b66a287cbfb0115b6bf3736fa426b9dde75521f84",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 86,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 925.5,
+            "firstSourceChunkCompletedMs": 4486.920000076294,
+            "audioSeconds": 1560.8346666666666,
+            "realTimeFactor": 0.2608038626342048,
+            "minSamplesPerChunk": 184576,
+            "maxSamplesPerChunk": 495424
+          }
+        },
+        {
+          "index": 2,
+          "generationMs": 406718.13499999046,
+          "samples": 37460032,
+          "sampleRate": 24000,
+          "pcmSha256": "92052f2f030d8f9ca00482f1cc1cf975371a84586142bb07c22423dd3dcc329e",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 86,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 916.7400000095367,
+            "firstSourceChunkCompletedMs": 4482.435000181198,
+            "audioSeconds": 1560.8346666666666,
+            "realTimeFactor": 0.26057733319607873,
+            "minSamplesPerChunk": 184576,
+            "maxSamplesPerChunk": 495424
+          }
+        },
+        {
+          "index": 3,
+          "generationMs": 406848.3450000286,
+          "samples": 37460032,
+          "sampleRate": 24000,
+          "pcmSha256": "68a5973d895baf88671533e026fa08b80c4689239dcb014669d42b1553db6108",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 86,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 915.460000038147,
+            "firstSourceChunkCompletedMs": 4443.47000002861,
+            "audioSeconds": 1560.8346666666666,
+            "realTimeFactor": 0.26066075650978315,
+            "minSamplesPerChunk": 184576,
+            "maxSamplesPerChunk": 495424
+          },
+          "audio": {
+            "sha256": "8d8928b80cfbe564a498cca87b35bdf3060cd3f03cba1cde58eab3bcec8a6bf6",
+            "bytes": 74920108
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-25T01-41-42-800Z-5f03ae2e3091; cell 2/4; source 02e06ca8b35a8e0bc3833822350935acec166c75; fixture fa-article-v1 (fa, 18805 JavaScript characters, 86 spans); requested n=3; effective n=3; Headed Google Chrome, Apple M1 Pro, AC power. Published tiny-voca-fa, parisa, FP32. Qualified backends: cpu, webgpu. Sequential isolated profiles. Warm protocol v2 excludes the full article warmup."
+  ]
+}

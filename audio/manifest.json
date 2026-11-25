@@ -5218,6 +5218,68 @@
       }
     },
     {
+      "resultId": "2026-11-25t01-41-43-438z-tiny-voca-fa-cpu-warm-5a8600fc",
+      "model": "tiny-voca-fa",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "parisa",
+      "language": "fa",
+      "attribution": "AI-generated Persian benchmark narration using Mehdi Allahyari / OncillaAI’s CC BY 4.0 Tiny Ava Parisa checkpoint. Powered by tiny-ava (Mehdi Allahyari / OncillaAI). Tiny Ava code is Apache-2.0; its Persian G2P model is MIT.",
+      "modelTerms": "CC BY 4.0; required Tiny Ava attribution applies.",
+      "sourceUrls": [
+        "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+        "https://huggingface.co/mehdi-hf/tiny-ava",
+        "https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+        "https://huggingface.co/mehdi-hf/tiny-ava/tree/cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+        "https://huggingface.co/mehdi-hf/persian-g2p-tiny/blob/596e9b915f2973ac476a32b4c8558c6544eb53db/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t01-41-43-438z-tiny-voca-fa-cpu-warm-5a8600fc--tiny-voca-fa--cpu.wav",
+        "sha256": "e7b6c3c5b4814c726c3bfa7661a0735ed4da5767a61654fca9ea209e9996e87c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "b1324153b79e102e8430af0a81a3b6e2bd39fae68c4129d6ccbf3c583f41a8a6",
+        "bytes": 74920108
+      }
+    },
+    {
+      "resultId": "2026-11-25t02-09-37-256z-tiny-voca-fa-webgpu-warm-494d790f",
+      "model": "tiny-voca-fa",
+      "backend": "webgpu",
+      "trialIndex": 3,
+      "voice": "parisa",
+      "language": "fa",
+      "attribution": "AI-generated Persian benchmark narration using Mehdi Allahyari / OncillaAI’s CC BY 4.0 Tiny Ava Parisa checkpoint. Powered by tiny-ava (Mehdi Allahyari / OncillaAI). Tiny Ava code is Apache-2.0; its Persian G2P model is MIT.",
+      "modelTerms": "CC BY 4.0; required Tiny Ava attribution applies.",
+      "sourceUrls": [
+        "https://huggingface.co/mehdi-hf/tiny-ava/blob/cd2a2217ac31447763cbb500bdc2433973e6e4f4/README.md",
+        "https://huggingface.co/mehdi-hf/tiny-ava",
+        "https://github.com/mallahyari/tiny-ava/tree/d4bd268a5386c60f15d1abb7e706df02b6ba4d32",
+        "https://huggingface.co/mehdi-hf/tiny-ava/tree/cd2a2217ac31447763cbb500bdc2433973e6e4f4",
+        "https://huggingface.co/mehdi-hf/persian-g2p-tiny/blob/596e9b915f2973ac476a32b4c8558c6544eb53db/README.md"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t02-09-37-256z-tiny-voca-fa-webgpu-warm-494d790f--tiny-voca-fa--webgpu.wav",
+        "sha256": "5fe5ddc30198ecf836a8b292674ed0b876c5a30c0f63af4862cf925ed37f158f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "8d8928b80cfbe564a498cca87b35bdf3060cd3f03cba1cde58eab3bcec8a6bf6",
+        "bytes": 74920108
+      }
+    },
+    {
       "resultId": "2026-11-23t00-08-29-212z-tiny-voca-fr-cpu-warm-f9f7e9b0",
       "model": "tiny-voca-fr",
       "backend": "cpu",
