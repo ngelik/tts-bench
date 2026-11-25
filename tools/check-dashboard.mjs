@@ -126,6 +126,23 @@ try {
   page.on('pageerror', e => errors.push(String(e)));
   page.on('request', r => {if (new URL(r.url()).origin !== new URL(base).origin) external.push(r.url());});
   page.on('response', r => {if (r.status() >= 400) failedResponses.push(r.status()+' '+r.url());});
+  await page.goto(base);
+  await page.locator('#sample-audio').evaluate(audio => { audio.muted = true; });
+  for (const language of ['de', 'uk']) {
+    const model = expected.byLanguage[language].models.find(item => item.id === 'supertonic-3');
+    const sample = model.playbackAudio.cpu;
+    assert.equal(sample.resultId, model.warm.cpu.resultId);
+    const button = page.locator(`#charts [data-edition="${language}"] .chart-panel.cpu [data-play="supertonic-3"][data-backend="cpu"]`);
+    await button.press('Enter');
+    await page.waitForFunction(url => {
+      const audio = document.querySelector('#sample-audio');
+      return audio.currentSrc === url && !audio.paused && audio.currentTime > .15;
+    }, new URL(sample.clip.path, base).href);
+    assert.equal(await button.getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('#player-receipt').getAttribute('href'), model.warm.cpu.reportUrl);
+    await page.locator('#close-player').click();
+    assert.ok(await button.evaluate(element => document.activeElement === element), 'Closing the player returns focus to the originating chart button');
+  }
   await page.goto(new URL('?lang=en&view=table',base).href);
   await page.waitForFunction(n => document.querySelectorAll('#model-rows tr').length === n, expectedResultModels.length);
   const candidateLayout = await measureResults(page);

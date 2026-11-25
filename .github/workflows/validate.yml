@@ -33,6 +33,10 @@ jobs:
       - run: npm run reference -- --check
       - run: npm run audio -- check
       - run: npm run listen:build
+      - name: Verify dashboard language and recording controls in Chrome
+        env:
+          TTS_BENCH_UI_CHROME: /usr/bin/google-chrome
+        run: xvfb-run -a node --test tests/dashboard-language.test.mjs
       - name: Verify eligible dashboard results in Chrome
         run: xvfb-run -a node tools/check-dashboard.mjs
       - name: Verify clean and mixed-cache Pages visits in Chrome
