@@ -13283,6 +13283,169 @@
         "notes": "The pinned Bengali fixture frontend oracle covers 89 spans and 305 sentence plans, maximum 220 tokens, 2,908 primary-stress marks and zero unknown phones. This is a text frontend audit, not a pronunciation review. Config frontend fingerprint 54cece4f… differs from the complete release inventory fingerprint 9b2e2c14… because the latter adds code-mix fallback entries; native fixture token/stress outputs match. The graph includes RandomNormalLike, so repeated PCM is stochastic. Model card requests Rasa attribution/terms for redistributed derived audio."
       }
     },
+    "tiny-voca-french": {
+      "displayName": "Ymelka Tiny Voca French F1 (FP32)",
+      "modelRevision": "502ebbc0b9d442d056da1ef60926646394a2dbc8",
+      "sourceRevision": "9662a249d8ced6957d9f85665468f93df84fbea8",
+      "sourceId": "yoch/tiny-voca",
+      "spaceId": "ymelka/tiny-voca-french",
+      "spaceRevision": "8ddb95dc20e47864cc9c5c3754aac331f2db1d6b",
+      "runtime": {
+        "package": "onnxruntime-web",
+        "version": "1.20.1",
+        "license": "MIT",
+        "files": []
+      },
+      "backends": [
+        "cpu"
+      ],
+      "license": {
+        "model": "Apache-2.0",
+        "frontend": "Apache-2.0; pinned frontend.zip from the exact Space revision.",
+        "phonemizer": "GPL-3.0 eSpeak NG 1.51, pinned JavaScript, WASM and data from the exact Space revision; see pinned LICENSES.md.",
+        "runtime": "MIT ONNX Runtime Web 1.20.1; Pyodide 0.26.4 is MPL-2.0 and its bundled CPython retains PSF terms.",
+        "requiresAcceptance": false
+      },
+      "assets": [
+        {
+          "id": "tiny-voca-french-assets-model-onnx",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/assets/model.onnx",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/model.onnx",
+          "bytes": 21348301,
+          "sha256": "7e02ecd2899c33c4e27d68c7977dfd10b3b3a3b667451e12f620493ba62afaf8",
+          "kind": "model-weights"
+        },
+        {
+          "id": "tiny-voca-french-assets-config-json",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/assets/config.json",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/config.json",
+          "bytes": 433,
+          "sha256": "0299f6b54c4ccc7d1ff4a68acb408dff3a46e664fbf28da91362aa1ea0827181",
+          "kind": "config"
+        },
+        {
+          "id": "tiny-voca-french-assets-frontend-zip",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/assets/frontend.zip",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/frontend.zip",
+          "bytes": 92483,
+          "sha256": "936d0d2344b7dd611dcca8417a47e03e2a89a912b851218aa87d299987e2530c",
+          "kind": "frontend"
+        },
+        {
+          "id": "tiny-voca-french-assets-espeak-tv-js",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/assets/espeak-tv.js",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/espeak-tv.js",
+          "bytes": 115247,
+          "sha256": "6d89ac1392f02cb34ef974e2091339b6c3188ed8bc699732460271ddf23c96e7",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-assets-espeak-tv-wasm",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/assets/espeak-tv.wasm",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/espeak-tv.wasm",
+          "bytes": 373215,
+          "sha256": "98f800f5e4879fb5feb2bafa9fc3e24b29f22043ee85c8b0ea9b132037d4888e",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-assets-espeak-tv-data",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/assets/espeak-tv.data",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/espeak-tv.data",
+          "bytes": 11627324,
+          "sha256": "ec4c2a525499354d33de586f45c01e4be48459890449fc9479ff11e3aaf231d9",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-LICENSES-md",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/LICENSES.md",
+          "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/LICENSES.md",
+          "bytes": 3436,
+          "sha256": "26b1e606d7a27be689cfb5ec330a1fe8edf6669b681ebfc551927a54c300b80a",
+          "kind": "license"
+        },
+        {
+          "id": "tiny-voca-french-runtime-pyodide-pyodide-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js",
+          "bytes": 14761,
+          "sha256": "c0069107621d5b942a659e737a12e774cc0451feaa2256f475d72e071d844ec7",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-pyodide-pyodide-asm-js",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.js",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.js",
+          "bytes": 1229099,
+          "sha256": "919560652ed3dad3707cb3a394785da1e046fb13dc0defa162058ff230cb7eed",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-pyodide-pyodide-asm-wasm",
+          "target": "runtimes/pyodide/0.26.4/pyodide.asm.wasm",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.asm.wasm",
+          "bytes": 10088051,
+          "sha256": "b7e66a19427a55010ac3367c1b6c64b893f9826f783412945fdf0c3337f3bc94",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-pyodide-python-stdlib-zip",
+          "target": "runtimes/pyodide/0.26.4/python_stdlib.zip",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/python_stdlib.zip",
+          "bytes": 2341872,
+          "sha256": "72894522b791858b9d613ac786b951d8b5094035dcf376313ea24a466810f336",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-pyodide-pyodide-lock-json",
+          "target": "runtimes/pyodide/0.26.4/pyodide-lock.json",
+          "url": "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide-lock.json",
+          "bytes": 106335,
+          "sha256": "cd50b49de944c579045e122fe8628b31f9ce446379f032f36c05e273d38766e0",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-ort-ort-wasm-min-js",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/runtime/cpu/ort.wasm.min.js",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.wasm.min.js",
+          "bytes": 49026,
+          "sha256": "e66568724f8848e57cc2a56e4bea3a5b86ce3ff81b2da11eac8ed7ab02b27bd4",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-ort-ort-wasm-simd-threaded-mjs",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/runtime/cpu/ort-wasm-simd-threaded.mjs",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.mjs",
+          "bytes": 24618,
+          "sha256": "745eb7c0ce6f18a6aa521971b2877babc7ffb27eecb58ab3bc6e5ef4692672e8",
+          "kind": "runtime"
+        },
+        {
+          "id": "tiny-voca-french-runtime-ort-ort-wasm-simd-threaded-wasm",
+          "target": "models/tiny-voca-french/502ebbc0b9d442d056da1ef60926646394a2dbc8/9662a249d8ced6957d9f85665468f93df84fbea8/runtime/cpu/ort-wasm-simd-threaded.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort-wasm-simd-threaded.wasm",
+          "bytes": 11246032,
+          "sha256": "207d02be4591c156b0a98f024f3d58005b5b04c92274d759fb390338c63559ea",
+          "kind": "runtime"
+        }
+      ],
+      "support": {
+        "voiceCount": 5,
+        "bundledVoiceCount": 5,
+        "languageCount": 1,
+        "languages": [
+          "fr"
+        ],
+        "scope": "French, five bundled voices. The benchmark uses F1 at index 0 with one WebAssembly thread.",
+        "sources": [
+          "https://huggingface.co/ymelka/tiny-voca-french/tree/502ebbc0b9d442d056da1ef60926646394a2dbc8",
+          "https://github.com/yoch/tiny-voca/tree/9662a249d8ced6957d9f85665468f93df84fbea8",
+          "https://huggingface.co/spaces/ymelka/tiny-voca-french/tree/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b",
+          "https://www.npmjs.com/package/onnxruntime-web/v/1.20.1"
+        ],
+        "notes": "F1 is a synthetic voice. The browser adapter matched the publisher’s pronunciation inputs across the full French article and sample counts on its opening three segments. The qualification record contains waveform comparisons. The SIWIS-derived SW voice is outside this benchmark."
+      },
+      "modelId": "ymelka/tiny-voca-french"
+    },
     "tiny-voca-fr": {
       "displayName": "Tiny Voca French FR_F1 (FP32)",
       "modelRevision": "73f7700f514e70eef3b459aedcc49829d41945d4",

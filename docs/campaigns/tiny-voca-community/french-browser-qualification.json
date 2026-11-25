@@ -1,0 +1,134 @@
+{
+  "model": "tiny-voca-french",
+  "voice": "F1",
+  "qualificationId": "2026-11-25t17-30-10-114z-tiny-voca-french-cpu-warm-2b2f53dd",
+  "nativeBrowser": "Google Chrome 158.0.8127.37",
+  "nativeReceiptSha256": "6497394a71aebafb19ad8e1ef71651fadbe72c243bc21bcc825938086626003c",
+  "stockControlSha256": "29f94ab3098f856144b5597d7c1154240dfd7ef676425cba7b62a99c8c0740ed",
+  "tokenStressSha256": "7d44468cb35583bf3c3147e6dc09453faf3bf79e2617a61e216d9e10f71fcf30",
+  "fullArticleTextSpans": 108,
+  "utterances": 334,
+  "maxTokens": 176,
+  "unknownTokens": 0,
+  "audioSha256": "b0d5c4131e01d88054ec80d575f94f54ad9706d084977acf8a4a740d911d4c36",
+  "acoustic": [
+    {
+      "id": 0,
+      "sourceSha256": "e60ba0cccd28a569fd3a5f4e5aa1f51504610e8c7f91d24e5c280dee8ccfc286",
+      "samples": 269568,
+      "utteranceSamples": [
+        88320,
+        181248
+      ],
+      "stockFloat32Sha256": [
+        "301adfaa43cd3ac4ff66d1e12b1134b6e8854b3ca74d75e52da1b9e52bf93435",
+        "1e79f3413ed969beeb45addd95e80431806d13a82b135593e0a83d1d57400f74"
+      ],
+      "pcm16Sha256": "f12d9bb62b54a5099e577f956427a4def2bd36b2f4048ff6327dd7842f4b044f",
+      "rms": 0.1465747956816964,
+      "peak": 0.90875244140625,
+      "stockRms": [
+        0.14660233270139944,
+        0.14663807533413495
+      ],
+      "repeatedStockRelativeRms": 0.11647828826173318,
+      "candidateRelativeRms": [
+        0.12031544661949724,
+        0.12054453258346152
+      ]
+    },
+    {
+      "id": 1,
+      "sourceSha256": "c993baad91671a33acc6429e035499516cf963246a904f0601b24919d9672fb7",
+      "samples": 274432,
+      "utteranceSamples": [
+        20480,
+        195328,
+        58624
+      ],
+      "stockFloat32Sha256": [
+        "ec8dfa7a9b40258a3bdfe5adec481060d148ccf0f0ac10a73645a609b68754b2",
+        "591de01d4e634149d2ec9fa61ae911712e8966198d5878f019fa78205821b286"
+      ],
+      "pcm16Sha256": "300a4d0be2a0423c3e11f336d5f05922cce2502e5e15b4c20e9502a4c295dcdc",
+      "rms": 0.16149107192572343,
+      "peak": 0.96246337890625,
+      "stockRms": [
+        0.16146884352425853,
+        0.1614700610256708
+      ],
+      "repeatedStockRelativeRms": 0.1272135846292063,
+      "candidateRelativeRms": [
+        0.12730453023793034,
+        0.12755254646078598
+      ]
+    },
+    {
+      "id": 2,
+      "sourceSha256": "cb0f961e2f189219381ff1a32b25dfdad5574e73cf1d0e68d530f31bdd4abfd1",
+      "samples": 269056,
+      "utteranceSamples": [
+        57088,
+        147456,
+        64512
+      ],
+      "stockFloat32Sha256": [
+        "0e8f23397c025d62f58aa4e9442a1363954377900cb09445f2fd7bf0eb0bbefc",
+        "3ee0c74f835d39f626feca05fe5da2f50299e6c02c299e2ab40d54d29d64ca09"
+      ],
+      "pcm16Sha256": "e575e71152520f63efaac52481ad5fd214320a2ba139e0f1312e3d019ca2f8da",
+      "rms": 0.14770490911078699,
+      "peak": 0.924285888671875,
+      "stockRms": [
+        0.14766652186173126,
+        0.14764609471350515
+      ],
+      "repeatedStockRelativeRms": 0.13939236872500335,
+      "candidateRelativeRms": [
+        0.1393493606366115,
+        0.1342284484308694
+      ]
+    }
+  ],
+  "reference": {
+    "modelId": "ymelka/tiny-voca-french",
+    "modelRevision": "502ebbc0b9d442d056da1ef60926646394a2dbc8",
+    "spaceId": "ymelka/tiny-voca-french",
+    "spaceRevision": "8ddb95dc20e47864cc9c5c3754aac331f2db1d6b",
+    "publisherWorker": "https://huggingface.co/spaces/ymelka/tiny-voca-french/blob/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/worker.js",
+    "publisherWorkerSha256": "de892789fd377cba88d27eabc1b93b616d552d3d37546f30dd97304d9fdff552",
+    "servedWorkerSha256": "4e0f3d82378420fe71e0c1862c06be0f9ff24579a2cfbe1f1f23b66196660ca4",
+    "runtimeUrlSubstitutions": [
+      [
+        "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
+        "/runtime/pyodide/"
+      ],
+      [
+        "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/",
+        "/runtime/ort/"
+      ]
+    ],
+    "modelGraph": {
+      "name": "model.onnx",
+      "bytes": 21348301,
+      "sha256": "7e02ecd2899c33c4e27d68c7977dfd10b3b3a3b667451e12f620493ba62afaf8",
+      "url": "https://huggingface.co/spaces/ymelka/tiny-voca-french/resolve/8ddb95dc20e47864cc9c5c3754aac331f2db1d6b/assets/model.onnx"
+    },
+    "fixtureId": "fr-article-v1",
+    "fixtureSha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+    "qualifiedSourceCommit": "f60910287dc12decce66036a4c4c3f74a6a08455",
+    "vocabularyFingerprint": "31807ddbd16771299960e70d15addc80902ab70ae20738240178903e23c7f7a6",
+    "frontendRulesFingerprint": "dfd29983f7c255e96722a1640cf04f0d433be815fb92b1bd82039682d22f18ba",
+    "versions": {
+      "onnxruntimeWeb": "1.20.1",
+      "pyodide": "0.26.4",
+      "espeakNg": "1.51"
+    },
+    "provider": "wasm",
+    "wasmThreads": 1,
+    "voiceIndex": 0,
+    "sampleRate": 24000,
+    "stockDrawsPerSegment": 2,
+    "waveformComparison": "Each candidate PCM16 sample is normalized by 32768 and compared with the time-aligned stock float samples. Relative RMS is the square root of difference energy divided by reference energy, calculated separately per segment and draw."
+  }
+}
