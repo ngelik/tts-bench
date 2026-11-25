@@ -736,6 +736,20 @@ try {
   await page.goto(new URL('?model=piper-en-gb-southern-english-female-low', base).href);
   await page.waitForFunction(() => document.querySelector('#details').open);
   assert.match(await page.locator('#detail-title').innerText(), /Piper/);
+  assert.equal(await page.locator('#details a[download="supertonic-3-non-english.tsv"]').count(), 0);
+  await page.locator('#close-details').click();
+  await page.goto(new URL('?lang=el&model=supertonic-3', base).href);
+  const roundsLink = page.getByRole('link', {name:'Download CPU and WebGPU rounds, memory and recordings (TSV)'});
+  await roundsLink.waitFor({state:'visible'});
+  const response = await page.request.get(await roundsLink.evaluate(link => link.href));
+  assert.equal(response.status(), 200);
+  const tsv = await response.text();
+  assert.equal(tsv, await readFile('docs/campaigns/supertonic-3/non-english-cpu-results.tsv', 'utf8'));
+  const [columns,...rows] = tsv.trimEnd().split('\n').map(line => line.split('\t'));
+  const cpuStatus = columns.indexOf('CPU status');
+  assert.ok(cpuStatus >= 0 && rows.length > 0);
+  const publishedCpu = rows.filter(row => row[cpuStatus] === 'Published').length;
+  assert.ok((await roundsLink.locator('..').innerText()).includes(`${publishedCpu} of ${rows.length} non-English editions`));
   await page.locator('#close-details').click();
   // Shareable family views must preserve the requested filter, chart and units.
   await page.setViewportSize({width:1440,height:1000});

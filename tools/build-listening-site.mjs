@@ -33,6 +33,7 @@ const files=['audio/index.html','audio/player.mjs','audio/player.css','audio/lin
 for(const file of files){const target=resolve(out,file);await mkdir(dirname(target),{recursive:true});await cp(file,target,{errorOnExist:true,force:false});}
 await writeFile(resolve(out,'.nojekyll'),'');
 await mkdir(resolve(out,'assets'),{recursive:true});
+await cp('docs/campaigns/supertonic-3/non-english-cpu-results.tsv',resolve(out,'assets/supertonic-3-non-english.tsv'));
 await cp('dashboard/index.html',resolve(out,'index.html'));
 await mkdir(resolve(out,'diagnostics/2026-11-multilingual'),{recursive:true});
 await cp('dashboard/diagnostics.html',resolve(out,'diagnostics/index.html'));
