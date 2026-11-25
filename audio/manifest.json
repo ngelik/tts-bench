@@ -634,6 +634,37 @@
       }
     },
     {
+      "resultId": "2026-11-25t13-16-47-193z-browser-voice-hi-int7-cpu-warm-2d2ffbe1",
+      "model": "browser-voice-hi-int7",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "Ishwari",
+      "language": "hi-Latn",
+      "attribution": "AI-generated Hindi benchmark narration using Tamal Hansda’s Browser Voice Ishwari INT7. The Apache-2.0 INT7 checkpoint is separate from its training sources. The Hindi Maya 2 Native Ishwari 20h synthetic speech and original release annotations are CC BY 4.0; the dataset card credits Common Voice prompt material (CC0-1.0), Indic TTS Mini Hindi prompt material (CC BY 4.0), Mozilla Common Voice contributors, AI4Bharat and Rasa contributors, and the indic-tts-mini-24k transcript index publisher. Publisher credits include Tiny Voca by Muhammed Nazeem (Apache-2.0), Maya 2 Native (Apache-2.0) and Kyutai Mimi (CC BY 4.0). Source prompts retain original terms; no generated-audio reuse rights are inferred.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/Hansda/hindi-voice-compact/tree/04e39413827f3d45af54ceb480cb77e732983c1b",
+        "https://tts.hansda.in/?lang=hi",
+        "https://raw.githubusercontent.com/DarvinX/multilingual-browser-tts/f2977727b8baccb989f80b492ea8da00124ecba3/web/credits.html",
+        "https://huggingface.co/datasets/Hansda/hindi-maya2-ishwari-20h/tree/c835a1a2c3892f5cd47507824bf33df19deec955",
+        "https://github.com/google-research-datasets/dakshina"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-25t13-16-47-193z-browser-voice-hi-int7-cpu-warm-2d2ffbe1--browser-voice-hi-int7--cpu.wav",
+        "sha256": "4c94cbd8ec556177404a2c242611835149f443732474465fbddd791bc25bf91c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "cfa1097669f7c9c5b9962e8e3ea082767e5ed9e1679f233671dd000dde237816",
+        "bytes": 68751404
+      }
+    },
+    {
       "resultId": "2026-11-25t05-59-02-774z-browser-voice-ml-int6-cpu-warm-8cb3ef76",
       "model": "browser-voice-ml-int6",
       "backend": "cpu",
