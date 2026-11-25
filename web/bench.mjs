@@ -12,6 +12,7 @@ import { createTinyVocaNlAdapter } from './adapters/tiny-voca-nl.mjs';
 import { createMiniVozAdapter } from './adapters/mini-voz.mjs';
 import { createTinyVocaEsAdapter } from './adapters/tiny-voca-es.mjs';
 import { createTinyVocaFrAdapter } from './adapters/tiny-voca-fr.mjs';
+import { createTinyVocaFrenchAdapter } from './adapters/tiny-voca-french.mjs';
 import { createTinySwaraAdapter } from './adapters/tiny-swara.mjs';
 import { createTinyVocaHindiAdapter } from './adapters/tiny-voca-hindi.mjs';
 import { createTinyVocaPtbrAdapter } from './adapters/tiny-voca-ptbr.mjs';
@@ -101,6 +102,7 @@ const FACTORIES = {
   'mini-voz': createMiniVozAdapter,
   'tiny-voca-es': createTinyVocaEsAdapter,
   'tiny-voca-fr': createTinyVocaFrAdapter,
+  'tiny-voca-french': createTinyVocaFrenchAdapter,
   'tiny-swara': createTinySwaraAdapter,
   'tiny-voca-hindi': createTinyVocaHindiAdapter,
   'tiny-voca-ptbr': createTinyVocaPtbrAdapter,
@@ -317,7 +319,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       sourceSha256: smoke ? undefined : loaded.fixture.sha256,
       probeText: state.chunks[0]?.text ?? 'A short browser speech check.',
       control: smoke && model === 'tiny-voca-he',
-      auditTexts: (model === 'tiny-voca-lg' && fixtureId === 'lg-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-uz-navoiy' && fixtureId === 'uz-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-zh-blue-buff' && fixtureId === 'zh-hans-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text, sha256 }) => ({ id, text, sha256 })) : ((smoke && (
+      auditTexts: (model === 'tiny-voca-lg' && fixtureId === 'lg-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-uz-navoiy' && fixtureId === 'uz-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-zh-blue-buff' && fixtureId === 'zh-hans-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text, sha256 }) => ({ id, text, sha256 })) : (model === 'tiny-voca-french' && fixtureId === 'fr-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text, sha256 }) => ({ id, text, sha256 })) : ((smoke && (
         (model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'tiny-voca-it' && fixtureId === 'it-article-v1') ||
         (model === 'tiny-voca-ja-tsukuyomi-chan' && fixtureId === 'ja-article-v1') ||

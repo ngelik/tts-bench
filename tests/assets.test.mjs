@@ -11,6 +11,7 @@ import { TINY_VOCA_RU } from '../web/adapters/tiny-voca-ru-profile.mjs';
 import { TINY_VOCA_GR } from '../web/adapters/tiny-voca-gr-profile.mjs';
 import { MINI_VOZ } from '../web/adapters/mini-voz-profile.mjs';
 import { TINY_VOCA_ES } from '../web/adapters/tiny-voca-es-profile.mjs';
+import { TINY_VOCA_FRENCH } from '../web/adapters/tiny-voca-french-profile.mjs';
 import { TINY_VOCA_FR } from '../web/adapters/tiny-voca-fr-profile.mjs';
 import { TINY_SWARA } from '../web/adapters/tiny-swara-profile.mjs';
 import { TINY_VOCA_PTBR } from '../web/adapters/tiny-voca-ptbr-profile.mjs';
@@ -27,7 +28,7 @@ const root = resolve(import.meta.dirname, '..');
 
 test('catalog entries match the pinned browser backends', () => {
   const models = listModels();
-  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-nl","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-swara","tiny-voca-fr","alpa-es","tiny-voca-ptpt","tiny-voca-ptbr","tiny-voca-ptbr-kokoro","tui-voice-mini-ml","tiny-broca","tiny-voca-ar-halabi","tiny-voca-he","tiny-voca-arabic","tiny-voca-ar","bengali-voice","tiny-voca-hindi","tiny-urdu","tiny-voca-swahili","sobbie-tts","alpa-sanskrit","fiato","tiny-voca-lg","browser-voice-gu-int6","tiny-voca-sinhala","browser-voice-te-preview-int8","browser-voice-hi-int6","browser-voice-hi-int7","browser-voice-ml-int6","browser-voice-en-int6","tiny-voca-uz-navoiy","tiny-voca-zh-blue-buff","tiny-voca-fa"]);
+  assert.deepEqual(models.map(model => model.id), ["paradee","phonon","leokani-7m","leokani-4.5m","pivo-curated","woof","piper-en-gb-southern-english-female-low","supertonic-3","kokoro-82m","mms-english","kitten-nano-0.8","sano-amy","inflect-micro-v2","lfm3-audio-2b-gguf","lfm3-omni-2b-gguf","lfm3-audio-2b-fusor-q7-cpu","lfm3-omni-2b-fusor-q7-cpu","mach-boom","pocket-tts-100m-english-int8","fun-cosyvoice3-0.5b-2512","audio8-realistic-0.6b-int4","ming-3.0-tts-0.5b-gguf","ming-3.0-tts-0.5b-fusor-mix-cpu","tiny-voca","korean-tts","slyszeglosy-v1","tiny-voca-de-en","apptor-tiny-tts","sopro-v2-turbo","supratts-1.0-preview","klein-tts-x1.5-pro","linnet-en-35m","silencio-2","zonos3-mini","sano-heart-nano-gguf-f32","sano-robot-mcu","sano-trellis","inflect-atom-v3","sano-heart-gguf","sano-amy-gguf","sano-amy-small-gguf","sano-amy-1p8m-gguf","sano-hfc-gguf","sano-kristin-gguf","inflect-micro-v3","inflect-mini-v3-browser-port","ua-serhiy-0p58m","kale-tts-1-nano-int8","kale-tts-1-nano-fp32","apptor-tiny-tts-at","tiny-voca-it","zerre-tts","vocina-it","clarvia-tts-tiny","tiny-voca-ja-v3","tiny-voca-ja-tsukuyomi-chan","tiny-voca-ru","tiny-voca-nl","tiny-voca-gr","mini-voz","tiny-voca-es","tiny-swara","tiny-voca-french","tiny-voca-fr","alpa-es","tiny-voca-ptpt","tiny-voca-ptbr","tiny-voca-ptbr-kokoro","tui-voice-mini-ml","tiny-broca","tiny-voca-ar-halabi","tiny-voca-he","tiny-voca-arabic","tiny-voca-ar","bengali-voice","tiny-voca-hindi","tiny-urdu","tiny-voca-swahili","sobbie-tts","alpa-sanskrit","fiato","tiny-voca-lg","browser-voice-gu-int6","tiny-voca-sinhala","browser-voice-te-preview-int8","browser-voice-hi-int6","browser-voice-hi-int7","browser-voice-ml-int6","browser-voice-en-int6","tiny-voca-uz-navoiy","tiny-voca-zh-blue-buff","tiny-voca-fa"]);
   const korean = getAssetLock().models['korean-tts'];
   assert.equal(korean.modelRevision, 'c63fc0de00de22203f4ccfd3dd8a2cd5a20f560c');
   assert.deepEqual(korean.backends, ['cpu', 'webgpu']);
@@ -59,6 +60,13 @@ test('catalog entries match the pinned browser backends', () => {
   assert.equal(tinyVocaEs.assets.filter(asset => asset.kind === 'model-weights').length, 1);
   assert.equal(tinyVocaEs.assets.filter(asset => asset.target.includes('/runtime/')).length, 6);
   assert.ok(!tinyVocaEs.assets.some(asset => asset.target.includes('LICENSE-ONNXRUNTIME')));
+  const ymelkaFrench = getAssetLock().models['tiny-voca-french'];
+  assert.equal(ymelkaFrench.modelRevision, TINY_VOCA_FRENCH.modelRevision);
+  assert.deepEqual(ymelkaFrench.backends, ['cpu']);
+  assert.deepEqual(ymelkaFrench.support.languages, ['fr']);
+  assert.equal(ymelkaFrench.support.voiceCount, 5);
+  assert.equal(ymelkaFrench.support.bundledVoiceCount, 5);
+  assert.deepEqual(TINY_VOCA_FRENCH.voices, [{id: 'F1', index: 0}]);
   const tinyVocaFr = getAssetLock().models['tiny-voca-fr'];
   assert.equal(tinyVocaFr.modelRevision, TINY_VOCA_FR.modelRevision);
   assert.equal(tinyVocaFr.sourceRevision, TINY_VOCA_FR.sourceRevision);

@@ -1475,6 +1475,7 @@ Counts describe the pinned model/catalog, not the number of voices or languages 
 | Mini Voz 4.5M FP32 (F1) | 4 | 4 | 1 (es-ES) | [Details](docs/MODEL_SUPPORT.md#mini-voz) |
 | Tiny Voca Spanish F2 (FP32) | 2 | 2 | 1 (es-ES) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-es) |
 | Tiny Swara Bengali BF (INT8) | 2 | 2 | 1 (bn) | [Details](docs/MODEL_SUPPORT.md#tiny-swara) |
+| Ymelka Tiny Voca French F1 (FP32) | 5 | 5 | 1 (fr) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-french) |
 | Tiny Voca French FR_F1 (FP32) | 2 | 2 | 1 (fr) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-fr) |
 | Alpa Spanish female (FP32) | 2 | 2 | 1 (es-AR) | [Details](docs/MODEL_SUPPORT.md#alpa-es) |
 | Tiny Voca European Portuguese F3 (FP32) | 2 | 2 | 1 (pt-PT) | [Details](docs/MODEL_SUPPORT.md#tiny-voca-ptpt) |
