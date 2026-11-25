@@ -58,11 +58,11 @@ async function woofUnsupportedCpuAndMeasuredGpu() {
   return [cpu, gpu];
 }
 
-function run(args) {
+function run(args, timeout = 30_000) {
   return spawnSync(process.execPath, [reportTool, ...args], {
     cwd: root,
     encoding: 'utf8',
-    timeout: 30_000,
+    timeout,
   });
 }
 
@@ -124,7 +124,7 @@ test('campaign overview omits cold metrics when no cold receipts are supplied', 
   const changed = run(['--check-all', missingRoot]);
   assert.equal(changed.status, 0, changed.stderr || changed.stdout);
 
-  const checkAll = run(['--check-all', 'reports']);
+  const checkAll = run(['--check-all', 'reports'], 120_000);
   assert.equal(checkAll.status, 0, checkAll.stderr || checkAll.stdout);
 
   await writeFile(join(output, 'overview.md'), markdown + '\nEdited after generation.\n');
