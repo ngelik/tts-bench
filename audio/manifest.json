@@ -4123,6 +4123,35 @@
       }
     },
     {
+      "resultId": "2026-11-26t03-10-17-800z-supertonic-3-cpu-warm-881874f4",
+      "model": "supertonic-3",
+      "backend": "cpu",
+      "trialIndex": 3,
+      "voice": "M3 (Robert)",
+      "language": "hi",
+      "attribution": "Supertonic 3 by Supertone Inc.; M3 preset voice. OpenRAIL-M model terms and use-based restrictions apply.",
+      "modelTerms": "OpenRAIL-M; use-based restrictions apply; output responsibilities remain with the user",
+      "sourceUrls": [
+        "https://huggingface.co/Supertone/supertonic-3/blob/3cadd1ee6394adea1bd021217a0e650ede09a323/README.md",
+        "https://huggingface.co/Supertone/supertonic-3/tree/3cadd1ee6394adea1bd021217a0e650ede09a323/voice_styles",
+        "https://huggingface.co/spaces/Supertone/supertonic-3/blob/4402acca094e2ff2b3dff446e0bf915f3fccc462/script.js"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-26t03-10-17-800z-supertonic-3-cpu-warm-881874f4--supertonic-3--cpu.wav",
+        "sha256": "a85611ed40e1267b80c1e8cb4a620708b196da52eaa02961d44a3c08ae2618d7",
+        "bytes": 2646044,
+        "startSample": 0,
+        "sampleRate": 44100,
+        "samples": 1323000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "92fce4fe1914e9710c0f9fd578e4bd19a0521ecb77ca9181d952e65218181e2a",
+        "bytes": 117464182
+      }
+    },
+    {
       "resultId": "2026-11-10t09-58-29-882z-supertonic-3-webgpu-warm-97865808",
       "model": "supertonic-3",
       "backend": "webgpu",
