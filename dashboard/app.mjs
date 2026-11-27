@@ -33,6 +33,10 @@ const weightValue = model => Number.isFinite(model.modelMB) && model.modelMB >= 
 const supportCodes = model => [...new Set((Array.isArray(model.support?.languages) ? model.support.languages : []).filter(code => typeof code === 'string' && code.trim()).map(code => code.trim()))];
 const languageNames = new Intl.DisplayNames(['en'], {type:'language'});
 const languageLabel = code => { try { return languageNames.of(code) || code; } catch { return code; } };
+const LANGUAGE_SEARCH_ALIASES = Object.freeze({
+  bn: Object.freeze(['Bengali']),
+  id: Object.freeze(['Bahasa Indonesia']),
+});
 const languageIdPattern = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
 // Match labels pasted with Latin accents, Hebrew marks, or Arabic marks and tatweel.
 const foldSearch = value => String(value ?? '').normalize('NFKD')
@@ -75,7 +79,7 @@ function languageDetails(id, registryLabel = '') {
   try { if (script) scriptName = new Intl.DisplayNames(['en'], {type:'script'}).of(script) || script; } catch {}
   try { if (region) regionName = new Intl.DisplayNames(['en'], {type:'region'}).of(region) || region; } catch {}
   const meta = hostedCoverage ? '' : [scriptName && `${scriptName} script`, regionName].filter(Boolean).join(' · ');
-  const aliases = hostedCoverage ? hostedCoverage.aliases : id === 'bn' ? ['Bengali'] : [];
+  const aliases = hostedCoverage ? hostedCoverage.aliases : [...(LANGUAGE_SEARCH_ALIASES[id] ?? [])];
   if (script === 'Latn' && !hostedCoverage) {
     const spoken = languageLabel(id.split('-')[0]);
     aliases.push(`Roman ${spoken}`, `Romanized ${spoken}`, `Romanised ${spoken}`, `${spoken} Latin`);
