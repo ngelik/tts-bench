@@ -75,8 +75,9 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   frenchWithoutAudio.name = 'Synthetic French result without published audio';
   frenchWithoutAudio.playbackAudio = {cpu:null,webgpu:null};
   frenchWithoutAudio.audio = [];
-  const previewTags = ['ar','bn','bn-Latn','de','de-AT','el','es-AR','es-ES','fr','he','hi','hi-Latn','it','ja','ko','ml','pl','pt-BR','ru','sa','si','sw','tr','ur-Latn','zh-Hans','zh-Hant'];
-  const previewLanguages = [{id:'en',label:'English'},{id:'uk',label:'Українська'},...previewTags.map(id=>id==='si'?{id,label:'සිංහල'}:{id})];
+  const previewTags = ['ar','bn','bn-Latn','de','de-AT','el','es-AR','es-ES','fr','he','hi','hi-Latn','id','it','ja','ko','ml','pl','pt-BR','ru','sa','si','sw','tr','ur-Latn','zh-Hans','zh-Hant'];
+  const nativeLabels = {id:'Indonesia', si:'සිංහල'};
+  const previewLanguages = [{id:'en',label:'English'},{id:'uk',label:'Українська'},...previewTags.map(id=>({id,label:nativeLabels[id]}))];
   const previewByLanguage = Object.fromEntries(previewTags.map(id=>[id,{fixture:{id:`${id.toLowerCase()}-preview-v1`,language:id,characters:3000,articleFile:`${id.toLowerCase()}-preview-v1.txt`},models:[]} ]));
   previewByLanguage.uk = {fixture:{id:'uk-article-v1',characters:12345,language:'uk',articleFile:'uk-article-v1.txt'},models:[ukrainian]};
   previewByLanguage.fr = {fixture:{id:'fr-article-v1',characters:4321,language:'fr',articleFile:'fr-article-v1.txt'},models:[frenchWithoutAudio]};
@@ -241,6 +242,13 @@ test('language picker isolates metrics, audio, URL state and empty datasets in h
   assert.equal(await romanBengali.locator('.language-option-english').textContent(), 'Romanized Bengali');
   assert.equal(await romanBengali.locator('bdi').getAttribute('lang'), 'bn-Latn');
   assert.equal(await romanBengali.locator('bdi').textContent(), 'Bangla (Roman horofe)');
+  const indonesian = page.locator('#language-id');
+  assert.equal(await indonesian.locator('.language-option-native').textContent(), 'Indonesia');
+  assert.equal(await indonesian.locator('.language-option-english').textContent(), 'Indonesian');
+  for (const query of ['Indonesian', 'Indonesia', 'id', 'Bahasa Indonesia']) {
+    await page.locator('#language-search').fill(query);
+    assert.equal(await indonesian.isVisible(), true, `Indonesian is searchable as ${query}`);
+  }
   for (const query of ['Roman Hindi', 'Romanized Hindi', 'Romanised Hindi', 'Hindi Latin']) {
     await page.locator('#language-search').fill(query);
     assert.equal(await page.locator('#language-hi-Latn').isVisible(), true);
