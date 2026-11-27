@@ -956,9 +956,9 @@ try {
   const selectedHealthy = [...selectedPaths].filter(path => !flaggedAudioPaths.has(path));
   const audio8DiagnosticEntry = expectedAudioEntries.find(entry => entry.model === 'audio8-realistic-0.6b-int4' && entry.backend === 'webgpu' && matchesAuditedWav(entry.full.sha256));
   assert.equal(audio8DiagnosticEntry?.clip.path, audio8ArchivedFault.clip.path, 'The old Audio8 fault remains available in the diagnostic recording set');
+  await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, selectedHealthy.length);
   assert.ok((await page.locator('#show-all').innerText()).includes(`Show all ${expectedAudioEntries.length} clips`), 'Listening-room total includes every registered language');
   assert.ok((await page.locator('#status').innerText()).includes(`${expectedAudioEntries.length} clips published`), 'Listening-room status total includes all data.byLanguage recordings');
-  await page.waitForFunction(count => document.querySelectorAll('#samples .audio-card').length === count, selectedHealthy.length);
   const defaultAudioPaths = await page.locator('#samples .audio-card').evaluateAll(cards => cards.map(card => `audio/samples/${card.dataset.sample}`));
   assert.deepEqual(new Set(defaultAudioPaths), new Set(selectedHealthy), 'The default listening page shows one healthy selected example per configuration/backend');
   const ukAudioEntries = (ukData?.models ?? []).flatMap(model => model.audio);
