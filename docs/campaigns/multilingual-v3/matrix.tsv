@@ -1,0 +1,164 @@
+priority	family	model	backend	language	fixtureId	fixtureSha256	effectiveWarmRounds	excludedWarmups	memoryPhase	clipSeconds
+1	Klein-TTS X1.5 Pro	klein-tts-x1.5-pro	cpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+1	Klein-TTS X1.5 Pro	klein-tts-x1.5-pro	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+1	Klein-TTS X1.5 Pro	klein-tts-x1.5-pro	cpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+1	Klein-TTS X1.5 Pro	klein-tts-x1.5-pro	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+1	Klein-TTS X1.5 Pro	klein-tts-x1.5-pro	cpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+1	Klein-TTS X1.5 Pro	klein-tts-x1.5-pro	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	ar	ar-article-v1	3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	ar	ar-article-v1	3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	da	da-article-v1	ccef97fc659fea876f8a6af1bb36b3b4062779d3ecbd802beac5de7e22c9516c	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	da	da-article-v1	ccef97fc659fea876f8a6af1bb36b3b4062779d3ecbd802beac5de7e22c9516c	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	el	el-article-v1	dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	el	el-article-v1	dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	fi	fi-article-v1	bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	fi	fi-article-v1	bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	he	he-article-v1	1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	he	he-article-v1	1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	nl	nl-article-v1	afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	nl	nl-article-v1	afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	pl	pl-article-v1	09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	pl	pl-article-v1	09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	sv	sv-article-v1	0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	sv	sv-article-v1	0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	tr	tr-article-v1	95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	tr	tr-article-v1	95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-fusor-q7-cpu	cpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+2	LFM3-Audio-2B	lfm3-audio-2b-gguf	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	ar	ar-article-v1	3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	ar	ar-article-v1	3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	da	da-article-v1	ccef97fc659fea876f8a6af1bb36b3b4062779d3ecbd802beac5de7e22c9516c	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	da	da-article-v1	ccef97fc659fea876f8a6af1bb36b3b4062779d3ecbd802beac5de7e22c9516c	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	el	el-article-v1	dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	el	el-article-v1	dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	fi	fi-article-v1	bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	fi	fi-article-v1	bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	he	he-article-v1	1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	he	he-article-v1	1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	nl	nl-article-v1	afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	nl	nl-article-v1	afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	pl	pl-article-v1	09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	pl	pl-article-v1	09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	sv	sv-article-v1	0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	sv	sv-article-v1	0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	tr	tr-article-v1	95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	tr	tr-article-v1	95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-fusor-q7-cpu	cpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+3	LFM3-Omni-2B	lfm3-omni-2b-gguf	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+4	Sopro v2 Turbo	sopro-v2-turbo	cpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+4	Sopro v2 Turbo	sopro-v2-turbo	webgpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+4	Sopro v2 Turbo	sopro-v2-turbo	cpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+4	Sopro v2 Turbo	sopro-v2-turbo	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+4	Sopro v2 Turbo	sopro-v2-turbo	cpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+4	Sopro v2 Turbo	sopro-v2-turbo	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-fusor-mix-cpu	cpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-gguf	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-fusor-mix-cpu	cpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-gguf	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-fusor-mix-cpu	cpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-gguf	webgpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-fusor-mix-cpu	cpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-gguf	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-fusor-mix-cpu	cpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-gguf	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-fusor-mix-cpu	cpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+5	Ming 3.0 TTS 0.5B	ming-3.0-tts-0.5b-gguf	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	hi	hi-article-v1	c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	hi	hi-article-v1	c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	cpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+6	Kokoro 82M	kokoro-82m	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	nl	nl-article-v1	afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	pl	pl-article-v1	09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	ru	ru-article-v1	14bd6d91b7738d8f3e275885d235540a362f5bf956294e3dfb779e0f3e5abf2f	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	sv	sv-article-v1	0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	tr	tr-article-v1	95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	uk	uk-article-v1	542130c28a312d8e29d4ab7615280bcb661d8c1d8f74e8f2d9c298e4eaceff40	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	cs	cs-article-v1	a2c49b6e2836315147c99bc0ff79cd1216823f434eae3de3992378b9a334408b	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	da	da-article-v1	ccef97fc659fea876f8a6af1bb36b3b4062779d3ecbd802beac5de7e22c9516c	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	fi	fi-article-v1	bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	el	el-article-v1	dbc35fd140cebb09299d642b3afef95ae78b610f28806fb3b92b5079e74c93e9	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	hu	hu-article-v1	f5eda9fa18468e6dc526638e68dd8dbe6d171d414b8d6184e799c9e3fa3c2659	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	ro	ro-article-v1	96711b4f007a5888114869642febe944945ef3ec5b7c9360d5b283837f58b3e5	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	sk	sk-article-v1	e7b89e5bdbf48b728978a4520dd7454a15a000bccf97315f46fd3f75dc441752	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	bg	bg-article-v1	9c52c5fa5d13dc399221faa8d3fa6b57754aa83d8727e7e64369069de137e8b5	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	ar	ar-article-v1	3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	he	he-article-v1	1f2ac7f4c6f81f21cea8262a64f6893440d49f8b97824c77a59dc8a831b8d3d7	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	vi	vi-article-v1	0d0158555d5465e96ebe0ebdc9b1b01dfb1b80042fedee177971bb8a83842cd9	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	id	id-article-v1	6b60b1842edb093754c1c7182d8f991b57864b230f7024d8d6ac9bfcc967422b	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	hi	hi-article-v1	c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	bn	bn-article-v1	6047a502a329ec3d83ece032feefbff353185b88c5a55f4ccfe838c677b64fe8	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	te	te-article-v1	3dbf5136b343b34f1548c4acb06e209ecdfc755237912932a58d331c5dcc0fdc	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	gu	gu-article-v1	9c211be0c5462306eac6e9434fbbd2370a00ec671875f0be20693275aa03c73b	1	1	excluded-warmup	30
+7	ZONOS3-Mini	zonos3-mini	webgpu	ml	ml-article-v1	ef98dc2e0c65d273b4b0514501c0b8e45022ad0e5d766beedfd60b03fa5c46fd	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+8	Fun-CosyVoice3 0.5B	fun-cosyvoice3-0.5b-2512	webgpu	ru	ru-article-v1	14bd6d91b7738d8f3e275885d235540a362f5bf956294e3dfb779e0f3e5abf2f	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	zh-Hans	zh-hans-article-v1	e3d2cc5e084b4eaca45a17e5856f3eb6b8225a60c31a19395512cb51b3db0336	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	ja	ja-article-v1	288437490ed89136edf80153031e936e6a33aebba80760b2cfb7287fc98504b6	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	ko	ko-article-v1	05840f7eaccf97ddf51d594872319bfa5319b38b4b5bf150439a4ad6b8192528	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	de	de-article-v1	f171154d19dc0598f221e45f15365be632ed8d275eb07822c2134971190d0931	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	fr	fr-article-v1	4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	es-ES	es-es-article-v1	8acee2d2fe70fb184d7a3f30e000d4a7cf5a9e09fc7523f32e958e7b1451653e	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	it	it-article-v1	9deb44d6edb942644c0e018446040f24984e2c2a032a9665b3bb4d4bff17023a	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	ru	ru-article-v1	14bd6d91b7738d8f3e275885d235540a362f5bf956294e3dfb779e0f3e5abf2f	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	ar	ar-article-v1	3421fd109af55f52743b89b377a81e55e9ed524bd717f334d81638fc091f94d5	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	fi	fi-article-v1	bf8661127ed5e00abfa8fe6412460928e286e4ec2e00f017d8cd0b899fa81a38	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	hi	hi-article-v1	c580f52a713c3bc5133a0c4e0ec7106623febbc4160944c2168a83964db08128	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	id	id-article-v1	6b60b1842edb093754c1c7182d8f991b57864b230f7024d8d6ac9bfcc967422b	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	nl	nl-article-v1	afbadecd4e0b7db057056fb8f6bb220f51a281a7cd956b9ead633590ea4389d8	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	pl	pl-article-v1	09e2f4876dca3feaf6c40ff9631dcdad383bf359d8d1a004c28510003668631d	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	pt-BR	pt-br-article-v1	718c92e50ffeb66db7fa088018ff7860c3824348a6db5917be40d6d2cd6eb686	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	sv	sv-article-v1	0f86fe45afaf5e7f7130c8480b402a85a8d97b2beaa85d24b5ccc920265d5179	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	tr	tr-article-v1	95e1958fe7385da7aa79d54c30230518e8be360848f2c824ce7639414ce8f3d3	1	1	excluded-warmup	30
+9	Audio8 TTS Realistic 0.6B	audio8-realistic-0.6b-int4	webgpu	vi	vi-article-v1	0d0158555d5465e96ebe0ebdc9b1b01dfb1b80042fedee177971bb8a83842cd9	1	1	excluded-warmup	30

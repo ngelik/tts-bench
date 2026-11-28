@@ -8,11 +8,13 @@ import {
   effectiveWarmRepetitions,
   minimumWarmRepetitionsForParameterCount,
   minimumWarmRepetitions,
+  minimumWarmRepetitionsForProtocol,
   repetitionAdjustmentNotice,
   receiptRepetitionEvidence,
   resolveProtocolId,
   resolveRepetitionPlan,
   requiresSingleWarmRepetition,
+  shouldSampleGenerationMemory,
   SINGLE_REPETITION_WARM_MODEL,
 } from '../lib/benchmark-policy.mjs';
 import { effectiveCampaignCell, validateCampaignCell } from '../lib/campaign-plan.mjs';
@@ -116,6 +118,65 @@ test('result validation accepts one current CosyVoice3 trial and five historical
   assert.doesNotThrow(() => validateResult(historicalMoreThanFive, { publication: true }));
 });
 
+test('warm v3 receipt binds measured RSS to its excluded warm-up only', async () => {
+  const id = '2026-11-15t22-58-44-576z-fun-cosyvoice3-0.5b-2512-cpu-warm-de0f943e';
+  const original = JSON.parse(await readFile(`results/${id}/result.json`, 'utf8'));
+  const current = structuredClone(original);
+  current.id = 'warm-v3-memory-validator-fixture';
+  current.protocol = { ...current.protocol, id: 'browser-tts-warm-v3', repetitions: 1, warmupRuns: 1 };
+  const cell = current.cells[0];
+  cell.status = 'measured';
+  cell.reason = null;
+  cell.trials = cell.trials.slice(0, 1);
+  cell.trials[0].metrics.firstPcmMs = 2;
+
+  const warmup = cell.warmup[0];
+  warmup.generationMs = 1000;
+  warmup.metrics = {
+    ...warmup.metrics,
+    firstPcmMs: 2,
+    firstSourceChunkCompletedMs: 3,
+    audioSeconds: warmup.samples / warmup.sampleRate,
+    realTimeFactor: 1000 / (warmup.samples / warmup.sampleRate * 1000),
+    articleCallPeakRssBytes: 300,
+    generationMeanRssBytes: 200,
+    generationRssSampleCount: 3,
+  };
+  warmup.memory = {
+    scope: 'owned-chrome-process-tree-rss-including-browser-baseline',
+    generationStartedAtEpochMs: 1000,
+    finalPcmAtEpochMs: 2000,
+    samplingIntervalMs: 500,
+    availability: 'measured',
+    samples: [[1000, 100], [1500, 200], [2000, 300]],
+  };
+  assert.doesNotThrow(() => validateResult(current, { publication: true }));
+
+  const insufficientWarmupRss = structuredClone(current);
+  const diagnosticMemory = insufficientWarmupRss.cells[0].warmup[0];
+  diagnosticMemory.memory = {
+    ...diagnosticMemory.memory,
+    availability: 'insufficient-samples',
+    samples: [[1000, 100]],
+  };
+  diagnosticMemory.metrics = {
+    ...diagnosticMemory.metrics,
+    articleCallPeakRssBytes: 100,
+    generationMeanRssBytes: null,
+    generationRssSampleCount: 1,
+  };
+  assert.doesNotThrow(() => validateResult(insufficientWarmupRss));
+  assert.throws(() => validateResult(insufficientWarmupRss, { publication: true }), /warm v3 publication requires measured warm-up RSS/i);
+
+  const missingWarmupRss = structuredClone(current);
+  delete missingWarmupRss.cells[0].warmup[0].memory;
+  assert.throws(() => validateResult(missingWarmupRss, { publication: true }), /warm v3 publication requires measured warm-up RSS/i);
+
+  const sampledScore = structuredClone(current);
+  sampledScore.cells[0].trials[0].memory = structuredClone(warmup.memory);
+  assert.throws(() => validateResult(sampledScore, { publication: true }), /generation memory evidence is only valid/i);
+});
+
 test('warm v2 requests three articles and keeps eligible single-observation policies', () => {
   assert.equal(resolveProtocolId({ scenario: 'warm', warmProtocol: 'v2' }), 'browser-tts-warm-v2');
   assert.equal(resolveProtocolId({ scenario: 'warm' }), 'browser-tts-warm-v1');
@@ -147,6 +208,36 @@ test('warm v2 requests three articles and keeps eligible single-observation poli
   assert.throws(() => validateCampaignCell({ ...v2Cell, resources: true }), /resources/i);
 });
 
+test('warm v3 requires one explicit score and samples RSS only on the excluded warm-up', () => {
+  assert.equal(resolveProtocolId({ scenario: 'warm', warmProtocol: 'v3' }), 'browser-tts-warm-v3');
+  assert.deepEqual(resolveRepetitionPlan({ modelId: 'tiny-voca', scenario: 'warm', requested: '1', warmProtocol: 'v3' }), {
+    requestedRepetitions: 1, effectiveRepetitions: 1, adjustment: null,
+  });
+  assert.equal(effectiveRepetitions('tiny-voca', 1, 'warm', 'v3'), 1);
+  assert.equal(effectiveRepetitions('lfm3-audio-2b-gguf', 1, 'warm', 'v3'), 1);
+  assert.equal(minimumWarmRepetitionsForProtocol('tiny-voca', 'v3'), 1);
+
+  for (const invalid of [
+    { modelId: 'tiny-voca', scenario: 'warm', warmProtocol: 'v3' },
+    { modelId: 'tiny-voca', scenario: 'warm', requested: '2', warmProtocol: 'v3' },
+    { modelId: 'tiny-voca', scenario: 'cached', requested: '1', warmProtocol: 'v3' },
+    { modelId: 'tiny-voca', scenario: 'warm', smoke: true, requested: '1', warmProtocol: 'v3' },
+    { modelId: 'tiny-voca', scenario: 'warm', resources: true, requested: '1', warmProtocol: 'v3' },
+  ]) assert.throws(() => resolveRepetitionPlan(invalid), /warm v3|warm-protocol v3|explicitly requesting/i);
+
+  assert.equal(shouldSampleGenerationMemory({ warmProtocol: 'v3', stage: 'warmup' }), true);
+  assert.equal(shouldSampleGenerationMemory({ warmProtocol: 'v3', stage: 'trial' }), false);
+  assert.equal(shouldSampleGenerationMemory({ warmProtocol: 'v2', stage: 'warmup' }), false);
+  assert.equal(shouldSampleGenerationMemory({ resources: true, stage: 'trial' }), true);
+
+  const v3Cell = { model: 'tiny-voca', backend: 'cpu', scenario: 'warm', repetitions: 1, warmProtocol: 'v3' };
+  assert.doesNotThrow(() => validateCampaignCell(v3Cell));
+  assert.equal(effectiveCampaignCell(v3Cell).repetitions, 1);
+  assert.throws(() => validateCampaignCell({ ...v3Cell, repetitions: 3 }), /warm v3.*one/i);
+  assert.throws(() => validateCampaignCell({ ...v3Cell, scenario: 'cached' }), /warm v3.*warm scenario/i);
+  assert.throws(() => validateCampaignCell({ ...v3Cell, resources: true }), /warm v3.*resources/i);
+});
+
 test('CLI rejects invalid v2 combinations before creating a run or reaching Chrome', async () => {
   const { readdir } = await import('node:fs/promises');
   const runsDirectory = new URL('../runs', import.meta.url);
@@ -164,6 +255,32 @@ test('CLI rejects invalid v2 combinations before creating a run or reaching Chro
   for (const [args, expected] of invalidArgs) {
     const run = spawnSync(process.execPath, ['bin/bench.mjs', 'run', '--model', 'tiny-voca', '--backend', 'cpu',
       '--fixture', 'english-20k-v1', ...args, '--warm-protocol', 'v2', '--chrome', '/bin/false'], {
+      cwd: new URL('..', import.meta.url), encoding: 'utf8', timeout: 10_000,
+    });
+    assert.notEqual(run.status, 0);
+    assert.match(run.stderr, expected);
+  }
+  assert.deepEqual(await snapshotRuns(), before);
+});
+
+test('CLI rejects invalid v3 combinations before creating a run or reaching Chrome', async () => {
+  const { readdir } = await import('node:fs/promises');
+  const runsDirectory = new URL('../runs', import.meta.url);
+  const snapshotRuns = async () => {
+    try { return { exists: true, entries: (await readdir(runsDirectory)).sort() }; }
+    catch (error) { if (error.code === 'ENOENT') return { exists: false, entries: null }; throw error; }
+  };
+  const before = await snapshotRuns();
+  const invalidArgs = [
+    [[], /explicitly requesting --repetitions 1/i],
+    [['--repetitions', '2'], /warm v3.*--repetitions 1/i],
+    [['--scenario', 'cached', '--repetitions', '1'], /warm-protocol v3.*warm/i],
+    [['--repetitions', '1', '--smoke'], /warm-protocol v3.*smoke/i],
+    [['--repetitions', '1', '--resources'], /warm-protocol v3.*resources/i],
+  ];
+  for (const [args, expected] of invalidArgs) {
+    const run = spawnSync(process.execPath, ['bin/bench.mjs', 'run', '--model', 'tiny-voca', '--backend', 'cpu',
+      '--fixture', 'english-20k-v1', ...args, '--warm-protocol', 'v3', '--chrome', '/bin/false'], {
       cwd: new URL('..', import.meta.url), encoding: 'utf8', timeout: 10_000,
     });
     assert.notEqual(run.status, 0);

@@ -23,6 +23,8 @@ When a full article WAV has been published, it is attached to this repository's
 retain the source WAV digest and byte count in the manifest, while the full WAV
 remains local and has no public URL.
 
+Warm v3 clips come from the sole scored article (trial 1). Chrome RSS is recorded during the preceding excluded warm-up. The warm-up has no published recording.
+
 ## Publishing the listening page
 
 `npm run listen:build` verifies every recording and prepares only the player,

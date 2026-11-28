@@ -28,6 +28,14 @@ state and raw observations; it never receives an invented average. Across repeti
 the table uses the arithmetic mean of these trial means, giving each article equal
 weight. It is a sample mean, not an exact time-weighted integral.
 
+## Memory during the warm-up
+
+Warm v3 collects the same Chrome process-tree RSS samples during the excluded
+full-article warm-up and records them in the same receipt as the following
+scored article. The sampler stops before scoring starts. The dashboard labels
+this measurement as memory during the excluded warm-up. Dedicated cached
+resource receipts remain their own measurement cohort.
+
 The initial memory comparison uses **one full 20,000-character article per cell**,
 in the cached-assets scenario with a fresh engine. It is not a five-repeat warm
 speed score. Reproduce sequentially for each model/backend:

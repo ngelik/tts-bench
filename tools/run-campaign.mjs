@@ -71,8 +71,8 @@ try {
   if(aborted)break;assertSource();
   const repetitionNote=`requested n=${requestedCell.repetitions}; effective n=${cell.repetitions}`;
   const note=`Campaign ${id}; cell ${index+1}/${plan.cells.length}; source ${commit}; fixture ${fixture.id} (${fixture.language}, ${fixture.characters} JavaScript characters, ${fixture.chunks} spans); ${repetitionNote}; ${plan.conditions??'Record local power and background conditions separately.'}`;
-  const command=['bin/bench.mjs','run','--model',cell.model,'--backend',cell.backend,'--scenario',cell.scenario,'--fixture',fixture.id,'--repetitions',String(cell.warmProtocol==='v2'?requestedCell.repetitions:cell.repetitions),'--machine',options.machine,'--accept-license','--note',note];
-  if(cell.warmProtocol==='v2')command.push('--warm-protocol','v2');
+  const command=['bin/bench.mjs','run','--model',cell.model,'--backend',cell.backend,'--scenario',cell.scenario,'--fixture',fixture.id,'--repetitions',String(cell.warmProtocol?requestedCell.repetitions:cell.repetitions),'--machine',options.machine,'--accept-license','--note',note];
+  if(cell.warmProtocol)command.push('--warm-protocol',cell.warmProtocol);
   if(cell.timeoutMinutes!==undefined)command.push('--timeout-minutes',String(cell.timeoutMinutes));
   if(cell.resources)command.push('--resources');
   console.log(`START ${index+1}/${plan.cells.length} ${cell.model}/${cell.backend}/${cell.scenario} · requested n=${requestedCell.repetitions}, effective n=${cell.repetitions}`);
@@ -100,10 +100,17 @@ try {
     const nonEnglishFixtureComplete=canonicalEnglishFixture||(observedFixture.language===fixture.language&&observedFixture.unicodeCodePoints===fixture.unicodeCodePoints&&observedFixture.utf8Bytes===fixture.utf8Bytes&&isDeepStrictEqual(observedFixture.source,fixture.source));
     if(receipt.source?.dirty!==false||receipt.source?.gitCommit!==commit||receipt.protocol?.smoke!==false||receipt.protocol?.scenario!==cell.scenario||receipt.protocol?.repetitions!==cell.repetitions||!fixtureMatches||!nonEnglishFixtureComplete) throw new Error('Receipt is not a clean-source result for the exact registered campaign fixture and effective cell');
     if(receipt.protocol?.id!==resolveProtocolId(cell))throw new Error('Receipt protocol does not match the campaign cell');
-    if(cell.warmProtocol==='v2'&&receipt.protocol?.warmupRuns!==1)throw new Error('Receipt protocol does not match the warm v2 campaign cell');
+    if(cell.warmProtocol&&receipt.protocol?.warmupRuns!==1)throw new Error(`Receipt protocol does not match the warm ${cell.warmProtocol} campaign cell`);
     if(!Array.isArray(receipt.notes)||!receipt.notes.some(entry=>typeof entry==='string'&&entry.includes(repetitionNote))) throw new Error('Receipt does not record requested and effective campaign repetitions');
     if(!Array.isArray(receipt.cells)||receipt.cells.length!==1||!['measured','unsupported'].includes(receipt.cells[0].status)) throw new Error('Unexpected benchmark status');
     if(receipt.cells[0].status==='measured'&&!canonicalEnglishFixture) assertSettingsLanguageMatchesFixture(receipt.cells[0].settings, fixture);
+    if(cell.warmProtocol==='v3'&&receipt.cells[0].status==='measured'){
+      const resultCell=receipt.cells[0],warmup=resultCell.warmup?.[0],trial=resultCell.trials?.[0];
+      if(resultCell.warmup?.length!==1||resultCell.trials?.length!==1) throw new Error('Warm v3 requires exactly one excluded warm-up and one scored full article');
+      if(warmup?.memory?.availability!=='measured') throw new Error('Warm v3 requires measured RSS from the excluded warm-up');
+      if(!trial||trial.memory!==undefined||trial.metrics?.generationMeanRssBytes!==undefined||trial.metrics?.generationRssSampleCount!==undefined||trial.metrics?.articleCallPeakRssBytes!==undefined) throw new Error('Warm v3 scored timing must run without RSS sampling');
+      if(!Number.isFinite(trial.metrics?.firstPcmMs)||typeof trial.audio?.sha256!=='string'||!Number.isSafeInteger(trial.audio?.bytes)) throw new Error('Warm v3 requires first-PCM timing and the scored article audio digest');
+    }
     if(cell.resources&&receipt.cells[0].status==='measured'&&(!receipt.cells[0].trials.length||receipt.cells[0].trials.some(t=>t.memory?.availability!=='measured'))) throw new Error('Generation RAM was not sufficiently sampled; inspect before continuing');
   } catch(error) { reviewError=String(error.message??error);failures++;stoppedOnFailure=true; }
   await appendFile(join(out,'attempts.jsonl'),JSON.stringify({index,requestedCell,cell,fixtureId,commit,exitCode:code,resultId:summary?.id??null,resultPath:summary?.result??null,reviewError,finishedAt:new Date().toISOString()})+'\n');

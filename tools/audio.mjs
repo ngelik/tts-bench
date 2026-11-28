@@ -8,13 +8,19 @@ import {fixtureLanguage} from './fixture-language.mjs';
 export function verifyAudioLanguage(entry,result){if(entry.language!==fixtureLanguage(result))throw new Error('Audio language does not match scored fixture');}
 const sourceCache=new Map();
 const playbackNotices = {'tiny-voca-ar': "Benchmark evaluation recording. Upstream has not cleared the reference voice for client work.", 'tiny-voca-ja-tsukuyomi-chan': 'Tsukuyomi-chan Corpus (CV Rei Yumesaki, © Rei Yumesaki). Listening only. Secondary use is prohibited.'};
+function audioAttribution(modelId, language, displayName) {
+  if (modelId === 'klein-tts-x1.5-pro' && language !== 'en') {
+    return 'Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.';
+  }
+  return attribution[modelId] ?? displayName;
+}
 export function verifyAudioAttribution(entry) {
   const model = getModel(entry.model);
   const notice = playbackNotices[entry.model];
   if (entry.playbackNotice !== notice || (notice && entry.full?.url != null)) {
     throw new Error('Audio playback terms differ from verified model catalog');
   }
-  if (entry.modelTerms !== model.license.model || entry.attribution !== (attribution[entry.model] ?? model.displayName) ||
+  if (entry.modelTerms !== model.license.model || entry.attribution !== audioAttribution(entry.model, entry.language, model.displayName) ||
       JSON.stringify(entry.sourceUrls) !== JSON.stringify(model.support.sources)) {
     throw new Error('Audio attribution differs from verified model catalog');
   }
@@ -108,7 +114,7 @@ export async function addAudio({result,wav,model,backend,clipOnly=false}){
  const m=getModel(model),language=fixtureLanguage(d),clip=makeClip(b),key=`${d.id}--${model}--${backend}`,path=`audio/samples/${key}.wav`;if(key.length>230)throw new Error('Audio asset name too long');
  const data=await manifest();if(data.entries.some(a=>a.resultId===d.id&&a.model===model&&a.backend===backend))throw new Error('Audio already registered; do not overwrite');
  await mkdir(dirname(path),{recursive:true});await writeFile(path,clip,{flag:'wx'});
- data.entries.push({resultId:d.id,model,backend,trialIndex:t.index,voice:c.voice,language,attribution:attribution[model]??m.displayName,modelTerms:m.license.model,...(playbackNotice?{playbackNotice}:{}),sourceUrls:m.support.sources,clip:{path,sha256:sha256(clip),bytes:clip.length,startSample:0,...wavInfo(clip)},full:{url:clipOnly?null:BASE+key+'-full.wav',sha256:digest,bytes:b.length}});
+ data.entries.push({resultId:d.id,model,backend,trialIndex:t.index,voice:c.voice,language,attribution:audioAttribution(model,language,m.displayName),modelTerms:m.license.model,...(playbackNotice?{playbackNotice}:{}),sourceUrls:m.support.sources,clip:{path,sha256:sha256(clip),bytes:clip.length,startSample:0,...wavInfo(clip)},full:{url:clipOnly?null:BASE+key+'-full.wav',sha256:digest,bytes:b.length}});
  data.entries.sort((a,b)=>(a.model+'/'+a.backend+'/'+a.resultId).localeCompare(b.model+'/'+b.backend+'/'+b.resultId));await writeFile('audio/manifest.json',JSON.stringify(data,null,2)+'\n');return data.entries.find(a=>a.clip.path===path);
 }
 export async function checkAudio(){

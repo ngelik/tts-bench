@@ -65,6 +65,15 @@ V2 is valid only for full warm runs, not smoke or resource-instrumented runs.
 Keep v1 and v2 in separate comparison cohorts; neither aggregate comparisons nor
 CPU/WebGPU paired ratios cross protocol IDs.
 
+`browser-tts-warm-v3` is an opt-in protocol for one scored observation per
+model, language and backend. Run `--scenario warm --warm-protocol v3
+--repetitions 1` using the registered full article. The runner samples Chrome
+process-tree RSS every 500 ms during the excluded full warm-up. It stops sampling
+before timing the one scored article and records the first PCM and final scored
+audio in that same run. A v3 receipt links the warm-up memory to the scored
+timing. Dedicated cached resource runs remain available under their own protocol.
+Publish cross-backend comparisons only within matching protocols and conditions.
+
 ## Other scenarios
 
 Keep each scenario in a separate result/protocol group:

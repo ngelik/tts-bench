@@ -55,3 +55,33 @@ test('overview CPU/GPU labels and medians reconcile with distinct historical pro
  const old=JSON.parse(await readFile(new URL('../results/historical-2026-11-08-m1pro-primary-warm/result.json',import.meta.url)));
  for(const row of overview.rows){const cpu=old.cells.find(c=>c.model===row.caseId&&c.backendRequested==='cpu');const gpu=historical.cells.find(c=>c.model===row.caseId&&c.backendRequested==='webgpu');if(cpu)assert.ok(Math.abs(row.cpuWarmSeconds-median(cpu.trials.map(t=>t.generationMs))/1000)<1e-6);else assert.equal(row.cpuWarmSeconds,null);assert.ok(Math.abs(row.gpuWarmSeconds-median(gpu.trials.map(t=>t.generationMs))/1000)<1e-6);}
 });
+
+test('warm v3 accepts a single scored article with RSS exclusively on its excluded warm-up', () => {
+  const receipt = native();
+  receipt.protocol.id = 'browser-tts-warm-v3';
+  receipt.protocol.repetitions = 1;
+  const cell = receipt.cells[0];
+  cell.trials = cell.trials.slice(0, 1);
+  const warmup = cell.warmup[0];
+  const start = 1_800_000_000_000;
+  const end = start + Math.round(warmup.generationMs);
+  const rss = 760_000_000;
+  const samples = [];
+  for (let at = start; at <= end; at += 500) samples.push([at, rss]);
+  warmup.memory = {
+    availability: 'measured', scope: 'owned-chrome-process-tree-rss-including-browser-baseline',
+    generationStartedAtEpochMs: start, finalPcmAtEpochMs: end, samplingIntervalMs: 500, samples,
+  };
+  Object.assign(warmup.metrics ??= {}, {
+    generationMeanRssBytes: rss, generationRssSampleCount: samples.length, articleCallPeakRssBytes: rss,
+  });
+  cell.trials[0].metrics.firstPcmMs ??= 500;
+  assert.equal(validateResult(receipt, { publication: true }), receipt);
+  assert.match(renderReport(receipt).markdown, /excluded full-article warm-up/);
+  assert.match(renderReport(receipt).markdown, /760\.00/);
+  const invalid = structuredClone(receipt);
+  invalid.cells[0].trials[0].metrics.articleCallPeakRssBytes = rss;
+  assert.throws(() => validateResult(invalid), /Generation memory evidence/);
+  delete warmup.memory;
+  assert.throws(() => validateResult(receipt, { publication: true }), /requires measured warm-up RSS/);
+});

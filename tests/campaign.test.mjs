@@ -38,7 +38,8 @@ const scenario = arg('--scenario');
 const warmProtocol = args.includes('--warm-protocol') ? arg('--warm-protocol') : null;
 const requestedRepetitions = Number(arg('--repetitions'));
 const repetitions = warmProtocol === 'v2' && model === 'large' ? 1 : requestedRepetitions;
-const protocolId = warmProtocol === 'v2' ? 'browser-tts-warm-v2' : 'browser-tts-' + scenario + '-v1' + (args.includes('--resources') ? '-resources' : '');
+const effective = warmProtocol === 'v3' ? 1 : repetitions;
+const protocolId = warmProtocol === 'v3' ? 'browser-tts-warm-v3' : warmProtocol === 'v2' ? 'browser-tts-warm-v2' : 'browser-tts-' + scenario + '-v1' + (args.includes('--resources') ? '-resources' : '');
 const fixtureId = arg('--fixture');
 const note = arg('--note');
 const events = process.env.CAMPAIGN_TEST_EVENTS;
@@ -71,13 +72,21 @@ const fixture = {
   }),
 };
 const settings = {language: registeredFixture.language};
+const warmup = warmProtocol === 'v3' ? [{
+  memory: { availability: process.env.CAMPAIGN_TEST_WARMUP_MEMORY ?? 'measured' },
+}] : [];
+const trials = scenario === 'warm' ? [{
+  metrics: { firstPcmMs: 2 },
+  ...(warmProtocol === 'v3' ? { audio: { sha256: 'a'.repeat(64), bytes: 1 } } : {}),
+  ...(process.env.CAMPAIGN_TEST_SCORED_MEMORY === 'true' ? { memory: {} } : {}),
+}] : [];
 const receipt = {
   id,
   status: 'measured',
   source: { gitCommit, dirty: false },
-  protocol: { id: process.env.CAMPAIGN_TEST_PROTOCOL_MISMATCH ?? protocolId, smoke: false, scenario, repetitions, warmupRuns: scenario === 'warm' ? 1 : 0 },
+  protocol: { id: process.env.CAMPAIGN_TEST_PROTOCOL_MISMATCH ?? protocolId, smoke: false, scenario, repetitions: effective, warmupRuns: scenario === 'warm' ? 1 : 0 },
   fixture,
-  cells: [{ status: 'measured', settings, trials: [] }],
+  cells: [{ status: 'measured', settings, warmup, trials }],
   notes: [note],
 };
 await writeFile(result, JSON.stringify(receipt) + '\\n');
@@ -389,6 +398,45 @@ test('warm v2 campaign dry-run and execution preserve protocol and reject a mism
   assert.notEqual(rejected.status, 0);
   assert.match(rejected.stderr, /protocol.*does not match/i);
   assert.equal((await eventRows(mismatch.events)).filter(row => row.event === 'start').length, 1);
+});
+
+test('warm v3 campaign sends the explicit single repetition and requires warm-up-only RSS', async t => {
+  const warmV3 = plan([cell('one', 'cpu', 'warm', 1, { warmProtocol: 'v3' })]);
+  const { directory, events } = await sandbox(t, warmV3);
+  const preview = invokeDryRun(directory, events);
+  assert.equal(preview.status, 0, preview.stderr);
+  const effective = JSON.parse(preview.stdout);
+  assert.deepEqual(effective.cells.map(row => [row.protocolId, row.requestedRepetitions, row.effectiveRepetitions]), [
+    ['browser-tts-warm-v3', 1, 1],
+  ]);
+  assert.deepEqual(await eventRows(events), []);
+
+  const run = invoke(directory, events);
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual((await eventRows(events)).filter(row => row.event === 'start').map(row => [row.repetitions, row.requestedRepetitions, row.warmProtocol]), [
+    [1, 1, 'v3'],
+  ]);
+  const ledger = await campaignDirectory(directory);
+  const attempt = JSON.parse((await readFile(join(ledger, 'attempts.jsonl'), 'utf8')).trim());
+  const receipt = JSON.parse(await readFile(join(directory, attempt.resultPath), 'utf8'));
+  assert.equal(receipt.protocol.id, 'browser-tts-warm-v3');
+  assert.equal(receipt.protocol.repetitions, 1);
+  assert.equal(receipt.cells[0].warmup[0].memory.availability, 'measured');
+  assert.equal(receipt.cells[0].trials[0].memory, undefined);
+
+  const insufficient = await sandbox(t, warmV3);
+  const rejectedMemory = invoke(insufficient.directory, insufficient.events, undefined, 'campaign-plan.json', {
+    CAMPAIGN_TEST_WARMUP_MEMORY: 'insufficient-coverage',
+  });
+  assert.notEqual(rejectedMemory.status, 0);
+  assert.match(rejectedMemory.stderr, /warm v3 requires measured RSS/i);
+
+  const scored = await sandbox(t, warmV3);
+  const rejectedScoredMemory = invoke(scored.directory, scored.events, undefined, 'campaign-plan.json', {
+    CAMPAIGN_TEST_SCORED_MEMORY: 'true',
+  });
+  assert.notEqual(rejectedScoredMemory.status, 0);
+  assert.match(rejectedScoredMemory.stderr, /without RSS sampling/i);
 });
 
 test('legacy large-model campaign rejects a v2 receipt with the same effective single count', async t => {
