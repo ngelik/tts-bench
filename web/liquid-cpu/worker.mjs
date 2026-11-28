@@ -65,9 +65,7 @@ function variantSettings(selectedKind, variant, language) {
     speechSampling: `Pinned variant defaults: temperature ${sampling.temperature}, top-k ${sampling.topK ?? 'all'}, repetition penalty ${sampling.repetitionPenalty}, recent-frame window ${sampling.window}. Benchmark seed 0 per source span overrides the upstream browser random seed.`,
     maxReplyRows: MAX_REPLY_ROWS,
     runtime: `Fusor browser runtime from Space ${SPACE_REVISION}; ${selectedKind} q7 bundle ${variant.bundleRevision}.`,
-    loadingCache: selectedKind === 'omni'
-      ? 'HTTP-streamed model parts; bypasses upstream OPFS caching. The browser HTTP cache may evict immutable local assets and refetch them. Initialization is outside generation timing.'
-      : 'Pinned upstream loader uses OPFS for verified model parts when available; initialization is outside generation timing.',
+    loadingCache: 'HTTP-streamed model parts through the local bounded loader; bypasses upstream OPFS caching for both Audio and Omni. The browser HTTP cache may evict immutable local assets and refetch them. Runtime end_part verifies each final BLAKE3 digest. Initialization is outside generation timing.',
     hostWork: 'CPU JavaScript scheduling and 24 kHz PCM transfer; neural inference and codec are in six-thread WebAssembly with upstream relaxed-SIMD selection.',
     streaming: 'Official 24 kHz PCM drained from Runtime.speech() after every step, including the final EOS/finalize step.',
   };
@@ -99,8 +97,8 @@ async function initialize(options) {
   const runtimeRoot = resourceBase(`liquid-cpu/runtime/${SPACE_REVISION}/engine/dist/`);
   const restoreFetch = localFetchFence(modelBase, runtimeRoot);
   try {
-    // The pinned upstream host modules create the runtime. Audio uses upstream loadParts; Omni
-    // uses the local HTTP-only loader, while runtime.end_part remains the BLAKE3 authority.
+    // The pinned upstream host modules create the runtime. Both Audio and Omni use the local
+    // bounded HTTP loader, while runtime.end_part remains the BLAKE3 authority.
     hostWorker = await import(new URL('host/worker.js', runtimeRoot));
     const loader = await import(new URL('host/loader.js', runtimeRoot));
     const response = await fetch(new URL('manifest.json', modelBase));
@@ -118,21 +116,17 @@ async function initialize(options) {
       throw new Error(`Fusor selected ${started.build.name} with ${started.threads} thread(s); the six-thread protocol forbids fallback.`);
     }
     runtime = new started.glue.Runtime(manifestText);
-    if (kind === 'omni') {
-      loadingAbortController = new AbortController();
-      try {
-        await loadHttpParts({
-          runtime,
-          manifest,
-          baseUrl: modelBase,
-          signal: loadingAbortController.signal,
-          onProgress(progress) { self.postMessage({ type: 'model-part-progress', ...progress }); },
-        });
-      } finally {
-        loadingAbortController = null;
-      }
-    } else {
-      await loader.loadParts({ runtime, manifest, baseUrl: modelBase, cacheName: `lfm3-${kind}-q7-threads-${CPU_THREADS}` });
+    loadingAbortController = new AbortController();
+    try {
+      await loadHttpParts({
+        runtime,
+        manifest,
+        baseUrl: modelBase,
+        signal: loadingAbortController.signal,
+        onProgress(progress) { self.postMessage({ type: 'model-part-progress', ...progress }); },
+      });
+    } finally {
+      loadingAbortController = null;
     }
     settings = { ...settings, runtimeBuild: started.build.name, effectiveThreads: started.threads };
     baseInfo.settings = settings;
