@@ -1,0 +1,470 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-28t07-51-38-463z-klein-tts-x1.5-pro-webgpu-warm-3fb6077d",
+  "createdAt": "2026-11-28T07:52:42.713Z",
+  "origin": "native",
+  "protocol": {
+    "id": "browser-tts-warm-v3",
+    "scenario": "warm",
+    "timingBoundary": "First source-chunk request through final CPU-readable PCM; excludes initialization, validation, hashing, WAV encoding and save. Optional articleCallPeakRssBytes spans the entire browser call including post-timer validation/export.",
+    "warmupRuns": 1,
+    "repetitions": 1,
+    "smoke": false,
+    "networkMbps": null
+  },
+  "environment": {
+    "machineLabel": "MacBook Pro (Apple M1 Pro, 16 GB)",
+    "os": "Darwin 25.6.0",
+    "arch": "arm64",
+    "cpu": "Apple M1 Pro",
+    "logicalCores": 8,
+    "ramBytes": 17179869184,
+    "chromeVersion": "Google Chrome 158.0.8127.37",
+    "gpu": "apple",
+    "headless": false
+  },
+  "fixture": {
+    "id": "fr-article-v1",
+    "language": "fr",
+    "sha256": "4383169bb50c860cac854434fde77b93b72bba73443a445d32764cc16688b196",
+    "characters": 23757,
+    "unicodeCodePoints": 23757,
+    "utf8Bytes": 25038,
+    "chunks": 108,
+    "source": {
+      "type": "translation",
+      "description": "Complete standard French translation of the English benchmark article by GPT-6 Luna. Codex reviewed all 27 paragraphs, edited regional vocabulary, clarified evening times and bell directions, preserved original measurements, and checked dialogue, identifiers and numeric values. AI editorial review.",
+      "sourceFixtureId": "english-20k-v1",
+      "sourceSha256": "4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b",
+      "sourceLanguage": "en"
+    }
+  },
+  "source": {
+    "gitCommit": "4d44a9a632462fbfb2958e1619904988c616287e",
+    "dirty": false,
+    "manifestSha256": "d870b727e423a34d9cefefb6d0c539acd9178bb51c05f28446908417ac0dc37d"
+  },
+  "assets": [
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort.wasm.min.mjs",
+      "sha256": "69751720f611e37d1ce2fa3c6ebaa80f949014752636c5f8887a63d40feadcc7",
+      "bytes": 49856
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort.webgpu.min.mjs",
+      "sha256": "8ae8f1340dd86f8aaa5acc0fd5ec2f42ae874ffd7c9cd804281b73fd177c9864",
+      "bytes": 66261
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.mjs",
+      "sha256": "90a557d15c02bac4504d95b67f431d8594635ed2a0a62a7f2cd83d090ff91d3e",
+      "bytes": 20321
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.wasm",
+      "sha256": "45eaee27761ad883742a8d4b8fce1538d60ce43b51adf1726fafccc59b8c1a15",
+      "bytes": 11905541
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "249b4dc791f081d33bd11760bfd669fe85f97289e679bbeb291b874272125dff",
+      "bytes": 51913
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:dist/ort-wasm-simd-threaded.asyncify.wasm",
+      "sha256": "babec0bbddb6d3082623b99b7e1391b75e0729bcca076ff8424d7753af97fada",
+      "bytes": 25499390
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:phonemizer:dist/phonemizer.js",
+      "sha256": "193481f474f7c1ea81df3195d18b45df8ef7254dbdccb3f193d60215c4897bec",
+      "bytes": 1322380
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:phonemizer:LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "bytes": 1073
+    },
+    {
+      "id": "runtime:klein-tts-x1.5-pro:onnxruntime-web:ThirdPartyNotices.txt",
+      "sha256": "e9e90971a8e75a9a8ac0c6412e29c1202d079998389915aa485f46c816c3b4cc",
+      "bytes": 326866
+    },
+    {
+      "id": "klein-pro-metadata",
+      "sha256": "e549b783b7650781c418f2f3c73a68e45181cea9513d1c72bd5b05b0c383a354",
+      "bytes": 92161
+    },
+    {
+      "id": "klein-multilingual-espeak-js",
+      "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+      "bytes": 178386
+    },
+    {
+      "id": "klein-multilingual-espeak-wasm",
+      "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+      "bytes": 18485010
+    },
+    {
+      "id": "klein-multilingual-espeak-license",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    {
+      "id": "klein-pro-encoder",
+      "sha256": "0abf547af7f8663c12134900a845087f0d220d70b4744b3a383c7a909fc4c4a6",
+      "bytes": 29050275
+    },
+    {
+      "id": "klein-pro-decoder",
+      "sha256": "8bcaace5e03ed273b987e5e319014fcffb08597f229e0eb11487bd24ed593918",
+      "bytes": 23832110
+    },
+    {
+      "id": "klein-en-us-lexicon",
+      "sha256": "f88c07d53f0bc97adecc70c755416dd1103f61c47f76937339f73a7f32bf5f85",
+      "bytes": 1394577
+    },
+    {
+      "id": "klein-model-license",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "bytes": 10280
+    },
+    {
+      "id": "klein-espeak-ng-license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    }
+  ],
+  "cells": [
+    {
+      "model": "klein-tts-x1.5-pro",
+      "support": {
+        "voiceCount": 17,
+        "bundledVoiceCount": 17,
+        "languageCount": 4,
+        "languages": [
+          "en",
+          "es",
+          "fr",
+          "it"
+        ],
+        "scope": "Pinned Klein-TTS X1.5 Pro ONNX checkpoint",
+        "sources": [
+          "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+          "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+        ],
+        "notes": "The benchmark selects Sarah (af_heart) for English, Lucia (ef_dora) for Spanish, Camille (ff_siwis) for French, and Giulia (if_sara) for Italian."
+      },
+      "backendRequested": "webgpu",
+      "backendEffective": "webgpu+wasm",
+      "status": "measured",
+      "reason": null,
+      "voice": "Camille (ff_siwis)",
+      "precision": "FP32",
+      "settings": {
+        "threads": 1,
+        "speed": 1,
+        "sampleRate": 24000,
+        "language": "fr",
+        "voiceId": "ff_siwis",
+        "frontend": "Klein-TTS upstream 0.2.0 non-English phoneme mapping and espeak-ng 1.0.2 WebAssembly CLI",
+        "sentenceChunks": "Upstream 250-character sentence grouping; strict vocabulary validation; recursively split at source word boundaries instead of upstream silent 510-token truncation",
+        "noise": "Upstream mulberry32 + Box-Muller; seed = canonical chunk id × 1024 + internal subchunk index",
+        "interChunkPauseSeconds": 0.12,
+        "modelLanguage": "fr"
+      },
+      "capability": {
+        "gpuDispatchVerified": true,
+        "description": "Non-fallback hardware adapter apple; observed 1343 compute dispatches in a separate untimed probe. WebGPU with possible WASM operator fallback; eSpeak preprocessing and CPU-readable PCM readback are CPU work."
+      },
+      "warmup": [
+        {
+          "index": 1,
+          "generationMs": 27298.94000005722,
+          "samples": 32517600,
+          "sampleRate": 24000,
+          "pcmSha256": "60288d3c11e267261ae07048670a4d9dbe06babd84cdfbe49bb8af1cddfbde3c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 384.3250000476837,
+            "firstSourceChunkCompletedMs": 384.3399999141693,
+            "audioSeconds": 1354.9,
+            "realTimeFactor": 0.02014830614809744,
+            "minSamplesPerChunk": 223200,
+            "maxSamplesPerChunk": 356400,
+            "articleCallPeakRssBytes": 1953562624,
+            "generationMeanRssBytes": 1873793176,
+            "generationRssSampleCount": 54
+          },
+          "memory": {
+            "scope": "owned-chrome-process-tree-rss-including-browser-baseline",
+            "generationStartedAtEpochMs": 1795852302951.795,
+            "finalPcmAtEpochMs": 1795852330250.7349,
+            "samplingIntervalMs": 500,
+            "samples": [
+              [
+                1795852303598,
+                1555382272
+              ],
+              [
+                1795852304016,
+                1834532864
+              ],
+              [
+                1795852304505,
+                1849163776
+              ],
+              [
+                1795852305007,
+                1814347776
+              ],
+              [
+                1795852305510,
+                1859600384
+              ],
+              [
+                1795852306030,
+                1828208640
+              ],
+              [
+                1795852306513,
+                1817821184
+              ],
+              [
+                1795852307017,
+                1799897088
+              ],
+              [
+                1795852307516,
+                1819754496
+              ],
+              [
+                1795852308022,
+                1827930112
+              ],
+              [
+                1795852308520,
+                1828110336
+              ],
+              [
+                1795852309024,
+                1865105408
+              ],
+              [
+                1795852309529,
+                1891532800
+              ],
+              [
+                1795852310029,
+                1892220928
+              ],
+              [
+                1795852310528,
+                1874083840
+              ],
+              [
+                1795852311031,
+                1939914752
+              ],
+              [
+                1795852311532,
+                1921302528
+              ],
+              [
+                1795852312033,
+                1926463488
+              ],
+              [
+                1795852312542,
+                1933803520
+              ],
+              [
+                1795852313045,
+                1942011904
+              ],
+              [
+                1795852313544,
+                1953562624
+              ],
+              [
+                1795852314055,
+                1947353088
+              ],
+              [
+                1795852314551,
+                1937883136
+              ],
+              [
+                1795852315051,
+                1941192704
+              ],
+              [
+                1795852315557,
+                1935196160
+              ],
+              [
+                1795852316060,
+                1934655488
+              ],
+              [
+                1795852316559,
+                1937752064
+              ],
+              [
+                1795852317062,
+                1942011904
+              ],
+              [
+                1795852317562,
+                1941127168
+              ],
+              [
+                1795852318063,
+                1951498240
+              ],
+              [
+                1795852318563,
+                1920352256
+              ],
+              [
+                1795852319063,
+                1900314624
+              ],
+              [
+                1795852319567,
+                1931821056
+              ],
+              [
+                1795852320086,
+                1935114240
+              ],
+              [
+                1795852320570,
+                1879605248
+              ],
+              [
+                1795852321079,
+                1863630848
+              ],
+              [
+                1795852321574,
+                1852571648
+              ],
+              [
+                1795852322075,
+                1852801024
+              ],
+              [
+                1795852322577,
+                1854406656
+              ],
+              [
+                1795852323079,
+                1859043328
+              ],
+              [
+                1795852323584,
+                1863434240
+              ],
+              [
+                1795852324083,
+                1864286208
+              ],
+              [
+                1795852324586,
+                1865678848
+              ],
+              [
+                1795852325089,
+                1868955648
+              ],
+              [
+                1795852325588,
+                1839480832
+              ],
+              [
+                1795852326088,
+                1844264960
+              ],
+              [
+                1795852326593,
+                1843396608
+              ],
+              [
+                1795852327090,
+                1847721984
+              ],
+              [
+                1795852327590,
+                1840726016
+              ],
+              [
+                1795852328095,
+                1844609024
+              ],
+              [
+                1795852328592,
+                1836728320
+              ],
+              [
+                1795852329094,
+                1839726592
+              ],
+              [
+                1795852329596,
+                1863270400
+              ],
+              [
+                1795852330100,
+                1829470208
+              ]
+            ],
+            "availability": "measured"
+          }
+        }
+      ],
+      "trials": [
+        {
+          "index": 1,
+          "generationMs": 27009.47000002861,
+          "samples": 32517600,
+          "sampleRate": 24000,
+          "pcmSha256": "60288d3c11e267261ae07048670a4d9dbe06babd84cdfbe49bb8af1cddfbde3c",
+          "validation": {
+            "finitePcm": true,
+            "chunkCount": 108,
+            "nonemptyChunks": true
+          },
+          "metrics": {
+            "firstPcmMs": 255.10000014305115,
+            "firstSourceChunkCompletedMs": 255.1100001335144,
+            "audioSeconds": 1354.9,
+            "realTimeFactor": 0.019934659384477534,
+            "minSamplesPerChunk": 223200,
+            "maxSamplesPerChunk": 356400
+          },
+          "audio": {
+            "sha256": "a0b5c31da20227bf238e7f0af784a4c3cc9b1e8baa5548348e50e05659c484e0",
+            "bytes": 65035244
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Capability checks run separately before timing. GPU dispatch does not imply GPU-exclusive execution.",
+    "Raw WAV is saved locally; opt-in audio publication is separate from timing and automatic result submission.",
+    "Campaign 2026-11-28T07-42-19-553Z-b6e80683a03b; cell 2/2; source 4d44a9a632462fbfb2958e1619904988c616287e; fixture fr-article-v1 (fr, 23757 JavaScript characters, 108 spans); requested n=1; effective n=1; Native arm64 Apple M1 Pro MacBook Pro with 8 CPU cores and 16 GiB RAM on AC power. Sequential disposable headed Chrome profiles. Warm v3 measures Chrome process-tree RSS during its excluded full-article warm-up.",
+    "Warm v3 samples 500 ms Chrome process-tree RSS only during the excluded full-article warm-up; the single scored article runs with RSS sampling disabled."
+  ]
+}

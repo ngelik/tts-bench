@@ -61,6 +61,19 @@ test('a legacy five-trial warm receipt cannot be hand-shortened using current mo
   assert.throws(() => verifySource(one,eligible.directory), /differs from the model weights/);
 });
 
+test('Warm v3 verifies scoring revision weights without a model-size exception', async t => {
+  const registration = await scoringRevision(t, null);
+  const receipt = oneScoredArticle(await load('2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f'));
+  receipt.protocol.id = 'browser-tts-warm-v3';
+  receipt.source = registration.source;
+  assert.doesNotThrow(() => verifySource(receipt, registration.directory));
+
+  const model = receipt.cells[0].model;
+  const firstWeight = getAssetLock().models[model].assets.find(asset => asset.kind === 'model-weights');
+  receipt.assets = receipt.assets.filter(asset => asset.id !== firstWeight.id);
+  assert.throws(() => verifySource(receipt, registration.directory), /differs from the model weights/);
+});
+
 test('publication validates one full article for an eligible model and preserves the five actual archived trials', async () => {
   const original = await load(audioId);
   const one = oneScoredArticle(original);

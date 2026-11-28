@@ -1430,6 +1430,90 @@
       }
     },
     {
+      "resultId": "2026-11-28t07-31-42-234z-klein-tts-x1.5-pro-cpu-warm-0577a232",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Lucia (ef_dora)",
+      "language": "es-ES",
+      "attribution": "Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-28t07-31-42-234z-klein-tts-x1.5-pro-cpu-warm-0577a232--klein-tts-x1.5-pro--cpu.wav",
+        "sha256": "6605538e9ad3f0c73331b6cb2628f916e04e4b6390344bb610bdd059a1e16d6c",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "a3f228ae5827577934ee1750511e3066b4d0be69abbc58c013c78f6b68cc2d62",
+        "bytes": 65422844
+      }
+    },
+    {
+      "resultId": "2026-11-28t07-42-20-253z-klein-tts-x1.5-pro-cpu-warm-78d45f3f",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Camille (ff_siwis)",
+      "language": "fr",
+      "attribution": "Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-28t07-42-20-253z-klein-tts-x1.5-pro-cpu-warm-78d45f3f--klein-tts-x1.5-pro--cpu.wav",
+        "sha256": "908b746a80d692d85ae0b8075d5783de79e4fd361cf4774fdd4f7ac8113084bd",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "4ac4fd29334f1ceb230788a8262fb7f11f23328d3170443f4030eedc6abca1bd",
+        "bytes": 65035244
+      }
+    },
+    {
+      "resultId": "2026-11-28t07-52-43-749z-klein-tts-x1.5-pro-cpu-warm-a4a4c704",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "cpu",
+      "trialIndex": 1,
+      "voice": "Giulia (if_sara)",
+      "language": "it",
+      "attribution": "Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-28t07-52-43-749z-klein-tts-x1.5-pro-cpu-warm-a4a4c704--klein-tts-x1.5-pro--cpu.wav",
+        "sha256": "943b9264855f1103b525b69158d601fd0cdb5e3607a97e6341b9053441f4a013",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "5e6255216c227aac789261248daada5d3b92b2db6c8f2147dfc3a6154f0c24e5",
+        "bytes": 66921644
+      }
+    },
+    {
       "resultId": "2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb",
       "model": "klein-tts-x1.5-pro",
       "backend": "webgpu",
@@ -1455,6 +1539,90 @@
         "url": "https://github.com/ngelik/tts-bench/releases/download/benchmark-audio-v1/2026-11-18t10-25-17-102z-klein-tts-x1.5-pro-webgpu-warm-47eae0fb--klein-tts-x1.5-pro--webgpu-full.wav",
         "sha256": "65e4e26420c90fe0e897f15cf57498ca3085612b46f791d64354dad066ac65ff",
         "bytes": 60412844
+      }
+    },
+    {
+      "resultId": "2026-11-28t07-41-14-651z-klein-tts-x1.5-pro-webgpu-warm-141709fb",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Lucia (ef_dora)",
+      "language": "es-ES",
+      "attribution": "Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-28t07-41-14-651z-klein-tts-x1.5-pro-webgpu-warm-141709fb--klein-tts-x1.5-pro--webgpu.wav",
+        "sha256": "9c45059b8589a51407dbee1da5e449f52b7065c00ca2492183f1dbde44e7e11a",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "b29f6d2f4c406a16ea0a0af8d69d2f2b22c656e57250f286a520cc28701615be",
+        "bytes": 65422844
+      }
+    },
+    {
+      "resultId": "2026-11-28t07-51-38-463z-klein-tts-x1.5-pro-webgpu-warm-3fb6077d",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Camille (ff_siwis)",
+      "language": "fr",
+      "attribution": "Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-28t07-51-38-463z-klein-tts-x1.5-pro-webgpu-warm-3fb6077d--klein-tts-x1.5-pro--webgpu.wav",
+        "sha256": "fa9537af159d1367fd9a7af050374dd9ef406867cc7d7f4b9dd8de7d86243e2d",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "a0b5c31da20227bf238e7f0af784a4c3cc9b1e8baa5548348e50e05659c484e0",
+        "bytes": 65035244
+      }
+    },
+    {
+      "resultId": "2026-11-28t08-02-26-332z-klein-tts-x1.5-pro-webgpu-warm-e751eab4",
+      "model": "klein-tts-x1.5-pro",
+      "backend": "webgpu",
+      "trialIndex": 1,
+      "voice": "Giulia (if_sara)",
+      "language": "it",
+      "attribution": "Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.",
+      "modelTerms": "Apache-2.0",
+      "sourceUrls": [
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
+        "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
+      ],
+      "clip": {
+        "path": "audio/samples/2026-11-28t08-02-26-332z-klein-tts-x1.5-pro-webgpu-warm-e751eab4--klein-tts-x1.5-pro--webgpu.wav",
+        "sha256": "928f2d1d117f06d3d322b1e886e138c0d170c07b1f9668a773b17c4f31407b6f",
+        "bytes": 1440044,
+        "startSample": 0,
+        "sampleRate": 24000,
+        "samples": 720000,
+        "seconds": 30
+      },
+      "full": {
+        "url": null,
+        "sha256": "6175635b34a9e3ddd3b8d242d923607e2eec44e4564b5efa4fb7a1f19fac1705",
+        "bytes": 66921644
       }
     },
     {

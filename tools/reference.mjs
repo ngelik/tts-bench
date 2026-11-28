@@ -67,7 +67,10 @@ const xml=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll
 export function ramChart(results,models,language='en'){
  const cohorts=ramCohorts(results.filter(result=>fixtureLanguage(result)===language),models);if(!cohorts.length)return null;
  const height=100+cohorts.reduce((n,g)=>n+120+g.rows.size*76,0);
- let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="${height}" viewBox="0 0 1080 ${height}" role="img" aria-labelledby="title desc"><title id="title">Average Chrome RAM during speech generation — ${xml(languageLabel(language))}</title><desc id="desc">Separate full-article diagnostics. Owned Chrome process-tree RSS includes browser baseline and workers. Decimal megabytes; lower uses less memory. Unsupported backends have no bar.</desc><rect width="100%" height="100%" fill="#f7f9fc"/><g font-family="system-ui,sans-serif" fill="#192b47"><text x="32" y="42" font-size="25" font-weight="700">Chrome RAM · ${xml(languageLabel(language))} full article diagnostics</text><text x="32" y="68" font-size="13">One isolated Chrome instance · includes workers and browser baseline · excludes loading and audio export</text>`;
+ const method=cohorts.some(({base})=>base.protocol.id===WARMUP_MEMORY_PROTOCOL)
+  ? 'Measurements from cached diagnostics and excluded Warm v3 warm-ups follow their labeled protocols.'
+  : 'Separate full-article diagnostics.';
+ let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="${height}" viewBox="0 0 1080 ${height}" role="img" aria-labelledby="title desc"><title id="title">Average Chrome RAM during speech generation — ${xml(languageLabel(language))}</title><desc id="desc">${method} Owned Chrome process-tree RSS includes browser baseline and workers. Decimal megabytes; lower uses less memory. Unsupported backends have no bar.</desc><rect width="100%" height="100%" fill="#f7f9fc"/><g font-family="system-ui,sans-serif" fill="#192b47"><text x="32" y="42" font-size="25" font-weight="700">Chrome RAM · ${xml(languageLabel(language))} full article diagnostics</text><text x="32" y="68" font-size="13">One isolated Chrome instance · includes workers and browser baseline · excludes loading and audio export</text>`;
  let y=100;
  for(const [index,{base:d,rows}]of cohorts.entries()){
   const sorted=[...rows.values()].sort((a,b)=>a.model.localeCompare(b.model));

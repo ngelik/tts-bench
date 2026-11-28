@@ -2,7 +2,7 @@ import test, { before } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { assembleDashboardData, buildDashboardData, selectLatestAttempt, summarizeMemoryTrials, verifySourcesOnce } from '../tools/dashboard-data.mjs';
-import { resultPaths, readResult } from '../tools/results.mjs';
+import { generationMemoryTrials, resultPaths, readResult } from '../tools/results.mjs';
 import { listBenchmarkFixtures } from '../lib/benchmark-fixtures.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 
@@ -55,13 +55,14 @@ test('exports all catalog models with explicit warm, memory, license, and suppor
       if (model.memory[backend].status === 'measured') {
         const receipt = results.find(result => result.id === model.memory[backend].resultId);
         const cell = receipt.cells.find(value => value.model === model.id && value.backendRequested === backend);
-        assert.equal(model.memory[backend].n, cell.trials.length);
+        const memoryTrials = generationMemoryTrials(receipt, cell);
+        assert.equal(model.memory[backend].n, memoryTrials.length);
         assert.ok(model.memory[backend].n >= 1);
         assert.ok(model.memory[backend].sampleCount >= 2);
-        const middle = [Math.floor((cell.trials.length - 1) / 2), Math.floor(cell.trials.length / 2)];
+        const middle = [Math.floor((memoryTrials.length - 1) / 2), Math.floor(memoryTrials.length / 2)];
         for (const [field, values] of [
-          ['generationSeconds', cell.trials.map(t => t.generationMs / 1000)],
-          ['audioSeconds', cell.trials.map(t => t.samples / t.sampleRate)],
+          ['generationSeconds', memoryTrials.map(t => t.generationMs / 1000)],
+          ['audioSeconds', memoryTrials.map(t => t.samples / t.sampleRate)],
         ]) {
           values.sort((a, b) => a - b);
           assert.equal(model.memory[backend][field], (values[middle[0]] + values[middle[1]]) / 2);
