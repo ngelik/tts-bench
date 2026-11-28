@@ -48,7 +48,7 @@ export async function fitPhoneChunks(text, phonemize, vocab, depth = 0) {
   const normalized = String(text).trim();
   if (!normalized) return [];
   if (depth > 12) throw new Error('Klein could not split text to fit its 510-token decoder limit.');
-  const phonemes = await phonemize(normalized, 'en');
+  const phonemes = await phonemize(normalized);
   const ids = tokenizeStrict(phonemes, vocab);
   if (ids) return [{ text: normalized, phonemes, ids }];
   const words = normalized.split(/(\s+)/u).filter(Boolean);

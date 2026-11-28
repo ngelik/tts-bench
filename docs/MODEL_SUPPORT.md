@@ -339,7 +339,7 @@ Pinned English-only preview checkpoint with one fixed voice and no streaming API
 
 Supported voices: **17**. Bundled voices: **17**. Supported languages: **4** (en, es, fr, it).
 
-The pinned `model.json` lists 17 speaker embeddings with language prefixes for English, Spanish, French and Italian. The benchmark exercises Sarah (`af_heart`) in English only. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json) · [Benchmark cohort and background-condition notes](campaigns/klein-x1-5-pro/conditions.md)
+The pinned `model.json` bundles 17 speaker embeddings. The browser benchmark selects Sarah (`af_heart`) for English, Lucia (`ef_dora`) for the Spanish article from Spain, Camille (`ff_siwis`) for French, and Giulia (`if_sara`) for Italian. The three additional routes use the matching language in the checkpoint's eSpeak frontend. [Model card at pinned revision](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md) · [Pinned model metadata](https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json) · [Benchmark cohort and background-condition notes](campaigns/klein-x1-5-pro/conditions.md)
 
 <a id="linnet-en-35m"></a>
 

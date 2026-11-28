@@ -322,6 +322,7 @@ export async function initialize({ model = 'phonon', backend = 'cpu', smoke = fa
       auditTexts: (model === 'tiny-voca-lg' && fixtureId === 'lg-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-uz-navoiy' && fixtureId === 'uz-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text }) => ({ id, text })) : (model === 'tiny-voca-zh-blue-buff' && fixtureId === 'zh-hans-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text, sha256 }) => ({ id, text, sha256 })) : (model === 'tiny-voca-french' && fixtureId === 'fr-article-v1') ? (await loadFixture(fixtureId)).chunks.map(({ id, text, sha256 }) => ({ id, text, sha256 })) : ((smoke && (
         (model === 'tiny-voca-de-en' && ['de-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'tiny-voca-it' && fixtureId === 'it-article-v1') ||
+        (model === 'klein-tts-x1.5-pro' && loaded.fixture.language !== 'en') ||
         (model === 'tiny-voca-ja-tsukuyomi-chan' && fixtureId === 'ja-article-v1') ||
         (model === 'tiny-voca-ja-v3' && ['ja-article-v1', 'english-20k-v1'].includes(fixtureId)) ||
         (model === 'clarvia-tts-tiny' && fixtureId === 'tr-article-v1') ||

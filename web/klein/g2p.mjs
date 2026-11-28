@@ -1,12 +1,10 @@
 // Modified from @kleinml/kleintts 0.2.0 src/g2p.js under Apache-2.0. Changes:
-// replace Node eSpeak and file I/O with same-origin browser phonemizer/lexicon
-// fetch, and normalize no-tie browser eSpeak IPA into the upstream alphabet.
-// The English lexicon is fetched from the local, checksum-pinned asset cache;
-// eSpeak is the benchmark's
-// pinned browser phonemizer, whose IPA omits the CLI's optional tie marks.
+// Load the English lexicon and both WebAssembly frontends from pinned local
+// assets. The English browser phonemizer omits eSpeak's optional tie marks.
 import { phonemize as browserEspeak } from '/runtimes/phonemizer/1.2.1/phonemizer.js';
 
 const LEXICON_URL = '/models/klein-tts-x1.5-pro/en_us_lexicon.json.gz';
+const ESPEAK_ROOT = '/runtimes/espeak-ng/npm-1.0.2/';
 
 const PRIMARY = "ˈ";
 const SECONDARY = "ˌ";
@@ -79,6 +77,26 @@ function lexicon() {
 async function espeakIPA(text, voice) {
   const lines = await browserEspeak(text, voice);
   return lines.map(line => String(line).trim()).filter(Boolean);
+}
+
+let multilingualEspeak;
+async function multilingualIPA(text, voice) {
+  multilingualEspeak ??= Promise.all([
+    import(ESPEAK_ROOT + 'espeak-ng.js'),
+    WebAssembly.compileStreaming(fetch(ESPEAK_ROOT + 'espeak-ng.wasm')),
+  ]);
+  const [{ default: createEspeak }, compiled] = await multilingualEspeak;
+  const engine = await createEspeak({
+    arguments: ['--phonout', 'out', '-q', '--ipa', '--tie=^', '-v', voice, text],
+    instantiateWasm(imports, receive) {
+      const instance = new WebAssembly.Instance(compiled, imports);
+      receive(instance, compiled);
+      return instance.exports;
+    },
+    print() {},
+    printErr() {},
+  });
+  return engine.FS.readFile('out', { encoding: 'utf8' }).split('\n').map(line => line.trim()).filter(Boolean);
 }
 
 function restress(ps) {
@@ -317,10 +335,22 @@ const CLAUSE_RE = /([^;:,.!?—…]+)([;:,.!?—…]*)/gu;
 async function espeakG2P(text, voice) {
   text = text.replace(/«/g, "“").replace(/»/g, "”").replace(/[()]/g, ",");
   const clauses = [...text.matchAll(CLAUSE_RE)].map((m) => ({ words: m[1].trim(), punct: m[2] })).filter((c) => c.words);
-  let lines = await espeakIPA(clauses.map(c => c.words + (c.punct || ',')).join(' '), voice);
-  if (lines.length !== clauses.length) lines = await Promise.all(clauses.map(async c => (await espeakIPA(c.words, voice)).join(' ')));
+  let lines = await multilingualIPA(clauses.map(c => c.words + (c.punct || ',')).join(' '), voice);
+  if (lines.length !== clauses.length) {
+    lines = [];
+    for (const { words } of clauses) lines.push((await multilingualIPA(words, voice)).join(' '));
+  }
   return clauses
-    .map((c, i) => replaceAll(lines[i] || "", OTHER_E2M).split("^").join("").split("-").join("") + c.punct)
+    .map((clause, index) => {
+      if (!lines[index] && /[\p{L}\p{N}]/u.test(clause.words)) {
+        throw new Error('eSpeak produced no phones for a clause containing spoken text.');
+      }
+      let ipa = replaceAll(lines[index], OTHER_E2M).split("^").join("").split("-").join("");
+      // eSpeak marks the d in the loanword “Hardware” as dental. Klein
+      // encodes its base /d/ but has no token for this place diacritic.
+      if (voice === 'it') ipa = ipa.replaceAll('d̪', 'd');
+      return ipa + clause.punct;
+    })
     .join(" ")
     .trim();
 }
