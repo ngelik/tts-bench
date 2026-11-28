@@ -2,6 +2,7 @@
 // stay in the ignored asset cache; the local controller and HTTP loader ports retain MIT attribution.
 import { validateFusorManifest, validateGenerationPlan } from './contract.mjs';
 import { loadHttpParts } from './part-loader.mjs';
+import { resolveLiquidAudioProfile } from '../liquid-speech-profile.mjs';
 
 const SPACE_REVISION = '572fc51e58808d3536bc8a8bea9d74a11b4b88bc';
 const SPEECH_SYSTEM = 'Perform TTS in American English using a female voice.';
@@ -48,15 +49,17 @@ function localFetchFence(modelBase, distBase) {
   return () => { self.fetch = original; };
 }
 
-function variantSettings(selectedKind, variant) {
+function variantSettings(selectedKind, variant, language) {
   const sampling = variant.speechSampling;
+  const speechProfile = selectedKind === 'audio' ? resolveLiquidAudioProfile(language) : null;
   return {
-    voice: 'American English female (prompted style; no fixed speaker ID)',
+    voice: speechProfile?.voice ?? 'American English female (prompted style; no fixed speaker ID)',
+    ...(speechProfile ? { language: speechProfile.language } : {}),
     sampleRate: SAMPLE_RATE,
     precision: 'Fusor q7 CPU bundle; six-thread WebAssembly (upstream relaxed-SIMD build when supported)',
     executionProviders: ['cpu-wasm-threads'],
     requestedThreads: CPU_THREADS,
-    systemPrompt: SPEECH_SYSTEM,
+    systemPrompt: speechProfile?.systemPrompt ?? SPEECH_SYSTEM,
     frontend: 'Pinned official LFM3 chat template; canonical source span passed verbatim; reset before every span.',
     textSampling: 'Official Audio/Omni greedy text defaults (temperature 0, top-p 1, top-k 1, presence penalty 0).',
     speechSampling: `Pinned variant defaults: temperature ${sampling.temperature}, top-k ${sampling.topK ?? 'all'}, repetition penalty ${sampling.repetitionPenalty}, recent-frame window ${sampling.window}. Benchmark seed 0 per source span overrides the upstream browser random seed.`,
@@ -74,9 +77,9 @@ async function initialize(options) {
   kind = options.kind;
   const variant = VARIANTS[kind];
   if (!variant) throw new Error('Unknown Liquid CPU model variant.');
-  settings = variantSettings(kind, variant);
+  settings = variantSettings(kind, variant, options.language);
   const baseInfo = {
-    voice: 'American English female (prompted style; no fixed speaker ID)',
+    voice: settings.voice,
     precision: 'q7 weights; six-thread WebAssembly (upstream relaxed-SIMD build when supported)',
     settings,
     sampleRate: SAMPLE_RATE,
@@ -179,7 +182,7 @@ async function generate(chunk, onFirstPcm) {
   await runtime.reset();
   const message = {
     text: chunk.text,
-    system: SPEECH_SYSTEM,
+    system: settings.systemPrompt,
     mode: 'speech',
     thinking: false,
     max_tokens: MAX_REPLY_ROWS,

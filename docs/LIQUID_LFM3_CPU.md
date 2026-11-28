@@ -37,14 +37,14 @@ the local loading timeout as a measured download-speed result.
 
 The upstream demo chooses cores minus two, capped at eight. This eight-core M1 Pro case requests **six compute threads**, with the upstream relaxed-SIMD build selected when supported. The adapter records the effective build and rejects single-thread fallback. Threading requires cross-origin isolation and SharedArrayBuffer; the local benchmark server supplies the necessary headers. The page owns the compute workers and terminates them on failure or disposal. The small MIT-attributed host controller adds timeout and post-start worker-error handling; the neural WASM, loader and kernels remain unchanged.
 
-The exact system prompt is `Perform TTS in American English using a female voice.` Every canonical source span is passed unchanged, with runtime state reset beforehand. Output is mono 24 kHz. Context capacity is 8,192 rows and the output cap is 4,096 rows; the adapter rejects reduced budgets and cap termination. Text/control tokens use upstream greedy defaults. Speech uses the variant's upstream sampling parameters, with **seed 0 per span** as a disclosed benchmark override to the demo's random seed:
+The Audio profile accepts the registered `en`, `ar`, `da`, `de`, `el`, `fi`, `fr`, `he`, `it`, `ja`, `ko`, `nl`, `pl`, `pt-BR`, `es-ES`, `sv`, `tr` and `zh-Hans` fixtures. It resolves the exact fixture tag into the official prompt form `Perform TTS in <language> using a female voice.` English retains the original American English prompt. The model card lists Portuguese, Spanish and Chinese without regional or script-specific accent guarantees, so their prompts use those broader names. Omni remains on the original American English prompt. Every canonical source span is passed unchanged, with runtime state reset beforehand. Output is mono 24 kHz. Context capacity is 8,192 rows and the output cap is 4,096 rows; the adapter rejects reduced budgets and cap termination. Text/control tokens use upstream greedy defaults. Speech uses the variant's upstream sampling parameters, with **seed 0 per span** as a disclosed benchmark override to the demo's random seed:
 
 | Variant | Temperature | Top-k | Repetition penalty | Recent-frame window |
 |---|---:|---:|---:|---:|
 | Audio | 1.0 | 128 | 1.1 | 4,096 |
 | Omni | 0.4 | All codes | 1.2 | 64 |
 
-Both models advertise 18 spoken languages. English US/UK locales are not separate languages. Male/female prompting does not establish a count of fixed voice identities; the voice count remains unknown. Only American English female is benchmarked.
+Both checkpoints advertise 18 spoken languages. English US/UK locales are not separate languages. Female/male prompts do not establish fixed voice identity counts; the count remains unknown. The benchmark's Audio profile selects female prompts, while the separate Omni profile stays English-only.
 
 ## Reproduce
 

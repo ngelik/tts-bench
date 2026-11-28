@@ -12,6 +12,12 @@ function audioAttribution(modelId, language, displayName) {
   if (modelId === 'klein-tts-x1.5-pro' && language !== 'en') {
     return 'Synthetic benchmark speech from Klein-TTS X1.5 Pro by Klein ML. Pinned Apache-2.0 model and publisher preset. Browser port of @kleinml/kleintts 0.2.0.';
   }
+  if (language !== 'en' && modelId === 'lfm3-audio-2b-gguf') {
+    return 'LFM3-Audio-2B by Liquid AI; official GGUF WebGPU runtime. Prompted female voice. LFM Open License v1.0; noncommercial benchmark evaluation.';
+  }
+  if (language !== 'en' && modelId === 'lfm3-audio-2b-fusor-q7-cpu') {
+    return 'LFM3-Audio-2B by Liquid AI; Fusor q7 CPU browser bundle. Prompted female voice. LFM Open License v1.0; noncommercial benchmark evaluation.';
+  }
   return attribution[modelId] ?? displayName;
 }
 export function verifyAudioAttribution(entry) {
