@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { SINGLE_REPETITION_WARM_MODEL, requiresSingleWarmRepetition } from '../lib/benchmark-policy.mjs';
 import { validateModelParameterEvidence } from '../lib/model-parameters.mjs';
-import { sha256 } from './results.mjs';
+import { sha256, WARMUP_MEMORY_PROTOCOL } from './results.mjs';
 
 export const isBenchmarkSource = file => /^(bin\/|lib\/|web\/|fixtures\/|models\/|tools\/.*\.mjs$|tools\/(?:export-)?ua[-_]serhiy[^/]*\.py$|tools\/ua-serhiy-export-requirements\.txt$|tools\/linnet-webgpu-runtime\/.*\.(?:rs|toml|lock)$|package(?:-lock)?\.json$|assets\.lock\.json$)/.test(file);
 export function committedManifest(commit, cwd = process.cwd()) {
@@ -51,12 +51,13 @@ export function committedManifest(commit, cwd = process.cwd()) {
   }
   return sha256(hashes.join('\n'));
 }
-// Older CosyVoice3 runs predate the parameter catalog. For every other
-// one-article warm score, use plain data from the actual scoring revision.
+// Verify the weights at the scoring revision. Legacy one-article exceptions
+// also need model-size evidence, except for CosyVoice3's registered policy.
 function verifySingleWarmSource(result, cwd) {
   if (result.protocol.smoke || result.protocol.scenario !== 'warm' || result.protocol.repetitions !== 1) return;
+  const usesWarmV3 = result.protocol.id === WARMUP_MEMORY_PROTOCOL;
   const models = new Set(result.cells.map(cell => cell.model));
-  models.delete(SINGLE_REPETITION_WARM_MODEL);
+  if (!usesWarmV3) models.delete(SINGLE_REPETITION_WARM_MODEL);
   if (!models.size) return;
   const commit = result.source.gitCommit;
   const readGitJson = file => JSON.parse(execFileSync('git', ['show', `${commit}:${file}`], {
@@ -64,14 +65,15 @@ function verifySingleWarmSource(result, cwd) {
   }));
   let parameters, registrations;
   try {
-    parameters = readGitJson('lib/model-parameters.json');
+    if (!usesWarmV3) parameters = readGitJson('lib/model-parameters.json');
     registrations = readGitJson('assets.lock.json').models;
   } catch {
+    if (usesWarmV3) throw new Error('The recorded scoring revision lacks readable asset registrations for Warm v3: ' + result.id);
     throw new Error('The recorded scoring revision lacks readable model parameter evidence for one warm repetition: ' + result.id);
   }
   for (const id of models) {
-    if (!parameters || !Object.hasOwn(parameters, id) ||
-        !requiresSingleWarmRepetition(validateModelParameterEvidence(parameters[id]).parameterCount)) {
+    if (!usesWarmV3 && (!parameters || !Object.hasOwn(parameters, id) ||
+        !requiresSingleWarmRepetition(validateModelParameterEvidence(parameters[id]).parameterCount))) {
       throw new Error('The recorded scoring revision does not establish more than one billion parameters for ' + id);
     }
     const weights = registrations?.[id]?.assets?.filter(asset => asset.kind === 'model-weights');
