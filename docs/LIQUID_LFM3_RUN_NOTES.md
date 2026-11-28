@@ -21,6 +21,23 @@ removes Omni's optional OPFS cache and adds bounded HTTP-part failures. Successf
 results after the fix use their own published source commit; earlier failures
 are not presented as an unsupported CPU model or a timing score.
 
+## Audio CPU OPFS stall and shared loader change
+
+The French Audio CPU attempt `2026-11-28t12-18-47-966z-lfm3-audio-2b-fusor-q7-cpu-cpu-warm-954bcc27`
+reached the 20-minute initialization timeout during the capability probe.
+The disposable Chrome profile had 48 OPFS model-part entries, with one empty
+47,256,576-byte part (`a5de7233c06fc8ad1cdafeb6c40bd657682e51d0ab4aaaadb8bb707a7c95943a`).
+The exact blocked operation remains undetermined. The preceding Finnish CPU
+attempt had also timed out during initialization. Neither failed attempt
+started the measured warm-up or scored article.
+
+Audio now uses Omni's existing bounded same-origin HTTP part loader. Both
+profiles retain the pinned weights, six WebAssembly threads, runtime BLAKE3
+validation, fixture spans and synthesis settings. The multilingual campaign
+uses the shared loader for all Audio CPU scores so their Chrome memory figures
+reflect the same loading policy. WebGPU runs retain their own exact source
+receipts and the existing GGUF runtime.
+
 ## Audio CPU memory repeat
 
 The [initial memory diagnostic](../results/2026-11-11t10-36-42-360z-lfm3-audio-2b-fusor-q7-cpu-cpu-cached-a50978d5/summary.md)

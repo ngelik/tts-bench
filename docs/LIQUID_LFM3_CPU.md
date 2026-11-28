@@ -13,27 +13,28 @@ Prebuilt WASM and JavaScript are fetched from the [pinned browser Space](https:/
 
 ## Loading policy and observed setup failures
 
-Audio uses the pinned upstream OPFS part cache. Omni uses the local MIT-attributed
-`web/liquid-cpu/part-loader.mjs`, derived from the same pinned Fusor loader, to
-stream model parts over same-origin HTTP without OPFS persistence. This change
-followed two Omni initialization stalls on this baseline; it does not establish
-that all upstream OPFS deployments fail. The first stalled attempt had all 52
-OPFS files but one 47,256,576-byte part remained empty. No scored generation had
-begun. The failed full attempt is preserved, not counted as an execution score.
-See [run notes and retained evidence](LIQUID_LFM3_RUN_NOTES.md).
+Audio and Omni use the local MIT-attributed `web/liquid-cpu/part-loader.mjs`,
+derived from the pinned Fusor loader, to stream model parts over same-origin HTTP
+without OPFS persistence. This policy follows repeated initialization stalls on
+the baseline; it does not establish that all upstream OPFS deployments fail.
+The newer Audio observation remained in its untimed capability probe with 48
+OPFS files present and one expected 47,256,576-byte part still empty. No scored
+generation had begun, and the underlying unresolved await is undetermined. The
+failed attempt remains preserved and is not an execution score. See [run notes
+and retained evidence](LIQUID_LFM3_RUN_NOTES.md).
 
-The local loader retains four lanes and approximately 4 MiB writes. It checks
-HTTP status, declared and actual byte counts, and calls the pinned runtime's
+The local loader retains four lanes and approximately 4 MiB writes for both
+variants. It checks HTTP status, declared and actual byte counts, and calls the pinned runtime's
 `end_part` for BLAKE3 verification. Errors abort sibling requests; each part has
 a 120-second initialization timeout with a filename-bearing error. There are no
 implicit retries. Model bytes, runtime build, speech sampling and generation
 code are unchanged. Initialization remains outside the generation timer.
 
-Omni may reuse Chrome's HTTP cache, but large assets can be evicted and fetched
-again from the local static server. A cached-profile scenario does not promise
-zero transfer. These large configurations are evaluated with pre-staged assets;
-this campaign does not perform a throttled 1 Mbps loading run. Do not interpret
-the local loading timeout as a measured download-speed result.
+Audio and Omni may reuse Chrome's HTTP cache, but large assets can be evicted and
+fetched again from the local static server. A cached-profile scenario does not
+promise zero transfer. These large configurations are evaluated with pre-staged
+assets; this campaign does not perform a throttled 1 Mbps loading run. Do not
+interpret the local loading timeout as a measured download-speed result.
 
 The upstream demo chooses cores minus two, capped at eight. This eight-core M1 Pro case requests **six compute threads**, with the upstream relaxed-SIMD build selected when supported. The adapter records the effective build and rejects single-thread fallback. Threading requires cross-origin isolation and SharedArrayBuffer; the local benchmark server supplies the necessary headers. The page owns the compute workers and terminates them on failure or disposal. The small MIT-attributed host controller adds timeout and post-start worker-error handling; the neural WASM, loader and kernels remain unchanged.
 
