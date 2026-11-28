@@ -300,6 +300,96 @@
       }
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "protocol": {
+            "properties": {
+              "id": {
+                "const": "browser-tts-warm-v3"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          }
+        },
+        "required": [
+          "protocol"
+        ]
+      },
+      "then": {
+        "properties": {
+          "origin": {
+            "const": "native"
+          },
+          "protocol": {
+            "properties": {
+              "scenario": {
+                "const": "warm"
+              },
+              "warmupRuns": {
+                "const": 1
+              },
+              "repetitions": {
+                "const": 1
+              },
+              "smoke": {
+                "const": false
+              },
+              "networkMbps": {
+                "type": "null"
+              }
+            }
+          },
+          "cells": {
+            "items": {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "measured"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "warmup": {
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": {
+                      "required": [
+                        "memory"
+                      ],
+                      "properties": {
+                        "memory": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  },
+                  "trials": {
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": {
+                      "not": {
+                        "required": [
+                          "memory"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
   "$defs": {
     "trial": {
       "type": "object",

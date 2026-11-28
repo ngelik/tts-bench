@@ -137,6 +137,13 @@ npm run bench -- run --model paradee --backend cpu --scenario switch --predecess
   `switchTransitionMs` includes predecessor disposal plus target initialization;
   target transfer bytes exclude predecessor preparation. Generation stays separate.
 
+
+Use `--scenario warm --warm-protocol v3 --repetitions 1` for an excluded
+full-article warm-up with Chrome RSS sampling followed by a single full scored
+article. Pass the same fixture ID through the CLI or campaign plan. The warm-up
+memory is available in the timing receipt. For v3, omit the separate cached run
+and omit `--resources`.
+
 Append `--resources` for 500 ms samples of the owned Chrome process-tree RSS on
 macOS/Linux. This changes the protocol ID. RSS includes browser baseline and the
 entire generation call, including validation/export after the synthesis timer;

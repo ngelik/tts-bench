@@ -16,7 +16,14 @@ import { resolve, join } from 'node:path';
 
 // A 24-hour diagnostic at 500 ms yields up to 172,801 timestamp/RSS pairs.
 export const MAX_RESOURCE_RECEIPT_BYTES = 20_000_000;
-const resourceReceipt = data => data.origin === 'native' && data.protocol?.id?.endsWith('-resources');
+export const WARMUP_MEMORY_PROTOCOL = 'browser-tts-warm-v3';
+const resourceReceipt = data => data.origin === 'native' &&
+  (data.protocol?.id === WARMUP_MEMORY_PROTOCOL || data.protocol?.id?.endsWith('-resources'));
+
+export function generationMemoryTrials(result, cell) {
+  if (!resourceReceipt(result) || result.protocol.smoke) return [];
+  return result.protocol.id === WARMUP_MEMORY_PROTOCOL ? cell.warmup : cell.trials;
+}
 export const FIXTURE_SHA = '4cd173ad03d14ba96df6eb1e58b193c0c796032c114cfb954838b5150651eb0b';
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const fail = message => { throw new Error(message); };
@@ -174,7 +181,13 @@ export function validateResult(d, { publication = false } = {}) {
     check(p.warmupRuns === 1, 'Warm v2 requires exactly one excluded full-article warm-up');
     check(p.networkMbps === null, 'Warm v2 requires networkMbps to be null');
   }
-  if (d.origin==='native' && p.scenario==='warm' && !p.smoke) {
+  if (p.id === WARMUP_MEMORY_PROTOCOL) {
+    check(d.origin === 'native' && p.scenario === 'warm' && !p.smoke && p.networkMbps === null,
+      'Warm v3 requires a full native warm result without network throttling');
+    check(p.warmupRuns === 1 && p.repetitions === 1,
+      'Warm v3 requires one instrumented full warm-up and one uninstrumented scored article');
+  }
+  if (d.origin==='native' && p.scenario==='warm' && !p.smoke && p.id !== WARMUP_MEMORY_PROTOCOL) {
     const singleAllowed = p.repetitions === 1 && p.warmupRuns === 1 &&
       Array.isArray(d.cells) && d.cells.length > 0 &&
       d.cells.every(cell => minimumWarmRepetitions(cell?.model) === 1);
@@ -264,6 +277,10 @@ export function validateResult(d, { publication = false } = {}) {
     }
     if(c.status==='measured'){
       check(c.trials.length===p.repetitions && c.warmup.length===p.warmupRuns,'Measured cell repetition count mismatch');
+      if (publication && p.id === WARMUP_MEMORY_PROTOCOL) {
+        check(c.warmup[0]?.memory?.availability === 'measured', 'Warm v3 publication requires measured warm-up RSS');
+        check(finite(c.trials[0]?.metrics?.firstPcmMs), 'Warm v3 publication requires a first-PCM observation');
+      }
       if(d.origin==='native')validateNativeBackend(c);
       if(c.backendRequested!=='cpu')check(c.capability.gpuDispatchVerified===true,'GPU results require actual dispatch evidence');
     } else check(text(c.reason,2000),'Unsupported/error cell requires a reason');
@@ -282,9 +299,12 @@ export function validateResult(d, { publication = false } = {}) {
       if(t.audio!==undefined){keys(t.audio,['sha256','bytes'],'audio');check(hash(t.audio.sha256)&&int(t.audio.bytes,1),'Invalid audio digest');}
       if(t.metrics!==undefined){check(object(t.metrics),'Invalid metrics');for(const [k,v] of Object.entries(t.metrics))check(/^[a-zA-Z][a-zA-Z0-9]{0,79}$/.test(k)&&(v===null||finite(v)&&v>=0),'Metrics must be finite, nonnegative or null');}
       if(d.origin==='native'&&t.metrics!==undefined)validateNativeMetrics(t);
-      const resourceRun=d.origin==='native'&&p.id.endsWith('-resources');
+      const resourceRun=d.origin==='native'&&
+        (p.id.endsWith('-resources') || (p.id===WARMUP_MEMORY_PROTOCOL && group==='warmup'));
       if(resourceRun)validateGenerationMemory(t,t.generationMs);
-      else check(t.memory===undefined&&t.metrics?.generationMeanRssBytes===undefined&&t.metrics?.generationRssSampleCount===undefined,'Generation memory evidence is only valid in native --resources runs');
+      else check(t.memory===undefined&&t.metrics?.generationMeanRssBytes===undefined&&t.metrics?.generationRssSampleCount===undefined&&
+        (p.id!==WARMUP_MEMORY_PROTOCOL || t.metrics?.articleCallPeakRssBytes===undefined),
+      'Generation memory evidence is only valid in native resource trials or an excluded warm v3 warm-up');
     }
   }
   if(d.notes!==undefined)check(Array.isArray(d.notes)&&d.notes.length<=50&&d.notes.every(n=>text(n,2000)),'Invalid notes');

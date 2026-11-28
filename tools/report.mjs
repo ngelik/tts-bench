@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
-import { readResult, summaries, median } from './results.mjs';
+import { readResult, summaries, median, WARMUP_MEMORY_PROTOCOL } from './results.mjs';
 const esc=x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const md=x=>String(x??'').replaceAll('|','\\|').replaceAll('\n',' ');
 const plain=x=>String(x??'').replaceAll('\n',' ').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replace(/[\\`*_{}\[\]()!#|]/g,c=>'\\'+c);
@@ -27,6 +27,16 @@ export function renderReport(d){
     const metrics=[];
     for(const c of d.cells)if(c.status==='measured')for(const [key,[label,unit]] of Object.entries(labels)){const values=c.trials.map(t=>t.metrics?.[key]).filter(v=>typeof v==='number'&&Number.isFinite(v));if(values.length)metrics.push([c.model,c.backendRequested,label,median(values),unit,values.length]);}
     if(metrics.length){markdown+='\nAdditional metrics (median of available observations; scopes are distinct):\n\n| Model | Backend | Metric | Median | Unit | n |\n|---|---|---|---:|---|---:|\n';for(const [model,backend,label,value,unit,n]of metrics)markdown+=`| ${md(model)} | ${md(backend)} | ${label} | ${value.toFixed(unit==='bytes'?0:3)} | ${unit} | ${n} |\n`;}
+  }
+  if (d.protocol.id === WARMUP_MEMORY_PROTOCOL) {
+    markdown += '\nChrome process-tree RSS during the excluded full-article warm-up. The scored article runs without RSS sampling.\n\n| Model | Backend | Mean RSS (MB) | Samples |\n|---|---|---:|---:|\n';
+    for (const cell of d.cells) {
+      const warmup = cell.warmup[0];
+      const mean = warmup?.metrics?.generationMeanRssBytes;
+      markdown += '| '+md(cell.model)+' | '+md(cell.backendRequested)+' | '+
+        (Number.isFinite(mean)?(mean/1e6).toFixed(2):md(warmup?.memory?.availability??'Unavailable'))+
+        ' | '+(warmup?.memory?.samples.length??0)+' |\n';
+    }
   }
   const supportCells=d.cells.filter(c=>c.support);
   if(supportCells.length){

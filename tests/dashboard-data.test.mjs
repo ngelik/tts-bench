@@ -325,3 +325,26 @@ test('a fixture-only edition does not replace a measured edition until it has an
   assert.equal(promoted.recordings.find(entry => entry.resultId === original.id).matchesSelectedWarm, false);
   assert.equal(promoted.recordings.find(entry => entry.resultId === v2Result.id).matchesSelectedWarm, true);
 });
+
+test('warm v3 presents the scored trial and the excluded warm-up RSS from the same receipt', () => {
+  const id = 'paradee';
+  const model = getAssetLock().models[id];
+  const original = results.find(result => result.id === '2026-11-09t04-55-36-509z-paradee-cpu-warm-244b2a2f');
+  const result = structuredClone(original);
+  result.protocol.id = 'browser-tts-warm-v3';
+  result.protocol.repetitions = 1;
+  const [cell] = result.cells;
+  cell.trials = cell.trials.slice(0, 1);
+  const [warmup] = cell.warmup;
+  warmup.metrics = { ...warmup.metrics, generationMeanRssBytes: 990_000_000 };
+  warmup.memory = { availability: 'measured', generationStartedAtEpochMs: 1000,
+    finalPcmAtEpochMs: 2000, samples: [[1200, 900_000_000], [1700, 1_080_000_000]] };
+  const [row] = assembleDashboardData({ results: [result], models: { [id]: model } }).models;
+  assert.equal(row.warm.cpu.resultId, result.id);
+  assert.equal(row.warm.cpu.n, 1);
+  assert.equal(row.warm.cpu.medianSeconds, cell.trials[0].generationMs / 1000);
+  assert.equal(row.memory.cpu.resultId, result.id);
+  assert.equal(row.memory.cpu.measurementPhase, 'excluded-warmup');
+  assert.equal(row.memory.cpu.meanMB, 990);
+  assert.equal(row.memory.cpu.sampleCount, 2);
+});

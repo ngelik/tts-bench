@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { validateCampaignCell } from '../lib/campaign-plan.mjs';
 import { defaultFixtureForModel, listBenchmarkFixtures } from '../lib/benchmark-fixtures.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
-import { readResult, resultPaths, sha256, median } from './results.mjs';
+import { readResult, resultPaths, sha256, median, generationMemoryTrials, WARMUP_MEMORY_PROTOCOL } from './results.mjs';
 import { verifySource } from './provenance.mjs';
 import { checkAudio } from './audio.mjs';
 import { loadDiagnosticAudio } from './diagnostic-audio.mjs';
@@ -157,12 +157,16 @@ function createMemoryMetric(candidate) {
   if (!candidate) return missingMetric('No native cached resource result has been submitted.', {
     meanMB: null, peakMB: null, n: null, sampleCount: null, generationSeconds: null, audioSeconds: null,
   });
-  const { cell } = candidate;
-  const base = metricBase(candidate);
+  const { result, cell } = candidate;
+  const base = {
+    ...metricBase(candidate),
+    ...(result.protocol.id === WARMUP_MEMORY_PROTOCOL ? { measurementPhase: 'excluded-warmup' } : {}),
+  };
   if (cell.status !== 'measured') return {
     ...base, meanMB: null, peakMB: null, n: null, sampleCount: null, generationSeconds: null, audioSeconds: null,
   };
-  const summary = summarizeMemoryTrials(cell.trials);
+  const trials = generationMemoryTrials(result, cell);
+  const summary = summarizeMemoryTrials(trials);
   if (!summary) return {
     ...base, status: 'unavailable', reason: 'Generation RSS evidence is missing, unmeasured, or has no in-window samples.',
     evidenceStatus: cell.status, meanMB: null, peakMB: null, n: null, sampleCount: null, generationSeconds: null, audioSeconds: null,
@@ -170,8 +174,8 @@ function createMemoryMetric(candidate) {
   return {
     ...base,
     ...summary,
-    generationSeconds: median(cell.trials.map(trial => trial.generationMs / 1000)),
-    audioSeconds: median(cell.trials.map(trial => trial.samples / trial.sampleRate)),
+    generationSeconds: median(trials.map(trial => trial.generationMs / 1000)),
+    audioSeconds: median(trials.map(trial => trial.samples / trial.sampleRate)),
   };
 }
 
@@ -233,7 +237,7 @@ function enrichAudio(entries, resultsById, selectedWarm, selectedMemory) {
       sourceCreatedAt: result.createdAt,
       sourceOrigin: result.origin,
       matchesSelectedWarm: selectedWarm.get(key)?.result.id === entry.resultId,
-      matchesSelectedMemory: selectedMemory.get(key)?.result.id === entry.resultId,
+      matchesSelectedMemory: result.protocol.id !== WARMUP_MEMORY_PROTOCOL && selectedMemory.get(key)?.result.id === entry.resultId,
       reportUrl: receiptUrl(entry.resultId),
     };
   });
@@ -331,7 +335,9 @@ function assembleLanguageData({ results, models, audioEntries = [], diagnosticAu
     }
   }
   const memoryCandidates = collectByModelBackend(results, models, result =>
-    !result.protocol.smoke && result.origin === 'native' && result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'));
+    !result.protocol.smoke && result.origin === 'native' &&
+    (result.protocol.id === WARMUP_MEMORY_PROTOCOL ||
+     (result.protocol.scenario === 'cached' && result.protocol.id.endsWith('-resources'))));
   const selectedWarm = new Map();
   const selectedMemory = new Map();
   for (const [id, model] of Object.entries(models)) {

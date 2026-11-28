@@ -118,6 +118,14 @@ Use the same fixture ID for WebGPU and for any requested cached memory runs. Cam
   billion takes the standard schedule. Check the registered parameter evidence
   in `lib/model-parameters.json` when onboarding or selecting a model.
   A backbone name or quantized file size cannot establish the full parameter count.
+- When the campaign explicitly selects the accelerated protocol, use
+  `--scenario warm --warm-protocol v3 --repetitions 1`. It samples Chrome
+  process-tree RSS at 500 ms during the excluded full article and measures one
+  full scored article with the sampler disabled. The same native receipt holds
+  the warm-up memory and the single scored timing, first PCM and audio digest.
+  Use the scored article for the 30-second clip. Treat the single result as one
+  observation and keep comparisons within its protocol. Skip the separate cached
+  memory run for this protocol.
 - For a campaign, inspect `node tools/run-campaign.mjs --plan PLAN --dry-run`
   before starting Chrome. Report the effective scored count for each CPU or GPU
   cell. Describe `n=1` as one observation. Keep the original counts, recordings

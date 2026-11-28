@@ -2,7 +2,7 @@ import {LISTENING_URL,recordingUrl} from '../audio/links.mjs';
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { resultPaths, readResult, summaries } from './results.mjs';
+import { resultPaths, readResult, summaries, generationMemoryTrials, WARMUP_MEMORY_PROTOCOL } from './results.mjs';
 import { getAssetLock } from '../lib/catalog.mjs';
 import {affectedTrials,waveformFinding,waveformReport} from '../audio/waveform-integrity.mjs';
 import { outputLengthNotes } from './output-notes.mjs';
@@ -33,25 +33,30 @@ function outputLengthReferenceBlock(groups, models){
 
 function ramCohorts(results, models){
  const cohorts=new Map();
- const attempts=fixtureGroups(results).flatMap(group=>preferredAttempts(group, models, d=>d.origin==='native'&&!d.protocol.smoke&&d.protocol.id.endsWith('-resources'), { perEnvironment: true }));
+ const attempts=fixtureGroups(results).flatMap(group=>preferredAttempts(group, models, d=>d.origin==='native'&&!d.protocol.smoke&&
+  (d.protocol.id.endsWith('-resources')||d.protocol.id===WARMUP_MEMORY_PROTOCOL), { perEnvironment: true }));
  for(const {result:d, cell:c} of attempts){
-  if(c.status==='measured'&&(!c.trials.length||!c.trials.every(t=>Number.isFinite(t.metrics?.generationMeanRssBytes)&&t.memory)))continue;
+  const memoryTrials=generationMemoryTrials(d,c);
+  if(c.status==='measured'&&(!memoryTrials.length||!memoryTrials.every(t=>Number.isFinite(t.metrics?.generationMeanRssBytes)&&t.memory)))continue;
   const key=fixtureKey(d)+'/'+envKey(d)+'/'+JSON.stringify(d.protocol)+'/'+d.source.manifestSha256;
   const group=cohorts.get(key)??{base:d,rows:new Map()};
   const row=group.rows.get(c.model)??{model:c.model};
-  row[c.backendRequested]={d,c};group.rows.set(c.model,row);cohorts.set(key,group);
+  row[c.backendRequested]={d,c,memoryTrials};group.rows.set(c.model,row);cohorts.set(key,group);
  }
  return [...cohorts.values()];
 }
 export function ramReferenceBlock(results,models){
  const cohorts=ramCohorts(results,models);
  let out='### Chrome RAM during generation\n\nDedicated full-article memory runs measure an isolated Chrome instance with one benchmark tab, including inference workers and browser baseline. These are separate resource diagnostics; their timings do not replace the warm speed measurements above. RSS may double-count shared pages and is not model-only RAM or GPU VRAM. Values are the mean of generation-window samples, averaged equally across recorded articles. [Method and reproduction](docs/MEMORY.md).\n\n';
+ if(cohorts.some(({base})=>base.protocol.id===WARMUP_MEMORY_PROTOCOL)){
+  out+='Warm v3 measures Chrome RSS during the excluded full-article warm-up. The following scored article runs with RSS sampling disabled.\n\n';
+ }
  if(!cohorts.length)return out+'Memory results are published here after their full-article diagnostics pass validation.\n\n';
  let i=0;
  for(const {base:d,rows}of cohorts){
   out+='**RAM '+(++i)+'** · '+md(languageLabel(fixtureLanguage(d)))+' ('+md(fixtureLanguage(d))+') · fixture `'+md(d.fixture.id)+'` · '+d.fixture.characters+' characters / '+d.fixture.chunks+' spans · '+md(d.environment.machineLabel)+' · '+md(d.environment.chromeVersion)+' · '+md(d.environment.os)+' · '+md(d.protocol.id)+' · '+d.protocol.repetitions+' full article(s) per measured cell · source [`'+d.source.gitCommit.slice(0,8)+'`](https://github.com/ngelik/tts-bench/commit/'+d.source.gitCommit+').\n\n';
   out+='| Model | Model weights (MB) | CPU avg Chrome RAM (MB) | WebGPU avg Chrome RAM (MB) |\n|---|---:|---:|---:|\n';
-  const metric=v=>{if(!v)return '—';if(v.c.status!=='measured')return '['+md(v.c.status)+']('+report(v.d)+')';const means=v.c.trials.map(t=>t.metrics.generationMeanRssBytes);return '['+(means.reduce((a,b)=>a+b,0)/means.length/1e6).toFixed(2)+']('+report(v.d)+')';};
+  const metric=v=>{if(!v)return '—';if(v.c.status!=='measured')return '['+md(v.c.status)+']('+report(v.d)+')';const means=v.memoryTrials.map(t=>t.metrics.generationMeanRssBytes);return '['+(means.reduce((a,b)=>a+b,0)/means.length/1e6).toFixed(2)+']('+report(v.d)+')';};
   for(const row of [...rows.values()].sort((a,b)=>a.model.localeCompare(b.model))){const pair=[row.cpu,row.webgpu].filter(Boolean),weights=models[row.model]?.assets?.filter(a=>a.kind==='model-weights')??[];const verified=weights.length&&pair.every(v=>weights.every(w=>v.d.assets.some(a=>a.sha256===w.sha256&&a.bytes===w.bytes)));const size=verified?(weights.reduce((n,a)=>n+a.bytes,0)/1e6).toFixed(2):'Unknown';out+='| '+md(models[row.model]?.displayName??row.model)+' | '+size+' | '+metric(row.cpu)+' | '+metric(row.webgpu)+' |\n';}
   out+='\n';
  }
@@ -66,7 +71,7 @@ export function ramChart(results,models,language='en'){
  let y=100;
  for(const [index,{base:d,rows}]of cohorts.entries()){
   const sorted=[...rows.values()].sort((a,b)=>a.model.localeCompare(b.model));
-  const average=v=>v?.c.status==='measured'?v.c.trials.reduce((n,t)=>n+t.metrics.generationMeanRssBytes,0)/v.c.trials.length/1e6:null;
+  const average=v=>v?.c.status==='measured'?v.memoryTrials.reduce((n,t)=>n+t.metrics.generationMeanRssBytes,0)/v.memoryTrials.length/1e6:null;
   const max=Math.max(1,...sorted.flatMap(r=>[average(r.cpu),average(r.webgpu)].filter(v=>v!==null)))*1.15;
   svg+=`<text x="32" y="${y}" font-size="14" font-weight="700">RAM ${index+1} · ${xml(d.fixture.id)} · ${xml(d.environment.machineLabel)} · n=${d.protocol.repetitions} article(s)</text><text x="32" y="${y+22}" font-size="11">${xml(d.environment.chromeVersion)} · ${xml(d.protocol.id)} · source ${xml(d.source.gitCommit.slice(0,8))}</text>`;y+=58;
   for(const r of sorted){
