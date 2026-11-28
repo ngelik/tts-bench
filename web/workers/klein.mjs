@@ -5,13 +5,18 @@ import { dispatchProbe, hardwareGpu } from './gpu-probe.mjs';
 
 const BASE = '/models/klein-tts-x1.5-pro/25e0e73bebba71e5985bc369628ebdcb81bf7116/';
 const RUNTIME = '/runtimes/onnxruntime-web/1.23.2/';
-const VOICE_ID = 'af_heart';
-let ort, encoder, decoder, info, style, voiceIndex;
+const routes = Object.freeze({
+  en: { language: 'en', voiceId: 'af_heart', probe: 'A short local speech check.' },
+  'es-ES': { language: 'es', voiceId: 'ef_dora', probe: 'Esta es una breve prueba de voz.' },
+  fr: { language: 'fr', voiceId: 'ff_siwis', probe: 'Ceci est un court test de parole.' },
+  it: { language: 'it', voiceId: 'if_sara', probe: 'Questa è una breve prova vocale.' },
+});
+let ort, encoder, decoder, info, style, route;
 
 const MODEL_INFO = Object.freeze({
   voice: 'Sarah (af_heart)', precision: 'FP32',
   settings: {
-    threads: 1, speed: 1, sampleRate: 24000, voiceId: VOICE_ID,
+    threads: 1, speed: 1, sampleRate: 24000, language: 'en', voiceId: routes.en.voiceId,
     frontend: 'Klein-TTS upstream 0.2.0 Misaki G2P and pinned browser eSpeak 1.2.1 fallback; no-tie IPA mapping',
     sentenceChunks: 'Upstream 250-character sentence grouping; strict vocabulary validation; recursively split at source word boundaries instead of upstream silent 510-token truncation',
     noise: 'Upstream mulberry32 + Box-Muller; seed = canonical chunk id × 1024 + internal subchunk index',
@@ -19,8 +24,21 @@ const MODEL_INFO = Object.freeze({
   },
 });
 
-function unsupported(reason) {
-  return { ...MODEL_INFO, status: 'unsupported', reason, backendEffective: 'none', capability: { gpuDispatchVerified: false, description: reason } };
+function modelInfo(edition, selected) {
+  if (edition === 'en') return MODEL_INFO;
+  const { language, voiceId } = selected;
+  return {
+    ...MODEL_INFO,
+    voice: `${VOICE_NAMES[voiceId]} (${voiceId})`,
+    settings: {
+      ...MODEL_INFO.settings, language: edition, modelLanguage: language, voiceId,
+      frontend: 'Klein-TTS upstream 0.2.0 non-English phoneme mapping and espeak-ng 1.0.2 WebAssembly CLI',
+    },
+  };
+}
+
+function unsupported(reason, metadata = MODEL_INFO) {
+  return { ...metadata, status: 'unsupported', reason, backendEffective: 'none', capability: { gpuDispatchVerified: false, description: reason } };
 }
 
 function getVoiceIndex(id) {
@@ -81,10 +99,16 @@ async function runPart(part, seed) {
   }
 }
 
+async function prepare(text) {
+  const parts = [];
+  const phonemizeForLanguage = input => phonemize(input, route.language);
+  for (const sentence of splitText(text)) parts.push(...await fitPhoneChunks(sentence, phonemizeForLanguage, info.vocab));
+  return parts;
+}
+
 async function generate(chunk) {
   if (!encoder || !decoder) throw new Error('Klein model is not initialized.');
-  const parts = [];
-  for (const text of splitText(chunk.text)) parts.push(...await fitPhoneChunks(text, phonemize, info.vocab));
+  const parts = await prepare(chunk.text);
   if (!parts.length) throw new Error(`Klein produced no phoneme chunks for canonical span ${chunk.id}.`);
   const rendered = [];
   for (let index = 0; index < parts.length; index++) {
@@ -118,7 +142,7 @@ async function loadJsonAndGraphs(backend) {
   if (info.sample_rate !== 24000 || info.speakers.length !== 17 || info.params !== 13122196) {
     throw new Error('Klein model metadata does not match the pinned X1.5 Pro checkpoint.');
   }
-  voiceIndex = getVoiceIndex(VOICE_ID);
+  const voiceIndex = getVoiceIndex(route.voiceId);
   style = Float32Array.from(info.styles[voiceIndex]);
   if (style.length !== info.styles[0].length) throw new Error('Klein voice style width is inconsistent.');
   const options = { executionProviders: ['wasm'], graphOptimizationLevel: 'all' };
@@ -126,10 +150,13 @@ async function loadJsonAndGraphs(backend) {
   ({ encoder, decoder } = await createKleinSessionsSequentially(ort, encoderBytes, decoderBytes, options));
 }
 
-async function initialize({ backend, probe = false, probeText = 'A short local speech check.' }) {
-  if (!['cpu', 'webgpu'].includes(backend)) return unsupported('Klein supports only CPU/WASM and WebGPU requests.');
+async function initialize({ backend, probe = false, probeText, language = 'en', auditTexts = [] }) {
+  if (!Object.hasOwn(routes, language)) return unsupported(`Klein has no benchmark voice for ${language}.`);
+  route = routes[language];
+  const metadata = modelInfo(language, route);
+  if (!['cpu', 'webgpu'].includes(backend)) return unsupported('Klein supports only CPU/WASM and WebGPU requests.', metadata);
   let gpu = backend === 'webgpu' ? await hardwareGpu() : null;
-  if (backend === 'webgpu' && !gpu) return unsupported('No non-fallback hardware WebGPU adapter is available.');
+  if (backend === 'webgpu' && !gpu) return unsupported('No non-fallback hardware WebGPU adapter is available.', metadata);
   ort = await import(RUNTIME + (backend === 'cpu' ? 'ort.wasm.min.mjs' : 'ort.webgpu.min.mjs'));
   ort.env.wasm.numThreads = 1;
   ort.env.wasm.proxy = false;
@@ -143,26 +170,35 @@ async function initialize({ backend, probe = false, probeText = 'A short local s
     const info = device?.adapterInfo ?? adapter?.info;
     if (info?.isFallbackAdapter || adapter?.isFallbackAdapter) {
       await dispose();
-      return unsupported('ONNX Runtime selected a software WebGPU adapter.');
+      return unsupported('ONNX Runtime selected a software WebGPU adapter.', metadata);
     }
     gpu = info?.description || info?.vendor || gpu;
   }
   let dispatches = null;
   if (probe) {
+    if (language !== 'en') {
+      for (const { id, text } of auditTexts) {
+        try {
+          if (!(await prepare(text)).length) throw new Error('No model tokens.');
+        } catch (error) {
+          throw new Error(`Klein ${language} frontend rejected source span ${id}: ${error.message}`, { cause: error });
+        }
+      }
+    }
     const hook = backend === 'webgpu' ? dispatchProbe() : null;
     try {
-      const out = await generate({ id: 0, text: probeText });
+      const out = await generate({ id: 0, text: probeText || route.probe });
       if (!out.parts[0].every(Number.isFinite)) throw new Error('Klein probe returned nonfinite PCM.');
     } finally {
       dispatches = hook?.stop() ?? 0;
     }
     if (backend === 'webgpu' && !dispatches) {
       await dispose();
-      return unsupported('No WebGPU compute dispatch was observed during the separate probe.');
+      return unsupported('No WebGPU compute dispatch was observed during the separate probe.', metadata);
     }
   }
   return {
-    ...MODEL_INFO,
+    ...metadata,
     status: 'measured',
     backendEffective: backend === 'cpu' ? 'cpu/wasm' : 'webgpu+wasm',
     gpu,
@@ -181,7 +217,7 @@ async function dispose() {
   decoder = null;
   info = null;
   style = null;
-  voiceIndex = null;
+  route = null;
 }
 
 self.onmessage = async ({ data }) => {

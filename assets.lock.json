@@ -6748,6 +6748,30 @@
           "kind": "model-support"
         },
         {
+          "id": "klein-multilingual-espeak-js",
+          "target": "runtimes/espeak-ng/npm-1.0.2/espeak-ng.js",
+          "url": "https://cdn.jsdelivr.net/npm/espeak-ng@1.0.2/dist/espeak-ng.js",
+          "bytes": 178386,
+          "sha256": "406c6655a6cacf34d84fc69dc4478c81b71518809080ce2d05df1b706d76429d",
+          "kind": "runtime"
+        },
+        {
+          "id": "klein-multilingual-espeak-wasm",
+          "target": "runtimes/espeak-ng/npm-1.0.2/espeak-ng.wasm",
+          "url": "https://cdn.jsdelivr.net/npm/espeak-ng@1.0.2/dist/espeak-ng.wasm",
+          "bytes": 18485010,
+          "sha256": "10d24bb7e4124e983aa9cd8cd96c52c8ea4b607d81956ec70846684e2827d532",
+          "kind": "runtime"
+        },
+        {
+          "id": "klein-multilingual-espeak-license",
+          "target": "licenses/espeak-ng/npm-1.0.2/LICENSE",
+          "url": "https://cdn.jsdelivr.net/npm/espeak-ng@1.0.2/LICENSE",
+          "bytes": 35149,
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "kind": "license"
+        },
+        {
           "id": "klein-pro-encoder",
           "target": "models/klein-tts-x1.5-pro/25e0e73bebba71e5985bc369628ebdcb81bf7116/encoder.onnx",
           "url": "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/resolve/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/encoder.onnx",
@@ -6813,7 +6837,7 @@
           "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/README.md",
           "https://huggingface.co/klein-ml/Klein-TTS-X1.5-Pro/blob/25e0e73bebba71e5985bc369628ebdcb81bf7116/onnx/model.json"
         ],
-        "notes": "17 speaker embeddings and four language prefixes in the pinned model.json. The benchmark uses Sarah (af_heart) in English; no other voice or language is exercised."
+        "notes": "The benchmark selects Sarah (af_heart) for English, Lucia (ef_dora) for Spanish, Camille (ff_siwis) for French, and Giulia (if_sara) for Italian."
       }
     },
     "linnet-en-35m": {
