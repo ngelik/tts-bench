@@ -1,5 +1,6 @@
 // Benchmark wrapper; the pinned official runtime is fetched, never vendored.
 import { observeComputeDispatches } from '../piper/webgpu.mjs';
+import { resolveLiquidAudioProfile } from '../liquid-speech-profile.mjs';
 let model, session, kind;
 const SYSTEM = 'Perform TTS in American English using a female voice.';
 const info = {
@@ -17,12 +18,13 @@ const info = {
     prefixSnapshots: false,
   },
 };
-const unsupported = reason => ({ ...info, status: 'unsupported', reason, backendEffective: 'none', capability: {gpuDispatchVerified: false, description: reason} });
+let activeInfo = info;
+const unsupported = reason => ({ ...activeInfo, status: 'unsupported', reason, backendEffective: 'none', capability: {gpuDispatchVerified: false, description: reason} });
 
 async function generate(chunk, firstPcm) {
   if (!session || !chunk?.text?.trim()) throw new Error('Liquid speech requires an initialized session and nonempty source text.');
   await session.reset();
-  const messages = [{role:'system', content:SYSTEM}, {role:'user', content:chunk.text}];
+  const messages = [{role:'system', content:activeInfo.settings.systemPrompt}, {role:'user', content:chunk.text}];
   const counts = session.count_tokens(messages);
   if (!Number.isInteger(counts.prompt_tokens) || counts.prompt_tokens + 2048 > 4096) throw new Error('Liquid source span exceeds the pinned context budget; truncation is forbidden.');
   const stream = session.generate(messages, {generation_mode:'audio', max_new_tokens:2048, do_sample:false});
@@ -42,6 +44,15 @@ async function generate(chunk, firstPcm) {
 async function initialize(options) {
   kind = options.kind;
   if (!['audio','omni'].includes(kind)) throw new Error('Unknown Liquid model variant.');
+  activeInfo = info;
+  if (kind === 'audio') {
+    const profile = resolveLiquidAudioProfile(options.language);
+    activeInfo = {
+      ...info,
+      voice: profile.voice,
+      settings: { ...info.settings, language: profile.language, systemPrompt: profile.systemPrompt },
+    };
+  }
   if (options.backend !== 'webgpu') return unsupported('This pinned official GGUF runtime requires WebGPU; the CPU configuration uses separate WASM weights.');
   if (!navigator.gpu) return unsupported('Chrome does not expose WebGPU.');
   const {Lfm3OmniForConditionalGeneration:Model} = await import('/liquid-gguf/runtime.mjs');
@@ -55,7 +66,11 @@ async function initialize(options) {
   if (!availability.ok) return unsupported('Official runtime capability check: '+JSON.stringify(availability));
   model = await Model.from_pretrained(base+'model.gguf', {mmproj:base+'mmproj.gguf', fetch:fetchLocal, cache:false, prefixSnapshotStore:null, maxLength:4096});
   const device = model.deviceInfo();
-  if (device.isFallbackAdapter) { await dispose(); return unsupported('The official runtime selected a software WebGPU adapter.'); }
+  if (device.isFallbackAdapter) {
+    const receipt = unsupported('The official runtime selected a software WebGPU adapter.');
+    await dispose();
+    return receipt;
+  }
   if (model.audio_sampling_rate !== 24000) throw new Error('Unexpected Liquid sample rate.');
   session = model.create_session();
   let dispatches = 0;
@@ -63,15 +78,20 @@ async function initialize(options) {
     const observer = observeComputeDispatches();
     try { await generate({id:'probe',text:options.probeText}); }
     finally { dispatches = observer.stop(); }
-    if (!dispatches) {await dispose(); return unsupported('No GPU compute dispatches observed during actual speech synthesis.');}
+    if (!dispatches) {
+      const receipt = unsupported('No GPU compute dispatches observed during actual speech synthesis.');
+      await dispose();
+      return receipt;
+    }
   }
-  return {...info, status:'measured', backendEffective:'webgpu', gpu:device.vendor+' '+device.architecture,
+  return {...activeInfo, status:'measured', backendEffective:'webgpu', gpu:device.vendor+' '+device.architecture,
     capability:{gpuDispatchVerified:options.probe ? dispatches>0 : null,
       description:options.probe ? `Observed ${dispatches} WebGPU compute dispatches during untimed synthesis with finite CPU-readable PCM. Hooks removed before timing. CPU JavaScript handles tokenization and scheduling.` : 'Official WebGPU runtime; dispatch probe was not requested.'}};
 }
 async function dispose() {
   await session?.dispose(); session = null;
   await model?.dispose(); model = null;
+  activeInfo = info;
 }
 self.onmessage = async ({data}) => {
   try {

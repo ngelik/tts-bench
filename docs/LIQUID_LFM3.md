@@ -20,9 +20,16 @@ modality components that are not exercised by TTS. Local static HTTP range
 requests load these large files without buffering an entire copy in the Node
 server. Node does not run inference.
 
-The system prompt is `Perform TTS in American English using a female voice.`
-Each unchanged canonical source span is passed as a user message. The session is
-reset for each span; no previous sentence or output is added to its context.
+The Audio profile accepts the registered `en`, `ar`, `da`, `de`, `el`, `fi`,
+`fr`, `he`, `it`, `ja`, `ko`, `nl`, `pl`, `pt-BR`, `es-ES`, `sv`, `tr` and
+`zh-Hans` fixtures. It resolves the fixture's exact tag to the official English
+language name in `Perform TTS in <language> using a female voice.` English keeps
+the original American English prompt. Portuguese, Spanish and Chinese are named
+only at the language level because the pinned model card does not promise the
+matrix's Brazilian, Spain or Simplified Chinese variants. The separate Omni
+profile remains English-only in this adapter. Each unchanged canonical source
+span is passed as a user message. The session is reset for each span; no previous
+sentence or output is added to its context.
 Generation uses audio mode, 4,096 context tokens and a 2,048 output-token ceiling.
 Input capacity is checked before generation. Any non-stop completion, empty or
 nonfinite PCM fails the attempt; cap-terminated output is not accepted as a score.

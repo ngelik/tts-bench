@@ -102,6 +102,12 @@ explicit repetition count, smoke runs, non-warm scenarios, and `--resources`.
 Campaign cells select v2 with `"warmProtocol": "v2"` and
 `"repetitions": 3`; dry-run output shows the protocol ID and effective count.
 V1 and v2 receipts remain separate for comparisons and paired backend ratios.
+
+Use `--scenario warm --warm-protocol v3 --repetitions 1` for an excluded
+full-article warm-up with Chrome RSS sampling followed by a single full scored
+article. Pass the same fixture ID through the CLI or campaign plan. The warm-up
+memory is available in the timing receipt. Run v3 without `--resources`.
+
 Default per-article timeout is 120 minutes; `--timeout-minutes N` accepts up to 1,440 (24 hours) for slow models. Campaign plans can set `timeoutMinutes` per cell. The timeout applies to each full article independently.
 PiVo WebGPU can take several hours for the complete warm sequence.
 
@@ -136,13 +142,6 @@ npm run bench -- run --model paradee --backend cpu --scenario switch --predecess
   initialize the target and generate. Both models must support the chosen backend.
   `switchTransitionMs` includes predecessor disposal plus target initialization;
   target transfer bytes exclude predecessor preparation. Generation stays separate.
-
-
-Use `--scenario warm --warm-protocol v3 --repetitions 1` for an excluded
-full-article warm-up with Chrome RSS sampling followed by a single full scored
-article. Pass the same fixture ID through the CLI or campaign plan. The warm-up
-memory is available in the timing receipt. For v3, omit the separate cached run
-and omit `--resources`.
 
 Append `--resources` for 500 ms samples of the owned Chrome process-tree RSS on
 macOS/Linux. This changes the protocol ID. RSS includes browser baseline and the
